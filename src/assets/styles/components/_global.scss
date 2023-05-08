@@ -1,0 +1,139 @@
+//disable docs controls
+.docblock-argstable{
+    display: none !important;
+}
+
+a{
+    cursor: pointer;
+}
+
+h1, h2, h3, h4, h5{
+    margin: 0;
+    padding: 0;
+}
+
+p{
+    margin: 0;
+    padding: 0;
+}
+
+.search-icon{
+    color:rgba(50, 71, 92, 0.54);
+}
+.icon-btn{
+    .mat-icon{
+        height: 24px !important;
+        width: 24px !important;
+        font-size: 24px !important;
+    }
+}
+.mat-mdc-form-field{
+    margin-bottom: 20px;
+}
+label{
+    margin: 0;
+}
+.mat-icon{
+    color: rgba(50, 71, 92, 0.54);
+}
+
+.svg-container {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .svg-caption {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    text-align: center;
+    left: 0;
+    top: 0;
+  }
+  
+  .scaling-svg {
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+  }
+  
+  div.donut-tip {
+    position: absolute;
+    text-align: center;
+    padding: 0.5rem;
+    background: #ffffff;
+    color: #313639;
+    border: 1px solid #313639;
+    border-radius: 8px;
+    pointer-events: none;
+    font-size: 1.3rem;
+  }
+  
+  ul.legend-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  ul.legend-list li .legend {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    margin-right: 10px;
+  }
+  
+  ul.legend-list li {
+    color: #3967ac;
+    padding: 20px;
+  }
+  
+  ul.legend-list li:nth-child(odd) {
+    background-color: #f5f5f5;
+  }
+  
+  ul.legend-list li.selected,
+  ul.legend-list li:hover {
+    text-decoration: underline;
+    background-color: #e1f4fe !important;
+    cursor: pointer;
+  }
+  
+  .donut-tooltip {
+    position: absolute;
+    color: black;
+    text-align: center;
+    width: 60px;
+    height: 12px;
+    padding: 8px;
+    margin-top: -20px;
+    font: 10px sans-serif;
+    background: #ddd;
+    pointer-events: none;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #F3F3F3; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #F3F3F3;
+  }
+
+  //need to shift this class
+  .w-100{
+    width: 100%;
+  }

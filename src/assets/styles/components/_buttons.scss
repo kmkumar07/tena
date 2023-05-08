@@ -1,0 +1,127 @@
+.mat_button {
+  &.primary {
+    &.contained {
+      background-color: #603ADE;
+      color: #fff;
+
+      &:hover {
+        background-color: color('purple', 'lighten');
+      }
+
+      &:disabled {
+        background-color: rgba(50, 71, 92, 0.12);
+        color: rgba(50, 71, 92, 0.26);
+      }
+    }
+
+    &.text {
+      background-color: transparent;
+      color: color('purple', 'lighten');;
+
+      &:hover {
+        background-color: rgba(102, 108, 255, 0.05);
+      }
+
+      &:disabled {
+        color: rgba(50, 71, 92, 0.26);
+      }
+    }
+  }
+
+  &.secondary {
+    &.contained {
+      background-color: #969696;
+      color: #fff;
+
+      &:hover {
+        background-color: #596274;
+      }
+
+      &:disabled {
+        background-color: rgba(50, 71, 92, 0.12);
+        color: rgba(50, 71, 92, 0.26);
+      }
+    }
+
+    &.text {
+      background-color: transparent;
+      color: color("grey", "lighten-4");
+
+      &:hover {
+        background-color: rgba(109, 120, 141, 0.05);
+      }
+
+      &:disabled {
+        color: rgba(50, 71, 92, 0.26);
+      }
+
+    }
+
+    &.outlined {
+      background-color: transparent;
+      border: 1px solid rgba(109, 120, 141, 0.5);
+
+      &:hover {
+        background-color: rgba(109, 120, 141, 0.05);
+      }
+    }
+  }
+
+  &.tertiary {
+    background-color: transparent;
+    border: 1px solid;
+
+    &.contained {
+      border-color: rgba(102, 108, 255, 0.5);
+      color: color('purple', 'lighten');;
+
+      &:hover {
+        background-color: rgba(102, 108, 255, 0.05);
+      }
+    }
+
+    &.text {
+      border-color: rgba(109, 120, 141, 0.5);
+      color: color("grey", "lighten-4");
+
+      &:hover {
+        background-color: rgba(109, 120, 141, 0.05);
+        ;
+      }
+    }
+
+    &:disabled {
+      color: rgba(50, 71, 92, 0.26);
+    }
+  }
+
+  &.text-light {
+    height: 30px !important;
+    color: color('purple', 'loghten') !important;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(102, 108, 255, 0.05);
+    border: none;
+    line-height: 22px;
+    padding: 0 8px !important;
+    &:hover{
+      background-color: #F7F7FF !important;
+    }
+  }
+
+  &.btn-large {
+    height: 42px;
+    padding: 0 26px;
+  }
+
+  &.btn-medium {
+    height: 38px;
+    padding: 0 20px;
+  }
+
+  &.btn-small {
+    height: 26px;
+    padding: 0 14px;
+  }
+}

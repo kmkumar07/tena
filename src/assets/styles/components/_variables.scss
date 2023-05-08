@@ -1,0 +1,360 @@
+// ==========================================================================
+// variables
+// ==========================================================================
+//
+// Table of Contents:
+//
+//  1. Colors
+//  2. Buttons
+//  3. Forms
+//  4. Global
+//  5. Grid
+//  4. Spinners | Loaders
+//  5. Tables
+//  6. Toasts
+//  7. Typography
+//  8. Flow Text
+//  9. Collections
+//  10. Progress Bar
+
+// 1. Colors
+// ==========================================================================
+
+$primary-color: color("blue", "base") !default;
+$primary-color-light: lighten($primary-color, 15%) !default;
+$primary-color-dark: color("plum-purple", "darken-1") !default;
+
+$secondary-color: color("green", "base") !default;
+$success-color: color("green", "base") !default;
+$error-color: color("red", "base") !default;
+$link-color: color("blue", "lighten-1") !default;
+$border-color: color("grey", "border") !default;
+
+
+// 2. Buttons
+// ==========================================================================
+
+// Shared styles
+$button-border: none !default;
+$button-background-focus: lighten($secondary-color, 4%) !default;
+$button-font-size: 0.929em !default;
+$button-icon-font-size: 16px !default;
+$button-height: 30px !default;
+$button-padding: 0 1.071em !default;
+$button-radius: 50px !default;
+$button-radius-default: 4px;
+$form-fields-radius: 0.8rem;
+$radius-15:15px;
+$radius-btn-standard:8px;
+$small-button-padding: 3px 40px;
+$medium-button-padding: 3px 16px;
+$large-button-padding: 13px 63px;
+$standard-padding: 10px;
+
+// Disabled styles
+$button-disabled-background: #DFDFDF !default;
+$button-disabled-color: #9F9F9F !default;
+
+
+
+// Raised buttons
+$button-raised-background: color("blue", "base") !default;
+$button-raised-background-hover: lighten($button-raised-background, 5%) !default;
+$button-raised-color: #fff !default;
+
+// Large buttons
+$button-large-font-size: 1em !default;
+$button-large-icon-font-size: 24px !default;
+$button-large-height: $button-height * 1.5 !default;
+
+// Flat buttons
+$button-flat-color: #343434 !default;
+$button-flat-disabled-color: lighten(#999, 10%) !default;
+
+// Floating buttons
+$button-floating-background: $secondary-color !default;
+$button-floating-background-hover: $button-floating-background !default;
+$button-floating-color: #fff !default;
+$button-floating-size: 40px !default;
+$button-floating-large-size: 56px !default;
+$button-floating-radius: 50% !default;
+
+// 3. Forms
+// ==========================================================================
+
+// Text Inputs + Textarea
+$input-height: 44px !default;
+$input-border-color: #ceced2 !default;
+$input-border: 1px solid $input-border-color !default;
+$input-background: #fff !default;
+$input-error-color: $error-color !default;
+$input-success-color: $success-color !default;
+$input-focus-color: $secondary-color !default;
+$input-font-size: 1rem !default;
+$input-margin-bottom: 8px;
+$input-margin: 0 0 $input-margin-bottom 0 !default;
+$input-padding: 0 15px !default;
+$input-transition: all .3s !default;
+$label-font-size: 0.929em !default;
+$input-disabled-color: #ceced2 !default;
+$input-disabled-solid-color: #949494 !default;
+$input-disabled-border: 1px dotted $input-border-color !default;
+$input-invalid-border: 1px solid $input-error-color !default;
+$placeholder-text-color: #a5a4a9 !default;
+
+// Radio Buttons
+$radio-fill-color: color("blue", "base") !default;
+$radio-empty-color: #5a5a5a !default;
+$radio-border: 2px solid $radio-fill-color !default;
+
+// Range
+$range-height: 14px !default;
+$range-width: 14px !default;
+$track-height: 3px !default;
+
+// Select
+$select-border: 1px solid #f2f2f2 !default;
+$select-background: rgba(255, 255, 255, 0.90) !default;
+$select-focus: 1px solid lighten($secondary-color, 47%) !default;
+$select-option-hover: rgba(0,0,0,.08) !default;
+$select-option-focus: rgba(0,0,0,.08) !default;
+$select-option-selected: rgba(0,0,0,.03) !default;
+$select-padding: 5px !default;
+$select-radius: 2px !default;
+$select-disabled-color: rgba(0,0,0,.3) !default;
+
+// Switches
+$switch-bg-color: $radio-fill-color !default;
+$switch-checked-lever-bg: desaturate(lighten($switch-bg-color, 25%), 25%) !default;
+$switch-unchecked-bg: #F1F1F1 !default;
+$switch-unchecked-lever-bg: rgba(0,0,0,.38) !default;
+$switch-radius: 15px !default;
+$medium-button-min-height: 40px !default;
+
+// 4. Global
+// ==========================================================================
+
+// Media Query Ranges
+$vsmall-screen-down: 360px !default;
+$mobile-screen-down: 450px !default;
+$small-screen-up: 601px !default;
+$medium-screen-up: 993px !default;
+$large-screen-up: 1201px !default;
+$small-screen: 767px !default;
+$tablet-screen: 768px !default;
+$medium-screen: 992px !default;
+$tablet-landscape-screen: 1100px !default;
+$large-screen: 1200px !default;
+$large-screen-medium: 1299px !default;
+$large-desktop-down: 1280px !default;
+$large-desktop-up: 1366px !default;
+$large-desktop-up-down: 1365px !default;
+$large-desktop-middle-down: 1549px !default;
+$large-desktop-down-up: 1650px !default;
+$large-desktop-middle-down-center: 1460px !default;
+$large-desktop-down-center: 1799px !default;
+$vlarge-desktop-up: 1920px !default;
+
+$extra-small-and-down: "only screen and (max-width : #{$small-screen-up})" !default;
+$medium-and-up: "only screen and (min-width : #{$small-screen-up})" !default;
+$large-and-up: "only screen and (min-width : #{$medium-screen-up})" !default;
+$extra-large-and-up: "only screen and (min-width : #{$large-screen-up})" !default;
+$small-and-down: "only screen and (max-width : #{$small-screen})" !default;
+$small-and-up: "only screen and (max-width : #{$small-screen})" !default;
+$medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
+$large-desktop-down-up: "only screen and (max-width : #{$medium-screen})" !default;
+$medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})" !default;
+$tablet-view: "only screen and (min-width : #{$tablet-screen}) and (max-width : #{$tablet-landscape-screen})" !default;
+// max-width: 1100
+$tablet-and-down: "only screen and (max-width : #{$tablet-landscape-screen})" !default;
+// max-width: 1299
+$large-and-down: "only screen and (max-width : #{$large-screen-medium})" !default;
+
+// 1200 - 1299
+$medium-desktop-screen: "only screen and (min-width : #{$large-screen}) and (max-width : #{$large-screen-medium})" !default;
+
+$large-desktop-up-down: "only screen and (max-width : #{$large-desktop-up-down})" !default;
+$large-desktop-middle-down: "only screen and (max-width : #{$large-desktop-middle-down})" !default;
+$large-desktop-middle-down-center: "only screen and (max-width : #{$large-desktop-middle-down-center})" !default;
+
+// 1280 To 1366
+$medium-desktop: "only screen and (min-width : #{$large-desktop-down}) and (max-width : #{$large-desktop-up})" !default; 
+// Max -width 1280
+$small-desktop-down: "only screen and (max-width : #{$large-desktop-down})" !default;
+// Max -width 1280
+$large-desktop-down-center: "only screen and (max-width : #{$large-desktop-down-center})" !default;
+// min-width: 1799
+$extra-large-desktop-up: "only screen and (min-width : #{$large-desktop-down-center})" !default;
+
+
+
+
+
+
+// 12. Grid
+// ==========================================================================
+
+$num-cols: 12 !default;
+$gutter-width: 3rem !default;
+$element-top-margin: calc($gutter-width/3) !default;
+$element-bottom-margin: calc(($gutter-width*2)/3) !default;
+
+// 16. Spinners | Loaders
+// ==========================================================================
+
+$spinner-default-color: $secondary-color !default;
+
+
+
+// 18. Tables
+// ==========================================================================
+
+$table-border-color: $border-color !default;
+$table-striped-color: rgba(242, 242, 242, 0.5) !default;
+
+
+// 19. Toasts
+// ==========================================================================
+
+$toast-height: 48px !default;
+$toast-color: #323232 !default;
+$toast-text-color: #fff !default;
+$toast-action-color: #eeff41;
+
+
+// 20. Typography
+// ==========================================================================
+$font-light: 'Roboto', sans-serif;
+$font-regular: 'Roboto', sans-serif;
+$font-medium: 'Roboto', sans-serif;
+$font-bold: 'Roboto', sans-serif;
+$off-black: color("grey", "base") !default;
+// Header Styles
+$h1-fontsize: 4.8rem !default;
+$h2-fontsize: 3.6rem !default;
+$h3-fontsize: 3.0rem !default;
+$h4-fontsize: 2.2rem !default;
+$h5-fontsize: 2.0rem !default;
+$h6-fontsize: 1.6rem !default;
+
+
+// font weight
+$normal: 400 !default;
+$medium: 500 !default;
+$font-bold: 700 !default;
+$font-bold-size: 700 !default;
+
+$font-color : color("grey", "darken");
+
+
+// 22. Flow Text
+// ==========================================================================
+
+$range : $large-screen - $small-screen !default;
+$intervals: 20 !default;
+$interval-size: calc($range / $intervals) !default;
+
+
+// 23. Collections
+// ==========================================================================
+
+$collection-border-color: #e0e0e0 !default;
+$collection-bg-color: #fff !default;
+$collection-active-bg-color: $secondary-color !default;
+$collection-active-color: lighten($secondary-color, 55%) !default;
+$collection-hover-bg-color: #ddd !default;
+$collection-link-color: $secondary-color !default;
+$collection-line-height: 1.5rem !default;
+
+
+// 24. Progress Bar
+// ==========================================================================
+
+$progress-bar-color: $secondary-color !default;
+
+
+$margin-padding1:1rem;
+$margin-padding2:2rem;
+$padding-top3: 3rem;
+$padding-top4: 4rem;
+$padding-top5: 5rem;
+$padding-top6: 6rem;
+$padding-top7: 7rem;
+$padding-top8: 8rem;
+$padding-top9: 9rem;
+$padding-top10: 10rem;
+
+$padding-bottom1: 1rem;
+$padding-bottom2: 2rem;
+$padding-bottom3: 3rem;
+$padding-bottom4: 4rem;
+$padding-bottom5: 5rem;
+$padding-bottom6: 6rem;
+$padding-bottom7: 7rem;
+$padding-bottom8: 8rem;
+$padding-bottom9: 9rem;
+$padding-bottom10: 10rem;
+
+$margin-top1: 1rem;
+$margin-top2: 2rem;
+$margin-top3: 3rem;
+$margin-top4: 4rem;
+$margin-top5: 5rem;
+$margin-top6: 6rem;
+$margin-top7: 7rem;
+$margin-top8: 8rem;
+$margin-top9: 9rem;
+$margin-top10: 10rem;
+
+$margin-left1: 1rem;
+$margin-left2: 2rem;
+$margin-left3: 3rem;
+$margin-left4: 4rem;
+$margin-left5: 5rem;
+$margin-left6: 6rem;
+$margin-left7: 7rem;
+$margin-left8: 8rem;
+$margin-left9: 9rem;
+$margin-left10: 10rem;
+
+$margin-right1: 1rem;
+$margin-right2: 2rem;
+$margin-right3: 3rem;
+$margin-right4: 4rem;
+$margin-right5: 5rem;
+$margin-right6: 6rem;
+$margin-right7: 7rem;
+$margin-right8: 8rem;
+$margin-right9: 9rem;
+$margin-right10: 10rem;
+
+$margin-bottom1: 1rem;
+$margin-bottom2: 2rem;
+$margin-bottom3: 3rem;
+$margin-bottom4: 4rem;
+$margin-bottom5: 5rem;
+$margin-bottom6: 6rem;
+$margin-bottom7: 7rem;
+$margin-bottom8: 8rem;
+$margin-bottom9: 9rem;
+$margin-bottom10: 10rem;
+
+$standard-margin:1rem;
+$top-bottom:1rem 0;
+$left-right:0 1rem;
+
+$width-full:100%;
+
+$height-full:100%;
+
+
+$ph-bg:                   #fff !default;
+$ph-color:                #EEEFF2 !default;
+$ph-border-radius:        4px !default; 
+
+$ph-gutter:               30px !default;
+$ph-spacer:               15px !default;
+
+$ph-avatar-border-radius: 50% !default;
+
+$ph-animation-duration: 1.2s !default;

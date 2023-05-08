@@ -1,0 +1,40 @@
+.mat_input{
+    &.input-medium{
+        width: 100%;
+        .mat-mdc-text-field-wrapper{
+            height: 40px;
+            .mat-mdc-form-field-flex{
+                height: 40px;
+                .mat-mdc-form-field-infix{
+                    padding: 8px 0;
+                    input{
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+    &.input-medium{
+        width: 100%;
+        .mat-mdc-text-field-wrapper{
+            height: 40px;
+            .mat-mdc-form-field-flex{
+                height: 40px;
+                .mdc-notched-outline{
+                    .mdc-notched-outline__notch{
+                        .mdc-floating-label{
+                            mat-label{
+                                margin-bottom: 20px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

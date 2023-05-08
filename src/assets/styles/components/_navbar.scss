@@ -1,0 +1,165 @@
+/* sidenav */
+
+.sidenav {
+  background-color: color("shades", "white");
+  width: 7.6rem;
+  height: $height-full;
+  @include fixed(top 0 left 0);
+  z-index: 1003;
+  border-right: 1px solid #E6E9EF;
+  @include flexbox;
+  @include justify-content(center);
+  @include flex-wrap(wrap);
+  overflow-x: hidden;
+
+  a {
+    margin: 0;
+    height: 39px;
+  }
+
+  .nav-list {
+    @include flexbox;
+    @include justify-content(center);
+    @include flex-wrap(wrap);
+    @include align-self(baseline);
+    height: $height-full;
+
+    mat-list {
+      a {
+        color: color("blue", "darken");
+        margin: 0;
+        height: 62px;
+        @include flexbox;
+        width: 62px;
+        @include align-items(center);
+        @include justify-content(center);
+        @include border-radius($radius-btn-standard); 
+        @include flex-wrap(wrap);
+        padding: 0.9rem 0;
+
+        img {
+          &.arrow-right {
+            @include absolute(top 16px right 0);
+            right: 0;
+            top: 16px;
+          }
+        }
+        mat-icon {
+          height: auto;
+          font-size: 2.8rem;
+          width: auto;
+          margin-bottom: 4px;
+        }
+        span.dashboard-icon-ew {
+          font-size: 0.9rem;
+          font-weight: $medium;
+          display: block;
+          width: $height-full;
+          text-align: center;
+          text-transform: uppercase;
+          line-height: normal;
+      }
+      }
+
+      mat-list-item {
+        height: 62px;
+        margin: 12px 0;
+
+        &.active {
+                a {
+            background: #E8EAF0;
+            color: color("blue", "darken");
+        }
+      }
+    }
+  }
+    span.add-creation-sidenav {
+      width: 40px;
+      height: 40px;
+      @include justify-content(center);
+      @include flexbox;
+      cursor: pointer;
+      outline: none;
+      background: color("blue", "darken");
+      margin: 1.9rem auto 0;
+      @include border-radius(4px);
+    }
+    .menu-hamburg-outer, .create-event-circle-ew {
+      width: $width-full;
+  }
+    span.menu-hamburg {
+      @include flexbox;
+      @include justify-content(center);
+      @include flex-wrap(wrap);
+      width: $width-full;
+      background: color("shades", "white");
+      cursor: pointer;
+      color: color("shades", "white");
+      margin: 2.4rem auto 0;
+
+      span.hemsburg {
+        width: 24px;
+        height: 2px;
+        background: color("blue", "base");
+        display: block;
+        margin-bottom: 0.6rem;
+      }
+    }
+    .side-nav-list-bottom {
+      mat-list {
+        mat-list-item {
+          height: auto;
+          margin-bottom: 1.9rem;
+        }
+      } 
+      .mat-list-base {
+        margin-top: 0;
+      }
+    } 
+    .nav-list-midle {
+      @include align-self(center);
+  }
+  .top-nav-list {
+   @include align-self(flex-start);
+}
+.mat-list-base {
+  padding-top: 0;
+  .mat-list-item.mat-list-item-disabled {
+    background: none;
+    opacity: .5;
+  }
+}
+
+  }
+
+  .user-image-sidenav {
+    @include avatar(35px, $circle: false);
+    @include flexbox;
+    margin: 0 auto;
+
+    img {
+      @include avatar(35px, $circle: false);
+    }
+  }
+  .side-nav-list-bottom {
+    @include flexbox;
+    align-self: flex-end;
+    @include flex-wrap(wrap);
+
+    mat-list-item {
+      margin-bottom: $margin-bottom1;    
+    }
+  }
+  .mat-list-base {
+    .mat-list-item {
+      .mat-list-item-content {
+        padding: 0;
+      }
+    } 
+  } 
+}
+
+.ew-nav {
+  border-top: 1px solid rgba(112, 112, 112, 0.1);
+  border-bottom: 1px solid #ECECEC;
+}
