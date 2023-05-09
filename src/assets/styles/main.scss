@@ -1,13 +1,13 @@
+@import './components/global';
 @import './components/color.scss';
 @import './components/variables.scss';
 @import './components/typography';
 @import './components/mixins';
 @import './components/base';
-@import './components/normalize';
 @import './components/_buttons.scss';
 @import './components/_input.scss';
+@import './components/navbar';
 @import './components/material-base.scss';
 @import './components/icons-material-design';
 @import './components/custom';
-@import './components/global';
 @import './components/grid';
