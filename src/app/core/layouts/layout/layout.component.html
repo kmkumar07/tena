@@ -1,1 +1,66 @@
-<p>layout works!</p>
+<div class="outer-layout">
+  <mat-sidenav-container [ngClass]="opened ? 'sidenav-open' : ''">
+    <mat-sidenav #sidenav mode="side" opened="true" class="sidenav-slider">
+      <div class="sidenav-wrapper border-2">
+        <div class="sidebar-toggle">
+          <button mat-mini-fab color="accent" class="toggle-sidenav" (click)="toggleSidenav()">
+            <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M0.269968 12.3681L1.42697 13.5186L7.85547 7.08355L1.42047 0.648554L0.269969 1.79905L5.55447 7.08355L0.269968 12.3681V12.3681Z"
+                fill="white" />
+            </svg>
+          </button>
+        </div>
+        <p>Sidenav content</p>
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="header-wrapper border-2">
+        <div class="global-search border-2">
+          <span class="search-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M11.2222 17.4444C14.6587 17.4444 17.4444 14.6587 17.4444 11.2222C17.4444 7.78578 14.6587 5 11.2222 5C7.78578 5 5 7.78578 5 11.2222C5 14.6587 7.78578 17.4444 11.2222 17.4444Z"
+                stroke="#405189" stroke-width="1.55556" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M19.3833 19.3833L16 16" stroke="#405189" stroke-width="1.55556" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </span>
+          <input type="text" placeholder="Search..." />
+        </div>
+        <div class="header-right">
+          <div class="notifications-section" matBadge="3" matBadgeSize="small" matBadgeColor="warn">
+            <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M8 20C9.1 20 10 19.1 10 18H6C6 19.1 6.9 20 8 20ZM14 14V9C14 5.93 12.37 3.36 9.5 2.68V2C9.5 1.17 8.83 0.5 8 0.5C7.17 0.5 6.5 1.17 6.5 2V2.68C3.64 3.36 2 5.92 2 9V14L0 16V17H16V16L14 14ZM12 15H4V9C4 6.52 5.51 4.5 8 4.5C10.49 4.5 12 6.52 12 9V15Z"
+                fill="#49494C" />
+            </svg>
+          </div>
+          <div class="user-profile">
+            <div class="user-image" [matMenuTriggerFor]="menu">
+              <img src="../../../../assets/images/profile-avatar-1.png" />
+            </div>
+            <mat-menu #menu="matMenu" class="profile-menu">
+              <div class="profile-menu-outer">
+                <div class="grad-bg">
+                  <div class="user-initials">
+                    JS
+                  </div>
+                </div>
+                <div class="profile-inner">
+                  
+                </div>
+              </div>
+            </mat-menu>
+            <div class="user-info">
+              <span class="name">John Smith</span>
+              <span class="role">Founder</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

@@ -1,80 +1,171 @@
 // Google Color Palette defined: http://www.google.com/design/spec/style/color.html
-$red: ( "base": #ff0404);
-$blue: ( "primary": #4198FF, "base": #070029, "darken": #090039, "darken-2": #1272CA, "lighten": #3a4580, "lighten-1":#E7E8F0, "lighten-2":#e5f5ff, "lighten-3":#FAFAFC, "lighten-4": #bcdeff, "lighten-5": #68B5FD, "lighten-6": #F2F9FF, "lighten-7": #DFF0FF, "lighten-8": #E8EDFB);
-$green: ( "base": #1BD2A4, "darken": #00AF5A, "darken-2": #16A883, "lighten": #e7faf6, "lighten-1": #E1FBF5, "lighten-2": #E9F5F0, "lighten-3": #e5f8f0, "lighten-base": #edfbf8, "lighten-4": #B9EBDE, "lighten-5": #6BE1C4, "lighten-6": #E8FAF6, "lighten-7": #F5FFFD);
-$orange: ( "base": #FF8B55, "lighten": #FFAB27, "lighten-2": #E8920C, "lighten-3": #FFF5E5);
-$red: ( "base": #ED5267, "darken": #C42339, "lighten": #E44258, "lighten-2": #F9DADE);
-$shades: ( "black": #000000, "white": #ffffff, "transparent": transparent, );
+$red: (
+  "base": #ff0404,
+);
+$blue: (
+  "primary": #4198ff,
+  "base": #070029,
+  "darken": #090039,
+  "darken-2": #1272ca,
+  "lighten": #3a4580,
+  "lighten-1": #e7e8f0,
+  "lighten-2": #e5f5ff,
+  "lighten-3": #fafafc,
+  "lighten-4": #bcdeff,
+  "lighten-5": #68b5fd,
+  "lighten-6": #f2f9ff,
+  "lighten-7": #dff0ff,
+  "lighten-8": #e8edfb,
+);
+$green: (
+  "base": #1bd2a4,
+  "darken": #00af5a,
+  "darken-2": #16a883,
+  "lighten": #e7faf6,
+  "lighten-1": #e1fbf5,
+  "lighten-2": #e9f5f0,
+  "lighten-3": #e5f8f0,
+  "lighten-base": #edfbf8,
+  "lighten-4": #b9ebde,
+  "lighten-5": #6be1c4,
+  "lighten-6": #e8faf6,
+  "lighten-7": #f5fffd,
+);
+$orange: (
+  "base": #ff8b55,
+  "lighten": #ffab27,
+  "lighten-2": #e8920c,
+  "lighten-3": #fff5e5,
+);
+$red: (
+  "base": #ed5267,
+  "darken": #c42339,
+  "lighten": #e44258,
+  "lighten-2": #f9dade,
+);
+$shades: (
+  "black": #000000,
+  "white": #ffffff,
+  "transparent": transparent,
+);
 //Project Color pallete
-$primary: ( "main":#603ADE, "light": #8082FF, "dark": #6062E8, "hover":#5456CC, "light2": #F0ECFF, "light3": #696CFF);
-$text: ( "primary":rgba(50, 71, 92, 0.87), "secondary": rgba(50, 71, 92, 0.6), "disabled": rgba(50, 71, 92, 0.38), "lighten": #748291, "red": #E97272);
-$error: ("main":#E34F4F, "light": #FF5B3F, "dark": #E8381A);
+$primary: (
+  "main": #F3F1FF,
+  "light": #8082ff,
+  "dark": #6062e8,
+  "hover": #5456cc,
+  "light2": #f0ecff,
+  "light3": #696cff,
+);
+$text: (
+  "primary": #405189,
+  "secondary": #1A3447,
+  "dark": #404C57,
+  "lighten": #748291,
+  "red": #e97272,
+);
+$error: (
+  "main": #e34f4f,
+  "light": #ff5b3f,
+  "dark": #e8381a,
+);
 // empty-state Classes
-$purple: ("lighten":#696CFF, "darken": #444791);
-$grey: ( "base": #000000, "darken": #2B2B30, "darken-2": #32475C, "darken-3": #5B5B5B, "darken-4": #979797, "darken-5": #2A2A2A, "light" : #6E6D76, "lighten-2":#B1B9C1, "lighten-3": #F5F5F9, "lighten-4": #8592A3, "lighten-5": #C4C4C4, "lighten-6": #7C7B7B);
+$purple: (
+  "lighten": #696cff,
+  "darken": #444791,
+);
+$grey: (
+  "base": #000000,
+  "darken": #2b2b30,
+  "darken-2": #32475c,
+  "darken-3": #5b5b5b,
+  "darken-4": #979797,
+  "darken-5": #2a2a2a,
+  "light": #6e6d76,
+  "lighten-2": #b1b9c1,
+  "lighten-3": #f5f5f9,
+  "lighten-4": #8592a3,
+  "lighten-5": #c4c4c4,
+  "lighten-6": #7c7b7b,
+  "primary": #f9f9f9,
+);
 
 //not is use
-$sky-blue: ( "base": #009E8E, "lighten": #ABFBF3, );
-$empty-red: ( "base": #FF6F41, "lighten": #FFDACE, );
-$empty-pink: ( "base": #ED5267, "lighten": #FFDCE1, );
-$colors: ( "red": $red, "blue": $blue, "green": $green, "purple": $purple, "orange": $orange, "grey": $grey, "shades": $shades, "sky-blue": $sky-blue, "empty-red": $empty-red, "empty-pink": $empty-pink, "primary": $primary, "text": $text, "error": $error) !default;
+$sky-blue: (
+  "base": #009e8e,
+  "lighten": #abfbf3,
+);
+$empty-red: (
+  "base": #ff6f41,
+  "lighten": #ffdace,
+);
+$empty-pink: (
+  "base": #ed5267,
+  "lighten": #ffdce1,
+);
+$colors: (
+  "red": $red,
+  "blue": $blue,
+  "green": $green,
+  "purple": $purple,
+  "orange": $orange,
+  "grey": $grey,
+  "shades": $shades,
+  "sky-blue": $sky-blue,
+  "empty-red": $empty-red,
+  "empty-pink": $empty-pink,
+  "primary": $primary,
+  "text": $text,
+  "error": $error,
+) !default;
 $lighten-blue: #3a4580;
-$red-lighten: #E44258;
-$red-lighten1: #F9DADE;
-$yellow-lighten: #FFF5E6;
-$yellow-lighten2: #FBF3E0;
+$red-lighten: #e44258;
+$red-lighten1: #f9dade;
+$yellow-lighten: #fff5e6;
+$yellow-lighten2: #fbf3e0;
 $input-grey: #909194;
 $white-2: #f2f2f2;
 $white-3: #ffffff0d;
-      
-
-
-
-
 
 // Color Classes
-@each $color_name,
-$color in $colors {
-    @each $color_type,
-    $color_value in $color {
-        @if $color_type=="base" {
-            .#{$color_name} {
-                background-color: $color_value !important;
-            }
-            .#{$color_name}-text {
-                color: $color_value !important;
-            }
-        }
-        @else if $color_name !="shades" {
-            .#{$color_name}.#{$color_type} {
-                background-color: $color_value !important;
-            }
-            .#{$color_name}-text.text-#{$color_type} {
-                color: $color_value !important;
-            }
-        }
+@each $color_name, $color in $colors {
+  @each $color_type, $color_value in $color {
+    @if $color_type== "base" {
+      .#{$color_name} {
+        background-color: $color_value !important;
+      }
+      .#{$color_name}-text {
+        color: $color_value !important;
+      }
+    } @else if $color_name != "shades" {
+      .#{$color_name}.#{$color_type} {
+        background-color: $color_value !important;
+      }
+      .#{$color_name}-text.text-#{$color_type} {
+        color: $color_value !important;
+      }
     }
+  }
 }
 
 // Shade classes
-@each $color,
-$color_value in $shades {
-    .#{$color} {
-        background-color: $color_value !important;
-    }
-    .#{$color}-text {
-        color: $color_value !important;
-    }
+@each $color, $color_value in $shades {
+  .#{$color} {
+    background-color: $color_value !important;
+  }
+  .#{$color}-text {
+    color: $color_value !important;
+  }
 }
 
 // usage: color("name_of_color", "type_of_color")
 // to avoid to repeating map-get($colors, ...)
 @function color($color, $type) {
-    @if map-has-key($colors, $color) {
-        $curr_color: map-get($colors, $color);
-        @if map-has-key($curr_color, $type) {
-            @return map-get($curr_color, $type);
-        }
+  @if map-has-key($colors, $color) {
+    $curr_color: map-get($colors, $color);
+    @if map-has-key($curr_color, $type) {
+      @return map-get($curr_color, $type);
     }
-    @return null;
+  }
+  @return null;
 }
