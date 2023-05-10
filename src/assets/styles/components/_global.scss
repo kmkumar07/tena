@@ -1,166 +1,394 @@
 //disable docs controls
-*{
+
+// content list
+// global border classes
+
+* {
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
 }
+
 html {
   font-size: 16px !important;
 }
-body{
+
+body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   background-color: color("primary", "main");
-  font-family: 'Roboto', sans-serif;
-}
-.docblock-argstable{
-    display: none !important;
+  font-family: "Roboto", sans-serif;
 }
 
-a{
-    cursor: pointer;
+.docblock-argstable {
+  display: none !important;
 }
 
-h1, h2, h3, h4, h5{
-    margin: 0;
-    padding: 0;
+a {
+  cursor: pointer;
 }
 
-p{
-    margin: 0;
-    padding: 0;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  padding: 0;
 }
-input{
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+input {
   width: 100%;
   height: 100% !important;
   background-color: transparent;
   border: none !important;
-  &:focus{
+
+  &:focus {
     border: none;
   }
 }
-.search-icon{
-    color:rgba(50, 71, 92, 0.54);
+
+.m-0 {
+  margin: 0 !important;
 }
-.icon-btn{
-    .mat-icon{
-        height: 24px !important;
-        width: 24px !important;
-        font-size: 24px !important;
-    }
+
+.search-icon {
+  color: rgba(50, 71, 92, 0.54);
 }
-.mat-mdc-form-field{
-    margin-bottom: 20px;
+
+.icon-btn {
+  .mat-icon {
+    height: 24px !important;
+    width: 24px !important;
+    font-size: 24px !important;
+  }
 }
-label{
-    margin: 0;
+
+.mat-mdc-form-field {
+  margin-bottom: 20px;
 }
-.mat-icon{
-    color: rgba(50, 71, 92, 0.54);
+
+label {
+  margin: 0;
+}
+
+.mat-icon {
+  color: rgba(50, 71, 92, 0.54);
 }
 
 .svg-container {
-    padding: 0;
-    margin: 0;
-  }
-  
-  .svg-caption {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    font-family: 'Roboto';
-    font-weight: 500;
-    text-align: center;
-    left: 0;
-    top: 0;
-  }
-  
-  .scaling-svg {
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-  }
-  
-  div.donut-tip {
-    position: absolute;
-    text-align: center;
-    padding: 0.5rem;
-    background: #ffffff;
-    color: #313639;
-    border: 1px solid #313639;
-    border-radius: 8px;
-    pointer-events: none;
-    font-size: 1.3rem;
-  }
-  
-  ul.legend-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  ul.legend-list li .legend {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-    margin-right: 10px;
-  }
-  
-  ul.legend-list li {
-    color: #3967ac;
-    padding: 20px;
-  }
-  
-  ul.legend-list li:nth-child(odd) {
-    background-color: #f5f5f5;
-  }
-  
-  ul.legend-list li.selected,
-  ul.legend-list li:hover {
-    text-decoration: underline;
-    background-color: #e1f4fe !important;
-    cursor: pointer;
-  }
-  
-  .donut-tooltip {
-    position: absolute;
-    color: black;
-    text-align: center;
-    width: 60px;
-    height: 12px;
-    padding: 8px;
-    margin-top: -20px;
-    font: 10px sans-serif;
-    background: #ddd;
-    pointer-events: none;
-  }
-  
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: transparent; 
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #F3F3F3; 
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #F3F3F3;
+  padding: 0;
+  margin: 0;
+}
+
+.svg-caption {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-family: "Roboto";
+  font-weight: 500;
+  text-align: center;
+  left: 0;
+  top: 0;
+}
+
+.scaling-svg {
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+div.donut-tip {
+  position: absolute;
+  text-align: center;
+  padding: 0.5rem;
+  background: #ffffff;
+  color: #313639;
+  border: 1px solid #313639;
+  border-radius: 8px;
+  pointer-events: none;
+  font-size: 1.3rem;
+}
+
+ul.legend-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.legend-list li .legend {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+ul.legend-list li {
+  color: #3967ac;
+  padding: 20px;
+}
+
+ul.legend-list li:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+
+ul.legend-list li.selected,
+ul.legend-list li:hover {
+  text-decoration: underline;
+  background-color: #e1f4fe !important;
+  cursor: pointer;
+}
+
+.donut-tooltip {
+  position: absolute;
+  color: black;
+  text-align: center;
+  width: 60px;
+  height: 12px;
+  padding: 8px;
+  margin-top: -20px;
+  font: 10px sans-serif;
+  background: #ddd;
+  pointer-events: none;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f3f3f3;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #f3f3f3;
+}
+
+//need to shift this class
+.w-100 {
+  width: 100%;
+}
+
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+
+// global border classes
+.border-2 {
+  border-radius: 0.5rem;
+}
+
+.fw-600 {
+  font-weight: 600 !important;
+}
+
+.mat-icon {
+  font-family: 'Material Icons' !important;
+}
+
+// ATOMIC SCSS // In Atomic CSS or SCSS, we break each css property in one single class (similar to that of tailwind). This helps in reducing the css size significantly!
+// *****NOTE- The media query for atomic css is still peding.
+// List
+// 1. Flexbox
+// 2. Width & Height
+// 3. Position
+// 1. flexbox
+.flex {
+  display: flex;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.horizontal {
+  flex-direction: row;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-even {
+  justify-content: space-evenly;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+// 2. Width & Height
+.h-screen {
+  height: 100vh;
+}
+
+@for $i from 0 through 100 {
+
+  .width-#{$i},
+  .w-#{$i} {
+    width: $i * $dimensions !important;
   }
 
-  //need to shift this class
-  .w-100{
-    width: 100%;
+  .height-#{$i},
+  .h-#{$i} {
+    height: $i * $dimensions !important;
+  }
+}
+
+// 3. Position
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.inset-0 {
+  inset: 0
+}
+
+.top-0 {
+  top: 0;
+}
+
+.right-0 {
+  right: 0;
+}
+
+.bottom-0 {
+  bottom: 0;
+}
+
+.left-0 {
+  left: 0;
+}
+
+// 4. Display
+.block {
+  display: block;
+}
+
+.inline {
+  display: inline;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+// 5. Overflow 
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+// SPACING // MarginLoop
+@for $i from 0 through 100 {
+  .m-#{$i} {
+    margin: $i * $spacing !important;
   }
 
-  // global border classes 
-  .border-2{
-    border-radius: 0.5rem;
+  .mt-#{$i} {
+    margin-top: $i * $spacing !important;
   }
+
+  .mr-#{$i} {
+    margin-right: $i * $spacing !important;
+  }
+
+  .mb-#{$i} {
+    margin-bottom: $i * $spacing !important;
+  }
+
+  .ml-#{$i} {
+    margin-left: $i * $spacing !important;
+  }
+
+  .my-#{$i} {
+    margin-top: $i * $spacing !important;
+    margin-bottom: $i * $spacing !important;
+  }
+
+  .mx-#{$i} {
+    margin-right: $i * $spacing !important;
+    margin-left: $i * $spacing !important;
+  }
+}
+
+// Padding Loop
+@for $i from 0 through 100 {
+  .p-#{$i} {
+    padding: $i * $spacing !important;
+  }
+
+  .pt-#{$i} {
+    padding-top: $i * $spacing !important;
+  }
+
+  .pr-#{$i} {
+    padding-right: $i * $spacing !important;
+  }
+
+  .pb-#{$i} {
+    padding-bottom: $i * $spacing !important;
+  }
+
+  .pl-#{$i} {
+    padding-left: $i * $spacing !important;
+  }
+
+  .py-#{$i} {
+    padding-top: $i * $spacing !important;
+    padding-bottom: $i * $spacing !important;
+  }
+
+  .px-#{$i} {
+    padding-right: $i * $spacing !important;
+    padding-left: $i * $spacing !important;
+  }
+}

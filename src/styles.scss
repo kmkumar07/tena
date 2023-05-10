@@ -11,7 +11,7 @@ $my-primary: (
   100: #d2caf5,
   200: #ECEBFF,
   300: #9484eb,
-  400: #7968e6,
+  400: #7868E6,
   500: #5c4ee1,
   600: #5049da,
   700: #3d41d0,
@@ -48,7 +48,7 @@ $my-custom-level: mat.define-typography-level(
 );
 
 $my-custom-typography-config: mat.define-typography-config(
-  $headline-5: mat.define-typography-level(24px, 20px, 400), /* h1, headline */
+  $headline-5: mat.define-typography-level(24px, 20px, 500), /* h1, headline */
   $subtitle-2: mat.define-typography-level(20px, 20px, 400, 0.1px),  /* h4, sub-heading */
   $body-1: mat.define-typography-level(14px, 20px, 400),  /* table-content */
   $caption: mat.define-typography-level(12px, 20px, 400, 0.1px),  /* subtext */

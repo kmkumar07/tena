@@ -1,5 +1,71 @@
-@import './components/global';
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$my-primary: (
+  50: #eeeafb,
+  100: #d2caf5,
+  200: #ECEBFF,
+  300: #9484eb,
+  400: #7868E6,
+  500: #5c4ee1,
+  600: #5049da,
+  700: #3d41d0,
+  800: #293bc8,
+  900: #2C2466,
+  contrast: (
+    50: rgba(#ffffff, 0.87),
+    100: rgba(#ffffff, 0.87),
+    200: rgba(#ffffff, 0.87),
+    300: rgba(#ffffff, 0.87),
+    400: rgba(#ffffff, 0.87),
+    500: rgba(#ffffff, 0.87),
+    600: rgba(#ffffff, 0.87),
+    700: rgba(#ffffff, 0.87),
+    800: rgba(#ffffff, 0.87),
+    900: rgba(#ffffff, 0.87),
+    A100: rgba(#ffffff, 0.87),
+    A200: rgba(#ffffff, 0.87),
+    A400: rgba(#ffffff, 0.87),
+    A700: rgba(#ffffff, 0.87),
+  )
+);
+
+$my-primary: mat.define-palette($my-primary, 400, 200, 900);
+$my-accent: mat.define-palette(mat.$indigo-palette, A200, A100, A400);
+
+//typography
+$my-custom-level: mat.define-typography-level(
+  $font-family: Roboto,
+  $font-weight: 400,
+  $font-size: 1rem,
+  $line-height: 1,
+  $letter-spacing: normal,
+);
+
+$my-custom-typography-config: mat.define-typography-config(
+  $headline-5: mat.define-typography-level(24px, 20px, 500), /* h1, headline */
+  $subtitle-2: mat.define-typography-level(20px, 20px, 400, 0.1px),  /* h4, sub-heading */
+  $body-1: mat.define-typography-level(14px, 20px, 400),  /* table-content */
+  $caption: mat.define-typography-level(12px, 20px, 400, 0.1px),  /* subtext */
+);
+
+$my-typography: $my-custom-typography-config;
+
+$my-theme: mat.define-light-theme((
+ color: (
+   primary: $my-primary,
+   accent: $my-accent,
+ ),
+ typography: $my-typography,
+ density: 0,
+));
+@include mat.typography-hierarchy($my-typography);
+@include mat.all-component-themes($my-theme);
+
 @import './components/color.scss';
+@import './components/variables';
+@import './components/global';
 @import './components/variables.scss';
 @import './components/typography';
 @import './components/mixins';
@@ -11,3 +77,6 @@
 @import './components/icons-material-design';
 @import './components/custom';
 @import './components/grid';
+
+//modules
+@import './components/modules/product'
