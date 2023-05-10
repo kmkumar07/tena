@@ -39,6 +39,18 @@ input{
     border: none;
   }
 }
+// Material Symbols Outlined
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined' !important;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+.m-0{
+  margin: 0 !important;
+}
 .search-icon{
     color:rgba(50, 71, 92, 0.54);
 }
@@ -159,8 +171,183 @@ label{
   .w-100{
     width: 100%;
   }
-
+  .mt-1{
+    margin-top: 0.25rem !important;
+  }
   // global border classes 
   .border-2{
     border-radius: 0.5rem;
   }
+  .fw-600{
+    font-weight: 600 !important;
+  }
+
+
+
+  // ATOMIC SCSS
+  // In Atomic CSS or SCSS, we break each css property in one single class (similar to that of tailwind). This helps in reducing the css size significantly!
+
+// *****NOTE- The media query for atomic css is still peding.
+
+// List
+// 1. Flexbox
+// 2. Width & Height
+// 3. Position
+
+// 1. flexbox
+.flex {
+  display: flex;
+}
+.wrap {
+  flex-wrap: wrap;
+}
+.horizontal {
+  flex-direction: row;
+}
+.vertical {
+  flex-direction: column;
+}
+.inline-flex {
+  display: inline-flex;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-even {
+  justify-content: space-evenly;
+}
+.justify-around {
+  justify-content: space-around;
+}
+.align-center {
+  align-items: center;
+}
+.align-start {
+  align-items: flex-start;
+}
+.align-end {
+  align-items: flex-end;
+}
+
+// 2. Width & Height
+
+.h-screen{
+  height: 100vh;
+}
+
+@for $i from 0 through 100 {
+  .width-#{$i},
+  .w-#{$i} {
+    width: $i * $dimensions !important;
+  }
+  .height-#{$i},
+  .h-#{$i} {
+    height: $i * $dimensions !important;
+  }
+}
+
+// 3. Position
+
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.fixed {
+  position: fixed;
+}
+.inset-0{
+  inset: 0
+}
+.top-0{
+  top: 0;
+} 
+.right-0{
+  right: 0;
+} 
+.bottom-0{
+  bottom: 0;
+} 
+.left-0{
+  left: 0;
+}
+
+// 4. Display
+
+.block{
+  display: block;
+}
+.inline{
+  display: inline;
+}
+.inline-block{
+  display: inline-block;
+}
+
+// 5. Overflow 
+
+.overflow-auto{
+  overflow: auto;
+}
+.overflow-hidden{
+  overflow: hidden;
+}
+
+// SPACING 
+// Margin Loop
+@for $i from 0 through 12 {
+  .m-#{$i} {
+    margin: $i * $spacing !important;
+  }
+  .mt-#{$i} {
+    margin-top: $i * $spacing !important;
+  }
+  .mr-#{$i} {
+    margin-right: $i * $spacing !important;
+  }
+  .mb-#{$i} {
+    margin-bottom: $i * $spacing !important;
+  }
+  .ml-#{$i} {
+    margin-left: $i * $spacing !important;
+  }
+  .my-#{$i} {
+    margin-top: $i * $spacing !important;
+    margin-bottom: $i * $spacing !important;
+  }
+  .mx-#{$i} {
+    margin-right: $i * $spacing !important;
+    margin-left: $i * $spacing !important;
+  }
+}
+
+// Padding Loop
+@for $i from 0 through 12 {
+  .p-#{$i} {
+    padding: $i * $spacing !important;
+  }
+  .pt-#{$i} {
+    padding-top: $i * $spacing !important;
+  }
+  .pr-#{$i} {
+    padding-right: $i * $spacing !important;
+  }
+  .pb-#{$i} {
+    padding-bottom: $i * $spacing !important;
+  }
+  .pl-#{$i} {
+    padding-left: $i * $spacing !important;
+  }
+  .py-#{$i} {
+    padding-top: $i * $spacing !important;
+    padding-bottom: $i * $spacing !important;
+  }
+  .px-#{$i} {
+    padding-right: $i * $spacing !important;
+    padding-left: $i * $spacing !important;
+  }
+}
