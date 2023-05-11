@@ -12,6 +12,8 @@ stages:
   jobs:
   - job: Sonarqube
     displayName: Sonarqube
+    pool:
+      vmImage: ubuntu-latest
     steps:
     - task: SonarQubePrepare@5
       inputs:
@@ -23,7 +25,7 @@ stages:
     - task: SonarQubeAnalyze@5
     - task: SonarQubePublish@5
       inputs:
-        pollingTimeoutSec: '300'    
+        pollingTimeoutSec: '300'
     - script: |
         echo $(Build.BuildId)
         pwd && ls -l
@@ -31,7 +33,6 @@ stages:
   - job: Build
     displayName: 'Build for Frontend application'
     steps:
-    
     - script: |
         echo $(Build.BuildId)
         pwd && ls -l
