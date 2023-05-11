@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-create-product',
@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./create-product.component.scss']
 })
 export class CreateProductComponent {
-
 }

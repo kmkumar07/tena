@@ -4,7 +4,6 @@ import {MatButtonModule} from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './core/layouts/header/header.component';
 import { SidenavComponent } from './core/layouts/sidenav/sidenav.component';
 import { LayoutComponent } from './core/layouts/layout/layout.component';
 import { AngularMaterialModule } from './shared/modules/angular-material/angular-material.module';
@@ -12,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     SidenavComponent,
     LayoutComponent
   ],

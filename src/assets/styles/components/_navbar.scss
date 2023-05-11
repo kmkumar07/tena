@@ -9,11 +9,11 @@
   background-color: transparent;
 }
 .mat-sidenav-container {
-  height: calc(100vh - 79px);
+  height: calc(100vh - 4.9375rem);
 }
 .mat-sidenav {
   background-color: color("primary", "main");
-  border: 0px;
+  border: 0rem;
   width: 5.3125rem;
   transition: 300ms;
 }
@@ -49,8 +49,7 @@
       background-color: color("shades", "white");
       z-index: 1003;
       height: 100%;
-      border-right: 1px solid #e6e9ef;
-      @include flexbox;
+      border-right: 0.0625rem solid #e6e9ef;
       @include justify-content(center);
       @include flex-wrap(wrap);
       .sidebar-toggle {
@@ -87,7 +86,7 @@
     display: block;
     max-width: 36.75rem;
     width: 100%;
-    height: 42px;
+    height: 2.625rem;
     background-color: color("grey", "primary");
     position: relative;
     padding: 0.825rem 1.5rem 0.875rem 2.6875rem;
@@ -135,10 +134,9 @@
   }
 }
 .profile-menu.mat-mdc-menu-panel {
-  height: 24.1875rem;
   max-width: 21.1875rem !important;
   width: 21.1875rem !important;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   .mat-mdc-menu-content {
     padding: 0;
     .profile-menu-outer {
@@ -146,23 +144,118 @@
         background: linear-gradient(90deg, #7868e6 0%, #ed7aac 100%);
         position: relative;
         height: 5.625rem;
-        .user-initials{
+        margin-bottom: 3rem;
+        .user-initials {
           position: absolute;
           bottom: -2.625rem;
           left: 50%;
-          transform: translate( -50%, 0);
+          transform: translate(-50%, 0);
           display: flex;
           justify-content: center;
           align-items: center;
           @include circle(5rem);
           border: 0.25rem solid #ffffff;
-          background: linear-gradient(180deg, #B9AEFF 0%, #FFA7C5 100%);
+          background: linear-gradient(180deg, #b9aeff 0%, #ffa7c5 100%);
           font-size: 2rem;
         }
       }
-      .profile-inner{
-        margin-top: 0.875rem;
+      .profile-inner {
         text-align: center;
+        margin-bottom: 0.875rem;
+      }
+      .profile-paths {
+        padding: 0rem 1.125rem 0.9375rem 1.125rem;
+        .user-link {
+          padding: 0.378rem 0.625rem;
+          margin-bottom: 0.5rem;
+          &:nth-last-child(1) {
+            margin-bottom: 0rem;
+          }
+          &:hover {
+            background-color: color("primary", "main");
+          }
+        }
+      }
+    }
+  }
+}
+
+// sidebar
+.sidebar-wrapper {
+  padding: 1.375rem 0.875rem;
+  overflow: auto;
+  height: 100%;
+  .logo {
+    @include flexbox;
+    h3 {
+      color: color("primary", "light4");
+      font-size: 1.6875rem;
+      font-weight: 700;
+      line-height: 73%;
+      margin: 0rem;
+    }
+    .text-wrapper {
+      margin-left: 0.9375rem;
+      .logo-text {
+        margin-top: 0.25rem;
+        display: block;
+        font-size: 1rem;
+        font-weight: 500;
+        color: color("primary", "light4");
+      }
+    }
+  }
+  .sidebar {
+    margin-top: 2.6875rem;
+    .icon {
+      &:hover {
+        background-color: #7868e6;
+        .mat-icon,.content{
+          color: color("shades", "white") !important;
+        }
+      }
+      border-radius: 0.25rem;
+      .icon-wrapper {
+        padding: 0.625rem 0.875rem;
+        .content {
+          font-weight: 500;
+          font-size: 0.875rem;
+          margin-left: 0.5rem;
+          color: color("text", "primary");
+        }
+      }
+    }
+  }
+  .image-wrapper {
+    margin-top: 1.3125rem;
+    text-align: center;
+    .img {
+      text-align: center;
+    }
+    .text {
+      margin-top: 0.5rem;
+      h3 {
+        font-weight: 500;
+        color: color("text", "primary");
+        font-size: 0.875rem;
+        line-height: 1rem;
+        margin: 0rem;
+        margin-bottom: 0.5rem;
+      }
+      .description {
+        font-weight: 400;
+        font-size: 0.75rem;
+        line-height: 0.875rem;
+        color: color("text", "primary");
+        margin: 0rem;
+        margin-bottom: 0.5rem;
+      }
+      span {
+        font-weight: 500;
+        font-size: 0.875rem;
+        line-height: 1rem;
+        display: block;
+        color: color("primary", "light4");
       }
     }
   }

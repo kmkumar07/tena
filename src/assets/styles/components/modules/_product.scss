@@ -47,6 +47,38 @@
 
         .header-section {
                 border-bottom: 1px solid color('grey', 'lighten-7');
+                padding-left: 1.125rem;
+
+                p {
+                        color: $primary-color;
+                        padding-left: .625rem;
+                }
+        }
+
+        .form-block {
+                .user-avatar {
+                        height: 7.5rem;
+                        width: 7.5rem;
+                        background-color: color('grey', 'lighten-8');
+                        border-radius: 50%;
+                        overflow: hidden;
+
+                        img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                        }
+
+                        p {
+                                color: color('grey', 'lighten-9');
+                        }
+                }
+                .input-wrapper {
+                        max-width: 47.5625rem;
+                        .action-btns {
+                                margin-top: .625rem;
+                        }
+                }
         }
 
 }

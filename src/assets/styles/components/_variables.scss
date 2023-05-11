@@ -20,7 +20,7 @@
 // 1. Colors
 // ==========================================================================
 
-$primary-color: color("blue", "base") !default;
+$primary-color: color("primary", "light4") !default;
 $primary-color-light: lighten($primary-color, 15%) !default;
 $primary-color-dark: color("plum-purple", "darken-1") !default;
 
@@ -223,12 +223,10 @@ $toast-action-color: #eeff41;
 
 
 // 20. Typography
+
 // ==========================================================================
-$font-light: 'Roboto', sans-serif;
-$font-regular: 'Roboto', sans-serif;
-$font-medium: 'Roboto', sans-serif;
-$font-bold: 'Roboto', sans-serif;
-$off-black: color("grey", "base") !default;
+$text-light: color('text', 'lighten-1');
+
 // Header Styles
 $h1-fontsize: 4.8rem !default;
 $h2-fontsize: 3.6rem !default;
@@ -358,8 +356,5 @@ $ph-spacer:               15px !default;
 $ph-avatar-border-radius: 50% !default;
 
 $ph-animation-duration: 1.2s !default;
-
-
 $dimensions: 0.3125rem;
-
 $spacing: 0.25rem;

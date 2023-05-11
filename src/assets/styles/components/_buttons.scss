@@ -110,12 +110,12 @@
   //   }
   // }
 
-  // &.btn-large {
-  //   height: 42px;
-  //   padding: 0 26px;
-  // }
+  &.medium {
+    height: 2.5rem;
+    padding: 0 1.5rem;
+  }
 
-  &.btn-medium {
+  &.large {
     height: 2.5rem;
     padding: 0 1.5rem;
   }

@@ -69,10 +69,6 @@ input {
   }
 }
 
-.mat-mdc-form-field {
-  margin-bottom: 20px;
-}
-
 label {
   margin: 0;
 }
@@ -199,12 +195,20 @@ ul.legend-list li:hover {
   font-family: 'Material Icons' !important;
 }
 
+// ----------------------------------- new  -------------------
+
+// Utility class
+.cursor-pointer {
+  cursor: pointer;
+}
+
 // ATOMIC SCSS // In Atomic CSS or SCSS, we break each css property in one single class (similar to that of tailwind). This helps in reducing the css size significantly!
 // *****NOTE- The media query for atomic css is still peding.
 // List
 // 1. Flexbox
 // 2. Width & Height
 // 3. Position
+
 // 1. flexbox
 .flex {
   display: flex;
@@ -357,6 +361,10 @@ ul.legend-list li:hover {
   .mx-#{$i} {
     margin-right: $i * $spacing !important;
     margin-left: $i * $spacing !important;
+  }
+
+  .ml-n-#{$i} {
+    margin-left: -$i * $spacing !important;
   }
 }
 
