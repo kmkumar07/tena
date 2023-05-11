@@ -14,4 +14,8 @@ import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/a
     AngularMaterialModule
   ]
 })
-export class ProductsModule { }
+export class ProductsModule { 
+  constructor(){
+    console.log("this is products module")
+  }
+}
