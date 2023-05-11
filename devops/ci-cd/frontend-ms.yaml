@@ -20,6 +20,7 @@ stages:
         configMode: 'manual'
         cliProjectKey: 'DF-Tenant-Portal'
         cliProjectName: 'DF-Tenant-Portal'
+        cliSources: '.'
     - task: SonarQubeAnalyze@5
     - task: SonarQubePublish@5
       inputs:
