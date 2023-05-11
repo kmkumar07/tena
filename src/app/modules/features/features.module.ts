@@ -14,4 +14,8 @@ import { FeaturesListingComponent } from './features-listing/features-listing.co
     FeaturesRoutingModule
   ]
 })
-export class FeaturesModule { }
+export class FeaturesModule { 
+  constructor(){
+    console.log("this is features module")
+  }
+}

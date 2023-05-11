@@ -1,198 +1,128 @@
 //disable docs controls
-*{
+* {
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
 }
 html {
   font-size: 16px !important;
 }
-body{
+body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   background-color: color("primary", "main");
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
-.docblock-argstable{
-    display: none !important;
-}
-
-a{
-    cursor: pointer;
+.docblock-argstable {
+  display: none !important;
 }
 
-h1, h2, h3, h4, h5{
-    margin: 0;
-    padding: 0;
+a {
+  cursor: pointer;
 }
 
-p{
-    margin: 0;
-    padding: 0;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  padding: 0;
 }
-input{
+
+p {
+  margin: 0;
+  padding: 0;
+}
+input {
   width: 100%;
   height: 100% !important;
   background-color: transparent;
   border: none !important;
-  &:focus{
+  &:focus {
     border: none;
   }
 }
 // Material Symbols Outlined
 .material-symbols-outlined {
-  font-family: 'Material Symbols Outlined' !important;
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48
+  font-family: "Material Symbols Outlined" !important;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 }
-.m-0{
+.m-0 {
   margin: 0 !important;
 }
-.search-icon{
-    color:rgba(50, 71, 92, 0.54);
+.search-icon {
+  color: rgba(50, 71, 92, 0.54);
 }
-.icon-btn{
-    .mat-icon{
-        height: 24px !important;
-        width: 24px !important;
-        font-size: 24px !important;
-    }
+.icon-btn {
+  .mat-icon {
+    height: 1.5rem !important;
+    width: 1.5rem !important;
+    font-size: 1.5rem !important;
+  }
 }
-.mat-mdc-form-field{
-    margin-bottom: 20px;
+.mat-mdc-form-field {
+  margin-bottom: 1.25rem;
 }
-label{
-    margin: 0;
+label {
+  margin: 0;
 }
-.mat-icon{
-    color: rgba(50, 71, 92, 0.54);
+.mat-icon {
+  color: rgba(50, 71, 92, 0.54);
 }
 
-.svg-container {
-    padding: 0;
-    margin: 0;
-  }
-  
-  .svg-caption {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    font-family: 'Roboto';
-    font-weight: 500;
-    text-align: center;
-    left: 0;
-    top: 0;
-  }
-  
-  .scaling-svg {
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-  }
-  
-  div.donut-tip {
-    position: absolute;
-    text-align: center;
-    padding: 0.5rem;
-    background: #ffffff;
-    color: #313639;
-    border: 1px solid #313639;
-    border-radius: 8px;
-    pointer-events: none;
-    font-size: 1.3rem;
-  }
-  
-  ul.legend-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  ul.legend-list li .legend {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-    margin-right: 10px;
-  }
-  
-  ul.legend-list li {
-    color: #3967ac;
-    padding: 20px;
-  }
-  
-  ul.legend-list li:nth-child(odd) {
-    background-color: #f5f5f5;
-  }
-  
-  ul.legend-list li.selected,
-  ul.legend-list li:hover {
-    text-decoration: underline;
-    background-color: #e1f4fe !important;
-    cursor: pointer;
-  }
-  
-  .donut-tooltip {
-    position: absolute;
-    color: black;
-    text-align: center;
-    width: 60px;
-    height: 12px;
-    padding: 8px;
-    margin-top: -20px;
-    font: 10px sans-serif;
-    background: #ddd;
-    pointer-events: none;
-  }
-  
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: transparent; 
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #F3F3F3; 
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #F3F3F3;
-  }
+::-webkit-scrollbar {
+  width: 0.3125rem;
+}
 
-  //need to shift this class
-  .w-100{
-    width: 100%;
-  }
-  .mt-1{
-    margin-top: 0.25rem !important;
-  }
-  // global border classes 
-  .border-2{
-    border-radius: 0.5rem;
-  }
-  .fw-600{
-    font-weight: 600 !important;
-  }
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f3f3f3;
+}
 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #f3f3f3;
+}
 
-  // ATOMIC SCSS
-  // In Atomic CSS or SCSS, we break each css property in one single class (similar to that of tailwind). This helps in reducing the css size significantly!
+//need to shift this class
+.w-100 {
+  width: 100%;
+}
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+// global border classes
+.border-2 {
+  border-radius: 0.5rem;
+}
+// font-weight
+.fw-500{
+  font-weight: 500 !important;
+}
+.fw-600 {
+  font-weight: 600 !important;
+}
+.text-center{
+  text-align: center;
+}
 
-// *****NOTE- The media query for atomic css is still peding.
+// ATOMIC SCSS
+// In Atomic CSS or SCSS, we break each css property in one single class (similar to that of tailwind). This helps in reducing the css size significantly!
+
+// *****NOTE- The media query for atomic css is still pending.
 
 // List
 // 1. Flexbox
 // 2. Width & Height
 // 3. Position
+// 4. Utility Classes
+// 5. Angulr Material
 
 // 1. flexbox
 .flex {
@@ -234,8 +164,11 @@ label{
 
 // 2. Width & Height
 
-.h-screen{
+.h-screen {
   height: 100vh;
+}
+.h-full{
+  height: 100%;
 }
 
 @for $i from 0 through 100 {
@@ -260,44 +193,57 @@ label{
 .fixed {
   position: fixed;
 }
-.inset-0{
-  inset: 0
+.inset-0 {
+  inset: 0;
 }
-.top-0{
+.top-0 {
   top: 0;
-} 
-.right-0{
+}
+.right-0 {
   right: 0;
-} 
-.bottom-0{
+}
+.bottom-0 {
   bottom: 0;
-} 
-.left-0{
+}
+.left-0 {
   left: 0;
+}
+.position-center{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.vertical-center{
+  top: 50%;
+  transform: translateY(-50%);
+}
+.horizontal-center{
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 // 4. Display
 
-.block{
+.block {
   display: block;
 }
-.inline{
+.inline {
   display: inline;
 }
-.inline-block{
+.inline-block {
   display: inline-block;
 }
 
-// 5. Overflow 
+// 5. Overflow
 
-.overflow-auto{
+.overflow-auto {
   overflow: auto;
 }
-.overflow-hidden{
+.overflow-hidden {
   overflow: hidden;
 }
 
-// SPACING 
+// SPACING
 // Margin Loop
 @for $i from 0 through 12 {
   .m-#{$i} {
@@ -350,4 +296,22 @@ label{
     padding-right: $i * $spacing !important;
     padding-left: $i * $spacing !important;
   }
+}
+
+// 4. Utility Classes
+
+.pointer {
+  cursor: pointer;
+}
+.main-bg{
+  background-color: color('shades', 'white');
+}
+.main-content-height{
+  height: calc(100% - 4.25rem);;   
+}
+
+// 5. Angular Material
+
+.mat-mdc-menu-content.mdc-list {
+  padding: 0;
 }
