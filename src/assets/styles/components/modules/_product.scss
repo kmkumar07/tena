@@ -1,10 +1,9 @@
 // product listing section
 .product-listing-wrapper {
         background: white;
-        margin-top: 1.5rem;
         border-radius: .5rem;
         padding: 1.6875rem 1.8125rem;
-        height: calc(100% - 5.75rem);
+        height: 100%;
         overflow: auto;
 
         .empty-state-info-wrapper {
@@ -39,10 +38,9 @@
 // create product section 
 .create-product-wrapper {
         background: white;
-        margin-top: 1.5rem;
         border-radius: .5rem;
         padding: 1.6875rem 1.8125rem;
-        height: calc(100% - 5.75rem);
+        height: 100%;
         overflow: auto;
 
         .header-section {
@@ -73,8 +71,10 @@
                                 color: color('grey', 'lighten-9');
                         }
                 }
+
                 .input-wrapper {
                         max-width: 47.5625rem;
+
                         .action-btns {
                                 margin-top: .625rem;
                         }
