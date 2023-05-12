@@ -1,84 +1,93 @@
 // product listing section
 .product-listing-wrapper {
-        background: white;
-        margin-top: 1.5rem;
-        border-radius: .5rem;
-        padding: 1.6875rem 1.8125rem;
-        height: calc(100% - 5.75rem);
-        overflow: auto;
+  background: white;
+  margin-top: 1.5rem;
+  border-radius: 0.5rem;
+  padding: 1.6875rem 1.8125rem;
+  height: calc(100% - 5.75rem);
+  overflow: auto;
 
-        .empty-state-info-wrapper {
-                height: calc(100% - 2.625rem);
-                display: flex;
-                align-items: center;
-                justify-content: center;
+  .empty-state-info-wrapper {
+    height: calc(100% - 2.625rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-                .empty-state-info {
-                        text-align: center;
-                        max-width: 24.75rem;
+    .empty-state-info {
+      text-align: center;
+      max-width: 24.75rem;
 
-                        div {
-                                margin-top: 2.625rem;
-                                color: color('purple', 'darken-1');
+      div {
+        margin-top: 2.625rem;
+        color: color("purple", "darken-1");
 
-                                .desc-info {
-                                        margin-top: 1.5rem;
-                                        color: color('blue', 'lighten-11');
-                                }
-                        }
-
-                        button {
-                                margin-top: 2.625rem;
-                        }
-                }
+        .desc-info {
+          margin-top: 1.5rem;
+          color: color("blue", "lighten-11");
         }
+      }
 
-
+      button {
+        margin-top: 2.625rem;
+      }
+    }
+  }
 }
 
-// create product section 
+// create product section
 .create-product-wrapper {
-        background: white;
-        margin-top: 1.5rem;
-        border-radius: .5rem;
-        padding: 1.6875rem 1.8125rem;
-        height: calc(100% - 5.75rem);
-        overflow: auto;
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1.6875rem 1.8125rem;
+  overflow: auto;
 
-        .header-section {
-                border-bottom: 1px solid color('grey', 'lighten-7');
-                padding-left: 1.125rem;
+  .header-section {
+    border-bottom: 1px solid color("grey", "lighten-7");
+    padding-left: 1.125rem;
 
-                p {
-                        color: $primary-color;
-                        padding-left: .625rem;
-                }
-        }
+    p {
+      color: $primary-color;
+      padding-left: 0.625rem;
+    }
+  }
 
-        .form-block {
-                .user-avatar {
-                        height: 7.5rem;
-                        width: 7.5rem;
-                        background-color: color('grey', 'lighten-8');
-                        border-radius: 50%;
-                        overflow: hidden;
+  .form-block {
+    .user-avatar {
+      height: 7.5rem;
+      width: 7.5rem;
+      background-color: color("grey", "lighten-8");
+      border-radius: 50%;
+      overflow: hidden;
 
-                        img {
-                                width: 100%;
-                                height: 100%;
-                                object-fit: cover;
-                        }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
-                        p {
-                                color: color('grey', 'lighten-9');
-                        }
-                }
-                .input-wrapper {
-                        max-width: 47.5625rem;
-                        .action-btns {
-                                margin-top: .625rem;
-                        }
-                }
-        }
-
+      p {
+        color: color("grey", "lighten-9");
+      }
+    }
+    .input-wrapper {
+      max-width: 47.5625rem;
+      .action-btns {
+        margin-top: 0.625rem;
+      }
+    }
+  }
+}
+.edit-menu + * .cdk-overlay-pane {
+  transform: translate(-10.875rem, -3.25rem) !important;
+  .actions-menu.mat-mdc-menu-panel.mdc-menu-surface {
+    min-width: 9rem;
+    border-radius: 0.5rem;
+    box-shadow: 0rem 0.125rem 0.25rem rgba(18, 18, 23, 0.04), 0rem 0.3125rem 0.5rem rgba(18, 18, 23, 0.04), 0rem 0.625rem 1.125rem rgba(18, 18, 23, 0.03), 0rem 1.5rem 3rem rgba(18, 18, 23, 0.03), 0rem 0rem 0rem 0.0625rem rgba(18, 18, 23, 0.1);
+    .mat-mdc-menu-content.mdc-list {
+      padding: 0.5rem 0;
+      .mat-mdc-menu-item {
+        min-height: 2rem;
+      }
+    }
+  }
 }

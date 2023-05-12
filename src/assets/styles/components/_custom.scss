@@ -1,5 +1,8 @@
-// 1. mat-chip
-// 2. mat-menu-position-right
+// 1. Mat-chip
+// 2. Tables
+//
+
+
 
 // 1. mat-chip
 .basic-chip.mat-mdc-chip {
@@ -13,11 +16,72 @@
     }
   }
 }
-// 2. mat-menu-position-right
-.right-menu+* .cdk-overlay-pane+* div{
-  transform: translateX(67px) !important;
-  .mat-menu-panel {
-    max-width: inherit !important;
-    margin-top: 10px !important;
+.chip-dark.mat-mdc-chip {
+  background-color: #000080 !important;
+  border-radius: 48px;
+  height: 22px;
+  .mat-mdc-chip-action {
+    padding: 0 8px;
+    .mat-mdc-chip-action-label {
+      color: color("shades", "white");
+    }
+  }
+}
+.table-chip.mat-mdc-chip{
+  background-color: #E1E0FF !important;
+  border-radius: 8px;
+  height: 32px;
+  .mat-mdc-chip-action{
+    padding: 0 16px;
+  }
+}
+
+// 2. Tables
+.primary-table {
+  overflow: auto;
+  .mdc-data-table__header-cell {
+    border: none;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  tbody{
+    tr:hover{
+      border: 1px solid #D6D6D6;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.14);
+    }
+  }
+  td {
+    border-top: $primary-table-border;
+    &:nth-last-child(1) {
+      border-right: $primary-table-border;
+    }
+    &:nth-child(1) {
+      border-left: $primary-table-border;
+    }
+    &.description-col{
+      width: 22.4375rem;
+      p{
+        display: block;
+        @include text-ellipsis(15.6875rem)
+      }
+    }
+  }
+  .mdc-data-table__row:first-child .mdc-data-table__cell {
+    border-bottom: none;
+  }
+  .mdc-data-table__row:first-child .mdc-data-table__cell:nth-child(1){
+    border-top-left-radius: $primary-table-border-radius;
+  }
+  .mdc-data-table__row:first-child .mdc-data-table__cell:nth-last-child(1) {
+    border-top-right-radius: $primary-table-border-radius;
+  }
+  .mdc-data-table__row:last-child .mdc-data-table__cell:nth-child(1){
+    border-bottom-left-radius: $primary-table-border-radius;
+  }
+  .mdc-data-table__row:last-child .mdc-data-table__cell:nth-last-child(1) {
+    border-bottom-right-radius: $primary-table-border-radius;
+  }
+  .mdc-data-table__row:last-child .mdc-data-table__cell {
+    border-bottom: $primary-table-border;
   }
 }

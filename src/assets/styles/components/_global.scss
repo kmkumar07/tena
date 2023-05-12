@@ -1,3 +1,11 @@
+// List
+// 1. Flexbox
+// 2. Width & Height
+// 3. Position
+// 4. Utility Classes
+// 5. Angular Material
+
+
 //disable docs controls
 * {
   box-sizing: border-box;
@@ -41,6 +49,7 @@ input {
   border: none !important;
   &:focus {
     border: none;
+    outline: none;
   }
 }
 // Material Symbols Outlined
@@ -117,12 +126,6 @@ label {
 
 // *****NOTE- The media query for atomic css is still pending.
 
-// List
-// 1. Flexbox
-// 2. Width & Height
-// 3. Position
-// 4. Utility Classes
-// 5. Angulr Material
 
 // 1. flexbox
 .flex {
@@ -339,7 +342,22 @@ label {
 .main-content-height{
   height: calc(100% - 4.25rem);;   
 }
-
+.p-main{
+  padding: 1.6875rem 1.8125rem;
+}
+.text-nowrap{
+  white-space: nowrap;
+}
+.create-btn{
+  min-width: 10rem !important;
+  height: 2.625rem !important;
+  .letter-spacing-0{
+    letter-spacing: 0 !important;
+  }
+}
+.lg-icon{
+  font-size: 1.25rem !important;
+}
 // 5. Angular Material
 
 .mat-mdc-menu-content.mdc-list {

@@ -4,7 +4,14 @@ export interface Menu {
   type: string;
   icon: string;
 }
-
+export interface Data_Type {
+  product_ID: string,
+  title: string,
+  description:string,
+  features: string[],
+  created_at: string,
+  status: string
+} 
 export const MENUITEMS = [
   {
     state: 'dashboard',
@@ -134,3 +141,44 @@ export const User_Options = [
   { path: '', icon: 'clear_day', name: 'Dark Mode', toggle: true },
   { path: '/help', icon: 'live_help', name: 'Help', toggle: false },
 ];
+export const User_Data = [
+  {
+    id: 'random_id_1234',
+    product_ID: '#O365ProPlusRetail',
+    title: "Microsoft Teams",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    features: [
+      'Host Online Calls',
+      'Unlimited Internet',
+      'Conference Calls'
+    ],
+    created_at: 'June 10th, 2020',
+    status: 'Active'
+  },
+  {
+    id: 'random_id_555',
+    product_ID: '#Or65SuperSupreme',
+    title: "Azure Devops",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    features: [
+      'Unlimited Repos',
+      'Upto 50 Team Members',
+      'Host Online Calls',
+      'Unlimited Internet',
+      'Conference Calls'
+    ],
+    created_at: 'June 11th, 2020',
+    status: 'Active'
+  },
+  {
+    id: 'random_id_6969',
+    product_ID: '#Ow65Basic',
+    title: "Azure Devops",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    features: [
+      'Conference Calls'
+    ],
+    created_at: 'June 18th, 2020',
+    status: 'Active'
+  },    
+]
