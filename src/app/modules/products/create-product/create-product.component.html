@@ -19,7 +19,14 @@
             <button mat-stroked-button color="primary" class="mr-3">
               Remove
             </button>
-            <button mat-flat-button color="primary" mat-raised-button (click)="openDialog('3000ms', '1500ms')">Upload</button>
+            <button
+              mat-flat-button
+              color="primary"
+              mat-raised-button
+              (click)="openDialog('0ms', '0ms')"
+            >
+              Upload
+            </button>
           </div>
         </div>
         <p class="mat-caption text-light font-weight-500 mt-3">
@@ -64,13 +71,15 @@
             tippyName="content"
             >help</mat-icon
           >
-          <ng-template #productnameinfo let-name  class="t-template">
+          <ng-template #productnameinfo let-name class="t-template">
             <div class="help-info-tooltip">
               <div class="heading">Product name</div>
               <div class="details">
                 Enter a name that helps you identify this Product
               </div>
-              <button mat-button color="primary"  class="px-0">Learn more</button>
+              <button mat-button color="primary" class="px-0">
+                Learn more
+              </button>
             </div>
           </ng-template>
         </div>
@@ -97,6 +106,20 @@
           <button mat-flat-button color="primary" class="large">Create</button>
         </div>
       </div>
+      <!-- <button
+        [ngxTippy]="tippyTemplate"
+        tippyName="content"
+        [tippyProps]="tippyContent"
+      >
+        Element with tooltip
+      </button>
+
+      <div #tippyTemplate>
+        <h4>Caption</h4>
+        <p>Some content</p>
+        <button >Action</button>
+        ...
+      </div> -->
     </div>
   </div>
 </div>
