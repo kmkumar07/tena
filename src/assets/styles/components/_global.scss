@@ -107,6 +107,9 @@ label {
   margin-top: 0.25rem !important;
 }
 // global border classes
+.border-1 {
+  border-radius: .25rem;
+}
 .border-2 {
   border-radius: 0.5rem;
 }
@@ -150,6 +153,10 @@ label {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.justify-end {
+  justify-content: flex-end;
 }
 
 .justify-center {

@@ -1,10 +1,9 @@
 // product listing section
 .product-listing-wrapper {
   background: white;
-  margin-top: 1.5rem;
   border-radius: 0.5rem;
   padding: 1.6875rem 1.8125rem;
-  height: calc(100% - 5.75rem);
+  height: 100%;
   overflow: auto;
 
   .empty-state-info-wrapper {
@@ -39,6 +38,7 @@
   background: white;
   border-radius: 0.5rem;
   padding: 1.6875rem 1.8125rem;
+  height: 100%;
   overflow: auto;
 
   .header-section {
@@ -69,24 +69,18 @@
         color: color("grey", "lighten-9");
       }
     }
+
     .input-wrapper {
       max-width: 47.5625rem;
+      .help-icon {
+        font-size: 0.875rem;
+        height: 0.875rem;
+        width: 0.875rem;
+        margin-bottom: 0.1875rem;
+      }
+
       .action-btns {
         margin-top: 0.625rem;
-      }
-    }
-  }
-}
-.edit-menu + * .cdk-overlay-pane {
-  transform: translate(-10.875rem, -3.25rem) !important;
-  .actions-menu.mat-mdc-menu-panel.mdc-menu-surface {
-    min-width: 9rem;
-    border-radius: 0.5rem;
-    box-shadow: 0rem 0.125rem 0.25rem rgba(18, 18, 23, 0.04), 0rem 0.3125rem 0.5rem rgba(18, 18, 23, 0.04), 0rem 0.625rem 1.125rem rgba(18, 18, 23, 0.03), 0rem 1.5rem 3rem rgba(18, 18, 23, 0.03), 0rem 0rem 0rem 0.0625rem rgba(18, 18, 23, 0.1);
-    .mat-mdc-menu-content.mdc-list {
-      padding: 0.5rem 0;
-      .mat-mdc-menu-item {
-        min-height: 2rem;
       }
     }
   }

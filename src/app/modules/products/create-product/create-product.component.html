@@ -1,9 +1,17 @@
-<!-- <div class="h-full overflow-auto main-bg p-main"> -->
-  <div class="create-product-wrapper h-full">
-    <div class="header-section pt-6 pb-6">
-      <div class="flex align-center">
-        <mat-icon class="material-symbols-outlined pointer" color="primary">keyboard_backspace</mat-icon>
-        <p class="mat-h1">Create Products</p>
+<div class="create-product-wrapper">
+  <div class="header-section pt-6 pb-6">
+    <div class="flex align-center">
+      <mat-icon class="material-symbols-outlined pointer" color="primary"
+        >keyboard_backspace</mat-icon
+      >
+      <p class="mat-h1 primary-text text-main">Create Products</p>
+    </div>
+  </div>
+  <div class="form-block pt-6">
+    <div class="user-img-wrapper flex align-center">
+      <div class="user-avatar flex align-center justify-center">
+        <!-- <img src="../.././../../assets/images/teams.png" alt="teams-img" /> -->
+        <p class="mat-body-1 mb-0">LOGO</p>
       </div>
     </div>
     <div class="form-block pt-6">
@@ -59,8 +67,90 @@
             <button mat-stroked-button color="primary" class="mr-2 large">
               Dismiss
             </button>
-            <button mat-flat-button color="primary" class="large">Create</button>
+            <button
+              mat-flat-button
+              color="primary"
+              (click)="openDialog('0ms', '0ms')"
+            >
+              Upload
+            </button>
           </div>
+        </div>
+        <p class="mat-caption text-light font-weight-500 mt-3">
+          Allowed JPG, GIF or PNG. Max size of 800K
+        </p>
+      </div>
+    </div>
+    <div class="input-wrapper mt-8">
+      <div>
+        <div class="flex align-center mb-2">
+          <p class="mat-subtitle-2 font-weight-500 input-label">Product ID</p>
+          <mat-icon
+            class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+            [ngxTippy]="helpinfotooltip"
+            [tippyProps]="{ placement: 'right' }"
+            >help</mat-icon
+          >
+          <ng-template #helpinfotooltip let-name>
+            <div class="help-info-tooltip">
+              <div class="heading">Description</div>
+              <div class="details">
+                Microsoft Teams is the ultimate messaging app for your
+                organization—a workspace for real-time collaboration and
+                communication, meetings, file and app sharing, and even the
+                occasional emoji! All in one place, all in the open, all
+                accessible to everyone.
+              </div>
+            </div>
+          </ng-template>
+        </div>
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Enter here..." />
+        </mat-form-field>
+      </div>
+      <div>
+        <div class="flex align-center mb-2">
+          <p class="mat-subtitle-2 font-weight-500 input-label">Product Name</p>
+          <mat-icon
+            class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+            [ngxTippy]="productnameinfo"
+            [tippyProps]="{ placement: 'right' }"
+            tippyName="content"
+            >help</mat-icon
+          >
+          <ng-template #productnameinfo let-name class="t-template">
+            <div class="help-info-tooltip">
+              <div class="heading">Product name</div>
+              <div class="details">
+                Enter a name that helps you identify this Product
+              </div>
+              <button mat-button color="primary" class="px-0">
+                Learn more
+              </button>
+            </div>
+          </ng-template>
+        </div>
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Enter here..." />
+        </mat-form-field>
+      </div>
+      <div>
+        <div class="flex align-center mb-2">
+          <p class="mat-subtitle-2 font-weight-500 input-label">Description</p>
+        </div>
+        <mat-form-field appearance="outline">
+          <textarea matInput placeholder="Enter here..."></textarea>
+        </mat-form-field>
+      </div>
+      <div class="action-btns flex align-center justify-between">
+        <mat-checkbox color="primary" class="font-weight-500 checkbox ml-n-3"
+          >Active</mat-checkbox
+        >
+        <div>
+          <button mat-stroked-button color="primary" class="mr-2 large">
+            Dismiss
+          </button>
+          <button mat-flat-button color="primary" class="large">Create</button>
         </div>
       </div>
     </div>

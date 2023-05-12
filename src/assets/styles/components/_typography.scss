@@ -1,6 +1,4 @@
-a {
-  text-decoration: none;
-}
+// 1. typography colors
 
 .mat-body p,
 .mat-body-2 p,
@@ -13,6 +11,8 @@ a {
 .mat-h1,
 .mat-headline-5,
 .mat-typography .mat-h1,
+.mat-typography h4,
+.mat-typography .mat-body-1,
 .mat-typography .mat-headline-5,
 .mat-typography h1 {
   margin: 0;
@@ -35,6 +35,11 @@ a {
   color: $text-light;
   font-weight: 600 !important;
 }
-.fs-lg{
+
+.text-dark {
+  color: $text-dark;
+}
+
+.fs-lg {
   font-size: 1rem;
 }
