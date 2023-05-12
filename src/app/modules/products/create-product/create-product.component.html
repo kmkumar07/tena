@@ -4,7 +4,7 @@
       <mat-icon class="material-symbols-outlined pointer" color="primary"
         >keyboard_backspace</mat-icon
       >
-      <p class="mat-h1">Create Products</p>
+      <p class="mat-h1 primary-text text-main">Create Products</p>
     </div>
   </div>
   <div class="form-block pt-6">
@@ -22,7 +22,6 @@
             <button
               mat-flat-button
               color="primary"
-              mat-raised-button
               (click)="openDialog('0ms', '0ms')"
             >
               Upload
@@ -39,7 +38,7 @@
         <div class="flex align-center mb-2">
           <p class="mat-subtitle-2 font-weight-500 input-label">Product ID</p>
           <mat-icon
-            class="material-symbols-outlined pointer ml-3"
+            class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
             [ngxTippy]="helpinfotooltip"
             [tippyProps]="{ placement: 'right' }"
             >help</mat-icon
@@ -65,7 +64,7 @@
         <div class="flex align-center mb-2">
           <p class="mat-subtitle-2 font-weight-500 input-label">Product Name</p>
           <mat-icon
-            class="material-symbols-outlined pointer ml-3"
+            class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
             [ngxTippy]="productnameinfo"
             [tippyProps]="{ placement: 'right' }"
             tippyName="content"
@@ -106,20 +105,6 @@
           <button mat-flat-button color="primary" class="large">Create</button>
         </div>
       </div>
-      <!-- <button
-        [ngxTippy]="tippyTemplate"
-        tippyName="content"
-        [tippyProps]="tippyContent"
-      >
-        Element with tooltip
-      </button>
-
-      <div #tippyTemplate>
-        <h4>Caption</h4>
-        <p>Some content</p>
-        <button >Action</button>
-        ...
-      </div> -->
     </div>
   </div>
 </div>
