@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
+import { NgxTippyModule } from 'ngx-tippy-wrapper';
 @NgModule({
   declarations: [CreateProductComponent, ProductListingComponent],
   imports: [
@@ -16,6 +17,7 @@ import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/a
     MatButtonModule,
     MatIconModule,
     AngularMaterialModule,
+    NgxTippyModule
   ],
 })
 export class ProductsModule {}
