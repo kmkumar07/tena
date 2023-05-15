@@ -10,7 +10,9 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
 import { NgxTippyModule } from 'ngx-tippy-wrapper';
+import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
 import { ViewProductComponent } from './view-product/view-product.component';
+
 @NgModule({
   declarations: [CreateProductComponent, ProductListingComponent, DialogAnimationsDialog, ViewProductComponent],
   imports: [
@@ -19,7 +21,7 @@ import { ViewProductComponent } from './view-product/view-product.component';
     MatButtonModule,
     MatIconModule,
     AngularMaterialModule,
-    NgxTippyModule,
+    SharedModule
   ],
 })
 export class ProductsModule {}

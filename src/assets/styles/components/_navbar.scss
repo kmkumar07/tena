@@ -123,9 +123,14 @@
   max-width: 36.75rem;
   width: 100%;
   height: 2.625rem;
-  background-color: color("grey", "primary");
   position: relative;
-  padding: 0.825rem 1.5rem 0.875rem 2.6875rem;
+  padding: 0.75rem 1.5rem 1rem 2.6875rem;
+  &.basic {
+    background-color: color("grey", "primary");
+  }
+  &.light {
+    background-color: color("primary", "light");
+  }
   .search-icon {
     position: absolute;
     left: 0.625rem;
@@ -165,7 +170,6 @@
     }
   }
   .sidebar {
-    margin-top: 2.6875rem;
     h1 {
       margin: 0;
       font-size: 0.75rem;
@@ -262,9 +266,6 @@
             display: none;
           }
         }
-        .config-section {
-          margin-top: 6.125rem;
-        }
       }
     }
   }
@@ -278,9 +279,51 @@
     height: 6.25rem;
     background-color: color("primary", "main");
     padding: 1.1875rem 0.9063rem 0 0.9063rem;
-    .label{
-      color: color('shades', 'white')
+    .label {
+      color: color("shades", "white");
     }
+    .tab-panel {
+      margin-top: 1.5625rem;
+      .mat-mdc-tab-header {
+        .mat-mdc-tab-label-container {
+          .mat-mdc-tab-labels {
+            align-items: flex-end;
+            .mat-mdc-tab {
+              font-size: 0.875rem;
+              color: color("shades", "white");
+              min-width: fit-content;
+              height: 2rem;
+              border-top-left-radius: 0.25rem;
+              border-top-right-radius: 0.25rem;
+              padding: 0 1rem;
+              .mdc-tab__text-label {
+                letter-spacing: 0.0625rem;
+                color: color('shades', 'white');
+              }
+              &.mdc-tab--active {
+                .mdc-tab__text-label {
+                  color: color("primary", "main");
+                }
+                background-color: color("shades", "white");
+              }
+              .mdc-tab-indicator {
+                .mdc-tab-indicator__content {
+                  border: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .modal-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: color("primary", "light");
+    color: color("primary", "main");
   }
 }
 // Profile Menu
@@ -326,4 +369,14 @@
       }
     }
   }
+}
+.sidebar-scrollable {
+  height: calc(100% - 12.47rem);
+  overflow: auto;
+}
+.alert-menu+* .cdk-overlay-pane {
+  transform: translate(0.3125rem, 1.1875rem) !important;
+}
+.right-menu+* .cdk-overlay-pane {
+  transform: translate(10.75rem, 1.8125rem) !important;
 }

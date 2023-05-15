@@ -21,27 +21,29 @@
               <span class="logo-text">Framework</span>
             </div>
           </div>
-          <mat-nav-list class="sidebar p-0">
-            <div *ngFor="let element of Menu_Headings">
-              <div *ngIf="element.name != 'Dashboard'" class="category-heading">
-                <h1>{{element.name}}</h1>
+          <div class="sidebar-scrollable mt-11">
+            <mat-nav-list class="sidebar p-0">
+              <div *ngFor="let element of Menu_Headings">
+                <div *ngIf="element.name != 'Dashboard'" class="category-heading">
+                  <h1>{{element.name}}</h1>
+                </div>
+                <mat-list-item class="nav-list-item p-0" *ngFor="let item of getList(element.category)">
+                  <a class="icon-wrapper flex align-center" [routerLink]="['/', item.state]">
+                    <mat-icon class="material-symbols-outlined m-0">{{item.icon}}</mat-icon>
+                    <span class="content">{{item.name}}</span>
+                  </a>
+                </mat-list-item>
               </div>
-              <mat-list-item class="nav-list-item p-0" *ngFor="let item of getList(element.category)">
-                <a class="icon-wrapper flex align-center" [routerLink]="['/', item.state]">
-                  <mat-icon class="material-symbols-outlined m-0">{{item.icon}}</mat-icon>
-                  <span class="content">{{item.name}}</span>
-                </a>
-              </mat-list-item>
-            </div>
-          </mat-nav-list>
-          <div class="image-wrapper">
-            <div class="img">
-              <img src="../../../../assets/images/dashboard-cat.png" alt="Dashboard Get Started" />
-            </div>
-            <div class="text">
-              <h3>First steps</h3>
-              <p class="description">Customize your dashboard and lean <br>about out features</p>
-              <span class="pointer">Get Started</span>
+            </mat-nav-list>
+            <div class="image-wrapper">
+              <div class="img">
+                <img src="../../../../assets/images/dashboard-cat.png" alt="Dashboard Get Started" />
+              </div>
+              <div class="text">
+                <h3>First steps</h3>
+                <p class="description">Customize your dashboard and lean <br>about out features</p>
+                <span class="pointer">Get Started</span>
+              </div>
             </div>
           </div>
           <mat-nav-list class="config-section sidebar">
@@ -58,7 +60,7 @@
     <!-- Header for application starts here! -->
     <mat-sidenav-content>
       <div class="header-wrapper border-2">
-        <div class="global-search mr-6 border-2">
+        <div class="global-search basic mr-6 border-2">
           <span class="search-icon pointer">
             <img src="../../../../assets/images/icons/search.svg" alt="search-icon" />
           </span>
@@ -79,50 +81,89 @@
                   4 New
                 </mat-chip>
               </div>
-              <div class="tab-panel">
+              <div class="tab-panel" (click)="preventClose($event)">
                 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-                  <mat-tab label="First">
-                    <div class="first-tab"> Content 1</div>
+                  <mat-tab label="All (4)"> 
+                    <div class="relative h-55" *ngIf="notificationsData.length == 0">
+                      <div class="absolute position-center text-center w-full">
+                        <img src="../../../../assets/images/notifications-icon.png" alt="no data" />
+                        <span class="block mt-6">
+                          Hey! You have no notifications.
+                        </span>
+                      </div>
+                    </div>
+                    <div class="notification-list" (click)="preventClose($event)" *ngIf="notificationsData.length > 0">
+
+                    </div>
+                   </mat-tab>
+                  <mat-tab label="Messages"> 
+                    <div class="relative h-55" *ngIf="notificationsData.length == 0">
+                      <div class="absolute position-center text-center w-full">
+                        <img src="../../../../assets/images/notifications-icon.png" alt="no data" />
+                        <span class="block mt-6">
+                          Hey! You have no notifications.
+                        </span>
+                      </div>
+                    </div>
+                    <div class="message-list" (click)="preventClose($event)" *ngIf="notificationsData.length > 0">
+                      My Messages
+                    </div>
                   </mat-tab>
-                  <mat-tab label="Second">Content 2</mat-tab>
-                  <mat-tab label="Third">Content 3</mat-tab>
+                  <mat-tab label="Alerts"> 
+                    <div class="relative h-55" *ngIf="notificationsData.length == 0">
+                      <div class="absolute position-center text-center w-full">
+                        <img src="../../../../assets/images/notifications-icon.png" alt="no data" />
+                        <span class="block mt-6">
+                          Hey! You have no notifications.
+                        </span>
+                      </div>
+                    </div>
+                    <div class="message-list" (click)="preventClose($event)" *ngIf="notificationsData.length > 0">
+                      Alerts
+                    </div>
+                   </mat-tab>
                 </mat-tab-group>
+              </div>
+              <div class="text-center modal-footer pointer" (click)="preventClose($event)">
+                <span class="block py-4">
+                  View All
+                </span>
               </div>
             </div>
           </mat-menu>
-          <div class="user-profile">
-            <div class="user-image pointer" [matMenuTriggerFor]="menu">
+          <div class="user-profile" [matMenuTriggerFor]="menu">
+            <div class="user-image pointer">
               <img src="../../../../assets/images/profile-avatar-1.png" />
             </div>
-            <mat-menu #menu="matMenu" class="profile-menu right-menu ">
-              <div class="profile-menu-outer">
-                <div class="grad-bg">
-                  <div class="user-initials">
-                    JS
-                  </div>
-                </div>
-                <div class="profile-inner">
-                  <p class="mat-h1 fw-600 m-0">John Smith</p>
-                  <p class="m-0 mt-1"> Founder </p>
-                </div>
-                <div class="profile-paths">
-                  <a class="flex align-center justify-between  user-link" *ngFor=" let element of userProfile">
-                    <div class="flex align-center">
-                      <mat-icon class="material-symbols-outlined">{{element.icon}}</mat-icon>
-                      <span>{{element.name}}</span>
-                    </div>
-                    <div *ngIf="element.toggle">
-                      <mat-slide-toggle (click)="preventClose($event)"></mat-slide-toggle>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </mat-menu>
             <div class="user-info">
               <span class="name">John Smith</span>
               <span class="role">Founder</span>
             </div>
           </div>
+          <mat-menu #menu="matMenu" class="profile-menu" backdropClass="alert-menu">
+            <div class="profile-menu-outer">
+              <div class="grad-bg">
+                <div class="user-initials">
+                  JS
+                </div>
+              </div>
+              <div class="profile-inner">
+                <p class="mat-h1 fw-600 m-0">John Smith</p>
+                <p class="m-0 mt-1"> Founder </p>
+              </div>
+              <div class="profile-paths">
+                <a class="flex align-center justify-between user-link" *ngFor=" let element of userProfile">
+                  <div class="flex align-center">
+                    <mat-icon class="material-symbols-outlined">{{element.icon}}</mat-icon>
+                    <span class="ml-3">{{element.name}}</span>
+                  </div>
+                  <div *ngIf="element.toggle">
+                    <mat-slide-toggle color="primary" (click)="preventClose($event)"></mat-slide-toggle>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </mat-menu>
         </div>
       </div>
       <div class="pt-6 main-content-height">

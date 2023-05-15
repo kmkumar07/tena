@@ -21,6 +21,7 @@
 // ==========================================================================
 
 $primary-color: color("primary", "light4") !default;
+$selected-row: color('primary', 'main');
 // $primary-color-light: lighten($primary-color, 15%) !default;
 $primary-color-dark: color("plum-purple", "darken-1") !default;
 
@@ -211,8 +212,9 @@ $spinner-default-color: $secondary-color !default;
 
 $table-border-color: $border-color !default;
 $table-striped-color: rgba(242, 242, 242, 0.5) !default;
-
-
+$primary-table-border:  0.0625rem solid $table-border-color;
+$primary-table-border-radius: 0.25rem;
+$primary-table-selected-row: 0.0625rem solid $selected-row;
 // 19. Toasts
 // ==========================================================================
 
