@@ -167,4 +167,31 @@
       }
     }
   }
+  .content-block {
+    .vertical-divider {
+      border: 1px solid color("text", "lighten-2");
+      border-left: none;
+      height: 1.125rem;
+    }
+    .product-features {
+      .feature-add-block {
+        border: 1px dashed #9ca8ba;
+        border-radius: 8px;
+      }
+      .icon-with-bg {
+        position: relative;
+        width: fit-content;
+        .bg-box {
+          background: #f3f1ff;
+          height: 26px;
+          width: 26px;
+          position: absolute;
+          z-index: 0;
+          top: -10px;
+          right: -9px;
+          border-radius: 8px;
+        }
+      }
+    }
+  }
 }

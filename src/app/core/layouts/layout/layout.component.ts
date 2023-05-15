@@ -17,11 +17,9 @@ export class LayoutComponent {
   userProfile = User_Options;
   configOptions = Config_Menu;
   Menu_Headings = Menu_Headings;
-  notificationsData = Notifications_Data
+  notificationsData = Notifications_Data;
   constructor() {
-    console.log(
-      this.notificationsData.length
-    )
+    console.log(this.notificationsData.length);
   }
 
   @ViewChild('sidenav') sidenav: MatSidenav;
@@ -34,5 +32,5 @@ export class LayoutComponent {
     let list = [];
     return (list = this.menuItems.filter((ele) => ele.category == item));
   }
-
+  preventClose(event: any) {}
 }
