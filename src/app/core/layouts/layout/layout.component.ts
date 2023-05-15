@@ -34,5 +34,7 @@ export class LayoutComponent {
     let list = [];
     return (list = this.menuItems.filter((ele) => ele.category == item));
   }
-
+  preventClose(event: any) {
+    event.stopPropagation();
+  }
 }
