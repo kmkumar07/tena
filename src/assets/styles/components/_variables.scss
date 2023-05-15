@@ -31,6 +31,7 @@ $error-color: color("red", "base") !default;
 $link-color: color("blue", "lighten-1") !default;
 $border-color: color("grey", "border") !default;
 
+$primay-light-bg-color: color("primary", "lighten-4");
 
 // 2. Buttons
 // ==========================================================================
@@ -228,7 +229,7 @@ $toast-action-color: #eeff41;
 
 // ==========================================================================
 $text-light: color('text', 'lighten-1');
-$text-dark: color('purple', 'darken-1');
+$text-dark: color('purple', 'darken-1'); // #3A3742
 $text-dark-1: color('grey', 'darken-6');
 
 // Header Styles
