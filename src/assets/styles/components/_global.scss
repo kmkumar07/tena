@@ -347,6 +347,10 @@ label {
   height: calc(100% - 4.25rem);;   
 }
 
+.text-underline {
+  text-decoration: underline;
+}
+
 // 5. Angular Material
 
 .mat-mdc-menu-content.mdc-list {
