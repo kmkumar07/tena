@@ -2,7 +2,6 @@ import {
   Component,
   ElementRef,
   ViewChild,
-  ViewEncapsulation,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NgxTippyProps, NgxTippyService } from 'ngx-tippy-wrapper';
@@ -19,7 +18,6 @@ export class CreateProductComponent {
   tippyContent: NgxTippyProps = {};
   constructor(
     public dialog: MatDialog,
-    private ngxTippyService: NgxTippyService
   ) {}
   // ngAfterViewInit() {
   //   this.setContentForTooltip();

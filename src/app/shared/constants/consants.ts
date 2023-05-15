@@ -182,3 +182,10 @@ export const User_Data = [
     status: 'Active'
   },    
 ]
+export const Notifications_Data = [
+  // {
+  //   user: 'John Smith' ,
+  //   message: 'subscriptione_created',
+  //   created_at: 'Aug 7th, 2023'
+  // }
+]

@@ -5,7 +5,6 @@
 // 4. Utility Classes
 // 5. Angular Material
 
-
 //disable docs controls
 * {
   box-sizing: border-box;
@@ -26,6 +25,7 @@ body {
 
 a {
   cursor: pointer;
+  text-decoration: none;
 }
 
 h1,
@@ -108,19 +108,19 @@ label {
 }
 // global border classes
 .border-1 {
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 }
 .border-2 {
   border-radius: 0.5rem;
 }
 // font-weight
-.fw-500{
+.fw-500 {
   font-weight: 500 !important;
 }
 .fw-600 {
   font-weight: 600 !important;
 }
-.text-center{
+.text-center {
   text-align: center;
 }
 
@@ -128,7 +128,6 @@ label {
 // In Atomic CSS or SCSS, we break each css property in one single class (similar to that of tailwind). This helps in reducing the css size significantly!
 
 // *****NOTE- The media query for atomic css is still pending.
-
 
 // 1. flexbox
 .flex {
@@ -188,12 +187,14 @@ label {
 .h-screen {
   height: 100vh;
 }
-.h-full{
+.h-full {
   height: 100%;
+}
+.w-full{
+  width: 100%;
 }
 
 @for $i from 0 through 100 {
-
   .width-#{$i},
   .w-#{$i} {
     width: $i * $dimensions !important;
@@ -232,16 +233,16 @@ label {
 .left-0 {
   left: 0;
 }
-.position-center{
+.position-center {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.vertical-center{
+.vertical-center {
   top: 50%;
   transform: translateY(-50%);
 }
-.horizontal-center{
+.horizontal-center {
   left: 50%;
   transform: translateX(-50%);
 }
@@ -258,11 +259,13 @@ label {
   display: inline-block;
 }
 
-// 5. Overflow 
+// 5. Overflow
 .overflow-auto {
   overflow: auto;
 }
-
+.overflow-scroll{
+  overflow: scroll;
+}
 .overflow-hidden {
   overflow: hidden;
 }
@@ -270,10 +273,6 @@ label {
 // SPACING
 // Margin Loop
 @for $i from 0 through 12 {
-  .m-#{$i} {
-    margin: $i * $spacing !important;
-  }
-
   .mt-#{$i} {
     margin-top: $i * $spacing !important;
   }
@@ -302,6 +301,9 @@ label {
 
   .ml-n-#{$i} {
     margin-left: -$i * $spacing !important;
+  }
+  .m-#{$i} {
+    margin: $i * $spacing !important;
   }
 }
 
@@ -343,26 +345,26 @@ label {
 .pointer {
   cursor: pointer;
 }
-.main-bg{
-  background-color: color('shades', 'white');
+.main-bg {
+  background-color: color("shades", "white");
 }
-.main-content-height{
-  height: calc(100% - 4.25rem);;   
+.main-content-height {
+  height: calc(100% - 4.25rem);
 }
-.p-main{
+.p-main {
   padding: 1.6875rem 1.8125rem;
 }
-.text-nowrap{
+.text-nowrap {
   white-space: nowrap;
 }
-.create-btn{
+.create-btn {
   min-width: 10rem !important;
   height: 2.625rem !important;
-  .letter-spacing-0{
+  .letter-spacing-0 {
     letter-spacing: 0 !important;
   }
 }
-.lg-icon{
+.lg-icon {
   font-size: 1.25rem !important;
 }
 // 5. Angular Material

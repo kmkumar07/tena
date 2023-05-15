@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutComponent } from './core/layouts/layout/layout.component';
 import { AngularMaterialModule } from './shared/modules/angular-material/angular-material.module';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from './shared/modules/shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
