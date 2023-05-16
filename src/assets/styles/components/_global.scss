@@ -182,6 +182,11 @@ label {
   align-items: flex-end;
 }
 
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 // 2. Width & Height
 
 .h-screen {
@@ -213,6 +218,10 @@ label {
 
 .absolute {
   position: absolute;
+}
+
+.inherit {
+  position: inherit;
 }
 
 .fixed {
