@@ -4,7 +4,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { NgxTippyProps, NgxTippyService } from 'ngx-tippy-wrapper';
+import { NgxTippyProps } from 'ngx-tippy-wrapper';
 import { trigger, transition, animate, style } from '@angular/animations'
 
 @Component({
@@ -58,8 +58,8 @@ export class CreateProductComponent {
 
 @Component({
   selector: 'dialog-animations-dialog',
-  templateUrl: '../../../shared/components/dialog-box/dialog-animations-dialog.html',
-  styleUrls: ['../../../shared/components/dialog-box/dialog-animations.scss'],
+  templateUrl: '../../../../shared/components/dialog-box/dialog-animations-dialog.html',
+  styleUrls: ['../../../../shared/components/dialog-box/dialog-animations.scss'],
 })
 export class DialogAnimationsDialog {
   constructor(public dialogRef: MatDialogRef<DialogAnimationsDialog>) {}

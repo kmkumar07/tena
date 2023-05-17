@@ -2,7 +2,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import { Data_Type, User_Data } from 'src/app/shared/constants/consants';
+import { Data_Type, Features_Data, features } from 'src/app/shared/constants/consants';
 @Component({
   selector: 'app-features-listing',
   templateUrl: './features-listing.component.html',
@@ -11,23 +11,24 @@ import { Data_Type, User_Data } from 'src/app/shared/constants/consants';
 export class FeaturesListingComponent {
   displayedColumns: string[] = [
     'select',
-    'product_ID',
-    'title',
+    'feature_id',
+    'product_name',
+    'feature_name',
     'description',
-    'features',
+    'feature_type',
     'created_at',
     'status',
     'action',
   ];
-  productsData: Data_Type[] = User_Data;
-  selection = new SelectionModel<Data_Type>(true, []);
+  featuresData: features[] = Features_Data;
+  selection = new SelectionModel<features>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.productsData.length;
+    const numRows = this.featuresData.length;
     return numSelected === numRows;
   }
   constructor(private _liveAnnouncer: LiveAnnouncer) {}
@@ -38,21 +39,21 @@ export class FeaturesListingComponent {
       return;
     }
     // console.log(this.selection.select)
-    this.selection.select(...this.productsData);
+    this.selection.select(...this.featuresData);
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Data_Type): string {
+  checkboxLabel(row?: features): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.product_ID + 1
+      row.feature_id + 1
     }`;
   }
 
   // ngAfterViewInit() {
-  //   this.productsData.sort = this.sort;
+  //   this.featuresData.sort = this.sort;
   // }
 
   /** Announce the change in sort state for assistive technology. */

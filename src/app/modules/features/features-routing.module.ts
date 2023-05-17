@@ -1,13 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FeaturesListingComponent } from './features-listing/features-listing.component';
+import { FeaturesListingComponent } from './components/features-listing/features-listing.component';
+import { CreateFeatureComponent } from './components/create-feature/create-feature.component';
 
 const routes: Routes = [
-  {path: '', component: FeaturesListingComponent}
+  { 
+    path: '', 
+    component: FeaturesListingComponent 
+  },
+  {
+    path: 'create',
+    component: CreateFeatureComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class FeaturesRoutingModule { }
+export class FeaturesRoutingModule {}
