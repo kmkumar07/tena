@@ -10,6 +10,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { name: 'Helium', weight: 4.0026 },
 ];
 
+const FEATURE_TYPE = 'custom'
+
 @Component({
   selector: 'app-view-feature',
   templateUrl: './view-feature.component.html',
@@ -18,5 +20,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class ViewFeatureComponent {
   displayedColumns: string[] = ['name', 'weight'];
   dataSource = ELEMENT_DATA;
+  featureType = FEATURE_TYPE;
   clickedRows = new Set<PeriodicElement>();
 }
