@@ -1,0 +1,183 @@
+<div
+  class="form-with-sample flex main-bg border-2 w-full overflow-scroll pt-2 pb- 5 px-6"
+>
+  <div class="form-left">
+    <div class="header-section">
+      <div class="pt-10 pb-5 pl-6">
+        <div class="flex align-center mb-2">
+          <mat-icon
+            class="material-symbols-outlined pointer"
+            color="primary"
+            [routerLink]="'/features'"
+            >keyboard_backspace</mat-icon
+          >
+          <span class="mat-h1 primary-text text-main ml-2">Create Feature</span>
+        </div>
+        <span class="pl-8 grey-text text-lighten-9 fs-lg">
+          Fill in the details to create a new item
+        </span>
+      </div>
+    </div>
+    <form>
+      <div class="form-container pl-6">
+        <div class="input-wrapper">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">Feature ID</p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="helpinfotooltip"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #helpinfotooltip let-name>
+              <div class="help-info-tooltip">
+                <div class="heading">Feature id</div>
+                <div class="details">
+                  Microsoft Teams is the ultimate messaging app for your
+                  organization—a workspace for real-time collaboration and
+                  communication, meetings, file and app sharing, and even the
+                  occasional emoji! All in one place, all in the open, all
+                  accessible to everyone.
+                </div>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline" class="border-2">
+            <input matInput placeholder="Enter here" />
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Select Product
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="selectProduct"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #selectProduct let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading">Product</div>
+                <div class="details">
+                  Please select a product to create a feature to it.
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline" class="border-2">
+            <mat-label> Select </mat-label>
+            <mat-select>
+              <mat-option
+                *ngFor="let product of productName"
+                value="[product.product_ID]"
+              >
+                {{ product.title }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Feature Name
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="selectProduct"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #selectProduct let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading">Feature name</div>
+                <div class="details">
+                  Please select a product to create a feature to it.
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline" class="border-2">
+            <input matInput placeholder="Enter here" />
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Feature Type
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="selectProduct"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #selectProduct let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading">Feature type</div>
+                <div class="details">
+                  Select how entitlements to this feature can be set in plans,
+                  addons, and charges.
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline" class="border-2">
+            <mat-label> Select </mat-label>
+            <mat-select>
+              <mat-option
+                *ngFor="let type of featureType"
+                value="[type.value]"
+              >
+                {{ type.title }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Description
+            </p>
+          </div>
+          <mat-form-field appearance="outline">
+            <textarea rows="4" maxlength="4" matInput placeholder="Enter here..."></textarea>
+          </mat-form-field>
+        </div>
+        <div class="action-btns flex align-center justify-between">
+          <mat-checkbox color="primary" class="font-weight-500 checkbox ml-n-3"
+            >Active</mat-checkbox
+          >
+          <div>
+            <button mat-stroked-button color="primary" class="mr-2 large">
+              Dismiss
+            </button>
+            <button
+              mat-flat-button
+              color="primary"
+              class="large"
+              [routerLink]="['/products/view-product']"
+            >
+              Create
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="sample-right h-auto">
+    <div class="py-5 pr-4 pl-8">
+      <div class="heading">Sample Feature</div>
+    </div>
+  </div>
+</div>

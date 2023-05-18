@@ -69,49 +69,34 @@
         color: color("grey", "lighten-9");
       }
     }
+  }
+}
 
-    .input-wrapper {
-      max-width: 47.5625rem;
-      .help-icon {
-        font-size: 0.875rem;
-        height: 0.875rem;
-        width: 0.875rem;
-        margin-bottom: 0.1875rem;
+// Input Wrapper
+.input-wrapper {
+  max-width: 47.5625rem;
+  .help-icon {
+    font-size: 1rem;
+    height: 1rem;
+    width: 1rem;
+  }
+
+  .form-block {
+    .user-avatar {
+      height: 7.5rem;
+      width: 7.5rem;
+      background-color: color("grey", "lighten-8");
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
 
-      .form-block {
-        .user-avatar {
-          height: 7.5rem;
-          width: 7.5rem;
-          background-color: color("grey", "lighten-8");
-          border-radius: 50%;
-          overflow: hidden;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-
-          p {
-            color: color("grey", "lighten-9");
-          }
-        }
-
-        .input-wrapper {
-          max-width: 47.5625rem;
-
-          .help-icon {
-            font-size: 0.875rem;
-            height: 0.875rem;
-            width: 0.875rem;
-            margin-bottom: 0.1875rem;
-          }
-
-          .action-btns {
-            margin-top: 0.625rem;
-          }
-        }
+      p {
+        color: color("grey", "lighten-9");
       }
     }
   }

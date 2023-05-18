@@ -1,10 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FeaturesListingComponent } from './features-listing/features-listing.component';
+import { FeaturesListingComponent } from './components/features-listing/features-listing.component';
+import { CreateFeatureComponent } from './components/create-feature/create-feature.component';
 import { ViewFeatureComponent } from './view-feature/view-feature.component';
 
 const routes: Routes = [
-  { path: '', component: FeaturesListingComponent },
+  { 
+    path: '', 
+    component: FeaturesListingComponent 
+  },
+  {
+    path: 'create',
+    component: CreateFeatureComponent,
+  },
   { path: 'view-feature', component: ViewFeatureComponent },
 ];
 

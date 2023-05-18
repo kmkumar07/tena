@@ -71,7 +71,7 @@ input {
   }
 }
 .mat-mdc-form-field {
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.625rem;
 }
 label {
   margin: 0;
@@ -191,6 +191,9 @@ label {
 
 .h-screen {
   height: 100vh;
+}
+.h-auto{
+  height: auto;
 }
 .h-full {
   height: 100%;
@@ -380,7 +383,14 @@ label {
 .text-underline {
   text-decoration: underline;
 }
-
+.heading {
+  color: #000000;
+  font-size: 1rem;
+  padding: 0.75rem 0.625rem;
+  background-color: #f3f1ff;
+  border-radius: 4px;
+  font-weight: 500;
+}
 // 5. Angular Material
 
 .mat-mdc-menu-content.mdc-list {

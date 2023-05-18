@@ -1,3 +1,23 @@
+.form-with-sample {
+  .form-left {
+    width: calc(100% - 22.1875rem);
+    .header-section {
+      border-bottom: 0.0625rem solid color("grey", "lighten-7");
+      margin-right: 0.1875rem;
+    }
+    .form-container {
+      margin-top: 0.875rem;
+      max-width: 40.625rem;
+      width: 100%;
+    }
+  }
+  .sample-right {
+    width: 22.1875rem;
+    border-left: 0.0625rem solid color("grey", "lighten-7");
+  }
+}
+
+
 //view product section
 .view-feature-wrapper {
   background-color: color("shades", "white");

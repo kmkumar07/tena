@@ -79,7 +79,7 @@ $my-theme: mat.define-light-theme((
 @import './components/grid';
 
 //modules
-@import './components/modules/product';
-@import './components/modules/feature';
+@import './components/modules/products/product';
+@import './components/modules/features/features';
 @import 'tippy.js/dist/tippy.css';
 @import '/node_modules/tippy.js/dist/tippy.css'

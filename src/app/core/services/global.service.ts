@@ -6,7 +6,5 @@ import { Injectable } from '@angular/core';
 export class GlobalService {
 
   constructor() { }
-  preventClose(event: any) {
-    event.stopPropagation();
-  }
+
 }
