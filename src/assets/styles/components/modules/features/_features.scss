@@ -17,3 +17,113 @@
     width: 22.1875rem;
   }
 }
+
+
+//view product section
+.view-feature-wrapper {
+  background-color: color("shades", "white");
+  border-radius: 0.5rem;
+  padding: 0.625rem;
+  height: 100%;
+  overflow: auto;
+
+  .header-block {
+    padding: 1.125rem 1.5rem 1.5rem;
+    background-color: rgba(color("primary", "light"), 0.83);
+
+    .heading {
+      margin-bottom: 3.9375rem;
+    }
+
+    .brand-info {
+      .title {
+        font-weight: 600;
+        line-height: 1.75rem;
+      }
+
+      .subtitle {
+        color: rgba(color("text", "primary"), 0.6);
+        margin-bottom: 0.1875rem;
+      }
+
+      .active-text {
+        .mat-icon {
+          height: 1rem;
+          width: 1rem;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+  .content-block {
+    .product-img {
+      border: 2px solid color("grey", "lighten-10");
+      height: 4.375rem;
+      width: 4.375rem;
+      background-color: color("grey", "lighten-8");
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .title {
+      font-weight: 600;
+      line-height: 1.1875rem;
+    }
+    .subtitle {
+      line-height: 1rem;
+      color: $text-headline-light;
+    }
+    .active-text {
+      .mat-icon {
+        height: 1rem;
+        width: 1rem;
+        font-size: 1rem;
+      }
+    }
+    .feature-type {
+      max-width: 45.6875rem;
+      img {
+        margin-right: 0.9375rem;
+      }
+      mat-icon {
+        margin-right: 0.875rem;
+      }
+      .switch-type {
+        background-color: $primay-light-bg-color;
+        padding: 1.125rem;
+      }
+    }
+    .range-detail {
+      background-color: $primay-light-bg-color;
+    }
+    .detail-info {
+      border: 1px solid color("primary", "light");
+
+      .range-td {
+        width: 10.875rem;
+      }
+    }
+    .range-detail-wrapper {
+      max-width: 45.6875rem;
+    }
+  }
+}
+
+// simple table with even background
+table {
+  text-align: left;
+  &.odd-bg-color {
+    th,
+    td {
+      padding: .75rem 1rem;
+    }
+    border-spacing: 0;
+    tr:nth-child(even) {
+      background-color: $primay-light-bg-color;
+    }
+  }
+}

@@ -40,12 +40,24 @@ a {
   font-weight: 600 !important;
 }
 
+.text-headline-dark {
+  color: $text-headline-dark;
+}
+
 .text-dark {
   color: $text-dark; // #3A3742 text-dark
 }
 
 .text-dark-1 {
   color: $text-dark-1;
+}
+
+.text-headline-light {
+  color: $headline-light;
+}
+
+.text-primary {
+  color: $text-primary
 }
 
 .fs-lg {

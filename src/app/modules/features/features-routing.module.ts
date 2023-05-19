@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FeaturesListingComponent } from './components/features-listing/features-listing.component';
 import { CreateFeatureComponent } from './components/create-feature/create-feature.component';
+import { ViewFeatureComponent } from './view-feature/view-feature.component';
 
 const routes: Routes = [
   { 
@@ -12,6 +13,7 @@ const routes: Routes = [
     path: 'create',
     component: CreateFeatureComponent,
   },
+  { path: 'view-feature', component: ViewFeatureComponent },
 ];
 
 @NgModule({

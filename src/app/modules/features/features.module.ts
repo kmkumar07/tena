@@ -6,11 +6,13 @@ import { FeaturesListingComponent } from './components/features-listing/features
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
 import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
 import { CreateFeatureComponent } from './components/create-feature/create-feature.component';
+import { ViewFeatureComponent } from './view-feature/view-feature.component';
 
 @NgModule({
   declarations: [
     FeaturesListingComponent,
-    CreateFeatureComponent
+    CreateFeatureComponent,
+    ViewFeatureComponent
   ],
   imports: [
     CommonModule,
@@ -19,8 +21,8 @@ import { CreateFeatureComponent } from './components/create-feature/create-featu
     SharedModule
   ]
 })
-export class FeaturesModule { 
-  constructor(){
-    console.log("this is features module")
+export class FeaturesModule {
+  constructor() {
+    console.log('this is features module');
   }
 }
