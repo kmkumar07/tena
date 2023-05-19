@@ -1,6 +1,8 @@
 .form-with-sample {
   .form-left {
     width: calc(100% - 22.1875rem);
+    border-right: 0.0625rem solid color("grey", "lighten-7");
+    height: fit-content;
     .header-section {
       border-bottom: 0.0625rem solid color("grey", "lighten-7");
       margin-right: 0.1875rem;
@@ -13,6 +15,5 @@
   }
   .sample-right {
     width: 22.1875rem;
-    border-left: 0.0625rem solid color("grey", "lighten-7");
   }
 }

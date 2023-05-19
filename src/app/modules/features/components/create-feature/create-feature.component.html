@@ -1,5 +1,5 @@
 <div
-  class="form-with-sample flex main-bg border-2 w-full overflow-scroll pt-2 pb- 5 px-6"
+  class="form-with-sample flex main-bg border-2 w-full h-full overflow-scroll pt-2 pb- 5 px-6"
 >
   <div class="form-left">
     <div class="header-section">
@@ -11,15 +11,15 @@
             [routerLink]="'/features'"
             >keyboard_backspace</mat-icon
           >
-          <span class="mat-h1 primary-text text-main ml-2">Create Feature</span>
+          <span class="mat-h1 primary-text text-main ml-2">Create</span>
         </div>
         <span class="pl-8 grey-text text-lighten-9 fs-lg">
           Fill in the details to create a new item
         </span>
       </div>
     </div>
-    <form>
-      <div class="form-container pl-6">
+    <form [formGroup]="featureForm" (ngSubmit)="onSubmit()">
+      <div class="form-container pl-6 pr-10">
         <div class="input-wrapper">
           <div class="flex align-center mb-2">
             <p class="mat-subtitle-2 font-weight-500 input-label">Feature ID</p>
@@ -31,7 +31,7 @@
             >
             <ng-template #helpinfotooltip let-name>
               <div class="help-info-tooltip">
-                <div class="heading">Feature id</div>
+                <div class="heading-with-background">Feature id</div>
                 <div class="details">
                   Microsoft Teams is the ultimate messaging app for your
                   organization—a workspace for real-time collaboration and
@@ -43,7 +43,12 @@
             </ng-template>
           </div>
           <mat-form-field appearance="outline" class="border-2">
-            <input matInput placeholder="Enter here" />
+            <input
+              required
+              matInput
+              placeholder="Enter here"
+              formControlName="feature_id"
+            />
           </mat-form-field>
         </div>
         <div class="input-wrapper">
@@ -59,7 +64,7 @@
             >
             <ng-template #selectProduct let-name class="t-template">
               <div class="help-info-tooltip">
-                <div class="heading">Product</div>
+                <div class="heading-with-background">Product</div>
                 <div class="details">
                   Please select a product to create a feature to it.
                 </div>
@@ -71,10 +76,10 @@
           </div>
           <mat-form-field appearance="outline" class="border-2">
             <mat-label> Select </mat-label>
-            <mat-select>
+            <mat-select required formControlName="product_name">
               <mat-option
                 *ngFor="let product of productName"
-                value="[product.product_ID]"
+                value="{{ product.product_ID }}"
               >
                 {{ product.title }}
               </mat-option>
@@ -94,7 +99,7 @@
             >
             <ng-template #selectProduct let-name class="t-template">
               <div class="help-info-tooltip">
-                <div class="heading">Feature name</div>
+                <div class="heading-with-background">Feature name</div>
                 <div class="details">
                   Please select a product to create a feature to it.
                 </div>
@@ -105,7 +110,12 @@
             </ng-template>
           </div>
           <mat-form-field appearance="outline" class="border-2">
-            <input matInput placeholder="Enter here" />
+            <input
+              required
+              matInput
+              placeholder="Enter here"
+              formControlName="feature_name"
+            />
           </mat-form-field>
         </div>
         <div class="input-wrapper">
@@ -121,7 +131,7 @@
             >
             <ng-template #selectProduct let-name class="t-template">
               <div class="help-info-tooltip">
-                <div class="heading">Feature type</div>
+                <div class="heading-with-background">Feature type</div>
                 <div class="details">
                   Select how entitlements to this feature can be set in plans,
                   addons, and charges.
@@ -134,10 +144,10 @@
           </div>
           <mat-form-field appearance="outline" class="border-2">
             <mat-label> Select </mat-label>
-            <mat-select>
+            <mat-select required formControlName="feature_type">
               <mat-option
                 *ngFor="let type of featureType"
-                value="[type.value]"
+                value="{{ type.value }}"
               >
                 {{ type.title }}
               </mat-option>
@@ -151,23 +161,135 @@
             </p>
           </div>
           <mat-form-field appearance="outline">
-            <textarea rows="4" maxlength="4" matInput placeholder="Enter here..."></textarea>
+            <textarea
+              required
+              rows="4"
+              matInput
+              placeholder="Enter here..."
+              formControlName="description"
+            ></textarea>
           </mat-form-field>
         </div>
+        <div
+          class="input-wrapper"
+          *ngIf="
+            this.featureForm.value.feature_type &&
+            this.featureForm.value.feature_type != 1
+          "
+        >
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Entitlement Units
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="selectProduct"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #selectProduct let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Entitlement Units</div>
+                <div class="details">
+                  Please select a product to create a feature to it.
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline" class="border-2">
+            <input
+              required
+              matInput
+              placeholder="Enter here"
+              formControlName="entitlement_Units"
+            />
+          </mat-form-field>
+        </div>
+        <div *ngIf="this.featureForm.value.entitlement_Units">
+          <div class="flex align-center">
+            <div class="input-wrapper w-half pr-2">
+              <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 input-label">
+                  Entitlement Range
+                </p>
+              </div>
+              <mat-form-field appearance="outline" class="border-2">
+                <input
+                  required
+                  matInput
+                  placeholder="Enter here"
+                  formControlName="entitlement_Range"
+                />
+              </mat-form-field>
+            </div>
+            <div class="input-wrapper w-half">
+              <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 input-label">
+                  Display Name
+                </p>
+              </div>
+              <mat-form-field appearance="outline" class="border-2">
+                <input
+                  matInput
+                  placeholder="Enter here"
+                  formControlName="entitlement_Range"
+                />
+              </mat-form-field>
+            </div>
+            <button mat-stroked-button disableRipple class="upper-case primary light medium px-1 ml-2">
+              Default
+            </button>
+          </div>
+          <div class="flex align-center">
+            <div class="input-wrapper w-half pr-2">
+              <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 input-label">
+                  Entitlement Range
+                </p>
+              </div>
+              <mat-form-field appearance="outline" class="border-2">
+                <input
+                  required
+                  matInput
+                  placeholder="Enter here"
+                  formControlName="entitlement_Range"
+                />
+              </mat-form-field>
+            </div>
+            <div class="input-wrapper w-half">
+              <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 input-label">
+                  Display Name
+                </p>
+              </div>
+              <mat-form-field appearance="outline" class="border-2">
+                <input
+                  matInput
+                  placeholder="Enter here"
+                  formControlName="entitlement_Range"
+                />
+              </mat-form-field>
+            </div>
+            <button mat-stroked-button disableRipple disableTouchRipple class="upper-case primary light medium px-1 ml-2">
+              Maximum
+            </button>
+          </div>
+        </div>
         <div class="action-btns flex align-center justify-between">
-          <mat-checkbox color="primary" class="font-weight-500 checkbox ml-n-3"
+          <mat-checkbox
+            color="primary"
+            formControlName="status"
+            class="font-weight-500 checkbox ml-n-3"
             >Active</mat-checkbox
           >
           <div>
             <button mat-stroked-button color="primary" class="mr-2 large">
               Dismiss
             </button>
-            <button
-              mat-flat-button
-              color="primary"
-              class="large"
-              [routerLink]="['/products/view-product']"
-            >
+            <button mat-flat-button color="primary" class="large" type="submit">
               Create
             </button>
           </div>
@@ -177,7 +299,47 @@
   </div>
   <div class="sample-right h-auto">
     <div class="py-5 pr-4 pl-8">
-      <div class="heading">Sample Feature</div>
+      <div class="heading-with-background mb-2">Sample Feature</div>
+      <div class="text-text text-primary mb-2">
+        <h3 class="fw-500 m-0">Switch Feature</h3>
+        <p class="mat-h4">
+          This feature type has 2 entitlement levels- "available" and "not
+          available".
+        </p>
+        <button mat-button color="primary" class="medium px-1">
+          Try a Sample
+        </button>
+      </div>
+      <div class="text-text text-primary mb-2">
+        <h3 class="fw-500 m-0">Range Feature</h3>
+        <p class="mat-h4">
+          This feature supports range based entitlements. For eg : Customer’s
+          access can be between 100 and 300 API / minute.
+        </p>
+        <button mat-button color="primary" class="medium px-1">
+          Try a Sample
+        </button>
+      </div>
+      <div class="text-text text-primary mb-2">
+        <h3 class="fw-500 m-0">Quantity Feature</h3>
+        <p class="mat-h4">
+          This feature type has numbered entitlement levels- For eg : 2,3,4 or
+          10 user licenses.
+        </p>
+        <button mat-button color="primary" class="medium px-1">
+          Try a Sample
+        </button>
+      </div>
+      <div class="text-text text-primary">
+        <h3 class="fw-500 m-0">Custom Feature</h3>
+        <p class="mat-h4">
+          This feature supports range based entitlements. For eg : Customer’s
+          access can be between 100 and 300 API / minute.
+        </p>
+        <button mat-button color="primary" class="medium px-1">
+          Try a Sample
+        </button>
+      </div>
     </div>
   </div>
 </div>

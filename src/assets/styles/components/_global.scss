@@ -201,7 +201,9 @@ label {
 .w-full {
   width: 100%;
 }
-
+.w-half{
+  width: 44%;
+}
 @for $i from 0 through 100 {
   .width-#{$i},
   .w-#{$i} {
@@ -379,11 +381,13 @@ label {
 .lg-icon {
   font-size: 1.25rem !important;
 }
-
+.upper-case{
+  text-transform: uppercase;
+}
 .text-underline {
   text-decoration: underline;
 }
-.heading {
+.heading-with-background {
   color: #000000;
   font-size: 1rem;
   padding: 0.75rem 0.625rem;

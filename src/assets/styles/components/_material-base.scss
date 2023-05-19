@@ -4,124 +4,129 @@
 
 // 1. mat-chip
 .basic-chip.mat-mdc-chip {
-    background-color: #ffffff33 !important;
-    border-radius: 0.25rem;
-    height: 1.5rem;
-  
-    .mat-mdc-chip-action {
-      padding: 0 0.5rem;
-  
-      .mat-mdc-chip-action-label {
-        color: color("shades", "white");
-      }
+  background-color: #ffffff33 !important;
+  border-radius: 0.25rem;
+  height: 1.5rem;
+
+  .mat-mdc-chip-action {
+    padding: 0 0.5rem;
+
+    .mat-mdc-chip-action-label {
+      color: color("shades", "white");
     }
   }
-  .chip-dark.mat-mdc-chip {
-    background-color: #000080 !important;
-    border-radius: 3rem;
-    height: 1.375rem;
-    .mat-mdc-chip-action {
-      padding: 0 0.5rem;
-      .mat-mdc-chip-action-label {
-        color: color("shades", "white");
-      }
+}
+.chip-dark.mat-mdc-chip {
+  background-color: #000080 !important;
+  border-radius: 3rem;
+  height: 1.375rem;
+  .mat-mdc-chip-action {
+    padding: 0 0.5rem;
+    .mat-mdc-chip-action-label {
+      color: color("shades", "white");
     }
   }
-  .table-chip.mat-mdc-chip {
-    background-color: #e1e0ff !important;
-    border-radius: 0.5rem;
-    height: 2rem;
-    .mat-mdc-chip-action {
-      padding: 0 1rem;
-    }
+}
+.table-chip.mat-mdc-chip {
+  background-color: #e1e0ff !important;
+  border-radius: 0.5rem;
+  height: 2rem;
+  .mat-mdc-chip-action {
+    padding: 0 1rem;
   }
-  
-  // 2. Tables
-  .primary-table {
-    overflow: auto;
-    .mat-mdc-table {
-      border-collapse: separate;
-      border-spacing: 0 0.5rem;
-      .mdc-data-table__header-cell {
-        border: none;
-        font-weight: 500;
-        white-space: nowrap;
-      }
-      tbody {
-        tr {
-          &:hover {
-            border: 1px solid #d6d6d6;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.14);
-            position: relative;
-          }
+}
+
+// 2. Tables
+.primary-table {
+  overflow: auto;
+  .mat-mdc-table {
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+    .mdc-data-table__header-cell {
+      border: none;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    tbody {
+      tr {
+        &:hover {
+          border: 1px solid #d6d6d6;
+          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.14);
+          position: relative;
+        }
+        td {
+          position: relative;
+        }
+        &.selected-row {
           td {
-            position: relative;
-          }
-          &.selected-row {
-            td {
-              border-top: $primary-table-selected-row;
-              border-bottom: $primary-table-selected-row !important;
-              &:nth-last-child(1) {
-                border-right: $primary-table-selected-row;
-              }
-              &:nth-child(1)::after {
-                content: "";
-                display: block;
-                position: absolute;
-                width: 0.1875rem;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                background-color: color("primary", "main");
-              }
+            border-top: $primary-table-selected-row;
+            border-bottom: $primary-table-selected-row !important;
+            &:nth-last-child(1) {
+              border-right: $primary-table-selected-row;
+            }
+            &:nth-child(1)::after {
+              content: "";
+              display: block;
+              position: absolute;
+              width: 0.1875rem;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              background-color: color("primary", "main");
             }
           }
         }
       }
-      td {
-        border-top: $primary-table-border;
-        &:nth-last-child(1) {
-          border-right: $primary-table-border;
+    }
+    td {
+      border-top: $primary-table-border;
+      &:nth-last-child(1) {
+        border-right: $primary-table-border;
+      }
+      &:nth-child(1) {
+        border-left: $primary-table-border;
+      }
+      &.description-col {
+        width: 22.4375rem;
+        p {
+          display: block;
+          @include text-ellipsis(15.6875rem);
         }
-        &:nth-child(1) {
-          border-left: $primary-table-border;
-        }
-        &.description-col {
-          width: 22.4375rem;
-          p {
-            display: block;
-            @include text-ellipsis(15.6875rem);
-          }
-        }
-      }
-      .mdc-data-table__row:first-child .mdc-data-table__cell:nth-child(1) {
-        border-top-left-radius: $primary-table-border-radius;
-      }
-      .mdc-data-table__row:first-child .mdc-data-table__cell:nth-last-child(1) {
-        border-top-right-radius: $primary-table-border-radius;
-      }
-      .mdc-data-table__row:last-child .mdc-data-table__cell:nth-child(1) {
-        border-bottom-left-radius: $primary-table-border-radius;
-      }
-      .mdc-data-table__row:last-child .mdc-data-table__cell:nth-last-child(1) {
-        border-bottom-right-radius: $primary-table-border-radius;
-      }
-      .mdc-data-table__row:last-child .mdc-data-table__cell {
-        border-bottom: $primary-table-border;
       }
     }
-  }
-  // 2. mat-menu-position-right
-  .right-menu + * .cdk-overlay-pane + * div {
-    transform: translateX(67px) !important;
-  
-    .mat-menu-panel {
-      max-width: inherit !important;
-      margin-top: 10px !important;
+    .mdc-data-table__row:first-child .mdc-data-table__cell:nth-child(1) {
+      border-top-left-radius: $primary-table-border-radius;
+    }
+    .mdc-data-table__row:first-child .mdc-data-table__cell:nth-last-child(1) {
+      border-top-right-radius: $primary-table-border-radius;
+    }
+    .mdc-data-table__row:last-child .mdc-data-table__cell:nth-child(1) {
+      border-bottom-left-radius: $primary-table-border-radius;
+    }
+    .mdc-data-table__row:last-child .mdc-data-table__cell:nth-last-child(1) {
+      border-bottom-right-radius: $primary-table-border-radius;
+    }
+    .mdc-data-table__row:last-child .mdc-data-table__cell {
+      border-bottom: $primary-table-border;
     }
   }
-  // Table Scrollbar
-  .primary-table::-webkit-scrollbar{
-    height: 0.4rem;
-    border-radius: .25rem;
+}
+// Table Scrollbar
+.primary-table::-webkit-scrollbar {
+  height: 0.4rem;
+  border-radius: 0.25rem;
+}
+// 2. mat actions menu for primary table
+.actions-menu.mat-mdc-menu-panel.mdc-menu-surface {
+  padding: 0.5rem 0;
+  min-width: 10.1875rem;
+  border-radius: 0.5rem;
+  .mat-mdc-menu-content {
+    .mat-mdc-menu-item {
+      min-height: 2rem;
+    }
   }
+}
+.edit-menu+* .cdk-overlay-pane {
+  transform: translate(-2.2rem, -1.6875rem) !important;
+}

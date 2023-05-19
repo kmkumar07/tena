@@ -1,5 +1,5 @@
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Component, ViewChild } from '@angular/core';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {
   Data_Type,
   User_Data,
@@ -7,10 +7,10 @@ import {
 } from 'src/app/shared/constants/consants';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import getUniqueId from 'src/app/core/utils/functions/getUniqueId';
 
 export interface menuOptions {
   value: number;
@@ -32,16 +32,22 @@ export class CreateFeatureComponent {
 
   constructor(private form: FormBuilder) {}
 
-  ngOnInIt(){
+  ngOnInit(){
     this.featureForm = this.form.group({
-      feature_id: ['', Validators.required],
+      feature_id: [getUniqueId(), Validators.required],
       product_name: ['', Validators.required],
       feature_name: ['', Validators.required],
       description: ['', Validators.required],
       feature_type: ['', Validators.required],
-      created_at: ['', Validators.required],
-      status: ['', Validators.required]
+      levels:[],
+      entitlement_Units: ['', Validators.required],
+      entitlement_Range: ['', Validators.required],
+      status: [false]
     })
   }
+
+  onSubmit(){
+    console.log(this.featureForm.value, "test")
+  }  
 
 }

@@ -214,3 +214,7 @@ export const feature_types = [
   { value: 3, title: 'Quantity' },
   { value: 4, title: 'Custom' },
 ];
+export const StaticRoutes = {
+  features: ['features'],
+  products: ['products']
+};
