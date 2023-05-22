@@ -400,3 +400,17 @@ label {
 .mat-mdc-menu-content.mdc-list {
   padding: 0;
 }
+// simple table with even background
+table {
+  text-align: left;
+  &.odd-bg-color {
+    th,
+    td {
+      padding: .75rem 1rem;
+    }
+    border-spacing: 0;
+    tr:nth-child(even) {
+      background-color: $primay-light-bg-color;
+    }
+  }
+}

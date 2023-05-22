@@ -5,11 +5,7 @@ import {
   User_Data,
   feature_types,
 } from 'src/app/shared/constants/consants';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import getUniqueId from 'src/app/core/utils/functions/getUniqueId';
 
 export interface menuOptions {
@@ -25,29 +21,45 @@ export interface menuOptions {
 export class CreateFeatureComponent {
   productName: Data_Type[] = User_Data;
   featureType: menuOptions[] = feature_types;
-  
-  public featureForm: FormGroup
-  
+
+  public featureForm: FormGroup;
+
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   constructor(private form: FormBuilder) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.featureForm = this.form.group({
-      feature_id: [getUniqueId(), Validators.required],
-      product_name: ['', Validators.required],
-      feature_name: ['', Validators.required],
+      id: [getUniqueId(), Validators.required],
+      productID: ['', Validators.required],
+      name: ['', Validators.required],
       description: ['', Validators.required],
-      feature_type: ['', Validators.required],
-      levels:[],
-      entitlement_Units: ['', Validators.required],
-      entitlement_Range: ['', Validators.required],
-      status: [false]
-    })
+      type: ['', Validators.required],
+      unit: ['', Validators.required],
+      status: [false],
+      entitlmentRange: ['', Validators.required],
+      entitlmentName: ['', Validators.required],
+      levels: this.form.array([]),
+    });
   }
 
-  onSubmit(){
-    console.log(this.featureForm.value, "test")
-  }  
+  get levels() {
+    return this.featureForm.controls['levels'] as FormArray;
+  }
 
+  addLevels() {
+    const levelsForm = this.form.group({
+      title: ['', Validators.required],
+      level: ['', Validators.required],
+    });
+    this.levels.push(levelsForm);
+  }
+
+  deleteLevels(levelIndex: number) {
+    this.levels.removeAt(levelIndex);
+  }
+
+  onSubmit() {
+    console.log(this.featureForm.value, 'test');
+  }
 }

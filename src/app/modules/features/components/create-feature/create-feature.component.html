@@ -47,7 +47,7 @@
               required
               matInput
               placeholder="Enter here"
-              formControlName="feature_id"
+              formControlName="id"
             />
           </mat-form-field>
         </div>
@@ -75,8 +75,12 @@
             </ng-template>
           </div>
           <mat-form-field appearance="outline" class="border-2">
-            <mat-label> Select </mat-label>
-            <mat-select required formControlName="product_name">
+            <!-- <mat-label> Select </mat-label> -->
+            <mat-select
+              required
+              formControlName="productID"
+              placeholder="select"
+            >
               <mat-option
                 *ngFor="let product of productName"
                 value="{{ product.product_ID }}"
@@ -114,7 +118,7 @@
               required
               matInput
               placeholder="Enter here"
-              formControlName="feature_name"
+              formControlName="name"
             />
           </mat-form-field>
         </div>
@@ -143,8 +147,7 @@
             </ng-template>
           </div>
           <mat-form-field appearance="outline" class="border-2">
-            <mat-label> Select </mat-label>
-            <mat-select required formControlName="feature_type">
+            <mat-select required formControlName="type" placeholder="select">
               <mat-option
                 *ngFor="let type of featureType"
                 value="{{ type.value }}"
@@ -173,8 +176,7 @@
         <div
           class="input-wrapper"
           *ngIf="
-            this.featureForm.value.feature_type &&
-            this.featureForm.value.feature_type != 1
+            this.featureForm.value.type && this.featureForm.value.type != 1
           "
         >
           <div class="flex align-center mb-2">
@@ -204,76 +206,76 @@
               required
               matInput
               placeholder="Enter here"
-              formControlName="entitlement_Units"
+              formControlName="unit"
             />
           </mat-form-field>
         </div>
-        <div *ngIf="this.featureForm.value.entitlement_Units">
-          <div class="flex align-center">
-            <div class="input-wrapper w-half pr-2">
-              <div class="flex align-center mb-2">
-                <p class="mat-subtitle-2 font-weight-500 input-label">
-                  Entitlement Range
-                </p>
+        <div *ngIf="this.featureForm.value.unit">
+          <!-- <ng-container formArrayName="levels">
+            <ng-container *ngFor="let levelForm of levels.controls; let i = index"> -->
+          <div class="flex align-center wrap mb-3">
+            <div class="flex align-center wrap w-88">
+              <div class="input-wrapper pr-2">
+                <div class="flex align-center mb-2">
+                  <p class="mat-subtitle-2 font-weight-500 input-label">
+                    Entitlement Range
+                  </p>
+                </div>
+                <mat-form-field appearance="outline" class="border-2">
+                  <input required matInput placeholder="Enter here" />
+                </mat-form-field>
               </div>
-              <mat-form-field appearance="outline" class="border-2">
-                <input
-                  required
-                  matInput
-                  placeholder="Enter here"
-                  formControlName="entitlement_Range"
-                />
-              </mat-form-field>
-            </div>
-            <div class="input-wrapper w-half">
-              <div class="flex align-center mb-2">
-                <p class="mat-subtitle-2 font-weight-500 input-label">
-                  Display Name
-                </p>
+              <div class="input-wrapper">
+                <div class="flex align-center mb-2">
+                  <p class="mat-subtitle-2 font-weight-500 input-label">
+                    Display Name
+                  </p>
+                </div>
+                <mat-form-field appearance="outline" class="border-2">
+                  <input matInput placeholder="Enter here" />
+                </mat-form-field>
               </div>
-              <mat-form-field appearance="outline" class="border-2">
-                <input
-                  matInput
-                  placeholder="Enter here"
-                  formControlName="entitlement_Range"
-                />
-              </mat-form-field>
             </div>
-            <button mat-stroked-button disableRipple class="upper-case primary light medium px-1 ml-2">
+            <button
+              (click)="addLevels()"
+              mat-stroked-button
+              disableRipple
+              class="upper-case primary light medium px-1 ml-2"
+            >
               Default
             </button>
           </div>
-          <div class="flex align-center">
-            <div class="input-wrapper w-half pr-2">
-              <div class="flex align-center mb-2">
-                <p class="mat-subtitle-2 font-weight-500 input-label">
-                  Entitlement Range
-                </p>
+          <!-- </ng-container>
+          </ng-container> -->
+          <div class="flex align-center wrap mb-3">
+            <div class="flex align-center wrap w-88">
+              <div class="input-wrapper pr-2">
+                <div class="flex align-center mb-2">
+                  <p class="mat-subtitle-2 font-weight-500 input-label">
+                    Entitlement Range
+                  </p>
+                </div>
+                <mat-form-field appearance="outline" class="border-2">
+                  <input required matInput placeholder="Enter here" />
+                </mat-form-field>
               </div>
-              <mat-form-field appearance="outline" class="border-2">
-                <input
-                  required
-                  matInput
-                  placeholder="Enter here"
-                  formControlName="entitlement_Range"
-                />
-              </mat-form-field>
-            </div>
-            <div class="input-wrapper w-half">
-              <div class="flex align-center mb-2">
-                <p class="mat-subtitle-2 font-weight-500 input-label">
-                  Display Name
-                </p>
+              <div class="input-wrapper">
+                <div class="flex align-center mb-2">
+                  <p class="mat-subtitle-2 font-weight-500 input-label">
+                    Display Name
+                  </p>
+                </div>
+                <mat-form-field appearance="outline" class="border-2">
+                  <input matInput placeholder="Enter here" />
+                </mat-form-field>
               </div>
-              <mat-form-field appearance="outline" class="border-2">
-                <input
-                  matInput
-                  placeholder="Enter here"
-                  formControlName="entitlement_Range"
-                />
-              </mat-form-field>
             </div>
-            <button mat-stroked-button disableRipple disableTouchRipple class="upper-case primary light medium px-1 ml-2">
+            <button
+              (click)="addLevels()"
+              mat-stroked-button
+              disableRipple
+              class="upper-case primary light medium px-1 ml-2"
+            >
               Maximum
             </button>
           </div>
@@ -289,7 +291,13 @@
             <button mat-stroked-button color="primary" class="mr-2 large">
               Dismiss
             </button>
-            <button mat-flat-button color="primary" class="large" type="submit">
+            <button
+              mat-flat-button
+              color="primary"
+              class="large"
+              type="submit"
+              [routerLink]="'/features/view'"
+            >
               Create
             </button>
           </div>
