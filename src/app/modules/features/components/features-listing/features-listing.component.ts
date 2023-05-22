@@ -2,7 +2,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import { Data_Type, Features_Data, features } from 'src/app/shared/constants/consants';
+import { Data_Type, Features_Data, features, noFeatures } from 'src/app/shared/constants/consants';
 @Component({
   selector: 'app-features-listing',
   templateUrl: './features-listing.component.html',
@@ -22,7 +22,7 @@ export class FeaturesListingComponent {
   ];
   featuresData: features[] = Features_Data;
   selection = new SelectionModel<features>(true, []);
-
+  emptyFeature = noFeatures
   @ViewChild(MatSort) sort: MatSort;
 
   /** Whether the number of selected elements matches the total number of rows. */

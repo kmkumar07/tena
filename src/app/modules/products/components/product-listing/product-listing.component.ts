@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import { Data_Type, User_Data } from 'src/app/shared/constants/consants';
+import { Data_Type, User_Data, noProducts } from 'src/app/shared/constants/consants';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatTableDataSource } from '@angular/material/table';
 @Component({
@@ -20,7 +20,8 @@ export class ProductListingComponent {
     'status',
     'action',
   ];
-  productsData: Data_Type[] = User_Data;
+  emptyProductPros = noProducts;
+  productsData: Data_Type[] = [];
   selection = new SelectionModel<Data_Type>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
