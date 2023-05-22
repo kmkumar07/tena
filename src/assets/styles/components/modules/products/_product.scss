@@ -1,0 +1,213 @@
+// product listing section
+.product-listing-wrapper {
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1.6875rem 1.8125rem;
+  height: 100%;
+  overflow: auto;
+
+  .empty-state-info-wrapper {
+    height: calc(100% - 2.625rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .empty-state-info {
+      text-align: center;
+      max-width: 24.75rem;
+
+      div {
+        margin-top: 2.625rem;
+        color: color("purple", "darken-1");
+
+        .desc-info {
+          margin-top: 1.5rem;
+          color: color("blue", "lighten-11");
+        }
+      }
+
+      button {
+        margin-top: 2.625rem;
+      }
+    }
+  }
+}
+
+// create product section
+.create-product-wrapper {
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1.6875rem 1.8125rem;
+  height: 100%;
+  overflow: auto;
+
+  .header-section {
+    border-bottom: 1px solid color("grey", "lighten-7");
+    padding-left: 1.125rem;
+
+    p {
+      color: $primary-color;
+      padding-left: 0.625rem;
+    }
+  }
+
+  .form-block {
+    .user-avatar {
+      height: 7.5rem;
+      width: 7.5rem;
+      background-color: color("grey", "lighten-8");
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      p {
+        color: color("grey", "lighten-9");
+      }
+    }
+  }
+}
+
+// Input Wrapper
+.input-wrapper {
+  max-width: 47.5625rem;
+  .help-icon {
+    font-size: 1rem;
+    height: 1rem;
+    width: 1rem;
+  }
+
+  .form-block {
+    .user-avatar {
+      height: 7.5rem;
+      width: 7.5rem;
+      background-color: color("grey", "lighten-8");
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      p {
+        color: color("grey", "lighten-9");
+      }
+    }
+  }
+}
+
+//view product section
+.view-product-wrapper {
+  background-color: color("shades", "white");
+  border-radius: 0.5rem;
+  padding: 0.625rem;
+  height: 100%;
+  overflow: auto;
+
+  .header-block {
+    padding: 1.125rem 1.5rem 1.5rem;
+    background-color: rgba(color("primary", "light"), 0.83);
+
+    .heading {
+      margin-bottom: 1.9375rem;
+    }
+
+    .brand-info {
+      .title {
+        font-weight: 600;
+        line-height: 1.75rem;
+      }
+
+      .subtitle {
+        color: rgba(color("text", "primary"), 0.6);
+        margin-bottom: 0.1875rem;
+      }
+
+      .product-img {
+        border: 2px solid color("grey", "lighten-10");
+        height: 5.6875rem;
+        width: 5.6875rem;
+        background-color: color("grey", "lighten-8");
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+  .active-text {
+    .mat-icon {
+      height: 1rem;
+      width: 1rem;
+      font-size: 1rem;
+    }
+  }
+  .content-block {
+    .vertical-divider {
+      border: 1px solid color("text", "lighten-2");
+      border-left: none;
+      height: 1.125rem;
+    }
+    .product-features {
+      .feature-add-block {
+        border: 1px dashed #9ca8ba;
+        border-radius: 0.5rem;
+      }
+      .icon-with-bg {
+        position: relative;
+        width: fit-content;
+        .bg-box {
+          background: #f3f1ff;
+          height: 1.625rem;
+          width: 1.625rem;
+          position: absolute;
+          z-index: 0;
+          top: -0.625rem;
+          right: -0.5625rem;
+          border-radius: 0.5rem;
+        }
+      }
+      .features-wrapper {
+        padding-top: 1.875rem;
+        .feature-item {
+          background-color: $primay-light-bg-color;
+          padding: 0.75rem 0.9375rem;
+          margin-bottom: 1.125rem;
+
+          .details {
+            flex-grow: 1;
+          }
+
+          .action-btns {
+            .edit-icon {
+              font-size: 1rem;
+              width: 1rem;
+              height: 1rem;
+            }
+          }
+        }
+        .feature-logo {
+          height: 2.3125rem;
+          width: 2.3125rem;
+          overflow: hidden;
+          background-color: #ffffff;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,144 @@
+<div *ngIf="productsData.length == 0" class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
+  <h1 class="text-text text-dark">Products</h1>
+  <div class="absolute position-center text-center">
+    <div class="">
+      <img src="../../../../assets/images/icons/search-people.svg" alt="search-people" />
+      <div class="my-10">
+        <p class="mat-h1 purple-text text-darken-1">Looking for Product</p>
+        <p class="desc-info mt-6 text-text text-lighten-2">
+          Seems like you haven't added any Product. Start adding products by
+          click on “Create Product” button
+        </p>
+      </div>
+      <button mat-flat-button color="primary" class="medium" [routerLink]="['create']">
+        Create Product
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="productsData.length > 0" class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll">
+  <div class="flex justify-between align-center px-1">
+    <div class="flex align-center">
+      <h1 class="text-text text-dark">Products</h1>
+      <mat-chip class="chip-dark ml-3">
+        {{productsData.length}}
+      </mat-chip>
+    </div>
+    <div class="flex align-center">
+      <div class="global-search light mr-6 border-2">
+        <span class="search-icon pointer">
+          <img src="../../../../assets/images/icons/search.svg" alt="search-icon" />
+        </span>
+        <input type="text" placeholder="Search anything..." />
+      </div>
+      <button mat-flat-button color="primary" class="create-btn" [routerLink]="['create']">
+        <mat-icon class="material-symbols-outlined m-0 white-text lg-icon">add_circle</mat-icon>
+        <span class="text-nowrap block ml-2 letter-spacing-0">Create Product</span>
+      </button>
+    </div>
+  </div>
+  <div class="primary-table mt-8 px-1 pb-2">
+    <table mat-table [dataSource]="productsData" matSort (matSortChange)="announceSortChange($event)">
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox color="primary" (click)="selectAll(productsData)" (change)="$event ? toggleAllRows() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox color="primary" (click)="selectedRow(row.id, $event)"
+            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+            [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Product ID Column -->
+      <ng-container matColumnDef="product_ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> #ID </th>
+        <td mat-cell *matCellDef="let element" [routerLink]="'/products/' + element.id"> {{element.product_ID}} </td>
+      </ng-container>
+
+      <!-- Product Name Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by title"> Product Name </th>
+        <td mat-cell *matCellDef="let element" [routerLink]="'/products/' + element.id"> {{element.title}} </td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let element" class="description-col" [ngxTippy]="fullDescription"
+          [tippyProps]="{ placement: 'right' }" >
+          <p>{{element.description}}</p>
+          <ng-template #fullDescription let-name class="t-template">
+            <div class="help-info-tooltip">
+              <div class="heading-with-background">Description</div>
+              <p class="py-3 black-text">{{element.description}}</p>
+            </div>
+          </ng-template>
+        </td>
+      </ng-container>
+
+      <!-- Features Column -->
+      <ng-container matColumnDef="features">
+        <th mat-header-cell *matHeaderCellDef> Features </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="flex align-center" [ngxTippy]="featureListinfo" [tippyProps]="{ placement: 'right' }">
+            <mat-chip *ngIf="element.features.length > 0" class="table-chip m-2 ml-0"
+              disableRipple>{{element.features[0]}}</mat-chip>
+            <mat-chip *ngIf="element.features.length > 1" class="table-chip m-2 ml-0 pointer">+{{element.features.length
+              -
+              1}}</mat-chip>
+            <ng-template #featureListinfo let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Features</div>
+                <div *ngFor="let feature of element.features">
+                  <button mat-button color="primary" class="p-2 py-3">
+                    {{feature}}
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Created Date Column -->
+      <ng-container matColumnDef="created_at">
+        <th mat-header-cell *matHeaderCellDef> Created On </th>
+        <td mat-cell *matCellDef="let element" [routerLink]="'/products/' + element.id">
+          {{element.created_at}}
+        </td>
+      </ng-container>
+
+      <!-- Created Date Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element" [routerLink]="'/products/' + element.id">
+          {{element.status}}
+        </td>
+      </ng-container>
+
+      <!-- Created Date Column -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon class="material-symbols-outlined" [matMenuTriggerFor]="actionsMenu">
+            more_vert
+          </mat-icon>
+          <mat-menu #actionsMenu="matMenu" class="actions-menu" backdropClass="edit-menu">
+            <button mat-menu-item disableRipple>Edit</button>
+            <button mat-menu-item disableRipple>Delete</button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pointer" [id]="row.id"></tr>
+    </table>
+  </div>
+</div>
