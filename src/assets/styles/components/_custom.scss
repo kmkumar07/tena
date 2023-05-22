@@ -1,3 +1,9 @@
+// LIST
+// 1. tooltip
+// 2. form with sample
+// 3. simple table with even background
+
+
 // tooltip
 .tippy-box {
   background-color: #ffffff;
@@ -16,6 +22,42 @@
       color: #405189;
       margin-top: 0.5rem;
       line-height: 161.52%;
+    }
+  }
+}
+
+// form with sample
+.form-with-sample {
+  .form-left {
+    width: calc(100% - 22.1875rem);
+    border-right: 0.0625rem solid color("grey", "lighten-7");
+    height: fit-content;
+    .header-section {
+      border-bottom: 0.0625rem solid color("grey", "lighten-7");
+      margin-right: 0.1875rem;
+    }
+    .form-container {
+      margin-top: 0.875rem;
+      max-width: 40.625rem;
+      width: 100%;
+    }
+  }
+  .sample-right {
+    width: 22.1875rem;
+  }
+}
+
+// simple table with even background
+table {
+  text-align: left;
+  &.odd-bg-color {
+    th,
+    td {
+      padding: 0.75rem 1rem;
+    }
+    border-spacing: 0;
+    tr:nth-child(even) {
+      background-color: $primay-light-bg-color;
     }
   }
 }
