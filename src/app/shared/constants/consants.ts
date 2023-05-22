@@ -58,7 +58,7 @@ export const MENUITEMS = [
     category: 'Product_Catalog',
   },
   {
-    state: 'tabs',
+    state: 'plans',
     type: 'link',
     name: 'Plans',
     icon: 'quick_reference_all',
