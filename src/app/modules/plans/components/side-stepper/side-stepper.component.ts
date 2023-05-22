@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./side-stepper.component.scss']
 })
 export class SideStepperComponent {
-
+  isLinear = false;
 }
