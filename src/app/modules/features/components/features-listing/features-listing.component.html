@@ -1,20 +1,5 @@
 <div *ngIf="featuresData.length == 0" class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
-  <h1 class="text-text text-dark">Features</h1>
-  <div class="absolute position-center text-center">
-    <div class="">
-      <img src="../../../../assets/images/empty-illustrations-2.png" alt="search-people" />
-      <div class="my-10">
-        <p class="mat-h1 purple-text text-darken-1">Looking for Feature</p>
-        <p class="desc-info mt-6 text-text text-lighten-2">
-          Seems like you haven't added any Features. Start adding features by
-          clicking on the “Create Feature” button
-        </p>
-      </div>
-      <button mat-flat-button color="primary" class="medium" [routerLink]="['create']">
-        Create Feature
-      </button>
-    </div>
-  </div>
+  <app-empty-listing [items]="emptyFeature"></app-empty-listing>
 </div>
 <div *ngIf="featuresData.length > 0" class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll">
   <div class="flex justify-between align-center px-1">
@@ -108,7 +93,7 @@
       <!-- Created Date Column -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> Status </th>
-        <td mat-cell *matCellDef="let element" [routerLink]="'/features/view'">
+        <td mat-cell *matCellDef="let element" [ngClass]="element.status" [routerLink]="'/features/view'">
           {{element.status}}
         </td>
       </ng-container>
