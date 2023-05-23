@@ -11,6 +11,7 @@ import { ViewPlansComponent } from './components/view-plans/view-plans.component
 
 import { CreatePlanComponent } from './components/create-plan/create-plan/create-plan.component';
 import { PlanAddEmptyLayoutComponent } from './components/plan-add-empty-layout/plan-add-empty-layout.component';
+import { CreatePlanComponent } from './components/create-plan/create-plan.component';
 
 @NgModule({
   declarations: [

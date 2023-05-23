@@ -1,0 +1,119 @@
+<div class="create-plan-main-wrapper">
+  <!-- plan info -->
+  <div class="plan-section-block flex-center border-2 p-11 mb-4">
+    <div class="plan-info-block inner-wrapper">
+      <div class="heading flex align-center">
+        <img
+          src="../../../../../../assets/images/icons/carbon_document-multiple-02.svg"
+          alt="carbon_document-multiple-icon"
+        />
+        <h5 class="mat-headline-5 text-dark">Plan Information</h5>
+      </div>
+      <div class="info-form">
+        <div class="input-wrapper mt-8">
+          <div>
+            <div class="flex align-center mb-2">
+              <p class="mat-subtitle-2 font-weight-500 input-label">Plan Id</p>
+              <mat-icon
+                class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                [ngxTippy]="helpinfotooltip"
+                [tippyProps]="{ placement: 'right' }"
+                >help</mat-icon
+              >
+              <ng-template #helpinfotooltip let-name>
+                <div class="help-info-tooltip">
+                  <div class="heading-with-background">Plan id</div>
+                  <div class="details">
+                    Enter a Customized Id. If user do not enter this field, the
+                    system will generate a ‘Customized Human-Readable-id’ based
+                    on the Name fielde.g. Plan id Name: “Karisch plus
+                    Enterprise”Plan Id: “karish-plus-enteprise-01”
+                  </div>
+                  <button mat-button color="primary" class="px-0">
+                    Learn more
+                  </button>
+                </div>
+              </ng-template>
+            </div>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="Enter here..." />
+            </mat-form-field>
+          </div>
+          <div>
+            <div class="flex align-center mb-2">
+              <p class="mat-subtitle-2 font-weight-500 input-label">
+                Plan Name (External)
+              </p>
+              <mat-icon
+                class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                [ngxTippy]="productnameinfo"
+                [tippyProps]="{ placement: 'right' }"
+                tippyName="content"
+                >help</mat-icon
+              >
+              <ng-template #productnameinfo let-name class="t-template">
+                <div class="help-info-tooltip">
+                  <div class="heading-with-background">
+                    Plan name (External)
+                  </div>
+                  <div class="details">
+                    This name will be shown on the customer portal.
+                  </div>
+                  <button mat-button color="primary" class="px-0">
+                    Learn more
+                  </button>
+                </div>
+              </ng-template>
+            </div>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="Enter here..." />
+            </mat-form-field>
+          </div>
+          <div>
+            <div class="flex align-center mb-2">
+              <p class="mat-subtitle-2 font-weight-500 input-label">
+                Plan Name (Internal)
+              </p>
+              <mat-icon
+                class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                [ngxTippy]="productnameinfo"
+                [tippyProps]="{ placement: 'right' }"
+                tippyName="content"
+                >help</mat-icon
+              >
+              <ng-template #productnameinfo let-name class="t-template">
+                <div class="help-info-tooltip">
+                  <div class="heading-with-background">
+                    Plan name (Internal)
+                  </div>
+                  <div class="details">
+                    This is help you identify the Plan Internally
+                  </div>
+                  <button mat-button color="primary" class="px-0">
+                    Learn more
+                  </button>
+                </div>
+              </ng-template>
+            </div>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="Enter here..." />
+            </mat-form-field>
+          </div>
+          <div>
+            <div class="flex align-center mb-2">
+              <p class="mat-subtitle-2 font-weight-500 input-label">
+                Description
+              </p>
+            </div>
+            <mat-form-field appearance="outline">
+              <textarea matInput placeholder="Enter here..."></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- pricing plan -->
+  <app-plan-add-empty-layout [items]="planAddEmptyData"></app-plan-add-empty-layout>
+</div>
