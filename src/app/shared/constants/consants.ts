@@ -218,3 +218,13 @@ export const StaticRoutes = {
   features: ['features'],
   products: ['products']
 };
+
+
+export const plan_add_empty_data = {
+  titleIcon: '../../../../../../assets/images/icons/basil_invoice-outline.svg',
+  iconAlt: 'invoice-outline-icon',
+  title: 'Plan information',
+  subtitle: 'Please click the “Add” button below to add a new product. Once you clicked the button, you will be prompted to enter the name of product, description and additional details.',
+  btnTitle: "Add product",
+  btnPath: '#'
+};

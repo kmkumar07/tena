@@ -1,0 +1,27 @@
+// create plan section
+.create-plan-main-wrapper {
+  .plan-info-block {
+    .heading {
+      border-bottom: 1px solid $border-color;
+      padding-bottom: .9375rem;
+      img {
+        margin-right: 0.625rem;
+      }
+    }
+    textarea {
+      min-height: 2.4375rem;
+    }
+  }
+  .plan-section-block {
+    background-color: #ffffff;
+    .inner-wrapper {
+      max-width: 44.75rem;
+      width: 100%;
+    }
+  }
+}
+
+.empty-add-section {
+  padding: 8.6875rem 3.75rem 5.6875rem;
+  background-color: $primay-extra-light-bg-color;
+}

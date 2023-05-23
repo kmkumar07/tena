@@ -6,11 +6,15 @@ import { PlansListingComponent } from './components/plans-listing/plans-listing.
 import { ViewPlansComponent } from './components/view-plans/view-plans.component';
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
 import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
+import { CreatePlanComponent } from './components/create-plan/create-plan/create-plan.component';
+import { PlanAddEmptyLayoutComponent } from './components/plan-add-empty-layout/plan-add-empty-layout.component';
 
 @NgModule({
   declarations: [
     PlansListingComponent,
-    ViewPlansComponent
+    ViewPlansComponent,
+    CreatePlanComponent,
+    PlanAddEmptyLayoutComponent
   ],
   imports: [
     CommonModule,
