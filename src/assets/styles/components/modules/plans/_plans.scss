@@ -1,6 +1,5 @@
 .stepper-wrapper {
-    max-width: 19.25rem;
-    width: 100%;
+    width: 19.25rem;
     background-color: color('shades', 'transparent');
 
     .mat-stepper-vertical {
@@ -10,26 +9,26 @@
             height: 5.625rem;
             border-left: .25rem solid color('shades', 'transparent');
 
-            &:first-of-type.active{
-                &::before{
+            &:first-of-type.active {
+                &::before {
                     height: 2.8125rem;
                     bottom: 0;
                 }
             }
 
-            &:last-of-type.active{
-                &::before{
+            &:last-of-type.active {
+                &::before {
                     height: 2.8125rem;
                     top: 0;
                 }
             }
-    
+
             &.active {
                 background-color: color('shades', 'white');
                 border-left: .25rem solid color('primary', 'main');
-                border-radius: .5rem;
+                border-radius: 0.5rem 0 0 0.5rem;
                 position: relative;
-    
+
                 &::before {
                     content: "";
                     position: absolute;
@@ -40,17 +39,17 @@
                     border-left-style: solid;
                     border-left-color: color('primary', 'main');
                 }
-                
+
                 .mat-step-icon {
                     border: .0938rem solid color('primary', 'main') !important;
                 }
-    
+
                 .mat-step-icon-content {
                     &::before {
                         background-color: color('primary', 'main');
                     }
                 }
-                
+
             }
         }
     }
@@ -67,7 +66,7 @@
             background-color: color('shades', 'white');
             border: .0938rem solid color('grey', 'stepper-border');
         }
-        
+
     }
 
     .mat-vertical-stepper-header {
@@ -121,4 +120,38 @@
         margin-right: .875rem;
     }
 
+}
+
+// create plan section
+.create-plan-main-wrapper {
+    width: calc(100% - 19.25rem);
+
+    .plan-info-block {
+        .heading {
+            border-bottom: .0625rem solid $border-color;
+            padding-bottom: .9375rem;
+
+            img {
+                margin-right: .625rem;
+            }
+        }
+
+        textarea {
+            min-height: 2.4375rem;
+        }
+    }
+
+    .plan-section-block {
+        background-color: #ffffff;
+        border-radius: 0 0.5rem  0.5rem 0;
+        .inner-wrapper {
+            max-width: 44.75rem;
+            width: 100%;
+        }
+    }
+}
+
+.empty-add-section {
+    padding: 8.6875rem 3.75rem 5.6875rem;
+    background-color: $primay-extra-light-bg-color;
 }
