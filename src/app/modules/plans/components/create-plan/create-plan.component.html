@@ -115,5 +115,55 @@
   </div>
 
   <!-- pricing plan -->
-  <app-plan-add-empty-layout [items]="planAddEmptyData"></app-plan-add-empty-layout>
+  <app-plan-add-empty-layout
+    [items]="planAddEmptyData"
+  ></app-plan-add-empty-layout>
+  <!-- product details -->
+  <app-plan-add-empty-layout
+    [items]="planAddEmptyData"
+  ></app-plan-add-empty-layout>
+  <!-- Add-ons details -->
+  <app-plan-add-empty-layout
+    [items]="planAddEmptyData"
+  ></app-plan-add-empty-layout>
+
+  <!-- Charges -->
+  <div class="plan-section-block flex-center border-2 p-11 mb-4">
+    <div class="plan-info-block inner-wrapper">
+      <div class="heading flex align-center">
+        <img
+          src="../../../../../assets/images/icons/money.svg"
+          alt="money-icon"
+        />
+        <h5 class="mat-headline-5 text-dark">Charges</h5>
+      </div>
+      <div class="input-wrapper mt-8">
+        <div class="mt-6">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">Charges</p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="chargesInfo"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #chargesInfo let-name>
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Charges</div>
+                <div class="details">
+                  You can create and select charges to include it in the plan
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="Enter here..." />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
