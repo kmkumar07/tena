@@ -1,0 +1,157 @@
+.stepper-wrapper {
+    width: 19.25rem;
+    background-color: color('shades', 'transparent');
+
+    .mat-stepper-vertical {
+        background-color: color('shades', 'transparent');
+
+        .mat-step {
+            height: 5.625rem;
+            border-left: .25rem solid color('shades', 'transparent');
+
+            &:first-of-type.active {
+                &::before {
+                    height: 2.8125rem;
+                    bottom: 0;
+                }
+            }
+
+            &:last-of-type.active {
+                &::before {
+                    height: 2.8125rem;
+                    top: 0;
+                }
+            }
+
+            &.active {
+                background-color: color('shades', 'white');
+                border-left: .25rem solid color('primary', 'main');
+                border-radius: 0.5rem 0 0 0.5rem;
+                position: relative;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    left: 2.5625rem;
+                    z-index: 2;
+                    height: 5.625rem;
+                    border-left-width: .0625rem;
+                    border-left-style: solid;
+                    border-left-color: color('primary', 'main');
+                }
+
+                .mat-step-icon {
+                    border: .0938rem solid color('primary', 'main') !important;
+                }
+
+                .mat-step-icon-content {
+                    &::before {
+                        background-color: color('primary', 'main');
+                    }
+                }
+
+            }
+        }
+    }
+
+    .mat-step-header {
+        -webkit-tap-highlight-color: color('shades', 'transparent') !important;
+        background: color('shades', 'transparent') !important;
+
+        &:hover {
+            background-color: color('shades', 'transparent');
+        }
+
+        .mat-step-icon {
+            background-color: color('shades', 'white');
+            border: .0938rem solid color('grey', 'stepper-border');
+        }
+
+    }
+
+    .mat-vertical-stepper-header {
+        height: unset;
+        z-index: 2;
+    }
+
+    .mat-step-icon {
+        height: 2.25rem;
+        width: 2.25rem;
+    }
+
+    .mat-vertical-content-container {
+        margin-left: 2.5625rem;
+    }
+
+    .mat-step-icon-content {
+        span {
+            display: none;
+        }
+
+        &::before {
+            content: '';
+            width: .625rem;
+            height: .625rem;
+            background-color: color('grey', 'stepper-border');
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .mat-icon.mat-icon.notranslate.material-icons.mat-ligature-font.mat-icon-no-color {
+        display: none;
+    }
+
+    .mat-vertical-stepper-content {
+        display: none;
+    }
+
+    .mat-stepper-vertical-line::before {
+        height: 5.625rem;
+        top: -1.625rem;
+        bottom: 0;
+        border-left-color: color('grey', 'stepper-border');
+    }
+
+    .mat-vertical-stepper-header .mat-step-icon {
+        margin-right: .875rem;
+    }
+
+}
+
+// create plan section
+.create-plan-main-wrapper {
+    width: calc(100% - 19.25rem);
+
+    .plan-info-block {
+        .heading {
+            border-bottom: .0625rem solid $border-color;
+            padding-bottom: .9375rem;
+
+            img {
+                margin-right: .625rem;
+            }
+        }
+
+        textarea {
+            min-height: 2.4375rem;
+        }
+    }
+
+    .plan-section-block {
+        background-color: #ffffff;
+        border-radius: 0 0.5rem  0.5rem 0;
+        .inner-wrapper {
+            max-width: 44.75rem;
+            width: 100%;
+        }
+    }
+}
+
+.empty-add-section {
+    padding: 8.6875rem 3.75rem 5.6875rem;
+    background-color: $primay-extra-light-bg-color;
+}

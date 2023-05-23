@@ -1,38 +1,40 @@
-import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ViewChild } from '@angular/core';
-import { MatSort, Sort } from '@angular/material/sort';
-import { Data_Type, User_Data, noProducts } from 'src/app/shared/constants/consants';
+import {
+  Plans_Data,
+  noPlans,
+  plansFields,
+} from 'src/app/shared/constants/consants';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatSort, Sort } from '@angular/material/sort';
 @Component({
-  selector: 'app-product-listing',
-  templateUrl: './product-listing.component.html',
-  styleUrls: ['./product-listing.component.scss'],
+  selector: 'app-plans-listing',
+  templateUrl: './plans-listing.component.html',
+  styleUrls: ['./plans-listing.component.scss'],
 })
-export class ProductListingComponent {
+export class PlansListingComponent {
+  emptyList = noPlans;
+  plansData: plansFields[] = Plans_Data;
   displayedColumns: string[] = [
     'select',
-    'product_ID',
-    'title',
+    'plan_ID',
+    'external_name',
+    'internal_name',
     'description',
-    'features',
     'created_at',
     'status',
     'action',
   ];
-  emptyProductPros = noProducts;
-  productsData: Data_Type[] = [];
-  selection = new SelectionModel<Data_Type>(true, []);
-
+  selection = new SelectionModel<plansFields>(true, []);
   @ViewChild(MatSort) sort: MatSort;
-
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.productsData.length;
+    const numRows = this.plansData.length;
     return numSelected === numRows;
   }
   constructor(private _liveAnnouncer: LiveAnnouncer) {}
+
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
@@ -40,22 +42,18 @@ export class ProductListingComponent {
       return;
     }
     // console.log(this.selection.select)
-    this.selection.select(...this.productsData);
+    this.selection.select(...this.plansData);
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Data_Type): string {
+  checkboxLabel(row?: plansFields): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.product_ID + 1
+      row.plan_ID + 1
     }`;
   }
-
-  // ngAfterViewInit() {
-  //   this.productsData.sort = this.sort;
-  // }
 
   /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
@@ -76,16 +74,15 @@ export class ProductListingComponent {
     }
     event.stopPropagation();
   }
-  selectAll(data: any[]){
+  selectAll(data: any[]) {
     if (this.isAllSelected()) {
       data.map((element: any) => {
-        document.getElementById(element.id)?.classList.add('selected-row')
-      })
-    }
-    else{
+        document.getElementById(element.id)?.classList.add('selected-row');
+      });
+    } else {
       data.map((element: any) => {
-        document.getElementById(element.id)?.classList.remove('selected-row')
-      })
+        document.getElementById(element.id)?.classList.remove('selected-row');
+      });
     }
   }
 }

@@ -6,6 +6,7 @@ import {
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NgxTippyProps } from 'ngx-tippy-wrapper';
 import { trigger, transition, animate, style } from '@angular/animations'
+import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 
 @Component({
   selector: 'app-create-product',
@@ -41,6 +42,14 @@ export class CreateProductComponent {
       width: '',
       enterAnimationDuration,
       exitAnimationDuration,
+    });
+  }
+  openSuccess(){
+    this.dialog.open(SuccessDialogComponent, {
+      width: '420px',
+      data: {
+        module: 'Plan' 
+      }
     });
   }
   // setContentForTooltip() {

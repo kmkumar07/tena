@@ -49,6 +49,7 @@
     }
     tbody {
       tr {
+        cursor: pointer;
         &:hover {
           border: 1px solid #d6d6d6;
           box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.14);
@@ -56,6 +57,9 @@
         }
         td {
           position: relative;
+          &.Active{
+            color:color('green', 'darken-3')
+          }
         }
         &.selected-row {
           td {
@@ -87,10 +91,10 @@
         border-left: $primary-table-border;
       }
       &.description-col {
-        width: 22.4375rem;
+        width: 25.6875rem;
         p {
           display: block;
-          @include text-ellipsis(15.6875rem);
+          @include text-ellipsis(25.6875rem);
         }
       }
     }

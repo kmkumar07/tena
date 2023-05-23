@@ -21,6 +21,13 @@ const routes: Routes = [
             (mod) => mod.FeaturesModule
           ),
       },
+      {
+        path: 'plans',
+        loadChildren: () =>
+          import('../app/modules/plans/plans.module').then(
+            (mod) => mod.PlansModule
+          ),
+      },
     ],
   },
 ];
