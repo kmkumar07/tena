@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { plan_add_empty_data } from 'src/app/shared/constants/consants';
 
 @Component({
@@ -8,4 +8,7 @@ import { plan_add_empty_data } from 'src/app/shared/constants/consants';
 })
 export class PlanAddEmptyLayoutComponent {
   planAddEmptyData = plan_add_empty_data;
+
+  @Input() items: any[] = [];
+  constructor(){}
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { plan_add_empty_data } from 'src/app/shared/constants/consants';
 
 @Component({
   selector: 'app-create-plan',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./create-plan.component.scss']
 })
 export class CreatePlanComponent {
-
+  planAddEmptyData = plan_add_empty_data;
 }
