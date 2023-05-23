@@ -4,22 +4,25 @@ import {MatButtonModule} from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './core/layouts/header/header.component';
-import { SidenavComponent } from './core/layouts/sidenav/sidenav.component';
+import { AngularMaterialModule } from './shared/modules/angular-material/angular-material.module';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from './shared/modules/shared/shared.module';
 import { LayoutComponent } from './core/layouts/layout/layout.component';
-
+import { SidebarComponent } from './core/layouts/sidebar/sidebar.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    SidenavComponent,
-    LayoutComponent
+    LayoutComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
+    AngularMaterialModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatButtonModule
+    MatButtonModule,
+    FormsModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

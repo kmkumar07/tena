@@ -1,0 +1,22 @@
+<div class="image-upload-dialog" [@slideInOut]>
+  <h4 class="text-dark mat-subtitle-2 mb-2 font-weight-500">Upload Logo</h4>
+  <p class="mat-caption grey-text text-darken-6">
+    Allowed JPG, GIF or PNG. Max size of 800K
+  </p>
+  <div>
+    <input type="file" name="" id="logo" onchange="fileValue(this)" />
+    <label for="logo" class="upload-field border-2 pointer" id="file-label">
+      <div class="file-thumbnail">
+        <mat-icon class="material-symbols-outlined m-0">imagesmode</mat-icon>
+        <h3 id="filename" class="mat-body-1 font-weight-500 text-text text-primary">
+          <a href="" class="mr-1 primary-text text-main text-underline">Click here to upload</a
+          >or drag & drop
+        </h3>
+      </div>
+    </label>
+  </div>
+  <div class="action-btns flex align-center justify-end">
+    <button mat-stroked-button color="primary" class="mr-2" mat-dialog-close>Dismiss</button>
+    <button mat-flat-button color="primary" class="" mat-dialog-close>Save</button>
+  </div>
+</div>

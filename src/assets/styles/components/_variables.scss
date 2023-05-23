@@ -20,8 +20,9 @@
 // 1. Colors
 // ==========================================================================
 
-$primary-color: color("blue", "base") !default;
-$primary-color-light: lighten($primary-color, 15%) !default;
+$primary-color: color("primary", "light4") !default;
+$selected-row: color('primary', 'main');
+// $primary-color-light: lighten($primary-color, 15%) !default;
 $primary-color-dark: color("plum-purple", "darken-1") !default;
 
 $secondary-color: color("green", "base") !default;
@@ -30,6 +31,7 @@ $error-color: color("red", "base") !default;
 $link-color: color("blue", "lighten-1") !default;
 $border-color: color("grey", "border") !default;
 
+$primay-light-bg-color: color("primary", "lighten-4"); // #F5F3FF
 
 // 2. Buttons
 // ==========================================================================
@@ -211,8 +213,9 @@ $spinner-default-color: $secondary-color !default;
 
 $table-border-color: $border-color !default;
 $table-striped-color: rgba(242, 242, 242, 0.5) !default;
-
-
+$primary-table-border:  0.0625rem solid $table-border-color;
+$primary-table-border-radius: 0.25rem;
+$primary-table-selected-row: 0.0625rem solid $selected-row;
 // 19. Toasts
 // ==========================================================================
 
@@ -222,13 +225,17 @@ $toast-text-color: #fff !default;
 $toast-action-color: #eeff41;
 
 
-// 20. Typography
+// 20. Typography (used in SAAS framework)
+
 // ==========================================================================
-$font-light: 'Roboto', sans-serif;
-$font-regular: 'Roboto', sans-serif;
-$font-medium: 'Roboto', sans-serif;
-$font-bold: 'Roboto', sans-serif;
-$off-black: color("grey", "base") !default;
+$text-light: color('text', 'lighten-1');
+$text-dark: color('purple', 'darken-1'); // #3A3742
+$text-dark-1: color('grey', 'darken-6');
+$text-headline-dark: color('text', 'dark'); // #2C2466   
+$text-headline-light: rgba(color('text', 'dark'), .6); // #2C2466   
+$headline-light: color('text', 'primary'); // #405189
+$text-primary: color('primary', 'main');
+
 // Header Styles
 $h1-fontsize: 4.8rem !default;
 $h2-fontsize: 3.6rem !default;
@@ -346,15 +353,5 @@ $left-right:0 1rem;
 $width-full:100%;
 
 $height-full:100%;
-
-
-$ph-bg:                   #fff !default;
-$ph-color:                #EEEFF2 !default;
-$ph-border-radius:        4px !default; 
-
-$ph-gutter:               30px !default;
-$ph-spacer:               15px !default;
-
-$ph-avatar-border-radius: 50% !default;
-
-$ph-animation-duration: 1.2s !default;
+$dimensions: 0.3125rem;
+$spacing: 0.25rem;
