@@ -7,7 +7,7 @@ import { ViewPlansComponent } from './components/view-plans/view-plans.component
 const routes: Routes = [
   {path:'', component: PlansListingComponent},
   {path:'view', component: ViewPlansComponent},
-  {path:'create-plan', component: CreatePlanComponent}
+  {path:'create', component: CreatePlanComponent}
 ];
 
 @NgModule({

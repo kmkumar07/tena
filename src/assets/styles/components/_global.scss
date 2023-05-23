@@ -113,6 +113,12 @@ label {
 .border-2 {
   border-radius: 0.5rem;
 }
+.border-3 {
+  border-radius: 0.75rem;
+}
+.border-4 {
+  border-radius: 1rem;
+}
 // font-weight
 .fw-500 {
   font-weight: 500 !important;
@@ -264,7 +270,7 @@ label {
 // 4. Display
 
 .block {
-  display: block;
+  display: block !important;
 }
 .inline {
   display: inline;
@@ -285,6 +291,28 @@ label {
 }
 
 // SPACING
+// Auto Margin
+.m-auto{
+  margin: auto;
+}
+.my-auto{
+  margin: auto 0;
+}
+.mx-auto{
+  margin: 0 auto;
+}
+.ml-auto{
+  margin-left: auto;
+}
+.mr-auto{
+  margin-right: auto;
+}
+.mt-auto{
+  margin-top: auto;
+}
+.mb-auto{
+  margin-bottom: auto;
+}
 // Margin Loop
 @for $i from 0 through 12 {
   .mt-#{$i} {
@@ -392,7 +420,7 @@ label {
   font-size: 1rem;
   padding: 0.75rem 0.625rem;
   background-color: #f3f1ff;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   font-weight: 500;
 }
 // 5. Angular Material
