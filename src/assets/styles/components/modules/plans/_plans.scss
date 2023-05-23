@@ -3,42 +3,56 @@
     width: 100%;
     background-color: color('shades', 'transparent');
 
-    .mat-step {
-        height: 5.625rem;
-        border-left: .25rem solid color('shades', 'transparent');
-
-        &.active {
-            background-color: color('shades', 'white');
-            border-left: .25rem solid color('primary', 'main');
-            border-radius: .5rem;
-            position: relative;
-
-            &::before {
-                content: "";
-                position: absolute;
-                left: 2.5625rem;
-                z-index: 2;
-                height: 5.625rem;
-                border-left-width: .0625rem;
-                border-left-style: solid;
-                border-left-color: color('primary', 'main');
-            }
-            
-            .mat-step-icon {
-                border: .0938rem solid color('primary', 'main') !important;
-            }
-
-            .mat-step-icon-content {
-                &::before {
-                    background-color: color('primary', 'main');
-                }
-            }
-        }
-    }
-
-
     .mat-stepper-vertical {
         background-color: color('shades', 'transparent');
+
+        .mat-step {
+            height: 5.625rem;
+            border-left: .25rem solid color('shades', 'transparent');
+
+            &:first-of-type.active{
+                &::before{
+                    height: 2.8125rem;
+                    bottom: 0;
+                }
+            }
+
+            &:last-of-type.active{
+                &::before{
+                    height: 2.8125rem;
+                    top: 0;
+                }
+            }
+    
+            &.active {
+                background-color: color('shades', 'white');
+                border-left: .25rem solid color('primary', 'main');
+                border-radius: .5rem;
+                position: relative;
+    
+                &::before {
+                    content: "";
+                    position: absolute;
+                    left: 2.5625rem;
+                    z-index: 2;
+                    height: 5.625rem;
+                    border-left-width: .0625rem;
+                    border-left-style: solid;
+                    border-left-color: color('primary', 'main');
+                }
+                
+                .mat-step-icon {
+                    border: .0938rem solid color('primary', 'main') !important;
+                }
+    
+                .mat-step-icon-content {
+                    &::before {
+                        background-color: color('primary', 'main');
+                    }
+                }
+                
+            }
+        }
     }
 
     .mat-step-header {
