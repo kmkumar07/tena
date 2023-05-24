@@ -1,6 +1,6 @@
 // 1. Mat-chip
 // 2. Tables
-//
+// 3. list checkbox
 
 // 1. mat-chip
 .basic-chip.mat-mdc-chip {
@@ -57,8 +57,8 @@
         }
         td {
           position: relative;
-          &.Active{
-            color:color('green', 'darken-3')
+          &.Active {
+            color: color("green", "darken-3");
           }
         }
         &.selected-row {
@@ -131,19 +131,26 @@
     }
   }
 }
-.edit-menu+* .cdk-overlay-pane {
+.edit-menu + * .cdk-overlay-pane {
   transform: translate(-2.2rem, -1.6875rem) !important;
 }
-.mdc-menu-surface.mat-mdc-select-panel{
+.mdc-menu-surface.mat-mdc-select-panel {
   border-radius: 0.5rem;
-  .mat-mdc-option.mdc-list-item{
+  .mat-mdc-option.mdc-list-item {
     min-height: 1.75rem;
-    color: color('text', 'primary')
+    color: color("text", "primary");
   }
 }
-.dialog-curved{
-  .mdc-dialog__container{
+.dialog-curved {
+  .mdc-dialog__container {
     border-radius: 1rem;
     overflow: hidden;
   }
+}
+
+// list checkbox
+.mat-mdc-option.mdc-list-item .mat-pseudo-checkbox-full {
+  margin-right: 0.625rem;
+  color: color("grey", "lighten-9");
+  border-radius: $checkbox-border;
 }

@@ -92,6 +92,12 @@
 
 // create plan section
 .create-plan-main-wrapper {
+  .with-footer-btn {
+    .add-new-btn-list {
+      display: flex;
+      justify-content: start;
+    }
+  }
   width: calc(100% - 19.25rem);
 
   .plan-info-block {
@@ -173,7 +179,7 @@
         content: "";
         display: block;
         position: absolute;
-        background-color: color('grey', 'border-2');
+        background-color: color("grey", "border-2");
         bottom: 0;
         left: 0;
         right: 0;
@@ -183,7 +189,8 @@
         height: 2.5625rem;
         padding: 0 1.25rem;
         min-width: inherit;
-        .mdc-tab__ripple,.mat-ripple {
+        .mdc-tab__ripple,
+        .mat-ripple {
           display: none;
         }
         .mdc-tab__text-label {
@@ -193,10 +200,82 @@
     }
   }
 }
-.pricing-tabs{
-  .mdc-tab{
-    .mdc-tab__text-label{
-      color: color('text', 'lighten-3');
+.pricing-tabs {
+  .mdc-tab {
+    .mdc-tab__text-label {
+      color: color("text", "lighten-3");
     }
   }
+  .plan-section-block {
+    background-color: color("shades", "white");
+    border-radius: 0 0.5rem 0.5rem 0;
+    .inner-wrapper {
+      max-width: 44.75rem;
+      width: 100%;
+    }
+  }
+
+  .flag-wrapper {
+    border-bottom: 0.0625rem solid color("primary", "light");
+  }
+  .table-wrapper {
+    .mat-mdc-row .mat-mdc-cell {
+      border-bottom: 0.0625rem solid transparent;
+      border-top: 0.0625rem solid transparent;
+      cursor: pointer;
+    }
+
+    .mat-mdc-table .mdc-data-table__header-row {
+      height: 2.1875rem;
+      background-color: color("primary", "lighten-4");
+    }
+    .mat-mdc-table .mdc-data-table__row {
+      height: 3.6875rem;
+    }
+    .mdc-data-table__cell,
+    .mdc-data-table__header-cell {
+      border-bottom-width: 0;
+    }
+
+    .billing-fixed {
+      background-color: color("primary", "lighten-4");
+    }
+    .price-cell {
+      color: color("purple", "lighten-1");
+    }
+    .action-header {
+      text-align: right;
+    }
+    .edit-btn {
+      height: 2rem;
+      .mat-icon {
+        width: 1rem;
+        height: 1rem;
+        font-size: 1rem;
+      }
+    }
+
+    @media only screen and (max-width: 1280px) {
+      th,
+      td,
+      .billing-fixed {
+        font-size: 0.875rem;
+      }
+      .mdc-data-table__cell,
+      .mdc-data-table__header-cell {
+        padding: 0 0.75rem;
+      }
+    }
+  }
+}
+
+.empty-add-section {
+  padding: 8.6875rem 3.75rem 5.6875rem;
+  background-color: $primay-extra-light-bg-color;
+}
+
+.add-new-btn-list.mat-mdc-button {
+  display: flex;
+  justify-content: start;
+  // margin-right: 0.625rem;
 }

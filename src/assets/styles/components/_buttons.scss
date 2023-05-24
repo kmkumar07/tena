@@ -114,8 +114,8 @@
 .mdc-button {
   &.small {
     height: 2rem;
-    padding: 0 .5rem;
-    font-size: .75rem;
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
   }
 
   &.medium {
@@ -126,5 +126,19 @@
   &.large {
     height: 2.5rem;
     padding: 0 1.5rem;
+  }
+}
+
+.mdc-icon-button {
+  &.light-bg {
+    &.mat-warn {
+      background-color: color("red", "lighten-3");
+      .mat-icon {
+        color: color("red", "darken-1");
+      }
+    }
+    &.rounded {
+      border-radius: .25rem;
+    }
   }
 }
