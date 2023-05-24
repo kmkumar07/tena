@@ -127,4 +127,20 @@
     height: 2.5rem;
     padding: 0 1.5rem;
   }
+
+  &.close-icon-btn{
+    height: 2rem;
+    min-width: 2rem;
+    padding: 0;
+    border-radius: .175rem;
+    background-color: color('red', 'close-btn');
+    display: flex;
+    align-items: center;
+    .mat-icon{
+        width: 1.0625rem;
+        height: 1.0625rem;
+        font-size: 1.0625rem;
+        color: color('red', 'close-icon');
+    }
+  }
 }
