@@ -34,7 +34,7 @@ export const MENUITEMS = [
     state: 'dashboard',
     type: 'link',
     name: 'Overview',
-    icon: 'dashboard',
+    icon: 'space_dashboard',
     category: 'Dashboard',
   },
   {
@@ -158,6 +158,7 @@ export const User_Options = [
   { path: '', icon: 'clear_day', name: 'Dark Mode', toggle: true },
   { path: '/help', icon: 'live_help', name: 'Help', toggle: false },
 ];
+// Product listing
 export const User_Data = [
   {
     id: 'random_id_1234',
@@ -245,8 +246,6 @@ export const StaticRoutes = {
   features: ['features'],
   products: ['products'],
 };
-
-
 export const plan_add_empty_data = [{
   titleIcon: '../../../../../../assets/images/icons/basil_invoice-outline.svg',
   iconAlt: 'invoice-outline-icon',

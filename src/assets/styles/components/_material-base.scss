@@ -134,3 +134,16 @@
 .edit-menu+* .cdk-overlay-pane {
   transform: translate(-2.2rem, -1.6875rem) !important;
 }
+.mdc-menu-surface.mat-mdc-select-panel{
+  border-radius: 0.5rem;
+  .mat-mdc-option.mdc-list-item{
+    min-height: 1.75rem;
+    color: color('text', 'primary')
+  }
+}
+.dialog-curved{
+  .mdc-dialog__container{
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+}

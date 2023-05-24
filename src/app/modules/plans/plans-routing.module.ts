@@ -5,10 +5,12 @@ import { SideStepperComponent } from './components/side-stepper/side-stepper.com
 
 import { ViewPlansComponent } from './components/view-plans/view-plans.component';
 import { CreatePlanComponent } from './components/create-plan/create-plan.component';
+import { SetPriceComponent } from './components/set-price/set-price.component';
 const routes: Routes = [
   { path: '', component: PlansListingComponent },
   { path: 'view', component: ViewPlansComponent },
   { path: 'create', component: CreatePlanComponent },
+  { path: 'create/set-price', component: SetPriceComponent}
 ];
 
 @NgModule({

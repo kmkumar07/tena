@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatStep } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-side-stepper',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./side-stepper.component.scss']
 })
 export class SideStepperComponent {
+  @ViewChild('stepper') stepper: MatStep;
   isLinear = false;
+  ngOnInit() {
+    console.log(this.stepper, 'jbjbd');
+  }
 }

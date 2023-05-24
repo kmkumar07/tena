@@ -1,12 +1,20 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort } from '@angular/material/sort';
-import { Data_Type, Features_Data, features, noFeatures } from 'src/app/shared/constants/consants';
+import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
+import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
+import {
+  Data_Type,
+  Features_Data,
+  features,
+  noFeatures,
+} from 'src/app/shared/constants/consants';
 @Component({
   selector: 'app-features-listing',
   templateUrl: './features-listing.component.html',
-  styleUrls: ['./features-listing.component.scss']
+  styleUrls: ['./features-listing.component.scss'],
 })
 export class FeaturesListingComponent {
   displayedColumns: string[] = [
@@ -22,7 +30,7 @@ export class FeaturesListingComponent {
   ];
   featuresData: features[] = Features_Data;
   selection = new SelectionModel<features>(true, []);
-  emptyFeature = noFeatures
+  emptyFeature = noFeatures;
   @ViewChild(MatSort) sort: MatSort;
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -31,7 +39,9 @@ export class FeaturesListingComponent {
     const numRows = this.featuresData.length;
     return numSelected === numRows;
   }
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer
+  ) {}
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
@@ -75,16 +85,16 @@ export class FeaturesListingComponent {
     }
     event.stopPropagation();
   }
-  selectAll(data: any[]){
+  selectAll(data: any[]) {
     if (this.isAllSelected()) {
       data.map((element: any) => {
-        document.getElementById(element.id)?.classList.add('selected-row')
-      })
-    }
-    else{
+        document.getElementById(element.id)?.classList.add('selected-row');
+      });
+    } else {
       data.map((element: any) => {
-        document.getElementById(element.id)?.classList.remove('selected-row')
-      })
+        document.getElementById(element.id)?.classList.remove('selected-row');
+      });
     }
   }
+
 }

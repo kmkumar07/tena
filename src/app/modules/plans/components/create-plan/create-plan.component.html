@@ -8,7 +8,7 @@
             src="../../../../../../assets/images/icons/carbon_document-multiple-02.svg"
             alt="carbon_document-multiple-icon"
           />
-          <h5 class="mat-headline-5 text-dark">Plan Information</h5>
+          <abbr class="mat-headline-5 text-dark" [routerLink]="'/plans/create/set-price'">Plan Information</abbr>
         </div>
         <div class="info-form">
           <div class="input-wrapper mt-8">
@@ -51,7 +51,6 @@
                   class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
                   [ngxTippy]="productnameinfo"
                   [tippyProps]="{ placement: 'right' }"
-                  tippyName="content"
                   >help</mat-icon
                 >
                 <ng-template #productnameinfo let-name class="t-template">

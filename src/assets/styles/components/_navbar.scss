@@ -58,7 +58,7 @@
         top: 4rem;
         @include flex-position("center", "center");
         .toggle-sidenav {
-          border: 0.125rem solid color("primary", "light");
+          outline: 0.125rem solid color("primary", "light");
           width: 1.75rem !important;
           height: 1.75rem !important;
           box-shadow: none;
