@@ -124,6 +124,12 @@
 
 // create plan section
 .create-plan-main-wrapper {
+    .with-footer-btn{
+        .add-new-btn-list{
+         display: flex;
+         justify-content: start;
+        }
+    }
     width: calc(100% - 19.25rem);
 
     .plan-info-block {
@@ -154,4 +160,10 @@
 .empty-add-section {
     padding: 8.6875rem 3.75rem 5.6875rem;
     background-color: $primay-extra-light-bg-color;
+}
+
+.add-new-btn-list.mat-mdc-button{
+    display: flex;
+    justify-content: start;
+    margin-right: .625rem;
 }

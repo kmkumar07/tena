@@ -1,6 +1,6 @@
 // 1. Mat-chip
 // 2. Tables
-//
+// 3. list checkbox 
 
 // 1. mat-chip
 .basic-chip.mat-mdc-chip {
@@ -133,4 +133,12 @@
 }
 .edit-menu+* .cdk-overlay-pane {
   transform: translate(-2.2rem, -1.6875rem) !important;
+}
+
+
+// list checkbox 
+.mat-mdc-option.mdc-list-item .mat-pseudo-checkbox-full  {
+  margin-right: .625rem;
+  color: color('grey', 'lighten-9');
+  border-radius: $checkbox-border;
 }
