@@ -153,7 +153,10 @@
                 </div>
               </ng-template>
             </div>
-            <mat-form-field appearance="outline" class="border-2 with-footer-btn">
+            <mat-form-field
+              appearance="outline"
+              class="border-2 with-footer-btn"
+            >
               <!-- <mat-label> Select </mat-label> -->
               <mat-select
                 required
@@ -179,6 +182,46 @@
             </mat-form-field>
           </div>
         </div>
+        <!-- setup fee inputs -->
+        <div class="fee-input-wrapper">
+          <div class="fee-input flex align-center justify-between">
+            <span class="mat-subtitle-2">Setup fee</span>
+            <div class="flex align-start">
+              <mat-form-field appearance="outline" class="mb-0">
+                <input matInput placeholder="Enter here..." />
+              </mat-form-field>
+              <button
+                mat-icon-button
+                class="mb-1 ml-4"
+                color="warn"
+                aria-label="Example icon button with a vertical three dot icon"
+              >
+                <mat-icon class="material-symbols-outlined" color="warn"
+                  >close</mat-icon
+                >
+              </button>
+            </div>
+          </div>
+          <div class="fee-input flex align-center justify-between">
+            <span class="mat-subtitle-2">Activation fee</span>
+            <div class="flex align-start">
+              <mat-form-field appearance="outline" class="mb-0">
+                <input matInput placeholder="Enter here..." />
+              </mat-form-field>
+              <button
+                mat-icon-button
+                class="mb-1 ml-4"
+                color="warn"
+                aria-label="Example icon button with a vertical three dot icon"
+              >
+                <mat-icon class="material-symbols-outlined" color="warn"
+                  >close</mat-icon
+                >
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- setup fee inputs -->
         <div class="action-btns flex align-center justify-end">
           <div>
             <button mat-stroked-button color="primary" class="mr-2 large">
