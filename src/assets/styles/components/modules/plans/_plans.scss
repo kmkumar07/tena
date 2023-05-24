@@ -188,21 +188,7 @@
                 font-size: 1rem;
             }
         }
-        .close-btn{
-            height: 2rem;
-            min-width: 2rem;
-            padding: 0;
-            border-radius: .175rem;
-            background-color: color('red', 'close-btn');
-            .mat-icon{
-                width: 1.0625rem;
-                height: 1.0625rem;
-                font-size: 1.0625rem;
-                color: color('red', 'close-icon');
-            }
-        }
 
-       
             @media only screen and (max-width: 1280px) {
                 th , td, .billing-fixed{
                 font-size: .875rem;
