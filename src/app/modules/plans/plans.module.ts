@@ -10,6 +10,7 @@ import { PlansListingComponent } from './components/plans-listing/plans-listing.
 import { ViewPlansComponent } from './components/view-plans/view-plans.component';
 import { PlanAddEmptyLayoutComponent } from './components/plan-add-empty-layout/plan-add-empty-layout.component';
 import { CreatePlanComponent } from './components/create-plan/create-plan.component';
+import { AddPlanPricingComponent } from './components/create-plan/step/add-plan-pricing/add-plan-pricing.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { CreatePlanComponent } from './components/create-plan/create-plan.compon
     PlansListingComponent,
     ViewPlansComponent,
     CreatePlanComponent,
-    PlanAddEmptyLayoutComponent
+    PlanAddEmptyLayoutComponent,
+    AddPlanPricingComponent
   ],
   imports: [
     CommonModule,

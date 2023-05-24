@@ -142,13 +142,78 @@
     }
 
     .plan-section-block {
-        background-color: #ffffff;
+        background-color: color('shades', 'white');
         border-radius: 0 0.5rem  0.5rem 0;
         .inner-wrapper {
             max-width: 44.75rem;
             width: 100%;
         }
     }
+
+    .flag-wrapper{
+        border-bottom: .0625rem solid color('primary', 'light');
+    }
+    .table-wrapper{
+        .mat-mdc-row .mat-mdc-cell {
+            border-bottom: .0625rem solid transparent;
+            border-top: .0625rem solid transparent;
+            cursor: pointer;
+          }
+
+          .mat-mdc-table .mdc-data-table__header-row {
+            height: 2.1875rem;
+            background-color: color('primary', 'lighten-4');
+        }
+        .mat-mdc-table .mdc-data-table__row {
+            height: 3.6875rem;
+        }
+        .mdc-data-table__cell, .mdc-data-table__header-cell {
+            border-bottom-width: 0;
+        }
+
+        .billing-fixed{
+            background-color: color('primary', 'lighten-4');
+        }
+        .price-cell{
+            color: color('purple', 'lighten-1');
+        }
+        .action-header{
+            text-align: right;
+        }
+        .edit-btn{
+            height: 2rem;
+            .mat-icon{
+                width: 1rem;
+                height: 1rem;
+                font-size: 1rem;
+            }
+        }
+        .close-btn{
+            height: 2rem;
+            min-width: 2rem;
+            padding: 0;
+            border-radius: .175rem;
+            background-color: color('red', 'close-btn');
+            .mat-icon{
+                width: 1.0625rem;
+                height: 1.0625rem;
+                font-size: 1.0625rem;
+                color: color('red', 'close-icon');
+            }
+        }
+
+       
+            @media only screen and (max-width: 1280px) {
+                th , td, .billing-fixed{
+                font-size: .875rem;
+                }
+                .mdc-data-table__cell, .mdc-data-table__header-cell {
+                    padding: 0 .75rem;
+                }
+        }
+          
+    }
+
 }
 
 .empty-add-section {
