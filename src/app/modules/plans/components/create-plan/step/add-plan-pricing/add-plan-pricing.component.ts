@@ -9,10 +9,10 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {PricingCycle: 'Daily', PricingModel: 'Tired', BillingCycle: 'Fixed', Price: '$100/Unit', action:''},
-  {PricingCycle: 'Weekly', PricingModel: 'Tired', BillingCycle: 'Fixed', Price: '$100/Unit', action:''},
-  {PricingCycle: 'Monthly', PricingModel: 'Tired', BillingCycle:'Fixed', Price: '$100/Unit',  action:''},
-  {PricingCycle: 'Yearly', PricingModel: 'Tired', BillingCycle: 'Fixed', Price: '$100/Unit',  action:''},
+  {PricingCycle: 'Daily', PricingModel: 'Tiered', BillingCycle: 'Fixed', Price: '$100/Unit', action:''},
+  {PricingCycle: 'Weekly', PricingModel: 'Tiered', BillingCycle: 'Fixed', Price: '$100/Unit', action:''},
+  {PricingCycle: 'Monthly', PricingModel: 'Tiered', BillingCycle:'Fixed', Price: '$100/Unit',  action:''},
+  {PricingCycle: 'Yearly', PricingModel: 'Tiered', BillingCycle: 'Fixed', Price: '$100/Unit',  action:''},
 ];
 
 @Component({
