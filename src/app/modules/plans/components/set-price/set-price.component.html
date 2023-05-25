@@ -1,0 +1,122 @@
+<div class="main-bg w-full h-full overflow-auto border-2 py-8 pl-11 pr-10">
+  <div class="flex align-center mb-2">
+    <mat-icon
+      class="material-symbols-outlined pointer"
+      color="primary"
+      [routerLink]="'/features'"
+      >keyboard_backspace</mat-icon
+    >
+    <span class="mat-h1 primary-text text-main ml-2">Create Plan</span>
+  </div>
+  <div class="flex align-center">
+    <span class="pl-8 grey-text text-lighten-9"> Create plan </span>
+    <mat-icon class="material-symbols-outlined mx-2 small-icon">
+      chevron_right
+    </mat-icon>
+    <span class="shades-text text-black fw-500">Set Price</span>
+  </div>
+  <div class="mt-8">
+    <form>
+      <mat-tab-group
+        class="pricing-tabs mb-6"
+        mat-stretch-tabs="false"
+        mat-align-tabs="start"
+      >
+        <mat-tab label="Daily"></mat-tab>
+        <mat-tab label="Weekly"></mat-tab>
+        <mat-tab label="Monthly"></mat-tab>
+        <mat-tab label="Yearly"></mat-tab>
+      </mat-tab-group>
+      <div class="py-2">
+        <div class="input-wrapper">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Pricing Model
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="helpinfotooltip"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #helpinfotooltip let-name>
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Feature id</div>
+                <div class="details">
+                  Microsoft Teams is the ultimate messaging app for your
+                  organization—a workspace for real-time collaboration and
+                  communication, meetings, file and app sharing, and even the
+                  occasional emoji! All in one place, all in the open, all
+                  accessible to everyone.
+                </div>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline" class="border-2">
+            <mat-select required placeholder="select">
+              <mat-option> Flat fee </mat-option>
+              <mat-option> Tiered </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">Price</p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="helpinfotooltip"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #helpinfotooltip let-name>
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Feature id</div>
+                <div class="details">
+                  Microsoft Teams is the ultimate messaging app for your
+                  organization—a workspace for real-time collaboration and
+                  communication, meetings, file and app sharing, and even the
+                  occasional emoji! All in one place, all in the open, all
+                  accessible to everyone.
+                </div>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline" class="border-2">
+            <input required matInput placeholder="Enter here" />
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Billing Cycle
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="helpinfotooltip"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #helpinfotooltip let-name>
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Feature id</div>
+                <div class="details">
+                  Microsoft Teams is the ultimate messaging app for your
+                  organization—a workspace for real-time collaboration and
+                  communication, meetings, file and app sharing, and even the
+                  occasional emoji! All in one place, all in the open, all
+                  accessible to everyone.
+                </div>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline" class="border-2">
+            <mat-select required placeholder="select">
+              <mat-option> Fixed </mat-option>
+              <mat-option> Forever </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

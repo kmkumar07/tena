@@ -7,7 +7,6 @@ import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/a
 import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
 import { CreateFeatureComponent } from './components/create-feature/create-feature.component';
 import { ViewFeatureComponent } from './components/view-feature/view-feature.component';
-
 @NgModule({
   declarations: [
     FeaturesListingComponent,

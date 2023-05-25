@@ -16,6 +16,7 @@
 //  8. Flow Text
 //  9. Collections
 //  10. Progress Bar
+//  11. checkbox
 
 // 1. Colors
 // ==========================================================================
@@ -32,6 +33,9 @@ $link-color: color("blue", "lighten-1") !default;
 $border-color: color("grey", "border") !default;
 
 $primay-light-bg-color: color("primary", "lighten-4"); // #F5F3FF
+$primay-extra-light-bg-color: color("primary", "lighten-5"); // #FBF9FD
+
+$input-border-color: color('grey', 'lighten-11');
 
 // 2. Buttons
 // ==========================================================================
@@ -86,7 +90,7 @@ $button-floating-radius: 50% !default;
 
 // Text Inputs + Textarea
 $input-height: 44px !default;
-$input-border-color: #ceced2 !default;
+// $input-border-color: #ceced2 !default;
 $input-border: 1px solid $input-border-color !default;
 $input-background: #fff !default;
 $input-error-color: $error-color !default;
@@ -355,3 +359,6 @@ $width-full:100%;
 $height-full:100%;
 $dimensions: 0.3125rem;
 $spacing: 0.25rem;
+
+// 11. checkbox
+$checkbox-border: .25rem;

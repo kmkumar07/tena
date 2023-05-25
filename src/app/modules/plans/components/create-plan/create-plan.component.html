@@ -1,0 +1,236 @@
+<div class="flex w-full h-full">
+  <app-side-stepper> </app-side-stepper>
+  <div class="create-plan-main-wrapper h-full overflow-auto">
+    <div class="plan-section-block flex-center p-11 mb-4">
+      <div class="plan-info-block inner-wrapper">
+        <div class="heading flex align-center">
+          <img
+            src="../../../../../../assets/images/icons/carbon_document-multiple-02.svg"
+            alt="carbon_document-multiple-icon"
+          />
+          <abbr class="mat-headline-5 text-dark" [routerLink]="'/plans/create/set-price'">Plan Information</abbr>
+        </div>
+        <div class="info-form">
+          <div class="input-wrapper mt-8">
+            <div>
+              <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 input-label">
+                  Plan Id
+                </p>
+                <mat-icon
+                  class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                  [ngxTippy]="helpinfotooltip"
+                  [tippyProps]="{ placement: 'right' }"
+                  >help</mat-icon
+                >
+                <ng-template #helpinfotooltip let-name>
+                  <div class="help-info-tooltip">
+                    <div class="heading-with-background">Plan id</div>
+                    <div class="details">
+                      Enter a Customized Id. If user do not enter this field,
+                      the system will generate a ‘Customized Human-Readable-id’
+                      based on the Name fielde.g. Plan id Name: “Karisch plus
+                      Enterprise”Plan Id: “karish-plus-enteprise-01”
+                    </div>
+                    <button mat-button color="primary" class="px-0">
+                      Learn more
+                    </button>
+                  </div>
+                </ng-template>
+              </div>
+              <mat-form-field appearance="outline">
+                <input matInput placeholder="Enter here..." />
+              </mat-form-field>
+            </div>
+            <div>
+              <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 input-label">
+                  Plan Name (External)
+                </p>
+                <mat-icon
+                  class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                  [ngxTippy]="productnameinfo"
+                  [tippyProps]="{ placement: 'right' }"
+                  >help</mat-icon
+                >
+                <ng-template #productnameinfo let-name class="t-template">
+                  <div class="help-info-tooltip">
+                    <div class="heading-with-background">
+                      Plan name (External)
+                    </div>
+                    <div class="details">
+                      This name will be shown on the customer portal.
+                    </div>
+                    <button mat-button color="primary" class="px-0">
+                      Learn more
+                    </button>
+                  </div>
+                </ng-template>
+              </div>
+              <mat-form-field appearance="outline">
+                <input matInput placeholder="Enter here..." />
+              </mat-form-field>
+            </div>
+            <div>
+              <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 input-label">
+                  Plan Name (Internal)
+                </p>
+                <mat-icon
+                  class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                  [ngxTippy]="productnameinfo"
+                  [tippyProps]="{ placement: 'right' }"
+                  tippyName="content"
+                  >help</mat-icon
+                >
+                <ng-template #productnameinfo let-name class="t-template">
+                  <div class="help-info-tooltip">
+                    <div class="heading-with-background">
+                      Plan name (Internal)
+                    </div>
+                    <div class="details">
+                      This is help you identify the Plan Internally
+                    </div>
+                    <button mat-button color="primary" class="px-0">
+                      Learn more
+                    </button>
+                  </div>
+                </ng-template>
+              </div>
+              <mat-form-field appearance="outline">
+                <input matInput placeholder="Enter here..." />
+              </mat-form-field>
+            </div>
+            <div>
+              <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 input-label">
+                  Description
+                </p>
+              </div>
+              <mat-form-field appearance="outline">
+                <textarea matInput placeholder="Enter here..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- pricing plan -->
+    <!-- <app-plan-add-empty-layout
+      [items]="planAddEmptyData"
+    ></app-plan-add-empty-layout> -->
+    <app-add-plan-pricing></app-add-plan-pricing>
+    <!-- Charges -->
+    <div class="plan-section-block flex-center border-2 p-11 mb-4">
+      <div class="plan-info-block inner-wrapper">
+        <div class="heading flex align-center">
+          <img
+            src="../../../../../assets/images/icons/money.svg"
+            alt="money-icon"
+          />
+          <h5 class="mat-headline-5 text-dark">Charges</h5>
+        </div>
+        <div class="input-wrapper mt-8">
+          <div class="mt-6">
+            <div class="flex align-center mb-2">
+              <p class="mat-subtitle-2 font-weight-500 input-label">Charges</p>
+              <mat-icon
+                class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                [ngxTippy]="chargesInfo"
+                [tippyProps]="{ placement: 'right' }"
+                >help</mat-icon
+              >
+              <ng-template #chargesInfo let-name>
+                <div class="help-info-tooltip">
+                  <div class="heading-with-background">Charges</div>
+                  <div class="details">
+                    You can create and select charges to include it in the plan
+                  </div>
+                  <button mat-button color="primary" class="px-0">
+                    Learn more
+                  </button>
+                </div>
+              </ng-template>
+            </div>
+            <mat-form-field
+              appearance="outline"
+              class="border-2 with-footer-btn"
+            >
+              <!-- <mat-label> Select </mat-label> -->
+              <mat-select
+                required
+                formControlName="productID"
+                placeholder="select"
+                multiple
+              >
+                <mat-option value="Setup Fee"> Setup Fee </mat-option>
+                <mat-option value="Activation Fee"> Activation Fee </mat-option>
+                <mat-option value="Implementation Charges">
+                  Implementation Charges
+                </mat-option>
+                <button
+                  mat-button
+                  color="primary"
+                  class="px-0 w-full add-new-btn-list pl-4 mat-body-1 large"
+                >
+                  <mat-icon class="material-symbols-outlined" color="primary"
+                    >add_circle</mat-icon
+                  >Add New Charge
+                </button>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- setup fee inputs -->
+        <div class="fee-input-wrapper">
+          <div class="fee-input flex align-center justify-between">
+            <span class="mat-subtitle-2">Setup fee</span>
+            <div class="flex align-start">
+              <mat-form-field appearance="outline" class="mb-0">
+                <input matInput placeholder="Enter here..." />
+              </mat-form-field>
+              <button
+                mat-icon-button
+                color="warn"
+                class="close-icon-btn light-bg rounded ml-2 mt-1"
+              >
+                <mat-icon class="material-symbols-outlined mr-0" color="warn"
+                  >close</mat-icon
+                >
+              </button>
+            </div>
+          </div>
+          <div class="fee-input flex align-center justify-between">
+            <span class="mat-subtitle-2">Activation fee</span>
+            <div class="flex align-start">
+              <mat-form-field appearance="outline" class="mb-0">
+                <input matInput placeholder="Enter here..." />
+              </mat-form-field>
+              <button
+                mat-icon-button
+                color="warn"
+                class="close-icon-btn light-bg rounded ml-2 mt-1"
+              >
+                <mat-icon class="material-symbols-outlined mr-0" color="warn"
+                  >close</mat-icon
+                >
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- setup fee inputs -->
+        <div class="action-btns flex align-center justify-end">
+          <div>
+            <button mat-stroked-button color="primary" class="mr-2 large">
+              Dismiss
+            </button>
+            <button mat-flat-button color="primary" class="large" type="submit">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
