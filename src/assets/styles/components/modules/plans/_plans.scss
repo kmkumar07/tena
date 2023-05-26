@@ -328,3 +328,10 @@
   justify-content: start;
   // margin-right: 0.625rem;
 }
+
+// plan detail section
+.plan-product-details {
+  .table-heading {
+    border-bottom: 1px solid color("blue", "lighten-11");
+  }
+}
