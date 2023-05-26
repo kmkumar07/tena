@@ -10,7 +10,8 @@ const routes: Routes = [
   { path: '', component: PlansListingComponent },
   { path: 'view', component: ViewPlansComponent },
   { path: 'create', component: CreatePlanComponent },
-  { path: 'create/set-price', component: SetPriceComponent}
+  { path: 'create/set-price', component: SetPriceComponent},
+  { path: 'create/view-plans', component: ViewPlansComponent}
 ];
 
 @NgModule({
