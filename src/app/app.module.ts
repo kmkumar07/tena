@@ -11,6 +11,7 @@ import { LayoutComponent } from './core/layouts/layout/layout.component';
 import { SidebarComponent } from './core/layouts/sidebar/sidebar.component';
 import { SuccessDialogComponent } from './shared/components/dialog-box/success-dialog/success-dialog.component';
 import { DeleteConfirmationComponent } from './shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { DeleteConfirmationComponent } from './shared/components/dialog-box/dele
     LayoutComponent,
     SidebarComponent,
     SuccessDialogComponent,
-    DeleteConfirmationComponent
+    DeleteConfirmationComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

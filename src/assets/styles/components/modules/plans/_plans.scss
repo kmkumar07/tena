@@ -123,6 +123,55 @@
       width: 100%;
     }
   }
+  .table-wrapper {
+    .mat-mdc-row .mat-mdc-cell {
+      border-bottom: 0.0625rem solid transparent;
+      border-top: 0.0625rem solid transparent;
+      cursor: pointer;
+    }
+
+    .mat-mdc-table .mdc-data-table__header-row {
+      height: 2.1875rem;
+      background-color: color("primary", "lighten-4");
+    }
+    .mat-mdc-table .mdc-data-table__row {
+      height: 3.6875rem;
+    }
+    .mdc-data-table__cell,
+    .mdc-data-table__header-cell {
+      border-bottom-width: 0;
+    }
+
+    .billing-fixed {
+      background-color: color("primary", "lighten-4");
+    }
+    .price-cell {
+      color: color("purple", "lighten-1");
+    }
+    .action-header {
+      text-align: right;
+    }
+    .edit-btn {
+      height: 2rem;
+      .mat-icon {
+        width: 1rem;
+        height: 1rem;
+        font-size: 1rem;
+      }
+    }
+
+    @media only screen and (max-width: 1280px) {
+      th,
+      td,
+      .billing-fixed {
+        font-size: 0.875rem;
+      }
+      .mdc-data-table__cell,
+      .mdc-data-table__header-cell {
+        padding: 0 0.75rem;
+      }
+    }
+  }
 }
 
 .empty-add-section {
@@ -141,7 +190,7 @@
     left: 2.5625rem;
     height: 5.625rem;
     border-left-width: 0.0625rem;
-    border-left-style: solid;
+    border-left-style: solid; 
     border-left-color: color("primary", "main");
   }
 
@@ -272,6 +321,7 @@
   // margin-right: 0.625rem;
 }
 
+// view plan section
 .view-plan-wrapper{
   background-color: color("shades", "white");
   padding: .6875rem;
@@ -369,5 +419,12 @@
         }
       }
     }
+  }
+}
+
+// plan detail section
+.plan-product-details {
+  .table-heading {
+    border-bottom: 1px solid color("blue", "lighten-11");
   }
 }

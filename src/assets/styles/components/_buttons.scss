@@ -149,6 +149,9 @@
 }
 
 .mdc-icon-button {
+  &.mat-mdc-icon-button .mat-mdc-button-persistent-ripple{
+  border-radius: 0;
+  }
   &.light-bg {
     &.mat-warn {
       background-color: color("red", "lighten-3");
@@ -158,6 +161,22 @@
     }
     &.rounded {
       border-radius: .25rem;
+    }
+    &.rounded-1 {
+      border-radius: .175rem;
+    }
+    &.small {
+           height: 2rem;
+            min-width: 2rem;
+            width: 2rem;         
+            padding: 0; 
+
+
+            .mat-icon{
+                width: 1.0625rem;
+                height: 1.0625rem;
+                font-size: 1.0625rem;
+            }
     }
   }
 }

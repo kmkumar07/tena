@@ -181,14 +181,18 @@
     }
     .nav-list-item {
       color: color("text", "primary");
-      &:hover {
+      border-radius: 0.25rem;
+      height: 2.5625rem;
+      .active {
         background-color: color("primary", "main");
         .mat-icon,
         .content {
           color: color("shades", "white") !important;
         }
       }
-      border-radius: 0.25rem;
+      &:hover {
+        background-color: color("primary", "light");
+      }
       .icon-wrapper {
         padding: 0.625rem 0.875rem;
         .content {

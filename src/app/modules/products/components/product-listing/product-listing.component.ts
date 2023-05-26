@@ -21,7 +21,7 @@ export class ProductListingComponent {
     'action',
   ];
   emptyProductPros = noProducts;
-  productsData: Data_Type[] = [];
+  productsData: Data_Type[] = User_Data;
   selection = new SelectionModel<Data_Type>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;

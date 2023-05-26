@@ -16,16 +16,14 @@
     <span class="shades-text text-black fw-500">Set Price</span>
   </div>
   <div class="mt-8">
-    <form>
+    <form [formGroup]="setPriceForm" (ngSubmit)="submitValues()">
       <mat-tab-group
         class="pricing-tabs mb-6"
         mat-stretch-tabs="false"
         mat-align-tabs="start"
+        (selectedTabChange)="onTabChange($event)"
       >
-        <mat-tab label="Daily"></mat-tab>
-        <mat-tab label="Weekly"></mat-tab>
-        <mat-tab label="Monthly"></mat-tab>
-        <mat-tab label="Yearly"></mat-tab>
+        <mat-tab *ngFor="let options of periodUnit" label="{{options}}" ></mat-tab>
       </mat-tab-group>
       <div class="py-2">
         <div class="input-wrapper">
@@ -53,17 +51,77 @@
             </ng-template>
           </div>
           <mat-form-field appearance="outline" class="border-2">
-            <mat-select
-              required
-              formControlName="productID"
-              placeholder="select"
+            <mat-select required placeholder="select" formControlName="pricingModel">
+              <mat-option
+                *ngFor="let option of pricingModelTypes"
+                value="{{option.value}}"
+              >
+                {{ option.title }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">Price</p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="helpinfotooltip"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
             >
-              <mat-option> Flat fee </mat-option>
-              <mat-option> Tiered </mat-option>
+            <ng-template #helpinfotooltip let-name>
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Feature id</div>
+                <div class="details">
+                  Microsoft Teams is the ultimate messaging app for your
+                  organization—a workspace for real-time collaboration and
+                  communication, meetings, file and app sharing, and even the
+                  occasional emoji! All in one place, all in the open, all
+                  accessible to everyone.
+                </div>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline" class="border-2">
+            <input required matInput placeholder="Enter here" formControlName="price"/>
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Billing Cycle
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="helpinfotooltip"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #helpinfotooltip let-name>
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Feature id</div>
+                <div class="details">
+                  Microsoft Teams is the ultimate messaging app for your
+                  organization—a workspace for real-time collaboration and
+                  communication, meetings, file and app sharing, and even the
+                  occasional emoji! All in one place, all in the open, all
+                  accessible to everyone.
+                </div>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline" class="border-2">
+            <mat-select required placeholder="select">
+              <mat-option> Fixed </mat-option>
+              <mat-option> Forever </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
       </div>
+      <button mat-flat-button color="primary" type="submit">
+        Set Price
+      </button>
     </form>
   </div>
 </div>

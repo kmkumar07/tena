@@ -12,6 +12,10 @@ export interface Data_Type {
   created_at: string;
   status: string;
 }
+export interface selectOptions {
+  value: number;
+  title: string;
+}
 export interface features {
   feature_id: string;
   product_name: string;
@@ -243,11 +247,18 @@ export const feature_types = [
   { value: 3, title: 'Quantity' },
   { value: 4, title: 'Custom' },
 ];
+export const pricingModels = [
+  { value: 1, title: 'Flat fee' },
+  { value: 2, title: 'Per unit' },
+  { value: 3, title: 'Tiered' },
+  { value: 4, title: 'Volume' },
+  { value: 5, title: 'Stairstep' },
+];
+export const periodUnit = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
 export const StaticRoutes = {
   features: ['features'],
   products: ['products'],
 };
-
 export const plan_add_empty_data = [
   {
     titleIcon:
