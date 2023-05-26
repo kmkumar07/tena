@@ -18,6 +18,9 @@
 .input-label {
   color: color("purple", "darken-1");
   font-weight: 500 !important;
+  &.disabled {
+    opacity: .5;
+  }
 }
 
 .mat-form-field-appearance-outline .mat-form-field-outline {

@@ -12,6 +12,7 @@ import { PlanAddEmptyLayoutComponent } from './components/plan-add-empty-layout/
 import { CreatePlanComponent } from './components/create-plan/create-plan.component';
 import { SetPriceComponent } from './components/set-price/set-price.component';
 import { AddPlanPricingComponent } from './components/create-plan/step/add-plan-pricing/add-plan-pricing.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AddPlanPricingComponent } from './components/create-plan/step/add-plan-
     CreatePlanComponent,
     PlanAddEmptyLayoutComponent,
     SetPriceComponent,
-    AddPlanPricingComponent
+    AddPlanPricingComponent,
+    ProductDetailsComponent
   ],
   imports: [
     CommonModule,
