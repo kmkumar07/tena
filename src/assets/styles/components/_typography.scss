@@ -41,7 +41,7 @@ a {
 }
 
 .text-headline-dark {
-  color: $text-headline-dark;
+  color: $text-headline-dark; //#2C2466
 }
 
 .text-dark {
@@ -53,11 +53,19 @@ a {
 }
 
 .text-headline-light {
-  color: $headline-light;
+  color: $headline-light; //#405189
 }
 
 .text-primary {
   color: $text-primary
+}
+
+.text-lighten-2{
+  color: $text-lighten-2; //#9CA8BA
+}
+
+.text-lighten-4{
+  color: $text-lighten-4; //#7A7E83
 }
 
 .fs-lg {

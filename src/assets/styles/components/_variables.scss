@@ -239,6 +239,9 @@ $text-headline-dark: color('text', 'dark'); // #2C2466
 $text-headline-light: rgba(color('text', 'dark'), .6); // #2C2466   
 $headline-light: color('text', 'primary'); // #405189
 $text-primary: color('primary', 'main');
+$text-lighten-2:color('text','lighten-2'); //#9CA8BA
+$text-lighten-4:color('text','lighten-4'); //#7A7E83
+
 
 // Header Styles
 $h1-fontsize: 4.8rem !default;

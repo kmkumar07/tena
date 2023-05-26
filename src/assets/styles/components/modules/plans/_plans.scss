@@ -246,14 +246,6 @@
     .action-header {
       text-align: right;
     }
-    .edit-btn {
-      height: 2rem;
-      .mat-icon {
-        width: 1rem;
-        height: 1rem;
-        font-size: 1rem;
-      }
-    }
 
     @media only screen and (max-width: 1280px) {
       th,
@@ -301,6 +293,13 @@
         color: rgba(color("text", "primary"), 0.6);
         margin-bottom: 0.1875rem;
       }
+      .active-text {
+        .mat-icon {
+          height: 1rem;
+          width: 1rem;
+          font-size: 1rem;
+        }
+      }
     }
     .pricing-box{
        padding: 0 3.125rem 0 3.0625rem;
@@ -312,6 +311,63 @@
         padding-right: 0;
         border-right: none;
        }
+    }
+  }
+  .inner-wrapper{
+    padding: 2.5625rem 1.0313rem 0;
+    .calendar-box{
+      border-right: .0625rem solid color("blue","lighten-11");
+    }
+    .table-priceing-details {
+      max-width: 50.0625rem;
+      table{
+        min-width: unset;
+        width: 100%;
+      }
+      .mat-mdc-table .mdc-data-table__header-row {
+        height: 1.5625rem;
+      }
+      .mdc-data-table__cell,
+      .mdc-data-table__header-cell {
+        border-bottom-width: 0;
+      }
+      .mat-mdc-table .mdc-data-table__row {
+        height: 1.5625rem;
+        &:last-child{
+          .mdc-data-table__cell, .mdc-data-table__header-cell {
+            padding: .625rem 1rem 0 0;
+          }
+        }
+    }
+    .mdc-data-table__cell, .mdc-data-table__header-cell {
+      padding: .625rem 1rem .625rem 0;
+    }
+    .flags{
+      width: 1.5488rem;
+      height: 1rem;
+      img{
+        width: 100%;
+      }
+    }
+    }
+
+    .product-inner{
+      .product-box{
+        padding-left: .875rem;
+        border-left: .1875rem solid color("text","primary");
+        .product-img{
+          max-width: 3.75rem;
+          width: 100%;
+          height: 3.75rem;
+          border: .0625rem solid color("primary",light);
+          border-radius: .375rem;
+          img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+      }
     }
   }
 }
