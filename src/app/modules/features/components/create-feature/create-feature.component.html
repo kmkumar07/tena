@@ -18,27 +18,28 @@
         </span>
       </div>
     </div>
-    <form [formGroup]="featureForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="featureForm">
       <div class="form-container pl-6 pr-10">
         <div class="input-wrapper">
           <div class="flex align-center mb-2">
-            <p class="mat-subtitle-2 font-weight-500 input-label">Feature ID</p>
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Feature Name
+            </p>
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-              [ngxTippy]="helpinfotooltip"
+              [ngxTippy]="selectProduct"
               [tippyProps]="{ placement: 'right' }"
               >help</mat-icon
             >
-            <ng-template #helpinfotooltip let-name>
+            <ng-template #selectProduct let-name class="t-template">
               <div class="help-info-tooltip">
-                <div class="heading-with-background">Feature id</div>
+                <div class="heading-with-background">Feature name</div>
                 <div class="details">
-                  Microsoft Teams is the ultimate messaging app for your
-                  organization—a workspace for real-time collaboration and
-                  communication, meetings, file and app sharing, and even the
-                  occasional emoji! All in one place, all in the open, all
-                  accessible to everyone.
+                  Please select a product to create a feature to it.
                 </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
               </div>
             </ng-template>
           </div>
@@ -47,7 +48,7 @@
               required
               matInput
               placeholder="Enter here"
-              formControlName="id"
+              formControlName="name"
             />
           </mat-form-field>
         </div>
@@ -92,24 +93,23 @@
         </div>
         <div class="input-wrapper">
           <div class="flex align-center mb-2">
-            <p class="mat-subtitle-2 font-weight-500 input-label">
-              Feature Name
-            </p>
+            <p class="mat-subtitle-2 font-weight-500 input-label">Feature ID</p>
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-              [ngxTippy]="selectProduct"
+              [ngxTippy]="helpinfotooltip"
               [tippyProps]="{ placement: 'right' }"
               >help</mat-icon
             >
-            <ng-template #selectProduct let-name class="t-template">
+            <ng-template #helpinfotooltip let-name>
               <div class="help-info-tooltip">
-                <div class="heading-with-background">Feature name</div>
+                <div class="heading-with-background">Feature id</div>
                 <div class="details">
-                  Please select a product to create a feature to it.
+                  Microsoft Teams is the ultimate messaging app for your
+                  organization—a workspace for real-time collaboration and
+                  communication, meetings, file and app sharing, and even the
+                  occasional emoji! All in one place, all in the open, all
+                  accessible to everyone.
                 </div>
-                <button mat-button color="primary" class="px-0">
-                  Learn more
-                </button>
               </div>
             </ng-template>
           </div>
@@ -118,7 +118,7 @@
               required
               matInput
               placeholder="Enter here"
-              formControlName="name"
+              formControlName="featureId"
             />
           </mat-form-field>
         </div>
@@ -150,7 +150,7 @@
             <mat-select required formControlName="type" placeholder="select">
               <mat-option
                 *ngFor="let type of featureType"
-                value="{{ type.value }}"
+                value="{{ type.title }}"
               >
                 {{ type.title }}
               </mat-option>
@@ -211,74 +211,84 @@
           </mat-form-field>
         </div>
         <div *ngIf="this.featureForm.value.unit">
-          <!-- <ng-container formArrayName="levels">
-            <ng-container *ngFor="let levelForm of levels.controls; let i = index"> -->
-          <div class="flex align-center wrap mb-3">
-            <div class="flex align-center wrap w-88">
-              <div class="input-wrapper pr-2">
-                <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 input-label">
-                    Entitlement Range
-                  </p>
-                </div>
-                <mat-form-field appearance="outline" class="border-2">
-                  <input required matInput placeholder="Enter here" />
-                </mat-form-field>
-              </div>
-              <div class="input-wrapper">
-                <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 input-label">
-                    Display Name
-                  </p>
-                </div>
-                <mat-form-field appearance="outline" class="border-2">
-                  <input matInput placeholder="Enter here" />
-                </mat-form-field>
-              </div>
-            </div>
-            <button
-              (click)="addLevels()"
-              mat-stroked-button
-              disableRipple
-              class="upper-case primary light medium px-1 ml-2"
+          <ng-container formArrayName="levels">
+            <ng-container
+              *ngFor="let element of levels.controls; let i = index"
             >
-              Default
+              <div class="flex align-center wrap mb-3" [formGroupName]="i">
+                <div class="flex align-center wrap w-88">
+                  <div class="input-wrapper pr-2">
+                    <div class="flex align-center mb-2">
+                      <p class="mat-subtitle-2 font-weight-500 input-label">
+                        Entitlement
+                      </p>
+                    </div>
+                    <mat-form-field appearance="outline" class="border-2">
+                      <input
+                        (change)="setName(i)"
+                        required
+                        matInput
+                        placeholder="Enter here"
+                        formControlName="value"
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="input-wrapper">
+                    <div class="flex align-center mb-2">
+                      <p class="mat-subtitle-2 font-weight-500 input-label">
+                        Display Name
+                      </p>
+                    </div>
+                    <mat-form-field appearance="outline" class="border-2">
+                      <input
+                        matInput
+                        placeholder="Enter here"
+                        formControlName="name"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <button
+                  *ngIf="i == 0"
+                  mat-stroked-button
+                  disableRipple
+                  class="upper-case primary light medium px-1 ml-2"
+                >
+                  Default
+                </button>
+                <button
+                  *ngIf="
+                    levels.controls.length > 1 &&
+                    i < levels.controls.length - 1 &&
+                    i != 0
+                  "
+                  mat-stroked-button
+                  disableRipple
+                  class="upper-case primary light medium px-1 ml-2"
+                  (click)="deleteLevels(i)"
+                >
+                  Remove
+                </button>
+                <button
+                  *ngIf="i == levels.controls.length - 1"
+                  mat-stroked-button
+                  disableRipple
+                  class="upper-case primary light medium px-1 ml-2"
+                >
+                  Maximum
+                </button>
+              </div>
+            </ng-container>
+          </ng-container>
+          <div>
+            <button mat-stroked-button (click)="toggleUnlimited()">
+              <mat-icon class="add-course-btn"></mat-icon
+              >{{ unlimitedButtonLabel }}
             </button>
           </div>
-          <!-- </ng-container>
-          </ng-container> -->
-          <div class="flex align-center wrap mb-3">
-            <div class="flex align-center wrap w-88">
-              <div class="input-wrapper pr-2">
-                <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 input-label">
-                    Entitlement Range
-                  </p>
-                </div>
-                <mat-form-field appearance="outline" class="border-2">
-                  <input required matInput placeholder="Enter here" />
-                </mat-form-field>
-              </div>
-              <div class="input-wrapper">
-                <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 input-label">
-                    Display Name
-                  </p>
-                </div>
-                <mat-form-field appearance="outline" class="border-2">
-                  <input matInput placeholder="Enter here" />
-                </mat-form-field>
-              </div>
-            </div>
-            <button
-              (click)="addLevels()"
-              mat-stroked-button
-              disableRipple
-              class="upper-case primary light medium px-1 ml-2"
-            >
-              Maximum
-            </button>
-          </div>
+          <button mat-stroked-button (click)="addLevels()">
+            <mat-icon class="add-course-btn"></mat-icon>Add Entitlement
+          </button>
         </div>
         <div class="action-btns flex align-center justify-between">
           <mat-checkbox
@@ -288,15 +298,20 @@
             >Active</mat-checkbox
           >
           <div>
-            <button mat-stroked-button color="primary" class="mr-2 large">
+            <button
+              mat-stroked-button
+              color="primary"
+              class="mr-2 large"
+              (click)="onDelete()"
+            >
               Dismiss
             </button>
             <button
               mat-flat-button
               color="primary"
               class="large"
-              type="submit"
-              [routerLink]="'/features/view'"
+              type="button"
+              (click)="onSubmit()"
             >
               Create
             </button>

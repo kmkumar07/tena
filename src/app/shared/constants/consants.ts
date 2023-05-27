@@ -238,10 +238,10 @@ export const Notifications_Data = [
   // }
 ];
 export const feature_types = [
-  { value: 1, title: 'Switch' },
-  { value: 2, title: 'Range' },
-  { value: 3, title: 'Quantity' },
-  { value: 4, title: 'Custom' },
+  { value: 1, title: 'switch' },
+  { value: 2, title: 'range' },
+  { value: 3, title: 'quantity' },
+  { value: 4, title: 'custom' },
 ];
 export const StaticRoutes = {
   features: ['features'],
