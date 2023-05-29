@@ -1,0 +1,25 @@
+<div *ngFor="let item of items" class="plan-section-block flex-center border-2 p-11 mb-4">
+  <div class="plan-info-block inner-wrapper">
+    <div class="heading flex align-center">
+      <img
+        src="{{ item.titleIcon }}"
+        alt="{{ item.iconAlt }}"
+      />
+      <h5 class="mat-headline-5 text-dark">{{ item.title }}</h5>
+    </div>
+    <div class="empty-add-section mt-6 border-1">
+      <div class="text-center">
+        <p class="mat-body-1 text-dark-1">
+          {{ item.subtitle }}
+        </p>
+        <button
+          mat-flat-button
+          color="primary"
+          class="mt-11 large"
+        >
+          {{ item.btnTitle }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

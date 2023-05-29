@@ -9,11 +9,17 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/modules/shared/shared.module';
 import { LayoutComponent } from './core/layouts/layout/layout.component';
 import { SidebarComponent } from './core/layouts/sidebar/sidebar.component';
+import { SuccessDialogComponent } from './shared/components/dialog-box/success-dialog/success-dialog.component';
+import { DeleteConfirmationComponent } from './shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
     SidebarComponent,
+    SuccessDialogComponent,
+    DeleteConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +28,8 @@ import { SidebarComponent } from './core/layouts/sidebar/sidebar.component';
     BrowserAnimationsModule,
     MatButtonModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

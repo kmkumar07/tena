@@ -1,0 +1,330 @@
+.stepper-wrapper {
+  width: 19.25rem;
+  background-color: color("shades", "transparent");
+
+  .mat-stepper-vertical {
+    background-color: color("shades", "transparent");
+
+    .mat-step {
+      height: 5.625rem;
+      .mat-step-header {
+        border-left: 0.25rem solid color("shades", "transparent");
+      }
+
+      &:last-of-type.active {
+        &::before {
+          height: 2.8125rem;
+          top: 0;
+        }
+      }
+
+      // &.active,
+      // .cdk-focused {
+      // }
+    }
+  }
+
+  .mat-step-header {
+    -webkit-tap-highlight-color: color("shades", "transparent") !important;
+    background: color("shades", "transparent") !important;
+
+    &:hover {
+      background-color: color("shades", "transparent");
+    }
+
+    .mat-step-icon {
+      background-color: color("shades", "white");
+      border: 0.0938rem solid color("grey", "stepper-border");
+    }
+  }
+
+  .mat-vertical-stepper-header {
+    height: unset;
+    z-index: 2;
+  }
+
+  .mat-step-icon {
+    height: 2.25rem;
+    width: 2.25rem;
+  }
+
+  .mat-vertical-content-container {
+    margin-left: 2.8125rem;
+  }
+
+  .mat-step-icon-content {
+    span {
+      display: none;
+    }
+
+    &::before {
+      content: "";
+      width: 0.625rem;
+      height: 0.625rem;
+      background-color: color("grey", "stepper-border");
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .mat-icon.mat-icon.notranslate.material-icons.mat-ligature-font.mat-icon-no-color {
+    display: none;
+  }
+
+  .mat-vertical-stepper-content {
+    display: none;
+  }
+
+  .mat-stepper-vertical-line::before {
+    height: 5.625rem;
+    top: -1.625rem;
+    bottom: 0;
+    border-left-color: color("grey", "stepper-border");
+  }
+
+  .mat-vertical-stepper-header .mat-step-icon {
+    margin-right: 0.875rem;
+  }
+}
+
+// create plan section
+.create-plan-main-wrapper {
+  .with-footer-btn {
+    .add-new-btn-list {
+      display: flex;
+      justify-content: start;
+    }
+  }
+  width: calc(100% - 19.25rem);
+
+  .plan-info-block {
+    .heading {
+      border-bottom: 0.0625rem solid $border-color;
+      padding-bottom: 0.9375rem;
+
+      img {
+        margin-right: 0.625rem;
+      }
+    }
+
+    textarea {
+      min-height: 2.4375rem;
+    }
+  }
+
+  .plan-section-block {
+    background-color: #ffffff;
+    border-radius: 0 0.5rem 0.5rem 0;
+    .inner-wrapper {
+      max-width: 44.75rem;
+      width: 100%;
+    }
+  }
+  .table-wrapper {
+    .mat-mdc-row .mat-mdc-cell {
+      border-bottom: 0.0625rem solid transparent;
+      border-top: 0.0625rem solid transparent;
+      cursor: pointer;
+    }
+
+    .mat-mdc-table .mdc-data-table__header-row {
+      height: 2.1875rem;
+      background-color: color("primary", "lighten-4");
+    }
+    .mat-mdc-table .mdc-data-table__row {
+      height: 3.6875rem;
+    }
+    .mdc-data-table__cell,
+    .mdc-data-table__header-cell {
+      border-bottom-width: 0;
+    }
+
+    .billing-fixed {
+      background-color: color("primary", "lighten-4");
+    }
+    .price-cell {
+      color: color("purple", "lighten-1");
+    }
+    .action-header {
+      text-align: right;
+    }
+    .edit-btn {
+      height: 2rem;
+      .mat-icon {
+        width: 1rem;
+        height: 1rem;
+        font-size: 1rem;
+      }
+    }
+
+    @media only screen and (max-width: 1280px) {
+      th,
+      td,
+      .billing-fixed {
+        font-size: 0.875rem;
+      }
+      .mdc-data-table__cell,
+      .mdc-data-table__header-cell {
+        padding: 0 0.75rem;
+      }
+    }
+  }
+}
+
+.empty-add-section {
+  padding: 8.6875rem 3.75rem 5.6875rem;
+  background-color: $primay-extra-light-bg-color;
+}
+.mat-step-header[aria-selected="true"] {
+  background-color: color("shades", "white") !important;
+  border-left: 0.25rem solid color("primary", "main") !important;
+  border-radius: 0.5rem 0 0 0.5rem;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 2.5625rem;
+    height: 5.625rem;
+    border-left-width: 0.0625rem;
+    border-left-style: solid; 
+    border-left-color: color("primary", "main");
+  }
+
+  .mat-step-icon {
+    border: 0.0938rem solid color("primary", "main") !important;
+  }
+
+  .mat-step-icon-content {
+    &::before {
+      background-color: color("primary", "main");
+    }
+  }
+}
+.mat-step:nth-child(1) {
+  .mat-step-header[aria-selected="true"] {
+    &::before {
+      height: 2.8125rem;
+      bottom: 0;
+    }
+  }
+}
+.mat-step:nth-last-child(1) {
+  .mat-step-header[aria-selected="true"] {
+    &::before {
+      height: 2.8125rem;
+      top: 0;
+    }
+  }
+}
+// Set Price Form CSS
+.pricing-tabs {
+  .mat-mdc-tab-list {
+    .mat-mdc-tab-labels {
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        background-color: color("grey", "border-2");
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 0.0625rem;
+      }
+      .mdc-tab {
+        height: 2.5625rem;
+        padding: 0 1.25rem;
+        min-width: inherit;
+        .mdc-tab__ripple,
+        .mat-ripple {
+          display: none;
+        }
+        .mdc-tab__text-label {
+          letter-spacing: 0.0313rem;
+        }
+      }
+    }
+  }
+}
+.pricing-tabs {
+  .mdc-tab {
+    .mdc-tab__text-label {
+      color: color("text", "lighten-3");
+    }
+  }
+  .plan-section-block {
+    background-color: color("shades", "white");
+    border-radius: 0 0.5rem 0.5rem 0;
+    .inner-wrapper {
+      max-width: 44.75rem;
+      width: 100%;
+    }
+  }
+
+  .flag-wrapper {
+    border-bottom: 0.0625rem solid color("primary", "light");
+  }
+  .table-wrapper {
+    .mat-mdc-row .mat-mdc-cell {
+      border-bottom: 0.0625rem solid transparent;
+      border-top: 0.0625rem solid transparent;
+      cursor: pointer;
+    }
+
+    .mat-mdc-table .mdc-data-table__header-row {
+      height: 2.1875rem;
+      background-color: color("primary", "lighten-4");
+    }
+    .mat-mdc-table .mdc-data-table__row {
+      height: 3.6875rem;
+    }
+    .mdc-data-table__cell,
+    .mdc-data-table__header-cell {
+      border-bottom-width: 0;
+    }
+
+    .billing-fixed {
+      background-color: color("primary", "lighten-4");
+    }
+    .price-cell {
+      color: color("purple", "lighten-1");
+    }
+    .action-header {
+      text-align: right;
+    }
+    .edit-btn {
+      height: 2rem;
+      .mat-icon {
+        width: 1rem;
+        height: 1rem;
+        font-size: 1rem;
+      }
+    }
+
+    @media only screen and (max-width: 1280px) {
+      th,
+      td,
+      .billing-fixed {
+        font-size: 0.875rem;
+      }
+      .mdc-data-table__cell,
+      .mdc-data-table__header-cell {
+        padding: 0 0.75rem;
+      }
+    }
+  }
+}
+
+.empty-add-section {
+  padding: 8.6875rem 3.75rem 5.6875rem;
+  background-color: $primay-extra-light-bg-color;
+}
+
+.add-new-btn-list.mat-mdc-button {
+  display: flex;
+  justify-content: start;
+  // margin-right: 0.625rem;
+}

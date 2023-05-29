@@ -81,5 +81,6 @@ $my-theme: mat.define-light-theme((
 //modules
 @import './components/modules/products/product';
 @import './components/modules/features/features';
+@import './components/modules/plans/plans';
 @import 'tippy.js/dist/tippy.css';
 @import '/node_modules/tippy.js/dist/tippy.css'

@@ -108,7 +108,8 @@
             mat-flat-button
             color="primary"
             class="large"
-            [routerLink]="['/products/view-product']"
+            type="submit"
+            (click)="openSuccess()"
           >
             Create
           </button>
