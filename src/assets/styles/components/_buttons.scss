@@ -145,6 +145,13 @@
       height: 1rem;
       font-size: 1rem;
     }
+    &.primary{
+      background-color: color("primary","main");
+      color: color("shades","white");
+      .mat-icon{
+      color: color("shades","white");
+      }
+    }
   }
 }
 
@@ -177,6 +184,14 @@
                 height: 1.0625rem;
                 font-size: 1.0625rem;
             }
+    }
+  }
+  &.x-small{
+    height: 2rem;
+    width: 2rem;
+    padding:0.3125rem;
+    .mat-icon{
+      color: color("shades","black");
     }
   }
 }

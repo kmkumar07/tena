@@ -314,4 +314,14 @@ ul {
       padding: 0;
     }
   }
+  
+  //primary light bg
+  &.mat-mdc-standard-chip.primary-light-chip {
+    padding: .375rem 1rem;
+    background-color: color("primary", "light");
+    .mdc-evolution-chip__action--primary {
+      padding-left: 0;
+      padding-right: 0;
+  }
+  }
 }
