@@ -428,3 +428,36 @@
     border-bottom: 1px solid color("blue", "lighten-11");
   }
 }
+
+
+//Product Details inner
+.details-wrapper{
+  border: .0625rem solid color("grey","lighten-11");
+  .details-inner{
+  .product-img{
+    max-width: 3.75rem;
+    width: 100%;
+    height: 3.75rem;
+    border: .0625rem solid color("primary",light);
+    border-radius: .375rem;
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+@media only screen and (max-width: 1280px) {
+  .mat-mdc-chip.mat-mdc-standard-chip.primary-light-chip{
+    padding: .375rem .625rem;
+  }
+}
+}
+
+//feature-details-popup
+.feature-details-popup{
+  width: 34.5rem;
+  .title{
+    border-bottom: .0625rem solid color("grey","lighten-7");
+  }
+}
