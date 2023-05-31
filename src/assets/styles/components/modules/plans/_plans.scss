@@ -190,7 +190,7 @@
     left: 2.5625rem;
     height: 5.625rem;
     border-left-width: 0.0625rem;
-    border-left-style: solid; 
+    border-left-style: solid;
     border-left-color: color("primary", "main");
   }
 
@@ -332,6 +332,21 @@
 // plan detail section
 .plan-product-details {
   .table-heading {
-    border-bottom: 1px solid color("blue", "lighten-11");
+    border-bottom: 0.0625rem solid color("blue", "lighten-11");
   }
+}
+// Set Price Page Styling
+// .form-array-section{
+// }
+.form-section {
+  max-width: 44.75rem;
+  width: 100%;
+  .header-bottom-border {
+    width: 100%;
+    border-bottom: 0.0625rem solid color("text", "lighten-2");
+  }
+}
+.delete-tier-btn{
+  right: -2.375rem;
+  top: 0.5625rem;
 }

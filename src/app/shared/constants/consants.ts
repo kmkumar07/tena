@@ -213,9 +213,21 @@ export const Features_Data = [
     created_at: 'Jun 10th, 2023',
     status: 'Active',
   },
+  {
+    id: 'feature_id_4591',
+    feature_id: '#98569',
+    product_name: 'Microsoft Teams',
+    feature_name: 'Whiteboard',
+    feature_type: 'Switch',
+    description:
+      'lorem ipsumDividers can be added to lists as a means of separating content into distinct sections. Inset dividers can also be added to provide the appearance of distinct elements in a list without cluttering content like avatar images or icons. Make sure to avoid adding an inset divider to the last element in a list, because it will overlap with the section divider.',
+    created_at: 'Jun 10th, 2023',
+    status: 'Active',
+  },
 ];
 export const Plans_Data = [
   {
+    id: 'ychvjbknk1',
     plan_ID: 'As-012P',
     external_name: 'Premium',
     internal_name: 'Premium v.3',
@@ -225,6 +237,7 @@ export const Plans_Data = [
     status: 'Active',
   },
   {
+    id: '1i23op1j2eo',
     plan_ID: 'As-099G',
     external_name: 'Premium',
     internal_name: 'Premium v.2',
@@ -322,5 +335,16 @@ export const noPlans = [
     text: "Seems like you haven't added any Plan. Start adding plan by click on “Create Plan” button",
     buttonTxt: 'Create Plan',
     path: '/plans/view',
+  },
+];
+export const noPageFound = [
+  {
+    heading: '',
+    imgPath: '../../../../assets/images/404-page.png',
+    alt: 'No Page Found',
+    subtext: "Oops! Why you're here?",
+    text: "We are very sorry for inconvenience. It looks like you're try to access a page that either has been deleted or never existed.",
+    buttonTxt: 'Back to home',
+    path: '',
   },
 ];

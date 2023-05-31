@@ -1,5 +1,52 @@
 <div class="flex w-full h-full">
-  <app-side-stepper> </app-side-stepper>
+  <div class="stepper-wrapper">
+    <mat-stepper orientation="vertical" #stepper [disableRipple]="true">
+      <mat-step>
+        <ng-template matStepLabel>
+          <span class="block text-dark font-weight-500">STEP 1</span>
+          <span class="block font-weight-600 mat-subtitle-2 text-headline-light"
+            >Plan information</span
+          >
+        </ng-template>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>
+          <span class="block text-dark font-weight-500">STEP 2</span>
+          <span class="block font-weight-600 mat-subtitle-2 text-headline-light"
+            >Add plan pricing</span
+          >
+        </ng-template>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>
+          <span class="block text-dark font-weight-500">STEP 3</span>
+          <span class="block font-weight-600 mat-subtitle-2 text-headline-light"
+            >Product Details</span
+          >
+        </ng-template>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>
+          <span class="block text-dark font-weight-500">STEP 4</span>
+          <span class="block font-weight-600 mat-subtitle-2 text-headline-light"
+            >Add-on Details</span
+          >
+        </ng-template>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>
+          <span class="block text-dark font-weight-500">STEP 5</span>
+          <span class="block font-weight-600 mat-subtitle-2 text-headline-light"
+            >Charges</span
+          >
+        </ng-template>
+      </mat-step>
+    </mat-stepper>
+  </div>
   <div class="create-plan-main-wrapper h-full overflow-auto">
     <div class="plan-section-block flex-center p-11 mb-4">
       <div class="plan-info-block inner-wrapper">
@@ -8,7 +55,11 @@
             src="../../../../../../assets/images/icons/carbon_document-multiple-02.svg"
             alt="carbon_document-multiple-icon"
           />
-          <abbr class="mat-headline-5 text-dark" [routerLink]="'/plans/create/set-price'">Plan Information</abbr>
+          <abbr
+            class="mat-headline-5 text-dark"
+            [routerLink]="'/plans/create/set-price'"
+            >Plan Information</abbr
+          >
         </div>
         <div class="info-form">
           <div class="input-wrapper mt-8">
@@ -28,7 +79,7 @@
                     <div class="heading-with-background">Plan id</div>
                     <div class="details">
                       Enter a Customized Id. If user do not enter this field,
-                      the system will generate a ‘Customized Human-Readable-id’
+                      the system will generate a 'Customized Human-Readable-id'
                       based on the Name fielde.g. Plan id Name: “Karisch plus
                       Enterprise”Plan Id: “karish-plus-enteprise-01”
                     </div>
@@ -119,7 +170,7 @@
     <!-- pricing plan -->
     <app-plan-add-empty-layout
       [items]="planAddEmptyData"
-    ></app-plan-add-empty-layout> 
+    ></app-plan-add-empty-layout>
     <app-add-plan-pricing></app-add-plan-pricing>
     <!-- Charges -->
     <div class="plan-section-block flex-center border-2 p-11 mb-4">
