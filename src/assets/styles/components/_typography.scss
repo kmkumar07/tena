@@ -34,6 +34,10 @@ a {
   font-weight: 600 !important;
 }
 
+.font-weight-700 {
+  font-weight: 700 !important;
+}
+
 // typography colors
 .text-light {
   color: $text-light;
@@ -57,14 +61,14 @@ a {
 }
 
 .text-primary {
-  color: $text-primary
+  color: $text-primary;
 }
 
-.text-lighten-2{
+.text-lighten-2 {
   color: $text-lighten-2; //#9CA8BA
 }
 
-.text-lighten-4{
+.text-lighten-4 {
   color: $text-lighten-4; //#7A7E83
 }
 
