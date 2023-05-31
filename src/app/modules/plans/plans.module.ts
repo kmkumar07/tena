@@ -13,6 +13,7 @@ import { CreatePlanComponent } from './components/create-plan/create-plan.compon
 import { SetPriceComponent } from './components/set-price/set-price.component';
 import { AddPlanPricingComponent } from './components/create-plan/step/add-plan-pricing/add-plan-pricing.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { AddOnsDetailsComponent } from './components/add-ons-details/add-ons-details.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ProductDetailsComponent } from './components/product-details/product-de
     PlanAddEmptyLayoutComponent,
     SetPriceComponent,
     AddPlanPricingComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    AddOnsDetailsComponent
   ],
   imports: [
     CommonModule,
