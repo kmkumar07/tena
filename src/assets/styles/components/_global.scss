@@ -396,6 +396,9 @@ label {
 .main-bg {
   background-color: color("shades", "white");
 }
+.primary-light-bg{
+  background-color: color("primary", "light"); //#F3F1FF
+}
 .main-content-height {
   height: calc(100% - 4.25rem);
 }

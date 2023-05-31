@@ -117,85 +117,106 @@
       border-bottom: $primary-table-border;
     }
   }
-}
-
-// checked stripe table
-.checked-stripe-table {
-  .mat-mdc-table {
-    border: 1px solid color("primary", "light");
-    border-radius: 0.5rem;
-
-    .mdc-data-table__row {
-      height: 3.5rem;
+  // checked stripe table
+  &.checked-stripe-table {
+    .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background{
+      border-color: color("grey","lighten-9");
     }
-  }
-  .mdc-data-table__cell,
-  .mdc-data-table__header-cell {
-    border-bottom-color: transparent;
-    padding: 0 0.5rem 0 0.5rem;
-
-    &.mat-column-select {
-      width: 3rem;
-      padding-right: 0;
+    .mdc-checkbox__background{
+      height: .9375rem;
+      width: .9375rem;
     }
-
-    .mdc-checkbox__background {
-      border: 1px solid #8394a4;
+    .mat-mdc-table {
+      border: 1px solid color("primary", "light");
+      border-radius: 0.5rem;
+      border-spacing: 0 .25rem;
+  
+      .mdc-data-table__row {
+        height: 3.5rem;
+      }
     }
-
-    // dropdown
-    .mat-mdc-form-field {
-      margin-bottom: 0;
-      .mat-mdc-text-field-wrapper {
-        height: fit-content;
-        border: 1px solid color("grey", "lighten-11");
-        border-radius: 0.25rem;
-        min-width: 6.375rem;
-        padding: 0 0.5rem;
-        background-color: #ffffff;
-        width: fit-content;
-
-        .mat-mdc-form-field-flex .mat-mdc-form-field-infix {
-          padding-top: 0;
-          padding-bottom: 0;
+    .mdc-data-table__cell,
+    .mdc-data-table__header-cell {
+      border-bottom-color: transparent;
+      padding: 0 0.5rem 0 0.5rem;
+  
+      &.mat-column-select {
+        width: 3rem;
+        padding-right: 0;
+      }
+  
+      .mdc-checkbox__background {
+        border: 1px solid #8394a4;
+      }
+  
+      // dropdown
+      .mat-mdc-form-field {
+        margin-bottom: 0;
+        .mat-mdc-text-field-wrapper {
           height: fit-content;
-          min-height: fit-content;
-
-          .mat-mdc-select-arrow svg {
-            fill: color("grey", "border-2");
+          border: 1px solid color("grey", "lighten-11");
+          border-radius: 0.25rem;
+          min-width: 6.375rem;
+          padding: 0 0.5rem;
+          background-color: #ffffff;
+          width: fit-content;
+  
+          .mat-mdc-form-field-flex .mat-mdc-form-field-infix {
+            padding-top: 0;
+            padding-bottom: 0;
+            height: fit-content;
+            min-height: fit-content;
+  
+            .mat-mdc-select-arrow svg {
+              fill: color("grey", "border-2");
+            }
           }
         }
-      }
-      .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple {
-        &::before {
-          border: none;
+        .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple {
+          &::before {
+            border: none;
+          }
+        }
+        .mat-mdc-form-field-infix {
+          width: fit-content;
+          padding: 0;
+        }
+        .mat-mdc-select-value {
+          margin-right: 19px;
         }
       }
-      .mat-mdc-form-field-infix {
-        width: fit-content;
-        padding: 0;
-      }
-      .mat-mdc-select-value {
-        margin-right: 19px;
+    }
+  
+    td.mdc-data-table__cell {
+      color: $headline-light;
+  
+      &.Active {
+        color: color("green", "darken-3");
       }
     }
-  }
-
-  td.mdc-data-table__cell {
-    color: $headline-light;
-
-    &.Active {
-      color: color("green", "darken-3");
+    .mat-mdc-table .mdc-data-table__row:nth-child(odd) {
+      background-color: $primay-light-bg-color;
     }
+  
+    .mat-mdc-select {
+      width: fit-content;
+    }
+    td {
+      border-top: none;
+      &:nth-last-child(1) {
+        border-right: none;
+      }
+      &:nth-child(1) {
+        border-left: none;
+      }
   }
-  .mat-mdc-table .mdc-data-table__row:nth-child(odd) {
-    background-color: $primay-light-bg-color;
-  }
-
-  .mat-mdc-select {
-    width: fit-content;
+  .mdc-data-table__row:last-child .mdc-data-table__cell {
+    border-bottom: none;
   }
 }
+}
+
+
 
 // Table Scrollbar
 .primary-table::-webkit-scrollbar {
@@ -323,5 +344,11 @@ ul {
       padding-left: 0;
       padding-right: 0;
   }
+
+  }
+
+  //white bg
+  &.mat-mdc-standard-chip.white-bg{
+    background-color: color("shades", "white");
   }
 }

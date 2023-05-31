@@ -431,7 +431,82 @@
 
 // create plan Add Add-ons
 .add-ons-details-outer{
- padding: 2rem 2.375rem 2rem 2.9375rem;
+  .input-wrapper{
+  max-width: 49.125rem;
+  width: 100%;
+  .details-wrapper{
+    border: 1px solid #F3F1FF;
+    border-radius: 8px 8px 0px 0px;
+  }
+  .add-product-table{
+    border-radius: 0px 0px 8px 8px;
+    border: .0625rem solid color("grey", "lighten-11");
+    border-top: 0;
+  .table-wrapper{
+    max-width: 44.75rem;
+    width: 100%;
+    margin:0 1.875rem;
+    .table-title{
+      border-bottom: .0625rem solid color("blue", "lighten-11");
+    }
+    .checked-stripe-table .mat-mdc-table{
+      border-radius: 0;
+    }
+    .primary-table.checked-stripe-table .mat-mdc-table .mdc-data-table__row{
+      height: 2.5rem;
+      box-shadow: 0 .25rem .5rem rgba(0, 0, 0, 0.1);
+      &.selected-row {
+        box-shadow: none;
+      }
+    }
+    .mat-mdc-table .mdc-data-table__header-row{
+      height: 2.6875rem;
+    }
+  }
+}
+ .outer-checkbox{
+  &.mat-mdc-checkbox.mat-accent{
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  input#mat-mdc-checkbox-1-input{
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .mdc-form-field .mdc-checkbox .mdc-checkbox__background{
+    top: 0;
+    left: 0;
+  }
+  
+  .mdc-form-field{
+    width: 1.25rem;
+    height: 1.25rem;
+    .mdc-checkbox{
+      padding: 0;
+      .mat-mdc-checkbox-touch-target{
+        width: 1.25rem;
+        height: 1.25rem;
+        .mdc-checkbox__native-control{
+          width: 1.25rem;
+          height: 1.25rem;
+        }
+        .mdc-checkbox__native-control{
+          width: 1.25rem;
+          height: 1.25rem;
+        }
+        
+      }
+      .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background{
+        border-color: color("grey","lighten-9");
+      }
+      .mdc-checkbox__background{
+        border-radius: .25rem;
+      }
+    }
+  }
+ 
+ }
+}
 }
 //Product Details inner
 .details-wrapper{
