@@ -11,6 +11,7 @@ import { LayoutComponent } from './core/layouts/layout/layout.component';
 import { SidebarComponent } from './core/layouts/sidebar/sidebar.component';
 import { SuccessDialogComponent } from './shared/components/dialog-box/success-dialog/success-dialog.component';
 import { DeleteConfirmationComponent } from './shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { DeleteConfirmationComponent } from './shared/components/dialog-box/dele
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AngularMaterialModule,
     AppRoutingModule,
     BrowserAnimationsModule,
