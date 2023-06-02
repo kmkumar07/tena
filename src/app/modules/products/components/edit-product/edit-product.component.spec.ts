@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditDeleteDropComponent } from './edit-delete-drop.component';
+import { EditProductComponent } from './edit-product.component';
 
-describe('EditDeleteDropComponent', () => {
-  let component: EditDeleteDropComponent;
-  let fixture: ComponentFixture<EditDeleteDropComponent>;
+describe('EditProductComponent', () => {
+  let component: EditProductComponent;
+  let fixture: ComponentFixture<EditProductComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditDeleteDropComponent ]
+      declarations: [ EditProductComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EditDeleteDropComponent);
+    fixture = TestBed.createComponent(EditProductComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

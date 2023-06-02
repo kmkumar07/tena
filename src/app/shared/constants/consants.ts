@@ -21,6 +21,25 @@ export interface features {
   created_at: string;
   status: string;
 }
+export interface Product {
+  productId: string;
+  imageUrl: string,
+  createdOn: string;
+  modifiedOn: string;
+  name: string;
+  description: string;
+  status: string;
+
+}
+export interface GetProduct {
+  productId: string;
+  imageUrl: string,
+  modifiedOn: string;
+  name: string;
+  description: string;
+  status: string;
+
+}
 export interface plansFields {
   plan_ID: string;
   external_name: string;

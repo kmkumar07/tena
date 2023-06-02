@@ -4,12 +4,12 @@
     <div class="flex align-center justify-between">
       <div class="brand-info flex align-end">
         <div class="product-img mr-4 border-2">
-          <img src="../.././../../assets/images/teams.png" alt="product-img" />
+          <img src="{{imageUrl}}" alt="product-img" />
         </div>
         <div>
           <div class="flex align-center">
             <p class="mat-headline-5 text-text text-dark title mb-1">
-              Microsoft Teams
+              {{name}}
             </p>
             <div
               class="active-text flex align-center green-text text-darken-3 ml-4"
@@ -18,16 +18,16 @@
                 class="material-symbols-outlined mr-1 green-text text-darken-3"
                 color="primary"
                 >check_circle</mat-icon
-              ><span>Active</span>
+              ><span>{{status}}</span>
             </div>
           </div>
           <span class="mat-subtitle-2 subtitle font-weight-500 block"
-            >O365ProPlusRetail</span
+            >{{productId}}</span
           >
         </div>
       </div>
       <div class="btn-section flex align-center">
-        <button mat-stroked-button color="primary" class="mr-2 large">
+        <button mat-stroked-button color="primary" class="mr-2 large" [routerLink]="['/products/edit-product/'+productId]" >
           Edit
         </button>
         <button mat-flat-button color="primary" class="large" [routerLink]="['/products']">
@@ -55,24 +55,14 @@
     <div class="product-desc">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4">Description</h4>
       <p class="mat-subtitle-2">
-        Microsoft Teams is a proprietary business communication platform
-        developed by Microsoft, as part of the Microsoft 365 family of products.
-        Teams primarily competes with the similar service Slack, offering
-        workspace chat and videoconferencing, file storage, and application
-        integration. <br /><br />
-        In addition, Teams provides file and data collaboration and
-        extensibility features, and integrates with Microsoft 365 and other
-        Microsoft and partner apps. Microsoft Teams is the ultimate messaging
-        app for your organization—a workspace for real-time collaboration and
-        communication, meetings, file and app sharing, and even the occasional
-        emoji! All in one place, all in the open, all accessible to everyone.
+        {{description}}
       </p>
     </div>
     <div class="product-features mt-8">
       <div class="flex align-center justify-between">
         <h4 class="mat-subtitle-2 font-weight-500 mb-4">Features</h4>
         <!-- below button will show only when added a feature  -->
-        <button mat-button color="primary">Create feature</button>
+        <button mat-button color="primary" [routerLink]="['/features']">Create feature</button>
       </div>
 
       <!-- ------------do not delete below commented code---------------->
@@ -128,7 +118,7 @@
             <span class="text-text text-primary ml-3">Switch</span>
           </div>
           <div class="action-btns flex align-center">
-            <button mat-button color="primary">
+            <button mat-button color="primary" >
               <mat-icon
                 class="material-symbols-outlined mb-1 small edit-icon"
                 color="primary"

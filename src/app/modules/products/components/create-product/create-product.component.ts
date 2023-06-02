@@ -13,7 +13,7 @@ import { trigger, transition, animate, style } from '@angular/animations';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 import { Subscription } from 'rxjs';
 
@@ -46,8 +46,8 @@ export class CreateProductComponent implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private productService: ProductsService
-  ) {}
+    private productService: ProductsService,
+  ) { }
   ngOnInit() {
     this.productForm = this.formBuilder.group({
       productId: ['', Validators.required],
@@ -77,13 +77,14 @@ export class CreateProductComponent implements OnInit {
     const status = this.productForm.value.status ? 'active' : 'disabled';
     const product = {
       ...this.productForm.value,
-      status: status,
+      status: status
     };
     this.subscription = this.productService
       .createProduct(product)
-      .subscribe((data) => {
+      .subscribe((res) => {
+        console.log("akhand", res)
         this.openSuccess();
-        this.router.navigate(['/products/view-product']);
+        this.router.navigate([`/products/view-product/${res.productId}`]);
       });
 
     this.productForm.reset();
@@ -115,7 +116,9 @@ export class CreateProductComponent implements OnInit {
     });
   }
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   // setContentForTooltip() {
@@ -155,7 +158,7 @@ export class DialogAnimationsDialog {
   constructor(
     public dialogRef: MatDialogRef<DialogAnimationsDialog>,
     private productService: ProductsService
-  ) {}
+  ) { }
   activeColor: string = 'green';
   baseColor: string = '#ccc';
   overlayColor: string = 'rgba(255,255,255,0.5)';
