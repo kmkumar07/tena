@@ -67,7 +67,7 @@
 
       <!-- ------------do not delete below commented code---------------->
 
-      <div class="feature-add-block flex align-center justify-center p-6">
+      <!-- <div class="feature-add-block flex align-center justify-center p-6">
         <div class="text-center flex align-center flex vertical">
           <div class="icon-with-bg">
             <div class="bg-box"></div>
@@ -84,21 +84,21 @@
             Create Features
           </button>
         </div>
-      </div>
+      </div> -->
 
       <!-- with feature added -->
       <div class="features-wrapper">
-        <div class="feature-item flex border-2">
+        <div class="feature-item flex border-2" *ngFor="let feature of productDetail.features; let i = index">
           <div
             class="feature-logo border-2 flex-center font-weight-500 primary-text text-main"
           >
-            <span>WB</span>
+            <span>{{ feature.name }}</span>
           </div>
           <div class="details ml-8">
             <div class="flex align-center mb-2">
               <span
                 class="mat-subtitle-2 font-weight-500 text-text text-primary"
-                >Whiteboard</span
+                >{{ feature.name }}</span
               >
               <div
                 class="active-text flex align-center green-text text-darken-3 ml-6"
@@ -107,15 +107,14 @@
                   class="material-symbols-outlined mr-1 green-text text-darken-3"
                   color="primary"
                   >check_circle</mat-icon
-                ><span>Active</span>
+                ><span>{{feature.status}}</span>
               </div>
             </div>
             <p class="mat-body-1 text-dark mb-2">
-              Host online meetings and video calls for up to 300 people with
-              Microsoft teams and get extra benefits also.
+                   {{ feature.description }}
             </p>
             <span class="text-dark">Feature type : </span>
-            <span class="text-text text-primary ml-3">Switch</span>
+            <span class="text-text text-primary ml-3">{{feature.type}}</span>
           </div>
           <div class="action-btns flex align-center">
             <button mat-button color="primary" >
@@ -138,7 +137,28 @@
             </button>
           </div>
         </div>
-        <div class="feature-item flex border-2">
+
+         <!-- No features block -->
+  <ng-template #noFeaturesBlock>
+    <div class="feature-add-block flex align-center justify-center p-6">
+      <div class="text-center flex align-center flex vertical">
+        <div class="icon-with-bg">
+          <div class="bg-box"></div>
+          <div class="icon inherit">
+            <mat-icon class="material-symbols-outlined mb-1">featured_play_list</mat-icon>
+          </div>
+        </div>
+        <p class="mat-subtitle-2 text-dark-1 mb-3 font-weight-500">
+          You have not added any features
+        </p>
+        <button mat-button color="primary" class="small">
+          Create Features
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</div>
+        <!-- <div class="feature-item flex border-2">
           <div
             class="feature-logo border-2 flex-center font-weight-500 primary-text text-main"
           >
@@ -188,7 +208,7 @@
             </button>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- with feature added -->
     </div>
   </div>
