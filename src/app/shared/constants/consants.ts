@@ -29,6 +29,28 @@ export interface plansFields {
   created_at: string;
   status: string;
 }
+export interface Feature {
+  featureId: string;
+  productID: string;
+  createdOn: string;
+  modifiedOn: string;
+  name: string;
+  description: string;
+  type: string;
+  status: string;
+  unit: string;
+  levels: []
+}
+
+export interface GetFeature {
+  featureId: string;
+  productID: string;
+  modifiedOn: string;
+  name: string;
+  description: string;
+  type: string;
+  status: string;
+}
 export const MENUITEMS = [
   {
     state: 'dashboard',

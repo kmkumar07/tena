@@ -6,7 +6,7 @@
         <div>
           <div class="flex align-center">
             <p class="mat-headline-5 text-text text-dark title mb-1">
-              Whiteboard
+              {{featureName}}
             </p>
             <div
               class="active-text flex align-center green-text text-darken-3 ml-4"
@@ -15,7 +15,7 @@
                 class="material-symbols-outlined mr-1 green-text text-darken-3"
                 color="primary"
                 >check_circle</mat-icon
-              ><span>Active</span>
+              ><span>{{status}}</span>
             </div>
           </div>
           <span class="mat-subtitle-2 subtitle font-weight-500 block"
@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="btn-section flex align-center">
-        <button mat-stroked-button color="primary" class="mr-2 large">
+        <button mat-stroked-button color="primary" class="mr-2 large" (click)="editFeature()">
           Edit
         </button>
         <button mat-flat-button color="primary" class="large">
@@ -46,7 +46,7 @@
           <p
             class="mat-subtitle-2 text-text text-dark title mb-1 font-weight-600"
           >
-            Microsoft Teams
+          {{productName}}
           </p>
           <span class="mat-body-1 subtitle font-weight-500 block"
             >O365ProPlusRetail</span
@@ -58,7 +58,7 @@
               class="material-symbols-outlined mr-1 green-text text-darken-3"
               color="primary"
               >check_circle</mat-icon
-            ><span>Active</span>
+            ><span>{{status}}</span>
           </div>
         </div>
       </div>
@@ -73,42 +73,42 @@
       <!-- ----------------range type--------------------------- -->
       <div class="switch-type pt-4 border-2 flex align-center">
         <mat-icon
-          *ngIf="featureType === 'range'"
+          *ngIf="featureValue === 'range'"
           class="material-symbols-outlined text-darken-3"
           >arrow_range</mat-icon
         >
 
         <img
-          *ngIf="featureType === 'switch'"
+          *ngIf="featureValue === 'switch'"
           src="../../../../assets/images/icons/toggle-left.svg"
           alt="toggle-left"
         />
 
         <mat-icon
-          *ngIf="featureType === 'quantity' || featureType === 'custom' "
+          *ngIf="featureValue === 'quantity' || featureValue === 'custom' "
           class="material-symbols-outlined text-darken-3"
           >production_quantity_limits</mat-icon
         >
 
         <div>
           <span class="mat-body-1 text-headline-light font-weight-500">{{
-            (featureType === "switch" && "Switch") ||
-              (featureType === "range" && "Range") ||
-              (featureType === "quantity" && "Quantity") ||
-              (featureType === "custom" && "Custom") 
+            (featureValue === "switch" && "Switch") ||
+              (featureValue === "range" && "Range") ||
+              (featureValue === "quantity" && "Quantity") ||
+              (featureValue === "custom" && "Custom") 
           }}</span>
           <p class="mat-body-1 text-dark mt-2">
             {{
-              (featureType === "switch" &&
+              (featureValue === "switch" &&
                 "This feature type has 2 entitlement levels- “available” and “not
               available”.") ||
-                (featureType === "range" &&
+                (featureValue === "range" &&
                   "This feature supports range based entitlements.
               For eg : Customer’s access can be between 100 and 300 API / minute.") ||
-                (featureType === "quantity" &&
+                (featureValue === "quantity" &&
                   "This feature type has numbered entitlement levels-
                 For eg : 2,3,4 or 10 user license's.") ||
-                (featureType === "custom" &&
+                (featureValue === "custom" &&
                   "This feature supports range based entitlements. For eg : Customer’s
                   access can be between 100 and 300 API / minute.")
             }}
@@ -119,13 +119,13 @@
     </div>
 
     <!-- ----------------range detail--------------------------- -->
-    <div *ngIf="featureType === 'range'" class="mt-8 range-detail-wrapper">
+    <div *ngIf="featureValue === 'range'" class="mt-8 range-detail-wrapper">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
         Range Details
       </h4>
       <div class="range-detail py-2 px-3 border-2 mb-4">
         <p class="mat-body-1 text-headline-dark">Entitlements Units</p>
-        <span class="mat-body-1 font-weight-500 text-primary">License</span>
+        <span class="mat-body-1 font-weight-500 text-primary">{{unit}}</span>
       </div>
       <div class="detail-info border-2">
         <table class="w-full odd-bg-color">
@@ -141,37 +141,34 @@
     <!-- ----------------range detail--------------------------- -->
 
     <!-- ----------------quantity and custom details--------------------------- -->
-    <div *ngIf="featureType === 'quantity'" class="mt-8 range-detail-wrapper">
+    <div *ngIf="featureValue === 'quantity'" class="mt-8 range-detail-wrapper">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
         Quantity Details
       </h4>
       <div class="range-detail py-2 px-3 border-2 mb-4">
         <p class="mat-body-1 text-headline-dark">Entitlements Units</p>
-        <span class="mat-body-1 font-weight-500 text-primary">License</span>
+        <span class="mat-body-1 font-weight-500 text-primary">{{unit}}</span>
       </div>
       <div class="detail-info border-2">
         <table class="w-full odd-bg-color">
-          <th class="font-weight-500 text-darken-1">Entitlement levels</th>
-          <tr class="text-headline-light">
-            <td>3 Licenses</td>
+          <th class="font-weight-500 text-darken-1">Entitlement Levels</th>
+          <tr class="text-headline-light" *ngFor="let displayName of displayNameArray">
+            <td>{{displayName}}</td>
           </tr>
           <tr class="text-headline-light">
-            <td>10 Licenses</td>
-          </tr>
-          <tr class="text-headline-light">
-            <td>Unlimited Licenses</td>
+            <td>Unlimited {{unit}}</td>
           </tr>
         </table>
       </div>
     </div>
 
-    <div *ngIf="featureType === 'custom'" class="mt-8 range-detail-wrapper">
+    <div *ngIf="featureValue === 'custom'" class="mt-8 range-detail-wrapper">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
         Quantity Details
       </h4>
       <div class="detail-info border-2">
         <table class="w-full odd-bg-color">
-          <th class="font-weight-500 text-darken-1">Entitlement levels</th>
+          <th class="font-weight-500 text-darken-1">Entitlement Levels</th>
           <tr class="text-headline-light">
             <td>Working hours</td>
           </tr>
@@ -190,7 +187,7 @@
 
     <div class="product-desc mt-8">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
-        Description
+        {{description}}
       </h4>
       <p class="mat-body-1">
         Teams allows users to communicate in two-way persistent chats with one

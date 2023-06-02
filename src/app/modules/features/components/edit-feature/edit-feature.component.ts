@@ -1,10 +1,5 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import {
-  Data_Type,
-  User_Data,
-  feature_types,
-} from 'src/app/shared/constants/consants';
+import { Component, ViewChild } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -12,10 +7,14 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import getUniqueId from 'src/app/core/utils/functions/getUniqueId';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import {
+  Data_Type,
+  feature_types,
+  User_Data,
+} from 'src/app/shared/constants/consants';
 import { FeatureService } from '../../services/feature.service';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 export interface menuOptions {
   value: number;
@@ -23,12 +22,11 @@ export interface menuOptions {
 }
 
 @Component({
-  selector: 'app-create-feature',
-  templateUrl: './create-feature.component.html',
-  styleUrls: ['./create-feature.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-edit-feature',
+  templateUrl: './edit-feature.component.html',
+  styleUrls: ['./edit-feature.component.scss'],
 })
-export class CreateFeatureComponent {
+export class EditFeatureComponent {
   productName: Data_Type[] = User_Data;
   featureType: menuOptions[] = feature_types;
   subscription: Subscription;
@@ -37,37 +35,42 @@ export class CreateFeatureComponent {
   postName: string = '';
   position: any;
   unlimitedButtonLabel: string = 'Set Unlimited';
+  featureForm: any = this.formBuilder.group({
+    featureId: [null, Validators.required],
+    productID: [null, Validators.required],
+    name: ['', Validators.required],
+    description: ['', Validators.required],
+    type: ['', Validators.required],
+    unit: [null, Validators.required],
+    status: [false],
+    levels: this.formBuilder.array([
+      this.formBuilder.group({
+        isUnlimited: [false],
+        value: ['', Validators.required],
+        name: ['', Validators.required],
+      }),
+      this.formBuilder.group({
+        isUnlimited: [false],
+        value: ['', Validators.required],
+        name: ['', Validators.required],
+      }),
+    ]),
+  });
 
-  public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   constructor(
     private formBuilder: FormBuilder,
     private featureService: FeatureService,
-    private routes: Router
+    private routes: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.featureForm = this.formBuilder.group({
-      featureId: ['', Validators.required],
-      productID: ['', Validators.required],
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      type: ['', Validators.required],
-      unit: ['', Validators.required],
-      status: [false],
-      levels: this.formBuilder.array([
-        this.formBuilder.group({
-          isUnlimited: [false],
-          value: ['', Validators.required],
-          name: ['', Validators.required],
-        }),
-        this.formBuilder.group({
-          isUnlimited: [false],
-          value: ['', Validators.required],
-          name: ['', Validators.required],
-        }),
-      ]),
+    const id = this.route.snapshot.params['id'];
+
+    this.featureService.getFeatureById(id).subscribe((data) => {
+      this.updateForm(data);
     });
   }
 
@@ -124,6 +127,19 @@ export class CreateFeatureComponent {
     });
   }
 
+  updateForm(res: any) {
+    this.featureForm.setValue({
+      featureId: res.featureId,
+      productID: res.productID || null,
+      name: res.name,
+      description: res.description,
+      type: res.type,
+      status: res.status,
+      unit: res.unit || null,
+      levels: res.levels,
+    });
+  }
+
   onSubmit() {
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
@@ -138,18 +154,18 @@ export class CreateFeatureComponent {
       ...this.featureForm.value,
       status: status,
     };
-    console.log('feature', feature);
 
-    this.subscription = this.featureService.addFeature(feature).subscribe({
-      next: (res: any) => {
-        this.routes.navigate([`/features/view/${res.featureId}`]);
-        return res;
-      },
-      error: (err: any) => {
-        console.log('something wrong occured', err);
-      },
-    });
-    this.featureForm.reset()
+    this.subscription = this.featureService
+      .updateFeature(this.featureForm.value.featureId, feature)
+      .subscribe({
+        next: (res: any) => {
+          this.routes.navigate([`/features/view/${res.featureId}`]);
+          return res;
+        },
+        error: (err: any) => {
+          console.log('something wrong occured', err);
+        },
+      });
   }
 
   onDelete() {

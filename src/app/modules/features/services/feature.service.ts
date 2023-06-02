@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, Subject } from 'rxjs';
+import { Feature, GetFeature } from 'src/app/shared/constants/consants';
 import { environment } from 'src/environments/environment';
 
 
@@ -13,11 +14,11 @@ export class FeatureService {
   error$ = new Subject<string>();
   constructor(private http: HttpClient) {}
 
-  addFeature(feature: any): Observable<any> {
+  addFeature(feature: any): Observable<Feature> {
     return this.http.post(`${environment.apiUrl}`, feature).pipe(
-      map((data: any) => {
-        this.featureSubject.next(data);
-        return data;
+      map((res: any) => {
+        this.featureSubject.next(res.data);
+        return res.data;
       }),
       catchError((err) => {
         this.error$.next(err.message);
@@ -47,6 +48,32 @@ export class FeatureService {
       catchError((error: HttpErrorResponse) => {
         this.error$.next(error.message);
         throw error;
+      })
+    );
+  }
+  getFeatureById(id: string): Observable<GetFeature> {
+    return this.http.get<any>(`${environment.apiUrl}/{id}?id=${id}`).pipe(
+      map((res) => {
+        this.featureSubject.next(res);
+        return res.data;
+      }),
+      catchError((err) => {
+        this.error$.next(err.message);
+        throw err;
+      })
+    );
+  }
+
+  updateFeature(featureId: string, updatedFeature: any): Observable<Feature> {
+    const url = `${environment.apiUrl}?featureId=${featureId}`;
+    return this.http.patch(url, updatedFeature).pipe(
+      map((res: any) => {
+        this.featureSubject.next(res.data);
+        return res.data;
+      }),
+      catchError((err) => {
+        this.error$.next(err.message);
+        throw err;
       })
     );
   }
