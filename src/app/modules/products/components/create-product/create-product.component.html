@@ -36,84 +36,96 @@
       </div>
     </div>
     <div class="input-wrapper mt-8">
-      <div>
-        <div class="flex align-center mb-2">
-          <p class="mat-subtitle-2 font-weight-500 input-label">Product ID</p>
-          <mat-icon
-            class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-            [ngxTippy]="helpinfotooltip"
-            [tippyProps]="{ placement: 'right' }"
-            >help</mat-icon
-          >
-          <ng-template #helpinfotooltip let-name>
-            <div class="help-info-tooltip">
-              <div class="heading-with-background">Description</div>
-              <div class="details">
-                Microsoft Teams is the ultimate messaging app for your
-                organization—a workspace for real-time collaboration and
-                communication, meetings, file and app sharing, and even the
-                occasional emoji! All in one place, all in the open, all
-                accessible to everyone.
-              </div>
-            </div>
-          </ng-template>
-        </div>
-        <mat-form-field appearance="outline">
-          <input matInput placeholder="Enter here..." />
-        </mat-form-field>
-      </div>
-      <div>
-        <div class="flex align-center mb-2">
-          <p class="mat-subtitle-2 font-weight-500 input-label">Product Name</p>
-          <mat-icon
-            class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-            [ngxTippy]="productnameinfo"
-            [tippyProps]="{ placement: 'right' }"
-            tippyName="content"
-            >help</mat-icon
-          >
-          <ng-template #productnameinfo let-name class="t-template">
-            <div class="help-info-tooltip">
-              <div class="heading-with-background">Product name</div>
-              <div class="details">
-                Enter a name that helps you identify this Product
-              </div>
-              <button mat-button color="primary" class="px-0">
-                Learn more
-              </button>
-            </div>
-          </ng-template>
-        </div>
-        <mat-form-field appearance="outline">
-          <input matInput placeholder="Enter here..." />
-        </mat-form-field>
-      </div>
-      <div>
-        <div class="flex align-center mb-2">
-          <p class="mat-subtitle-2 font-weight-500 input-label">Description</p>
-        </div>
-        <mat-form-field appearance="outline">
-          <textarea matInput placeholder="Enter here..."></textarea>
-        </mat-form-field>
-      </div>
-      <div class="action-btns flex align-center justify-between">
-        <mat-checkbox color="primary" class="font-weight-500 checkbox ml-n-3"
-          >Active</mat-checkbox
-        >
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
         <div>
-          <button mat-stroked-button color="primary" class="mr-2 large">
-            Dismiss
-          </button>
-          <button
-            mat-flat-button
-            color="primary"
-            class="large"
-            [routerLink]="['/products/view-product']"
-          >
-            Create
-          </button>
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Product Name
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="productnameinfo"
+              [tippyProps]="{ placement: 'right' }"
+              tippyName="content"
+              >help</mat-icon
+            >
+            <ng-template #productnameinfo let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Product name</div>
+                <div class="details">
+                  Enter a name that helps you identify this Product
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              placeholder="Enter here..."
+              formControlName="name"
+            />
+          </mat-form-field>
         </div>
-      </div>
+        <div>
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Description
+            </p>
+          </div>
+          <mat-form-field appearance="outline">
+            <textarea
+              matInput
+              placeholder="Enter here..."
+              formControlName="description"
+            ></textarea>
+          </mat-form-field>
+        </div>
+        <div>
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">Product ID</p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="helpinfotooltip"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #helpinfotooltip let-name>
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Description</div>
+                <div class="details">
+                  Enter a id that helps you identify this Product
+                </div>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              placeholder="Enter here..."
+              formControlName="productId"
+            />
+          </mat-form-field>
+        </div>
+        <div class="action-btns flex align-center justify-between">
+          <mat-checkbox
+            color="primary"
+            class="font-weight-500 checkbox ml-n-3"
+            formControlName="status"
+            >Active</mat-checkbox
+          >
+          <div>
+            <button mat-stroked-button color="primary" class="mr-2 large" [mat-dialog-close]="true" >
+              Dismiss
+            </button>
+            <button mat-flat-button color="primary" class="large" type="submit">
+              Create
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
   <!-- </div> -->

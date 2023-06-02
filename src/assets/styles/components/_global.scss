@@ -19,7 +19,6 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: color("primary", "main");
   font-family: "Roboto", sans-serif;
 }
 
@@ -54,7 +53,7 @@ input {
 }
 // Material Symbols Outlined
 .material-symbols-outlined {
-  font-family: "Material Symbols Outlined" !important;
+  font-family: "Material Symbols Rounded" !important;
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 }
 .m-0 {
@@ -113,6 +112,12 @@ label {
 .border-2 {
   border-radius: 0.5rem;
 }
+.border-3 {
+  border-radius: 0.75rem;
+}
+.border-4 {
+  border-radius: 1rem;
+}
 // font-weight
 .fw-500 {
   font-weight: 500 !important;
@@ -158,6 +163,10 @@ label {
   justify-content: flex-end;
 }
 
+.justify-start {
+  justify-content: flex-start;
+}
+
 .justify-center {
   justify-content: center;
 }
@@ -192,7 +201,7 @@ label {
 .h-screen {
   height: 100vh;
 }
-.h-auto{
+.h-auto {
   height: auto;
 }
 .h-full {
@@ -201,7 +210,7 @@ label {
 .w-full {
   width: 100%;
 }
-.w-half{
+.w-half {
   width: 44%;
 }
 @for $i from 0 through 100 {
@@ -264,7 +273,7 @@ label {
 // 4. Display
 
 .block {
-  display: block;
+  display: block !important;
 }
 .inline {
   display: inline;
@@ -285,6 +294,28 @@ label {
 }
 
 // SPACING
+// Auto Margin
+.m-auto {
+  margin: auto;
+}
+.my-auto {
+  margin: auto 0;
+}
+.mx-auto {
+  margin: 0 auto;
+}
+.ml-auto {
+  margin-left: auto;
+}
+.mr-auto {
+  margin-right: auto;
+}
+.mt-auto {
+  margin-top: auto;
+}
+.mb-auto {
+  margin-bottom: auto;
+}
 // Margin Loop
 @for $i from 0 through 12 {
   .mt-#{$i} {
@@ -378,10 +409,15 @@ label {
     letter-spacing: 0 !important;
   }
 }
+.small-icon {
+  font-size: 1rem;
+  width: 1.125rem;
+  height: 1.125rem;
+}
 .lg-icon {
   font-size: 1.25rem !important;
 }
-.upper-case{
+.upper-case {
   text-transform: uppercase;
 }
 .text-underline {
@@ -392,7 +428,7 @@ label {
   font-size: 1rem;
   padding: 0.75rem 0.625rem;
   background-color: #f3f1ff;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   font-weight: 500;
 }
 // 5. Angular Material
@@ -406,7 +442,7 @@ table {
   &.odd-bg-color {
     th,
     td {
-      padding: .75rem 1rem;
+      padding: 0.75rem 1rem;
     }
     border-spacing: 0;
     tr:nth-child(even) {

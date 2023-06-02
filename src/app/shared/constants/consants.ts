@@ -21,12 +21,39 @@ export interface features {
   created_at: string;
   status: string;
 }
+export interface Product {
+  productId: string;
+  imageUrl: string,
+  createdOn: string;
+  modifiedOn: string;
+  name: string;
+  description: string;
+  status: string;
+
+}
+export interface GetProduct {
+  productId: string;
+  imageUrl: string,
+  modifiedOn: string;
+  name: string;
+  description: string;
+  status: string;
+
+}
+export interface plansFields {
+  plan_ID: string;
+  external_name: string;
+  internal_name: string;
+  description: string;
+  created_at: string;
+  status: string;
+}
 export const MENUITEMS = [
   {
     state: 'dashboard',
     type: 'link',
     name: 'Overview',
-    icon: 'dashboard',
+    icon: 'space_dashboard',
     category: 'Dashboard',
   },
   {
@@ -58,7 +85,7 @@ export const MENUITEMS = [
     category: 'Product_Catalog',
   },
   {
-    state: 'tabs',
+    state: 'plans',
     type: 'link',
     name: 'Plans',
     icon: 'quick_reference_all',
@@ -150,6 +177,7 @@ export const User_Options = [
   { path: '', icon: 'clear_day', name: 'Dark Mode', toggle: true },
   { path: '/help', icon: 'live_help', name: 'Help', toggle: false },
 ];
+// Product listing
 export const User_Data = [
   {
     id: 'random_id_1234',
@@ -201,6 +229,26 @@ export const Features_Data = [
     status: 'Active',
   },
 ];
+export const Plans_Data = [
+  {
+    plan_ID: 'As-012P',
+    external_name: 'Premium',
+    internal_name: 'Premium v.3',
+    description:
+      'lorem ipsumDividers can be added to lists as a means of separating content into distinct sections. Inset dividers can also be added to provide the appearance of distinct elements in a list without cluttering content like avatar images or icons. Make sure to avoid adding an inset divider to the last element in a list, because it will overlap with the section divider.',
+    created_at: 'June 10th, 2020',
+    status: 'Active',
+  },
+  {
+    plan_ID: 'As-099G',
+    external_name: 'Premium',
+    internal_name: 'Premium v.2',
+    description:
+      'lorem ipsumDividers can be added to lists as a means of separating content into distinct sections. Inset dividers can also be added to provide the appearance of distinct elements in a list without cluttering content like avatar images or icons. Make sure to avoid adding an inset divider to the last element in a list, because it will overlap with the section divider.',
+    created_at: 'June 10th, 2020',
+    status: 'Active',
+  },
+];
 export const Notifications_Data = [
   // {
   //   user: 'John Smith' ,
@@ -216,5 +264,71 @@ export const feature_types = [
 ];
 export const StaticRoutes = {
   features: ['features'],
-  products: ['products']
+  products: ['products'],
 };
+
+export const plan_add_empty_data = [
+  {
+    titleIcon:
+      '../../../../../../assets/images/icons/basil_invoice-outline.svg',
+    iconAlt: 'invoice-outline-icon',
+    title: 'Product Details',
+    subtitle:
+      'Please click the “Add” button below to add a new product. Once you clicked the button, you will be prompted to enter the name of product, description and additional details.',
+    btnTitle: 'Add product',
+    btnPath: '/#',
+  },
+  {
+    titleIcon:
+      '../../../../../../assets/images/icons/basil_invoice-outline.svg',
+    iconAlt: 'invoice-outline-icon',
+    title: 'Pricing Plans',
+    subtitle:
+      'Please click the “Add” button below to add a new pricing plans. Once you clicked the button, you will be prompted to enter pricing and additional details.',
+    btnTitle: 'Add Pricing',
+    btnPath: '/#',
+  },
+  {
+    titleIcon:
+      '../../../../../../assets/images/icons/basil_invoice-outline.svg',
+    iconAlt: 'invoice-outline-icon',
+    title: 'Add-ons Details',
+    subtitle:
+      'Please click the “Add” button below to add a new add-on. Once you have click button, you will be prompted to select add-on.',
+    btnTitle: 'Add Add-on',
+    btnPath: '/#',
+  },
+];
+export const noProducts = [
+  {
+    heading: 'Products',
+    imgPath: '../../../../assets/images/empty-illustrations.png',
+    alt: 'no proudcts available',
+    subtext: 'Looking for Product',
+    text: "Seems like you haven't added any Product. Start adding products by click on “Create Product” button",
+    buttonTxt: 'Create Product',
+    path: '/products/create',
+  },
+];
+export const noFeatures = [
+  {
+    heading: 'Features',
+    imgPath: '../../../../assets/images/empty-illustrations-2.png',
+    alt: 'no features available',
+    subtext: 'Looking for Features',
+    text: "Seems like you haven't added any feature. Start adding feature by click on “Create Feature” button ",
+    buttonTxt: 'Create Feature',
+    path: '/features/create',
+  },
+];
+export const noPlans = [
+  {
+    heading: 'Plans',
+    imgPath: '../../../../assets/images/empty-illustrations-4.png',
+    alt: 'no Plans available',
+    subtext: 'Looking for Plans',
+    text: "Seems like you haven't added any Plan. Start adding plan by click on “Create Plan” button",
+    buttonTxt: 'Create Plan',
+    path: '/plans/view',
+  },
+];

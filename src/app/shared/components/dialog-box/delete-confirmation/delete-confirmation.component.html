@@ -1,0 +1,11 @@
+<div class="p-6 border-4">
+  <h1 class="mb-4">Delete Confirmation</h1>
+  <span class="mat-body-1 mb-8 block"
+    >Are you sure you want to delete plan</span
+  >
+  <div class="flex justify-end">
+  
+    <button mat-button mat-dialog-close (click)="onCancelClick()">No</button>
+    <button mat-flat-button color="primary" class="medium ml-2" [mat-dialog-close]="true" >Yes</button>
+  </div>
+</div>
