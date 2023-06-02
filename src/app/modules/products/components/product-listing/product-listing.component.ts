@@ -5,6 +5,8 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ProductsService } from '../../services/products.service';
 import { Subject, Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
 import { Data_Type, noProducts } from 'src/app/shared/constants/consants';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
 
 @Component({
   selector: 'app-product-listing',
@@ -47,6 +49,7 @@ export class ProductListingComponent implements OnInit {
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
+    public dialog: MatDialog,
     protected productService: ProductsService,
   ) { }
 
@@ -103,6 +106,32 @@ export class ProductListingComponent implements OnInit {
     this.PageNumber++;
     this.getProduct(this.PageNumber, this.limit, this.search);
     console.log('onNext', this.PageNumber);
+  }
+
+  sendElementId(elementId: string) {
+    console.log(elementId);
+
+    this.productService.deleteProduct(elementId).subscribe(() => {
+      this.data$.subscribe((data) => {
+       // console.log("data",data);
+      });
+    });
+  }
+  openDelete(id: any) {
+    this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      width: '420px',
+      panelClass: 'dialog-curved',
+    });
+
+    this.dialogRef.afterClosed().subscribe((res:any) => {
+      if (res) {
+        console.log(res);
+        
+        this.sendElementId(id);
+      } else {
+        console.log('Delete canceled');
+      }
+    });
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */

@@ -193,7 +193,7 @@
           <mat-menu #actionsMenu="matMenu" class="actions-menu" backdropClass="edit-menu">
             <button mat-menu-item disableRipple  [routerLink]="['edit-product/'+element.productId]"          
             >Edit</button>
-            <button mat-menu-item disableRipple>Delete</button>
+            <button mat-menu-item disableRipple (click)="openDelete(element.productId)">Delete</button>
           </mat-menu>
         </td>
       </ng-container>
@@ -219,7 +219,7 @@
                 this.getProduct(this.PageNumber, this.limit, this.search)
               "
             >
-              <option value="2">2</option>
+              <option value="5">5</option>
 
               <option value="10">10</option>
 
