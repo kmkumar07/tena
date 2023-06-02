@@ -1,37 +1,46 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSort, Sort } from '@angular/material/sort';
-import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
-import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import {
-  Data_Type,
-  Features_Data,
-  features,
-  noFeatures,
-} from 'src/app/shared/constants/consants';
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { MatSort, Sort } from '@angular/material/sort';
+import { features, noFeatures } from 'src/app/shared/constants/consants';
+import { FeatureService } from '../../services/feature.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { Subscription } from 'rxjs';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
 @Component({
   selector: 'app-features-listing',
   templateUrl: './features-listing.component.html',
   styleUrls: ['./features-listing.component.scss'],
 })
-export class FeaturesListingComponent {
+export class FeaturesListingComponent implements OnInit {
   displayedColumns: string[] = [
     'select',
-    'feature_id',
-    'product_name',
-    'feature_name',
+    'featureId',
+  //  'product_name',
+    'name',
     'description',
-    'feature_type',
-    'created_at',
+    'type',
+    'createdOn',
     'status',
     'action',
   ];
-  featuresData: features[] = Features_Data;
+  featuresData = [];
   selection = new SelectionModel<features>(true, []);
   emptyFeature = noFeatures;
+  subscription: Subscription;
+  data$ = this.featureService.feature$;
+  elementId: number;
+  data: any;
+  PageNumber = 1;
+  limit = 5;
+  dialogRef: MatDialogRef<any>;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -40,8 +49,42 @@ export class FeaturesListingComponent {
     return numSelected === numRows;
   }
   constructor(
-    private _liveAnnouncer: LiveAnnouncer
+    private _liveAnnouncer: LiveAnnouncer,
+    private featureService: FeatureService,
+    public dialog: MatDialog
   ) {}
+
+  ngOnInit(): void {
+    this.getFeature(this.PageNumber, this.limit);
+  }
+
+  getFeature(PageNumber: number, limit: number) {
+    this.featureService.getFeatures(this.PageNumber, this.limit).subscribe(() => {
+      this.data$.subscribe((res) => {
+        this.featuresData =res.data;
+        
+      });
+    });
+  }
+  onPrevious() {
+    if (this.PageNumber > 1) {
+      this.PageNumber--;
+      this.getFeature(this.PageNumber, this.limit);
+    }
+  }
+  onNext() {
+    this.PageNumber++;
+    this.getFeature(this.PageNumber, this.limit);
+  }
+  sendElementId(elementId: number) {
+    this.featureService.deleteFeature(elementId).subscribe(() => {
+      this.data$.subscribe((data) => {
+        console.log('data', data);
+      });
+      this.getFeature(this.PageNumber, this.limit);
+    });
+  }
+
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
@@ -96,5 +139,19 @@ export class FeaturesListingComponent {
       });
     }
   }
+  openDelete(id: any) {
+    
+    this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      width: '420px',
+      panelClass: 'dialog-curved',
+    });
 
+    this.dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.sendElementId(id);
+      } else {
+        console.log('Delete canceled');
+      }
+    });
+  }
 }
