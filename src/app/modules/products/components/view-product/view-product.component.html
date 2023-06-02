@@ -64,30 +64,9 @@
         <!-- below button will show only when added a feature  -->
         <button mat-button color="primary" [routerLink]="['/features']">Create feature</button>
       </div>
-
-      <!-- ------------do not delete below commented code---------------->
-
-      <!-- <div class="feature-add-block flex align-center justify-center p-6">
-        <div class="text-center flex align-center flex vertical">
-          <div class="icon-with-bg">
-            <div class="bg-box"></div>
-            <div class="icon inherit">
-              <mat-icon class="material-symbols-outlined mb-1">
-                featured_play_list
-              </mat-icon>
-            </div>
-          </div>
-          <p class="mat-subtitle-2 text-dark-1 mb-3 font-weight-500">
-            You have not added features
-          </p>
-          <button mat-button color="primary" class="small">
-            Create Features
-          </button>
-        </div>
-      </div> -->
-
       <!-- with feature added -->
       <div class="features-wrapper">
+       <div *ngIf="productDetail?.features && productDetail.features.length > 0; else noFeaturesBlock">
         <div class="feature-item flex border-2" *ngFor="let feature of productDetail.features; let i = index">
           <div
             class="feature-logo border-2 flex-center font-weight-500 primary-text text-main"
@@ -137,6 +116,7 @@
             </button>
           </div>
         </div>
+        </div>
 
          <!-- No features block -->
   <ng-template #noFeaturesBlock>
@@ -151,65 +131,12 @@
         <p class="mat-subtitle-2 text-dark-1 mb-3 font-weight-500">
           You have not added any features
         </p>
-        <button mat-button color="primary" class="small">
+        <button mat-button color="primary" class="small" [routerLink]="['/features']">
           Create Features
         </button>
       </div>
     </div>
   </ng-template>
-</div>
-        <!-- <div class="feature-item flex border-2">
-          <div
-            class="feature-logo border-2 flex-center font-weight-500 primary-text text-main"
-          >
-            <span>WB</span>
-          </div>
-          <div class="details ml-8">
-            <div class="flex align-center mb-2">
-              <span
-                class="mat-subtitle-2 font-weight-500 text-text text-primary"
-                >Whiteboard</span
-              >
-              <div
-                class="active-text flex align-center green-text text-darken-3 ml-6"
-              >
-                <mat-icon
-                  class="material-symbols-outlined mr-1 green-text text-darken-3"
-                  color="primary"
-                  >check_circle</mat-icon
-                ><span>Active</span>
-              </div>
-            </div>
-            <p class="mat-body-1 text-dark mb-2">
-              Host online meetings and video calls for up to 300 people with
-              Microsoft teams and get extra benefits also.
-            </p>
-            <span class="text-dark">Feature type : </span>
-            <span class="text-text text-primary ml-3">Switch</span>
-          </div>
-          <div class="action-btns flex align-center">
-            <button mat-button color="primary">
-              <mat-icon
-                class="material-symbols-outlined mb-1 small edit-icon"
-                color="primary"
-              >
-                edit </mat-icon
-              >Edit
-            </button>
-            <button
-              mat-icon-button
-              class="mb-1 ml-4"
-              color="warn"
-              aria-label="Example icon button with a vertical three dot icon"
-            >
-              <mat-icon class="material-symbols-outlined" color="warn"
-                >close</mat-icon
-              >
-            </button>
-          </div>
-        </div>
-      </div> -->
-      <!-- with feature added -->
     </div>
   </div>
 </div>

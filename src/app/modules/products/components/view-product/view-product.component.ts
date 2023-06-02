@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
@@ -6,7 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-view-product',
   templateUrl: './view-product.component.html',
-  styleUrls: ['./view-product.component.scss']
+  styleUrls: ['./view-product.component.scss'],
 })
 export class ViewProductComponent {
   product$: Observable<any>;
@@ -17,6 +17,7 @@ export class ViewProductComponent {
   description: string
   status: string
   imageUrl: string
+  features:any
   constructor(private productService: ProductsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -31,6 +32,7 @@ export class ViewProductComponent {
         this.description = this.productDetail?.description
         this.status = this.productDetail?.status
         this.imageUrl = this.productDetail?.imageUrl
+        this.features = this.productDetail?.features || [];
       })
 
   }
