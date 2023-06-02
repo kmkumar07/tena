@@ -103,6 +103,13 @@
         <th mat-header-cell *matHeaderCellDef> Action</th>
         <td mat-cell *matCellDef="let element">
           <!-- <app-edit-delete-drop></app-edit-delete-drop> -->
+          <mat-icon class="material-symbols-outlined" [matMenuTriggerFor]="actionsMenu">
+            more_vert
+          </mat-icon>
+          <mat-menu #actionsMenu="matMenu" class="actions-menu" backdropClass="edit-menu">
+            <button mat-menu-item disableRipple [routerLink]="['edit-feature/'+element.featureId]">Edit</button>
+            <button mat-menu-item disableRipple (click)="openDelete(element.featureId)">Delete</button>
+          </mat-menu>
         </td>
       </ng-container>
 
