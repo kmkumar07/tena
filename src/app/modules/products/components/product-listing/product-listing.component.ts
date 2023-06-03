@@ -21,6 +21,7 @@ export class ProductListingComponent implements OnInit {
     'productId',
     'name',
     'description',
+    'feature',
     'createdOn',
     'status',
     'action',
