@@ -3,7 +3,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  OnDestroy,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -16,6 +15,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-create-product',
@@ -41,13 +41,15 @@ export class CreateProductComponent implements OnInit {
   tippyContent: NgxTippyProps = {};
   productForm: FormGroup;
   imageUrl: string = '';
+  imageName:string='';
   data: string = '';
+  imagePath: string = ''
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private productService: ProductsService,
-  ) { }
+    private productService: ProductsService
+  ) {}
   ngOnInit() {
     this.productForm = this.formBuilder.group({
       productId: ['', Validators.required],
@@ -77,22 +79,16 @@ export class CreateProductComponent implements OnInit {
     const status = this.productForm.value.status ? 'active' : 'disabled';
     const product = {
       ...this.productForm.value,
-      status: status
+      status: status,
     };
     this.subscription = this.productService
       .createProduct(product)
       .subscribe((res) => {
-        console.log("akhand", res)
         this.openSuccess();
         this.router.navigate([`/products/view-product/${res.productId}`]);
       });
-
-    this.productForm.reset();
   }
 
-  // ngAfterViewInit() {
-  //   this.setContentForTooltip();
-  // }
   openDialog(
     enterAnimationDuration: string,
     exitAnimationDuration: string
@@ -102,8 +98,11 @@ export class CreateProductComponent implements OnInit {
       enterAnimationDuration,
       exitAnimationDuration,
     });
-    dialogRef.componentInstance.saveSuccess.subscribe((imageUrl: string) => {
-      this.imageUrl = imageUrl;
+    dialogRef.componentInstance.saveSuccess.subscribe((data: { imageUrl: string, imageName: string }) => {
+      this.imageUrl = data.imageUrl;
+      this.imageName = data.imageName;
+      this.imagePath = environment.imagePath
+      console.log("aaaa", this.imageUrl)
     });
   }
 
@@ -111,7 +110,7 @@ export class CreateProductComponent implements OnInit {
     this.dialog.open(SuccessDialogComponent, {
       width: '420px',
       data: {
-        module: 'Plan',
+        module: 'Product',
       },
     });
   }
@@ -120,18 +119,6 @@ export class CreateProductComponent implements OnInit {
       this.subscription.unsubscribe();
     }
   }
-
-  // setContentForTooltip() {
-  //   const template = this.tippyTemplate.nativeElement;
-
-  //   // Pass element itself
-  //   this.ngxTippyService.setContent('content', template);
-
-  //   // or
-
-  //   // Pass element `innerHTML`
-  //   this.ngxTippyService.setContent('content', template.innerHTML);
-  // }
 }
 
 @Component({
@@ -158,7 +145,7 @@ export class DialogAnimationsDialog {
   constructor(
     public dialogRef: MatDialogRef<DialogAnimationsDialog>,
     private productService: ProductsService
-  ) { }
+  ) {}
   activeColor: string = 'green';
   baseColor: string = '#ccc';
   overlayColor: string = 'rgba(255,255,255,0.5)';
@@ -168,8 +155,11 @@ export class DialogAnimationsDialog {
   imageLoaded: boolean = false;
   imageSrc: string = '';
   base64imageData: string = '';
-  imageType: string = '';
+  imageName: string = '';
   imageUrl: string = '';
+  
+  
+  
 
   handleDragEnter() {
     this.dragging = true;
@@ -199,6 +189,7 @@ export class DialogAnimationsDialog {
       return;
     }
     this.loaded = false;
+    this.imageName = file.name;
     reader.onload = this._handleReaderLoaded.bind(this);
     reader.readAsDataURL(file);
   }
@@ -207,24 +198,25 @@ export class DialogAnimationsDialog {
     var reader = e.target;
     this.imageSrc = reader.result;
     const dataURLParts = this.imageSrc?.split(';base64,');
-    this.imageType = dataURLParts[0]?.split(':')[1];
     this.base64imageData = dataURLParts[1];
+    console.log("bbbb",this.base64imageData)
     this.loaded = true;
   }
-  @Output() saveSuccess: EventEmitter<string> = new EventEmitter<string>();
+  @Output() saveSuccess: EventEmitter<{ imageUrl: string, imageName: string }> = new EventEmitter<{ imageUrl: string, imageName: string }>();
   handleSave() {
     if (this.base64imageData) {
       const payload = {
         image: this.base64imageData,
-        imageName: this.imageType,
+        imageName: this.imageName,
       };
       this.subscription = this.productService
         .uploadImage(payload)
         .subscribe((res) => {
           this.imageUrl = res.data.blobURL;
-          this.saveSuccess.emit(this.imageUrl);
+          this.saveSuccess.emit({ imageUrl: this.imageUrl, imageName: this.imageName });
         });
     }
+   
   }
 
   cancel() {
