@@ -58,7 +58,6 @@ export class ProductsService {
         map((res) => {
           this.productSubject.next(res.data);
           this.products=res.data;
-          console.log('res', res.data);
           return res.data;
 
         }),

@@ -135,28 +135,28 @@
       </ng-container>
 
       <!-- Features Column -->
-      <!-- <ng-container matColumnDef="features">
+      <ng-container matColumnDef="feature">
         <th mat-header-cell *matHeaderCellDef> Features </th>
         <td mat-cell *matCellDef="let element">
           <div class="flex align-center" [ngxTippy]="featureListinfo" [tippyProps]="{ placement: 'right' }">
-            <mat-chip *ngIf="element.features.length > 0" class="table-chip m-2 ml-0"
-              disableRipple>{{element.features[0]}}</mat-chip>
-            <mat-chip *ngIf="element.features.length > 1" class="table-chip m-2 ml-0 pointer">+{{element.features.length
+            <mat-chip *ngIf="element.feature.length > 0" class="table-chip m-2 ml-0"
+              disableRipple>{{element.feature[0].name}}</mat-chip>
+            <mat-chip *ngIf="element.feature.length > 1" class="table-chip m-2 ml-0 pointer">+{{element.feature.length
               -
               1}}</mat-chip>
             <ng-template #featureListinfo let-name class="t-template">
               <div class="help-info-tooltip">
                 <div class="heading-with-background">Features</div>
-                <div *ngFor="let feature of element.features">
+                <div *ngFor="let feature of element.feature">
                   <button mat-button color="primary" class="p-2 py-3">
-                    {{feature}}
+                    {{feature.name}}
                   </button>
                 </div>
               </div>
             </ng-template>
           </div>
         </td>
-      </ng-container> -->
+      </ng-container>
 
       <!-- Created Date Column  -->
       <ng-container matColumnDef="createdOn">

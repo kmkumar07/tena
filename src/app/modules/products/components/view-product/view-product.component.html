@@ -49,7 +49,7 @@
         <mat-icon class="material-symbols-outlined mr-3"
           >calendar_today</mat-icon
         >
-        <p class="mat-subtitle-2 text-dark">Created 24 March, 2023</p>
+       <p class="mat-subtitle-2 text-dark"> modified {{modifiedOn}}</p>
       </div>
     </div>
     <div class="product-desc">
@@ -62,16 +62,16 @@
       <div class="flex align-center justify-between">
         <h4 class="mat-subtitle-2 font-weight-500 mb-4">Features</h4>
         <!-- below button will show only when added a feature  -->
-        <button mat-button color="primary" [routerLink]="['/features']">Create feature</button>
+        <button mat-button color="primary" [routerLink]="['/features/create']">Create feature</button>
       </div>
       <!-- with feature added -->
       <div class="features-wrapper">
-       <div *ngIf="productDetail?.features && productDetail.features.length > 0; else noFeaturesBlock">
-        <div class="feature-item flex border-2" *ngFor="let feature of productDetail.features; let i = index">
+       <div *ngIf="productDetail?.feature && productDetail.feature.length > 0; else noFeaturesBlock">
+        <div class="feature-item flex border-2" *ngFor="let feature of productDetail.feature; let i = index">
           <div
             class="feature-logo border-2 flex-center font-weight-500 primary-text text-main"
           >
-            <span>{{ feature.name }}</span>
+            <span>{{ feature.featureId}}</span>
           </div>
           <div class="details ml-8">
             <div class="flex align-center mb-2">

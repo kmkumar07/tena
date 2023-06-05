@@ -15,9 +15,10 @@ export class ViewProductComponent {
   productId: string
   name: string
   description: string
+  modifiedOn:string
   status: string
   imageUrl: string
-  features:any
+  feature:any
   constructor(private productService: ProductsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -30,9 +31,10 @@ export class ViewProductComponent {
         this.productId = this.productDetail?.productId
         this.name = this.productDetail?.name
         this.description = this.productDetail?.description
+        this.modifiedOn = this.productDetail?.modifiedOn
         this.status = this.productDetail?.status
         this.imageUrl = this.productDetail?.imageUrl
-        this.features = this.productDetail?.features || [];
+        this.feature = this.productDetail?.feature || [];
       })
 
   }
