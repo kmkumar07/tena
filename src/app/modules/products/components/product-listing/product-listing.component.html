@@ -166,7 +166,7 @@
           *matCellDef="let element"
           [routerLink]="'/products/' + element.id"
         >
-          {{ element.createdOn}}
+          {{ element.createdOn | date: 'd MMMM y'}}
         </td>
       </ng-container>
 
