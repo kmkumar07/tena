@@ -16,7 +16,6 @@ import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-bo
 })
 export class FeaturesListingComponent implements OnInit {
   displayedColumns: string[] = [
-    'select',
     'featureId',
     'productName',
     'name',

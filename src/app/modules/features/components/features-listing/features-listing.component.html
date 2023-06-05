@@ -61,31 +61,6 @@
 
               The actual rendered columns are set as a property on the row definition" -->
 
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox
-            color="primary"
-            (click)="selectAll(featuresData)"
-            (change)="$event ? toggleAllRows() : null"
-            [checked]="selection.hasValue() && isAllSelected()"
-            [indeterminate]="selection.hasValue() && !isAllSelected()"
-            [aria-label]="checkboxLabel()"
-          >
-          </mat-checkbox>
-        </th>
-
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox
-            color="primary"
-            (click)="selectedRow(row.id, $event)"
-            (change)="$event ? selection.toggle(row) : null"
-            [checked]="selection.isSelected(row)"
-            [aria-label]="checkboxLabel(row)"
-          >
-          </mat-checkbox>
-        </td>
-      </ng-container>
-
       <!-- Product ID Column -->
 
       <ng-container matColumnDef="featureId">
@@ -174,7 +149,7 @@
         <th mat-header-cell *matHeaderCellDef>Created On</th>
 
         <td mat-cell *matCellDef="let element" [routerLink]="'/features/view'">
-          {{ element.createdOn }}
+          {{element.createdOn | date: 'd MMMM y'}}
         </td>
       </ng-container>
 
