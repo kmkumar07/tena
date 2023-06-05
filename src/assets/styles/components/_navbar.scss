@@ -26,6 +26,7 @@
 .sidenav-open {
   .mat-sidenav {
     width: 16.375rem !important;
+    transition: 400ms;
     .sidenav-wrapper {
       .sidebar-toggle {
         transform: rotate(180deg);
@@ -38,7 +39,6 @@
 }
 .mat-sidenav-content {
   margin-left: 6.8125rem !important;
-  // transition-delay: 100ms;
 }
 .sidenav-slider.mat-drawer {
   transform: none !important;
@@ -161,6 +161,8 @@
       z-index: 9;
       background-color: color("shades", "white");
       transition: 400ms;
+      display: flex;
+      justify-content: center;
       align-items: flex-start;
     }
     h3 {
@@ -215,8 +217,11 @@
         height: 2.5625rem;
         .content-wrapper {
           transition: 400ms;
-          transition-delay: 200ms;
+          // transition-delay: 200ms;
           position: relative;
+          display: flex;
+          align-items: flex-end;
+          overflow: hidden;
           .content {
             transition: 400ms;
             font-weight: 500;
@@ -318,8 +323,6 @@
           .logo-img {
             transition: 400ms;
             justify-self: flex-start;
-            display: flex;
-            justify-content: center;
             width: 100%;
           }
           .text-wrapper {

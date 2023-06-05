@@ -283,26 +283,26 @@ export const plan_add_empty_data = [
     btnTitle: 'Add product',
     btnPath: '/#',
   },
-  {
-    titleIcon:
-      '../../../../../../assets/images/icons/basil_invoice-outline.svg',
-    iconAlt: 'invoice-outline-icon',
-    title: 'Pricing Plans',
-    subtitle:
-      'Please click the “Add” button below to add a new pricing plans. Once you clicked the button, you will be prompted to enter pricing and additional details.',
-    btnTitle: 'Add Pricing',
-    btnPath: '/#',
-  },
-  {
-    titleIcon:
-      '../../../../../../assets/images/icons/basil_invoice-outline.svg',
-    iconAlt: 'invoice-outline-icon',
-    title: 'Add-ons Details',
-    subtitle:
-      'Please click the “Add” button below to add a new add-on. Once you have click button, you will be prompted to select add-on.',
-    btnTitle: 'Add Add-on',
-    btnPath: '/#',
-  },
+  // {
+  //   titleIcon:
+  //     '../../../../../../assets/images/icons/basil_invoice-outline.svg',
+  //   iconAlt: 'invoice-outline-icon',
+  //   title: 'Pricing Plans',
+  //   subtitle:
+  //     'Please click the “Add” button below to add a new pricing plans. Once you clicked the button, you will be prompted to enter pricing and additional details.',
+  //   btnTitle: 'Add Pricing',
+  //   btnPath: '/#',
+  // },
+  // {
+  //   titleIcon:
+  //     '../../../../../../assets/images/icons/basil_invoice-outline.svg',
+  //   iconAlt: 'invoice-outline-icon',
+  //   title: 'Add-ons Details',
+  //   subtitle:
+  //     'Please click the “Add” button below to add a new add-on. Once you have click button, you will be prompted to select add-on.',
+  //   btnTitle: 'Add Add-on',
+  //   btnPath: '/#',
+  // },
 ];
 export const noProducts = [
   {
@@ -346,5 +346,37 @@ export const noPageFound = [
     text: "We are very sorry for inconvenience. It looks like you're try to access a page that either has been deleted or never existed.",
     buttonTxt: 'Back to home',
     path: '',
+  },
+];
+export const Stepper = [
+  {
+    id: 1,
+    title: 'Step 1',
+    caption: 'Plan Information',
+    isVisible: true,
+  },
+  {
+    id: 2,
+    title: 'Step 2',
+    caption: 'Add Plan Pricing',
+    isVisible: false,
+  },
+  {
+    id: 3,
+    title: 'Step 3',
+    caption: 'Product Details',
+    isVisible: false,
+  },
+  {
+    id: 4,
+    title: 'Step 4',
+    caption: 'Add-on Details',
+    isVisible: false,
+  },
+  {
+    id: 5,
+    title: 'Step 5',
+    caption: 'Charges',
+    isVisible: false,
   },
 ];

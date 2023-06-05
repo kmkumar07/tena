@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { noPageFound } from '../shared/constants/consants';
+import { noPageFound } from '../../constants/consants';
 
 @Component({
   selector: 'app-page-not-found',

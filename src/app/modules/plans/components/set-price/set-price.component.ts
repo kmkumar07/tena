@@ -23,7 +23,7 @@ export class SetPriceComponent {
   selectedTab: number = 0;
   previePrice: number = 0;
   monthlyBilling = ['3', '4', '5'];
-  readOnly: boolean = false
+  readOnly: boolean = false;
   public setPriceForm: FormGroup;
   constructor(private form: FormBuilder) {}
   ngOnInit() {
@@ -108,8 +108,8 @@ export class SetPriceComponent {
   deleteTier(tierIndex: number) {
     this.tiers.removeAt(tierIndex);
     const lastIdx = this.lastObj();
-    lastIdx.get('endingUnit')?.setValue('& Above')
-    lastIdx.get('endingUnit')?.disable()
+    lastIdx.get('endingUnit')?.setValue('& Above');
+    lastIdx.get('endingUnit')?.disable();
   }
   cycleValue(event: any) {
     if (event.value === '1') {
@@ -125,16 +125,20 @@ export class SetPriceComponent {
     }
   }
   submitValues() {
-    console.log(this.setPriceForm.value, 'test what is here');
+    if (!this.monthlyBilling.includes(this.setPriceForm.value.pricingModel)) {
+      this.tiers.clear()
+      console.log('test what is here', this.setPriceForm.getRawValue());
+    }
+    console.log('check value', this.setPriceForm.getRawValue());
   }
-  // checkIndex(index: number) {
-  //   const position = this.tiers.length - 1;
-  //   if (index > 0 && index !== position) {
-  //     return this.readOnly = true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  checkIndex(index: number) {
+    const position = this.tiers.length - 1;
+    if (index > 0 && index !== position) {
+      return this.readOnly = true;
+    } else {
+      return false;
+    }
+  }
   setStartingValue(event: any, index: number) {
     const setStarting = Number(event.target.value);
     const getNext = index + 1;

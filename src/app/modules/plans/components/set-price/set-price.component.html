@@ -104,7 +104,7 @@
                     *ngFor="let tiersGroup of tiers.controls; let i = index"
                   >
                     <div formGroupName="{{i}}" class="flex align-center relative">
-                      <div class="input-wrapper small mr-2">
+                      <div class="input-wrapper small mr-2 relative ">
                         <mat-form-field appearance="outline" class="border-2">
                           <input
                             required
@@ -126,7 +126,7 @@
                           />
                         </mat-form-field>
                       </div>
-                      <div class="input-wrapper small">
+                      <div class="input-wrapper small relative" [ngClass]="'checkindex(i)' ? 'disable-field' : ''">
                         <mat-form-field appearance="outline" class="border-2">
                           <input
                             required

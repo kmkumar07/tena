@@ -11,7 +11,7 @@ import { LayoutComponent } from './core/layouts/layout/layout.component';
 import { SidebarComponent } from './core/layouts/sidebar/sidebar.component';
 import { SuccessDialogComponent } from './shared/components/dialog-box/success-dialog/success-dialog.component';
 import { DeleteConfirmationComponent } from './shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { FeatureDetailsPopupComponent } from './shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 
 @NgModule({
