@@ -118,7 +118,7 @@
           *matCellDef="let element"
           class="description-col"
           [ngxTippy]="fullDescription"
-          [tippyProps]="{ placement: 'right' }"
+          [tippyProps]="{ placement: 'right', interactive: true}"
         >
           <p>{{ element.description }}</p>
           <ng-template #fullDescription let-name class="t-template">

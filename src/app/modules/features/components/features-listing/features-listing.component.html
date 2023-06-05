@@ -71,7 +71,7 @@
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef> Description </th>
         <td mat-cell *matCellDef="let element" class="description-col" [ngxTippy]="fullDescription"
-          [tippyProps]="{ placement: 'right' }" tippyName="content">
+          [tippyProps]="{ placement: 'right', interactive: true}" tippyName="content">
           <p>{{element.description}}</p>
           <ng-template #fullDescription let-name class="t-template">
             <div class="help-info-tooltip">

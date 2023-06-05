@@ -42,12 +42,12 @@
           <mat-icon
             class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
             [ngxTippy]="helpinfotooltip"
-            [tippyProps]="{ placement: 'right' }"
+            [tippyProps]="{ placement: 'right', interactive: true}"
             >help</mat-icon
           >
           <ng-template #helpinfotooltip let-name>
             <div class="help-info-tooltip">
-              <div class="heading-with-background">Description</div>
+              <div class="heading-with-background">Product ID</div>
               <div class="details">
                 Microsoft Teams is the ultimate messaging app for your
                 organization—a workspace for real-time collaboration and
@@ -68,7 +68,7 @@
           <mat-icon
             class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
             [ngxTippy]="productnameinfo"
-            [tippyProps]="{ placement: 'right' }"
+            [tippyProps]="{ placement: 'right', interactive: true}"
             tippyName="content"
             >help</mat-icon
           >

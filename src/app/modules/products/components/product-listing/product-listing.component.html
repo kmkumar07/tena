@@ -57,7 +57,7 @@
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef> Description </th>
         <td mat-cell *matCellDef="let element" class="description-col" [ngxTippy]="fullDescription"
-          [tippyProps]="{ placement: 'right' }" >
+          [tippyProps]="{ placement: 'right', interactive: true}" >
           <p>{{element.description}}</p>
           <ng-template #fullDescription let-name class="t-template">
             <div class="help-info-tooltip">
@@ -72,7 +72,7 @@
       <ng-container matColumnDef="features">
         <th mat-header-cell *matHeaderCellDef> Features </th>
         <td mat-cell *matCellDef="let element">
-          <div class="flex align-center" [ngxTippy]="featureListinfo" [tippyProps]="{ placement: 'right' }">
+          <div class="flex align-center" [ngxTippy]="featureListinfo" [tippyProps]="{ placement: 'right', interactive: true}">
             <mat-chip *ngIf="element.features.length > 0" class="table-chip m-2 ml-0"
               disableRipple>{{element.features[0]}}</mat-chip>
             <mat-chip *ngIf="element.features.length > 1" class="table-chip m-2 ml-0 pointer">+{{element.features.length

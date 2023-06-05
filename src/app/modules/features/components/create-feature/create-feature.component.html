@@ -26,7 +26,7 @@
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
               [ngxTippy]="helpinfotooltip"
-              [tippyProps]="{ placement: 'right' }"
+              [tippyProps]="{ placement: 'right', interactive: true}"
               >help</mat-icon
             >
             <ng-template #helpinfotooltip let-name>
@@ -59,7 +59,7 @@
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
               [ngxTippy]="selectProduct"
-              [tippyProps]="{ placement: 'right' }"
+              [tippyProps]="{ placement: 'right', interactive: true}"
               >help</mat-icon
             >
             <ng-template #selectProduct let-name class="t-template">
@@ -97,15 +97,15 @@
             </p>
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-              [ngxTippy]="selectProduct"
-              [tippyProps]="{ placement: 'right' }"
+              [ngxTippy]="Featurename"
+              [tippyProps]="{ placement: 'right', interactive: true}"
               >help</mat-icon
             >
-            <ng-template #selectProduct let-name class="t-template">
+            <ng-template #Featurename let-name class="t-template">
               <div class="help-info-tooltip">
                 <div class="heading-with-background">Feature name</div>
                 <div class="details">
-                  Please select a product to create a feature to it.
+                  Enter a name that helps you identify this Fetaure
                 </div>
                 <button mat-button color="primary" class="px-0">
                   Learn more
@@ -129,16 +129,15 @@
             </p>
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-              [ngxTippy]="selectProduct"
-              [tippyProps]="{ placement: 'right' }"
+              [ngxTippy]="Featuretype"
+              [tippyProps]="{ placement: 'right', interactive: true}"
               >help</mat-icon
             >
-            <ng-template #selectProduct let-name class="t-template">
+            <ng-template #Featuretype let-name class="t-template">
               <div class="help-info-tooltip">
                 <div class="heading-with-background">Feature type</div>
                 <div class="details">
-                  Select how entitlements to this feature can be set in plans,
-                  addons, and charges.
+                  Select how entitlements to this feature can be set in plans, addons, and charges.
                 </div>
                 <button mat-button color="primary" class="px-0">
                   Learn more
@@ -185,11 +184,11 @@
             </p>
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-              [ngxTippy]="selectProduct"
-              [tippyProps]="{ placement: 'right' }"
+              [ngxTippy]="EntitlementUnits"
+              [tippyProps]="{ placement: 'right', interactive: true}"
               >help</mat-icon
             >
-            <ng-template #selectProduct let-name class="t-template">
+            <ng-template #EntitlementUnits let-name class="t-template">
               <div class="help-info-tooltip">
                 <div class="heading-with-background">Entitlement Units</div>
                 <div class="details">

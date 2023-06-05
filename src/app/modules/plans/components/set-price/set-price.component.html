@@ -34,19 +34,18 @@
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
               [ngxTippy]="helpinfotooltip"
-              [tippyProps]="{ placement: 'right' }"
+              [tippyProps]="{ placement: 'right', interactive: true}"
               >help</mat-icon
             >
             <ng-template #helpinfotooltip let-name>
               <div class="help-info-tooltip">
-                <div class="heading-with-background">Feature id</div>
+                <div class="heading-with-background">Pricing Model</div>
                 <div class="details">
-                  Microsoft Teams is the ultimate messaging app for your
-                  organization—a workspace for real-time collaboration and
-                  communication, meetings, file and app sharing, and even the
-                  occasional emoji! All in one place, all in the open, all
-                  accessible to everyone.
+                  Explain how the recurring charges are calculated for the subscription.
                 </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
               </div>
             </ng-template>
           </div>
@@ -67,7 +66,7 @@
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
               [ngxTippy]="helpinfotooltip"
-              [tippyProps]="{ placement: 'right' }"
+              [tippyProps]="{ placement: 'right', interactive: true}"
               >help</mat-icon
             >
             <ng-template #helpinfotooltip let-name>
@@ -94,20 +93,19 @@
             </p>
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-              [ngxTippy]="helpinfotooltip"
-              [tippyProps]="{ placement: 'right' }"
+              [ngxTippy]="BillingCycle"
+              [tippyProps]="{ placement: 'right', interactive: true}"
               >help</mat-icon
             >
-            <ng-template #helpinfotooltip let-name>
+            <ng-template #BillingCycle let-name>
               <div class="help-info-tooltip">
-                <div class="heading-with-background">Feature id</div>
+                <div class="heading-with-background">Billing Cycle</div>
                 <div class="details">
-                  Microsoft Teams is the ultimate messaging app for your
-                  organization—a workspace for real-time collaboration and
-                  communication, meetings, file and app sharing, and even the
-                  occasional emoji! All in one place, all in the open, all
-                  accessible to everyone.
+                  Select if you would like this plan to be billed forever or for a fixed period.
                 </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
               </div>
             </ng-template>
           </div>
