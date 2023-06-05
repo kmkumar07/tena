@@ -19,7 +19,7 @@ import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-bo
 })
 export class FeaturesListingComponent implements OnInit {
   displayedColumns: string[] = [
-    'select',
+    //'select',
     'featureId',
   //  'product_name',
     'name',
@@ -38,6 +38,7 @@ export class FeaturesListingComponent implements OnInit {
   data: any;
   PageNumber = 1;
   limit = 5;
+  loading=true
   dialogRef: MatDialogRef<any>;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -61,7 +62,11 @@ export class FeaturesListingComponent implements OnInit {
   getFeature(PageNumber: number, limit: number) {
     this.featureService.getFeatures(this.PageNumber, this.limit).subscribe(() => {
       this.data$.subscribe((res) => {
-        this.featuresData =res.data;
+        setTimeout(()=>{
+          this.featuresData =res.data;
+          this.loading = false
+  
+        },3000);
         
       });
     });

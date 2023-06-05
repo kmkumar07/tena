@@ -3,7 +3,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  OnDestroy,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -46,8 +45,8 @@ export class CreateProductComponent implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private productService: ProductsService,
-  ) { }
+    private productService: ProductsService
+  ) {}
   ngOnInit() {
     this.productForm = this.formBuilder.group({
       productId: ['', Validators.required],
@@ -77,22 +76,16 @@ export class CreateProductComponent implements OnInit {
     const status = this.productForm.value.status ? 'active' : 'disabled';
     const product = {
       ...this.productForm.value,
-      status: status
+      status: status,
     };
     this.subscription = this.productService
       .createProduct(product)
       .subscribe((res) => {
-        console.log("akhand", res)
         this.openSuccess();
         this.router.navigate([`/products/view-product/${res.productId}`]);
       });
-
-    this.productForm.reset();
   }
 
-  // ngAfterViewInit() {
-  //   this.setContentForTooltip();
-  // }
   openDialog(
     enterAnimationDuration: string,
     exitAnimationDuration: string
@@ -111,7 +104,7 @@ export class CreateProductComponent implements OnInit {
     this.dialog.open(SuccessDialogComponent, {
       width: '420px',
       data: {
-        module: 'Plan',
+        module: 'Product',
       },
     });
   }
@@ -120,18 +113,6 @@ export class CreateProductComponent implements OnInit {
       this.subscription.unsubscribe();
     }
   }
-
-  // setContentForTooltip() {
-  //   const template = this.tippyTemplate.nativeElement;
-
-  //   // Pass element itself
-  //   this.ngxTippyService.setContent('content', template);
-
-  //   // or
-
-  //   // Pass element `innerHTML`
-  //   this.ngxTippyService.setContent('content', template.innerHTML);
-  // }
 }
 
 @Component({
@@ -158,7 +139,7 @@ export class DialogAnimationsDialog {
   constructor(
     public dialogRef: MatDialogRef<DialogAnimationsDialog>,
     private productService: ProductsService
-  ) { }
+  ) {}
   activeColor: string = 'green';
   baseColor: string = '#ccc';
   overlayColor: string = 'rgba(255,255,255,0.5)';

@@ -3,7 +3,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ProductsService } from '../../services/products.service';
-import { Subject, Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
+import {
+  Subject,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+} from 'rxjs';
 import { Data_Type, noProducts } from 'src/app/shared/constants/consants';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
@@ -17,7 +22,6 @@ export class ProductListingComponent implements OnInit {
   loading = false;
   id: string = '';
   displayedColumns: string[] = [
-    'select',
     'productId',
     'name',
     'description',
@@ -51,8 +55,8 @@ export class ProductListingComponent implements OnInit {
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     public dialog: MatDialog,
-    protected productService: ProductsService,
-  ) { }
+    protected productService: ProductsService
+  ) {}
 
   onSearchInput() {
     this.searchQueryChanged.next(this.searchQuery);
@@ -63,11 +67,10 @@ export class ProductListingComponent implements OnInit {
     this.loading = true;
     this.getProduct(this.PageNumber, this.limit, this.search);
     this.productService.product$.subscribe((data) => {
-      if(data){
-      this.productsData = data;
-      this.filteredProducts = data;
-      this.loading = false
-
+      if (data) {
+        this.productsData = data;
+        this.filteredProducts = data;
+        this.loading = false;
       }
     });
 
@@ -81,11 +84,11 @@ export class ProductListingComponent implements OnInit {
   }
 
   getProduct(PageNumber: number, limit: number, search: string) {
-    //  this.loading = true;
+    this.loading = true;
     this.productService
       .getProducts(this.PageNumber, this.limit, this.search)
       .subscribe(() => {
-        //  this.loading = false;
+        this.loading = false;
       });
   }
 
@@ -99,23 +102,19 @@ export class ProductListingComponent implements OnInit {
     if (this.PageNumber > 1) {
       this.PageNumber--;
       this.getProduct(this.PageNumber, this.limit, this.search);
-      console.log('onPrevious', this.PageNumber);
     }
   }
 
   onNext() {
     this.PageNumber++;
     this.getProduct(this.PageNumber, this.limit, this.search);
-    console.log('onNext', this.PageNumber);
   }
 
   sendElementId(elementId: string) {
     console.log(elementId);
 
     this.productService.deleteProduct(elementId).subscribe(() => {
-      this.data$.subscribe((data) => {
-       // console.log("data",data);
-      });
+      this.data$.subscribe((data) => {});
     });
   }
   openDelete(id: any) {
@@ -124,10 +123,10 @@ export class ProductListingComponent implements OnInit {
       panelClass: 'dialog-curved',
     });
 
-    this.dialogRef.afterClosed().subscribe((res:any) => {
+    this.dialogRef.afterClosed().subscribe((res: any) => {
       if (res) {
         console.log(res);
-        
+
         this.sendElementId(id);
       } else {
         console.log('Delete canceled');
@@ -149,7 +148,9 @@ export class ProductListingComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.product_ID + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.product_ID + 1
+    }`;
   }
 
   announceSortChange(sortState: Sort) {
@@ -180,5 +181,3 @@ export class ProductListingComponent implements OnInit {
     }
   }
 }
-
-

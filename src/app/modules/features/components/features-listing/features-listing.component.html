@@ -1,3 +1,8 @@
+
+<div class="loader" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+  <!-- <span>Loading...</span> -->
+</div>
 <div *ngIf="featuresData.length == 0" class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
   <app-empty-listing [items]="emptyFeature"></app-empty-listing>
 </div>
@@ -26,7 +31,7 @@
     <table mat-table [dataSource]="featuresData" matSort (matSortChange)="announceSortChange($event)">
       <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
-      <ng-container matColumnDef="select">
+      <!-- <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox color="primary" (click)="selectAll(featuresData)" (change)="$event ? toggleAllRows() : null"
             [checked]="selection.hasValue() && isAllSelected()"
@@ -39,7 +44,7 @@
             [aria-label]="checkboxLabel(row)">
           </mat-checkbox>
         </td>
-      </ng-container>
+      </ng-container> -->
 
       <!-- Product ID Column -->
       <ng-container matColumnDef="feature_id">
