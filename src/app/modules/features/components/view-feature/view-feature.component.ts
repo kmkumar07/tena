@@ -22,12 +22,14 @@ const FEATURE_TYPE = 'custom';
 export class ViewFeatureComponent implements OnInit {
   displayedColumns: string[] = ['name', 'weight'];
   dataSource = ELEMENT_DATA;
-  featureType = FEATURE_TYPE;
+  featureTypes = FEATURE_TYPE;
   clickedRows = new Set<PeriodicElement>();
   featureDetails: any;
-  productName: string = 'Microsoft Teams';
+  productName: string;
+  productStatus: string;
+  productId: string;
   featureName: string;
-  featureValue: string;
+  featureType: string;
   description: string;
   unit: string;
   status: string;
@@ -38,6 +40,9 @@ export class ViewFeatureComponent implements OnInit {
   displayNameArray: any = [];
   level: number;
   value: string;
+  createdOn: string;
+  modifiedOn: string;
+  featureId: string;
 
   constructor(
     private featureService: FeatureService,
@@ -49,19 +54,26 @@ export class ViewFeatureComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.featureService.getFeatureById(this.id).subscribe((res) => {
       this.featureDetails = res;
+
       this.featureName = this.featureDetails?.name;
-      this.featureValue = this.featureDetails?.type;
+      this.featureId = this.featureDetails?.featureId;
+      this.featureType = this.featureDetails?.type;
       this.status = this.featureDetails?.status;
       this.description = this.featureDetails?.description;
       this.unit = this.featureDetails?.unit;
-      this.levelsArray = Object.values(this.featureDetails?.levels)
-      this.levelsArray.forEach((data: any, index: number)=>{
-        this.isUnlimited = data.isUnlimited
-        this.displayName = data.displayName
-        this.level = data.level
-        this.value = data.value
-        this.displayNameArray[index] = this.displayName
-      })
+      this.productId = this.featureDetails?.product.productId;
+      this.productName = this.featureDetails?.product.name;
+      this.productStatus = this.featureDetails?.product.status;
+      this.createdOn = this.featureDetails?.createdOn;
+      this.modifiedOn = this.featureDetails?.modifiedOn;
+      this.levelsArray = Object.values(this.featureDetails?.levels);
+      this.levelsArray.forEach((data: any, index: number) => {
+        this.isUnlimited = data.isUnlimited;
+        this.displayName = data.name;
+        this.level = data.level;
+        this.value = data.value;
+        this.displayNameArray[index] = this.displayName;
+      });
     });
   }
 

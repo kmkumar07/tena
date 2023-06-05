@@ -83,10 +83,10 @@
               placeholder="select"
             >
               <mat-option
-                *ngFor="let product of productName"
-                value="{{ product.product_ID }}"
+                *ngFor="let product of productArray"
+                value="{{ product }}"
               >
-                {{ product.title }}
+                {{ product }}
               </mat-option>
             </mat-select>
           </mat-form-field>

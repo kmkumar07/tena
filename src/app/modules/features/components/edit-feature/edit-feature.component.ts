@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { ProductsService } from 'src/app/modules/products/services/products.service';
 import {
   Data_Type,
   feature_types,
@@ -27,7 +28,6 @@ export interface menuOptions {
   styleUrls: ['./edit-feature.component.scss'],
 })
 export class EditFeatureComponent {
-  productName: Data_Type[] = User_Data;
   featureType: menuOptions[] = feature_types;
   subscription: Subscription;
   isUnlimited: boolean = false;
@@ -35,6 +35,10 @@ export class EditFeatureComponent {
   postName: string = '';
   position: any;
   unlimitedButtonLabel: string = 'Set Unlimited';
+  PageNumber = 1;
+  limit = 5;
+  search: string = '';
+  productId = [];
   featureForm: any = this.formBuilder.group({
     featureId: [null, Validators.required],
     productID: [null, Validators.required],
@@ -63,13 +67,21 @@ export class EditFeatureComponent {
     private formBuilder: FormBuilder,
     private featureService: FeatureService,
     private routes: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private productService: ProductsService
   ) {}
 
   ngOnInit() {
+    this.productService
+      .getProducts(this.PageNumber, this.limit, this.search)
+      .subscribe((data) => {
+        this.productId = data.map((res) => res.productId);
+      });
     const id = this.route.snapshot.params['id'];
 
     this.featureService.getFeatureById(id).subscribe((data) => {
+      console.log("a", data);
+      
       this.updateForm(data);
     });
   }
@@ -130,13 +142,13 @@ export class EditFeatureComponent {
   updateForm(res: any) {
     this.featureForm.setValue({
       featureId: res.featureId,
-      productID: res.productID || null,
+      productID: res.product.productId,
       name: res.name,
       description: res.description,
       type: res.type,
       status: res.status,
       unit: res.unit || null,
-      levels: res.levels,
+      levels: res.levels
     });
   }
 

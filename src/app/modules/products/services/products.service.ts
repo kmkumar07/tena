@@ -1,12 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  Subject,
-  catchError,
-  map,
-} from 'rxjs';
+import { BehaviorSubject, Observable, Subject, catchError, map } from 'rxjs';
 import { GetProduct, Product } from 'src/app/shared/constants/consants';
 import { environment } from 'src/environments/environment';
 
@@ -17,12 +11,13 @@ export class ProductsService {
   private productSubject = new BehaviorSubject<any>(null);
   private uploadImageSubject = new BehaviorSubject<any>(null);
   public product$ = this.productSubject.asObservable();
+  id: string;
   products: Product[] = [];
   error$ = new Subject<string>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  createProduct(product:Product): Observable<Product> {
+  createProduct(product: Product): Observable<Product> {
     return this.http.post(`${environment.productData}`, product).pipe(
       map((res: any) => {
         this.productSubject.next(res.data);
@@ -51,15 +46,20 @@ export class ProductsService {
     );
   }
 
-  getProducts(PageNumber: number, limit: number, search: string): Observable<Product[]> {
+  getProducts(
+    PageNumber: number,
+    limit: number,
+    search: string
+  ): Observable<Product[]> {
     return this.http
-      .get<any>(`${environment.productData}?page=${PageNumber}&limit=${limit}&search=${search}`)
+      .get<any>(
+        `${environment.productData}?page=${PageNumber}&limit=${limit}&search=${search}`
+      )
       .pipe(
         map((res) => {
           this.productSubject.next(res.data);
-          this.products=res.data;
+          this.products = res.data;
           return res.data;
-
         }),
         catchError((err) => {
           console.log(err);
@@ -70,8 +70,8 @@ export class ProductsService {
   getProductById(id: string): Observable<GetProduct> {
     return this.http.get<any>(`${environment.productData}/${id}`).pipe(
       map((res) => {
-        console.log("res", res)     
-       return res.data;
+        console.log('res', res);
+        return res.data;
       }),
 
       catchError((err) => {
@@ -79,7 +79,6 @@ export class ProductsService {
         throw err;
       })
     );
-
   }
   editProduct(productId: string, updatedProduct: any): Observable<Product> {
     const url = `${environment.productData}/{productId}?productId=${productId}`;
@@ -94,7 +93,7 @@ export class ProductsService {
       })
     );
   }
-  deleteProduct(id:string) {
+  deleteProduct(id: string) {
     const url = `${environment.productData}/${id}?productId=${id}`;
     return this.http.delete(url).pipe(
       map((res) => {
@@ -110,5 +109,11 @@ export class ProductsService {
       })
     );
   }
-}
 
+  setId(id: string) {
+    this.id = id;
+  }
+  getId() {
+    return this.id;
+  }
+}

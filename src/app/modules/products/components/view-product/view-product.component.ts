@@ -38,6 +38,10 @@ export class ViewProductComponent {
       })
 
   }
+  getProductId(id: string){
+    this.productService.setId(id)
+    
+  }
 
 }
 
