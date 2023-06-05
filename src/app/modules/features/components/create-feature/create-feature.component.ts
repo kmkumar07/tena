@@ -16,6 +16,7 @@ import getUniqueId from 'src/app/core/utils/functions/getUniqueId';
 import { FeatureService } from '../../services/feature.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ProductsService } from 'src/app/modules/products/services/products.service';
 
 export interface menuOptions {
   value: number;
@@ -37,6 +38,11 @@ export class CreateFeatureComponent {
   postName: string = '';
   position: any;
   unlimitedButtonLabel: string = 'Set Unlimited';
+  PageNumber = 1;
+  limit = 5;
+  search: string = '';
+  productArray = [];
+  id: string;
 
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -44,13 +50,25 @@ export class CreateFeatureComponent {
   constructor(
     private formBuilder: FormBuilder,
     private featureService: FeatureService,
-    private routes: Router
+    private routes: Router,
+    private productService: ProductsService
   ) {}
 
   ngOnInit() {
+    this.id = this.productService.getId();
+
+    this.productService
+      .getProducts(this.PageNumber, this.limit, this.search)
+      .subscribe((data) => {
+        this.productArray = data.map((res) => res.productId);
+      });
+    this.feature();
+  }
+
+  feature() {
     this.featureForm = this.formBuilder.group({
       featureId: ['', Validators.required],
-      productID: ['', Validators.required],
+      productID: [this.id ? this.id : '', Validators.required],
       name: ['', Validators.required],
       description: ['', Validators.required],
       type: ['', Validators.required],
@@ -149,7 +167,6 @@ export class CreateFeatureComponent {
         console.log('something wrong occured', err);
       },
     });
-    this.featureForm.reset()
   }
 
   onDelete() {

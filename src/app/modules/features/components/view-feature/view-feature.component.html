@@ -19,7 +19,7 @@
             </div>
           </div>
           <span class="mat-subtitle-2 subtitle font-weight-500 block"
-            >#65130</span
+            >{{featureId}}</span
           >
         </div>
       </div>
@@ -34,6 +34,21 @@
     </div>
   </div>
   <div class="content-block p-6">
+    <div class="date-block flex align-center mb-8">
+      <div class="flex align-center">
+        <mat-icon class="material-symbols-outlined mr-3"
+          >calendar_today</mat-icon
+        >
+        <p class="mat-subtitle-2 text-dark">Created {{createdOn | date: 'd MMMM y'}}</p>
+      </div>
+      <div class="vertical-divider mx-6"></div>
+      <div class="flex align-center">
+        <mat-icon class="material-symbols-outlined mr-3"
+          >calendar_today</mat-icon
+        >
+       <p class="mat-subtitle-2 text-dark"> modified {{modifiedOn | date: 'd MMMM y'}}</p>
+      </div>
+    </div>
     <div class="product-desc">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
         Product
@@ -49,7 +64,7 @@
           {{productName}}
           </p>
           <span class="mat-body-1 subtitle font-weight-500 block"
-            >O365ProPlusRetail</span
+            >{{productId}}</span
           >
           <div
             class="active-text flex align-center green-text text-darken-3 mt-1"
@@ -58,7 +73,7 @@
               class="material-symbols-outlined mr-1 green-text text-darken-3"
               color="primary"
               >check_circle</mat-icon
-            ><span>{{status}}</span>
+            ><span>{{productStatus}}</span>
           </div>
         </div>
       </div>
@@ -73,42 +88,42 @@
       <!-- ----------------range type--------------------------- -->
       <div class="switch-type pt-4 border-2 flex align-center">
         <mat-icon
-          *ngIf="featureValue === 'range'"
+          *ngIf="featureType === 'range'"
           class="material-symbols-outlined text-darken-3"
           >arrow_range</mat-icon
         >
 
         <img
-          *ngIf="featureValue === 'switch'"
+          *ngIf="featureType === 'switch'"
           src="../../../../assets/images/icons/toggle-left.svg"
           alt="toggle-left"
         />
 
         <mat-icon
-          *ngIf="featureValue === 'quantity' || featureValue === 'custom' "
+          *ngIf="featureType === 'quantity' || featureType === 'custom' "
           class="material-symbols-outlined text-darken-3"
           >production_quantity_limits</mat-icon
         >
 
         <div>
           <span class="mat-body-1 text-headline-light font-weight-500">{{
-            (featureValue === "switch" && "Switch") ||
-              (featureValue === "range" && "Range") ||
-              (featureValue === "quantity" && "Quantity") ||
-              (featureValue === "custom" && "Custom") 
+            (featureType === "switch" && "Switch") ||
+              (featureType === "range" && "Range") ||
+              (featureType === "quantity" && "Quantity") ||
+              (featureType === "custom" && "Custom") 
           }}</span>
           <p class="mat-body-1 text-dark mt-2">
             {{
-              (featureValue === "switch" &&
+              (featureType === "switch" &&
                 "This feature type has 2 entitlement levels- “available” and “not
               available”.") ||
-                (featureValue === "range" &&
+                (featureType === "range" &&
                   "This feature supports range based entitlements.
               For eg : Customer’s access can be between 100 and 300 API / minute.") ||
-                (featureValue === "quantity" &&
+                (featureType === "quantity" &&
                   "This feature type has numbered entitlement levels-
                 For eg : 2,3,4 or 10 user license's.") ||
-                (featureValue === "custom" &&
+                (featureType === "custom" &&
                   "This feature supports range based entitlements. For eg : Customer’s
                   access can be between 100 and 300 API / minute.")
             }}
@@ -119,7 +134,7 @@
     </div>
 
     <!-- ----------------range detail--------------------------- -->
-    <div *ngIf="featureValue === 'range'" class="mt-8 range-detail-wrapper">
+    <div *ngIf="featureType === 'range'" class="mt-8 range-detail-wrapper">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
         Range Details
       </h4>
@@ -141,7 +156,7 @@
     <!-- ----------------range detail--------------------------- -->
 
     <!-- ----------------quantity and custom details--------------------------- -->
-    <div *ngIf="featureValue === 'quantity'" class="mt-8 range-detail-wrapper">
+    <div *ngIf="featureType === 'quantity'" class="mt-8 range-detail-wrapper">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
         Quantity Details
       </h4>
@@ -162,7 +177,7 @@
       </div>
     </div>
 
-    <div *ngIf="featureValue === 'custom'" class="mt-8 range-detail-wrapper">
+    <div *ngIf="featureType === 'custom'" class="mt-8 range-detail-wrapper">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
         Quantity Details
       </h4>

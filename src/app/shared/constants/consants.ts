@@ -50,7 +50,7 @@ export interface plansFields {
 }
 export interface Feature {
   featureId: string;
-  productID: string;
+  productId: string;
   createdOn: string;
   modifiedOn: string;
   name: string;
@@ -59,6 +59,17 @@ export interface Feature {
   status: string;
   unit: string;
   levels: []
+}
+export interface FeatureList {
+  featureId: number;
+  name: string;
+  productName: string;
+  levels: [];
+  description: string;
+  createdOn: string;
+  modifiedOn: string;
+  type: string;
+  status: string;
 }
 
 export interface GetFeature {
