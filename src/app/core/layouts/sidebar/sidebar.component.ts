@@ -36,13 +36,11 @@ export class SidebarComponent {
     private router: Router,
     public route: ActivatedRoute
   ) {
-    console.log(router.url, 'naa');
     this.router.events
       .pipe(filter((event: any) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         this.currentRoute = event.url;
         this.activeRoute = this.currentRoute.split('/')
-        console.log(this.activeRoute, 'bana')
       });
   }
 

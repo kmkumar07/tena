@@ -25,6 +25,7 @@ $primary-color: color("primary", "light4") !default;
 $selected-row: color('primary', 'main');
 // $primary-color-light: lighten($primary-color, 15%) !default;
 $primary-color-dark: color("plum-purple", "darken-1") !default;
+$primary-color-light: color("purple", "darken-1") !default;
 
 $secondary-color: color("green", "base") !default;
 $success-color: color("green", "base") !default;
@@ -34,6 +35,9 @@ $border-color: color("grey", "border") !default;
 
 $primay-light-bg-color: color("primary", "lighten-4"); // #F5F3FF
 $primay-extra-light-bg-color: color("primary", "lighten-5"); // #FBF9FD
+$green-dark-3:color("green","darken-3");  //#4DA63E
+$grey-darken-6:color("grey","darken-6"); //#495057
+$grey-darken-7:color("grey","darken-7"); //#1B1B1E
 
 $input-border-color: color('grey', 'lighten-11');
 
@@ -239,6 +243,9 @@ $text-headline-dark: color('text', 'dark'); // #2C2466
 $text-headline-light: rgba(color('text', 'dark'), .6); // #2C2466   
 $headline-light: color('text', 'primary'); // #405189
 $text-primary: color('primary', 'main');
+$text-lighten-2:color('text','lighten-2'); //#9CA8BA
+$text-lighten-4:color('text','lighten-4'); //#7A7E83
+
 
 // Header Styles
 $h1-fontsize: 4.8rem !default;

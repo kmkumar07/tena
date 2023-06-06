@@ -45,6 +45,7 @@ $my-custom-level: mat.define-typography-level(
 
 $my-custom-typography-config: mat.define-typography-config(
   $headline-5: mat.define-typography-level(24px, 20px, 500), /* h1, headline .mat-headline-5*/
+  $subtitle-1: mat.define-typography-level(18px, 21px, 400, 0.1px),  /* h3,.mat-subtitle-1*/
   $subtitle-2: mat.define-typography-level(16px, 20px, 400, 0.1px),  /* h4, sub-heading .mat-subtitle-2*/
   $body-1: mat.define-typography-level(14px, 20px, 400),  /* table-content .mat-body-1*/
   $caption: mat.define-typography-level(12px, 20px, 500, 0.1px),  /* subtext .mat-caption*/
