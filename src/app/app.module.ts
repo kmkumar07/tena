@@ -11,7 +11,8 @@ import { LayoutComponent } from './core/layouts/layout/layout.component';
 import { SidebarComponent } from './core/layouts/sidebar/sidebar.component';
 import { SuccessDialogComponent } from './shared/components/dialog-box/success-dialog/success-dialog.component';
 import { DeleteConfirmationComponent } from './shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
-import { HttpClientModule } from '@angular/common/http';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import { FeatureDetailsPopupComponent } from './shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 
 @NgModule({
   declarations: [
@@ -19,18 +20,18 @@ import { HttpClientModule } from '@angular/common/http';
     LayoutComponent,
     SidebarComponent,
     SuccessDialogComponent,
-    DeleteConfirmationComponent
+    DeleteConfirmationComponent,
+    PageNotFoundComponent,
+    FeatureDetailsPopupComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
     AngularMaterialModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
     FormsModule,
-    SharedModule,
-    HttpClientModule
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

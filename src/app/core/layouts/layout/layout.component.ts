@@ -18,9 +18,7 @@ export class LayoutComponent {
   Menu_Headings = Menu_Headings;
   userProfile = User_Options;
   notificationsData = Notifications_Data;
-  constructor() {
-    console.log('1234', this.opened);
-  }
+  constructor() {}
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 

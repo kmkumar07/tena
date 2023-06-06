@@ -1,33 +1,35 @@
 <div class="main-bg w-full h-full overflow-auto border-2 py-8 pl-11 pr-10">
-  <div class="flex align-center mb-2">
-    <mat-icon
-      class="material-symbols-outlined pointer"
-      color="primary"
-      [routerLink]="'/features'"
-      >keyboard_backspace</mat-icon
-    >
-    <span class="mat-h1 primary-text text-main ml-2">Create Plan</span>
-  </div>
-  <div class="flex align-center">
-    <span class="pl-8 grey-text text-lighten-9"> Create plan </span>
-    <mat-icon class="material-symbols-outlined mx-2 small-icon">
-      chevron_right
-    </mat-icon>
-    <span class="shades-text text-black fw-500">Set Price</span>
-  </div>
-  <div class="mt-8">
-    <form>
+  <form [formGroup]="setPriceForm" (ngSubmit)="submitValues()">
+    <div class="flex align-center mb-2">
+      <mat-icon
+        class="material-symbols-outlined pointer"
+        color="primary"
+        [routerLink]="'/features'"
+        >keyboard_backspace</mat-icon
+      >
+      <span class="mat-h1 primary-text text-main ml-2">Create Plan</span>
+    </div>
+    <div class="flex align-center">
+      <span class="pl-8 grey-text text-lighten-9"> Create plan </span>
+      <mat-icon class="material-symbols-outlined mx-2 small-icon">
+        chevron_right
+      </mat-icon>
+      <span class="shades-text text-black fw-500">Set Price</span>
+    </div>
+    <div class="mt-8">
       <mat-tab-group
         class="pricing-tabs mb-6"
         mat-stretch-tabs="false"
         mat-align-tabs="start"
+        (selectedTabChange)="onTabChange($event)"
       >
-        <mat-tab label="Daily"></mat-tab>
-        <mat-tab label="Weekly"></mat-tab>
-        <mat-tab label="Monthly"></mat-tab>
-        <mat-tab label="Yearly"></mat-tab>
+        <mat-tab
+          *ngFor="let options of periodUnit"
+          label="{{ options }}"
+        ></mat-tab>
       </mat-tab-group>
-      <div class="py-2">
+      <div class="py-2 form-section">
+        <!-- Pricing Model -->
         <div class="input-wrapper">
           <div class="flex align-center mb-2">
             <p class="mat-subtitle-2 font-weight-500 input-label">
@@ -53,13 +55,121 @@
             </ng-template>
           </div>
           <mat-form-field appearance="outline" class="border-2">
-            <mat-select required placeholder="select">
-              <mat-option> Flat fee </mat-option>
-              <mat-option> Tiered </mat-option>
+            <mat-select
+              required
+              placeholder="select"
+              formControlName="pricingModel"
+            >
+              <mat-option
+                *ngFor="let option of pricingModelTypes"
+                value="{{ option.value }}"
+              >
+                {{ option.title }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="input-wrapper">
+        <!-- Dynamic Fields -->
+        <div
+          class="w-full form-array-section mb-8"
+          *ngIf="monthlyBilling.includes(setPriceForm.value.pricingModel)"
+        >
+          <div class="header-bottom-border mb-8">
+            <h4 class="fw-500 primary-text text-main my-2 mat-subtitle-2">
+              Monthly billing
+            </h4>
+          </div>
+          <div class="mb-32">
+            <div class="w-full">
+              <div class="flex align-center">
+                <div class="mr-2 input-wrapper small">
+                  <p class="mat-subtitle-2 font-weight-500 input-label mb-2">
+                    From (Units)
+                  </p>
+                </div>
+                <div class="mr-2 input-wrapper small">
+                  <p class="mat-subtitle-2 font-weight-500 input-label mb-2">
+                    To
+                  </p>
+                </div>
+                <div class="input-wrapper small">
+                  <p class="mat-subtitle-2 font-weight-500 input-label mb-2">
+                    Price Per unit
+                  </p>
+                </div>
+              </div>
+              <div>
+                <ng-container formArrayName="tiers">
+                  <ng-container
+                    *ngFor="let tiersGroup of tiers.controls; let i = index"
+                  >
+                    <div formGroupName="{{i}}" class="flex align-center relative">
+                      <div class="input-wrapper small mr-2 relative ">
+                        <mat-form-field appearance="outline" class="border-2">
+                          <input
+                            required
+                            matInput
+                            placeholder="Enter here"
+                            formControlName="startingUnit"
+                            type="number"
+                          />
+                        </mat-form-field>
+                      </div>
+                      <div class="input-wrapper small mr-2">
+                        <mat-form-field appearance="outline" class="border-2">
+                          <input
+                            required
+                            matInput
+                            placeholder="Enter here"
+                            formControlName="endingUnit"
+                            (change)="setStartingValue($event, i)"
+                          />
+                        </mat-form-field>
+                      </div>
+                      <div class="input-wrapper small relative" [ngClass]="'checkindex(i)' ? 'disable-field' : ''">
+                        <mat-form-field appearance="outline" class="border-2">
+                          <input
+                            required
+                            matInput
+                            ng-readonly="readOnly"
+                            placeholder="Enter here"
+                            formControlName="price"
+                            type="number"
+                          />
+                        </mat-form-field>
+                      </div>
+                      <button
+                        mat-icon-button
+                        color="warn"
+                        class="light-bg small rounded-1 absolute delete-tier-btn"
+                        *ngIf="i == tiers.length - 1 && i > 0"
+                        (click)="deleteTier(i)"
+                      >
+                        <mat-icon
+                          class="material-symbols-outlined mr-0"
+                          color="warn"
+                          >close</mat-icon
+                        >
+                      </button>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+              <!-- <div class="mr-2 input-wrapper small"> -->
+              <!-- </div> -->
+            </div>
+            <button
+              disableRipple
+              mat-button
+              class="primary-text text-main"
+              (click)="addTiers()"
+            >
+              + Add More
+            </button>
+          </div>
+        </div>
+        <!-- Price Field -->
+        <div class="input-wrapper" *ngIf="!monthlyBilling.includes(setPriceForm.value.pricingModel)">
           <div class="flex align-center mb-2">
             <p class="mat-subtitle-2 font-weight-500 input-label">Price</p>
             <mat-icon
@@ -82,9 +192,43 @@
             </ng-template>
           </div>
           <mat-form-field appearance="outline" class="border-2">
-            <input required matInput placeholder="Enter here" />
+            <input
+              required
+              matInput
+              placeholder="Enter here"
+              formControlName="price"
+              type="number"
+              min="0"
+            />
           </mat-form-field>
         </div>
+        <!-- Price Preview field -->
+        <div class="preview-price mb-6">
+          <p class="mat-subtitle-2 font-weight-500 input-label mb-2">
+            Price Preview
+          </p>
+          <div class="flex align-center">
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2">
+              If a customer purchase
+            </p>
+            <div class="w-18 border-2 mx-2 input-wrapper price-digits">
+              <mat-form-field appearance="outline">
+                <input
+                  matInput
+                  type="number"
+                  placeholder="--"
+                  min="1"
+                  max="1000"
+                  (keyup)="getPreviewPrice($event)"
+                />
+              </mat-form-field>
+            </div>
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2">
+              Units. The total amount payable will be USD {{previePrice}}
+            </p>
+          </div>
+        </div>
+        <!-- Billing Cycle -->
         <div class="input-wrapper">
           <div class="flex align-center mb-2">
             <p class="mat-subtitle-2 font-weight-500 input-label">
@@ -110,13 +254,14 @@
             </ng-template>
           </div>
           <mat-form-field appearance="outline" class="border-2">
-            <mat-select required placeholder="select">
-              <mat-option> Fixed </mat-option>
-              <mat-option> Forever </mat-option>
+            <mat-select required placeholder="select" (selectionChange)="cycleValue($event)">
+              <mat-option value="1"> Fixed </mat-option>
+              <mat-option value="2"> Forever </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
       </div>
-    </form>
-  </div>
+      <button mat-flat-button color="primary" type="submit">Set Price</button>
+    </div>
+  </form>
 </div>
