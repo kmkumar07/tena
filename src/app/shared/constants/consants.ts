@@ -136,7 +136,7 @@ export const MENUITEMS = [
     category: 'Product_Catalog',
   },
   {
-    state: 'stepper',
+    state: 'coupons',
     type: 'link',
     name: 'Coupons',
     icon: 'confirmation_number',

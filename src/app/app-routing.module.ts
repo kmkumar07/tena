@@ -29,6 +29,13 @@ const routes: Routes = [
             (mod) => mod.PlansModule
           ),
       },
+      {
+        path: 'coupons',
+        loadChildren: () =>
+          import('../app/modules/coupons/coupons.module').then(
+            (mod) => mod.CouponsModule
+          ),
+      },
     ],
   },
   { path: '**', component: PageNotFoundComponent },
