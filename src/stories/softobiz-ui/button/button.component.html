@@ -1,0 +1,90 @@
+<button
+  *ngIf="variant === 'default'"
+  [disabled]="disable"
+  [color]="color"
+  [disableRipple]="disableRipple"
+  [disabled]="disable"
+  [class]="size + ' ' + class"
+  [id]="id"
+  mat-button
+  [type]="type"
+  (click)="(onClick)"
+>
+  {{ label }}
+</button>
+<button
+  *ngIf="variant === 'raised'"
+  [disabled]="disable"
+  [color]="color"
+  [disableRipple]="disableRipple"
+  mat-raised-button
+  [class]="size + ' ' + class"
+  [id]="id"
+  [type]="type"
+>
+  {{ label }}
+</button>
+<button
+  *ngIf="variant === 'flat'"
+  mat-flat-button
+  [color]="color"
+  [disableRipple]="disableRipple"
+  [disabled]="disable"
+  [class]="size + ' ' + class"
+  [id]="id"
+  [type]="type"
+>
+  {{ label }}
+</button>
+<button
+  *ngIf="variant === 'stroked'"
+  [disabled]="disable"
+  [color]="color"
+  [disableRipple]="disableRipple"
+  [class]="size + ' ' + class"
+  [id]="id"
+  mat-stroked-button
+  [type]="type"
+>
+  {{ label }}
+</button>
+<button
+  *ngIf="variant === 'icon'"
+  [disabled]="disable"
+  [color]="color"
+  [disableRipple]="disableRipple"
+  [class]="size + ' ' + class"
+  [id]="id"
+  mat-icon-button
+  disabled
+  aria-label="Example icon button with a open in new tab icon"
+  [type]="type"
+>
+  <mat-icon>open_in_new</mat-icon>
+</button>
+<button
+  *ngIf="variant === 'fab'"
+  [disabled]="disable"
+  [color]="color"
+  [disableRipple]="disableRipple"
+  [class]="size + ' ' + class"
+  [id]="id"
+  mat-fab
+  aria-label="Example icon button with a bookmark icon"
+  [type]="type"
+>
+  <mat-icon>bookmark</mat-icon>
+</button>
+<button
+  *ngIf="variant === 'mini-fab'"
+  [disabled]="disable"
+  [color]="color"
+  [disableRipple]="disableRipple"
+  [class]="size + ' ' + class"
+  [id]="id"
+  aria-label="Example icon button with a home icon"
+  mat-mini-fab
+  [type]="type"
+>
+  <mat-icon fontIcon="home"></mat-icon>
+</button>
