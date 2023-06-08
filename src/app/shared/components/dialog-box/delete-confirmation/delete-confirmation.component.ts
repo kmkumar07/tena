@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
+
 
 export interface DialogData {
   deleteId: number;
@@ -11,11 +13,20 @@ export interface DialogData {
 })
 export class DeleteConfirmationComponent {
   @Output() confirmed: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  constructor(public dialogRef: MatDialogRef<DeleteConfirmationComponent>) {}
+  constructor(
+    public dialogRef: MatDialogRef<DeleteConfirmationComponent>,
+    public dialog: MatDialog
+  ) {}
+  // dialogRef: any;
 
   onCancelClick(): void {
     this.dialogRef.close(false);
+  }
+  onYesClick(): void {
+    const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
+      width: '422px',
+      panelClass: 'dialog-curved',
+    });
   }
 
 }

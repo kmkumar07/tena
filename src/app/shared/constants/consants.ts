@@ -25,6 +25,14 @@ export interface features {
   created_at: string;
   status: string;
 }
+
+export interface coupon {
+  coupon_id: string;
+  coupon_name: string;
+  description: string;
+  created_at: string;
+  status: string;
+}
 export interface Product {
   productId: string;
   imageUrl: string,
@@ -277,6 +285,28 @@ export const Features_Data = [
     status: 'Active',
   },
 ];
+
+export const Coupon_Data = [
+  {
+    id: 'coupon_id_459',
+    coupon_id: '#S0-001',
+    coupon_name: 'INR 100 Off',
+    description:
+      'Rs. 100.00 for Forever get it today and enjoy it forever... ',
+    created_at: '24 March, 2023',
+    status: 'Active',
+  },
+  {
+    id: 'coupon_id_460',
+    coupon_id: '#S0-001',
+    coupon_name: 'INR 100 Off',
+    description:
+      'Rs. 100.00 for Forever get it today and enjoy it forever... ',
+    created_at: '24 March, 2023',
+    status: 'Active',
+  },
+
+];
 export const Plans_Data = [
   {
     id: 'ychvjbknk1',
@@ -396,6 +426,17 @@ export const noPageFound = [
     alt: 'No Page Found',
     subtext: "Oops! Why you're here?",
     text: "We are very sorry for inconvenience. It looks like you're try to access a page that either has been deleted or never existed.",
+    buttonTxt: 'Back to home',
+    path: '',
+  },
+];
+export const nocoupons = [
+  {
+    heading: '',
+    imgPath: '../../../../assets/images/empty-coupons.png',
+    alt: 'no coupons available',
+    subtext: "Start Adding Coupons",
+    text: "Click on the below buttons to open create coupons form.",
     buttonTxt: 'Back to home',
     path: '',
   },
