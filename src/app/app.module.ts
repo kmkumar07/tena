@@ -22,7 +22,7 @@ import { FeatureDetailsPopupComponent } from './shared/components/dialog-box/fea
     SuccessDialogComponent,
     DeleteConfirmationComponent,
     PageNotFoundComponent,
-    FeatureDetailsPopupComponent
+    FeatureDetailsPopupComponent,
   ],
   imports: [
     BrowserModule,

@@ -84,7 +84,14 @@
       }
     }
   }
-  &.price-digits{
+  &.no-sub {
+    .mat-mdc-form-field {
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+    }
+  }
+  &.price-digits {
     max-width: 5.8125rem;
     width: 100%;
     .mat-mdc-form-field {
@@ -120,7 +127,18 @@
   }
   .mat-mdc-form-field {
     .mat-mdc-text-field-wrapper {
-      // height: 3rem;
+      .mat-mdc-form-field-flex {
+        .mdc-notched-outline {
+          .mdc-notched-outline__leading {
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+          }
+          .mdc-notched-outline__trailing {
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+          }
+        }
+      }
       .mat-mdc-form-field-flex {
         .mat-mdc-form-field-infix {
           padding-top: 0.75rem;

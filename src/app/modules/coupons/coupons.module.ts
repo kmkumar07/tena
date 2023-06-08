@@ -6,18 +6,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
 import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
 import { ViewCouponsComponent } from './components/view-coupons/view-coupons.component';
-
+import { CreateCouponsComponent } from './components/create-coupons/create-coupons.component';
 
 @NgModule({
-  declarations: [
-    ViewCouponsComponent
-  ],
+  declarations: [ViewCouponsComponent, CreateCouponsComponent],
   imports: [
     CommonModule,
     CouponsRoutingModule,
     HttpClientModule,
     AngularMaterialModule,
-    SharedModule
-  ]
+    SharedModule,
+  ],
 })
-export class CouponsModule { }
+export class CouponsModule {}
