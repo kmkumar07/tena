@@ -11,7 +11,6 @@ export class ProductsService {
   private productSubject = new BehaviorSubject<any>(null);
   private uploadImageSubject = new BehaviorSubject<any>(null);
   public product$ = this.productSubject.asObservable();
-  id: string;
   products: Product[] = [];
   error$ = new Subject<string>();
 
@@ -108,12 +107,5 @@ export class ProductsService {
         throw err;
       })
     );
-  }
-
-  setId(id: string) {
-    this.id = id;
-  }
-  getId() {
-    return this.id;
   }
 }

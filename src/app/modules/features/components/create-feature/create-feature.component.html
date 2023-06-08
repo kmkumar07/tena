@@ -84,7 +84,7 @@
             >
               <mat-option
                 *ngFor="let product of productArray"
-                value="{{ product }}"
+                [value]="product"
               >
                 {{ product }}
               </mat-option>
