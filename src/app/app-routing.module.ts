@@ -36,6 +36,13 @@ const routes: Routes = [
             (mod) => mod.CouponsModule
           ),
       },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/payment-history/payment-history.module').then(
+            (m) => m.PaymentHistoryModule
+          ),
+      },
     ],
   },
   { path: '**', component: PageNotFoundComponent },

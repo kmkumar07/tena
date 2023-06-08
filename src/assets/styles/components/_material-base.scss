@@ -4,6 +4,7 @@
 // 4. accordion custom
 // 5. ul with green mark
 // 6. chip with success-bg
+// 7. coupons dialog
 
 // 1. mat-chip
 .basic-chip.mat-mdc-chip {
@@ -49,6 +50,9 @@
       border: none;
       font-weight: 500;
       white-space: nowrap;
+      &:nth-last-child(1) {
+        text-align: center;
+      }
     }
     tbody {
       tr {
@@ -62,6 +66,9 @@
           position: relative;
           &.Active {
             color: color("green", "darken-3");
+          }
+          &:nth-last-child(1) {
+            text-align: center;
           }
         }
         &.selected-row {
@@ -359,5 +366,19 @@ ul {
   //white bg
   &.mat-mdc-standard-chip.white-bg {
     background-color: color("shades", "white");
+  }
+}
+
+// 7. coupons dialog
+.coupons-dialog{
+  position: relative;
+  padding: 3.8125rem 2.625rem 2.625rem;
+  .close-dialog-icon{
+    position: absolute;
+    top: 2.9375rem;
+    right: 2.9375rem;
+    .mat-icon{
+      color: color('shades' , "black");
+    }
   }
 }
