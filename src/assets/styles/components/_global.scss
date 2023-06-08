@@ -234,11 +234,11 @@ label {
 
 // 3. Position
 .relative {
-  position: relative;
+  position: relative !important;
 }
 
 .absolute {
-  position: absolute;
+  position: absolute !important;
 }
 
 .inherit {
@@ -299,6 +299,10 @@ label {
 .overflow-hidden {
   overflow: hidden;
 }
+.overflow-visible{
+  overflow: visible;
+}
+
 
 // SPACING
 // Auto Margin
@@ -418,6 +422,9 @@ label {
   .letter-spacing-0 {
     letter-spacing: 0 !important;
   }
+  .mdc-button__label{
+    display: flex;
+  }
 }
 .small-icon {
   font-size: 1rem;
@@ -441,6 +448,17 @@ label {
   border-radius: 0.25rem;
   font-weight: 500;
 }
+.input-suffix{
+  position: absolute;
+  right: -0.1875rem;
+  top: 0;
+  padding-left: 0.8125rem;
+  border-left: 0.0625rem solid color('grey', 'lighten-11');
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 // 5. Angular Material
 
 .mat-mdc-menu-content.mdc-list {
@@ -459,4 +477,7 @@ table {
       background-color: $primay-light-bg-color;
     }
   }
+}
+.transition-400{
+  transition: 10s;
 }

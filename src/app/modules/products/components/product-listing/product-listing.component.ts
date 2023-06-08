@@ -1,30 +1,49 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import { Data_Type, User_Data, noProducts } from 'src/app/shared/constants/consants';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatTableDataSource } from '@angular/material/table';
+import { ProductsService } from '../../services/products.service';
+import {
+  Subject,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+} from 'rxjs';
+import { Data_Type, noProducts } from 'src/app/shared/constants/consants';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
+
 @Component({
   selector: 'app-product-listing',
   templateUrl: './product-listing.component.html',
   styleUrls: ['./product-listing.component.scss'],
 })
-export class ProductListingComponent {
+export class ProductListingComponent implements OnInit {
+  loading = false;
+  id: string = '';
   displayedColumns: string[] = [
-    'select',
-    'product_ID',
-    'title',
+    'productId',
+    'name',
     'description',
-    'features',
-    'created_at',
+    'feature',
+    'createdOn',
     'status',
     'action',
   ];
   emptyProductPros = noProducts;
-  productsData: Data_Type[] = User_Data;
+  PageNumber = 1;
+  limit = 5;
+  search: string = '';
+  productsData = [];
+  filteredProducts: Data_Type[];
+
   selection = new SelectionModel<Data_Type>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
+  searchQuery: string;
+  private searchQueryChanged: Subject<string> = new Subject<string>();
+  private searchSubscription: Subscription;
+  dialogRef: any;
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -32,14 +51,95 @@ export class ProductListingComponent {
     const numRows = this.productsData.length;
     return numSelected === numRows;
   }
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    public dialog: MatDialog,
+    protected productService: ProductsService
+  ) {}
+
+  onSearchInput() {
+    this.searchQueryChanged.next(this.searchQuery);
+  }
+
+  data$ = this.productService.product$;
+  ngOnInit(): void {
+    this.loading = true;
+    this.getProduct(this.PageNumber, this.limit, this.search);
+    this.productService.product$.subscribe((data) => {
+      if (data) {
+        this.productsData = data;
+        this.filteredProducts = data;
+        this.loading = false;
+      }
+    });
+
+    this.searchSubscription = this.searchQueryChanged
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((value) => {
+        this.loading = true;
+        this.search = value;
+        this.getProduct(this.PageNumber, this.limit, this.search);
+      });
+  }
+
+  getProduct(PageNumber: number, limit: number, search: string) {
+    this.loading = true;
+    this.productService
+      .getProducts(this.PageNumber, this.limit, this.search)
+      .subscribe(() => {
+        this.loading = false;
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
+  }
+
+  onPrevious() {
+    if (this.PageNumber > 1) {
+      this.PageNumber--;
+      this.getProduct(this.PageNumber, this.limit, this.search);
+    }
+  }
+
+  onNext() {
+    this.PageNumber++;
+    this.getProduct(this.PageNumber, this.limit, this.search);
+  }
+
+  sendElementId(elementId: string) {
+    console.log(elementId);
+
+    this.productService.deleteProduct(elementId).subscribe(() => {
+      this.data$.subscribe((data) => {});
+    });
+  }
+  openDelete(id: any) {
+    this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      width: '420px',
+      panelClass: 'dialog-curved',
+    });
+
+    this.dialogRef.afterClosed().subscribe((res: any) => {
+      if (res) {
+        console.log(res);
+
+        this.sendElementId(id);
+      } else {
+        console.log('Delete canceled');
+      }
+    });
+  }
+
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();
       return;
     }
-    // console.log(this.selection.select)
     this.selection.select(...this.productsData);
   }
 
@@ -53,22 +153,14 @@ export class ProductListingComponent {
     }`;
   }
 
-  // ngAfterViewInit() {
-  //   this.productsData.sort = this.sort;
-  // }
-
-  /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
+
   selectedRow(selectedID: string, event: any) {
     const selectedRow = document.getElementById(`${selectedID}`);
     if (selectedRow != null) {
@@ -76,16 +168,16 @@ export class ProductListingComponent {
     }
     event.stopPropagation();
   }
-  selectAll(data: any[]){
+
+  selectAll(data: any[]) {
     if (this.isAllSelected()) {
       data.map((element: any) => {
-        document.getElementById(element.id)?.classList.add('selected-row')
-      })
-    }
-    else{
+        document.getElementById(element.id)?.classList.add('selected-row');
+      });
+    } else {
       data.map((element: any) => {
-        document.getElementById(element.id)?.classList.remove('selected-row')
-      })
+        document.getElementById(element.id)?.classList.remove('selected-row');
+      });
     }
   }
 }

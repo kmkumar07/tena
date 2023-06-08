@@ -1,255 +1,492 @@
-<div class="view-plan-wrapper  overflow-auto border-2 w-full h-full">
-    <div class="header-block border-2">
-        <h3 class="mat-headline-5 heading text-text text-primary">View Plan</h3>
+<div class="view-plan-wrapper overflow-auto border-2 w-full h-full">
+  <div class="header-block border-2">
+    <h3 class="mat-headline-5 heading text-text text-primary">View Plan</h3>
 
-        <div class="brand-info">
-            <div class="flex align-center">
-                <p class="mat-headline-5 text-text text-dark title mb-1">
-                    Premium
-                </p>
-                <div class="active-text flex align-center green-text text-darken-3 ml-4">
-                    <mat-icon class="material-symbols-outlined mr-1 green-text text-darken-3"
-                        color="primary">check_circle</mat-icon><span>Active</span>
-                </div>
-            </div>
-            <span class="mat-subtitle-2 subtitle font-weight-500 block">#AS- 012P</span>
+    <div class="brand-info">
+      <div class="flex align-center">
+        <p class="mat-headline-5 text-text text-dark title mb-1">Premium</p>
+        <div
+          class="active-text flex align-center green-text text-darken-3 ml-4"
+        >
+          <mat-icon
+            class="material-symbols-outlined mr-1 green-text text-darken-3"
+            color="primary"
+            >check_circle</mat-icon
+          ><span>Active</span>
         </div>
-        <div class="flex align-center justify-between mt-8">
-            <div class="flex">
-                <div class="pricing-box">
-                    <span class="mat-subtitle-2 text-headline-light">Pricing Model</span>
-                    <span class="block mat-subtitle-2 text-headline-dark font-weight-500">Tiered</span>
-                </div>
-                <div class="pricing-box">
-                    <span class="mat-subtitle-2 text-headline-light">Billing Cycle</span>
-                    <span class="block mat-subtitle-2 text-headline-dark font-weight-500">Fixed</span>
-                </div>
-                <div class="pricing-box">
-                    <span class="mat-subtitle-2 text-headline-light">Setup Fee</span>
-                    <span class="block mat-subtitle-2 text-headline-dark font-weight-500">INR. 0.00</span>
-                </div>
-                <div class="pricing-box">
-                    <span class="mat-subtitle-2 text-headline-light">Activation Fee</span>
-                    <span class="block mat-subtitle-2 text-headline-dark font-weight-500">INR. 0.00</span>
-                </div>
-            </div>
-
-            <div class="btn-section flex align-center">
-                <button mat-stroked-button color="primary" class="mr-2 large">
-                    Edit
-                </button>
-                <button mat-flat-button color="primary" class="large">
-                    Back to list
-                </button>
-            </div>
-        </div>
+      </div>
+      <span class="mat-subtitle-2 subtitle font-weight-500 block"
+        >#AS- 012P</span
+      >
     </div>
-    <div class="inner-wrapper">
-        <div class="flex mb-8">
-            <div class="flex align-center pr-6 calendar-box">
-                <mat-icon class="material-symbols-outlined mr-3 text-lighten-2">calendar_today</mat-icon>
-                <span class="mat-subtitle-2 text-dark">Created 24 March, 2023</span>
-            </div>
-            <div class="flex align-center pl-6">
-                <mat-icon class="material-symbols-outlined mr-3 text-lighten-2">calendar_today</mat-icon>
-                <span class="mat-subtitle-2 text-dark">Created 24 March, 2023</span>
-            </div>
+    <div class="flex align-center justify-between mt-8">
+      <div class="flex">
+        <div class="pricing-box">
+          <span class="mat-subtitle-2 text-headline-light">Pricing Model</span>
+          <span class="block mat-subtitle-2 text-headline-dark font-weight-500"
+            >Tiered</span
+          >
         </div>
-        <div class="Plan-Description">
-            <p class="mat-subtitle-2 text-headline-dark font-weight-500 mb-3">Plan Description</p>
-            <p class="mat-subtitle-2 text-dark">Smart plan with the right mix of basic and slightly advanced tools to
-                help you with all marketing and sales requirements.</p>
+        <div class="pricing-box">
+          <span class="mat-subtitle-2 text-headline-light">Billing Cycle</span>
+          <span class="block mat-subtitle-2 text-headline-dark font-weight-500"
+            >Fixed</span
+          >
         </div>
-        <div class="my-10">
-            <h6 class="mat-subtitle-2 text-headline-dark font-weight-500">Pricing Details</h6>
-            <div class="table-priceing-details">
-                <table mat-table [dataSource]="dataSource">
-                    <!-- Currency Column -->
-                    <ng-container matColumnDef="Currency">
-                        <th mat-header-cell *matHeaderCellDef class="mat-subtitle-2 text-headline-dark action-header">
-                            Currency</th>
-                        <td mat-cell *matCellDef="let element">
-                            <div class="flex">
-                                <div class="flags mr-3">
-                                    <img src="../../../../../../assets/images/flags.png" alt="flags" />
-                                </div>
-                                <span class="mat-subtitle-2 text-headline-dark">USD</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <!-- PricingCycle Column -->
-                    <ng-container matColumnDef="PricingCycle">
-                        <th mat-header-cell *matHeaderCellDef class="mat-subtitle-2 text-headline-dark">Pricing Cycle
-                        </th>
-                        <td mat-cell *matCellDef="let element" class="mat-subtitle-2 text-headline-light">
-                            {{element.PricingCycle}}</td>
-                    </ng-container>
+        <div class="pricing-box">
+          <span class="mat-subtitle-2 text-headline-light">Setup Fee</span>
+          <span class="block mat-subtitle-2 text-headline-dark font-weight-500"
+            >INR. 0.00</span
+          >
+        </div>
+        <div class="pricing-box">
+          <span class="mat-subtitle-2 text-headline-light">Activation Fee</span>
+          <span class="block mat-subtitle-2 text-headline-dark font-weight-500"
+            >INR. 0.00</span
+          >
+        </div>
+      </div>
 
-                    <!-- Price Column -->
-                    <ng-container matColumnDef="Price">
-                        <th mat-header-cell *matHeaderCellDef class="mat-subtitle-2 text-headline-dark">Price</th>
-                        <td mat-cell *matCellDef="let element" class="mat-subtitle-2 text-headline-light">
-                            {{element.Price}}</td>
-                    </ng-container>
-
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row (click)="clickedRows.add(row)" [class.demo-row-is-clicked]="clickedRows.has(row)"
-                        *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-            </div>
-        </div>
-        <div class="product-wrapper">
-            <div class="product-inner mb-4">
-                <h2 class="mat-subtitle-2 text-headline-dark font-weight-500 mb-4">Associated Product</h2>
-                <div class="product-box mb-4 flex">
-                    <div class="product-img p-2 mr-4">
-                        <img src="../.././../../assets/images/teams.png" alt="product-img" />
-                    </div>
-                    <div class="">
-                        <mat-accordion class="product-info">
-                            <mat-expansion-panel hideToggle #panelH (click)="panelH.toggle()" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <h6 class="mat-subtitle-2 text-headline-light font-weight-500 mb-1">MS Teams</h6>
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    <p class="mat-subtitle-2 text-dark">Microsoft Teams is a proprietary business communication platform developed by Microsoft, as part
-                                        of the Microsoft 365 family of products. Teams primarily competes with the similar service
-                                        Slack, offering workspace chat and videoconferencing, file storage, and application integration.
-                                        <button mat-button disableRipple class="link-text" (click)="panelH.toggle()">Explore features</button>
-                                    </p>
-                                </mat-panel-description>
-                              </mat-expansion-panel-header>
-                              <h6 class="mat-subtitle-2 text-headline-light my-2">Assigned features to product</h6>
-                              <ul class="green-dot">
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Whiteboard</span><span class="text-lighten-4 ml-1">(Switch <span class="text-headline-light">ON</span> )</span></li>
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Email Support</span><span class="text-lighten-4 ml-1">(Custom <span class="text-headline-light">All Week</span> )</span></li>
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">User License</span><span class="text-lighten-4 ml-1">(Quantity 10 <span class="text-headline-light">License</span> )</span></li>
-                              </ul>
-                            </mat-expansion-panel>
-                          </mat-accordion>
-                          
-                    </div>
-                </div>
-                <div class="product-box mb-4 flex">
-                    <div class="product-img p-2 mr-4">
-                        <img src="../.././../../assets/images/excel.png" alt="product-img" />
-                    </div>
-                    <div class="">
-                        <mat-accordion class="product-info">
-                            <mat-expansion-panel hideToggle #panelH (click)="panelH.toggle()">
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <h6 class="mat-subtitle-2 text-headline-light font-weight-500 mb-1">MS Excel</h6>
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    <p class="mat-subtitle-2 text-dark">MS Excel is a powerful spreadsheet program included  mainly used to record data in tables. 
-                                        as part of the Microsoft 365 family of products. Teams primarily competes with the similar service Slack, 
-                                        offering workspace chat and videoconferencing, file storage, and application integration. 
-                                        <button mat-button disableRipple class="link-text" (click)="panelH.toggle()">Explore features</button>
-                                    </p>
-                                </mat-panel-description>
-                              </mat-expansion-panel-header>
-                              <h6 class="mat-subtitle-2 text-headline-light my-2">Assigned features to product</h6>
-                              <ul class="green-dot">
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Data Base</span><span class="text-lighten-4 ml-1">(Range <span class="text-headline-light">1-50</span> )</span></li>
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Data clearly</span><span class="text-lighten-4 ml-1">(Volume  <span class="text-headline-light">50-100</span> )</span></li>
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Data merger</span><span class="text-lighten-4 ml-1">(Switch <span class="text-headline-light">ON</span> )</span></li>
-                              </ul>
-                            </mat-expansion-panel>
-                          </mat-accordion>
-                          
-                    </div>
-                </div>
-                <div class="product-box mb-4 flex">
-                    <div class="product-img p-2 mr-4">
-                        <img src="../.././../../assets/images/word.png" alt="product-img" />
-                    </div>
-                    <div class="">
-                        <mat-accordion class="product-info">
-                            <mat-expansion-panel hideToggle #panelH (click)="panelH.toggle()">
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <h6 class="mat-subtitle-2 text-headline-light font-weight-500 mb-1">MS Word</h6>
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    <p class="mat-subtitle-2 text-dark">Microsoft Word is a word processing program that allows for the creation of 
-                                        both simple and complex documents. 365 family of products. Teams primarily competes with the similar service Slack, 
-                                        offering workspace chat and videoconferencing, file storage, and application integration. 
-                                        <button mat-button disableRipple class="link-text" (click)="panelH.toggle()">Explore features</button>
-                                    </p>
-                                </mat-panel-description>
-                              </mat-expansion-panel-header>
-                              <h6 class="mat-subtitle-2 text-headline-light my-2">Assigned features to product</h6>
-                              <ul class="green-dot">
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Create team sites</span><span class="text-lighten-4 ml-1">(Range <span class="text-headline-light">1-50</span> )</span></li>
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Huge Files</span><span class="text-lighten-4 ml-1">(Volume  <span class="text-headline-light">50-100</span> )</span></li>
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Mail Merge</span><span class="text-lighten-4 ml-1">(Switch <span class="text-headline-light">ON</span> )</span></li>
-                              </ul>
-                            </mat-expansion-panel>
-                          </mat-accordion>
-                          
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="addon-wrapper mt-8">
-            <div class="product-inner mb-4">
-                <h2 class="mat-subtitle-2 text-headline-dark font-weight-500 mb-4">Associated Addon</h2>
-                <div class="product-box mb-4 flex">
-                    <div class="">
-                        <mat-accordion class="product-info">
-                            <mat-expansion-panel hideToggle #panelH (click)="panelH.toggle()">
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <h6 class="mat-subtitle-2 text-headline-light font-weight-500 mb-1 mr-5">Teamwork and communication</h6>
-                                    <mat-chip class="success-chip mb-1" color="success"> <span class="mat-caption">$100.00 USD</span> </mat-chip>
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    <p class="mat-subtitle-2 text-dark">We have 3 features which are clubbed in this addon.
-                                        <button mat-button disableRipple class="link-text" (click)="panelH.toggle()">Explore features</button>
-                                    </p>
-                                </mat-panel-description>
-                              </mat-expansion-panel-header>
-                              <h6 class="mat-subtitle-2 text-headline-light my-2">Assigned features to product</h6>
-                              <ul class="green-dot">
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Host online calls</span><span class="text-lighten-4 ml-1">(Switch <span class="text-headline-light">ON</span> )</span></li>
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Host webinars</span><span class="text-lighten-4 ml-1">(Volume <span class="text-headline-light">51</span> )</span></li>
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Create team sites</span><span class="text-lighten-4 ml-1">(Range <span class="text-headline-light">1-50</span> )</span></li>
-                              </ul>
-                            </mat-expansion-panel>
-                          </mat-accordion>
-                          
-                    </div>
-                </div>
-                <div class="product-box mb-4 flex">
-                    <div class="">
-                        <mat-accordion class="product-info">
-                            <mat-expansion-panel hideToggle #panelH (click)="panelH.toggle()">
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <h6 class="mat-subtitle-2 text-headline-light font-weight-500 mb-1 mr-5">Security and compliance</h6>
-                                    <mat-chip class="success-chip mb-1" color="success"> <span class="mat-caption">$100.00 USD</span> </mat-chip>
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    <p class="mat-subtitle-2 text-dark">We have 3 features which are clubbed in this addon.
-                                        <button mat-button disableRipple class="link-text" (click)="panelH.toggle()">Explore features</button>
-                                    </p>
-                                </mat-panel-description>
-                              </mat-expansion-panel-header>
-                              <h6 class="mat-subtitle-2 text-headline-light my-2">Assigned features to product</h6>
-                              <ul class="green-dot">
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Online Protection</span><span class="text-lighten-4 ml-1">(Switch <span class="text-headline-light">ON</span> )</span></li>
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Password policies</span><span class="text-lighten-4 ml-1">(Volume <span class="text-headline-light">51</span> )</span></li>
-                                <li class="mat-subtitle-2 text-dark"><span class="ml-n-1">Defender for business</span><span class="text-lighten-4 ml-1">(Range <span class="text-headline-light">1-50</span> )</span></li>
-                              </ul>
-                            </mat-expansion-panel>
-                          </mat-accordion>
-                          
-                    </div>
-                </div>
-            </div>
-        </div>
+      <div class="btn-section flex align-center">
+        <button mat-stroked-button color="primary" class="mr-2 large">
+          Edit
+        </button>
+        <button mat-flat-button color="primary" class="large">
+          Back to list
+        </button>
+      </div>
     </div>
+  </div>
+  <div class="inner-wrapper">
+    <div class="flex mb-8">
+      <div class="flex align-center pr-6 calendar-box">
+        <mat-icon class="material-symbols-outlined mr-3 text-lighten-2"
+          >calendar_today</mat-icon
+        >
+        <span class="mat-subtitle-2 text-dark">Created 24 March, 2023</span>
+      </div>
+      <div class="flex align-center pl-6">
+        <mat-icon class="material-symbols-outlined mr-3 text-lighten-2"
+          >calendar_today</mat-icon
+        >
+        <span class="mat-subtitle-2 text-dark">Created 24 March, 2023</span>
+      </div>
+    </div>
+    <div class="Plan-Description">
+      <p class="mat-subtitle-2 text-headline-dark font-weight-500 mb-3">
+        Plan Description
+      </p>
+      <p class="mat-subtitle-2 text-dark">
+        Smart plan with the right mix of basic and slightly advanced tools to
+        help you with all marketing and sales requirements.
+      </p>
+    </div>
+    <div class="my-10">
+      <h6 class="mat-subtitle-2 text-headline-dark font-weight-500">
+        Pricing Details
+      </h6>
+      <div class="table-priceing-details">
+        <table mat-table [dataSource]="dataSource">
+          <!-- Currency Column -->
+          <ng-container matColumnDef="Currency">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="mat-subtitle-2 text-headline-dark action-header"
+            >
+              Currency
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="flex">
+                <div class="flags mr-3">
+                  <img
+                    src="../../../../../../assets/images/flags.png"
+                    alt="flags"
+                  />
+                </div>
+                <span class="mat-subtitle-2 text-headline-dark">USD</span>
+              </div>
+            </td>
+          </ng-container>
+          <!-- PricingCycle Column -->
+          <ng-container matColumnDef="PricingCycle">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="mat-subtitle-2 text-headline-dark"
+            >
+              Pricing Cycle
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              class="mat-subtitle-2 text-headline-light"
+            >
+              {{ element.PricingCycle }}
+            </td>
+          </ng-container>
+
+          <!-- Price Column -->
+          <ng-container matColumnDef="Price">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="mat-subtitle-2 text-headline-dark"
+            >
+              Price
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              class="mat-subtitle-2 text-headline-light"
+            >
+              {{ element.Price }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            (click)="clickedRows.add(row)"
+            [class.demo-row-is-clicked]="clickedRows.has(row)"
+            *matRowDef="let row; columns: displayedColumns"
+          ></tr>
+        </table>
+      </div>
+    </div>
+    <div class="product-wrapper">
+      <div class="product-inner mb-4">
+        <h2 class="mat-subtitle-2 text-headline-dark font-weight-500 mb-4">
+          Associated Product
+        </h2>
+        <div class="product-box mb-4 flex">
+          <div class="product-img p-2 mr-4">
+            <img
+              src="../.././../../assets/images/teams.png"
+              alt="product-img"
+            />
+          </div>
+          <div class="">
+            <mat-accordion class="product-info">
+              <mat-expansion-panel
+                hideToggle
+                #panelH
+                (click)="panelH.toggle()"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <h6
+                      class="mat-subtitle-2 text-headline-light font-weight-500 mb-1"
+                    >
+                      MS Teams
+                    </h6>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <p class="mat-subtitle-2 text-dark">
+                      Microsoft Teams is a proprietary business communication
+                      platform developed by Microsoft, as part of the Microsoft
+                      365 family of products. Teams primarily competes with the
+                      similar service Slack, offering workspace chat and
+                      videoconferencing, file storage, and application
+                      integration.
+                      <button
+                        mat-button
+                        disableRipple
+                        class="link-text"
+                        (click)="panelH.toggle()"
+                      >
+                        Explore features
+                      </button>
+                    </p>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <h6 class="mat-subtitle-2 text-headline-light my-2">
+                  Assigned features to product
+                </h6>
+                <ul class="green-dot">
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Whiteboard</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Switch
+                      <span class="text-headline-light">ON</span> )</span
+                    >
+                  </li>
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Email Support</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Custom
+                      <span class="text-headline-light">All Week</span> )</span
+                    >
+                  </li>
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">User License</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Quantity 10
+                      <span class="text-headline-light">License</span> )</span
+                    >
+                  </li>
+                </ul>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+        <div class="product-box mb-4 flex">
+          <div class="product-img p-2 mr-4">
+            <img
+              src="../.././../../assets/images/excel.png"
+              alt="product-img"
+            />
+          </div>
+          <div class="">
+            <mat-accordion class="product-info">
+              <mat-expansion-panel hideToggle #panelH (click)="panelH.toggle()">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <h6
+                      class="mat-subtitle-2 text-headline-light font-weight-500 mb-1"
+                    >
+                      MS Excel
+                    </h6>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <p class="mat-subtitle-2 text-dark">
+                      MS Excel is a powerful spreadsheet program included mainly
+                      used to record data in tables. as part of the Microsoft
+                      365 family of products. Teams primarily competes with the
+                      similar service Slack, offering workspace chat and
+                      videoconferencing, file storage, and application
+                      integration.
+                      <button
+                        mat-button
+                        disableRipple
+                        class="link-text"
+                        (click)="panelH.toggle()"
+                      >
+                        Explore features
+                      </button>
+                    </p>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <h6 class="mat-subtitle-2 text-headline-light my-2">
+                  Assigned features to product
+                </h6>
+                <ul class="green-dot">
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Data Base</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Range
+                      <span class="text-headline-light">1-50</span> )</span
+                    >
+                  </li>
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Data clearly</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Volume
+                      <span class="text-headline-light">50-100</span> )</span
+                    >
+                  </li>
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Data merger</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Switch
+                      <span class="text-headline-light">ON</span> )</span
+                    >
+                  </li>
+                </ul>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+        <div class="product-box mb-4 flex">
+          <div class="product-img p-2 mr-4">
+            <img src="../.././../../assets/images/word.png" alt="product-img" />
+          </div>
+          <div class="">
+            <mat-accordion class="product-info">
+              <mat-expansion-panel hideToggle #panelH (click)="panelH.toggle()">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <h6
+                      class="mat-subtitle-2 text-headline-light font-weight-500 mb-1"
+                    >
+                      MS Word
+                    </h6>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <p class="mat-subtitle-2 text-dark">
+                      Microsoft Word is a word processing program that allows
+                      for the creation of both simple and complex documents. 365
+                      family of products. Teams primarily competes with the
+                      similar service Slack, offering workspace chat and
+                      videoconferencing, file storage, and application
+                      integration.
+                      <button
+                        mat-button
+                        disableRipple
+                        class="link-text"
+                        (click)="panelH.toggle()"
+                      >
+                        Explore features
+                      </button>
+                    </p>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <h6 class="mat-subtitle-2 text-headline-light my-2">
+                  Assigned features to product
+                </h6>
+                <ul class="green-dot">
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Create team sites</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Range
+                      <span class="text-headline-light">1-50</span> )</span
+                    >
+                  </li>
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Huge Files</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Volume
+                      <span class="text-headline-light">50-100</span> )</span
+                    >
+                  </li>
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Mail Merge</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Switch
+                      <span class="text-headline-light">ON</span> )</span
+                    >
+                  </li>
+                </ul>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="addon-wrapper mt-8">
+      <div class="product-inner mb-4">
+        <h2 class="mat-subtitle-2 text-headline-dark font-weight-500 mb-4">
+          Associated Addon
+        </h2>
+        <div class="product-box mb-4 flex">
+          <div class="">
+            <mat-accordion class="product-info">
+              <mat-expansion-panel hideToggle #panelH (click)="panelH.toggle()">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <h6
+                      class="mat-subtitle-2 text-headline-light font-weight-500 mb-1 mr-5"
+                    >
+                      Teamwork and communication
+                    </h6>
+                    <mat-chip class="success-chip mb-1" color="success">
+                      <span class="mat-caption">$100.00 USD</span>
+                    </mat-chip>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <p class="mat-subtitle-2 text-dark">
+                      We have 3 features which are clubbed in this addon.
+                      <button
+                        mat-button
+                        disableRipple
+                        class="link-text"
+                        (click)="panelH.toggle()"
+                      >
+                        Explore features
+                      </button>
+                    </p>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <h6 class="mat-subtitle-2 text-headline-light my-2">
+                  Assigned features to product
+                </h6>
+                <ul class="green-dot">
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Host online calls</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Switch
+                      <span class="text-headline-light">ON</span> )</span
+                    >
+                  </li>
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Host webinars</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Volume
+                      <span class="text-headline-light">51</span> )</span
+                    >
+                  </li>
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Create team sites</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Range
+                      <span class="text-headline-light">1-50</span> )</span
+                    >
+                  </li>
+                </ul>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+        <div class="product-box mb-4 flex">
+          <div class="">
+            <mat-accordion class="product-info">
+              <mat-expansion-panel hideToggle #panelH (click)="panelH.toggle()">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <h6
+                      class="mat-subtitle-2 text-headline-light font-weight-500 mb-1 mr-5"
+                    >
+                      Security and compliance
+                    </h6>
+                    <mat-chip class="success-chip mb-1" color="success">
+                      <span class="mat-caption">$100.00 USD</span>
+                    </mat-chip>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <p class="mat-subtitle-2 text-dark">
+                      We have 3 features which are clubbed in this addon.
+                      <button
+                        mat-button
+                        disableRipple
+                        class="link-text"
+                        (click)="panelH.toggle()"
+                      >
+                        Explore features
+                      </button>
+                    </p>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <h6 class="mat-subtitle-2 text-headline-light my-2">
+                  Assigned features to product
+                </h6>
+                <ul class="green-dot">
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Online Protection</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Switch
+                      <span class="text-headline-light">ON</span> )</span
+                    >
+                  </li>
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Password policies</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Volume
+                      <span class="text-headline-light">51</span> )</span
+                    >
+                  </li>
+                  <li class="mat-subtitle-2 text-dark">
+                    <span class="ml-n-1">Defender for business</span
+                    ><span class="text-lighten-4 ml-1"
+                      >(Range
+                      <span class="text-headline-light">1-50</span> )</span
+                    >
+                  </li>
+                </ul>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

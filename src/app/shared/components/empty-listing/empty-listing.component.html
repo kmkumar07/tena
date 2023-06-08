@@ -9,7 +9,7 @@
           {{ item.text }}
         </p>
       </div>
-      <a href="{{ item.path }}">
+      <a *ngIf="item.showButton" href="{{ item.path }}">
         <button mat-flat-button color="primary" class="medium">
           {{ item.buttonTxt }}
         </button>

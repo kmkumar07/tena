@@ -1,0 +1,406 @@
+<div class="create-product-wrapper">
+  <div class="header-section pt-6 pb-6">
+    <div class="flex align-center">
+      <mat-icon
+        class="material-symbols-outlined pointer"
+        color="primary"
+        [routerLink]="'/coupons'"
+        >keyboard_backspace</mat-icon
+      >
+      <p class="mat-h1 primary-text text-main">Create Coupon</p>
+    </div>
+  </div>
+  <div class="form-block pt-6">
+    <div class="input-wrapper">
+      <form>
+        <div class="input-wrapper no-sub mb-8">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">Coupon Id</p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="productnameinfo"
+              [tippyProps]="{ placement: 'right' }"
+              tippyName="content"
+              >help</mat-icon
+            >
+            <ng-template #productnameinfo let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Coupon id</div>
+                <div class="details">
+                  Enter a Customized Id. If user do not enter this field, the
+                  system will generate a 'Customized Human-Readable-id' based on
+                  the Name field.
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="Enter here..." />
+          </mat-form-field>
+          <span class="block mat-body-1 grey-text text-form-caption">
+            This will be the reference used by SAAS Framework to identify this
+            coupon.
+          </span>
+        </div>
+        <div class="input-wrapper mb-2">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Coupon Name
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="couponName"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #couponName let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Coupon name</div>
+                <div class="details">
+                  A descriptive name for this coupon. Please note that this will
+                  be displayed to customer, in case “invoice Name” field is not
+                  provided.
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="Enter here..." />
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper no-sub mb-8">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Invoice Name
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="InvoiceName"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #InvoiceName let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">invoice Name</div>
+                <div class="details">
+                  Name displayed to your customers on the invoices and hosted
+                  payment pages.
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="Enter here..." />
+          </mat-form-field>
+          <span class="block mat-body-1 grey-text text-form-caption">
+            Name displayed to your customers on the invoices and hosted payment
+            pages.
+          </span>
+        </div>
+        <h4 class="mat-body-1 text-text text-primary fw-500 mb-8">DISCOUNT</h4>
+        <div class="input-wrapper no-sub mb-2">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Discount Type
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="discountType"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #discountType let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Discount type</div>
+                <div class="details">
+                  FIxed Amount<br />
+                  The mentioned amount will be deducted.
+                </div>
+                <div class="details">
+                  Percentage<br />
+                  The mentioned percentage will be deducted
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-select>
+              <mat-option>Percentage</mat-option>
+              <mat-option>Fixed Amount</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper mb-2">
+          <mat-form-field appearance="outline">
+            <input type="text" matInput placeholder="Enter here " />
+          </mat-form-field>
+        </div>
+        <h3 class="mat-subtitle-2 font-weight-500 input-label mb-8">
+          Type: Invoice Amount
+        </h3>
+        <h4 class="mat-body-1 text-text text-primary fw-500 mb-8">DURATION</h4>
+        <div class="input-wrapper mb-2">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Duration Type
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="durationType"
+              panelClass="foo-bar"
+              [tippyProps]="{ placement: 'right', interactive: true }"
+              >help</mat-icon
+            >
+            <ng-template #durationType let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Duration type</div>
+                <div class="details">
+                  Specify for how long should this coupon be applied to the
+                  subscription?
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-select>
+              <mat-option>One Time</mat-option>
+              <mat-option>Forever</mat-option>
+              <mat-option>Limited Period</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper mb-2">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Associate Plans
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="associatePlans"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #associatePlans let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Associate Plans</div>
+                <div class="details">
+                  Choose the plans to which you would like to apply these
+                  coupons
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-select>
+              <mat-option value="All plans">All Plans</mat-option>
+              <mat-option value="Selected Plans">Selected Plans</mat-option>
+              <mat-option value="None">None</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper mb-2">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Select Plans
+            </p>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-select multiple>
+              <div class="global-search full m-0 basic border-2">
+                <span class="search-icon pointer">
+                  <img
+                    src="../../../../../assets/images/icons/search.svg"
+                    alt="search-icon"
+                  />
+                </span>
+                <input type="text" placeholder="Search..." />
+              </div>
+              <mat-option value="All plans">All Plans</mat-option>
+              <mat-option value="Selected Plans">Selected Plans</mat-option>
+              <mat-option value="None">None</mat-option>
+              <div class="pt-1 border-top mt-8">
+                <div
+                  class="select-done flex align-center justify-center w-full primary light purple-text text-lighten-1 py-2 pointer"
+                >
+                  <img
+                    src="../../../../../assets/images/icons/primary-check-circle.svg"
+                    alt="check-circle"
+                  />
+                  <span class="mat-caption block ml-1">Done</span>
+                </div>
+              </div>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper mb-2">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Associate Addons
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="associateAddons"
+              [tippyProps]="{ placement: 'right' }"
+              >help</mat-icon
+            >
+            <ng-template #associateAddons let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Associate Addons</div>
+                <div class="details">
+                  Choose the addons to which you would like to apply these
+                  coupons
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-select>
+              <mat-option value="All Addons">All Addons</mat-option>
+              <mat-option value="Selected Addons">Selected Addons</mat-option>
+              <mat-option value="None">None</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper mb-2">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Select Addons
+            </p>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-select multiple>
+              <div class="global-search full m-0 basic border-2">
+                <span class="search-icon pointer">
+                  <img
+                    src="../../../../../assets/images/icons/search.svg"
+                    alt="search-icon"
+                  />
+                </span>
+                <input type="text" placeholder="Search..." />
+              </div>
+              <mat-option value="Addon 1">Addon 1</mat-option>
+              <mat-option value="Addon 2">Addon 2</mat-option>
+              <mat-option value="Addon 3">Addon 3</mat-option>
+              <div class="pt-1 border-top mt-8">
+                <div
+                  class="select-done flex align-center justify-center w-full primary light purple-text text-lighten-1 py-2 pointer"
+                >
+                  <img
+                    src="../../../../../assets/images/icons/primary-check-circle.svg"
+                    alt="check-circle"
+                  />
+                  <span class="mat-caption block ml-1">Done</span>
+                </div>
+              </div>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <h4 class="mat-body-1 text-text text-primary fw-500 mb-8">VALIDITY</h4>
+        <div class="input-wrapper mb-2">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">Valid Till</p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="validTill"
+              panelClass="foo-bar"
+              [tippyProps]="{ placement: 'right', interactive: true }"
+              >help</mat-icon
+            >
+            <ng-template #validTill let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">Validity</div>
+                <div class="details">
+                  Select the Validity date of the coupon
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="select date" [matDatepicker]="picker" />
+            <div class="input-suffix" (click)="picker.open()" panelClass="my-custom">
+              <img
+                src="../../../../../assets/images/icons/primary-calendar-icon.svg"
+                alt="calendar-icon"
+              />
+            </div>
+            <mat-datepicker #picker [calendarHeaderComponent]="customHeader" ></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="input-wrapper mb-2">
+          <div class="flex align-center mb-2">
+            <p class="mat-subtitle-2 font-weight-500 input-label">
+              Maximum Recommendations
+            </p>
+            <mat-icon
+              class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+              [ngxTippy]="validTill"
+              panelClass="foo-bar"
+              [tippyProps]="{ placement: 'right', interactive: true }"
+              >help</mat-icon
+            >
+            <ng-template #validTill let-name class="t-template">
+              <div class="help-info-tooltip">
+                <div class="heading-with-background">
+                  Maximum Recommendations
+                </div>
+                <div class="details">
+                  Maximum number of times this coupon can be redeemed.
+                </div>
+                <div class="details">
+                  Note : If not mentioned this coupon will be redeemed
+                  indefinite number of times
+                </div>
+                <button mat-button color="primary" class="px-0">
+                  Learn more
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <mat-form-field appearance="outline">
+            <input type="text" matInput placeholder="Enter here" />
+          </mat-form-field>
+        </div>
+        <div class="action-btns flex align-center justify-between">
+          <mat-checkbox
+            color="primary"
+            formControlName="status"
+            class="font-weight-500 checkbox ml-n-3"
+            >Active</mat-checkbox
+          >
+          <div>
+            <button mat-stroked-button color="primary" class="mr-2 large">
+              Dismiss
+            </button>
+            <button mat-flat-button color="primary" class="large" type="button">
+              Create
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

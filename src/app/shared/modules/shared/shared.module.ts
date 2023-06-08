@@ -4,9 +4,11 @@ import { NgxTippyModule } from 'ngx-tippy-wrapper';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmptyListingComponent } from '../../components/empty-listing/empty-listing.component';
 import { AngularMaterialModule } from '../angular-material/angular-material.module';
-import { EditDeleteDropComponent } from '../../components/dropdown/edit-delete-drop/edit-delete-drop.component';
+import { CustomDateHeaderComponent } from '../../components/custom-date-header/custom-date-header.component';
+
 @NgModule({
-  declarations: [EmptyListingComponent, EditDeleteDropComponent],
+  declarations: [EmptyListingComponent, 
+    CustomDateHeaderComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,7 +20,8 @@ import { EditDeleteDropComponent } from '../../components/dropdown/edit-delete-d
     FormsModule,
     ReactiveFormsModule,
     EmptyListingComponent,
-    EditDeleteDropComponent
+    CustomDateHeaderComponent
+    
   ],
 })
 export class SharedModule {}

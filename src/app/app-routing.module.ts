@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './core/layouts/layout/layout.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -27,6 +27,20 @@ const routes: Routes = [
         loadChildren: () =>
           import('../app/modules/plans/plans.module').then(
             (mod) => mod.PlansModule
+          ),
+      },
+      {
+        path: 'coupons',
+        loadChildren: () =>
+          import('../app/modules/coupons/coupons.module').then(
+            (mod) => mod.CouponsModule
+          ),
+      },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/payment-history/payment-history.module').then(
+            (m) => m.PaymentHistoryModule
           ),
       },
     ],

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FeaturesListingComponent } from './components/features-listing/features-listing.component';
 import { CreateFeatureComponent } from './components/create-feature/create-feature.component';
 import { ViewFeatureComponent } from './components/view-feature/view-feature.component';
+import { EditFeatureComponent } from './components/edit-feature/edit-feature.component';
 
 const routes: Routes = [
   {
@@ -12,8 +13,19 @@ const routes: Routes = [
   {
     path: 'create',
     component: CreateFeatureComponent,
+    children: [
+      {path: 'products/:id', component: CreateFeatureComponent}
+    ]
   },
-  { path: 'view', component: ViewFeatureComponent },
+  {
+    path: 'create/products/:id',
+    component: CreateFeatureComponent,
+  },
+  { path: 'view/:id', component: ViewFeatureComponent },
+  {
+    path: 'edit-feature/:id',
+    component: EditFeatureComponent,
+  },
 ];
 
 @NgModule({

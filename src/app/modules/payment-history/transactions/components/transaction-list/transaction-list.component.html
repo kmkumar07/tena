@@ -1,0 +1,135 @@
+<div
+  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll"
+  *ngIf="transactionData.length == 0"
+>
+  <app-empty-listing [items]="noContent"></app-empty-listing>
+</div>
+<div
+  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll"
+  *ngIf="transactionData.length > 0"
+>
+  <div class="flex justify-between align-center px-1">
+    <div class="flex align-center">
+      <h1 class="text-text text-dark">Transaction</h1>
+    </div>
+    <div class="flex align-center">
+      <div class="global-search light mr-6 border-2">
+        <span class="search-icon pointer">
+          <img
+            src="../../../../assets/images/icons/search.svg"
+            alt="search-icon"
+          />
+        </span>
+        <input type="text" placeholder="Search anything..." />
+        <!-- <div class="loader" *ngIf="loading">
+          <mat-spinner></mat-spinner>
+        </div> -->
+      </div>
+      <button mat-flat-button color="primary" class="create-btn">
+        <img
+          src="../../../../../../assets/images/icons/file-download.svg"
+          alt="download"
+        />
+        <span class="text-nowrap block ml-2 letter-spacing-0">Export Data</span>
+      </button>
+    </div>
+  </div>
+  <div class="primary-table overflow-visible mt-8 px-1 pb-2">
+    <table
+      mat-table
+      [dataSource]="transactionData"
+      matSort
+      (matSortChange)="announceSortChange($event)"
+    >
+      <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            color="primary"
+            (click)="selectAll(transactionData)"
+            (change)="$event ? toggleAllRows() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+            [aria-label]="checkboxLabel()"
+          >
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox
+            color="primary"
+            (click)="selectedRow(row.id, $event)"
+            (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)"
+            [aria-label]="checkboxLabel(row)"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>#ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <!-- Product Name Column -->
+      <ng-container matColumnDef="customer_info">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by title"
+        >
+          Coupon Name
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.customerInfo }}</td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="payment_method">
+        <th mat-header-cell *matHeaderCellDef>Payment Method</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="flex align-center">
+            <mat-icon
+              class="material-symbols-outlined mr-2 grey-text text-darken-6"
+              >credit_card</mat-icon
+            >
+            <p>{{ element.paymentMethod }}</p>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Created Date Column -->
+      <ng-container matColumnDef="occured_on">
+        <th mat-header-cell *matHeaderCellDef>Occured On</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.occuredOn }}
+        </td>
+      </ng-container>
+
+      <!-- Created Date Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let element" [ngClass]="element.status">
+          {{ element.status }}
+        </td>
+      </ng-container>
+
+      <!-- Created Date Column -->
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef class="text-right">Amount</th>
+        <td mat-cell *matCellDef="let element" class="text-right">
+          $ {{ element.amount }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [id]="row.id"
+      ></tr>
+    </table>
+  </div>
+</div>
