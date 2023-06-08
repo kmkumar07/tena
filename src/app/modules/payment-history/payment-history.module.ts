@@ -8,6 +8,8 @@ import { LogsListComponent } from './logs/components/logs-list/logs-list.compone
 import { LogViewComponent } from './logs/components/log-view/log-view.component';
 import { InvoiceListComponent } from './invoices/components/invoice-list/invoice-list.component';
 import { InvoiceViewComponent } from './invoices/components/invoice-view/invoice-view.component';
+import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
+import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { InvoiceViewComponent } from './invoices/components/invoice-view/invoice
   ],
   imports: [
     CommonModule,
-    PaymentHistoryRoutingModule
+    PaymentHistoryRoutingModule,
+    SharedModule,
+    AngularMaterialModule
   ]
 })
 export class PaymentHistoryModule { }

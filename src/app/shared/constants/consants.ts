@@ -35,22 +35,20 @@ export interface coupon {
 }
 export interface Product {
   productId: string;
-  imageUrl: string,
+  imageUrl: string;
   createdOn: string;
   modifiedOn: string;
   name: string;
   description: string;
   status: string;
-
 }
 export interface GetProduct {
   productId: string;
-  imageUrl: string,
+  imageUrl: string;
   modifiedOn: string;
   name: string;
   description: string;
   status: string;
-
 }
 export interface plansFields {
   plan_ID: string;
@@ -70,7 +68,7 @@ export interface Feature {
   type: string;
   status: string;
   unit: string;
-  levels: []
+  levels: [];
 }
 export interface FeatureList {
   featureId: number;
@@ -291,8 +289,7 @@ export const Coupon_Data = [
     id: 'coupon_id_459',
     coupon_id: '#S0-001',
     coupon_name: 'INR 100 Off',
-    description:
-      'Rs. 100.00 for Forever get it today and enjoy it forever... ',
+    description: 'Rs. 100.00 for Forever get it today and enjoy it forever... ',
     created_at: '24 March, 2023',
     status: 'Active',
   },
@@ -300,12 +297,10 @@ export const Coupon_Data = [
     id: 'coupon_id_460',
     coupon_id: '#S0-001',
     coupon_name: 'INR 100 Off',
-    description:
-      'Rs. 100.00 for Forever get it today and enjoy it forever... ',
+    description: 'Rs. 100.00 for Forever get it today and enjoy it forever... ',
     created_at: '24 March, 2023',
     status: 'Active',
   },
-
 ];
 export const Plans_Data = [
   {
@@ -335,6 +330,24 @@ export const Notifications_Data = [
   //   message: 'subscriptione_created',
   //   created_at: 'Aug 7th, 2023'
   // }
+];
+export const TransactionList = [
+  {
+    id: '#S0-001',
+    customerInfo: 'Greenplus Enterprises',
+    paymentMethod: '2341',
+    occuredOn: 'Jan 16, 2023',
+    status: 'Active',
+    amount: '199.00',
+  },
+  {
+    id: '#S0-002',
+    customerInfo: 'Greenplus Enterprises',
+    paymentMethod: '2341',
+    occuredOn: 'Jan 16, 2023',
+    status: 'Active',
+    amount: '199.00',
+  },
 ];
 export const feature_types = [
   { value: 1, title: 'switch' },
@@ -393,6 +406,7 @@ export const noProducts = [
     alt: 'no proudcts available',
     subtext: 'Looking for Product',
     text: "Seems like you haven't added any Product. Start adding products by click on “Create Product” button",
+    showButton: true,
     buttonTxt: 'Create Product',
     path: '/products/create',
   },
@@ -404,6 +418,7 @@ export const noFeatures = [
     alt: 'no features available',
     subtext: 'Looking for Features',
     text: "Seems like you haven't added any feature. Start adding feature by click on “Create Feature” button ",
+    showButton: true,
     buttonTxt: 'Create Feature',
     path: '/features/create',
   },
@@ -415,6 +430,7 @@ export const noPlans = [
     alt: 'no Plans available',
     subtext: 'Looking for Plans',
     text: "Seems like you haven't added any Plan. Start adding plan by click on “Create Plan” button",
+    showButton: true,
     buttonTxt: 'Create Plan',
     path: '/plans/view',
   },
@@ -426,6 +442,7 @@ export const noPageFound = [
     alt: 'No Page Found',
     subtext: "Oops! Why you're here?",
     text: "We are very sorry for inconvenience. It looks like you're try to access a page that either has been deleted or never existed.",
+    showButton: true,
     buttonTxt: 'Back to home',
     path: '',
   },
@@ -435,10 +452,21 @@ export const nocoupons = [
     heading: '',
     imgPath: '../../../../assets/images/empty-coupons.png',
     alt: 'no coupons available',
-    subtext: "Start Adding Coupons",
-    text: "Click on the below buttons to open create coupons form.",
+    subtext: 'Start Adding Coupons',
+    text: 'Click on the below buttons to open create coupons form.',
+    showButton: true,
     buttonTxt: 'Back to home',
     path: '',
+  },
+];
+export const noTransactions = [
+  {
+    heading: 'Transaction',
+    imgPath: '../../../../assets/images/empty-illustrations-5.png',
+    alt: 'no transactions to show',
+    subtext: 'NO transaction yet',
+    text: 'After your first transaction you will be able to view it here.',
+    showButton: false,
   },
 ];
 export const Stepper = [
