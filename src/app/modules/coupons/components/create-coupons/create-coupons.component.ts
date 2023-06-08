@@ -7,5 +7,5 @@ import { CustomDateHeaderComponent } from 'src/app/shared/components/custom-date
   styleUrls: ['./create-coupons.component.scss'],
 })
 export class CreateCouponsComponent {
-  exampleHeader = CustomDateHeaderComponent
+  customHeader = CustomDateHeaderComponent
 }
