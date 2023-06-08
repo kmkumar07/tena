@@ -22,8 +22,12 @@ const meta: Meta<TextareaComponent> = {
   argTypes: {
     hint: { control: 'text' },
     class: { control: 'text' },
-    infoIcon: {
-      control: 'boolean',
+    appearance: {
+      control: 'select',
+      options: [
+        'outline',
+        'fill'
+      ],
     },
   },
   decorators: [
@@ -51,7 +55,5 @@ export const Textarea: Story = {
     disable: false,
     required: true,
     label: 'Label',
-    infoIcon: false,
-    formControlName: 'formControlName'
   },
 };

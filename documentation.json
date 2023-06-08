@@ -71,12 +71,12 @@
         },
         {
             "name": "DialogData",
-            "id": "interface-DialogData-cc74eb230b399b3ed03a7c8085f74c084301ab4de28d49825b8c71b35a6778fe5423ea83e5224eb1f4c6d7c5bfb6cbe286e716346607c63fa3e76d62b25b7903",
+            "id": "interface-DialogData-de8258368fcc3767680beb8afd0041bb0ad6de914838f71246ae57de288ed2131949be24765fd0d5c52cf0214f5dfd2a18b091f1708aa1929be1d708025fe915",
             "file": "src/stories/softobiz-ui/Dialog/dialog.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { Component, ViewEncapsulation, Inject } from '@angular/core';\nimport {\n  MatDialog,\n  MAT_DIALOG_DATA,\n  MatDialogRef,\n} from '@angular/material/dialog';\n\nexport interface DialogData {\n  animal: string;\n  name: string;\n}\n\n@Component({\n  selector: 'sft-Dialog',\n  templateUrl: './dialog.component.html',\n  styleUrls: ['./dialog.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n})\nexport class DialogComponent {\n  animal: string = '';  \n  name: string = '';\n\n  constructor(public dialog: MatDialog) {}\n\n  openDialog(): void {\n    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {\n      data: { name: this.name, animal: this.animal },\n    });\n\n    dialogRef.afterClosed().subscribe((result) => {\n      console.log('The dialog was closed');\n      this.animal = result;\n    });\n  }\n}\n\n@Component({\n  selector: 'dialog-html',\n  templateUrl: './dialog-html.component.html',\n})\nexport class DialogOverviewExampleDialog {\n  constructor(\n    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,\n    @Inject(MAT_DIALOG_DATA) public data: DialogData\n  ) {}\n\n  onNoClick(): void {\n    this.dialogRef.close();\n  }\n}",
+            "sourceCode": "import { Component, ViewEncapsulation, Inject } from '@angular/core';\r\nimport {\r\n  MatDialog,\r\n  MAT_DIALOG_DATA,\r\n  MatDialogRef,\r\n} from '@angular/material/dialog';\r\n\r\nexport interface DialogData {\r\n  animal: string;\r\n  name: string;\r\n}\r\n\r\n@Component({\r\n  selector: 'sft-Dialog',\r\n  templateUrl: './dialog.component.html',\r\n  styleUrls: ['./dialog.component.scss'],\r\n  encapsulation: ViewEncapsulation.None,\r\n})\r\nexport class DialogComponent {\r\n  animal: string = '';  \r\n  name: string = '';\r\n\r\n  constructor(public dialog: MatDialog) {}\r\n\r\n  openDialog(): void {\r\n    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {\r\n      data: { name: this.name, animal: this.animal },\r\n    });\r\n\r\n    dialogRef.afterClosed().subscribe((result) => {\r\n      console.log('The dialog was closed');\r\n      this.animal = result;\r\n    });\r\n  }\r\n}\r\n\r\n@Component({\r\n  selector: 'dialog-html',\r\n  templateUrl: './dialog-html.component.html',\r\n})\r\nexport class DialogOverviewExampleDialog {\r\n  constructor(\r\n    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,\r\n    @Inject(MAT_DIALOG_DATA) public data: DialogData\r\n  ) {}\r\n\r\n  onNoClick(): void {\r\n    this.dialogRef.close();\r\n  }\r\n}",
             "properties": [
                 {
                     "name": "animal",
@@ -320,7 +320,42 @@
         },
         {
             "name": "PeriodicElement",
-            "id": "interface-PeriodicElement-1215067d1a8730b32651809b178a609e325ab6d5227e1ddfcc9f262f1c5ebc2c0bebc724421fff58d432d05d5ca17fcb4258b8e8e5e4216cf1cc4b2c96630ada-1",
+            "id": "interface-PeriodicElement-e07b960d2a1ec14199e4b5a94821a588576cb0d43f5a97cbff52d9710fbda6fab857555d9765e3374a49d5652304fdbbefba8123e7832fcaafe5f1371f7288b3-1",
+            "file": "src/app/modules/plans/components/create-plan/create-plan.component.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Component } from '@angular/core';\r\nimport { MatDialog } from '@angular/material/dialog';\r\nimport { FeatureDetailsPopupComponent } from 'src/app/shared/components/dialog-box/feature-details-popup/feature-details-popup.component';\r\nimport { plan_add_empty_data } from 'src/app/shared/constants/consants';\r\n\r\nexport interface PeriodicElement {\r\n  PricingCycle: string; \r\n  Price: any;\r\n}\r\n\r\nconst ELEMENT_DATA: PeriodicElement[] = [\r\n  { PricingCycle: 'Daily', Price: 'Set Price' },\r\n  { PricingCycle: 'Weekly', Price: 'Set Price' },\r\n  { PricingCycle: 'Monthly', Price: 'Set Price' },\r\n  { PricingCycle: 'Yearly', Price: 'Set Price' },\r\n];\r\n\r\n@Component({\r\n  selector: 'app-create-plan',\r\n  templateUrl: './create-plan.component.html',\r\n  styleUrls: ['./create-plan.component.scss'],\r\n})\r\nexport class CreatePlanComponent {\r\n  planAddEmptyData = plan_add_empty_data;\r\n  constructor(public dialog: MatDialog) {}\r\n  openPopup() {\r\n    this.dialog.open(FeatureDetailsPopupComponent, {});\r\n  }\r\n\r\n  displayedColumns: string[] = ['PricingCycle', 'Price'];\r\n  dataSource = ELEMENT_DATA;\r\n  clickedRows = new Set<PeriodicElement>();\r\n}\r\n",
+            "properties": [
+                {
+                    "name": "Price",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 8
+                },
+                {
+                    "name": "PricingCycle",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 7
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 165,
+            "methods": [],
+            "isDuplicate": true,
+            "duplicateId": 1,
+            "duplicateName": "PeriodicElement-1"
+        },
+        {
+            "name": "PeriodicElement",
+            "id": "interface-PeriodicElement-1215067d1a8730b32651809b178a609e325ab6d5227e1ddfcc9f262f1c5ebc2c0bebc724421fff58d432d05d5ca17fcb4258b8e8e5e4216cf1cc4b2c96630ada-2",
             "file": "src/app/modules/plans/components/add-ons-details/add-ons-details.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
@@ -371,41 +406,6 @@
                     "optional": false,
                     "description": "",
                     "line": 14
-                }
-            ],
-            "indexSignatures": [],
-            "kind": 165,
-            "methods": [],
-            "isDuplicate": true,
-            "duplicateId": 1,
-            "duplicateName": "PeriodicElement-1"
-        },
-        {
-            "name": "PeriodicElement",
-            "id": "interface-PeriodicElement-e07b960d2a1ec14199e4b5a94821a588576cb0d43f5a97cbff52d9710fbda6fab857555d9765e3374a49d5652304fdbbefba8123e7832fcaafe5f1371f7288b3-2",
-            "file": "src/app/modules/plans/components/create-plan/create-plan.component.ts",
-            "deprecated": false,
-            "deprecationMessage": "",
-            "type": "interface",
-            "sourceCode": "import { Component } from '@angular/core';\r\nimport { MatDialog } from '@angular/material/dialog';\r\nimport { FeatureDetailsPopupComponent } from 'src/app/shared/components/dialog-box/feature-details-popup/feature-details-popup.component';\r\nimport { plan_add_empty_data } from 'src/app/shared/constants/consants';\r\n\r\nexport interface PeriodicElement {\r\n  PricingCycle: string; \r\n  Price: any;\r\n}\r\n\r\nconst ELEMENT_DATA: PeriodicElement[] = [\r\n  { PricingCycle: 'Daily', Price: 'Set Price' },\r\n  { PricingCycle: 'Weekly', Price: 'Set Price' },\r\n  { PricingCycle: 'Monthly', Price: 'Set Price' },\r\n  { PricingCycle: 'Yearly', Price: 'Set Price' },\r\n];\r\n\r\n@Component({\r\n  selector: 'app-create-plan',\r\n  templateUrl: './create-plan.component.html',\r\n  styleUrls: ['./create-plan.component.scss'],\r\n})\r\nexport class CreatePlanComponent {\r\n  planAddEmptyData = plan_add_empty_data;\r\n  constructor(public dialog: MatDialog) {}\r\n  openPopup() {\r\n    this.dialog.open(FeatureDetailsPopupComponent, {});\r\n  }\r\n\r\n  displayedColumns: string[] = ['PricingCycle', 'Price'];\r\n  dataSource = ELEMENT_DATA;\r\n  clickedRows = new Set<PeriodicElement>();\r\n}\r\n",
-            "properties": [
-                {
-                    "name": "Price",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "any",
-                    "optional": false,
-                    "description": "",
-                    "line": 8
-                },
-                {
-                    "name": "PricingCycle",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 7
                 }
             ],
             "indexSignatures": [],
@@ -676,12 +676,12 @@
         },
         {
             "name": "Task",
-            "id": "interface-Task-7fbb884b07e961c1ec31bae4b33d54b4a6beecf5fa1537955971cf2f2e2231f02472cdf5227b185b2079ea894aa4b8bc50cb9564c921665daebe81debcc2d42e",
+            "id": "interface-Task-f7ac941ae6bfa47d2ef8849da3665b21871fcd4e0a24af87aa1397bd42213da937cedc1571c2aff880b96efe936ed23ff87b832e8a9f9dc05c364f86d252704b",
             "file": "src/stories/softobiz-ui/Checkbox/checkbox.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { Component, ViewEncapsulation, Input } from '@angular/core';\nimport { ThemePalette } from '@angular/material/core';\n\nexport interface Task {\n  name: string;\n  completed: boolean;\n  color: ThemePalette;\n  subtasks?: Task[];\n}\n\n@Component({\n  selector: 'sft-check-box',\n  templateUrl: './checkbox.component.html',\n  styleUrls: ['./checkbox.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n})\nexport class CheckboxComponent {\n\n  @Input() task: string = '';\n\n  //Checkbox label\n  @Input() label: string = '';\n\n  //Whether the checkbox is disabled.\n  @Input() disable = false;\n\n  //Whether the checkbox is checked.\n  @Input() checked: boolean = false;\n  \n  //Theme color palette for the component\n  @Input() color: ThemePalette;\n\n  //Whether ripples are disabled\n  @Input() disableRipple: boolean = false;\n\n  //Whether the checkbox is indeterminate\n  @Input() indeterminate: boolean = false;\n\n  // Whether the label should appear after or before the checkbox. Defaults to 'after'\n  @Input() labelPosition: 'before' | 'after' = 'after';\n\n}\n",
+            "sourceCode": "import { Component, ViewEncapsulation, Input } from '@angular/core';\r\nimport { ThemePalette } from '@angular/material/core';\r\n\r\nexport interface Task {\r\n  name: string;\r\n  completed: boolean;\r\n  color: ThemePalette;\r\n  subtasks?: Task[];\r\n}\r\n\r\n@Component({\r\n  selector: 'sft-check-box',\r\n  templateUrl: './checkbox.component.html',\r\n  styleUrls: ['./checkbox.component.scss'],\r\n  encapsulation: ViewEncapsulation.None,\r\n})\r\nexport class CheckboxComponent {\r\n\r\n  @Input() task: string = '';\r\n\r\n  //Checkbox label\r\n  @Input() label: string = '';\r\n\r\n  //Whether the checkbox is disabled.\r\n  @Input() disable = false;\r\n\r\n  //Whether the checkbox is checked.\r\n  @Input() checked: boolean = false;\r\n  \r\n  //Theme color palette for the component\r\n  @Input() color: ThemePalette;\r\n\r\n  //Whether ripples are disabled\r\n  @Input() disableRipple: boolean = false;\r\n\r\n  //Whether the checkbox is indeterminate\r\n  @Input() indeterminate: boolean = false;\r\n\r\n  // Whether the label should appear after or before the checkbox. Defaults to 'after'\r\n  @Input() labelPosition: 'before' | 'after' = 'after';\r\n\r\n}\r\n",
             "properties": [
                 {
                     "name": "color",
@@ -1266,7 +1266,7 @@
         },
         {
             "name": "ButtonComponent",
-            "id": "component-ButtonComponent-efbdbb68d8a20845810b78dc974e17c71902bbacb5a1db789d47c2624762ab9f9a014cc8088bf41b5cdd03591da87e6eb0b1f21251033d091cf40437186f813c",
+            "id": "component-ButtonComponent-2109969319f31ccb9ee5464f3e5993620016b462b14a04b828f8285e931bff933d08751f25169f16403c596cd919731735560c0238857d38af3e633db2b96487",
             "file": "src/stories/softobiz-ui/button/button.component.ts",
             "encapsulation": [
                 "ViewEncapsulation.None"
@@ -1408,7 +1408,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, ViewEncapsulation, Input } from '@angular/core';\nimport { ThemePalette } from '@angular/material/core';\n// import { ButtonVariant } from './types';\n\n@Component({\n  selector: 'sft-button',\n  templateUrl: './button.component.html',\n  styleUrls: ['./button.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n})\nexport class ButtonComponent {\n\n  /**\n   * HTML Aria label.\n   */\n  @Input() ariaLabel?: string;\n\n  /**\n   * HTML Aria labbeled by.\n   */\n  @Input() ariaLabelledBy?: string;\n\n  @Input() label: string = 'button';\n\n  @Input() color: ThemePalette = 'primary';\n\n  @Input() variant: any = 'default';\n\n  @Input() disable = false;\n\n  @Input() disableRipple = false;\n\n  @Input() size: string ='medium';\n\n  @Input() type: string ='';\n\n  @Input() class: string ='';\n  \n  @Input() id: string ='';\n  \n  /**\n   * clickfuntion().\n   */\n  @Input() onClick: string ='clickfuntion()';\n}\n",
+            "sourceCode": "import { Component, ViewEncapsulation, Input } from '@angular/core';\r\nimport { ThemePalette } from '@angular/material/core';\r\n// import { ButtonVariant } from './types';\r\n\r\n@Component({\r\n  selector: 'sft-button',\r\n  templateUrl: './button.component.html',\r\n  styleUrls: ['./button.component.scss'],\r\n  encapsulation: ViewEncapsulation.None,\r\n})\r\nexport class ButtonComponent {\r\n\r\n  /**\r\n   * HTML Aria label.\r\n   */\r\n  @Input() ariaLabel?: string;\r\n\r\n  /**\r\n   * HTML Aria labbeled by.\r\n   */\r\n  @Input() ariaLabelledBy?: string;\r\n\r\n  @Input() label: string = 'button';\r\n\r\n  @Input() color: ThemePalette = 'primary';\r\n\r\n  @Input() variant: any = 'default';\r\n\r\n  @Input() disable = false;\r\n\r\n  @Input() disableRipple = false;\r\n\r\n  @Input() size: string ='medium';\r\n\r\n  @Input() type: string ='';\r\n\r\n  @Input() class: string ='';\r\n  \r\n  @Input() id: string ='';\r\n  \r\n  /**\r\n   * clickfuntion().\r\n   */\r\n  @Input() onClick: string ='clickfuntion()';\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1421,7 +1421,7 @@
         },
         {
             "name": "CheckboxComponent",
-            "id": "component-CheckboxComponent-7fbb884b07e961c1ec31bae4b33d54b4a6beecf5fa1537955971cf2f2e2231f02472cdf5227b185b2079ea894aa4b8bc50cb9564c921665daebe81debcc2d42e",
+            "id": "component-CheckboxComponent-f7ac941ae6bfa47d2ef8849da3665b21871fcd4e0a24af87aa1397bd42213da937cedc1571c2aff880b96efe936ed23ff87b832e8a9f9dc05c364f86d252704b",
             "file": "src/stories/softobiz-ui/Checkbox/checkbox.component.ts",
             "encapsulation": [
                 "ViewEncapsulation.None"
@@ -1522,7 +1522,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, ViewEncapsulation, Input } from '@angular/core';\nimport { ThemePalette } from '@angular/material/core';\n\nexport interface Task {\n  name: string;\n  completed: boolean;\n  color: ThemePalette;\n  subtasks?: Task[];\n}\n\n@Component({\n  selector: 'sft-check-box',\n  templateUrl: './checkbox.component.html',\n  styleUrls: ['./checkbox.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n})\nexport class CheckboxComponent {\n\n  @Input() task: string = '';\n\n  //Checkbox label\n  @Input() label: string = '';\n\n  //Whether the checkbox is disabled.\n  @Input() disable = false;\n\n  //Whether the checkbox is checked.\n  @Input() checked: boolean = false;\n  \n  //Theme color palette for the component\n  @Input() color: ThemePalette;\n\n  //Whether ripples are disabled\n  @Input() disableRipple: boolean = false;\n\n  //Whether the checkbox is indeterminate\n  @Input() indeterminate: boolean = false;\n\n  // Whether the label should appear after or before the checkbox. Defaults to 'after'\n  @Input() labelPosition: 'before' | 'after' = 'after';\n\n}\n",
+            "sourceCode": "import { Component, ViewEncapsulation, Input } from '@angular/core';\r\nimport { ThemePalette } from '@angular/material/core';\r\n\r\nexport interface Task {\r\n  name: string;\r\n  completed: boolean;\r\n  color: ThemePalette;\r\n  subtasks?: Task[];\r\n}\r\n\r\n@Component({\r\n  selector: 'sft-check-box',\r\n  templateUrl: './checkbox.component.html',\r\n  styleUrls: ['./checkbox.component.scss'],\r\n  encapsulation: ViewEncapsulation.None,\r\n})\r\nexport class CheckboxComponent {\r\n\r\n  @Input() task: string = '';\r\n\r\n  //Checkbox label\r\n  @Input() label: string = '';\r\n\r\n  //Whether the checkbox is disabled.\r\n  @Input() disable = false;\r\n\r\n  //Whether the checkbox is checked.\r\n  @Input() checked: boolean = false;\r\n  \r\n  //Theme color palette for the component\r\n  @Input() color: ThemePalette;\r\n\r\n  //Whether ripples are disabled\r\n  @Input() disableRipple: boolean = false;\r\n\r\n  //Whether the checkbox is indeterminate\r\n  @Input() indeterminate: boolean = false;\r\n\r\n  // Whether the label should appear after or before the checkbox. Defaults to 'after'\r\n  @Input() labelPosition: 'before' | 'after' = 'after';\r\n\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1535,7 +1535,7 @@
         },
         {
             "name": "ChipComponent",
-            "id": "component-ChipComponent-3fb5f2766f3d49be3684e9b10cf2860a05463ec297039257538f0fa9aa6b5e8ad9713cb3a0dcb2ccd62aa2a32d0593417ea04a89a506de2715242a8784a2f33a",
+            "id": "component-ChipComponent-55ae9cc48067ac0c02f861b6c0bee0998234ee8e676f68b69de501f6e3bc8e73a220bdcaae36b6fd49d889d282f71a0b623612e9b5697036e2530ab9a2043725",
             "file": "src/stories/softobiz-ui/Chip/chip.component.ts",
             "encapsulation": [
                 "ViewEncapsulation.None"
@@ -1663,7 +1663,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, ViewEncapsulation, Input } from '@angular/core';\nimport { ThemePalette } from '@angular/material/core';\n\n@Component({\n  selector: 'sft-chip',\n  templateUrl: './chip.component.html',\n  styleUrls: ['./chip.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n})\nexport class ChipComponent {\n  @Input() label: string = 'One fish';\n\n  @Input() color: ThemePalette = 'primary';\n\n  @Input() ariaDescription: string | null = '';\n\n  @Input() ariaLabel: string | null = '';\n\n  @Input() disableRipple: boolean = false;\n\n  @Input() disabled: boolean = false;\n\n  @Input() highlighted: boolean = false;\n\n  @Input() id: string = '';\n\n  @Input() removable: boolean = false;\n\n  @Input() role: string | null = '';\n\n  @Input() value: any;\n}\n",
+            "sourceCode": "import { Component, ViewEncapsulation, Input } from '@angular/core';\r\nimport { ThemePalette } from '@angular/material/core';\r\n\r\n@Component({\r\n  selector: 'sft-chip',\r\n  templateUrl: './chip.component.html',\r\n  styleUrls: ['./chip.component.scss'],\r\n  encapsulation: ViewEncapsulation.None,\r\n})\r\nexport class ChipComponent {\r\n  @Input() label: string = 'One fish';\r\n\r\n  @Input() color: ThemePalette = 'primary';\r\n\r\n  @Input() ariaDescription: string | null = '';\r\n\r\n  @Input() ariaLabel: string | null = '';\r\n\r\n  @Input() disableRipple: boolean = false;\r\n\r\n  @Input() disabled: boolean = false;\r\n\r\n  @Input() highlighted: boolean = false;\r\n\r\n  @Input() id: string = '';\r\n\r\n  @Input() removable: boolean = false;\r\n\r\n  @Input() role: string | null = '';\r\n\r\n  @Input() value: any;\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2267,7 +2267,7 @@
         },
         {
             "name": "DialogComponent",
-            "id": "component-DialogComponent-cc74eb230b399b3ed03a7c8085f74c084301ab4de28d49825b8c71b35a6778fe5423ea83e5224eb1f4c6d7c5bfb6cbe286e716346607c63fa3e76d62b25b7903",
+            "id": "component-DialogComponent-de8258368fcc3767680beb8afd0041bb0ad6de914838f71246ae57de288ed2131949be24765fd0d5c52cf0214f5dfd2a18b091f1708aa1929be1d708025fe915",
             "file": "src/stories/softobiz-ui/Dialog/dialog.component.ts",
             "encapsulation": [
                 "ViewEncapsulation.None"
@@ -2340,7 +2340,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, ViewEncapsulation, Inject } from '@angular/core';\nimport {\n  MatDialog,\n  MAT_DIALOG_DATA,\n  MatDialogRef,\n} from '@angular/material/dialog';\n\nexport interface DialogData {\n  animal: string;\n  name: string;\n}\n\n@Component({\n  selector: 'sft-Dialog',\n  templateUrl: './dialog.component.html',\n  styleUrls: ['./dialog.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n})\nexport class DialogComponent {\n  animal: string = '';  \n  name: string = '';\n\n  constructor(public dialog: MatDialog) {}\n\n  openDialog(): void {\n    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {\n      data: { name: this.name, animal: this.animal },\n    });\n\n    dialogRef.afterClosed().subscribe((result) => {\n      console.log('The dialog was closed');\n      this.animal = result;\n    });\n  }\n}\n\n@Component({\n  selector: 'dialog-html',\n  templateUrl: './dialog-html.component.html',\n})\nexport class DialogOverviewExampleDialog {\n  constructor(\n    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,\n    @Inject(MAT_DIALOG_DATA) public data: DialogData\n  ) {}\n\n  onNoClick(): void {\n    this.dialogRef.close();\n  }\n}",
+            "sourceCode": "import { Component, ViewEncapsulation, Inject } from '@angular/core';\r\nimport {\r\n  MatDialog,\r\n  MAT_DIALOG_DATA,\r\n  MatDialogRef,\r\n} from '@angular/material/dialog';\r\n\r\nexport interface DialogData {\r\n  animal: string;\r\n  name: string;\r\n}\r\n\r\n@Component({\r\n  selector: 'sft-Dialog',\r\n  templateUrl: './dialog.component.html',\r\n  styleUrls: ['./dialog.component.scss'],\r\n  encapsulation: ViewEncapsulation.None,\r\n})\r\nexport class DialogComponent {\r\n  animal: string = '';  \r\n  name: string = '';\r\n\r\n  constructor(public dialog: MatDialog) {}\r\n\r\n  openDialog(): void {\r\n    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {\r\n      data: { name: this.name, animal: this.animal },\r\n    });\r\n\r\n    dialogRef.afterClosed().subscribe((result) => {\r\n      console.log('The dialog was closed');\r\n      this.animal = result;\r\n    });\r\n  }\r\n}\r\n\r\n@Component({\r\n  selector: 'dialog-html',\r\n  templateUrl: './dialog-html.component.html',\r\n})\r\nexport class DialogOverviewExampleDialog {\r\n  constructor(\r\n    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,\r\n    @Inject(MAT_DIALOG_DATA) public data: DialogData\r\n  ) {}\r\n\r\n  onNoClick(): void {\r\n    this.dialogRef.close();\r\n  }\r\n}",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2379,7 +2379,7 @@
         },
         {
             "name": "DialogOverviewExampleDialog",
-            "id": "component-DialogOverviewExampleDialog-cc74eb230b399b3ed03a7c8085f74c084301ab4de28d49825b8c71b35a6778fe5423ea83e5224eb1f4c6d7c5bfb6cbe286e716346607c63fa3e76d62b25b7903",
+            "id": "component-DialogOverviewExampleDialog-de8258368fcc3767680beb8afd0041bb0ad6de914838f71246ae57de288ed2131949be24765fd0d5c52cf0214f5dfd2a18b091f1708aa1929be1d708025fe915",
             "file": "src/stories/softobiz-ui/Dialog/dialog.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2446,7 +2446,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, ViewEncapsulation, Inject } from '@angular/core';\nimport {\n  MatDialog,\n  MAT_DIALOG_DATA,\n  MatDialogRef,\n} from '@angular/material/dialog';\n\nexport interface DialogData {\n  animal: string;\n  name: string;\n}\n\n@Component({\n  selector: 'sft-Dialog',\n  templateUrl: './dialog.component.html',\n  styleUrls: ['./dialog.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n})\nexport class DialogComponent {\n  animal: string = '';  \n  name: string = '';\n\n  constructor(public dialog: MatDialog) {}\n\n  openDialog(): void {\n    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {\n      data: { name: this.name, animal: this.animal },\n    });\n\n    dialogRef.afterClosed().subscribe((result) => {\n      console.log('The dialog was closed');\n      this.animal = result;\n    });\n  }\n}\n\n@Component({\n  selector: 'dialog-html',\n  templateUrl: './dialog-html.component.html',\n})\nexport class DialogOverviewExampleDialog {\n  constructor(\n    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,\n    @Inject(MAT_DIALOG_DATA) public data: DialogData\n  ) {}\n\n  onNoClick(): void {\n    this.dialogRef.close();\n  }\n}",
+            "sourceCode": "import { Component, ViewEncapsulation, Inject } from '@angular/core';\r\nimport {\r\n  MatDialog,\r\n  MAT_DIALOG_DATA,\r\n  MatDialogRef,\r\n} from '@angular/material/dialog';\r\n\r\nexport interface DialogData {\r\n  animal: string;\r\n  name: string;\r\n}\r\n\r\n@Component({\r\n  selector: 'sft-Dialog',\r\n  templateUrl: './dialog.component.html',\r\n  styleUrls: ['./dialog.component.scss'],\r\n  encapsulation: ViewEncapsulation.None,\r\n})\r\nexport class DialogComponent {\r\n  animal: string = '';  \r\n  name: string = '';\r\n\r\n  constructor(public dialog: MatDialog) {}\r\n\r\n  openDialog(): void {\r\n    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {\r\n      data: { name: this.name, animal: this.animal },\r\n    });\r\n\r\n    dialogRef.afterClosed().subscribe((result) => {\r\n      console.log('The dialog was closed');\r\n      this.animal = result;\r\n    });\r\n  }\r\n}\r\n\r\n@Component({\r\n  selector: 'dialog-html',\r\n  templateUrl: './dialog-html.component.html',\r\n})\r\nexport class DialogOverviewExampleDialog {\r\n  constructor(\r\n    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,\r\n    @Inject(MAT_DIALOG_DATA) public data: DialogData\r\n  ) {}\r\n\r\n  onNoClick(): void {\r\n    this.dialogRef.close();\r\n  }\r\n}",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -2495,7 +2495,7 @@
         },
         {
             "name": "DividerComponent",
-            "id": "component-DividerComponent-e82e036fe4677017645f6977171135a8ad363ae108725e24a9ebad711e43040d613ded4c8b377a8f218c96a65cc765a731ae85280a80a890d4fc40eb8e96847d",
+            "id": "component-DividerComponent-e0fde259b1859b136ebb869f504ef69eb07c94d922f9b10de63e2b0690dc0263882cf938b6ad8ed4add973d06fb70cd235205ca2ac4c4939cc8bb1b7c9170bae",
             "file": "src/stories/softobiz-ui/divider/divider.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2541,7 +2541,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { ThemePalette } from '@angular/material/core';\n\n@Component({\n  selector: 'app-divider',\n  templateUrl: './divider.component.html',\n  styleUrls: ['./divider.component.scss']\n})\nexport class DividerComponent {\n  @Input() inset: boolean = false;\n  @Input() vertical: boolean = false;\n}\n",
+            "sourceCode": "import { Component, Input } from '@angular/core';\r\nimport { ThemePalette } from '@angular/material/core';\r\n\r\n@Component({\r\n  selector: 'app-divider',\r\n  templateUrl: './divider.component.html',\r\n  styleUrls: ['./divider.component.scss']\r\n})\r\nexport class DividerComponent {\r\n  @Input() inset: boolean = false;\r\n  @Input() vertical: boolean = false;\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2550,7 +2550,7 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<mat-list>\n  <mat-list-item>Item 1</mat-list-item>\n  <mat-divider [inset]=\"inset\" [vertical]=\"vertical\"></mat-divider>\n  <mat-list-item>Item 2</mat-list-item>\n  <mat-divider [inset]=\"inset\" [vertical]=\"vertical\"></mat-divider>\n  <mat-list-item>Item 3</mat-list-item>\n</mat-list>"
+            "templateData": "<mat-list>\r\n  <mat-list-item>Item 1</mat-list-item>\r\n  <mat-divider [inset]=\"inset\" [vertical]=\"vertical\"></mat-divider>\r\n  <mat-list-item>Item 2</mat-list-item>\r\n  <mat-divider [inset]=\"inset\" [vertical]=\"vertical\"></mat-divider>\r\n  <mat-list-item>Item 3</mat-list-item>\r\n</mat-list>"
         },
         {
             "name": "EditDeleteDropComponent",
@@ -3022,7 +3022,7 @@
         },
         {
             "name": "InputComponent",
-            "id": "component-InputComponent-d2cf09d9fdcb3df2b0d87a95900bd709e5f597f3b2589af7f04682bcd7b25d344bfb18fc205f2bd1e7ca992e78816a8d90e198d2321455c29794709a8d9ac981",
+            "id": "component-InputComponent-5c4eefdf0aa5691050fcfce24e29d50819e270cd4a9cb72e19451eb964c917bd9b5ae308e5371bdb01641ba90a05e03f40199bb54724412c7282735cc987221c",
             "file": "src/stories/softobiz-ui/Input/input.component.ts",
             "encapsulation": [
                 "ViewEncapsulation.None"
@@ -3169,7 +3169,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, ViewEncapsulation, Input } from '@angular/core';\nimport { ThemePalette } from '@angular/material/core';\nimport { MatIconModule } from '@angular/material/icon';\nimport { NgxTippyModule } from 'ngx-tippy-wrapper';\n// import { ButtonVariant } from './types';\n\n@Component({\n  selector: 'sft-input',\n  templateUrl: './input.component.html',\n  styleUrls: ['./input.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n})\nexport class InputComponent {\n  @Input() label: string = 'Label';\n\n  @Input() readonly: boolean = false;\n\n  @Input() type: string;\n\n  @Input() placeholder: string = 'Enter here...';\n\n  @Input() hint?: string = '';\n\n  @Input() disable: boolean = false;\n\n  @Input() required: boolean = false;\n\n  @Input() infoIcon: boolean = false;\n\n  @Input() infoTitle: string = '';\n\n  @Input() infoDetail: string = '';\n\n  @Input() value: string = '';\n\n  @Input() class: string = '';\n\n  errorState: boolean;\n}\n",
+            "sourceCode": "import { Component, ViewEncapsulation, Input } from '@angular/core';\r\nimport { ThemePalette } from '@angular/material/core';\r\nimport { MatIconModule } from '@angular/material/icon';\r\nimport { NgxTippyModule } from 'ngx-tippy-wrapper';\r\n// import { ButtonVariant } from './types';\r\n\r\n@Component({\r\n  selector: 'sft-input',\r\n  templateUrl: './input.component.html',\r\n  styleUrls: ['./input.component.scss'],\r\n  encapsulation: ViewEncapsulation.None,\r\n})\r\nexport class InputComponent {\r\n  @Input() label: string = 'Label';\r\n\r\n  @Input() readonly: boolean = false;\r\n\r\n  @Input() type: string;\r\n\r\n  @Input() placeholder: string = 'Enter here...';\r\n\r\n  @Input() hint?: string = '';\r\n\r\n  @Input() disable: boolean = false;\r\n\r\n  @Input() required: boolean = false;\r\n\r\n  @Input() infoIcon: boolean = false;\r\n\r\n  @Input() infoTitle: string = '';\r\n\r\n  @Input() infoDetail: string = '';\r\n\r\n  @Input() value: string = '';\r\n\r\n  @Input() class: string = '';\r\n\r\n  errorState: boolean;\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -4834,7 +4834,7 @@
         },
         {
             "name": "TextareaComponent",
-            "id": "component-TextareaComponent-5d557ec121698d49034c5fc2e118fe638b9da3eb5acaf964c5a49b445a3803c469931aac2b7e547f1550cbdc7f778a6a56a5d7e789e130c68b095989d1459666",
+            "id": "component-TextareaComponent-324911c709e2c762e4bdda9bb2067f596d0dde27a9efbe3e73513c5acf2d8de82f38bda3c91835f4fca759cbf40b50b05d79e9cf5b656d3b11540bb0d5b76e88",
             "file": "src/stories/softobiz-ui/Textarea/textarea.component.ts",
             "encapsulation": [
                 "ViewEncapsulation.None"
@@ -4989,7 +4989,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, ViewEncapsulation, Input } from '@angular/core';\nimport { ThemePalette } from '@angular/material/core';\nimport { MatIconModule } from '@angular/material/icon';\nimport { NgxTippyModule } from 'ngx-tippy-wrapper';\n// import { ButtonVariant } from './types';\n\n@Component({\n  selector: 'sft-textarea',\n  templateUrl: './textarea.component.html',\n  styleUrls: ['./textarea.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n})\nexport class TextareaComponent {\n  @Input() label: string = 'Label';\n\n  @Input() readonly: boolean = false;\n\n  @Input() type: string;\n\n  @Input() placeholder: string = 'Enter here...';\n\n  @Input() formControlName: string = '';\n\n  @Input() hint?: string = '';\n\n  @Input() disable: boolean = false;\n\n  @Input() required: boolean = false;\n\n  @Input() infoIcon: boolean = false;\n\n  @Input() value: string = '';\n\n  @Input() class: string = '';\n\n  @Input() id: string = '';\n\n  @Input() rows: number ;\n\n  errorState: boolean;\n}\n",
+            "sourceCode": "import { Component, ViewEncapsulation, Input } from '@angular/core';\r\nimport { ThemePalette } from '@angular/material/core';\r\nimport { MatIconModule } from '@angular/material/icon';\r\nimport { NgxTippyModule } from 'ngx-tippy-wrapper';\r\n// import { ButtonVariant } from './types';\r\n\r\n@Component({\r\n  selector: 'sft-textarea',\r\n  templateUrl: './textarea.component.html',\r\n  styleUrls: ['./textarea.component.scss'],\r\n  encapsulation: ViewEncapsulation.None,\r\n})\r\nexport class TextareaComponent {\r\n  @Input() label: string = 'Label';\r\n\r\n  @Input() readonly: boolean = false;\r\n\r\n  @Input() type: string;\r\n\r\n  @Input() placeholder: string = 'Enter here...';\r\n\r\n  @Input() formControlName: string = '';\r\n\r\n  @Input() hint?: string = '';\r\n\r\n  @Input() disable: boolean = false;\r\n\r\n  @Input() required: boolean = false;\r\n\r\n  @Input() infoIcon: boolean = false;\r\n\r\n  @Input() value: string = '';\r\n\r\n  @Input() class: string = '';\r\n\r\n  @Input() id: string = '';\r\n\r\n  @Input() rows: number ;\r\n\r\n  errorState: boolean;\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -4998,7 +4998,7 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<div class=\"input-wrapper\">\r\n  <div class=\"flex align-center mb-2\">\r\n    <p class=\"mat-subtitle-2 font-weight-500 input-label\">\r\n      {{label}}\r\n    </p>\r\n  </div>\r\n  <mat-form-field [appearance]=\"appearance\" [class]=\"class\" [id]=\"id\">\r\n    <textarea\r\n      [required]=\"required\"\r\n      [rows]=\"rows\"\r\n      matInput\r\n      [placeholder]=\"placeholder\"\r\n      [formControlName]=\"formControlName\"\r\n      [readonly]=\"readonly\"\r\n      [disabled]=\"disable\"\r\n    ></textarea>\r\n  </mat-form-field>\r\n</div>"
+            "templateData": "<div class=\"input-wrapper\">\r\n  <div class=\"flex align-center mb-2\">\r\n    <p class=\"mat-subtitle-2 font-weight-500 input-label\">\r\n      {{label}}\r\n    </p>\r\n  </div>\r\n  <!-- <mat-form-field [appearance]=\"appearance\" [class]=\"class\" [id]=\"id\">\r\n    <textarea\r\n      [required]=\"required\"\r\n      [rows]=\"rows\"\r\n      matInput\r\n      [placeholder]=\"placeholder\"\r\n      [formControlName]=\"formControlName\"\r\n      [readonly]=\"readonly\"\r\n      [disabled]=\"disable\"\r\n    ></textarea>\r\n  </mat-form-field> -->\r\n</div>"
         },
         {
             "name": "ViewFeatureComponent",
@@ -5658,13 +5658,13 @@
         },
         {
             "name": "SftButtonModule",
-            "id": "module-SftButtonModule-ca357a8fc8196c2fec582645924bc1857f420cc6139385aade01184b2e2420f1a9e459fba2ac0b96b8f027db602b78ad74effa648b831373dcb7712e7d329263",
+            "id": "module-SftButtonModule-c0772d301344b03fa3f94916108da11b549475999d0e60036196ae9ec64b679c945e6ef9a0538e1cecb8b135fea614052ecff3c42fd85a6835f4dd6cdf2a45a2",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/stories/softobiz-ui/button/button.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MatButtonModule } from '@angular/material/button';\nimport { ButtonComponent } from './button.component';\nimport { MatIconModule } from '@angular/material/icon';\n\n@NgModule({\n  imports: [CommonModule, MatButtonModule, MatIconModule],\n  declarations: [ButtonComponent],\n  exports: [ButtonComponent],\n})\nexport class SftButtonModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { MatButtonModule } from '@angular/material/button';\r\nimport { ButtonComponent } from './button.component';\r\nimport { MatIconModule } from '@angular/material/icon';\r\n\r\n@NgModule({\r\n  imports: [CommonModule, MatButtonModule, MatIconModule],\r\n  declarations: [ButtonComponent],\r\n  exports: [ButtonComponent],\r\n})\r\nexport class SftButtonModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -5702,13 +5702,13 @@
         },
         {
             "name": "SftCheckboxModule",
-            "id": "module-SftCheckboxModule-305979271b0f98fc2d394852453fc2cb0e30b0f8d8fb6f9f6dc2283cde6118a477f50c8f54ffdbff8b015928a6ecd74070e0367aecb73f573016d6c828a3651c",
+            "id": "module-SftCheckboxModule-8b1feb798c70b8582eb98ccaed055c34af37f0b9c57cc487b67c5038e1bb27b01f184a96baa3695f7576114583f90fac2c0e049a87075709f68b5cd2a3f76de2",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/stories/softobiz-ui/Checkbox/checkbox.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { CheckboxComponent } from './checkbox.component';\nimport { MatCheckboxModule } from '@angular/material/checkbox';\n\n@NgModule({\n  imports: [CommonModule, MatCheckboxModule],\n  declarations: [CheckboxComponent],\n  schemas: [\n    NO_ERRORS_SCHEMA\n  ],\n  exports: [CheckboxComponent],\n})\nexport class SftCheckboxModule {}\n",
+            "sourceCode": "import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { CheckboxComponent } from './checkbox.component';\r\nimport { MatCheckboxModule } from '@angular/material/checkbox';\r\n\r\n@NgModule({\r\n  imports: [CommonModule, MatCheckboxModule],\r\n  declarations: [CheckboxComponent],\r\n  schemas: [\r\n    NO_ERRORS_SCHEMA\r\n  ],\r\n  exports: [CheckboxComponent],\r\n})\r\nexport class SftCheckboxModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -5746,13 +5746,13 @@
         },
         {
             "name": "SftChipModule",
-            "id": "module-SftChipModule-b9d9fa06040160039d5974e7339d366496b2b6ede6a83ad4a0a36ae1af2145e8d06957331b3a240fe2c3c6be645a8d7192a581511e5f3aff8a09997a52cab919",
+            "id": "module-SftChipModule-708994eb32cf517fb53d81ab1273e6e9965d37fdd48484de4e2cfd9fc20bdd541d2c5824b8e28a4d9ba009e5f8f3474a6045e1eee44fdc47ba8dc518b2365414",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/stories/softobiz-ui/Chip/chip.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MatChipsModule } from '@angular/material/chips';\nimport { ChipComponent } from './chip.component';\n\n@NgModule({\n  imports: [CommonModule, MatChipsModule],\n  declarations: [ChipComponent],\n  exports: [ChipComponent],\n})\nexport class SftChipModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { MatChipsModule } from '@angular/material/chips';\r\nimport { ChipComponent } from './chip.component';\r\n\r\n@NgModule({\r\n  imports: [CommonModule, MatChipsModule],\r\n  declarations: [ChipComponent],\r\n  exports: [ChipComponent],\r\n})\r\nexport class SftChipModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -5790,13 +5790,13 @@
         },
         {
             "name": "SftDialogModule",
-            "id": "module-SftDialogModule-532c52891ab98d57dee68e13269b09598e70da75c231f0d6eee03977ac9697feb5c1cbf898415faf70fe19ab276d7fe2ec6d215d9cc539a837b6f9bfbe48ecf4",
+            "id": "module-SftDialogModule-c5ed3af840b8bd67966fb64f50e49d9ca156cc5eb8f4631c784f3d696aa0c198645c9d1c4ccb5542b6699636b7644fef2484770b3ae95c05e499c2f907c82c67",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/stories/softobiz-ui/Dialog/dialog.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { DialogComponent } from './dialog.component';\nimport { MatButtonModule } from '@angular/material/button';\nimport { MatDialogModule } from '@angular/material/dialog';\n\n@NgModule({\n  imports: [CommonModule, MatDialogModule, MatButtonModule],\n  declarations: [DialogComponent],\n  exports: [DialogComponent],\n})\nexport class SftDialogModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { DialogComponent } from './dialog.component';\r\nimport { MatButtonModule } from '@angular/material/button';\r\nimport { MatDialogModule } from '@angular/material/dialog';\r\n\r\n@NgModule({\r\n  imports: [CommonModule, MatDialogModule, MatButtonModule],\r\n  declarations: [DialogComponent],\r\n  exports: [DialogComponent],\r\n})\r\nexport class SftDialogModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -5834,13 +5834,13 @@
         },
         {
             "name": "SftDividerModule",
-            "id": "module-SftDividerModule-b93e37f7f3fc715c54146757f0a9e385fc35e707ae199b9a6d86960207f056a93681b8a7a77bc675d5f96d73c654aefad4861d12842fc9ba47be5cfa02342ec2",
+            "id": "module-SftDividerModule-40e77cb1e49b8a05dd19847de3d977264a26d5743b282837bb2cf9cace94f58587ac407917490991cb0c20f000b0f1557a010de3ba1bb9ea04417a38bdbe05e5",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/stories/softobiz-ui/divider/divider.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { DividerComponent } from './divider.component';\nimport {MatDividerModule} from '@angular/material/divider';\nimport {MatListModule} from '@angular/material/list';\n\n\n\n@NgModule({\n  imports: [CommonModule, MatDividerModule, MatListModule],\n  declarations: [DividerComponent],\n  exports: [DividerComponent],\n})\nexport class SftDividerModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { DividerComponent } from './divider.component';\r\nimport {MatDividerModule} from '@angular/material/divider';\r\nimport {MatListModule} from '@angular/material/list';\r\n\r\n\r\n\r\n@NgModule({\r\n  imports: [CommonModule, MatDividerModule, MatListModule],\r\n  declarations: [DividerComponent],\r\n  exports: [DividerComponent],\r\n})\r\nexport class SftDividerModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -5878,13 +5878,13 @@
         },
         {
             "name": "SftInputModule",
-            "id": "module-SftInputModule-1c8e32a8eb6db0c4ec3679c11976b7b749c5e1a37bdb7e57cb1c58861b22f1965ce58d8cbc0f2e8594408a6c3b6c7df4f10194c1f78e2beb2e88c0aecb0ddbca",
+            "id": "module-SftInputModule-db86d87cfddf5e054e9f2081d7e7e4b1cf85bd9ba6767968b52d4858214ba7aff22dfa42fef515d6f57dd2ab17a60df4c43da04b201efd1bbea925e95a9d95b6",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/stories/softobiz-ui/Input/input.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MatButtonModule } from '@angular/material/button';\nimport { InputComponent } from './input.component';\nimport { MatIconModule } from '@angular/material/icon';\nimport { MatFormFieldModule } from '@angular/material/form-field';\nimport {MatInputModule} from '@angular/material/input';\nimport { NgxTippyModule } from 'ngx-tippy-wrapper';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\n@NgModule({\n  imports: [CommonModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, NgxTippyModule, BrowserAnimationsModule],\n  declarations: [InputComponent],\n  exports: [InputComponent ],\n})\nexport class SftInputModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { MatButtonModule } from '@angular/material/button';\r\nimport { InputComponent } from './input.component';\r\nimport { MatIconModule } from '@angular/material/icon';\r\nimport { MatFormFieldModule } from '@angular/material/form-field';\r\nimport {MatInputModule} from '@angular/material/input';\r\nimport { NgxTippyModule } from 'ngx-tippy-wrapper';\r\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\n\r\n@NgModule({\r\n  imports: [CommonModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, NgxTippyModule, BrowserAnimationsModule],\r\n  declarations: [InputComponent],\r\n  exports: [InputComponent ],\r\n})\r\nexport class SftInputModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -5922,13 +5922,13 @@
         },
         {
             "name": "SftTextareaModule",
-            "id": "module-SftTextareaModule-ef25098665ee154fdd49cee091b979e80b0624b9540dce4977e2fad40683c0572b8e9c21e70b410fc5625b782573c0837fbae69fae41653a9382e7576cc9fac7",
+            "id": "module-SftTextareaModule-59b980d8a6aa15639943e4c7c402c3b07105813cd65d2fd59c49c471fd09377790aa9f932e51ced32c51c19f5e2af9e28be466e019b3741f8fd7917b29cfad11",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/stories/softobiz-ui/Textarea/textarea.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { MatButtonModule } from '@angular/material/button';\nimport { TextareaComponent } from './textarea.component';\nimport { MatIconModule } from '@angular/material/icon';\nimport { MatFormFieldModule } from '@angular/material/form-field';\nimport {MatInputModule} from '@angular/material/input';\nimport { NgxTippyModule } from 'ngx-tippy-wrapper';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\n\n@NgModule({\n  imports: [CommonModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, NgxTippyModule, BrowserAnimationsModule],\n  declarations: [TextareaComponent],\n  exports: [TextareaComponent, MatIconModule, NgxTippyModule ],\n})\nexport class SftTextareaModule {}\n\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { MatButtonModule } from '@angular/material/button';\r\nimport { TextareaComponent } from './textarea.component';\r\nimport { MatIconModule } from '@angular/material/icon';\r\nimport { MatFormFieldModule } from '@angular/material/form-field';\r\nimport {MatInputModule} from '@angular/material/input';\r\nimport { NgxTippyModule } from 'ngx-tippy-wrapper';\r\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\n\r\n@NgModule({\r\n  imports: [CommonModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, NgxTippyModule, BrowserAnimationsModule],\r\n  declarations: [TextareaComponent],\r\n  exports: [TextareaComponent, MatIconModule, NgxTippyModule ],\r\n})\r\nexport class SftTextareaModule {}\r\n\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -6020,13 +6020,13 @@
         },
         {
             "name": "SoftobizUiModule",
-            "id": "module-SoftobizUiModule-523d404d55dbb1dea10bd4295505839e40bd0dc8eca51280ca5af650d6b21b0265d54f85246cd16d6b553d559c5c5e5bc6f23f252f54aa5d16877e00d64dbf86",
+            "id": "module-SoftobizUiModule-2f8f4029a8fe6210df5c603dccf36ee4bee6f85ac6a233574e859cdca2b548e9ccbe0d579d00bb668068a41aa6aca68862307a6636ed68c40902614d8f9c1763",
             "description": "<p>HumaUI shared modules</p>\n",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/stories/softobiz-ui/softobiz-ui.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { SftButtonModule } from './button/button.module';\n// import { SftProgressbarModule } from './ProgressBar/progressbar.module';\n// import { SftButtonToggleModule } from './ButtonToggle/buttonToggle.module';\n// import { SftCardModule } from './Card/card.module';\n// import { SftDividerModule } from './divider/divider.module';\n// import { SftExpensionModule } from './expansion-panel/expansion.module';\nimport { NgxTippyModule } from 'ngx-tippy-wrapper';\n\nconst SFT_UI_MODULES = [SftButtonModule, NgxTippyModule];\n\n/**\n * HumaUI shared modules\n */\n@NgModule({\n  imports: SFT_UI_MODULES,\n  exports: SFT_UI_MODULES,\n  declarations: [],\n})\nexport class SoftobizUiModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { SftButtonModule } from './button/button.module';\r\n// import { SftProgressbarModule } from './ProgressBar/progressbar.module';\r\n// import { SftButtonToggleModule } from './ButtonToggle/buttonToggle.module';\r\n// import { SftCardModule } from './Card/card.module';\r\n// import { SftDividerModule } from './divider/divider.module';\r\n// import { SftExpensionModule } from './expansion-panel/expansion.module';\r\nimport { NgxTippyModule } from 'ngx-tippy-wrapper';\r\n\r\nconst SFT_UI_MODULES = [SftButtonModule, NgxTippyModule];\r\n\r\n/**\r\n * HumaUI shared modules\r\n */\r\n@NgModule({\r\n  imports: SFT_UI_MODULES,\r\n  exports: SFT_UI_MODULES,\r\n  declarations: [],\r\n})\r\nexport class SoftobizUiModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -6139,21 +6139,21 @@
                 "name": "ELEMENT_DATA",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modules/plans/components/add-ons-details/add-ons-details.component.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "PeriodicElement[]",
-                "defaultValue": "[\r\n  { id:'element123456', name: 'Host online calls', status: \"Active\",Product: 'Microsoft Teams', type: 'Switch' },\r\n  {  id:'element1234', name: 'Union all information', status: \"Active\",Product: 'Microsoft Teams', type: 'Range' },\r\n  {  id:'element12', name: 'Create team sites', status: \"Active\",Product: 'Microsoft Teams', type: 'Custom' },\r\n]"
-            },
-            {
-                "name": "ELEMENT_DATA",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/modules/plans/components/create-plan/create-plan.component.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "PeriodicElement[]",
                 "defaultValue": "[\r\n  { PricingCycle: 'Daily', Price: 'Set Price' },\r\n  { PricingCycle: 'Weekly', Price: 'Set Price' },\r\n  { PricingCycle: 'Monthly', Price: 'Set Price' },\r\n  { PricingCycle: 'Yearly', Price: 'Set Price' },\r\n]"
+            },
+            {
+                "name": "ELEMENT_DATA",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/modules/plans/components/add-ons-details/add-ons-details.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "PeriodicElement[]",
+                "defaultValue": "[\r\n  { id:'element123456', name: 'Host online calls', status: \"Active\",Product: 'Microsoft Teams', type: 'Switch' },\r\n  {  id:'element1234', name: 'Union all information', status: \"Active\",Product: 'Microsoft Teams', type: 'Range' },\r\n  {  id:'element12', name: 'Create team sites', status: \"Active\",Product: 'Microsoft Teams', type: 'Custom' },\r\n]"
             },
             {
                 "name": "ELEMENT_DATA",
@@ -6249,6 +6249,26 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/softobiz-ui/Chip/stories/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<ChipComponent>",
+                "defaultValue": "{\r\n  component: ChipComponent,\r\n  title: 'softobiz-ui/Atom/Chip',\r\n  tags: ['autodocs'],\r\n  render: (args: ChipComponent) => ({\r\n    props: {\r\n      backgroundColor: null,\r\n      ...args,\r\n    },\r\n  }),\r\n  argTypes: {\r\n    color: {\r\n      options: ['primary', 'accent', 'warn'],\r\n      control: { type: 'radio' },\r\n    },\r\n\r\n    ariaDescription: {\r\n      control: 'text',\r\n    },\r\n\r\n    ariaLabel: {\r\n      control: 'text',\r\n    },\r\n\r\n    disableRipple: {\r\n      control: 'boolean',\r\n    },\r\n\r\n    disabled: {\r\n      control: 'boolean',\r\n    },\r\n\r\n    highlighted: {\r\n      control: 'boolean',\r\n    },\r\n\r\n    removable: {\r\n      control: 'boolean',\r\n    },\r\n    \r\n    label: { control: 'text' },\r\n    id: {\r\n      control:'text'\r\n    }\r\n  },\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [MatChipsModule],\r\n    }),\r\n  ],\r\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/softobiz-ui/Dialog/stories/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<DialogComponent>",
+                "defaultValue": "{\r\n  component: DialogComponent,\r\n\r\n  title: 'softobiz-ui/Organism/Dialog',\r\n  tags: ['autodocs'],\r\n  render: (args: DialogComponent) => ({\r\n    props: {\r\n      backgroundColor: null,\r\n      ...args,\r\n    },\r\n  }),\r\n  argTypes: {},\r\n  decorators: [\r\n    moduleMetadata({\r\n      providers: [MatDialog],\r\n      imports: [\r\n        MatDialogModule,\r\n        MatButtonModule,\r\n        BrowserAnimationsModule,\r\n        MatIconModule,\r\n      ],\r\n    }),\r\n  ],\r\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/softobiz-ui/Checkbox/stories/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -6269,21 +6289,11 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/softobiz-ui/Chip/stories/chip.stories.ts",
+                "file": "src/stories/softobiz-ui/Input/stories/input.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<ChipComponent>",
-                "defaultValue": "{\r\n  component: ChipComponent,\r\n  title: 'softobiz-ui/Atom/Chip',\r\n  tags: ['autodocs'],\r\n  render: (args: ChipComponent) => ({\r\n    props: {\r\n      backgroundColor: null,\r\n      ...args,\r\n    },\r\n  }),\r\n  argTypes: {\r\n    color: {\r\n      options: ['primary', 'accent', 'warn'],\r\n      control: { type: 'radio' },\r\n    },\r\n\r\n    ariaDescription: {\r\n      control: 'text',\r\n    },\r\n\r\n    ariaLabel: {\r\n      control: 'text',\r\n    },\r\n\r\n    disableRipple: {\r\n      control: 'boolean',\r\n    },\r\n\r\n    disabled: {\r\n      control: 'boolean',\r\n    },\r\n\r\n    highlighted: {\r\n      control: 'boolean',\r\n    },\r\n\r\n    removable: {\r\n      control: 'boolean',\r\n    },\r\n    \r\n    label: { control: 'text' },\r\n    id: {\r\n      control:'text'\r\n    }\r\n  },\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [MatChipsModule],\r\n    }),\r\n  ],\r\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/softobiz-ui/Textarea/stories/textarea.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<TextareaComponent>",
-                "defaultValue": "{\r\n  component: TextareaComponent,\r\n  title: 'softobiz-ui/Atom/Textarea',\r\n  tags: ['autodocs'],\r\n  render: (args: TextareaComponent) => ({\r\n    props: {\r\n      backgroundColor: null,\r\n      ...args,\r\n    },\r\n  }),\r\n  argTypes: {\r\n    hint: { control: 'text' },\r\n    class: { control: 'text' },\r\n    infoIcon: {\r\n      control: 'boolean',\r\n    },\r\n  },\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [\r\n        BrowserAnimationsModule,\r\n        MatIconModule,\r\n        MatFormFieldModule,\r\n        MatInputModule,\r\n        NgxTippyModule\r\n      ],\r\n    }),\r\n  ],\r\n}"
+                "type": "Meta<InputComponent>",
+                "defaultValue": "{\r\n  component: InputComponent,\r\n  title: 'softobiz-ui/Atom/Input',\r\n  tags: ['autodocs'],\r\n  render: (args: InputComponent) => ({\r\n    props: {\r\n      backgroundColor: null,\r\n      ...args,\r\n    },\r\n  }),\r\n  argTypes: {\r\n    hint: { control: 'text' },\r\n    class: { control: 'text' },\r\n    infoIcon: {\r\n      control: 'boolean',\r\n    },\r\n  },\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [\r\n        BrowserAnimationsModule,\r\n        MatIconModule,\r\n        MatFormFieldModule,\r\n        MatInputModule,\r\n        NgxTippyModule,\r\n      ],\r\n    }),\r\n  ],\r\n}"
             },
             {
                 "name": "meta",
@@ -6299,21 +6309,11 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/softobiz-ui/Dialog/stories/dialog.stories.ts",
+                "file": "src/stories/softobiz-ui/Textarea/stories/textarea.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<DialogComponent>",
-                "defaultValue": "{\r\n  component: DialogComponent,\r\n\r\n  title: 'softobiz-ui/Organism/Dialog',\r\n  tags: ['autodocs'],\r\n  render: (args: DialogComponent) => ({\r\n    props: {\r\n      backgroundColor: null,\r\n      ...args,\r\n    },\r\n  }),\r\n  argTypes: {},\r\n  decorators: [\r\n    moduleMetadata({\r\n      providers: [MatDialog],\r\n      imports: [\r\n        MatDialogModule,\r\n        MatButtonModule,\r\n        BrowserAnimationsModule,\r\n        MatIconModule,\r\n      ],\r\n    }),\r\n  ],\r\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/softobiz-ui/Input/stories/input.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<InputComponent>",
-                "defaultValue": "{\r\n  component: InputComponent,\r\n  title: 'softobiz-ui/Atom/Input',\r\n  tags: ['autodocs'],\r\n  render: (args: InputComponent) => ({\r\n    props: {\r\n      backgroundColor: null,\r\n      ...args,\r\n    },\r\n  }),\r\n  argTypes: {\r\n    hint: { control: 'text' },\r\n    class: { control: 'text' },\r\n    infoIcon: {\r\n      control: 'boolean',\r\n    },\r\n  },\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [\r\n        BrowserAnimationsModule,\r\n        MatIconModule,\r\n        MatFormFieldModule,\r\n        MatInputModule,\r\n        NgxTippyModule,\r\n      ],\r\n    }),\r\n  ],\r\n}"
+                "type": "Meta<TextareaComponent>",
+                "defaultValue": "{\r\n  component: TextareaComponent,\r\n  title: 'softobiz-ui/Atom/Textarea',\r\n  tags: ['autodocs'],\r\n  render: (args: TextareaComponent) => ({\r\n    props: {\r\n      backgroundColor: null,\r\n      ...args,\r\n    },\r\n  }),\r\n  argTypes: {\r\n    hint: { control: 'text' },\r\n    class: { control: 'text' },\r\n    infoIcon: {\r\n      control: 'boolean',\r\n    },\r\n  },\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [\r\n        BrowserAnimationsModule,\r\n        MatIconModule,\r\n        MatFormFieldModule,\r\n        MatInputModule,\r\n        NgxTippyModule\r\n      ],\r\n    }),\r\n  ],\r\n}"
             },
             {
                 "name": "noFeatures",
@@ -6393,7 +6393,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Preview",
-                "defaultValue": "{\r\n  parameters: {\r\n    actions: { argTypesRegex: '^on[A-Z].*' },\r\n    controls: {\r\n      matchers: {\r\n        color: /(background|color)$/i,\r\n        date: /Date$/,\r\n      },\r\n    },\r\n    global: {\r\n      css: `\r\n        .sidebar-header {\r\n          background-color: #f2f2f2 !important;\r\n        }\r\n  \r\n        .myButton {\r\n          background-color: blue;\r\n          color: white;\r\n          padding: 10px 20px;\r\n          border-radius: 4px;\r\n        }\r\n      `,\r\n    },\r\n    options: {\r\n      storySort: (a: any, b: any) =>\r\n        a.id === b.id\r\n          ? 0\r\n          : a.id.localeCompare(b.id, undefined, { numeric: true }),\r\n    },\r\n  },\r\n}"
+                "defaultValue": "{\r\n  parameters: {\r\n    actions: { argTypesRegex: '^on[A-Z].*' },\r\n    controls: {\r\n      matchers: {\r\n        color: /(background|color)$/i,\r\n        date: /Date$/,\r\n      },\r\n    },\r\n    // global: {\r\n    //   css: `\r\n    //     .sidebar-header {\r\n    //       background-color: #f2f2f2 !important;\r\n    //     }\r\n  \r\n    //     .myButton {\r\n    //       background-color: blue;\r\n    //       color: white;\r\n    //       padding: 10px 20px;\r\n    //       border-radius: 4px;\r\n    //     }\r\n    //   `,\r\n    // },\r\n    // options: {\r\n    //   storySort: (a: any, b: any) =>\r\n    //     a.id === b.id\r\n    //       ? 0\r\n    //       : a.id.localeCompare(b.id, undefined, { numeric: true }),\r\n    // },\r\n  },\r\n}"
             },
             {
                 "name": "pricingModels",
@@ -6486,7 +6486,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "\"basic\" | \"raised\" | \"flat\" | \"icon\" | \"stroked\"",
-                "file": "src/stories/softobiz-ui/Textarea/types.ts",
+                "file": "src/stories/softobiz-ui/Input/types.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6497,11 +6497,33 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "\"basic\" | \"raised\" | \"flat\" | \"icon\" | \"stroked\"",
-                "file": "src/stories/softobiz-ui/Input/types.ts",
+                "file": "src/stories/softobiz-ui/Textarea/types.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
                 "kind": 186
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<ChipComponent>",
+                "file": "src/stories/softobiz-ui/Chip/stories/chip.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 177
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<DialogComponent>",
+                "file": "src/stories/softobiz-ui/Dialog/stories/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 177
             },
             {
                 "name": "Story",
@@ -6529,19 +6551,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<ChipComponent>",
-                "file": "src/stories/softobiz-ui/Chip/stories/chip.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 177
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<TextareaComponent>",
-                "file": "src/stories/softobiz-ui/Textarea/stories/textarea.stories.ts",
+                "rawtype": "StoryObj<InputComponent>",
+                "file": "src/stories/softobiz-ui/Input/stories/input.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6562,19 +6573,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<DialogComponent>",
-                "file": "src/stories/softobiz-ui/Dialog/stories/dialog.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 177
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<InputComponent>",
-                "file": "src/stories/softobiz-ui/Input/stories/input.stories.ts",
+                "rawtype": "StoryObj<TextareaComponent>",
+                "file": "src/stories/softobiz-ui/Textarea/stories/textarea.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -6877,18 +6877,6 @@
                     "defaultValue": "'custom'"
                 }
             ],
-            "src/app/modules/plans/components/add-ons-details/add-ons-details.component.ts": [
-                {
-                    "name": "ELEMENT_DATA",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/modules/plans/components/add-ons-details/add-ons-details.component.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "PeriodicElement[]",
-                    "defaultValue": "[\r\n  { id:'element123456', name: 'Host online calls', status: \"Active\",Product: 'Microsoft Teams', type: 'Switch' },\r\n  {  id:'element1234', name: 'Union all information', status: \"Active\",Product: 'Microsoft Teams', type: 'Range' },\r\n  {  id:'element12', name: 'Create team sites', status: \"Active\",Product: 'Microsoft Teams', type: 'Custom' },\r\n]"
-                }
-            ],
             "src/app/modules/plans/components/create-plan/create-plan.component.ts": [
                 {
                     "name": "ELEMENT_DATA",
@@ -6899,6 +6887,18 @@
                     "deprecationMessage": "",
                     "type": "PeriodicElement[]",
                     "defaultValue": "[\r\n  { PricingCycle: 'Daily', Price: 'Set Price' },\r\n  { PricingCycle: 'Weekly', Price: 'Set Price' },\r\n  { PricingCycle: 'Monthly', Price: 'Set Price' },\r\n  { PricingCycle: 'Yearly', Price: 'Set Price' },\r\n]"
+                }
+            ],
+            "src/app/modules/plans/components/add-ons-details/add-ons-details.component.ts": [
+                {
+                    "name": "ELEMENT_DATA",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/modules/plans/components/add-ons-details/add-ons-details.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "PeriodicElement[]",
+                    "defaultValue": "[\r\n  { id:'element123456', name: 'Host online calls', status: \"Active\",Product: 'Microsoft Teams', type: 'Switch' },\r\n  {  id:'element1234', name: 'Union all information', status: \"Active\",Product: 'Microsoft Teams', type: 'Range' },\r\n  {  id:'element12', name: 'Create team sites', status: \"Active\",Product: 'Microsoft Teams', type: 'Custom' },\r\n]"
                 }
             ],
             "src/app/modules/plans/components/product-details/product-details.component.ts": [
@@ -6990,7 +6990,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Preview",
-                    "defaultValue": "{\r\n  parameters: {\r\n    actions: { argTypesRegex: '^on[A-Z].*' },\r\n    controls: {\r\n      matchers: {\r\n        color: /(background|color)$/i,\r\n        date: /Date$/,\r\n      },\r\n    },\r\n    global: {\r\n      css: `\r\n        .sidebar-header {\r\n          background-color: #f2f2f2 !important;\r\n        }\r\n  \r\n        .myButton {\r\n          background-color: blue;\r\n          color: white;\r\n          padding: 10px 20px;\r\n          border-radius: 4px;\r\n        }\r\n      `,\r\n    },\r\n    options: {\r\n      storySort: (a: any, b: any) =>\r\n        a.id === b.id\r\n          ? 0\r\n          : a.id.localeCompare(b.id, undefined, { numeric: true }),\r\n    },\r\n  },\r\n}"
+                    "defaultValue": "{\r\n  parameters: {\r\n    actions: { argTypesRegex: '^on[A-Z].*' },\r\n    controls: {\r\n      matchers: {\r\n        color: /(background|color)$/i,\r\n        date: /Date$/,\r\n      },\r\n    },\r\n    // global: {\r\n    //   css: `\r\n    //     .sidebar-header {\r\n    //       background-color: #f2f2f2 !important;\r\n    //     }\r\n  \r\n    //     .myButton {\r\n    //       background-color: blue;\r\n    //       color: white;\r\n    //       padding: 10px 20px;\r\n    //       border-radius: 4px;\r\n    //     }\r\n    //   `,\r\n    // },\r\n    // options: {\r\n    //   storySort: (a: any, b: any) =>\r\n    //     a.id === b.id\r\n    //       ? 0\r\n    //       : a.id.localeCompare(b.id, undefined, { numeric: true }),\r\n    // },\r\n  },\r\n}"
                 }
             ],
             "src/stories/softobiz-ui/softobiz-ui.module.ts": [
@@ -7036,6 +7036,19 @@
                     "kind": 186
                 }
             ],
+            "src/stories/softobiz-ui/Input/types.ts": [
+                {
+                    "name": "ButtonVariant",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"basic\" | \"raised\" | \"flat\" | \"icon\" | \"stroked\"",
+                    "file": "src/stories/softobiz-ui/Input/types.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 186
+                }
+            ],
             "src/stories/softobiz-ui/Textarea/types.ts": [
                 {
                     "name": "ButtonVariant",
@@ -7049,17 +7062,30 @@
                     "kind": 186
                 }
             ],
-            "src/stories/softobiz-ui/Input/types.ts": [
+            "src/stories/softobiz-ui/Chip/stories/chip.stories.ts": [
                 {
-                    "name": "ButtonVariant",
+                    "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "\"basic\" | \"raised\" | \"flat\" | \"icon\" | \"stroked\"",
-                    "file": "src/stories/softobiz-ui/Input/types.ts",
+                    "rawtype": "StoryObj<ChipComponent>",
+                    "file": "src/stories/softobiz-ui/Chip/stories/chip.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
-                    "kind": 186
+                    "kind": 177
+                }
+            ],
+            "src/stories/softobiz-ui/Dialog/stories/dialog.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<DialogComponent>",
+                    "file": "src/stories/softobiz-ui/Dialog/stories/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 177
                 }
             ],
             "src/stories/softobiz-ui/Checkbox/stories/checkbox.stories.ts": [
@@ -7088,26 +7114,13 @@
                     "kind": 177
                 }
             ],
-            "src/stories/softobiz-ui/Chip/stories/chip.stories.ts": [
+            "src/stories/softobiz-ui/Input/stories/input.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<ChipComponent>",
-                    "file": "src/stories/softobiz-ui/Chip/stories/chip.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 177
-                }
-            ],
-            "src/stories/softobiz-ui/Textarea/stories/textarea.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<TextareaComponent>",
-                    "file": "src/stories/softobiz-ui/Textarea/stories/textarea.stories.ts",
+                    "rawtype": "StoryObj<InputComponent>",
+                    "file": "src/stories/softobiz-ui/Input/stories/input.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -7127,26 +7140,13 @@
                     "kind": 177
                 }
             ],
-            "src/stories/softobiz-ui/Dialog/stories/dialog.stories.ts": [
+            "src/stories/softobiz-ui/Textarea/stories/textarea.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<DialogComponent>",
-                    "file": "src/stories/softobiz-ui/Dialog/stories/dialog.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 177
-                }
-            ],
-            "src/stories/softobiz-ui/Input/stories/input.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<InputComponent>",
-                    "file": "src/stories/softobiz-ui/Input/stories/input.stories.ts",
+                    "rawtype": "StoryObj<TextareaComponent>",
+                    "file": "src/stories/softobiz-ui/Textarea/stories/textarea.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",

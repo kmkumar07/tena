@@ -15,26 +15,26 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
-    global: {
-      css: `
-        .sidebar-header {
-          background-color: #f2f2f2 !important;
-        }
+    // global: {
+    //   css: `
+    //     .sidebar-header {
+    //       background-color: #f2f2f2 !important;
+    //     }
   
-        .myButton {
-          background-color: blue;
-          color: white;
-          padding: 10px 20px;
-          border-radius: 4px;
-        }
-      `,
-    },
-    options: {
-      storySort: (a: any, b: any) =>
-        a.id === b.id
-          ? 0
-          : a.id.localeCompare(b.id, undefined, { numeric: true }),
-    },
+    //     .myButton {
+    //       background-color: blue;
+    //       color: white;
+    //       padding: 10px 20px;
+    //       border-radius: 4px;
+    //     }
+    //   `,
+    // },
+    // options: {
+    //   storySort: (a: any, b: any) =>
+    //     a.id === b.id
+    //       ? 0
+    //       : a.id.localeCompare(b.id, undefined, { numeric: true }),
+    // },
   },
 };
 

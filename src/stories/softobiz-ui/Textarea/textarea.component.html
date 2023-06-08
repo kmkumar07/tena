@@ -4,15 +4,26 @@
       {{label}}
     </p>
   </div>
-  <!-- <mat-form-field [appearance]="appearance" [class]="class" [id]="id">
+  <mat-form-field *ngIf="appearance === 'outline'" appearance="outline" [class]="class" [id]="id">
     <textarea
       [required]="required"
       [rows]="rows"
       matInput
       [placeholder]="placeholder"
-      [formControlName]="formControlName"
       [readonly]="readonly"
       [disabled]="disable"
     ></textarea>
-  </mat-form-field> -->
+    <mat-hint>{{hint}}</mat-hint>
+  </mat-form-field>
+  <mat-form-field *ngIf="appearance === 'fill'" appearance="fill" [class]="class" [id]="id">
+    <textarea
+      [required]="required"
+      [rows]="rows"
+      matInput
+      [placeholder]="placeholder"
+      [readonly]="readonly"
+      [disabled]="disable"
+    ></textarea>
+    <mat-hint>{{hint}}</mat-hint>
+  </mat-form-field>
 </div>

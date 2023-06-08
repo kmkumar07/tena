@@ -19,15 +19,13 @@ export class TextareaComponent {
 
   @Input() placeholder: string = 'Enter here...';
 
-  @Input() formControlName: string = '';
+  @Input() appearance: string = 'outline';
 
   @Input() hint?: string = '';
 
   @Input() disable: boolean = false;
 
   @Input() required: boolean = false;
-
-  @Input() infoIcon: boolean = false;
 
   @Input() value: string = '';
 
@@ -36,8 +34,6 @@ export class TextareaComponent {
   @Input() id: string = '';
 
   @Input() rows: number ;
-
-  
 
   errorState: boolean;
 }
