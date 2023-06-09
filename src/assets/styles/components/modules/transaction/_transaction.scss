@@ -1,0 +1,32 @@
+.transaction-view{
+    .title{
+        padding: 1.125rem 1.5rem 1rem;
+        margin-bottom: 2rem;
+        border-bottom: .0625rem solid color('grey', 'border-2');
+    }
+    .transaction-details{
+        max-width: 77.375rem;
+        width: 100%;
+        margin: 0 auto;
+        padding: 2rem 2.125rem 2.375rem 1.9375rem;
+        border: .0625rem solid color('grey', 'border-2');
+        border-radius: .375rem;
+
+        .table-heading{
+            padding-left: 1.25rem;
+            margin-bottom: 1.5625rem;
+        }
+        .dashed-table{
+            width: 100%;
+                th{
+                    padding: .4375rem 1.25rem;
+                    border-bottom: 1px dashed color("grey", "lighten-7");
+                }
+                td{
+                    padding: .4375rem 1.25rem;
+                    border-bottom: 1px dashed color("grey", "lighten-7");
+                }
+          
+        }
+    }
+}
