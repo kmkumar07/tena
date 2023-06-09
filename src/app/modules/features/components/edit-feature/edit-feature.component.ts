@@ -7,9 +7,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
+import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import {
   Data_Type,
   feature_types,
@@ -35,8 +37,8 @@ export class EditFeatureComponent {
   postName: string = '';
   position: any;
   unlimitedButtonLabel: string = 'Set Unlimited';
-  PageNumber = 1;
-  limit = 5;
+  PageNumber: any = '';
+  limit: any = '';
   search: string = '';
   productId = [];
   featureForm: any = this.formBuilder.group({
@@ -68,7 +70,8 @@ export class EditFeatureComponent {
     private featureService: FeatureService,
     private routes: Router,
     private route: ActivatedRoute,
-    private productService: ProductsService
+    private productService: ProductsService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -80,8 +83,8 @@ export class EditFeatureComponent {
     const id = this.route.snapshot.params['id'];
 
     this.featureService.getFeatureById(id).subscribe((data) => {
-      console.log("a", data);
-      
+      console.log('a', data);
+
       this.updateForm(data);
     });
   }
@@ -140,16 +143,31 @@ export class EditFeatureComponent {
   }
 
   updateForm(res: any) {
-    this.featureForm.setValue({
+    this.featureForm.patchValue({
       featureId: res.featureId,
       productID: res.product.productId,
       name: res.name,
       description: res.description,
       type: res.type,
       status: res.status,
-      unit: res.unit || null,
-      levels: res.levels
+      unit: res.unit,
+      levels: res.levels,
     });
+    if (Array.isArray(res.levels) && res.levels.length >= 0) {
+      const levelsControl = this.featureForm.get('levels') as FormArray;
+      levelsControl.clear();
+
+      res.levels.forEach((level: any) => {
+        const levelGroup = this.formBuilder.group({
+          isUnlimited: [level.isUnlimited],
+          level: [level.level],
+          name: [level.name],
+          value: [level.value],
+        });
+
+        levelsControl.push(levelGroup);
+      });
+    }
   }
 
   onSubmit() {
@@ -162,15 +180,27 @@ export class EditFeatureComponent {
     });
 
     const status = this.featureForm.value.status ? 'active' : 'disabled';
-    const feature = {
-      ...this.featureForm.value,
+    let feature: any = {
+      featureId: this.featureForm.value.featureId,
+      productID: this.featureForm.value.productID,
+      name: this.featureForm.value.name,
+      description: this.featureForm.value.description,
+      type: this.featureForm.value.type,
       status: status,
+      levels: [],
     };
-
+    if (this.featureForm.value.type === 'quantity') {
+      feature = {
+        ...feature,
+        unit: this.featureForm.value.unit,
+        levels: this.featureForm.value.levels,
+      };
+    }
     this.subscription = this.featureService
       .updateFeature(this.featureForm.value.featureId, feature)
       .subscribe({
         next: (res: any) => {
+          this.openSuccess();
           this.routes.navigate([`/features/view/${res.featureId}`]);
           return res;
         },
@@ -182,5 +212,15 @@ export class EditFeatureComponent {
 
   onDelete() {
     this.routes.navigate(['/features']);
+  }
+
+  openSuccess() {
+    this.dialog.open(SuccessDialogComponent, {
+      width: '420px',
+      data: {
+        module: 'Feature',
+        operation: 'Updated',
+      },
+    });
   }
 }

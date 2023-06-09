@@ -27,7 +27,7 @@
         <button mat-stroked-button color="primary" class="mr-2 large" (click)="editFeature()">
           Edit
         </button>
-        <button mat-flat-button color="primary" class="large">
+        <button mat-flat-button color="primary" class="large" [routerLink]="'/features'">
           Back to list
         </button>
       </div>
@@ -202,15 +202,10 @@
 
     <div class="product-desc mt-8">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
-        {{description}}
+        Description
       </h4>
       <p class="mat-body-1">
-        Teams allows users to communicate in two-way persistent chats with one
-        or multiple participants. Participants can message using text, emojis,
-        stickers and gifs as well as sharing links and files. Messages can be
-        marked as urgent or important. In August 2022, the chat feature was
-        updated for "chat with yourself"; allowing for the organization of
-        files, notes, comments, images, and videos within a private chat tab
+        {{description}}
       </p>
     </div>
   </div>

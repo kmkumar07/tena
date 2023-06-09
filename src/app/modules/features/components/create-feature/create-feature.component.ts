@@ -14,9 +14,11 @@ import {
 } from '@angular/forms';
 import getUniqueId from 'src/app/core/utils/functions/getUniqueId';
 import { FeatureService } from '../../services/feature.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
+import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface menuOptions {
   value: number;
@@ -38,8 +40,8 @@ export class CreateFeatureComponent {
   postName: string = '';
   position: any;
   unlimitedButtonLabel: string = 'Set Unlimited';
-  PageNumber = 1;
-  limit = 5;
+  PageNumber: any = '';
+  limit: any = '';
   search: string = '';
   productArray = [];
   id: string;
@@ -51,16 +53,20 @@ export class CreateFeatureComponent {
     private formBuilder: FormBuilder,
     private featureService: FeatureService,
     private routes: Router,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private route: ActivatedRoute,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.id = this.productService.getId();
+    this.id = this.route.snapshot.params['id'];
+    console.log('id', this.id);
 
     this.productService
       .getProducts(this.PageNumber, this.limit, this.search)
       .subscribe((data) => {
         this.productArray = data.map((res) => res.productId);
+        this.featureForm.patchValue({ productID: this.id });
       });
     this.feature();
   }
@@ -68,7 +74,7 @@ export class CreateFeatureComponent {
   feature() {
     this.featureForm = this.formBuilder.group({
       featureId: ['', Validators.required],
-      productID: [this.id ? this.id : '', Validators.required],
+      productID: ['', Validators.required],
       name: ['', Validators.required],
       description: ['', Validators.required],
       type: ['', Validators.required],
@@ -87,6 +93,8 @@ export class CreateFeatureComponent {
         }),
       ]),
     });
+
+    // this.featureForm.get('productID').setValue(this.id)
   }
 
   get levels() {
@@ -152,14 +160,27 @@ export class CreateFeatureComponent {
     });
 
     const status = this.featureForm.value.status ? 'active' : 'disabled';
-    const feature = {
-      ...this.featureForm.value,
+    let feature: any = {
+      featureId: this.featureForm.value.featureId,
+      productID: this.featureForm.value.productID,
+      name: this.featureForm.value.name,
+      description: this.featureForm.value.description,
+      type: this.featureForm.value.type,
       status: status,
+      levels: [],
     };
+    if (this.featureForm.value.type === 'quantity') {
+      feature = {
+        ...feature,
+        unit: this.featureForm.value.unit,
+        levels: this.featureForm.value.levels,
+      };
+    }
     console.log('feature', feature);
 
     this.subscription = this.featureService.addFeature(feature).subscribe({
       next: (res: any) => {
+        this.openSuccess();
         this.routes.navigate([`/features/view/${res.featureId}`]);
         return res;
       },
@@ -171,5 +192,15 @@ export class CreateFeatureComponent {
 
   onDelete() {
     this.routes.navigate(['/features']);
+  }
+
+  openSuccess() {
+    this.dialog.open(SuccessDialogComponent, {
+      width: '420px',
+      data: {
+        module: 'Feature',
+        operation: 'Created',
+      },
+    });
   }
 }
