@@ -32,10 +32,7 @@ export class FeatureService {
   }
 
   getFeatures(PageNumber: number, limit: number): Observable<FeatureList[]> {
-    return this.http
-
-      .get<any>(`${environment.featureUrl}?page=${PageNumber}&limit=${limit}`)
-
+    return this.http .get<any>(`${environment.featureUrl}?page=${PageNumber}&limit=${limit}`)
       .pipe(
         map((res) => {
           this.featureSubject.next(res.data);

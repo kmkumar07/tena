@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import {MatButtonModule} from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './shared/modules/angular-material/angular-material.module';
 import { FormsModule } from '@angular/forms';
@@ -26,6 +27,7 @@ import { FeatureDetailsPopupComponent } from './shared/components/dialog-box/fea
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AngularMaterialModule,
     AppRoutingModule,
     BrowserAnimationsModule,
