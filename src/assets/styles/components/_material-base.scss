@@ -67,6 +67,9 @@
           &.Active {
             color: color("green", "darken-3");
           }
+          &.InActive{
+            color: color("red", "darken-2");
+          }
           &:nth-last-child(1) {
             text-align: center;
           }

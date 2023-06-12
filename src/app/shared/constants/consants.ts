@@ -91,6 +91,17 @@ export interface GetFeature {
   type: string;
   status: string;
 }
+
+export interface invoice {
+  id: string;
+  customer_info: string;
+  issued_on: string;
+  voided_on:string;
+  paid_on:string;
+  created_at: string;
+  status: string;
+  amount:string;
+}
 export const MENUITEMS = [
   {
     state: 'dashboard',
@@ -349,6 +360,36 @@ export const TransactionList = [
     amount: '199.00',
   },
 ];
+export const InvoiceList = [
+  {
+    id: '#S0-001',
+    customerInfo: 'Greenplus Enterprises',
+    issuedOn: 'Jan 14, 2023',
+    voidedOn:'-',
+    paidOn: 'Jan 16, 2023',
+    status: 'Active',
+    amount: '199.00',
+    
+  },
+  {
+    id: '#S0-002',
+    customerInfo: 'Greenplus Enterprises',
+    issuedOn: 'Jan 14, 2023',
+    voidedOn:'-',
+    paidOn: 'Jan 16, 2023',
+    status: 'Active',
+    amount: '199.00',
+  },
+  {
+    id: '#S0-003',
+    customerInfo: 'Greenplus Enterprises',
+    issuedOn: 'Jan 14, 2023',
+    voidedOn:'-',
+    paidOn: 'Jan 16, 2023',
+    status: 'Payment Due',
+    amount: '199.00',
+  },
+];
 export const feature_types = [
   { value: 1, title: 'switch' },
   { value: 2, title: 'range' },
@@ -466,6 +507,16 @@ export const noTransactions = [
     alt: 'no transactions to show',
     subtext: 'NO transaction yet',
     text: 'After your first transaction you will be able to view it here.',
+    showButton: false,
+  },
+];
+export const noInvoice = [
+  {
+    heading: 'Invoice',
+    imgPath: '../../../../assets/images/invoice-empty.png',
+    alt: 'no transactions to show',
+    subtext: 'No invoice yet',
+    text: 'After your first transaction you will be able to view invoice here.',
     showButton: false,
   },
 ];
