@@ -9,25 +9,25 @@ stages:
   variables:
   - group: ory-authorization-dev  
   jobs:
-  - job: Sonarqube
-    displayName: Sonarqube
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: SonarQubePrepare@5
-      inputs:
-        SonarQube: 'SonarQube-service-connection-DF'
-        scannerMode: 'CLI'
-        configMode: 'manual'
-        cliProjectKey: 'DF-Tenant-Portal'
-        cliProjectName: 'DF-Tenant-Portal'
-    - task: SonarQubeAnalyze@5
-    - task: SonarQubePublish@5
-      inputs:
-        pollingTimeoutSec: '300'
-    - script: |
-        echo $(Build.BuildId)
-        pwd && ls -l
+  # - job: Sonarqube
+  #   displayName: Sonarqube
+  #   pool:
+  #     vmImage: ubuntu-latest
+  #   steps:
+  #   - task: SonarQubePrepare@5
+  #     inputs:
+  #       SonarQube: 'SonarQube-service-connection-DF'
+  #       scannerMode: 'CLI'
+  #       configMode: 'manual'
+  #       cliProjectKey: 'DF-Tenant-Portal'
+  #       cliProjectName: 'DF-Tenant-Portal'
+  #   - task: SonarQubeAnalyze@5
+  #   - task: SonarQubePublish@5
+  #     inputs:
+  #       pollingTimeoutSec: '300'
+  #   - script: |
+  #       echo $(Build.BuildId)
+  #       pwd && ls -l
   
   - job: Build
     displayName: 'Build for Frontend application'
