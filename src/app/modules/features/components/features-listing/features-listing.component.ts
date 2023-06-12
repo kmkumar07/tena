@@ -70,10 +70,7 @@ export class FeaturesListingComponent implements OnInit {
 
   getFeature(PageNumber: number, limit: number) {
     this.loading = true;
-    this.featureService
-
-      .getFeatures(this.PageNumber, this.limit)
-
+    this.featureService.getFeatures(this.PageNumber, this.limit)
       .subscribe((res) => {
         this.loading = false;
       });
@@ -89,7 +86,6 @@ export class FeaturesListingComponent implements OnInit {
 
   onNext() {
     this.PageNumber++;
-
     this.getFeature(this.PageNumber, this.limit);
   }
 
@@ -102,16 +98,13 @@ export class FeaturesListingComponent implements OnInit {
   openDelete(id: any) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       width: '420px',
-
       panelClass: 'dialog-curved',
     });
 
     this.dialogRef.afterClosed().subscribe((res) => {
       if (res) {
         this.deleteElementById(id);
-      } else {
-        console.log('Delete canceled');
-      }
+      } 
     });
   }
 
@@ -120,12 +113,8 @@ export class FeaturesListingComponent implements OnInit {
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();
-
       return;
     }
-
-    // console.log(this.selection.select)
-
     this.selection.select(...this.featuresData);
   }
 
@@ -135,15 +124,12 @@ export class FeaturesListingComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
       row.feature_id + 1
     }`;
   }
 
-  // ngAfterViewInit() {
-  //   this.featuresData.sort = this.sort;
-  // }
+ 
   /** Announce the change in sort state for assistive technology. */
 
   announceSortChange(sortState: Sort) {

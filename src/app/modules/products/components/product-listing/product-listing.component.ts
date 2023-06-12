@@ -111,8 +111,6 @@ export class ProductListingComponent implements OnInit {
   }
 
   sendElementId(elementId: string) {
-    console.log(elementId);
-
     this.productService.deleteProduct(elementId).subscribe(() => {
       this.data$.subscribe((data) => {});
     });
@@ -125,12 +123,8 @@ export class ProductListingComponent implements OnInit {
 
     this.dialogRef.afterClosed().subscribe((res: any) => {
       if (res) {
-        console.log(res);
-
         this.sendElementId(id);
-      } else {
-        console.log('Delete canceled');
-      }
+      } 
     });
   }
 

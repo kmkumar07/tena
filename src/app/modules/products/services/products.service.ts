@@ -69,7 +69,6 @@ export class ProductsService {
   getProductById(id: string): Observable<GetProduct> {
     return this.http.get<any>(`${environment.productData}/${id}`).pipe(
       map((res) => {
-        console.log('res', res);
         return res.data;
       }),
 
