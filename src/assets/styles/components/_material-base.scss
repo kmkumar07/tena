@@ -126,12 +126,13 @@
   }
 }
 // checked stripe table
-.primary-table.checked-stripe-table, .checked-stripe-table {
+.primary-table.checked-stripe-table,
+.checked-stripe-table {
   .mat-mdc-checkbox
     .mdc-checkbox
-    .mdc-checkbox__native-control:enabled:not(:checked):not(
-      :indeterminate
-    ):not([data-indeterminate="true"])
+    .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not(
+      [data-indeterminate="true"]
+    )
     ~ .mdc-checkbox__background {
     border-color: color("grey", "lighten-9");
   }
@@ -185,8 +186,7 @@
           }
         }
       }
-      .mdc-text-field--filled:not(.mdc-text-field--disabled)
-        .mdc-line-ripple {
+      .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple {
         &::before {
           border: none;
         }
@@ -369,16 +369,34 @@ ul {
   }
 }
 
+// storybook chip
+.mat-mdc-standard-chip.mat-primary {
+  .mdc-evolution-chip__text-label {
+    color: #1b1b1e;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+  &.mat-mdc-chip-highlighted {
+    background-color: color("primary", "light");
+    .mdc-evolution-chip__text-label {
+      color: #1b1b1e;
+    }
+    --mdc-chip-elevated-container-color: color("primary", "light");
+    --mdc-chip-elevated-disabled-container-color: color("primary", "light");
+  }
+}
+
 // 7. coupons dialog
-.coupons-dialog{
+.coupons-dialog {
   position: relative;
   padding: 3.8125rem 2.625rem 2.625rem;
-  .close-dialog-icon{
+  .close-dialog-icon {
     position: absolute;
     top: 2.9375rem;
     right: 2.9375rem;
-    .mat-icon{
-      color: color('shades' , "black");
+    .mat-icon {
+      color: color("shades", "black");
     }
   }
 }

@@ -8,9 +8,7 @@ import { ThemePalette } from '@angular/material/core';
   encapsulation: ViewEncapsulation.None,
 })
 export class ChipComponent {
-  @Input() label: string = 'One fish';
-
-  @Input() color: ThemePalette = 'primary';
+  @Input() label: string = 'Chip';
 
   @Input() ariaDescription: string | null = '';
 
@@ -20,13 +18,12 @@ export class ChipComponent {
 
   @Input() disabled: boolean = false;
 
-  @Input() highlighted: boolean = false;
+  @Input() highlighted: boolean = true;
+
+  @Input() class: string = '';
 
   @Input() id: string = '';
 
-  @Input() removable: boolean = false;
+  @Input() withIcon: boolean = false;
 
-  @Input() role: string | null = '';
-
-  @Input() value: any;
 }

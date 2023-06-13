@@ -1,4 +1,4 @@
-<mat-chip-listbox aria-label="Fish selection">
+<!-- <mat-chip-listbox [ariaLabel]="ariaLabel">
   <mat-chip-option
     [color]="color"
     [selected]="selected"
@@ -9,6 +9,45 @@
     [highlighted]="highlighted"
     [removable]="removable"
     [id]="id"
-    >{{label}}</mat-chip-option
+    >{{ label }}</mat-chip-option
   >
-</mat-chip-listbox>
+</mat-chip-listbox> -->
+<!-- <mat-chip-set class="example-chip">
+  <mat-chip-option
+    [color]="color"
+    [selected]="selected"
+    [ariaDescription]="ariaDescription"
+    [ariaLabel]="ariaLabel"
+    [disableRipple]="disableRipple"
+    [disabled]="disabled"
+    [highlighted]="highlighted"
+    [removable]="removable"
+    [id]="id"
+    [class]="class"
+  >
+    {{ label }}
+  </mat-chip-option>
+</mat-chip-set> -->
+
+<mat-chip
+  [ariaDescription]="ariaDescription"
+  [ariaLabel]="ariaLabel"
+  [disableRipple]="disableRipple"
+  [disabled]="disabled"
+  [highlighted]="highlighted"
+  [id]="id"
+  [class]="'white-bg' + ' ' + class"
+>
+  <mat-icon
+    *ngIf="withIcon"
+    color="primary"
+    class="material-symbols-outlined mr-2"
+    >check</mat-icon
+  >
+  {{ label }}
+  <mat-icon
+    *ngIf="withIcon"
+    class="material-symbols-outlined pointer ml-2 grey-text text-darken-8"
+    >close</mat-icon
+  >
+</mat-chip>

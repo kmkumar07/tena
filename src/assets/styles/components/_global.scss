@@ -299,10 +299,9 @@ label {
 .overflow-hidden {
   overflow: hidden;
 }
-.overflow-visible{
+.overflow-visible {
   overflow: visible;
 }
-
 
 // SPACING
 // Auto Margin
@@ -404,7 +403,7 @@ label {
 .main-bg {
   background-color: color("shades", "white");
 }
-.primary-light-bg{
+.primary-light-bg {
   background-color: color("primary", "light"); //#F3F1FF
 }
 .main-content-height {
@@ -422,7 +421,7 @@ label {
   .letter-spacing-0 {
     letter-spacing: 0 !important;
   }
-  .mdc-button__label{
+  .mdc-button__label {
     display: flex;
   }
 }
@@ -448,12 +447,12 @@ label {
   border-radius: 0.25rem;
   font-weight: 500;
 }
-.input-suffix{
+.input-suffix {
   position: absolute;
   right: -0.1875rem;
   top: 0;
   padding-left: 0.8125rem;
-  border-left: 0.0625rem solid color('grey', 'lighten-11');
+  border-left: 0.0625rem solid color("grey", "lighten-11");
   bottom: 0;
   display: flex;
   align-items: center;
@@ -478,6 +477,26 @@ table {
     }
   }
 }
-.transition-400{
+.transition-400 {
   transition: 10s;
+}
+
+//breadcrumb
+ul.breadcrumb {
+  list-style: none;
+  display: flex;
+
+  li {
+    display: flex;
+    align-items: center;
+
+    a {
+      color: #aaaaaa;
+      font-weight: bold;
+    }
+    span {
+      font-weight: bold;
+      color: #1B1B1E;
+    }
+  }
 }

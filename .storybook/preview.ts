@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/angular';
 import { setCompodocJson } from '@storybook/addon-docs/angular';
+import { themes } from '@storybook/theming';
 import docJson from '../documentation.json';
 import '!style-loader!css-loader!sass-loader!../src/styles.scss';
 import '!style-loader!css-loader!./global.css';
@@ -14,6 +15,9 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/,
       },
+    },
+    docs: {
+      theme: themes.light,
     },
     // global: {
     //   css: `
