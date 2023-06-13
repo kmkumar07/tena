@@ -25,3 +25,14 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+## Compodoc
+
+For running compodoc in your local system, you need to run the following commands:
+
+    1. `npm run buildcompodoc` 
+        This command will build, and generate the necessary compodoc files required for running and showcasing compodoc in your system.
+    
+    2. `npm run compodoc`
+        This command will run the compodoc engine, on a local port for your viewing. You need to run this command, after generating the compodoc build.

@@ -9,7 +9,9 @@
     "test": "ng test",
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
     "storybook": "ng run tenant-portal:storybook",
-    "build-storybook": "ng run tenant-portal:build-storybook"
+    "build-storybook": "ng run tenant-portal:build-storybook",
+    "buildcompodoc": "compodoc -p tsconfig.json",
+    "compodoc": "npx compodoc -s tsconfig.json"
   },
   "private": true,
   "dependencies": {
@@ -34,6 +36,7 @@
     "@angular/cli": "~15.0.0",
     "@angular/compiler-cli": "^15.0.0",
     "@babel/core": "^7.21.8",
+    "@angular/localize": "^15.2.5",
     "@compodoc/compodoc": "^1.1.19",
     "@storybook/addon-actions": "^7.0.5",
     "@storybook/addon-docs": "^7.0.6",
