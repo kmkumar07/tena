@@ -2,12 +2,11 @@
   <div class="stepper-wrapper">
     <mat-stepper orientation="vertical" #stepper [disableRipple]="true">
       <mat-step *ngFor="let step of stepsTitle" id="foo-bar">
-        <ng-template matStepLabel >
+        <ng-template matStepLabel>
           <div (click)="switchStepper(step)">
-            <span id={{step.id}}
-              class="block text-dark font-weight-500"
-              >{{ step.title }}</span
-            >
+            <span id="{{ step.id }}" class="block text-dark font-weight-500">{{
+              step.title
+            }}</span>
             <span
               class="block font-weight-600 mat-subtitle-2 text-headline-light"
               >{{ step.caption }}</span
@@ -15,10 +14,12 @@
           </div>
         </ng-template>
       </mat-step>
-
     </mat-stepper>
   </div>
-  <div #contentSection class="create-plan-main-wrapper h-full overflow-auto relative">
+  <div
+    #contentSection
+    class="create-plan-main-wrapper h-full overflow-auto relative"
+  >
     <div #step1 id="step1" class="plan-section-block flex-center p-11 mb-4">
       <div class="plan-info-block inner-wrapper">
         <div class="heading flex align-center">
@@ -139,29 +140,33 @@
     </div>
 
     <!-- pricing plan -->
-    <div #step2 id="step2" class="plan-section-block flex-center border-2 p-11 mb-4">
+    <div
+      #step2
+      id="step2"
+      class="plan-section-block flex-center border-2 p-11 mb-4"
+    >
       <div class="plan-info-block inner-wrapper">
         <div class="heading flex align-center">
           <img
             src="../../../../../../assets/images/icons/basil_invoice-outline.svg"
             alt="icon"
           />
-          <h5 class="mat-headline-5 text-dark">Product Details</h5>
+          <h5 class="mat-headline-5 text-dark">Pricing Plan</h5>
         </div>
         <div class="empty-add-section mt-6 border-1">
           <div class="text-center">
             <p class="mat-body-1 text-dark-1">
-              Please click the “Add” button below to add a new product. Once you
-              clicked the button, you will be prompted to enter the name of
-              product, description and additional details.
+              Please click the “Add” button below to add a new pricing plans.
+              Once you clicked the button, you will be prompted to enter pricing
+              and additional details.
             </p>
             <button
               mat-flat-button
               color="primary"
               class="mt-11 large"
-              [routerLink]="'/plans/create/product-detail'"
+              [routerLink]="'/plans/create/set-price'"
             >
-              Add product
+              Add Pricing
             </button>
           </div>
         </div>
@@ -169,7 +174,11 @@
     </div>
 
     <!-- Product Details inner -->
-    <div #step3 id="step3" class="plan-section-block flex-center border-2 p-11 mb-4">
+    <div
+      #step3
+      id="step3"
+      class="plan-section-block flex-center border-2 p-11 mb-4"
+    >
       <div class="plan-info-block inner-wrapper">
         <div class="heading flex align-center">
           <img
@@ -246,7 +255,11 @@
     <!-- <app-add-plan-pricing></app-add-plan-pricing> -->
 
     <!-- add-on view section  -->
-    <div #step4 id="step4" class="plan-section-block flex-center border-2 p-11 mb-4">
+    <div
+      #step4
+      id="step4"
+      class="plan-section-block flex-center border-2 p-11 mb-4"
+    >
       <div class="plan-info-block inner-wrapper">
         <div class="heading flex align-center">
           <img
@@ -410,7 +423,11 @@
     <!-- add-on view section  -->
 
     <!-- Charges -->
-    <div #step5 id="step5" class="plan-section-block flex-center border-2 p-11 mb-4 bottom-margin">
+    <div
+      #step5
+      id="step5"
+      class="plan-section-block flex-center border-2 p-11 mb-4 bottom-margin"
+    >
       <div class="plan-info-block inner-wrapper">
         <div class="heading flex align-center">
           <img

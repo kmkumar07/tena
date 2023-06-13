@@ -11,6 +11,7 @@ import { CreatePlanComponent } from './components/create-plan/create-plan.compon
 import { SetPriceComponent } from './components/set-price/set-price.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { AddOnsDetailsComponent } from './components/add-ons-details/add-ons-details.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AddOnsDetailsComponent } from './components/add-ons-details/add-ons-det
   imports: [
     CommonModule,
     PlansRoutingModule,
+    HttpClientModule,
     AngularMaterialModule,
     SharedModule
   ]
