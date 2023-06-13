@@ -1,1 +1,104 @@
-<p>transaction-view works!</p>
+<div class="transaction-view main-bg border-2 overflow-auto border-2 w-full h-full pb-4">
+<div class="flex align-center title">
+    <mat-icon
+    class="material-symbols-outlined pointer text-headline-dark mr-2"
+    [routerLink]="'/coupons'"
+    >keyboard_backspace</mat-icon
+  >
+  <h2 class="mat-headline-5 text-headline-dark">Transaction</h2>
+</div>
+<div class="px-4">
+<div class="transaction-details">
+    <h2 class="mat-headline-5 text-black table-heading">Transaction Details</h2>
+        <table class="dashed-table border-2 overflow-hidden">
+          <tr>
+            <th class="mat-subtitle-2 text-dark">
+              Customer Name :  
+              </th>
+              <th class="mat-subtitle-2 text-grey-darken-6">
+                Green Enterprises
+                </th>
+          </tr>
+          <tr>
+            <td class="mat-subtitle-2 text-dark">
+              Transaction Id :
+          </td>
+          <td class="mat-subtitle-2 text-grey-darken-6">
+            SO - 001
+          </td>
+          </tr>
+          <tr>
+            <td class="mat-subtitle-2 text-dark">
+              Transaction Type :
+          </td>
+          <td class="mat-subtitle-2 text-grey-darken-6">
+            Payment
+          </td>
+          </tr>
+          <tr>
+            <td class="mat-subtitle-2 text-dark">
+              Status :
+          </td>
+          <td class="mat-subtitle-2 green-text text-darken-3">
+            <div
+            class="active-text flex align-center "
+          >
+            <mat-icon
+              class="material-symbols-outlined mr-2 green-text text-darken-3"
+              color="primary"
+              >check_circle</mat-icon
+            ><span>Success</span>
+          </div>
+        
+          </td>
+          </tr>
+          <tr>
+            <td class="mat-subtitle-2 text-dark">
+              Timestamp :
+          </td>
+          <td class="mat-subtitle-2 text-grey-darken-6">
+            <div
+            class="active-text flex align-center "
+          >
+            <mat-icon
+              class="material-symbols-filled mr-2 text-grey-darken-6"
+              >schedule</mat-icon
+            ><span> 55 mins ago (Jan 08, 2023 10:20:35 AM)</span>
+          </div>
+          </td>
+          </tr>
+          <tr>
+            <td class="mat-subtitle-2 text-dark">
+              Payment Method :
+          </td>
+          <td class="mat-subtitle-2 text-grey-darken-6">
+            <div
+            class="active-text flex align-center "
+          >
+            <mat-icon
+              class="material-symbols-outlined mr-2 text-grey-darken-6"
+              >credit_card</mat-icon
+            ><span>2341</span>
+          </div>
+          </td>
+          </tr>
+          <tr>
+            <td class="mat-subtitle-2 text-dark">
+              Subscription :
+          </td>
+          <td class="mat-subtitle-2 text-grey-darken-6">
+            cbdemo_non_renewing_sub.
+          </td>
+          </tr>
+          <tr>
+            <td class="mat-subtitle-2 text-dark">
+              Invoice :
+          </td>
+          <td class="mat-subtitle-2 text-grey-darken-6">
+            cbdemo_inv_003
+          </td>
+          </tr>
+          </table>
+    </div>
+</div>
+</div>

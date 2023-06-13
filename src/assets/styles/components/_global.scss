@@ -56,6 +56,12 @@ input {
   font-family: "Material Symbols Rounded" !important;
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 }
+
+// Material Symbols filled
+.material-symbols-filled {
+  font-family: "Material Symbols Rounded" !important;
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
+}
 .m-0 {
   margin: 0 !important;
 }
@@ -418,6 +424,7 @@ label {
 .create-btn {
   min-width: 10rem !important;
   height: 2.625rem !important;
+  border-radius: .25rem !important;
   .letter-spacing-0 {
     letter-spacing: 0 !important;
   }
