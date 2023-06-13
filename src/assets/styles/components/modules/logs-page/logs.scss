@@ -1,0 +1,36 @@
+.logs-view {
+    .title{
+        padding: 1.125rem 1.5rem 1rem;
+        margin-bottom: 2.125rem;
+        border-bottom: .0625rem solid color('grey', 'border-2');
+    }
+    .inner-wrapper{
+        max-width: 1221px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 58px 20px 20px;
+
+        .table-wrapper{
+            border: .0625rem solid color('grey', 'border-2');
+
+            table{
+                padding: 0 1.5rem;
+                tr{
+                    th{
+                        padding: 1.4375rem 0 1.125rem;
+                        border-bottom: .0625rem solid color('grey', 'border-2');
+                        .chip-active{
+                            height: 1.1875rem;
+                            padding: 0 .5625rem;
+                            border-radius: .125rem;
+                            background-color: color('green' , 'darken-4');
+                        }
+                    }
+                    td{
+                        padding: 10px 0;
+                    }
+                }
+            }
+        }
+    }
+}
