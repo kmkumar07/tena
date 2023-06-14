@@ -1,0 +1,49 @@
+.sign-page{
+    .side-page{
+        width: 33.5%;
+        @media only screen and (max-width: 1280px) {
+            width: 40%;
+        }
+        .inner-side{
+            padding: 6.8125rem 1.5625rem 14.3125rem 2rem;
+        .top-line{
+            img{
+                max-height: 100%;
+            }
+        }
+        .bottom-line{
+            img{
+                max-height: 100%;
+            }
+        }
+        .img-wrapper{
+            max-width: 25rem;
+            width: 100%;
+            margin: 0 auto 7.75rem;
+            @media only screen and (max-width: 1280px) {
+                margin: 0 auto 2.8125rem 1.8125rem;
+                max-width: 20rem;
+            }
+            img{
+                width: 100%;
+            }
+        }
+    }
+    }
+    .main-page{
+       width: 66.5%;
+        padding: 1.375rem 1.625rem 1.25rem 3.4375rem;
+        @media only screen and (max-width: 1280px) {
+            width: 60%;
+        }
+        .inner-wrapper{
+            max-width: 29rem;
+            width: 100%;
+            margin: auto;
+            height: calc(100vh - 4.375rem);
+            // @media only screen and (max-width: 1280px) {
+            //     margin-top: 0;
+            // }
+        }
+    }
+}

@@ -242,12 +242,14 @@ $text-dark-1: color('grey', 'darken-6');
 $text-headline-dark: color('text', 'dark'); // #2C2466   
 $text-headline-light: rgba(color('text', 'dark'), .6); // #2C2466   
 $headline-light: color('text', 'primary'); // #405189
-$text-primary: color('primary', 'main');
+$text-primary: color('primary', 'main'); //#7868E6
 $text-lighten-2:color('text','lighten-2'); //#9CA8BA
 $text-lighten-4:color('text','lighten-4'); //#7A7E83
 $text-black:color('shades','black');
+$text-white:color('shades','white');
 $text-purple-dark-2:color('purple' , 'dark-2'); //#364A63
 $text-grey-lighten-11:color('grey','lighten-2'); //#5E7080
+$text-grey-darken-8:color('grey','darken-8'); //#333333
 
 
 

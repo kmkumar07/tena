@@ -254,6 +254,10 @@ label {
 .fixed {
   position: fixed;
 }
+.sticky{
+  position: sticky;
+}
+
 .inset-0 {
   inset: 0;
 }
@@ -412,6 +416,9 @@ label {
 }
 .primary-light-bg{
   background-color: color("primary", "light"); //#F3F1FF
+}
+.primary-bg{
+  background-color: color("primary" , "main"); //#7868E6
 }
 .main-content-height {
   height: calc(100% - 4.25rem);
