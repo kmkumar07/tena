@@ -1,6 +1,6 @@
 trigger: none
 
-pool: saas
+pool: DF-UAT-selfhost
   #vmImage: 'ubuntu-latest'
 
 stages:
