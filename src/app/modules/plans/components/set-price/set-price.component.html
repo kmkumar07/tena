@@ -228,13 +228,22 @@
                 />
               </mat-form-field>
             </div>
-            
-            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 3||dropKey == 4" >
-              Units. The total amount payable will be USD {{ total }}
-            </p>
-            <p class="mat-subtitle-2 font-weight-500 input-label mb-2" *ngIf="dropKey != 3&&dropKey != 4">
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2" *ngIf="dropKey ==1">
               Units. The total amount payable will be USD {{ previePrice }}
             </p>
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2" *ngIf="dropKey ==2">
+              Units. The total amount payable will be USD {{ previePrice }}
+            </p>
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 3" >
+              Units. The total amount payable will be USD {{ tiredTotal }}
+            </p>
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 4" >
+              Units. The total amount payable will be USD {{volumeTotal}}
+            </p>
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 5" >
+              Units. The total amount payable will be USD {{stairTotal}}
+            </p>
+            
           </div>
         </div>
         <!-- Billing Cycle -->

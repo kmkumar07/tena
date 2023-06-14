@@ -24,7 +24,9 @@ export class SetPriceComponent {
   periodUnit: string[] = periodUnit;
   selectedTab: number = 0;
   previePrice: number = 0;
-  total: number = 0;
+  tiredTotal: number = 0;
+  volumeTotal=1
+  stairTotal=0;
   price:any;
   monthlyBilling = ['3', '4', '5'];
   readOnly: boolean = false;
@@ -199,7 +201,9 @@ formData(){
     const arr = this.setPriceForm.value.tiers;
     let i = 0;
     let total1 = 0;
+    let startUnit=1;
     while (i < arr.length && input > 0) {
+     
       if (i == arr.length - 1) {
         total1 += input * arr[i].price;
         input = 0;
@@ -207,10 +211,11 @@ formData(){
       let gap = 0;
       if (i == 0) {
         gap = arr[0].endingUnit;
+        
       } else {
         gap = arr[i].endingUnit - arr[i - 1].endingUnit;
       }
-
+     
       if (input >= gap) {
         total1 += arr[i].price * gap;
         input -= gap;
@@ -221,8 +226,19 @@ formData(){
 
       i++;
     }
-    this.total = total1;
+
+    this.tiredTotal = total1;
     this.previePrice = event.target.value * this.setPriceForm.value.price;
+    let inputval= parseInt(event.target.value)
+
+    for( i=0;i< arr.length;i++){
+      if(startUnit<=inputval && inputval<=arr[i].endingUnit||arr[i].endingUnit===undefined){
+        this.stairTotal=arr[i].price;
+        this.volumeTotal=inputval*arr[i].price;
+        startUnit=(parseInt(arr[i].endingUnit))+1;
+         break;
+      }
+    }
      }
 
   ngOnDestroy(): void {
