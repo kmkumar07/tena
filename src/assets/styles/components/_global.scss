@@ -56,6 +56,12 @@ input {
   font-family: "Material Symbols Rounded" !important;
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 }
+
+// Material Symbols filled
+.material-symbols-filled {
+  font-family: "Material Symbols Rounded" !important;
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
+}
 .m-0 {
   margin: 0 !important;
 }
@@ -248,6 +254,10 @@ label {
 .fixed {
   position: fixed;
 }
+.sticky{
+  position: sticky;
+}
+
 .inset-0 {
   inset: 0;
 }
@@ -299,6 +309,10 @@ label {
 .overflow-hidden {
   overflow: hidden;
 }
+.overflow-visible{
+  overflow: visible;
+}
+
 
 // SPACING
 // Auto Margin
@@ -403,6 +417,9 @@ label {
 .primary-light-bg{
   background-color: color("primary", "light"); //#F3F1FF
 }
+.primary-bg{
+  background-color: color("primary" , "main"); //#7868E6
+}
 .main-content-height {
   height: calc(100% - 4.25rem);
 }
@@ -415,8 +432,12 @@ label {
 .create-btn {
   min-width: 10rem !important;
   height: 2.625rem !important;
+  border-radius: .25rem !important;
   .letter-spacing-0 {
     letter-spacing: 0 !important;
+  }
+  .mdc-button__label{
+    display: flex;
   }
 }
 .small-icon {
@@ -440,6 +461,17 @@ label {
   background-color: #f3f1ff;
   border-radius: 0.25rem;
   font-weight: 500;
+}
+.input-suffix{
+  position: absolute;
+  right: -0.1875rem;
+  top: 0;
+  padding-left: 0.8125rem;
+  border-left: 0.0625rem solid color('grey', 'lighten-11');
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 // 5. Angular Material
 
