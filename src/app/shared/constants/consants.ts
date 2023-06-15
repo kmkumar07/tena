@@ -102,6 +102,13 @@ export interface invoice {
   status: string;
   amount:string;
 }
+
+export interface logs {
+  Timestamp:any,
+  Events: string,
+  Customer_Info:string,
+  Event_Source:string,
+}
 export const MENUITEMS = [
   {
     state: 'dashboard',
@@ -390,6 +397,21 @@ export const InvoiceList = [
     amount: '199.00',
   },
 ];
+
+export const Logs_Data = [
+  {
+    Timestamp:'Aug 7th, 2022 9:09am',
+    Events:'Subscription has been created for the Plan.',
+    Customer_Info: 'Greenplus Enterprises',
+    Event_Source: 'Via Portal',
+  },
+  {
+    Timestamp:'Aug 7th, 2022 9:09am',
+    Events:'Active  subscription created for demo',
+    Customer_Info: 'Zencorporation',
+    Event_Source: 'Via Interface',
+  },
+];
 export const feature_types = [
   { value: 1, title: 'switch' },
   { value: 2, title: 'range' },
@@ -518,6 +540,18 @@ export const noInvoice = [
     subtext: 'No invoice yet',
     text: 'After your first transaction you will be able to view invoice here.',
     showButton: false,
+  },
+];
+export const noLogs = [
+  {
+    heading: '',
+    imgPath: '../../../../assets/images/empty-coupons.png',
+    alt: 'no coupons available',
+    subtext: 'Start Adding Coupons',
+    text: 'Click on the below buttons to open create coupons form.',
+    showButton: true,
+    buttonTxt: 'Back to home',
+    path: '',
   },
 ];
 export const Stepper = [
