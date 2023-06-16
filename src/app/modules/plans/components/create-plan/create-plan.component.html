@@ -1,24 +1,32 @@
 <div class="flex w-full h-full">
   <div class="stepper-wrapper">
     <mat-stepper orientation="vertical" #stepper [disableRipple]="true">
-      <mat-step *ngFor="let step of stepsTitle" id="foo-bar">
-        <ng-template matStepLabel >
-          <div (click)="switchStepper(step)">
-            <span id={{step.id}}
-              class="block text-dark font-weight-500"
-              >{{ step.title }}</span
+      <ng-container *ngFor="let step of stepsTitle; let i = index">
+        <mat-step id="foo-bar" [editable]="i === 0 || stepOneCompleted">
+          <ng-template matStepLabel>
+            <div
+              (click)="switchStepper(step)"
+              [ngClass]="{ 'disabled-step': i !== 0 && !stepOneCompleted }"
             >
-            <span
-              class="block font-weight-600 mat-subtitle-2 text-headline-light"
-              >{{ step.caption }}</span
-            >
-          </div>
-        </ng-template>
-      </mat-step>
-
+              <span
+                id="{{ step.id }}"
+                class="block text-dark font-weight-500"
+                >{{ step.title }}</span
+              >
+              <span
+                class="block font-weight-600 mat-subtitle-2 text-headline-light"
+                >{{ step.caption }}</span
+              >
+            </div>
+          </ng-template>
+        </mat-step>
+      </ng-container>
     </mat-stepper>
   </div>
-  <div #contentSection class="create-plan-main-wrapper h-full overflow-auto relative">
+  <div
+    #contentSection
+    class="create-plan-main-wrapper h-full overflow-auto relative"
+  >
     <div #step1 id="step1" class="plan-section-block flex-center p-11 mb-4">
       <div class="plan-info-block inner-wrapper">
         <div class="heading flex align-center">
@@ -32,114 +40,168 @@
             >Plan Information</abbr
           >
         </div>
-        <div class="info-form">
-          <div class="input-wrapper mt-8">
-            <div>
-              <div class="flex align-center mb-2">
-                <p class="mat-subtitle-2 font-weight-500 input-label">
-                  Plan Id
-                </p>
-                <mat-icon
-                  class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                  [ngxTippy]="helpinfotooltip"
-                  [tippyProps]="{ placement: 'right' }"
-                  >help</mat-icon
+        <form [formGroup]="planForm">
+          <div class="info-form">
+            <div class="input-wrapper mt-8">
+              <div>
+                <div class="flex align-center mb-2">
+                  <p class="mat-subtitle-2 font-weight-500 input-label">
+                    Plan Name (Internal)
+                  </p>
+                  <mat-icon
+                    class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                    [ngxTippy]="productnameinfo"
+                    [tippyProps]="{ placement: 'right' }"
+                    tippyName="content"
+                    >help</mat-icon
+                  >
+                  <ng-template #productnameinfo let-name class="t-template">
+                    <div class="help-info-tooltip">
+                      <div class="heading-with-background">
+                        Plan name (Internal)
+                      </div>
+                      <div class="details">
+                        This is help you identify the Plan Internally
+                      </div>
+                      <button mat-button color="primary" class="px-0">
+                        Learn more
+                      </button>
+                    </div>
+                  </ng-template>
+                </div>
+                <mat-form-field appearance="outline">
+                  <input
+                    required
+                    matInput
+                    placeholder="Enter here..."
+                    formControlName="internalName"
+                  />
+                </mat-form-field>
+              </div>
+              <div>
+                <div class="flex align-center mb-2">
+                  <p class="mat-subtitle-2 font-weight-500 input-label">
+                    Plan Name (External)
+                  </p>
+                  <mat-icon
+                    class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                    [ngxTippy]="productnameinfo"
+                    [tippyProps]="{ placement: 'right' }"
+                    >help</mat-icon
+                  >
+                  <ng-template #productnameinfo let-name class="t-template">
+                    <div class="help-info-tooltip">
+                      <div class="heading-with-background">
+                        Plan name (External)
+                      </div>
+                      <div class="details">
+                        This name will be shown on the customer portal.
+                      </div>
+                      <button mat-button color="primary" class="px-0">
+                        Learn more
+                      </button>
+                    </div>
+                  </ng-template>
+                </div>
+                <mat-form-field appearance="outline">
+                  <input
+                    required
+                    matInput
+                    placeholder="Enter here..."
+                    formControlName="externalName"
+                  />
+                </mat-form-field>
+              </div>
+              <div>
+                <div class="flex align-center mb-2">
+                  <p class="mat-subtitle-2 font-weight-500 input-label">
+                    Plan Id
+                  </p>
+                  <mat-icon
+                    class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                    [ngxTippy]="helpinfotooltip"
+                    [tippyProps]="{ placement: 'right' }"
+                    >help</mat-icon
+                  >
+                  <ng-template #helpinfotooltip let-name>
+                    <div class="help-info-tooltip">
+                      <div class="heading-with-background">Plan id</div>
+                      <div class="details">
+                        Enter a Customized Id. If user do not enter this field,
+                        the system will generate a 'Customized
+                        Human-Readable-id' based on the Name fielde.g. Plan id
+                        Name: “Karisch plus Enterprise”Plan Id:
+                        “karish-plus-enteprise-01”
+                      </div>
+                      <button mat-button color="primary" class="px-0">
+                        Learn more
+                      </button>
+                    </div>
+                  </ng-template>
+                </div>
+                <mat-form-field appearance="outline">
+                  <input
+                    required
+                    matInput
+                    placeholder="Enter here..."
+                    formControlName="planId"
+                  />
+                </mat-form-field>
+              </div>
+              <div>
+                <div class="flex align-center mb-2">
+                  <p class="mat-subtitle-2 font-weight-500 input-label">
+                    Description
+                  </p>
+                </div>
+                <mat-form-field appearance="outline">
+                  <textarea
+                    matInput
+                    placeholder="Enter here..."
+                    formControlName="description"
+                  ></textarea>
+                </mat-form-field>
+              </div>
+              <div class="action-btns flex align-center justify-between">
+                <mat-checkbox
+                  color="primary"
+                  formControlName="status"
+                  class="font-weight-500 checkbox ml-n-3"
+                  >Active</mat-checkbox
                 >
-                <ng-template #helpinfotooltip let-name>
-                  <div class="help-info-tooltip">
-                    <div class="heading-with-background">Plan id</div>
-                    <div class="details">
-                      Enter a Customized Id. If user do not enter this field,
-                      the system will generate a 'Customized Human-Readable-id'
-                      based on the Name fielde.g. Plan id Name: “Karisch plus
-                      Enterprise”Plan Id: “karish-plus-enteprise-01”
-                    </div>
-                    <button mat-button color="primary" class="px-0">
-                      Learn more
-                    </button>
-                  </div>
-                </ng-template>
+                <div>
+                  <button
+                    mat-stroked-button
+                    color="primary"
+                    class="mr-2 large"
+                    [routerLink]="'/plans'"
+                  >
+                    Dismiss
+                  </button>
+                  <button
+                    mat-flat-button
+                    color="primary"
+                    class="large"
+                    type="button"
+                    (click)="onSubmit()"
+                  >
+                    Create
+                  </button>
+                </div>
               </div>
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="Enter here..." />
-              </mat-form-field>
-            </div>
-            <div>
-              <div class="flex align-center mb-2">
-                <p class="mat-subtitle-2 font-weight-500 input-label">
-                  Plan Name (External)
-                </p>
-                <mat-icon
-                  class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                  [ngxTippy]="productnameinfo"
-                  [tippyProps]="{ placement: 'right' }"
-                  >help</mat-icon
-                >
-                <ng-template #productnameinfo let-name class="t-template">
-                  <div class="help-info-tooltip">
-                    <div class="heading-with-background">
-                      Plan name (External)
-                    </div>
-                    <div class="details">
-                      This name will be shown on the customer portal.
-                    </div>
-                    <button mat-button color="primary" class="px-0">
-                      Learn more
-                    </button>
-                  </div>
-                </ng-template>
-              </div>
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="Enter here..." />
-              </mat-form-field>
-            </div>
-            <div>
-              <div class="flex align-center mb-2">
-                <p class="mat-subtitle-2 font-weight-500 input-label">
-                  Plan Name (Internal)
-                </p>
-                <mat-icon
-                  class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                  [ngxTippy]="productnameinfo"
-                  [tippyProps]="{ placement: 'right' }"
-                  tippyName="content"
-                  >help</mat-icon
-                >
-                <ng-template #productnameinfo let-name class="t-template">
-                  <div class="help-info-tooltip">
-                    <div class="heading-with-background">
-                      Plan name (Internal)
-                    </div>
-                    <div class="details">
-                      This is help you identify the Plan Internally
-                    </div>
-                    <button mat-button color="primary" class="px-0">
-                      Learn more
-                    </button>
-                  </div>
-                </ng-template>
-              </div>
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="Enter here..." />
-              </mat-form-field>
-            </div>
-            <div>
-              <div class="flex align-center mb-2">
-                <p class="mat-subtitle-2 font-weight-500 input-label">
-                  Description
-                </p>
-              </div>
-              <mat-form-field appearance="outline">
-                <textarea matInput placeholder="Enter here..."></textarea>
-              </mat-form-field>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
 
     <!-- pricing plan -->
-    <div #step2 id="step2" class="plan-section-block flex-center border-2 p-11 mb-4">
+    <div
+      #step2
+      id="step2"
+      class="plan-section-block flex-center border-2 p-11 mb-4"
+      *ngIf="productDetails?.length === 0"
+    >
       <div class="plan-info-block inner-wrapper">
         <div class="heading flex align-center">
           <img
@@ -160,6 +222,7 @@
               color="primary"
               class="mt-11 large"
               [routerLink]="'/plans/create/product-detail'"
+              [disabled]="!stepOneCompleted"
             >
               Add product
             </button>
@@ -169,7 +232,12 @@
     </div>
 
     <!-- Product Details inner -->
-    <div #step3 id="step3" class="plan-section-block flex-center border-2 p-11 mb-4">
+    <div
+      #step3
+      id="step3"
+      class="plan-section-block flex-center border-2 p-11 mb-4"
+      *ngIf="productDetails?.length > 0"
+    >
       <div class="plan-info-block inner-wrapper">
         <div class="heading flex align-center">
           <img
@@ -178,7 +246,10 @@
           />
           <h5 class="mat-headline-5 text-dark">Product Details</h5>
         </div>
-        <div class="details-wrapper mt-6 p-3 border-2">
+        <div
+          class="details-wrapper mt-6 p-3 border-2"
+          *ngFor="let product of productDetails"
+        >
           <div class="details-inner flex justify-between">
             <div class="flex align-center">
               <div class="product-img p-2 mr-4">
@@ -189,10 +260,10 @@
               </div>
               <div>
                 <h6 class="mat-subtitle-2 font-weight-500 text-dark mb-1">
-                  MS Team
+                  {{ product.productID }}
                 </h6>
                 <span class="mat-body-1 font-weight-500 text-dark"
-                  >3 Features included</span
+                  >{{ product.features.length }} Features included</span
                 >
               </div>
             </div>
@@ -201,6 +272,7 @@
                 class="flex icon-text mat-caption mr-4"
                 mat-button
                 color="primary"
+                (click)="editProductVariant(product.productID)"
               >
                 <mat-icon class="material-symbols-outlined mr-1" color="primary"
                   >edit</mat-icon
@@ -210,6 +282,8 @@
                 mat-icon-button
                 color="warn"
                 class="light-bg small rounded-1"
+                (click)="onDelete(product.productVariantId)"
+                [disabled]="!stepOneCompleted"
               >
                 <mat-icon class="material-symbols-outlined mr-0" color="warn"
                   >close</mat-icon
@@ -218,25 +292,24 @@
             </div>
           </div>
           <div class="flex-center mt-3">
-            <mat-chip class="primary-light-chip mr-2" (click)="openPopup()"
+            <mat-chip
+              class="primary-light-chip mr-2"
+              *ngFor="let feature of product.features"
+              (click)="openPopup(feature)"
               ><span class="mat-body-1 text-grey-darken-7"
-                >Whiteboard (ON)</span
-              >
-            </mat-chip>
-            <mat-chip class="primary-light-chip mr-2"
-              ><span class="mat-body-1 text-grey-darken-7"
-                >Email support (All Week)</span
-              >
-            </mat-chip>
-            <mat-chip class="primary-light-chip"
-              ><span class="mat-body-1 text-grey-darken-7"
-                >User License (10 License)</span
+                >{{ feature.featureId }} {{ feature.value }}</span
               >
             </mat-chip>
           </div>
         </div>
         <div class="mt-12 text-right">
-          <button mat-flat-button color="primary" class="large">
+          <button
+            mat-flat-button
+            color="primary"
+            class="large"
+            [routerLink]="'/plans/create/product-detail'"
+            [disabled]="!stepOneCompleted"
+          >
             Add Product
           </button>
         </div>
@@ -246,7 +319,11 @@
     <!-- <app-add-plan-pricing></app-add-plan-pricing> -->
 
     <!-- add-on view section  -->
-    <div #step4 id="step4" class="plan-section-block flex-center border-2 p-11 mb-4">
+    <div
+      #step4
+      id="step4"
+      class="plan-section-block flex-center border-2 p-11 mb-4"
+    >
       <div class="plan-info-block inner-wrapper">
         <div class="heading flex align-center">
           <img
@@ -277,7 +354,7 @@
 
           <div class="content-wrapper">
             <div class="mt-3">
-              <mat-chip class="primary-light-chip mr-2" (click)="openPopup()"
+              <mat-chip class="primary-light-chip mr-2"
                 ><span class="mat-body-1 text-grey-darken-7"
                   >Whiteboard (ON)</span
                 >
@@ -307,9 +384,7 @@
                     </p>
                   </div>
                   <div class="flex-center mt-3 flex-wrap chip-wrapper">
-                    <mat-chip
-                      class="primary-light-chip pointer white-bg mr-2"
-                      (click)="openPopup()"
+                    <mat-chip class="primary-light-chip pointer white-bg mr-2"
                       ><span class="mat-body-1 text-grey-darken-7"
                         >Host online calls (1-50)</span
                       >
@@ -331,6 +406,7 @@
                 mat-icon-button
                 color="warn"
                 class="light-bg small rounded-1 ml-2"
+                [disabled]="!stepOneCompleted"
               >
                 <mat-icon class="material-symbols-outlined mr-0" color="warn"
                   >close</mat-icon
@@ -410,7 +486,11 @@
     <!-- add-on view section  -->
 
     <!-- Charges -->
-    <div #step5 id="step5" class="plan-section-block flex-center border-2 p-11 mb-4 bottom-margin">
+    <div
+      #step5
+      id="step5"
+      class="plan-section-block flex-center border-2 p-11 mb-4 bottom-margin"
+    >
       <div class="plan-info-block inner-wrapper">
         <div class="heading flex align-center">
           <img
@@ -477,6 +557,7 @@
                 mat-icon-button
                 color="warn"
                 class="close-icon-btn light-bg rounded ml-2 mt-1"
+                [disabled]="!stepOneCompleted"
               >
                 <mat-icon class="material-symbols-outlined mr-0" color="warn"
                   >close</mat-icon
@@ -494,6 +575,7 @@
                 mat-icon-button
                 color="warn"
                 class="close-icon-btn light-bg rounded ml-2 mt-1"
+                [disabled]="!stepOneCompleted"
               >
                 <mat-icon class="material-symbols-outlined mr-0" color="warn"
                   >close</mat-icon
@@ -505,10 +587,21 @@
         <!-- setup fee inputs -->
         <div class="action-btns flex align-center justify-end">
           <div>
-            <button mat-stroked-button color="primary" class="mr-2 large">
+            <button
+              mat-stroked-button
+              color="primary"
+              class="mr-2 large"
+              [disabled]="!stepOneCompleted"
+            >
               Dismiss
             </button>
-            <button mat-flat-button color="primary" class="large" type="submit">
+            <button
+              mat-flat-button
+              color="primary"
+              class="large"
+              type="submit"
+              [disabled]="!stepOneCompleted"
+            >
               Save
             </button>
           </div>

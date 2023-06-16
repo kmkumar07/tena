@@ -5,5 +5,7 @@ export const environment = {
   apiUrl: 'http://[::1]:4201/pcm/api/v1/feature',
   featureUrl: 'http://[::1]:4201/pcm/api/v1/feature',
   imagePath:'https://saasframeworkuploads.blob.core.windows.net',
+  planUrl: 'http://[::1]:4201/nest-boilerplate/api/v1/plans',
+  planListUrl: 'http://[::1]:4201/nest-boilerplate/api/v1/productVariant'
 };
 
