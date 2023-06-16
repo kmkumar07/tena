@@ -4,6 +4,7 @@ import { NgxTippyModule } from 'ngx-tippy-wrapper';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmptyListingComponent } from '../../components/empty-listing/empty-listing.component';
 import { AngularMaterialModule } from '../angular-material/angular-material.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [EmptyListingComponent],
@@ -11,7 +12,8 @@ import { AngularMaterialModule } from '../angular-material/angular-material.modu
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    HttpClientModule
   ],
   exports: [
     NgxTippyModule,
