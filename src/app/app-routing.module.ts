@@ -9,6 +9,13 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
+        path: '',
+        loadChildren: () =>
+          import('../app/modules/dashboard/dashboard.module').then(
+            (mod) => mod.DashboardModule
+          ),
+      },
+      {
         path: 'products',
         loadChildren: () =>
           import('../app/modules/products/products.module').then(
@@ -27,6 +34,20 @@ const routes: Routes = [
         loadChildren: () =>
           import('../app/modules/plans/plans.module').then(
             (mod) => mod.PlansModule
+          ),
+      },
+      {
+        path: 'coupons',
+        loadChildren: () =>
+          import('../app/modules/coupons/coupons.module').then(
+            (mod) => mod.CouponsModule
+          ),
+      },
+      {
+        path: 'payment',
+        loadChildren: () =>
+          import('./modules/payment-history/payment-history.module').then(
+            (m) => m.PaymentHistoryModule
           ),
       },
     ],

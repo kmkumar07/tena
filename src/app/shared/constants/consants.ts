@@ -25,24 +25,30 @@ export interface features {
   created_at: string;
   status: string;
 }
+
+export interface coupon {
+  coupon_id: string;
+  coupon_name: string;
+  description: string;
+  created_at: string;
+  status: string;
+}
 export interface Product {
   productId: string;
-  imageUrl: string,
+  imageUrl: string;
   createdOn: string;
   modifiedOn: string;
   name: string;
   description: string;
   status: string;
-
 }
 export interface GetProduct {
   productId: string;
-  imageUrl: string,
+  imageUrl: string;
   modifiedOn: string;
   name: string;
   description: string;
   status: string;
-
 }
 export interface plansFields {
   plan_ID: string;
@@ -62,7 +68,7 @@ export interface Feature {
   type: string;
   status: string;
   unit: string;
-  levels: []
+  levels: [];
 }
 export interface FeatureList {
   featureId: number;
@@ -75,7 +81,15 @@ export interface FeatureList {
   type: string;
   status: string;
 }
-
+export interface Customer {
+  id: string;
+  name: string;
+  companyName: string;
+  email: string,
+  workPhone: string,
+  website: string,
+  subscription: string
+}
 export interface GetFeature {
   featureId: string;
   productID: string;
@@ -85,79 +99,97 @@ export interface GetFeature {
   type: string;
   status: string;
 }
+
+export interface invoice {
+  id: string;
+  customer_info: string;
+  issued_on: string;
+  voided_on: string;
+  paid_on: string;
+  created_at: string;
+  status: string;
+  amount: string;
+}
+
+export interface logs {
+  Timestamp: any;
+  Events: string;
+  Customer_Info: string;
+  Event_Source: string;
+}
 export const MENUITEMS = [
   {
-    state: 'dashboard',
+    state: '/overview',
     type: 'link',
     name: 'Overview',
     icon: 'space_dashboard',
     category: 'Dashboard',
   },
   {
-    state: 'button',
+    state: '/customers',
     type: 'link',
     name: 'Customer',
     icon: 'account_box',
     category: 'Dashboard',
   },
   {
-    state: 'grid',
+    state: '/subscription',
     type: 'link',
     name: 'Subscription',
     icon: 'card_membership',
     category: 'Dashboard',
   },
   {
-    state: 'products',
+    state: '/products',
     type: 'link',
     name: 'Products',
     icon: 'local_mall',
     category: 'Product_Catalog',
   },
   {
-    state: 'features',
+    state: '/features',
     type: 'link',
     name: 'Features',
     icon: 'featured_play_list',
     category: 'Product_Catalog',
   },
   {
-    state: 'plans',
+    state: '/plans',
     type: 'link',
     name: 'Plans',
     icon: 'quick_reference_all',
     category: 'Product_Catalog',
   },
   {
-    state: 'stepper',
+    state: '/stepper',
     type: 'link',
     name: 'Add Ons',
     icon: 'add_notes',
     category: 'Product_Catalog',
   },
   {
-    state: 'stepper',
+    state: '/coupons',
     type: 'link',
     name: 'Coupons',
     icon: 'confirmation_number',
     category: 'Product_Catalog',
   },
   {
-    state: 'stepper',
+    state: '/payment/transactions',
     type: 'link',
     name: 'Transactions',
     icon: 'compare_arrows',
     category: 'Payment History',
   },
   {
-    state: 'stepper',
+    state: '/payment/invoices',
     type: 'link',
     name: 'Invoices',
     icon: 'receipt_long',
     category: 'Payment History',
   },
   {
-    state: 'stepper',
+    state: '/payment/logs',
     type: 'link',
     name: 'Logs',
     icon: 'list_alt',
@@ -277,6 +309,25 @@ export const Features_Data = [
     status: 'Active',
   },
 ];
+
+export const Coupon_Data = [
+  {
+    id: 'coupon_id_459',
+    coupon_id: '#S0-001',
+    coupon_name: 'INR 100 Off',
+    description: 'Rs. 100.00 for Forever get it today and enjoy it forever... ',
+    created_at: '24 March, 2023',
+    status: 'Active',
+  },
+  {
+    id: 'coupon_id_460',
+    coupon_id: '#S0-001',
+    coupon_name: 'INR 100 Off',
+    description: 'Rs. 100.00 for Forever get it today and enjoy it forever... ',
+    created_at: '24 March, 2023',
+    status: 'Active',
+  },
+];
 export const Plans_Data = [
   {
     id: 'ychvjbknk1',
@@ -305,6 +356,87 @@ export const Notifications_Data = [
   //   message: 'subscriptione_created',
   //   created_at: 'Aug 7th, 2023'
   // }
+];
+export const TransactionList = [
+  {
+    id: '#S0-001',
+    customerInfo: 'Greenplus Enterprises',
+    paymentMethod: '2341',
+    occuredOn: 'Jan 16, 2023',
+    status: 'Active',
+    amount: '199.00',
+  },
+  {
+    id: '#S0-002',
+    customerInfo: 'Greenplus Enterprises',
+    paymentMethod: '2341',
+    occuredOn: 'Jan 16, 2023',
+    status: 'Active',
+    amount: '199.00',
+  },
+];
+export const InvoiceList = [
+  {
+    id: '#S0-001',
+    customerInfo: 'Greenplus Enterprises',
+    issuedOn: 'Jan 14, 2023',
+    voidedOn: '-',
+    paidOn: 'Jan 16, 2023',
+    status: 'Active',
+    amount: '199.00',
+  },
+  {
+    id: '#S0-002',
+    customerInfo: 'Greenplus Enterprises',
+    issuedOn: 'Jan 14, 2023',
+    voidedOn: '-',
+    paidOn: 'Jan 16, 2023',
+    status: 'Active',
+    amount: '199.00',
+  },
+  {
+    id: '#S0-003',
+    customerInfo: 'Greenplus Enterprises',
+    issuedOn: 'Jan 14, 2023',
+    voidedOn: '-',
+    paidOn: 'Jan 16, 2023',
+    status: 'Payment Due',
+    amount: '199.00',
+  },
+];
+export const CustomerList = [
+  {
+    id: '#S0-001',
+    name: 'Alex C',
+    companyName: 'Greenplus Enterprises',
+    email: 'alex@example.com',
+    workPhone: '9876778865',
+    website: 'www.greenplus.com',
+    subscription: '2 subscripton (Available)',
+  },
+  {
+    id: '#S0-002',
+    name: 'Zen D',
+    companyName: 'Zencorporation',
+    email: 'zen@example.com',
+    workPhone: '839103113',
+    website: 'www.zencorporation.com',
+    subscription: '1 subscripton (Available)',
+  },
+];
+export const Logs_Data = [
+  {
+    Timestamp: 'Aug 7th, 2022 9:09am',
+    Events: 'Subscription has been created for the Plan.',
+    Customer_Info: 'Greenplus Enterprises',
+    Event_Source: 'Via Portal',
+  },
+  {
+    Timestamp: 'Aug 7th, 2022 9:09am',
+    Events: 'Active  subscription created for demo',
+    Customer_Info: 'Zencorporation',
+    Event_Source: 'Via Interface',
+  },
 ];
 export const feature_types = [
   { value: 1, title: 'switch' },
@@ -363,6 +495,7 @@ export const noProducts = [
     alt: 'no proudcts available',
     subtext: 'Looking for Product',
     text: "Seems like you haven't added any Product. Start adding products by click on “Create Product” button",
+    showButton: true,
     buttonTxt: 'Create Product',
     path: '/products/create',
   },
@@ -374,6 +507,7 @@ export const noFeatures = [
     alt: 'no features available',
     subtext: 'Looking for Features',
     text: "Seems like you haven't added any feature. Start adding feature by click on “Create Feature” button ",
+    showButton: true,
     buttonTxt: 'Create Feature',
     path: '/features/create',
   },
@@ -385,6 +519,7 @@ export const noPlans = [
     alt: 'no Plans available',
     subtext: 'Looking for Plans',
     text: "Seems like you haven't added any Plan. Start adding plan by click on “Create Plan” button",
+    showButton: true,
     buttonTxt: 'Create Plan',
     path: '/plans/view',
   },
@@ -396,6 +531,63 @@ export const noPageFound = [
     alt: 'No Page Found',
     subtext: "Oops! Why you're here?",
     text: "We are very sorry for inconvenience. It looks like you're try to access a page that either has been deleted or never existed.",
+    showButton: true,
+    buttonTxt: 'Back to home',
+    path: '',
+  },
+];
+export const noCustomers = [
+  {
+    heading: 'Customers',
+    imgPath: '../../../../assets/images/empty-illustrations-6.png',
+    alt: 'no customers',
+    subtext: 'No customer yet',
+    text: 'Customers No customer yet After your first customer you will be able to view it here.',
+    showButton: false,
+    buttonTxt: 'Back to home',
+    path: '',
+  },
+];
+export const nocoupons = [
+  {
+    heading: '',
+    imgPath: '../../../../assets/images/empty-coupons.png',
+    alt: 'no coupons available',
+    subtext: 'Start Adding Coupons',
+    text: 'Click on the below buttons to open create coupons form.',
+    showButton: true,
+    buttonTxt: 'Back to home',
+    path: '',
+  },
+];
+export const noTransactions = [
+  {
+    heading: 'Transaction',
+    imgPath: '../../../../assets/images/empty-illustrations-5.png',
+    alt: 'no transactions to show',
+    subtext: 'NO transaction yet',
+    text: 'After your first transaction you will be able to view it here.',
+    showButton: false,
+  },
+];
+export const noInvoice = [
+  {
+    heading: 'Invoice',
+    imgPath: '../../../../assets/images/invoice-empty.png',
+    alt: 'no transactions to show',
+    subtext: 'No invoice yet',
+    text: 'After your first transaction you will be able to view invoice here.',
+    showButton: false,
+  },
+];
+export const noLogs = [
+  {
+    heading: '',
+    imgPath: '../../../../assets/images/empty-coupons.png',
+    alt: 'no coupons available',
+    subtext: 'Start Adding Coupons',
+    text: 'Click on the below buttons to open create coupons form.',
+    showButton: true,
     buttonTxt: 'Back to home',
     path: '',
   },
@@ -431,4 +623,14 @@ export const Stepper = [
     caption: 'Charges',
     isVisible: false,
   },
+];
+export const listFilterOptions = [
+  'Yesterday',
+  'Last 7 days',
+  'Last Week',
+  'Last 30 days',
+  'Last 4 weeks',
+  'Last 12 weeks',
+  'Current month',
+  'Last calendar month',
 ];

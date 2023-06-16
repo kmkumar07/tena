@@ -1,0 +1,22 @@
+.invoice-view {
+  .title {
+    padding: 1.125rem 1.5rem 1rem;
+    margin-bottom: 2.125rem;
+    border-bottom: 0.0625rem solid color("grey", "border-2");
+  }
+  .inner-wrapper {
+    max-width: 60.625rem;
+    width: 100%;
+    margin: 0 auto;
+
+    .inner-title {
+      margin-bottom: 2.1875rem;
+      h2 {
+        font-size: 2.1875rem;
+      }
+      p {
+        font-size: 0.8125rem;
+      }
+    }
+  }
+}
