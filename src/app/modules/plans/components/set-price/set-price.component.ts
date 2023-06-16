@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   pricingModels,
   selectOptions,
@@ -13,6 +8,9 @@ import {
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { PriceService } from '../../price.service';
 import { Subscription } from 'rxjs';
+import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-set-price',
   templateUrl: './set-price.component.html',
@@ -23,45 +21,50 @@ export class SetPriceComponent {
   pricingModelTypes: selectOptions[] = pricingModels;
   periodUnit: string[] = periodUnit;
   selectedTab: number = 0;
-  previePrice: number = 0;
-  tiredTotal: number = 0;
-  volumeTotal=1
-  stairTotal=0;
-  price:any;
+  previePrice: number;
+  tiredTotal: number;
+  volumeTotal: number;
+  stairTotal: number;
+  price: any;
   monthlyBilling = ['3', '4', '5'];
   readOnly: boolean = false;
-   start=0;
-   check:string;
-   dropKey:number
+  start = 0;
+  check: string;
+  dropKey: number;
   public setPriceForm: FormGroup;
-  constructor(private form: FormBuilder, private priceService: PriceService) {}
+  constructor(
+    private form: FormBuilder,
+    private priceService: PriceService,
+    public dialog: MatDialog,
+    private router: Router
+  ) {}
   ngOnInit() {
-  this.formData()
-}
-formData(){
-  this.setPriceForm = this.form.group({
-    priceid: ['', Validators.required],
-    planID: ['qwerty123', Validators.required],
-    name: ['', Validators.required],
-    description: ['', Validators.required],
-    invoiceNotes: ['', Validators.required],
-    currencyCode: ['USD', Validators.required],
-    pricingModel: ['', Validators.required],
-    price: ['', Validators.required],
-    periodUnit: ['daily', Validators.required],
-    period: ['1', Validators.required],
-    isExpirable: [true],
-    noOfCycle: ['', Validators.required],
-    status:"active",
-    tiers: this.form.array([
-      this.form.group({
-        startingUnit: { value: '1', disabled: true },
-        endingUnit: { value: ' ', disabled: true },
-        price: [''],
-      }),
-    ]),
-  });
-}
+    this.formData();
+  }
+  formData() {
+    this.setPriceForm = this.form.group({
+      priceid: ['', Validators.required],
+      planID: ['qwerty123', Validators.required],
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      invoiceNotes: ['', Validators.required],
+      currencyCode: ['USD', Validators.required],
+      pricingModel: ['', Validators.required],
+      price: ['', Validators.required],
+      periodUnit: ['daily', Validators.required],
+      period: ['1', Validators.required],
+      isExpirable: [true],
+      noOfCycle: ['', Validators.required],
+      status: 'active',
+      tiers: this.form.array([
+        this.form.group({
+          startingUnit: { value: '1', disabled: true },
+          endingUnit: { value: '&above', disabled: true },
+          price: [''],
+        }),
+      ]),
+    });
+  }
   getLevelList(index: number) {
     const tierList = this.tiers.at(index) as FormGroup;
     return tierList;
@@ -86,7 +89,7 @@ formData(){
     this.tiers.push(
       this.form.group({
         startingUnit: { value: '', disabled: true },
-        endingUnit: [''],
+        endingUnit: ['&above'],
         price: [''],
       })
     );
@@ -94,16 +97,16 @@ formData(){
     const lastIdx = this.lastObj();
     const prevIdx = this.secondLastObj();
     lastIdx.patchValue({
-      endingUnit: ' ',
+      endingUnit: '&above',
     });
     lastIdx.get('endingUnit')?.disable();
     prevIdx.patchValue({
-      endingUnit: '',
+      endingUnit: ' ',
     });
     prevIdx.get('endingUnit')?.enable();
   }
   onTabChange(event: MatTabChangeEvent): void {
-    this.formData()
+    this.formData();
     this.selectedTab = event.index;
     if (this.selectedTab == 0) {
       this.setPeriod('daily');
@@ -115,14 +118,13 @@ formData(){
       this.setPeriod('yearly');
     }
   }
-  onDropdownKey(event:number): void {
-   this.dropKey=event
-  
+  onDropdownKey(event: number): void {
+    this.dropKey = event;
   }
   deleteTier(tierIndex: number) {
     this.tiers.removeAt(tierIndex);
     const lastIdx = this.lastObj();
-    lastIdx.get('endingUnit')?.setValue(' ');
+    lastIdx.get('endingUnit')?.setValue('&above');
     lastIdx.get('endingUnit')?.disable();
   }
   selectedOption: string;
@@ -141,37 +143,59 @@ formData(){
       });
     }
   }
- 
-  pricingModelValueToName(price:any){
-    
+  pricingModelSetEndingUnitEmpty(price: any) {
+    for (let i = 0; i < price.tiers.length; i++) {
+      if (price.tiers[i].endingUnit == '&above') {
+        price.tiers[i].endingUnit = ' ';
+      }
+    }
+  }
+
+  pricingModelValueToName(price: any) {
     if (price) {
       price.priceid =
         price.planID + '-' + price.currencyCode + '-' + price.periodUnit;
     }
-    if(price.pricingModel==1){
-      price.pricingModel="Flat fee"
-    }  
-     if(price.pricingModel==2){
-      price.pricingModel="Per unit"
+    if (price.pricingModel == 1) {
+      price.pricingModel = 'Flat fee';
+      price.tiers = [];
     }
-    if(price.pricingModel==3){
-      price.pricingModel="Tired"
+    if (price.pricingModel == 2) {
+      price.pricingModel = 'Per unit';
+      price.tiers = [];
     }
-    if(price.pricingModel==4){
-      price.pricingModel="Volume"
-    }   if(price.pricingModel==5){
-      price.pricingModel="Stairstep"
+    if (price.pricingModel == 3) {
+      price.pricingModel = 'Tired';
+      this.pricingModelSetEndingUnitEmpty(price);
+    }
+    if (price.pricingModel == 4) {
+      price.pricingModel = 'Volume';
+      this.pricingModelSetEndingUnitEmpty(price);
+    }
+    if (price.pricingModel == 5) {
+      price.pricingModel = 'Stairstep';
+      this.pricingModelSetEndingUnitEmpty(price);
     }
   }
-   submitValues() {
+  submitValues() {
     this.price = this.setPriceForm.getRawValue();
-   this.pricingModelValueToName(this.price);
+    this.pricingModelValueToName(this.price);
     this.subscription = this.priceService
       .createPrice(this.price)
       .subscribe((res) => {
+        this.openSuccess();
+        this.router.navigate(['/plans']);
       });
-   }
- 
+  }
+  openSuccess() {
+    this.dialog.open(SuccessDialogComponent, {
+      width: '420px',
+      data: {
+        module: 'Plan',
+      },
+    });
+  }
+
   checkIndex(index: number) {
     const position = this.tiers.length - 1;
     if (index > 0 && index !== position) {
@@ -183,27 +207,24 @@ formData(){
 
   setStartingValue(event: any, index: number) {
     const setStarting = Number(event.target.value);
-    if(this.start<setStarting){
-    this.start=Number(event.target.value)+1;
-    const getNext = index + 1;
-    const NextObject = this.getLevelList(getNext);
-    NextObject.patchValue({
-      startingUnit: setStarting + 1,
-    });
-  }
-  else{
-     this.check="plz put above value from startingunit";
-  }
+    if (this.start < setStarting) {
+      this.start = Number(event.target.value) + 1;
+      const getNext = index + 1;
+      const NextObject = this.getLevelList(getNext);
+      NextObject.patchValue({
+        startingUnit: setStarting + 1,
+      });
+    } else {
+      this.check = 'plz put above value from startingunit';
+    }
   }
   getPreviewPrice(event: any) {
-   
     let input = parseInt(event.target.value);
     const arr = this.setPriceForm.value.tiers;
     let i = 0;
     let total1 = 0;
-    let startUnit=1;
+    let startUnit = 1;
     while (i < arr.length && input > 0) {
-     
       if (i == arr.length - 1) {
         total1 += input * arr[i].price;
         input = 0;
@@ -211,11 +232,10 @@ formData(){
       let gap = 0;
       if (i == 0) {
         gap = arr[0].endingUnit;
-        
       } else {
         gap = arr[i].endingUnit - arr[i - 1].endingUnit;
       }
-     
+
       if (input >= gap) {
         total1 += arr[i].price * gap;
         input -= gap;
@@ -229,17 +249,27 @@ formData(){
 
     this.tiredTotal = total1;
     this.previePrice = event.target.value * this.setPriceForm.value.price;
-    let inputval= parseInt(event.target.value)
-
-    for( i=0;i< arr.length;i++){
-      if(startUnit<=inputval && inputval<=arr[i].endingUnit||arr[i].endingUnit===undefined){
-        this.stairTotal=arr[i].price;
-        this.volumeTotal=inputval*arr[i].price;
-        startUnit=(parseInt(arr[i].endingUnit))+1;
-         break;
+    let inputval = parseInt(event.target.value);
+    let voltotal = 0;
+    let stTotal = 0;
+    let j = 0;
+    while (j < arr.length && inputval > 0) {
+      if (
+        (startUnit <= inputval && inputval <= arr[j].endingUnit) ||
+        arr[j].endingUnit === undefined
+      ) {
+        stTotal = arr[j].price;
+        this.stairTotal = stTotal;
+        voltotal = inputval * arr[j].price;
+        this.volumeTotal = voltotal;
+        startUnit = parseInt(arr[j].endingUnit) + 1;
+        break;
       }
+      j++;
     }
-     }
+    this.stairTotal = stTotal;
+    this.volumeTotal = voltotal;
+  }
 
   ngOnDestroy(): void {
     if (this.subscription) {
