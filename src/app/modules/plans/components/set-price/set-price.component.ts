@@ -43,9 +43,9 @@ export class SetPriceComponent {
   }
   formData() {
     this.setPriceForm = this.form.group({
-      priceid: ['', Validators.required],
-      planID: ['qwerty123', Validators.required],
-      name: ['', Validators.required],
+      priceId: ['', Validators.required],
+      planId: ['string2', Validators.required],
+      name: ['aps', Validators.required],
       description: ['', Validators.required],
       invoiceNotes: ['', Validators.required],
       currencyCode: ['USD', Validators.required],
@@ -138,7 +138,7 @@ export class SetPriceComponent {
       });
     } else if (this.selectedOption === '2') {
       this.setPriceForm.patchValue({
-        noOfCycle: '0',
+        noOfCycle: null,
         isExpirable: false,
       });
     }
@@ -153,27 +153,27 @@ export class SetPriceComponent {
 
   pricingModelValueToName(price: any) {
     if (price) {
-      price.priceid =
-        price.planID + '-' + price.currencyCode + '-' + price.periodUnit;
+      price.priceId =
+        price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
     }
     if (price.pricingModel == 1) {
-      price.pricingModel = 'Flat fee';
+      price.pricingModel = 'flat_fee';
       price.tiers = [];
     }
     if (price.pricingModel == 2) {
-      price.pricingModel = 'Per unit';
+      price.pricingModel = 'per_unit';
       price.tiers = [];
     }
     if (price.pricingModel == 3) {
-      price.pricingModel = 'Tired';
+      price.pricingModel = 'tiered';
       this.pricingModelSetEndingUnitEmpty(price);
     }
     if (price.pricingModel == 4) {
-      price.pricingModel = 'Volume';
+      price.pricingModel = 'volume';
       this.pricingModelSetEndingUnitEmpty(price);
     }
     if (price.pricingModel == 5) {
-      price.pricingModel = 'Stairstep';
+      price.pricingModel = 'stairStep';
       this.pricingModelSetEndingUnitEmpty(price);
     }
   }

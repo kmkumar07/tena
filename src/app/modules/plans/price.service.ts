@@ -12,8 +12,8 @@ export class PriceService {
   error$ = new Subject<string>();
 
   constructor(private http: HttpClient) { }
-  createPrice(product): Observable<any> {
-    return this.http.post(`${environment.price}`, product).pipe(
+  createPrice(price): Observable<any> {
+    return this.http.post(`${environment.price}`, price).pipe(
       map((res: any) => {
         this.priceSubject.next(res.data);        
         return res.data;
