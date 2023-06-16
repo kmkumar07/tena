@@ -63,6 +63,7 @@
           position: relative;
         }
         td {
+          white-space: nowrap;
           position: relative;
           &.Active {
             color: color("green", "darken-3");
