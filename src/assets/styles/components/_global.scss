@@ -62,9 +62,6 @@ input {
   font-family: "Material Symbols Rounded" !important;
   font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
 }
-.m-0 {
-  margin: 0 !important;
-}
 .search-icon {
   color: rgba(50, 71, 92, 0.54);
 }
@@ -104,13 +101,6 @@ label {
   background: #f3f3f3;
 }
 
-//need to shift this class
-.w-100 {
-  width: 100%;
-}
-.mt-1 {
-  margin-top: 0.25rem !important;
-}
 // global border classes
 .border-1 {
   border-radius: 0.25rem;

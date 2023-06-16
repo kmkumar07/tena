@@ -67,7 +67,7 @@
           &.Active {
             color: color("green", "darken-3");
           }
-          &.InActive{
+          &.InActive {
             color: color("red", "darken-2");
           }
           &:nth-last-child(1) {
@@ -129,12 +129,13 @@
   }
 }
 // checked stripe table
-.primary-table.checked-stripe-table, .checked-stripe-table {
+.primary-table.checked-stripe-table,
+.checked-stripe-table {
   .mat-mdc-checkbox
     .mdc-checkbox
-    .mdc-checkbox__native-control:enabled:not(:checked):not(
-      :indeterminate
-    ):not([data-indeterminate="true"])
+    .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not(
+      [data-indeterminate="true"]
+    )
     ~ .mdc-checkbox__background {
     border-color: color("grey", "lighten-9");
   }
@@ -188,8 +189,7 @@
           }
         }
       }
-      .mdc-text-field--filled:not(.mdc-text-field--disabled)
-        .mdc-line-ripple {
+      .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple {
         &::before {
           border: none;
         }
@@ -245,6 +245,36 @@
   .mat-mdc-menu-content {
     .mat-mdc-menu-item {
       min-height: 2rem;
+    }
+  }
+}
+.listing-filter.mat-mdc-menu-panel.mdc-menu-surface {
+  padding: 0;
+  border-radius: 0.25rem;
+  min-width: 21.25rem;
+  .mat-mdc-tab-group {
+    .mat-mdc-tab-label-container {
+      .mat-mdc-tab-labels {
+        .mat-mdc-tab {
+          min-width: 50%;
+          height: 2.375rem;
+        }
+      }
+    }
+    .mat-mdc-tab-body-wrapper {
+      .mat-mdc-tab-body-content {
+        .filter-list {
+          padding: 0.5rem 0.625rem;
+          .mat-mdc-list-item {
+            height: 2rem !important;
+            margin-bottom: 0.4375rem;
+            border-radius: 0.125rem;
+            &:hover {
+              background-color: #f2f0fd;
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -373,15 +403,63 @@ ul {
 }
 
 // 7. coupons dialog
-.coupons-dialog{
+.coupons-dialog {
   position: relative;
   padding: 3.8125rem 2.625rem 2.625rem;
-  .close-dialog-icon{
+  .close-dialog-icon {
     position: absolute;
     top: 2.9375rem;
     right: 2.9375rem;
-    .mat-icon{
-      color: color('shades' , "black");
+    .mat-icon {
+      color: color("shades", "black");
+    }
+  }
+}
+
+.mat-calendar {
+  .mat-calendar-content {
+    padding: 0rem;
+    .mat-calendar-table-header {
+      tr {
+        th {
+          padding: 0;
+          font-size: 0.75rem;
+          &:nth-last-child(1) {
+            color: color("error", "primary");
+          }
+          &:nth-last-child(2) {
+            color: color("error", "primary");
+          }
+        }
+        &:nth-child(2){
+          display: none;
+        }
+      }
+    }
+    .mat-calendar-table-header-divider::after {
+      display: none;
+    }
+    .mat-calendar-body {
+      tr {
+        td{
+          max-height: 1.8rem;
+          max-width: 1.8rem;
+        }
+        &:nth-child(1) {
+          td {
+            &:nth-child(1) {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.mat-datepicker-content-container {
+  .mat-calendar {
+    .mat-calendar-content {
+      padding: 1.3125rem;
     }
   }
 }

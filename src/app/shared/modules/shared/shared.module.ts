@@ -13,7 +13,8 @@ import { CustomDateHeaderComponent } from '../../components/custom-date-header/c
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    
   ],
   exports: [
     NgxTippyModule,
