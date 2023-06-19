@@ -17,7 +17,7 @@ const SFT_UI_MODULES = [SftButtonModule, NgxTippyModule];
   imports: SFT_UI_MODULES,
   exports: SFT_UI_MODULES,
   declarations: [
-    TypographyComponent
+    TypographyComponent,
   ],
 })
 export class SoftobizUiModule {}

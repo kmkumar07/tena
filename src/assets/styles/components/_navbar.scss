@@ -91,32 +91,32 @@
     .notifications-section {
       height: 1.25rem;
     }
-    .user-profile {
-      margin-left: 2.5rem;
-      display: flex;
-      align-items: center;
-      .user-image {
-        @include circle(2.625rem);
-      }
-      .user-info {
-        margin-left: 0.625rem;
-        width: 4.625rem;
-        .name {
-          display: block;
-          font-weight: 500;
-          font-size: 0.875rem;
-          color: color("text", "secondary");
-          width: 100%;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-        .role {
-          font-size: 0.75rem;
-          font-weight: 400;
-          color: color("text", "dark");
-        }
-      }
+  }
+}
+.user-profile {
+  margin-left: 2.5rem;
+  display: flex;
+  align-items: center;
+  .user-image {
+    @include circle(2.625rem);
+  }
+  .user-info {
+    margin-left: 0.625rem;
+    width: 4.625rem;
+    .name {
+      display: block;
+      font-weight: 500;
+      font-size: 0.875rem;
+      color: color("text", "secondary");
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .role {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: color("text", "dark");
     }
   }
 }
@@ -127,7 +127,7 @@
   width: 100%;
   height: 2.625rem;
   position: relative;
-  padding: 0.75rem 1.5rem 1rem 2.6875rem;
+  padding: 0 1.5rem 0 2.6875rem;
   &.basic {
     background-color: color("grey", "primary");
   }
@@ -149,6 +149,15 @@
   }
   input::-webkit-input-placeholder {
     color: color("text", "primary");
+  }
+  &:hover {
+    box-shadow: 0 0 0 2px #CCC7F2;
+  }
+  &:active {
+    box-shadow: 0 0 0 2px #8D80EC;
+  }
+  &:focus {
+    box-shadow: 0 0 0 2px #8D80EC;
   }
 }
 // sidebar

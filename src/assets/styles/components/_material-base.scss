@@ -67,7 +67,7 @@
           &.Active {
             color: color("green", "darken-3");
           }
-          &.InActive{
+          &.InActive {
             color: color("red", "darken-2");
           }
           &:nth-last-child(1) {
@@ -401,5 +401,54 @@ ul {
     .mat-icon {
       color: color("shades", "black");
     }
+  }
+}
+
+// switch
+
+.switch-box {
+  &.mat-mdc-slide-toggle .mdc-switch .mdc-switch__track {
+    height: 1.25rem;
+    border-radius: .9375rem;
+  }
+
+  &.mat-mdc-slide-toggle .mdc-switch.mdc-switch--selected .mdc-switch__icon {
+    width: .625rem;
+    height: .625rem;
+  }
+
+  .mdc-switch__icons {
+    /* height: 16px; */
+    /* width: 16px; */
+  }
+
+  &.mat-mdc-slide-toggle .mdc-switch .mdc-switch__handle {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &.mat-mdc-slide-toggle .mdc-switch .mdc-switch__handle-track {
+    width: 1rem;
+  }
+
+  svg.mdc-switch__icon.mdc-switch__icon--on {
+    display: none;
+  }
+
+  svg.mdc-switch__icon.mdc-switch__icon--off {
+    display: none;
+  }
+  &.mat-mdc-slide-toggle
+    .mdc-switch.mdc-switch--selected:enabled
+    .mdc-switch__icon {
+    fill: white;
+  }
+
+  .mdc-switch__shadow {
+    background: white;
+    box-shadow: none;
+  }
+  &.mat-mdc-slide-toggle .mdc-switch {
+    width: 2rem;
   }
 }

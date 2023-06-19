@@ -1,13 +1,13 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { CheckboxComponent } from '../checkbox.component';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SwitchButtonComponent } from '../switch.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
-const meta: Meta<CheckboxComponent> = {
-  component: CheckboxComponent,
-  title: 'softobiz-ui/Atom/Checkbox',
+const meta: Meta<SwitchButtonComponent> = {
+  component: SwitchButtonComponent,
+  title: 'softobiz-ui/Atom/switch',
   tags: ['autodocs'],
-  render: (args: CheckboxComponent) => ({
+  render: (args: SwitchButtonComponent) => ({
     props: {
       backgroundColor: null,
       ...args,
@@ -29,31 +29,32 @@ const meta: Meta<CheckboxComponent> = {
     },
     indeterminate: {
       control: 'boolean',
-      option: [true, false]
+      option: [true, false],
     },
     label: {
-      control:'text'
+      control: 'text',
     },
   },
   decorators: [
     moduleMetadata({
-      imports: [MatCheckboxModule],
+      imports: [MatSlideToggleModule],
     }),
   ],
 };
 
 export default meta;
-type Story = StoryObj<CheckboxComponent>;
+type Story = StoryObj<SwitchButtonComponent>;
 
 // More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
 
-export const Checkbox: Story = {
+export const SwitchButton: Story = {
   args: {
     indeterminate: false,
     label: 'Click Me!',
     checked: false,
-    disable:false,
+    disable: false,
     disableRipple: false,
+    color: "primary",
     labelPosition: 'after',
   },
 };
