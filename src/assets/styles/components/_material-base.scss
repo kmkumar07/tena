@@ -63,6 +63,7 @@
           position: relative;
         }
         td {
+          white-space: nowrap;
           position: relative;
           &.Active {
             color: color("green", "darken-3");
@@ -248,6 +249,36 @@
     }
   }
 }
+.listing-filter.mat-mdc-menu-panel.mdc-menu-surface {
+  padding: 0;
+  border-radius: 0.25rem;
+  min-width: 21.25rem;
+  .mat-mdc-tab-group {
+    .mat-mdc-tab-label-container {
+      .mat-mdc-tab-labels {
+        .mat-mdc-tab {
+          min-width: 50%;
+          height: 2.375rem;
+        }
+      }
+    }
+    .mat-mdc-tab-body-wrapper {
+      .mat-mdc-tab-body-content {
+        .filter-list {
+          padding: 0.5rem 0.625rem;
+          .mat-mdc-list-item {
+            height: 2rem !important;
+            margin-bottom: 0.4375rem;
+            border-radius: 0.125rem;
+            &:hover {
+              background-color: #f2f0fd;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 .edit-menu + * .cdk-overlay-pane {
   transform: translate(-2.2rem, -1.6875rem) !important;
 }
@@ -409,12 +440,12 @@ ul {
 .switch-box {
   &.mat-mdc-slide-toggle .mdc-switch .mdc-switch__track {
     height: 1.25rem;
-    border-radius: .9375rem;
+    border-radius: 0.9375rem;
   }
 
   &.mat-mdc-slide-toggle .mdc-switch.mdc-switch--selected .mdc-switch__icon {
-    width: .625rem;
-    height: .625rem;
+    width: 0.625rem;
+    height: 0.625rem;
   }
 
   .mdc-switch__icons {
@@ -450,5 +481,53 @@ ul {
   }
   &.mat-mdc-slide-toggle .mdc-switch {
     width: 2rem;
+  }
+}
+
+.mat-calendar {
+  .mat-calendar-content {
+    padding: 0rem;
+    .mat-calendar-table-header {
+      tr {
+        th {
+          padding: 0;
+          font-size: 0.75rem;
+          &:nth-last-child(1) {
+            color: color("error", "primary");
+          }
+          &:nth-last-child(2) {
+            color: color("error", "primary");
+          }
+        }
+        &:nth-child(2) {
+          display: none;
+        }
+      }
+    }
+    .mat-calendar-table-header-divider::after {
+      display: none;
+    }
+    .mat-calendar-body {
+      tr {
+        td {
+          max-height: 1.8rem;
+          max-width: 1.8rem;
+        }
+        &:nth-child(1) {
+          td {
+            &:nth-child(1) {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.mat-datepicker-content-container {
+  .mat-calendar {
+    .mat-calendar-content {
+      padding: 1.3125rem;
+    }
   }
 }

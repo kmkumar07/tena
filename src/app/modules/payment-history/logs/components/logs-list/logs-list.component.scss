@@ -1,0 +1,8 @@
+::ng-deep .mat-datepicker-panel {
+    position: absolute !important;
+    top: auto !important;
+    left: auto !important;
+    right: 0 !important;
+    bottom: calc(100% + 5px) !important;
+    transform: none !important;
+  }

@@ -1,1 +1,59 @@
-<p>log-view works!</p>
+<div class="logs-view main-bg border-2 overflow-auto border-2 w-full h-full pb-4">
+    <div class="flex align-center title">
+        <mat-icon class="material-symbols-outlined pointer text-headline-dark mr-2"
+            [routerLink]="'/coupons'">keyboard_backspace</mat-icon>
+        <h2 class="mat-headline-5 text-headline-dark">Logs</h2>
+    </div>
+    <div class="inner-wrapper">
+        <div class="table-wrapper border-2">
+            <table class="w-full">
+                <tr>
+                    <th>
+                        <span class="text-dark mr-3 font-weight-400 mat-subtitle-2">Event</span>
+                        <span class="chip-active text-white font-weight-400 mat-subtitle-2 inline-block">Active</span>
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-dark">
+                        Name               : 
+                    </td>
+                    <td class="text-right text-dark">
+                        Subscription has been created for the Plan.
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-dark">
+                        Timestamp    : 
+                    </td>
+                    <td class="text-right text-dark">
+                        Aug 7th, 2022 9:09am
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-dark">
+                        Customer Info.   :
+                    </td>
+                    <td class="text-right text-dark">
+                        Greenplus Enterprises
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-dark">
+                        Source Type    :
+                    </td>
+                    <td class="text-right text-dark">
+                        Via Portal
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="text-right pt-4">
+            <button mat-flat-button color="primary">
+                Close
+            </button>
+        </div>
+    </div>
+</div>

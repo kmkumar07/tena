@@ -1,1 +1,121 @@
-<p>logs-list works!</p>
+<div
+  *ngIf="LogsData.length == 0"
+  class="relative main-bg border-2 w-full h-full p-7 overflow-scroll"
+>
+  <app-empty-listing [items]="emptyCoupons"></app-empty-listing>
+</div>
+<div
+  *ngIf="LogsData.length > 0"
+  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll logs-list"
+>
+  <div class="flex justify-between align-center px-1">
+    <div class="flex align-center">
+      <h1 class="text-text text-dark">Logs</h1>
+    </div>
+    <div class="flex align-center">
+      <div class="global-search light mr-2 border-1">
+        <span class="search-icon pointer">
+          <img
+            src="../../../../assets/images/icons/search.svg"
+            alt="search-icon"
+          />
+        </span>
+        <input type="text" placeholder="Search anything..." />
+      </div>
+      <div
+        class="tab-wrapper p-2 flex align-center w-full pointer"
+        [matMenuTriggerFor]="filterMenu"
+      >
+        <div class="flex mr-4">
+          <img
+            src="../../../../../assets/images/icons/primary-calendar-icon.svg"
+            alt="calendar-icon"
+          />
+        </div>
+        <p>2023-08-07 - 2023- 08-07</p>
+      </div>
+      <mat-menu #filterMenu="matMenu" class="listing-filter">
+        <div class="tab-panel" (click)="preventClose($event)">
+          <mat-tab-group
+            mat-stretch-tabs="false"
+            mat-align-tabs="start"
+          >
+            <mat-tab label="Present">
+              <mat-list role="list" class="filter-list">
+                <mat-list-item
+                  role="listitem"
+                  *ngFor="let option of filterOptions"
+                  (click)="setFilter(option)"
+                  >{{ option }}</mat-list-item
+                >
+              </mat-list>
+            </mat-tab>
+            <mat-tab label="Custom">
+              <div class="py-2 px-6">
+                <div class="flex align-center input-wrapper px-2">
+                  <div class="block filter-input mr-4">
+                    <span class="block mat-body-1 pl-2 mb-1"> Start </span>
+                    <mat-form-field>
+                      <input
+                        matInput
+                        placeholder="Start Date"
+                        [(ngModel)]="startDate"
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="block filter-input">
+                    <span class="block mat-body-1 pl-2 mb-1"> End </span>
+                    <mat-form-field>
+                      <input matInput type="text" placeholder="end Date" />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <mat-calendar ></mat-calendar>
+                <div class="w-full flex justify-end align-center">
+                  <button mat-stroked-button color="primary" class="mr-3">Cancel</button>
+                  <button mat-flat-button color="primary">Apply</button>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </mat-menu>
+    </div>
+  </div>
+  <div class="primary-table overflow-visible mt-8 px-1 pb-2 table-wrapper">
+    <table mat-table [dataSource]="LogsData">
+      <!-- TimestampColumn -->
+      <ng-container matColumnDef="Timestamp">
+        <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+        <td mat-cell *matCellDef="let element">{{ element.Timestamp }}</td>
+      </ng-container>
+
+      <!-- Events Column -->
+      <ng-container matColumnDef="Events">
+        <th mat-header-cell *matHeaderCellDef>Events</th>
+        <td mat-cell *matCellDef="let element">{{ element.Events }}</td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="Customer_Info">
+        <th mat-header-cell *matHeaderCellDef>Customer Info</th>
+        <td mat-cell *matCellDef="let element">
+          <p>{{ element.Customer_Info }}</p>
+        </td>
+      </ng-container>
+
+      <!-- Created Date Column -->
+      <ng-container matColumnDef="Event_Source">
+        <th mat-header-cell *matHeaderCellDef>Event Source</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="primary-light-6-bg p-1 border-1 text-primary">
+            {{ element.Event_Source }}
+          </span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

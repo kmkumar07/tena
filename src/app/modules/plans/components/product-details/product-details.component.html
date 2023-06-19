@@ -1,12 +1,20 @@
 <div class="plan-product-details main-bg w-full h-full overflow-auto border-2 py-8 pl-11 pr-10">
-  <div class="flex align-center mb-2">
-    <mat-icon
-      class="material-symbols-outlined pointer"
-      color="primary"
-      [routerLink]="'/features'"
-      >keyboard_backspace</mat-icon
-    >
-    <span class="mat-h1 primary-text text-main ml-2">Create Plan</span>
+  <div class="flex align-center justify-between mb-2">
+    <div class="flex align-center">
+      <mat-icon
+        class="material-symbols-outlined pointer"
+        color="primary"
+        [routerLink]="'/features'"
+        >keyboard_backspace</mat-icon
+      >
+      <span class="mat-h1 primary-text text-main ml-2">Create Plan</span>
+    </div>
+    <div class="flex align-center">
+      <button mat-stroked-button color="primary" class="mr-2">
+        Dismiss
+      </button>
+      <button mat-flat-button color="primary">Add</button>
+    </div>
   </div>
   <div class="flex align-center">
     <span class="pl-8 grey-text text-lighten-9"> Create plan </span>

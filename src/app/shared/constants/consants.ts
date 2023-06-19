@@ -81,7 +81,15 @@ export interface FeatureList {
   type: string;
   status: string;
 }
-
+export interface Customer {
+  id: string;
+  name: string;
+  companyName: string;
+  email: string,
+  workPhone: string,
+  website: string,
+  subscription: string
+}
 export interface GetFeature {
   featureId: string;
   productID: string;
@@ -96,85 +104,92 @@ export interface invoice {
   id: string;
   customer_info: string;
   issued_on: string;
-  voided_on:string;
-  paid_on:string;
+  voided_on: string;
+  paid_on: string;
   created_at: string;
   status: string;
-  amount:string;
+  amount: string;
+}
+
+export interface logs {
+  Timestamp: any;
+  Events: string;
+  Customer_Info: string;
+  Event_Source: string;
 }
 export const MENUITEMS = [
   {
-    state: 'dashboard',
+    state: '/overview',
     type: 'link',
     name: 'Overview',
     icon: 'space_dashboard',
     category: 'Dashboard',
   },
   {
-    state: 'button',
+    state: '/customers',
     type: 'link',
     name: 'Customer',
     icon: 'account_box',
     category: 'Dashboard',
   },
   {
-    state: 'grid',
+    state: '/subscription',
     type: 'link',
     name: 'Subscription',
     icon: 'card_membership',
     category: 'Dashboard',
   },
   {
-    state: 'products',
+    state: '/products',
     type: 'link',
     name: 'Products',
     icon: 'local_mall',
     category: 'Product_Catalog',
   },
   {
-    state: 'features',
+    state: '/features',
     type: 'link',
     name: 'Features',
     icon: 'featured_play_list',
     category: 'Product_Catalog',
   },
   {
-    state: 'plans',
+    state: '/plans',
     type: 'link',
     name: 'Plans',
     icon: 'quick_reference_all',
     category: 'Product_Catalog',
   },
   {
-    state: 'stepper',
+    state: '/stepper',
     type: 'link',
     name: 'Add Ons',
     icon: 'add_notes',
     category: 'Product_Catalog',
   },
   {
-    state: 'coupons',
+    state: '/coupons',
     type: 'link',
     name: 'Coupons',
     icon: 'confirmation_number',
     category: 'Product_Catalog',
   },
   {
-    state: 'transactions',
+    state: '/payment/transactions',
     type: 'link',
     name: 'Transactions',
     icon: 'compare_arrows',
     category: 'Payment History',
   },
   {
-    state: 'invoices',
+    state: '/payment/invoices',
     type: 'link',
     name: 'Invoices',
     icon: 'receipt_long',
     category: 'Payment History',
   },
   {
-    state: 'logs',
+    state: '/payment/logs',
     type: 'link',
     name: 'Logs',
     icon: 'list_alt',
@@ -365,17 +380,16 @@ export const InvoiceList = [
     id: '#S0-001',
     customerInfo: 'Greenplus Enterprises',
     issuedOn: 'Jan 14, 2023',
-    voidedOn:'-',
+    voidedOn: '-',
     paidOn: 'Jan 16, 2023',
     status: 'Active',
     amount: '199.00',
-    
   },
   {
     id: '#S0-002',
     customerInfo: 'Greenplus Enterprises',
     issuedOn: 'Jan 14, 2023',
-    voidedOn:'-',
+    voidedOn: '-',
     paidOn: 'Jan 16, 2023',
     status: 'Active',
     amount: '199.00',
@@ -384,10 +398,44 @@ export const InvoiceList = [
     id: '#S0-003',
     customerInfo: 'Greenplus Enterprises',
     issuedOn: 'Jan 14, 2023',
-    voidedOn:'-',
+    voidedOn: '-',
     paidOn: 'Jan 16, 2023',
     status: 'Payment Due',
     amount: '199.00',
+  },
+];
+export const CustomerList = [
+  {
+    id: '#S0-001',
+    name: 'Alex C',
+    companyName: 'Greenplus Enterprises',
+    email: 'alex@example.com',
+    workPhone: '9876778865',
+    website: 'www.greenplus.com',
+    subscription: '2 subscripton (Available)',
+  },
+  {
+    id: '#S0-002',
+    name: 'Zen D',
+    companyName: 'Zencorporation',
+    email: 'zen@example.com',
+    workPhone: '839103113',
+    website: 'www.zencorporation.com',
+    subscription: '1 subscripton (Available)',
+  },
+];
+export const Logs_Data = [
+  {
+    Timestamp: 'Aug 7th, 2022 9:09am',
+    Events: 'Subscription has been created for the Plan.',
+    Customer_Info: 'Greenplus Enterprises',
+    Event_Source: 'Via Portal',
+  },
+  {
+    Timestamp: 'Aug 7th, 2022 9:09am',
+    Events: 'Active  subscription created for demo',
+    Customer_Info: 'Zencorporation',
+    Event_Source: 'Via Interface',
   },
 ];
 export const feature_types = [
@@ -488,6 +536,18 @@ export const noPageFound = [
     path: '',
   },
 ];
+export const noCustomers = [
+  {
+    heading: 'Customers',
+    imgPath: '../../../../assets/images/empty-illustrations-6.png',
+    alt: 'no customers',
+    subtext: 'No customer yet',
+    text: 'Customers No customer yet After your first customer you will be able to view it here.',
+    showButton: false,
+    buttonTxt: 'Back to home',
+    path: '',
+  },
+];
 export const nocoupons = [
   {
     heading: '',
@@ -518,6 +578,18 @@ export const noInvoice = [
     subtext: 'No invoice yet',
     text: 'After your first transaction you will be able to view invoice here.',
     showButton: false,
+  },
+];
+export const noLogs = [
+  {
+    heading: '',
+    imgPath: '../../../../assets/images/empty-coupons.png',
+    alt: 'no coupons available',
+    subtext: 'Start Adding Coupons',
+    text: 'Click on the below buttons to open create coupons form.',
+    showButton: true,
+    buttonTxt: 'Back to home',
+    path: '',
   },
 ];
 export const Stepper = [
@@ -551,4 +623,14 @@ export const Stepper = [
     caption: 'Charges',
     isVisible: false,
   },
+];
+export const listFilterOptions = [
+  'Yesterday',
+  'Last 7 days',
+  'Last Week',
+  'Last 30 days',
+  'Last 4 weeks',
+  'Last 12 weeks',
+  'Current month',
+  'Last calendar month',
 ];
