@@ -6,11 +6,11 @@ import {
   periodUnit,
 } from 'src/app/shared/constants/consants';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { PriceService } from '../../price.service';
 import { Subscription } from 'rxjs';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { PlanService } from '../../services/plan.service';
 @Component({
   selector: 'app-set-price',
   templateUrl: './set-price.component.html',
@@ -34,7 +34,7 @@ export class SetPriceComponent {
   public setPriceForm: FormGroup;
   constructor(
     private form: FormBuilder,
-    private priceService: PriceService,
+    private priceService: PlanService,
     public dialog: MatDialog,
     private router: Router
   ) {}

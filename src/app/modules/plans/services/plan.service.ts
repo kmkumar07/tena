@@ -10,13 +10,15 @@ import { environment } from 'src/environments/environment';
 export class PlanService {
   private planSubject = new BehaviorSubject<any>(null);
   public plan$ = this.planSubject.asObservable();
+  private priceSubject = new BehaviorSubject<any>(null);
+  public price$ = this.priceSubject.asObservable();
   plans: PlanList[] = [];
   error$ = new Subject<string>();
 
   constructor(private http: HttpClient) {}
 
   addPlan(plan: any): Observable<Plan> {
-    return this.http.post(`${environment.planUrl}`, plan).pipe(
+    return this.http.post(`${environment.apiUrl}/plans`, plan).pipe(
       map((res: any) => {
         this.planSubject.next(res.data);
         return res.data;
@@ -30,7 +32,7 @@ export class PlanService {
 
   getPlanVariant(PageNumber: number, limit: number): Observable<PlanList[]> {
     return this.http
-      .get<any>(`${environment.planListUrl}?page=${PageNumber}&limit=${limit}`)
+      .get<any>(`${environment.apiUrl}/productVariant?page=${PageNumber}&limit=${limit}`)
       .pipe(
         map((res) => {
           this.planSubject.next(res.data);
@@ -45,7 +47,7 @@ export class PlanService {
   }
 
   deleteProductVariant(id: string) {
-    const url = `${environment.planListUrl}/{productVariantId}?productVariantId=${id}`;
+    const url = `${environment.apiUrl}/productVariant/{productVariantId}?productVariantId=${id}`;
     return this.http.delete(url).pipe(
       map((res) => {
         this.plans = this.plans.filter(
@@ -56,6 +58,20 @@ export class PlanService {
       }),
       catchError((err) => {
         console.log(err);
+        throw err;
+      })
+    );
+  }
+  createPrice(price): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/pricing`, price).pipe(
+      map((res: any) => {
+        this.priceSubject.next(res.data);        
+        return res.data;
+      }),
+
+      catchError((err) => {
+        console.log(err);
+        this.error$.next(err.message);
         throw err;
       })
     );
