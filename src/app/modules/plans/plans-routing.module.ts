@@ -6,6 +6,8 @@ import { CreatePlanComponent } from './components/create-plan/create-plan.compon
 import { SetPriceComponent } from './components/set-price/set-price.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { AddOnsDetailsComponent } from './components/add-ons-details/add-ons-details.component';
+import { FeatureDetailsPopupComponent } from 'src/app/shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
+import { EditProductDetailsComponent } from './components/edit-product-details/edit-product-details.component';
 
 const routes: Routes = [
   { path: '', component: PlansListingComponent },
@@ -13,6 +15,7 @@ const routes: Routes = [
   { path: 'create', component: CreatePlanComponent },
   { path: 'create/set-price', component: SetPriceComponent},
   { path: 'create/product-detail', component: ProductDetailsComponent},
+  { path: 'create/edit-product-detail/:id', component: EditProductDetailsComponent},
   { path: 'create/add-ons', component:AddOnsDetailsComponent},
 ];
 

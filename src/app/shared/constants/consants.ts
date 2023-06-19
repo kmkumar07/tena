@@ -123,6 +123,24 @@ export interface logs {
   Customer_Info: string;
   Event_Source: string;
 }
+export interface Plan {
+  planId: string;
+  internalName: string;
+  externalName: string;
+  type: string;
+  description: string;
+  status: string;
+}
+
+export interface PlanList {
+  productVariantId: string;
+  name: string;
+  productID: string;
+  type: string;
+  features: [];
+  status: string;
+}
+
 export const MENUITEMS = [
   {
     state: '/overview',
