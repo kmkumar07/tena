@@ -658,3 +658,12 @@ export const listFilterOptions = [
   'Current month',
   'Last calendar month',
 ];
+
+export interface ProductVariant {
+  productVariantId: string;
+  name: string;
+  productID: string;
+  type: string;
+  features: [];
+  status: string;
+}
