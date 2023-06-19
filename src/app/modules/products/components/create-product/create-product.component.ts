@@ -101,7 +101,7 @@ export class CreateProductComponent implements OnInit {
     dialogRef.componentInstance.saveSuccess.subscribe((data: { imageUrl: string, imageName: string }) => {
       this.imageUrl = data.imageUrl;
       this.imageName = data.imageName;
-      this.imagePath = environment.imagePath
+      this.imagePath = environment.blobStorageUrl
       console.log("aaaa", this.imageUrl)
     });
   }
