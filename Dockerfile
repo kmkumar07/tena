@@ -3,7 +3,7 @@ WORKDIR /app
 COPY . /app
 RUN npm i
 RUN npm install -g @angular/cli
-RUN ng build:dev
+RUN npm run build:dev
 
 
 FROM nginx
