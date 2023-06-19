@@ -12,6 +12,7 @@ import { SetPriceComponent } from './components/set-price/set-price.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { AddOnsDetailsComponent } from './components/add-ons-details/add-ons-details.component';
 import { HttpClientModule } from '@angular/common/http';
+import { EditProductDetailsComponent } from './components/edit-product-details/edit-product-details.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     PlanAddEmptyLayoutComponent,
     SetPriceComponent,
     ProductDetailsComponent,
-    AddOnsDetailsComponent
+    AddOnsDetailsComponent,
+    EditProductDetailsComponent
   ],
   imports: [
     CommonModule,

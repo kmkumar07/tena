@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, Subject } from 'rxjs';
-import { Plan, PlanList } from 'src/app/shared/constants/consants';
+import { Plan, PlanList, ProductVariant } from 'src/app/shared/constants/consants';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class PlanService {
   constructor(private http: HttpClient) {}
 
   addPlan(plan: any): Observable<Plan> {
-    return this.http.post(`${environment.planUrl}`, plan).pipe(
+    return this.http.post(`${environment.apiUrl}/plans`, plan).pipe(
       map((res: any) => {
         this.planSubject.next(res.data);
         return res.data;
@@ -30,7 +30,7 @@ export class PlanService {
 
   getPlanVariant(PageNumber: number, limit: number): Observable<PlanList[]> {
     return this.http
-      .get<any>(`${environment.planListUrl}?page=${PageNumber}&limit=${limit}`)
+      .get<any>(`${environment.apiUrl}/productVariant/?page=${PageNumber}&limit=${limit}`)
       .pipe(
         map((res) => {
           this.planSubject.next(res.data);
@@ -45,7 +45,7 @@ export class PlanService {
   }
 
   deleteProductVariant(id: string) {
-    const url = `${environment.planListUrl}/{productVariantId}?productVariantId=${id}`;
+    const url = `${environment.apiUrl}/productVariant/{productVariantId}?productVariantId=${id}`;
     return this.http.delete(url).pipe(
       map((res) => {
         this.plans = this.plans.filter(
@@ -56,6 +56,33 @@ export class PlanService {
       }),
       catchError((err) => {
         console.log(err);
+        throw err;
+      })
+    );
+  }
+
+  updateProductVariant(id: string, updatedProductVariant: any): Observable<ProductVariant> {
+    const url = `${environment.apiUrl}/productVariant/?productVariantId=${id}`;
+    return this.http.put(url, updatedProductVariant).pipe(
+      map((res: any) => {
+        this.planSubject.next(res.data);
+        return res.data;
+      }),
+      catchError((err) => {
+        this.error$.next(err.message);
+        throw err;
+      })
+    );
+  }
+
+  getProductVariantById(id: string): Observable<ProductVariant> {
+    return this.http.get<any>(`${environment.apiUrl}/productVariant/{productVariantId}?productVariantId=${id}`).pipe(
+      map((res) => {
+        this.planSubject.next(res.data);
+        return res.data;
+      }),
+      catchError((err) => {
+        this.error$.next(err.message);
         throw err;
       })
     );
