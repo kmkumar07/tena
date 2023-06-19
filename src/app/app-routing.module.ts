@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './core/layouts/layout/layout.component';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import { SignInComponent } from './modules/sign-in/components/sign-in.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,9 @@ const routes: Routes = [
           ),
       },
     ],
+  },
+  {
+    path: 'sign-in', component: SignInComponent
   },
   { path: '**', component: PageNotFoundComponent },
 ];

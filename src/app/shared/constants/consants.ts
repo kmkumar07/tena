@@ -33,6 +33,12 @@ export interface coupon {
   created_at: string;
   status: string;
 }
+export interface loginCredientials {
+  csrf_token:string,
+  method: string,
+  password_identifier: string,
+  password: string
+}
 export interface Product {
   productId: string;
   imageUrl: string;
