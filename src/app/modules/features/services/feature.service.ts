@@ -31,8 +31,8 @@ export class FeatureService {
     );
   }
 
-  getFeatures(PageNumber: number, limit: number): Observable<FeatureList[]> {
-    return this.http .get<any>(`${environment.apiUrl}/feature?page=${PageNumber}&limit=${limit}`)
+  getFeatures(PageNumber: number, limit: number, search: string): Observable<FeatureList[]> {
+    return this.http .get<any>(`${environment.apiUrl}/feature?page=${PageNumber}&limit=${limit}&search=${search}`)
       .pipe(
         map((res) => {
           this.featureSubject.next(res.data);
