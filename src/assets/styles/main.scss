@@ -66,10 +66,10 @@ $my-theme: mat.define-light-theme((
 
 @import './components/color.scss';
 @import './components/variables';
+@import './components/mixins';
 @import './components/global';
 @import './components/variables.scss';
 @import './components/typography';
-@import './components/mixins';
 @import './components/base';
 @import './components/_buttons.scss';
 @import './components/_input.scss';
@@ -87,6 +87,7 @@ $my-theme: mat.define-light-theme((
 @import './components/modules/transaction/transaction';
 @import './components/modules/invoice/invoice.scss';
 @import './components/modules/logs/logs.scss';
+@import './components/modules/customers/customer';
 @import 'tippy.js/dist/tippy.css';
 @import '/node_modules/tippy.js/dist/tippy.css';
 @import './components/modules/subscription/subscription.scss';

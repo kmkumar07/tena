@@ -295,10 +295,9 @@ label {
 .overflow-hidden {
   overflow: hidden;
 }
-.overflow-visible{
+.overflow-visible {
   overflow: visible;
 }
-
 
 // SPACING
 // Auto Margin
@@ -400,11 +399,11 @@ label {
 .main-bg {
   background-color: color("shades", "white");
 }
-.primary-light-bg{
+.primary-light-bg {
   background-color: color("primary", "light"); //#F3F1FF
 }
 
-.primary-light-6-bg{
+.primary-light-6-bg {
   background-color: color("primary", "lighten-6"); //#7868e61a
 }
 .main-content-height {
@@ -419,11 +418,11 @@ label {
 .create-btn {
   min-width: 10rem !important;
   height: 2.625rem !important;
-  border-radius: .25rem !important;
+  border-radius: 0.25rem !important;
   .letter-spacing-0 {
     letter-spacing: 0 !important;
   }
-  .mdc-button__label{
+  .mdc-button__label {
     display: flex;
   }
 }
@@ -449,16 +448,32 @@ label {
   border-radius: 0.25rem;
   font-weight: 500;
 }
-.input-suffix{
+.heading-bt-br {
+  padding: 1.125rem 1.5rem 1rem;
+  border-bottom: 0.0625rem solid color("grey", "border-2");
+}
+.input-suffix {
   position: absolute;
   right: -0.1875rem;
   top: 0;
   padding-left: 0.8125rem;
-  border-left: 0.0625rem solid color('grey', 'lighten-11');
+  border-left: 0.0625rem solid color("grey", "lighten-11");
   bottom: 0;
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+.section-heading{
+  border-bottom: 0.0625rem solid color('grey', 'border-2');
+}
+.img-contain{
+  @include image(6.625rem, 7.3125rem);
+  border-radius: 0.25rem;
+  img{
+    width: 100%;
+    min-height: 100%;
+    object-fit: contain;
+  }
 }
 // 5. Angular Material
 
@@ -479,7 +494,7 @@ table {
     }
   }
 }
-.transition-400{
+.transition-400 {
   transition: 10s;
 }
 
