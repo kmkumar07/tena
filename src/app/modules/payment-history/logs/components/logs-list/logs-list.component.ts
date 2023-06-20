@@ -8,7 +8,7 @@ import {
   logs,
   noLogs,
 } from 'src/app/shared/constants/consants';
-import * as moment from 'moment';
+// import * as moment from 'moment';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import {
   DateAdapter,
