@@ -23,7 +23,7 @@ a {
 }
 
 .font-weight-400 {
-  font-weight: 400;
+  font-weight: 400 !important;
 }
 
 .font-weight-500 {
@@ -61,7 +61,7 @@ a {
 }
 
 .text-primary {
-  color: $text-primary;
+  color: $text-primary; //#7868E6
 }
 
 .text-lighten-2 {

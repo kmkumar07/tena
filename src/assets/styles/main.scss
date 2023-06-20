@@ -88,4 +88,5 @@ $my-theme: mat.define-light-theme((
 @import './components/modules/invoice/invoice.scss';
 @import './components/modules/logs/logs.scss';
 @import 'tippy.js/dist/tippy.css';
-@import '/node_modules/tippy.js/dist/tippy.css'
+@import '/node_modules/tippy.js/dist/tippy.css';
+@import './components/modules/subscription/subscription.scss';

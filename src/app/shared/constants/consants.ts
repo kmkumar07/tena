@@ -111,6 +111,15 @@ export interface invoice {
   amount: string;
 }
 
+export interface subscription {
+  id: string;
+  name: string;
+  customer_info: string;
+  Created_On: string;
+  Activated_On: string;
+  status: string;
+  amount: string;
+}
 export interface logs {
   Timestamp: any;
   Events: string;
@@ -424,6 +433,36 @@ export const CustomerList = [
     subscription: '1 subscripton (Available)',
   },
 ];
+export const SubscriptionList = [
+  {
+    id: '#S0-001',
+    Name: 'Premium USD Monthly',
+    customerInfo: 'Greenplus Enterprises',
+    CreatedOn: 'Jan 14, 2023',
+    ActivatedOn: 'Jan 16, 2023',
+    status: 'Active',
+    amount: '199.00',
+  },
+  {
+    id: '#S0-001',
+    Name: 'Basic USD Monthly',
+    customerInfo: 'Zencorporation',
+    CreatedOn: 'Jan 14, 2023',
+    ActivatedOn: 'Jan 16, 2023',
+    status: 'Active',
+    amount: '199.00',
+  },
+  {
+    id: '#S0-001',
+    Name: 'Standard USD Daily',
+    customerInfo: 'Iselectrics',
+    CreatedOn: 'Jan 14, 2023',
+    ActivatedOn: 'Jan 16, 2023',
+    status: 'Disable',
+    amount: '199.00',
+  },
+  
+];
 export const Logs_Data = [
   {
     Timestamp: 'Aug 7th, 2022 9:09am',
@@ -577,6 +616,16 @@ export const noInvoice = [
     alt: 'no transactions to show',
     subtext: 'No invoice yet',
     text: 'After your first transaction you will be able to view invoice here.',
+    showButton: false,
+  },
+];
+export const noSubscription = [
+  {
+    heading: 'Subscription',
+    imgPath: '../../../../assets/images/invoice-empty.png',
+    alt: 'no transactions to show',
+    subtext: 'No Subscription yet',
+    text: 'After your first subscription you will be able to view it here..',
     showButton: false,
   },
 ];

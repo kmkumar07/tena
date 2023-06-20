@@ -1,0 +1,37 @@
+.subscription-view{
+    .title{
+        padding: 1.125rem 2rem;
+        border-bottom: 0.0625rem solid color("grey", "border-2");
+    }
+    .inner-wrapper{
+        padding: 1.6875rem 2.125rem;
+        height: calc(100% - 3.8125rem);
+        overflow: auto;
+        .sub-title{
+            padding-bottom: 3.1875rem;
+        }
+        .tab-wrapper{
+            max-width: 69.5625rem;
+            width: 100%;
+            .detail-title{
+                padding: .625rem 0;
+                border-bottom: 0.0625rem solid color("grey", "border-2");
+            }
+            .detail-wrapper{
+                padding: 1.8125rem 0 3.9375rem;
+            }
+            .name-col{
+                min-width: 20.9375rem;
+            }
+            .card-detail{
+                border: 0.0625rem solid color("grey", "border-2");
+                border-radius: .3125rem;
+                .card-chip{
+                    padding: .125rem .25rem;
+                    border-radius: .125rem;
+                    background-color: color("blue", "darken-4");
+                }
+            }
+        }
+    }
+}

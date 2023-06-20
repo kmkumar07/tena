@@ -1,0 +1,101 @@
+<div class="main-bg border-2 w-full h-full subscription-view">
+    <div class="flex align-center title">
+        <mat-icon class="material-symbols-outlined pointer text-headline-dark mr-2"
+            [routerLink]="'/coupons'">keyboard_backspace</mat-icon>
+        <h2 class="mat-headline-5 text-headline-dark">Subscription</h2>
+    </div>
+    <div class="inner-wrapper">
+        <div class="flex sub-title">
+            <h2 class="mat-subtitle-1 text-dark mr-2">Premium USD - Monthly</h2>
+            <span class="chip-active text-white mat-subtitle-2 inline-block">Active</span>
+        </div>
+        <div class="tab-wrapper">
+            <mat-tab-group animationDuration="none">
+                <mat-tab label="Overview">
+                    <div class="overview-box py-9">
+                        <div class="date-data pb-8 flex justify-between">
+                            <div>
+                                <h4 class="text-dark mat-subtitle-2 mb-2">Activation Date</h4>
+                                <span class="mat-body-1 text-grey-darken-6">Jan 16, 2023</span>
+                            </div>
+                            <div>
+                                <h4 class="text-dark mat-subtitle-2 mb-2">Renew Date</h4>
+                                <span class="mat-body-1 text-grey-darken-6">Feb 16, 2023</span>
+                            </div>
+                            <div>
+                                <h4 class="text-dark mat-subtitle-2 mb-2">Billed</h4>
+                                <span class="mat-body-1 text-grey-darken-6">Monthly</span>
+                            </div>
+                            <div>
+                                <h4 class="text-dark mat-subtitle-2 mb-2">Subscription Amount</h4>
+                                <span class="mat-body-1 pointer text-primary">$ 199.00</span>
+                            </div>
+                        </div>
+                        <div class="payment-details">
+                            <div class="detail-title w-full">
+                                <h3 class="mat-subtitle-2 text-primary font-weight-500">Payment Details</h3>
+                            </div>
+                            <div class="detail-wrapper">
+                                <div class="flex justify-between align-center  pb-8">
+                                    <div>
+                                        <h4 class="text-dark mat-subtitle-2 mb-2">Last Payment</h4>
+                                        <span class="mat-body-1 text-grey-darken-6">Payment Done</span>
+                                    </div>
+                                    <div class="card-detail py-2 px-4">
+                                        <span class="mr-4">* * * *</span><span class="mr-4">* * * *</span><span
+                                            class="mr-4">* * * *</span><span class="mr-4">0009</span>
+                                        <span class="card-chip text-white mat-caption font-weight-400">VISA</span>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-grey-darken-6 mat-subtitle-2">$ 199.00</h3>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between align-center pb-9">
+                                    <div>
+                                        <h4 class="text-dark mat-subtitle-2 mb-2">Next Payment</h4>
+                                        <span class="mat-body-1 text-grey-darken-6">March 16, 2023</span>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-grey-darken-6 mat-subtitle-2">$ 230.00</h3>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between align-center">
+                                    <div>
+                                        <span class="mat-caption font-weight-400 text-primary">Change Payment
+                                            Method</span>
+                                    </div>
+                                    <div>
+                                        <span class="mat-caption font-weight-400 text-primary">Payment History</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="other-details">
+                            <div class="detail-title w-full flex justify-between align-center">
+                                <h3 class="mat-subtitle-2 text-primary font-weight-500">Other Details</h3>
+                                <button class="flex icon-text mat-caption mr-4" mat-button color="primary">
+                                    <mat-icon class="material-symbols-outlined mr-1" color="primary">edit</mat-icon>Edit
+                                </button>
+                            </div>
+                            <div class="py-6">
+                                <div class="flex">
+                                    <div class="name-col">
+                                        <h4 class="text-dark mat-subtitle-2 mb-2">Customer Name</h4>
+                                        <span class="mat-body-1 text-grey-darken-6">Green Enterprises</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-dark mat-subtitle-2 mb-2">Billing Address</h4>
+                                        <span class="mat-body-1 text-grey-darken-6">Abc, 1 Mumbai, 400012, India</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Invoices"> Content 2 </mat-tab>
+                <mat-tab label="Activity Logs"> Content 3 </mat-tab>
+            </mat-tab-group>
+
+        </div>
+    </div>
+</div>

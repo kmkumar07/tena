@@ -482,3 +482,11 @@ table {
 .transition-400{
   transition: 10s;
 }
+
+// simple active chip
+.chip-active {
+  height: 1.1875rem;
+  padding: 0 .375rem;
+  border-radius: 0.125rem;
+  background-color: color("green", "darken-4");
+}
