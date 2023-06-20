@@ -1,23 +1,18 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { HeaderComponent } from '../header.component';
+import { ProfileComponent } from '../profile.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatChipsModule } from '@angular/material/chips';
-import { CommonModule } from '@angular/common';
-import { SftSearchbarModule } from '../../searchbar/searchbar.module';
-import { BrowserModule } from '@angular/platform-browser';
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
-const meta: Meta<HeaderComponent> = {
-  component: HeaderComponent,
-  title: 'softobiz-ui/Molecules/Header',
+const meta: Meta<ProfileComponent> = {
+  component: ProfileComponent,
+  title: 'softobiz-ui/Molecules/Profile',
   tags: ['autodocs'],
-  render: (args: HeaderComponent) => ({
+  render: (args: ProfileComponent) => ({
     props: {
       backgroundColor: null,
       ...args,
@@ -34,10 +29,6 @@ const meta: Meta<HeaderComponent> = {
         MatButtonModule,
         BrowserAnimationsModule,
         MatIconModule,
-        MatTabsModule,
-        MatChipsModule,
-        SftSearchbarModule,
-        CommonModule
       ],
     }),
   ],
@@ -115,10 +106,10 @@ const meta: Meta<HeaderComponent> = {
 };
 
 export default meta;
-type Story = StoryObj<HeaderComponent>;
+type Story = StoryObj<ProfileComponent>;
 
 // More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
 
-export const Header: Story = {
+export const Profile: Story = {
   args: {},
 };
