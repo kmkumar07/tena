@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, Subject } from 'rxjs';
-import { Plan, PlanList, ProductVariant } from 'src/app/shared/constants/consants';
+import { Plan, PlanList, ProductVariants } from 'src/app/shared/constants/consants';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -76,7 +76,7 @@ export class PlanService {
     );
   }
 
-  updateProductVariant(id: string, updatedProductVariant: any): Observable<ProductVariant> {
+  updateProductVariant(id: string, updatedProductVariant: any): Observable<ProductVariants> {
     const url = `${environment.apiUrl}/productVariant/?productVariantId=${id}`;
     return this.http.put(url, updatedProductVariant).pipe(
       map((res: any) => {
@@ -90,7 +90,7 @@ export class PlanService {
     );
   }
 
-  getProductVariantById(id: string): Observable<ProductVariant> {
+  getProductVariantById(id: string): Observable<ProductVariants> {
     return this.http.get<any>(`${environment.apiUrl}/productVariant/{productVariantId}?productVariantId=${id}`).pipe(
       map((res) => {
         this.planSubject.next(res.data);
