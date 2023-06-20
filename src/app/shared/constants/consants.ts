@@ -141,6 +141,15 @@ export interface PlanList {
   status: string;
 }
 
+export interface ProductVariant {
+  productVariantId: string;
+  name: string,
+  productID: string;
+  type: string;
+  features: { featureID: string; value: string }[];
+  status: string;
+
+}
 export const MENUITEMS = [
   {
     state: '/overview',
