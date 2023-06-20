@@ -30,7 +30,13 @@
           />
         </span>
 
-        <input type="text" placeholder="Search anything..." />
+        <input type="text" placeholder="Search anything..." 
+        [(ngModel)]="searchQuery"
+        (input)="onSearchInput()"/>
+        <div class="loader" *ngIf="loading">
+          <mat-spinner></mat-spinner>
+          <!-- <span>Loading...</span> -->
+        </div>
       </div>
 
       <button
@@ -53,7 +59,7 @@
   <div class="primary-table mt-8 px-1 pb-2">
     <table
       mat-table
-      [dataSource]="featuresData"
+      [dataSource]="filteredFeature"
       matSort
       (matSortChange)="announceSortChange($event)"
     >
@@ -224,7 +230,7 @@
 
           <select
             [(ngModel)]="limit"
-            (change)="this.getFeature(this.PageNumber, this.limit)"
+            (change)="this.getFeature(this.PageNumber, this.limit,this.search)"
           >
             <option value="5">5</option>
 
