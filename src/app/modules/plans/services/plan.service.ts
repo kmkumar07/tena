@@ -17,7 +17,7 @@ export class PlanService {
 
   constructor(private http: HttpClient) {}
 
-  addPlan(plan: any): Observable<Plan> {
+  addPlan(plan: Plan): Observable<Plan> {
     return this.http.post(`${environment.apiUrl}/plans`, plan).pipe(
       map((res: any) => {
         this.planSubject.next(res.data);
