@@ -11,6 +11,12 @@ import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/suc
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { PlanService } from '../../services/plan.service';
+import { SharedDataService } from 'src/app/shared/shareddata.service';
+
+export class PlanValue {
+  planId: string;
+  externalName: string;
+}
 @Component({
   selector: 'app-set-price',
   templateUrl: './set-price.component.html',
@@ -26,6 +32,7 @@ export class SetPriceComponent {
   volumeTotal: number;
   stairTotal: number;
   price: any;
+  planValue: PlanValue = new PlanValue();
   monthlyBilling = ['3', '4', '5'];
   readOnly: boolean = false;
   start = 0;
@@ -36,16 +43,19 @@ export class SetPriceComponent {
     private form: FormBuilder,
     private priceService: PlanService,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private dataService: SharedDataService
   ) {}
   ngOnInit() {
+    this.planValue = this.dataService.getplanValue();
     this.formData();
   }
   formData() {
+
     this.setPriceForm = this.form.group({
       priceId: ['', Validators.required],
-      planId: ['string2', Validators.required],
-      name: ['aps', Validators.required],
+      planId: [this.planValue.planId, Validators.required],
+      name: [this.planValue.externalName, Validators.required],
       description: ['', Validators.required],
       invoiceNotes: ['', Validators.required],
       currencyCode: ['USD', Validators.required],
@@ -155,12 +165,13 @@ export class SetPriceComponent {
     if (price) {
       price.priceId =
         price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
+        price.name=price.name+'-'+price.currencyCode+ '-' + price.periodUnit;
     }
-    if (price.pricingModel == 1) {
+    if (price.pricingModel === 1) {
       price.pricingModel = 'flat_fee';
       price.tiers = [];
     }
-    if (price.pricingModel == 2) {
+    if (price.pricingModel === 2) {
       price.pricingModel = 'per_unit';
       price.tiers = [];
     }
@@ -179,6 +190,8 @@ export class SetPriceComponent {
   }
   submitValues() {
     this.price = this.setPriceForm.getRawValue();
+    console.log("this.price",this.price);
+    
     this.pricingModelValueToName(this.price);
     this.subscription = this.priceService
       .createPrice(this.price)
@@ -191,7 +204,8 @@ export class SetPriceComponent {
     this.dialog.open(SuccessDialogComponent, {
       width: '420px',
       data: {
-        module: 'Plan',
+        module: 'Pricing',
+        operation: 'is created',
       },
     });
   }
@@ -217,6 +231,11 @@ export class SetPriceComponent {
     } else {
       this.check = 'plz put above value from startingunit';
     }
+  }
+  PreviewPrice(event: any) {
+    let input = parseInt(event.target.value);
+   console.log("input",input);
+   
   }
   getPreviewPrice(event: any) {
     let input = parseInt(event.target.value);

@@ -204,7 +204,13 @@
               formControlName="price"
               type="number"
               min="0"
+
             />
+            <mat-error *ngIf="setPriceForm.controls['price'].invalid && setPriceForm.controls['price'].touched">
+              <ng-container *ngIf="setPriceForm.controls['price'].errors['required']">
+                Price is required and cannot be left empty.
+              </ng-container>
+            </mat-error>
           </mat-form-field>
         </div>
         <!-- Price Preview field -->
@@ -280,10 +286,15 @@
           <div *ngIf="selectedOption == '1'">
             <mat-form-field appearance="outline" class="border-2">
               <input matInput type="text" placeholder="noOfCycle" formControlName="noOfCycle"  name="noOfCycle">
+              <mat-error *ngIf="setPriceForm.controls['noOfCycle'].invalid && setPriceForm.controls['noOfCycle'].touched">
+                <ng-container *ngIf="setPriceForm.controls['noOfCycle'].errors['required']">
+                  noOfCycle is required and cannot be left empty.
+                </ng-container>
+              </mat-error>
             </mat-form-field>
         </div>
       </div>
-      <button mat-flat-button color="primary" type="submit">Set Price</button>
+      <button mat-flat-button color="primary" [disabled]="setPriceForm.invalid && this.setPriceForm.value.pricingModel!=='2' && this.setPriceForm.value.pricingModel!=='3'" type="submit">Set Price</button>
     </div>
   </div>
   </form>
