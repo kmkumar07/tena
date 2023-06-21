@@ -33,6 +33,12 @@ export interface coupon {
   created_at: string;
   status: string;
 }
+export interface loginCredientials {
+  csrf_token:string,
+  method: string,
+  password_identifier: string,
+  password: string
+}
 export interface Product {
   productId: string;
   imageUrl: string;
@@ -116,6 +122,33 @@ export interface logs {
   Events: string;
   Customer_Info: string;
   Event_Source: string;
+}
+export interface Plan {
+  planId: string;
+  internalName: string;
+  externalName: string;
+  type: string;
+  description: string;
+  status: string;
+}
+
+export interface PlanList {
+  productVariantId: string;
+  name: string;
+  productID: string;
+  type: string;
+  features: [];
+  status: string;
+}
+
+export interface ProductVariant {
+  productVariantId: string;
+  name: string,
+  productID: string;
+  type: string;
+  features: { featureID: string; value: string }[];
+  status: string;
+
 }
 export const MENUITEMS = [
   {
@@ -634,3 +667,12 @@ export const listFilterOptions = [
   'Current month',
   'Last calendar month',
 ];
+
+export interface ProductVariant {
+  productVariantId: string;
+  name: string;
+  productID: string;
+  type: string;
+  features: { featureID: string; value: string }[];
+  status: string;
+}

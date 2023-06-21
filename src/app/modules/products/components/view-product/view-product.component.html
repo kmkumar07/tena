@@ -67,7 +67,7 @@
       <div class="flex align-center justify-between">
         <h4 class="mat-subtitle-2 font-weight-500 mb-4">Features</h4>
         <!-- below button will show only when added a feature  -->
-        <button mat-button color="primary" (click)="getProductId(productId)" [routerLink]="['/features/create/products/' + productId]">Create feature</button>
+        <button mat-button color="primary" (click)="navigateToFeatures()">Create feature</button>
       </div>
       <!-- with feature added -->
       <div class="features-wrapper">
@@ -136,7 +136,7 @@
         <p class="mat-subtitle-2 text-dark-1 mb-3 font-weight-500">
           You have not added any features
         </p>
-        <button mat-button color="primary" class="small" (click)="getProductId(productId)" [routerLink]="['/features/create/products/' + productId]">
+        <button mat-button color="primary" class="small" (click)="navigateToFeatures()">
           Create Features
         </button>
       </div>

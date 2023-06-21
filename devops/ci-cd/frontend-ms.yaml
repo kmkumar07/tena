@@ -1,5 +1,4 @@
-trigger: 
-- main
+trigger: none
 
 pool: saas
   #vmImage: 'ubuntu-latest'
@@ -10,25 +9,25 @@ stages:
   variables:
   - group: ory-authorization-dev  
   jobs:
-  - job: Sonarqube
-    displayName: Sonarqube
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: SonarQubePrepare@5
-      inputs:
-        SonarQube: 'SonarQube-service-connection-DF'
-        scannerMode: 'CLI'
-        configMode: 'manual'
-        cliProjectKey: 'DF-Tenant-Portal'
-        cliProjectName: 'DF-Tenant-Portal'
-    - task: SonarQubeAnalyze@5
-    - task: SonarQubePublish@5
-      inputs:
-        pollingTimeoutSec: '300'
-    - script: |
-        echo $(Build.BuildId)
-        pwd && ls -l
+  # - job: Sonarqube
+  #   displayName: Sonarqube
+  #   pool:
+  #     vmImage: ubuntu-latest
+  #   steps:
+  #   - task: SonarQubePrepare@5
+  #     inputs:
+  #       SonarQube: 'SonarQube-service-connection-DF'
+  #       scannerMode: 'CLI'
+  #       configMode: 'manual'
+  #       cliProjectKey: 'DF-Tenant-Portal'
+  #       cliProjectName: 'DF-Tenant-Portal'
+  #   - task: SonarQubeAnalyze@5
+  #   - task: SonarQubePublish@5
+  #     inputs:
+  #       pollingTimeoutSec: '300'
+  #   - script: |
+  #       echo $(Build.BuildId)
+  #       pwd && ls -l
   
   - job: Build
     displayName: 'Build for Frontend application'
@@ -36,6 +35,16 @@ stages:
     - script: |
         echo $(Build.BuildId)
         pwd && ls -l
+        sed -i  '3,6d' src/environments/environment.ts
+        sed -i '3i  frontend-app-var01' src/environments/environment.ts
+        sed -i '/frontend-app-var01/c\  productData:`https://dev-kong-saasframework.symple.co.in/pcm/api/v1/products`,' src/environments/environment.ts
+        sed -i '4i  frontend-app-var02' src/environments/environment.ts
+        sed -i '/frontend-app-var02/c\  uploadUrl:`https://dev-kong-saasframework.symple.co.in/pcm/api/v1/blob/upload`,' src/environments/environment.ts
+        sed -i '5i  frontend-app-var03' src/environments/environment.ts
+        sed -i '/frontend-app-var03/c\  apiUrl:`https://dev-kong-saasframework.symple.co.in/pcm/api/v1/feature`,' src/environments/environment.ts
+        sed -i '6i  frontend-app-var04' src/environments/environment.ts
+        sed -i '/frontend-app-var04/c\  featureUrl:`https://dev-kong-saasframework.symple.co.in/pcm/api/v1/feature`,' src/environments/environment.ts
+        cat src/environments/environment.ts        
 
     - task: Docker@2
       displayName: buildAndPush

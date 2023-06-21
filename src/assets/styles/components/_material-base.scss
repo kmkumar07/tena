@@ -531,3 +531,32 @@ ul {
     }
   }
 }
+// Mat Tab Group
+.tabs-medium {
+  .mat-mdc-tab-list {
+    .mat-mdc-tab-labels {
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        background-color: color("grey", "border-2");
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 0.0625rem;
+      }
+      .mdc-tab {
+        height: 2.5625rem;
+        padding: 0 1.25rem;
+        min-width: inherit;
+        .mdc-tab__ripple,
+        .mat-ripple {
+          display: none;
+        }
+        .mdc-tab__text-label {
+          letter-spacing: 0.0313rem;
+        }
+      }
+    }
+  }
+}

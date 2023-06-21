@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import {
   MatDialogRef,
   MatDialog,
@@ -7,6 +7,7 @@ import {
 
 export interface DialogData {
   module: string;
+  operation: string;
 }
 
 @Component({
@@ -15,6 +16,7 @@ export interface DialogData {
   styleUrls: ['./success-dialog.component.scss'],
 })
 export class SuccessDialogComponent {
+  @Input() operation: string;
   constructor(
     public dialogRef: MatDialogRef<SuccessDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData

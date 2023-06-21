@@ -62,6 +62,9 @@ input {
   font-family: "Material Symbols Rounded" !important;
   font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
 }
+.m-0 {
+  margin: 0 !important;
+}
 .search-icon {
   color: rgba(50, 71, 92, 0.54);
 }
@@ -244,6 +247,9 @@ label {
 .fixed {
   position: fixed;
 }
+.sticky{
+  position: sticky;
+}
 .inset-0 {
   inset: 0;
 }
@@ -403,8 +409,11 @@ label {
   background-color: color("primary", "light"); //#F3F1FF
 }
 
-.primary-light-6-bg{
+.primary-light-6-bg {
   background-color: color("primary", "lighten-6"); //#7868e61a
+}
+.primary-bg{
+  background-color: color("primary" , "main"); //#7868E6
 }
 .main-content-height {
   height: calc(100% - 4.25rem);
@@ -418,7 +427,7 @@ label {
 .create-btn {
   min-width: 10rem !important;
   height: 2.625rem !important;
-  border-radius: .25rem !important;
+  border-radius: 0.25rem !important;
   .letter-spacing-0 {
     letter-spacing: 0 !important;
   }
@@ -426,6 +435,9 @@ label {
     display: flex;
   }
 }
+  .mdc-button__label {
+    display: flex;
+ }
 .small-icon {
   font-size: 1rem;
   width: 1.125rem;
@@ -448,6 +460,10 @@ label {
   border-radius: 0.25rem;
   font-weight: 500;
 }
+.heading-bt-br {
+  padding: 1.125rem 1.5rem 1rem;
+  border-bottom: 0.0625rem solid color("grey", "border-2");
+}
 .input-suffix {
   position: absolute;
   right: -0.1875rem;
@@ -458,6 +474,18 @@ label {
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+.section-heading{
+  border-bottom: 0.0625rem solid color('grey', 'border-2');
+}
+.img-contain{
+  @include image(6.625rem, 7.3125rem);
+  border-radius: 0.25rem;
+  img{
+    width: 100%;
+    min-height: 100%;
+    object-fit: contain;
+  }
 }
 // 5. Angular Material
 

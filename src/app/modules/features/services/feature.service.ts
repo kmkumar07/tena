@@ -19,7 +19,7 @@ export class FeatureService {
   constructor(private http: HttpClient) {}
 
   addFeature(feature: any): Observable<Feature> {
-    return this.http.post(`${environment.apiUrl}`, feature).pipe(
+    return this.http.post(`${environment.apiUrl}/feature`, feature).pipe(
       map((res: any) => {
         this.featureSubject.next(res.data);
         return res.data;
@@ -31,11 +31,8 @@ export class FeatureService {
     );
   }
 
-  getFeatures(PageNumber: number, limit: number): Observable<FeatureList[]> {
-    return this.http
-
-      .get<any>(`${environment.featureUrl}?page=${PageNumber}&limit=${limit}`)
-
+  getFeatures(PageNumber: number, limit: number, search: string): Observable<FeatureList[]> {
+    return this.http .get<any>(`${environment.apiUrl}/feature?page=${PageNumber}&limit=${limit}&search=${search}`)
       .pipe(
         map((res) => {
           this.featureSubject.next(res.data);
@@ -50,7 +47,7 @@ export class FeatureService {
   }
 
   deleteFeature(id: number) {
-    const url = `${environment.featureUrl}/{featureId}?featureId=${id}`;
+    const url = `${environment.apiUrl}/feature/{featureId}?featureId=${id}`;
     return this.http.delete(url).pipe(
       map((res) => {
         this.features = this.features.filter(
@@ -66,7 +63,7 @@ export class FeatureService {
     );
   }
   getFeatureById(id: string): Observable<GetFeature> {
-    return this.http.get<any>(`${environment.apiUrl}/{featureId}?featureId=${id}`).pipe(
+    return this.http.get<any>(`${environment.apiUrl}/feature/{featureId}?featureId=${id}`).pipe(
       map((res) => {
         this.featureSubject.next(res);
         return res.data;
@@ -79,7 +76,7 @@ export class FeatureService {
   }
 
   updateFeature(featureId: string, updatedFeature: any): Observable<Feature> {
-    const url = `${environment.apiUrl}?featureId=${featureId}`;
+    const url = `${environment.apiUrl}/feature?featureId=${featureId}`;
     return this.http.patch(url, updatedFeature).pipe(
       map((res: any) => {
         this.featureSubject.next(res.data);

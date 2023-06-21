@@ -13,9 +13,6 @@ const routes: Routes = [
   {
     path: 'create',
     component: CreateFeatureComponent,
-    children: [
-      {path: 'products/:id', component: CreateFeatureComponent}
-    ]
   },
   {
     path: 'create/products/:id',

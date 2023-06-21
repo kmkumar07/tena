@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -24,12 +24,13 @@ export class ViewProductComponent {
   imagePath:string
   imageName:string
   feature:any
-  constructor(private productService: ProductsService, private route: ActivatedRoute) { }
+  id: string;
+  constructor(private productService: ProductsService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
 
-    const id = this.route.snapshot.params['id'];
-    this.productService.getProductById(id).
+    this.id = this.route.snapshot.params['id'];
+    this.productService.getProductById(this.id).
       subscribe((res) => {
         this.productDetail = res
         console.log("aaa", this.productDetail)
@@ -41,14 +42,14 @@ export class ViewProductComponent {
         this.status = this.productDetail?.status
         this.imageUrl = this.productDetail?.imageUrl,
         this.imageName = this.imageUrl?.substring(this.imageUrl.lastIndexOf('/') + 1);
-        this.imagePath=this.environment.imagePath
+        this.imagePath=this.environment.blobStorageUrl
         this.feature = this.productDetail?.feature || [];
       })
 
   }
-  getProductId(id: string){
-    this.productService.setId(id)
-    
+  
+  navigateToFeatures(){
+    this.router.navigate(['/features/create/products/', this.id]);
   }
 
 }

@@ -42,6 +42,8 @@
           >
             <a
               class="icon-wrapper flex align-center"
+
+              routerLinkActive="active"
               [ngClass]="{'active': (activeRoute.includes(item.state) || currentRoute == item.state)}"
               [routerLink]="[item.state]"
             >

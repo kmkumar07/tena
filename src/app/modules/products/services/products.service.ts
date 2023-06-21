@@ -11,14 +11,13 @@ export class ProductsService {
   private productSubject = new BehaviorSubject<any>(null);
   private uploadImageSubject = new BehaviorSubject<any>(null);
   public product$ = this.productSubject.asObservable();
-  id: string;
   products: Product[] = [];
   error$ = new Subject<string>();
 
   constructor(private http: HttpClient) {}
 
   createProduct(product: Product): Observable<Product> {
-    return this.http.post(`${environment.productData}`, product).pipe(
+    return this.http.post(`${environment.apiUrl}/products`, product).pipe(
       map((res: any) => {
         this.productSubject.next(res.data);
         return res.data;
@@ -53,7 +52,7 @@ export class ProductsService {
   ): Observable<Product[]> {
     return this.http
       .get<any>(
-        `${environment.productData}?page=${PageNumber}&limit=${limit}&search=${search}`
+        `${environment.apiUrl}/products?page=${PageNumber}&limit=${limit}&search=${search}`
       )
       .pipe(
         map((res) => {
@@ -68,9 +67,8 @@ export class ProductsService {
       );
   }
   getProductById(id: string): Observable<GetProduct> {
-    return this.http.get<any>(`${environment.productData}/${id}`).pipe(
+    return this.http.get<any>(`${environment.apiUrl}/products/${id}`).pipe(
       map((res) => {
-        console.log('res', res);
         return res.data;
       }),
 
@@ -81,7 +79,7 @@ export class ProductsService {
     );
   }
   editProduct(productId: string, updatedProduct: any): Observable<Product> {
-    const url = `${environment.productData}/{productId}?productId=${productId}`;
+    const url = `${environment.apiUrl}/products/{productId}?productId=${productId}`;
     return this.http.patch(url, updatedProduct).pipe(
       map((res: any) => {
         this.productSubject.next(res.data);
@@ -94,7 +92,7 @@ export class ProductsService {
     );
   }
   deleteProduct(id: string) {
-    const url = `${environment.productData}/${id}?productId=${id}`;
+    const url = `${environment.apiUrl}/products/${id}?productId=${id}`;
     return this.http.delete(url).pipe(
       map((res) => {
         this.products = this.products.filter(
@@ -108,12 +106,5 @@ export class ProductsService {
         throw err;
       })
     );
-  }
-
-  setId(id: string) {
-    this.id = id;
-  }
-  getId() {
-    return this.id;
   }
 }

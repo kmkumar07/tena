@@ -1,10 +1,498 @@
-<div class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
-  <div class="flex align-center title">
+<div class="relative main-bg border-2 w-full h-full overflow-scroll">
+  <div class="flex align-center heading-bt-br">
     <mat-icon
       class="material-symbols-outlined pointer text-headline-dark mr-2"
-      [routerLink]="'/coupons'"
+      [routerLink]="'/customers'"
       >keyboard_backspace</mat-icon
     >
     <h2 class="mat-headline-5 text-headline-dark">Customer</h2>
+  </div>
+  <div class="px-7 mt-4 tab-panel content-width">
+    <mat-tab-group
+      mat-stretch-tabs="false"
+      mat-align-tabs="start"
+      class="tabs-medium"
+    >
+      <mat-tab label="Overview">
+        <div class="pt-7">
+          <div class="mb-11">
+            <div class="section-heading flex align-center justify-between">
+              <h4 class="primary-text text-main mat-subtitle-2">
+                General Details
+              </h4>
+              <button
+                mat-button
+                color="primary"
+                class="small"
+                (click)="openEdit('general')"
+              >
+                <mat-icon class="material-symbols-outlined">edit</mat-icon>
+                <span class="primary-text text-main">Edit</span>
+              </button>
+            </div>
+            <div class="flex mt-4">
+              <div class="mr-12 img-contain">
+                <img
+                  src="../../../../../../assets/images/company_logo.png"
+                  alt="company logo"
+                />
+              </div>
+              <div class="ml-2 w-90">
+                <div class="mb-6">
+                  <h5 class="mat-subtitle-2 mb-1">Company Name</h5>
+                  <span class="block mat-body-1 grey-text text-darken-6"
+                    >Greenplus Enterprises</span
+                  >
+                </div>
+                <div>
+                  <h5 class="mat-subtitle-2 mb-1">Work Phone</h5>
+                  <span class="block mat-body-1 grey-text text-darken-6"
+                    >9896778865</span
+                  >
+                </div>
+              </div>
+              <div class="w-60">
+                <div>
+                  <h5 class="mat-subtitle-2 mb-1">Name</h5>
+                  <span class="block mat-body-1 grey-text text-darken-6"
+                    >Alex C</span
+                  >
+                </div>
+              </div>
+              <div>
+                <div>
+                  <h5 class="mat-subtitle-2 mb-1">Email</h5>
+                  <span class="block mat-body-1 grey-text text-darken-6"
+                    >Alex@example.com</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-9">
+            <div class="section-heading flex align-center justify-between">
+              <h4 class="primary-text text-main mat-subtitle-2">Address</h4>
+              <button
+                mat-button
+                color="primary"
+                class="small"
+                (click)="openEdit('address')"
+              >
+                <mat-icon class="material-symbols-outlined">edit</mat-icon>
+                <span class="primary-text text-main">Edit</span>
+              </button>
+            </div>
+            <div class="flex mt-4">
+              <div class="w-60">
+                <h5 class="mat-subtitle-2 mb-1">Billing Address</h5>
+                <span class="block mat-body-1 grey-text text-darken-6"
+                  >21/5, ABC Lane, India</span
+                >
+              </div>
+              <div>
+                <h5 class="mat-subtitle-2 mb-1">Shipping Address</h5>
+                <span class="block mat-body-1 grey-text text-darken-6"
+                  >21/5, ABC Lane, India</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mb-9">
+            <div class="section-heading flex align-center justify-between">
+              <h4 class="primary-text text-main mat-subtitle-2">
+                Order Details
+              </h4>
+              <button
+                mat-button
+                color="primary"
+                class="small"
+                (click)="openEdit('other')"
+              >
+                <mat-icon class="material-symbols-outlined">edit</mat-icon>
+                <span class="primary-text text-main">Edit</span>
+              </button>
+            </div>
+            <div class="flex mt-4">
+              <div class="w-60">
+                <h5 class="mat-subtitle-2 mb-1">Customer Type</h5>
+                <span class="block mat-body-1 grey-text text-darken-6"
+                  >Business</span
+                >
+              </div>
+              <div class="w-60">
+                <h5 class="mat-subtitle-2 mb-1">Currencies</h5>
+                <span class="block mat-body-1 grey-text text-darken-6"
+                  >USD</span
+                >
+              </div>
+              <div class="w-60">
+                <h5 class="mat-subtitle-2 mb-1">Payment Terms</h5>
+                <span class="block mat-body-1 grey-text text-darken-6"
+                  >Due on Reception</span
+                >
+              </div>
+              <div>
+                <h5 class="mat-subtitle-2 mb-1">Portal Status</h5>
+                <span class="block mat-body-1 grey-text text-darken-6 Active"
+                  >Enabled</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mb-9">
+            <div class="section-heading flex align-center justify-between">
+              <h4 class="primary-text text-main mat-subtitle-2 mb-2">
+                Record Information
+              </h4>
+            </div>
+            <div class="flex mt-4">
+              <div class="w-60">
+                <h5 class="mat-subtitle-2 mb-1">Customer ID</h5>
+                <span class="block mat-body-1 grey-text text-darken-6"
+                  >SO-001</span
+                >
+              </div>
+              <div class="w-60">
+                <h5 class="mat-subtitle-2 mb-1">Created On</h5>
+                <span class="block mat-body-1 grey-text text-darken-6"
+                  >Jan 02 2023</span
+                >
+              </div>
+              <div class="w-60">
+                <h5 class="mat-subtitle-2 mb-1">Created By</h5>
+                <span class="block mat-body-1 grey-text text-darken-6"
+                  >Alex C</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Subscription">
+        <div class="primary-table">
+          <table mat-table [dataSource]="customers">
+            <!-- ID Column -->
+            <ng-container matColumnDef="subscriptionInfo">
+              <th mat-header-cell *matHeaderCellDef>Subscription Info</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                {{ element.subscriptionInfo }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>#ID</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                {{ element.id }}
+              </td>
+            </ng-container>
+
+            <!-- Description Column -->
+            <ng-container matColumnDef="state">
+              <th mat-header-cell *matHeaderCellDef>State</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+                [ngClass]="element.state   === 'Active' ? 'Active' : 'InActive'" 
+              >
+                {{ element.state }}
+              </td>
+            </ng-container>
+
+            <!-- Created Date Column -->
+            <ng-container matColumnDef="createdOn">
+              <th mat-header-cell *matHeaderCellDef>
+                <p class="text-center">Created On</p>
+              </th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                <p class="text-center">{{ element.createdOn }}</p>
+              </td>
+            </ng-container>
+
+            <!-- Created Date Column -->
+
+            <ng-container matColumnDef="activatedOn">
+              <th mat-header-cell *matHeaderCellDef>Work Phone</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                {{ element.activatedOn }}
+              </td>
+            </ng-container>
+
+            <!-- Description Column -->
+            <ng-container matColumnDef="nextRenewal">
+              <th mat-header-cell *matHeaderCellDef>Next Renewal</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                {{ element.nextRenewal }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="subscriptionCols"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: subscriptionCols"
+              [id]="row.id"
+            ></tr>
+          </table>
+        </div>
+      </mat-tab>
+      <mat-tab label="Transaction">
+        <div class="primary-table">
+          <table mat-table [dataSource]="transactions">
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>#ID</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                {{ element.id }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="occurOn">
+              <th mat-header-cell *matHeaderCellDef>Occurs On</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                {{ element.occurOn }}
+              </td>
+            </ng-container>
+            <!-- Description Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+                [ngClass]="element.status === 'Success' ? 'Active' : 'InActive'" 
+              >
+                {{ element.status }}
+              </td>
+            </ng-container>
+
+            <!-- Created Date Column -->
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef>
+                <p class="text-center">Type</p>
+              </th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                <p class="text-center">{{ element.type }}</p>
+              </td>
+            </ng-container>
+
+            <!-- Created Date Column -->
+
+            <ng-container matColumnDef="paymentMethod">
+              <th mat-header-cell *matHeaderCellDef>Payment Method</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                <div class="flex align-center">
+                  <mat-icon
+                    class="material-symbols-outlined mr-2 grey-text text-darken-6"
+                    >credit_card</mat-icon
+                  >
+                  {{ element.paymentMethod }}
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Description Column -->
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>Amount</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                $ {{ element.amount }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="transactionCols"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: transactionCols"
+              [id]="row.id"
+            ></tr>
+          </table>
+        </div>
+      </mat-tab>
+      <mat-tab label="Invoices">
+        <div class="primary-table">
+          <table mat-table [dataSource]="invoices">
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>#ID</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                {{ element.id }}
+              </td>
+            </ng-container>
+
+            <!-- Description Column -->
+            <ng-container matColumnDef="occurOn">
+              <th mat-header-cell *matHeaderCellDef>Occurs On</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                {{ element.occurOn }}
+              </td>
+            </ng-container>
+
+            <!-- Created Date Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>
+                <p class="text-center">Status</p>
+              </th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+                [ngClass]="element.status === 'Paid' ? 'Active' : 'InActive'" 
+              >
+                <p class="text-center">{{ element.status }}</p>
+              </td>
+            </ng-container>
+
+            <!-- Created Date Column -->
+
+            <ng-container matColumnDef="paymentMethod">
+              <th mat-header-cell *matHeaderCellDef>Payment Method</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                <div class="flex align-center">
+                  <mat-icon
+                    class="material-symbols-outlined mr-2 grey-text text-darken-6"
+                    >credit_card</mat-icon
+                  >
+                  {{ element.paymentMethod }}
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Description Column -->
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>Amount</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                $ {{ element.amount }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="invoiceCols"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: invoiceCols"
+              [id]="row.id"
+            ></tr>
+          </table>
+        </div>
+      </mat-tab>
+      <mat-tab label="Activity Logs">
+        <div class="primary-table">
+          <table mat-table [dataSource]="activityLogs">
+            <!-- Description Column -->
+            <ng-container matColumnDef="timeStamp">
+              <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                {{ element.timeStamp }}
+              </td>
+            </ng-container>
+
+            <!-- Created Date Column -->
+            <ng-container matColumnDef="events">
+              <th mat-header-cell *matHeaderCellDef>
+                <p class="text-center">Events</p>
+              </th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                <p class="text-center">{{ element.events }}</p>
+              </td>
+            </ng-container>
+
+            <!-- Created Date Column -->
+
+            <ng-container matColumnDef="customerInfo">
+              <th mat-header-cell *matHeaderCellDef>Customer Info</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                {{ element.customerInfo }}
+              </td>
+            </ng-container>
+
+            <!-- Description Column -->
+            <ng-container matColumnDef="eventSource">
+              <th mat-header-cell *matHeaderCellDef>Event Source</th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [routerLink]="'/customers/view'"
+              >
+                <span class="primary-light-6-bg p-1 border-1 text-primary">
+                  {{ element.eventSource }}
+                </span>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="logsCols"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: logsCols"
+              [id]="row.id"
+            ></tr>
+          </table>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>

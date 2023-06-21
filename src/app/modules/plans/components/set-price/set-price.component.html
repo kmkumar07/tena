@@ -4,7 +4,7 @@
       <mat-icon
         class="material-symbols-outlined pointer"
         color="primary"
-        [routerLink]="'/features'"
+        [routerLink]="'/plans/create'"
         >keyboard_backspace</mat-icon
       >
       <span class="mat-h1 primary-text text-main ml-2">Create Plan</span>
@@ -62,7 +62,8 @@
             >
               <mat-option
                 *ngFor="let option of pricingModelTypes"
-                value="{{ option.value }}"
+                value="{{ option.value }}" (click)="onDropdownKey(option.value)"
+
               >
                 {{ option.title }}
               </mat-option>
@@ -116,7 +117,7 @@
                         </mat-form-field>
                       </div>
                       <div class="input-wrapper small mr-2">
-                        <mat-form-field appearance="outline" class="border-2">
+                        <mat-form-field appearance="outline"class="border-2">
                           <input
                             required
                             matInput
@@ -125,8 +126,11 @@
                             (change)="setStartingValue($event, i)"
                           />
                         </mat-form-field>
+                        <!-- <ng-container *ngIf="check">
+                          {{ check }}
+                        </ng-container> -->
                       </div>
-                      <div class="input-wrapper small relative" >
+                      <div class="input-wrapper small relative">
                         <mat-form-field appearance="outline" class="border-2">
                           <input
                             required
@@ -161,6 +165,7 @@
             <button
               disableRipple
               mat-button
+              type="button"
               class="primary-text text-main"
               (click)="addTiers()"
             >
@@ -195,7 +200,7 @@
             <input
               required
               matInput
-              placeholder="Enter here"
+              placeholder="Enter here "
               formControlName="price"
               type="number"
               min="0"
@@ -223,9 +228,22 @@
                 />
               </mat-form-field>
             </div>
-            <p class="mat-subtitle-2 font-weight-500 input-label mb-2">
-              Units. The total amount payable will be USD {{previePrice}}
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2" *ngIf="dropKey ==1">
+              Units. The total amount payable will be USD {{ previePrice }}
             </p>
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2" *ngIf="dropKey ==2">
+              Units. The total amount payable will be USD {{ previePrice }}
+            </p>
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 3" >
+              Units. The total amount payable will be USD {{ tiredTotal }}
+            </p>
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 4" >
+              Units. The total amount payable will be USD {{volumeTotal}}
+            </p>
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 5" >
+              Units. The total amount payable will be USD {{stairTotal}}
+            </p>
+            
           </div>
         </div>
         <!-- Billing Cycle -->
@@ -254,14 +272,19 @@
             </ng-template>
           </div>
           <mat-form-field appearance="outline" class="border-2">
-            <mat-select required placeholder="select" (selectionChange)="cycleValue($event)">
-              <mat-option value="1"> Fixed </mat-option>
-              <mat-option value="2"> Forever </mat-option>
+            <mat-select required placeholder="select"  (selectionChange)="cycleValue($event)">
+              <mat-option value="1">Fixed</mat-option>
+              <mat-option value="2">Forever</mat-option>
             </mat-select>
           </mat-form-field>
+          <div *ngIf="selectedOption == '1'">
+            <mat-form-field appearance="outline" class="border-2">
+              <input matInput type="text" placeholder="noOfCycle" formControlName="noOfCycle"  name="noOfCycle">
+            </mat-form-field>
         </div>
       </div>
       <button mat-flat-button color="primary" type="submit">Set Price</button>
     </div>
+  </div>
   </form>
 </div>

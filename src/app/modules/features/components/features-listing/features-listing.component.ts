@@ -2,10 +2,10 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import { features, noFeatures } from 'src/app/shared/constants/consants';
+import { FeatureList, features, noFeatures } from 'src/app/shared/constants/consants';
 import { FeatureService } from '../../services/feature.service';
 import { MatPaginator } from '@angular/material/paginator';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
 
@@ -35,12 +35,16 @@ export class FeaturesListingComponent implements OnInit {
   data: any;
   PageNumber = 1;
   limit = 5;
-  dialogRef: MatDialogRef<any>;
+  dialogRef:any;
   loading = false;
-
+  search: string = '';
+  filteredFeature: FeatureList[];
   @ViewChild(MatSort) sort: MatSort;
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  searchQuery: string;
+  private searchQueryChanged: Subject<string> = new Subject<string>();
+  private searchSubscription: Subscription;
+ 
 
   /** Whether the number of selected elements matches the total number of rows. */
 
@@ -55,42 +59,45 @@ export class FeaturesListingComponent implements OnInit {
     private featureService: FeatureService,
     public dialog: MatDialog
   ) {}
-
+  onSearchInput() {
+    this.searchQueryChanged.next(this.searchQuery);
+  }
   ngOnInit(): void {
     this.loading = true;
-    this.getFeature(this.PageNumber, this.limit);
+    this.getFeature(this.PageNumber, this.limit, this.search);
 
     this.featureService.feature$.subscribe((data) => {
       if (data) {
         this.featuresData = data;
+        this.filteredFeature = data;
         this.loading = false;
       }
     });
   }
 
-  getFeature(PageNumber: number, limit: number) {
+  getFeature(PageNumber: number, limit: number, search: string) {
     this.loading = true;
-    this.featureService
-
-      .getFeatures(this.PageNumber, this.limit)
-
+    this.featureService.getFeatures(this.PageNumber, this.limit, this.search)
       .subscribe((res) => {
         this.loading = false;
       });
   }
-
+  ngOnDestroy(): void {
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
+  }
   onPrevious() {
     if (this.PageNumber > 1) {
       this.PageNumber--;
 
-      this.getFeature(this.PageNumber, this.limit);
+      this.getFeature(this.PageNumber, this.limit, this.search);
     }
   }
 
   onNext() {
     this.PageNumber++;
-
-    this.getFeature(this.PageNumber, this.limit);
+    this.getFeature(this.PageNumber, this.limit, this.search);
   }
 
   deleteElementById(elementId: number) {
@@ -102,16 +109,13 @@ export class FeaturesListingComponent implements OnInit {
   openDelete(id: any) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       width: '420px',
-
       panelClass: 'dialog-curved',
     });
 
     this.dialogRef.afterClosed().subscribe((res) => {
       if (res) {
         this.deleteElementById(id);
-      } else {
-        console.log('Delete canceled');
-      }
+      } 
     });
   }
 
@@ -120,12 +124,8 @@ export class FeaturesListingComponent implements OnInit {
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();
-
       return;
     }
-
-    // console.log(this.selection.select)
-
     this.selection.select(...this.featuresData);
   }
 
@@ -135,15 +135,12 @@ export class FeaturesListingComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
       row.feature_id + 1
     }`;
   }
 
-  // ngAfterViewInit() {
-  //   this.featuresData.sort = this.sort;
-  // }
+ 
   /** Announce the change in sort state for assistive technology. */
 
   announceSortChange(sortState: Sort) {

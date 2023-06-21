@@ -570,3 +570,10 @@ $border-radius: ("4": 4px, "8": 8px, "12": 12px, "16": 16px);
   width: $width;
   white-space: nowrap;
 }
+@mixin image($width, $height){
+  overflow: hidden;
+  max-height: $height;
+  height: $height;
+  max-width: $width;
+  width: 100%;
+}
