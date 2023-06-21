@@ -668,7 +668,7 @@ export const listFilterOptions = [
   'Last calendar month',
 ];
 
-export interface ProductVariant {
+export interface ProductVariants {
   productVariantId: string;
   name: string;
   productID: string;

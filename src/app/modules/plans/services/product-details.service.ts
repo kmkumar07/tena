@@ -15,7 +15,7 @@ export class ProductDetailsService {
   constructor(private http: HttpClient) { }
 
   createProductVariant(productVariant: ProductVariant): Observable<ProductVariant> {
-    return this.http.post(`${environment.productVariantApi}`, productVariant).pipe(
+    return this.http.post(`${environment.apiUrl}/productVariant`, productVariant).pipe(
       map((res: any) => {
         this.productVariantSubject.next(res.data);
         return res.data;
