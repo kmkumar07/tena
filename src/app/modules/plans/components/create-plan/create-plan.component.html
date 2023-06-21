@@ -75,6 +75,17 @@
                     placeholder="Enter here..."
                     formControlName="internalName"
                   />
+                  <mat-error *ngIf="planForm.controls['internalName'].invalid && planForm.controls['internalName'].touched">
+                    <ng-container *ngIf="planForm.controls['internalName'].errors['required']">
+                      InternalName is required and cannot be left empty.
+                    </ng-container>
+                    <ng-container *ngIf="planForm.controls['internalName'].errors['maxlength']">
+                      InternalName cannot exceed 20 characters.
+                    </ng-container>
+                    <ng-container *ngIf="planForm.controls['internalName'].errors['pattern']">
+                      InternalName cannot contain special characters.
+                    </ng-container>
+                  </mat-error>
                 </mat-form-field>
               </div>
               <div>
@@ -109,6 +120,17 @@
                     placeholder="Enter here..."
                     formControlName="externalName"
                   />
+                  <mat-error *ngIf="planForm.controls['externalName'].invalid && planForm.controls['externalName'].touched">
+                    <ng-container *ngIf="planForm.controls['externalName'].errors['required']">
+                      ExternalName is required and cannot be left empty.
+                    </ng-container>
+                    <ng-container *ngIf="planForm.controls['externalName'].errors['maxlength']">
+                      ExternalName cannot exceed 20 characters.
+                    </ng-container>
+                    <ng-container *ngIf="planForm.controls['externalName'].errors['pattern']">
+                      ExternalName cannot contain special characters.
+                    </ng-container>
+                  </mat-error>
                 </mat-form-field>
               </div>
               <div>
@@ -159,6 +181,11 @@
                     placeholder="Enter here..."
                     formControlName="description"
                   ></textarea>
+                  <mat-error *ngIf="planForm.controls['description'].invalid && planForm.controls['description'].touched">
+                    <ng-container *ngIf="planForm.controls['description'].errors['maxlength']">
+                      Description cannot exceed 500 characters.
+                    </ng-container>
+                  </mat-error>
                 </mat-form-field>
               </div>
               <div class="action-btns flex align-center justify-between">
@@ -183,6 +210,7 @@
                     class="large"
                     type="button"
                     (click)="onSubmit()"
+                    [disabled]="planForm.invalid"
                   >
                     Create
                   </button>

@@ -41,8 +41,6 @@ export class CreatePlanComponent implements OnInit {
   productDetails: any = [];
   productID: string;
   name: string;
-  status: string;
-  type: string;
   featureId: string;
   entitlement: string;
   PageNumber: any = '';
@@ -100,10 +98,10 @@ export class CreatePlanComponent implements OnInit {
   planDetails() {
     this.planForm = this.formBuilder.group({
       planId: ['', Validators.required],
-      internalName: ['', Validators.required],
-      externalName: ['', Validators.required],
-      type: ['base'],
-      description: [''],
+      internalName: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
+      externalName: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
+      type: [''],
+      description: ['', Validators.maxLength(500)],
       status: [true],
     });
 
@@ -114,15 +112,22 @@ export class CreatePlanComponent implements OnInit {
   }
 
   onSubmit() {
-    this.stepOneCompleted = true;
     const status = this.planForm.value.status ? 'active' : 'disabled';
+    const type = 'base';
     const plan = {
       ...this.planForm.value,
+      type: type,
       status: status,
     };
-    this.subscription = this.planService.addPlan(plan).subscribe((res) => {
-      this.openSuccess();
-      return res;
+    this.subscription = this.planService.addPlan(plan).subscribe({
+      next: (res: any) => {
+        this.openSuccess();
+        this.stepOneCompleted = true;
+        return res;
+      },
+      error: (err: any) => {
+        console.log('something wrong occured', err);
+      },
     });
     this.planForm.reset();
   }
@@ -233,7 +238,7 @@ export class CreatePlanComponent implements OnInit {
       width: '420px',
       data: {
         module: 'Plan',
-        operation: 'Created',
+        operation: 'is created',
       },
     });
   }
