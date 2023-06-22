@@ -10,6 +10,7 @@ import {
   plan_add_empty_data,
 } from 'src/app/shared/constants/consants';
 import { PlanService } from '../../services/plan.service';
+import { SharedDataService } from 'src/app/shared/shareddata.service';
 
 export interface PeriodicElement {
   PricingCycle: string;
@@ -40,6 +41,8 @@ export class CreatePlanComponent implements OnInit {
   data$ = this.planService.plan$;
   productDetails: any = [];
   productID: string;
+  planId:string;
+  externalName:string;
   name: string;
   featureId: string;
   entitlement: string;
@@ -59,7 +62,9 @@ export class CreatePlanComponent implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private planService: PlanService
+    private planService: PlanService,
+    private dataService: SharedDataService
+
   ) {}
 
   ngOnInit(): void {
@@ -119,6 +124,11 @@ export class CreatePlanComponent implements OnInit {
       type: type,
       status: status,
     };
+    this.planId=plan.planId;
+    this.externalName=plan.externalName;
+    this.dataService.setplanValue(this.planId,this.externalName);
+
+    console.log("asdfghbnm,.-09",this.planId);
     this.subscription = this.planService.addPlan(plan).subscribe({
       next: (res: any) => {
         this.openSuccess();
