@@ -1,7 +1,7 @@
 <div class="create-product-wrapper">
   <div class="header-section pt-6 pb-6">
     <div class="flex align-center">
-      <mat-icon class="material-symbols-outlined pointer" color="primary"
+      <mat-icon class="material-symbols-outlined pointer" color="primary" [routerLink]="'/products'"
         >keyboard_backspace</mat-icon
       >
       <p class="mat-h1 primary-text text-main">Edit Products</p>
@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="input-wrapper mt-8">
-      <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="postForm">
         <div>
           <div class="flex align-center mb-2">
             <p class="mat-subtitle-2 font-weight-500 input-label">
@@ -67,6 +67,17 @@
               placeholder="Enter here..."
               formControlName="name"
             />
+            <mat-error *ngIf="postForm.controls['name'].invalid && postForm.controls['name'].touched">
+              <ng-container *ngIf="postForm.controls['name'].errors['required']">
+                Name is required and cannot be left empty.
+              </ng-container>
+              <ng-container *ngIf="postForm.controls['name'].errors['maxlength']">
+                Name cannot exceed 20 characters.
+              </ng-container>
+              <ng-container *ngIf="postForm.controls['name'].errors['pattern']">
+                Name cannot contain special characters.
+              </ng-container>
+            </mat-error>
           </mat-form-field>
         </div>
         <div>
@@ -81,6 +92,11 @@
               placeholder="Enter here..."
               formControlName="description"
             ></textarea>
+            <mat-error *ngIf="postForm.controls['description'].invalid && postForm.controls['description'].touched">
+              <ng-container *ngIf="postForm.controls['description'].errors['maxlength']">
+                Description cannot exceed 500 characters.
+              </ng-container>
+            </mat-error>
           </mat-form-field>
         </div>
         <div>
@@ -118,11 +134,11 @@
             >Active</mat-checkbox
           >
           <div>
-            <button mat-stroked-button color="primary" class="mr-2 large">
+            <button mat-stroked-button color="primary" class="mr-2 large" (click)="onDelete()">
               Dismiss
             </button>
-            <button mat-flat-button color="primary" class="large" type="submit">
-              Create
+            <button mat-flat-button color="primary" class="large" type="submit" (click)="onSubmit()">
+              Update
             </button>
           </div>
         </div>
