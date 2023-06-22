@@ -51,7 +51,6 @@ export class SetPriceComponent {
     this.formData();
   }
   formData() {
-
     this.setPriceForm = this.form.group({
       priceId: ['', Validators.required],
       planId: [this.planValue.planId, Validators.required],
@@ -148,7 +147,7 @@ export class SetPriceComponent {
       });
     } else if (this.selectedOption === '2') {
       this.setPriceForm.patchValue({
-        noOfCycle:'',
+        noOfCycle: '',
         isExpirable: false,
       });
     }
@@ -156,7 +155,7 @@ export class SetPriceComponent {
   pricingModelSetEndingUnitEmpty(price: any) {
     for (let i = 0; i < price.tiers.length; i++) {
       if (price.tiers[i].endingUnit == '&above') {
-        price.tiers[i].endingUnit ="";
+        price.tiers[i].endingUnit = "";
       }
     }
   }
@@ -165,7 +164,8 @@ export class SetPriceComponent {
     if (price) {
       price.priceId =
         price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
-        price.name=price.name+'-'+price.currencyCode+ '-' + price.periodUnit;
+      price.name =
+        price.name + '-' + price.currencyCode + '-' + price.periodUnit;
     }
     if (price.pricingModel == 1) {
       price.pricingModel = 'flat_fee';
@@ -232,8 +232,6 @@ export class SetPriceComponent {
   }
   PreviewPrice(event: any) {
     let input = parseInt(event.target.value);
-   console.log("input",input);
-   
   }
   getPreviewPrice(event: any) {
     let input = parseInt(event.target.value);
