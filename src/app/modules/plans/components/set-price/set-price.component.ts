@@ -111,7 +111,7 @@ export class SetPriceComponent {
     });
     lastIdx.get('endingUnit')?.disable();
     prevIdx.patchValue({
-      endingUnit: ' ',
+      endingUnit: "",
     });
     prevIdx.get('endingUnit')?.enable();
   }
@@ -148,7 +148,7 @@ export class SetPriceComponent {
       });
     } else if (this.selectedOption === '2') {
       this.setPriceForm.patchValue({
-        noOfCycle: null,
+        noOfCycle:'',
         isExpirable: false,
       });
     }
@@ -156,7 +156,7 @@ export class SetPriceComponent {
   pricingModelSetEndingUnitEmpty(price: any) {
     for (let i = 0; i < price.tiers.length; i++) {
       if (price.tiers[i].endingUnit == '&above') {
-        price.tiers[i].endingUnit = ' ';
+        price.tiers[i].endingUnit ="";
       }
     }
   }
@@ -167,11 +167,11 @@ export class SetPriceComponent {
         price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
         price.name=price.name+'-'+price.currencyCode+ '-' + price.periodUnit;
     }
-    if (price.pricingModel === 1) {
+    if (price.pricingModel == 1) {
       price.pricingModel = 'flat_fee';
       price.tiers = [];
     }
-    if (price.pricingModel === 2) {
+    if (price.pricingModel == 2) {
       price.pricingModel = 'per_unit';
       price.tiers = [];
     }
@@ -190,8 +190,6 @@ export class SetPriceComponent {
   }
   submitValues() {
     this.price = this.setPriceForm.getRawValue();
-    console.log("this.price",this.price);
-    
     this.pricingModelValueToName(this.price);
     this.subscription = this.priceService
       .createPrice(this.price)
