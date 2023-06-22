@@ -90,4 +90,5 @@ $my-theme: mat.define-light-theme((
 @import './components/modules/sign-in/sign-in.scss';
 @import './components/modules/customers/customer';
 @import 'tippy.js/dist/tippy.css';
-@import '/node_modules/tippy.js/dist/tippy.css'
+@import '/node_modules/tippy.js/dist/tippy.css';
+@import './components/modules/subscription/subscription.scss';

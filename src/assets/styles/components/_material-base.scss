@@ -43,6 +43,14 @@
 // 2. Tables
 .primary-table {
   overflow: auto;
+  .mat-mdc-checkbox
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not(
+    [data-indeterminate="true"]
+  )
+  ~ .mdc-checkbox__background {
+  border-color: color("grey", "lighten-12");
+}
   .mat-mdc-table {
     border-collapse: separate;
     border-spacing: 0 0.5rem;
@@ -100,9 +108,13 @@
       border-top: $primary-table-border;
       &:nth-last-child(1) {
         border-right: $primary-table-border;
+        border-top-right-radius: $primary-table-border-radius;
+        border-bottom-right-radius: $primary-table-border-radius;
       }
       &:nth-child(1) {
         border-left: $primary-table-border;
+        border-top-left-radius: $primary-table-border-radius;
+        border-bottom-left-radius: $primary-table-border-radius;
       }
       &.description-col {
         width: 25.6875rem;
@@ -114,15 +126,19 @@
     }
     .mdc-data-table__row:first-child .mdc-data-table__cell:nth-child(1) {
       border-top-left-radius: $primary-table-border-radius;
+      border-bottom-left-radius: $primary-table-border-radius;
     }
     .mdc-data-table__row:first-child .mdc-data-table__cell:nth-last-child(1) {
       border-top-right-radius: $primary-table-border-radius;
+      border-bottom-right-radius: $primary-table-border-radius;
     }
     .mdc-data-table__row:last-child .mdc-data-table__cell:nth-child(1) {
       border-bottom-left-radius: $primary-table-border-radius;
+      border-top-left-radius: $primary-table-border-radius;
     }
     .mdc-data-table__row:last-child .mdc-data-table__cell:nth-last-child(1) {
       border-bottom-right-radius: $primary-table-border-radius;
+      border-top-right-radius: $primary-table-border-radius;
     }
     .mdc-data-table__row:last-child .mdc-data-table__cell {
       border-bottom: $primary-table-border;

@@ -415,6 +415,11 @@ label {
 .primary-bg{
   background-color: color("primary" , "main"); //#7868E6
 }
+
+.input-greyLighten-14-bg{
+background-color: color("grey", "lighten-14");
+}
+
 .main-content-height {
   height: calc(100% - 4.25rem);
 }
@@ -505,4 +510,49 @@ table {
 }
 .transition-400 {
   transition: 10s;
+}
+
+// simple active chip
+.chip-active {
+  height: 1.1875rem;
+  padding: 0 .375rem;
+  border-radius: 0.125rem;
+  background-color: color("green", "darken-4");
+}
+
+// popup table
+.popup-table{
+  border-spacing: 0 .5rem;
+ tr{
+  th{
+    height: 2rem;
+    &:nth-child(1) {
+      padding-left: 1rem;
+    }
+    &:nth-last-child(1) {
+
+      padding-right: .875rem;
+    }
+  }
+  td{
+    color: color("grey", "darken-8");
+    border-top: $primary-table-border;
+    border-bottom: $primary-table-border;
+    padding: .75rem 0;
+    &:nth-child(1) {
+      padding-left: 1rem;
+      border-left: $primary-table-border;
+      border-top-left-radius: $primary-table-border-radius;
+      border-bottom-left-radius: $primary-table-border-radius;
+    }
+    &:nth-last-child(1) {
+      border-right: $primary-table-border;
+      border-top-right-radius: $primary-table-border-radius;
+      border-bottom-right-radius: $primary-table-border-radius;
+      padding-right: .875rem;
+    }
+ 
+  }
+
+ }
 }
