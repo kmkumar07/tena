@@ -204,7 +204,6 @@
               formControlName="price"
               type="number"
               min="0"
-
             />
             <mat-error *ngIf="setPriceForm.controls['price'].invalid && setPriceForm.controls['price'].touched">
               <ng-container *ngIf="setPriceForm.controls['price'].errors['required']">
@@ -230,7 +229,7 @@
                   placeholder="--"
                   min="1"
                   max="1000"
-                  (keyup)="getPreviewPrice($event)"
+                  (input)="getPreviewPrice($event)"
                 />
               </mat-form-field>
             </div>
