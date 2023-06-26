@@ -45,6 +45,7 @@ export class CreateFeatureComponent {
   search: string = '';
   productArray = [];
   id: string;
+  isRangeSelected: boolean = false;
 
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -77,7 +78,14 @@ export class CreateFeatureComponent {
     this.featureForm = this.formBuilder.group({
       featureId: ['', Validators.required],
       productID: ['', Validators.required],
-      name: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+        ],
+      ],
       description: ['', Validators.maxLength(500)],
       type: ['', Validators.required],
       unit: ['', Validators.required],
@@ -149,7 +157,23 @@ export class CreateFeatureComponent {
       name: displayName,
     });
   }
-
+  onTypeSelection(value: string) {
+    if (value === 'range') {
+      this.isRangeSelected = true;
+      while (this.levels.length > 2) {
+        this.levels.removeAt(2); // Remove form groups starting from index 2
+      }
+      this.levels.reset(
+        this.formBuilder.group({
+          isUnlimited: [false],
+          value: ['', Validators.required],
+          name: ['', Validators.required],
+        })
+      );
+    } else {
+      this.isRangeSelected = false;
+    }
+  }
   onSubmit() {
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
@@ -177,6 +201,13 @@ export class CreateFeatureComponent {
       };
     }
 
+    if (this.featureForm.value.type === 'range') {
+      feature = {
+        ...feature,
+        unit: this.featureForm.value.unit,
+        levels: this.featureForm.value.levels,
+      };
+    }
     this.subscription = this.featureService.addFeature(feature).subscribe({
       next: (res: any) => {
         this.openSuccess();
