@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { LogViewComponent } from 'src/app/modules/payment-history/logs/components/log-view/log-view.component';
 
 export interface menuOptions {
   value: number;
@@ -160,17 +161,33 @@ export class CreateFeatureComponent {
   onTypeSelection(value: string) {
     if (value === 'range') {
       this.isRangeSelected = true;
+      this.featureForm.controls['unit'].reset();
       while (this.levels.length > 2) {
         this.levels.removeAt(2); // Remove form groups starting from index 2
       }
-      this.levels.reset(
-        this.formBuilder.group({
-          isUnlimited: [false],
-          value: ['', Validators.required],
-          name: ['', Validators.required],
-        })
-      );
-    } else {
+      for (let i = 0; i < this.levels.length; i++) {
+        const formGroup = this.levels.at(i); // Get the specific form group
+        formGroup.patchValue({
+          value: '',
+          name: '',
+        });
+      }
+
+    }
+   else if (value === 'quantity') {
+      this.isRangeSelected = false;
+      this.featureForm.controls['unit'].reset();
+
+      for (let i = 0; i < this.levels.length; i++) {
+        const formGroup = this.levels.at(i); // Get the specific form group
+        formGroup.patchValue({
+          value: '',
+          name: '',
+        });
+      }
+
+    }
+     else {
       this.isRangeSelected = false;
     }
   }
@@ -233,7 +250,7 @@ export class CreateFeatureComponent {
   }
 
   onDelete() {
-    this.routes.navigate(['/features'])
+    this.routes.navigate(['/features']);
   }
 
   openSuccess() {
