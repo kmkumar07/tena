@@ -41,9 +41,9 @@ export class CreateProductComponent implements OnInit {
   tippyContent: NgxTippyProps = {};
   productForm: FormGroup;
   imageUrl: string = '';
-  imageName:string='';
+  imageName: string = '';
   data: string = '';
-  imagePath: string = ''
+  imagePath: string = '';
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -53,8 +53,15 @@ export class CreateProductComponent implements OnInit {
   ngOnInit() {
     this.productForm = this.formBuilder.group({
       productId: ['', Validators.required],
-      name: ['', Validators.required],
-      description: [''],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+        ],
+      ],
+      description: ['', Validators.maxLength(500)],
       status: [true],
       imageUrl: [],
     });
@@ -88,6 +95,9 @@ export class CreateProductComponent implements OnInit {
         this.router.navigate([`/products/view-product/${res.productId}`]);
       });
   }
+  onDelete() {
+    this.router.navigate(['/products']);
+  }
 
   openDialog(
     enterAnimationDuration: string,
@@ -98,12 +108,14 @@ export class CreateProductComponent implements OnInit {
       enterAnimationDuration,
       exitAnimationDuration,
     });
-    dialogRef.componentInstance.saveSuccess.subscribe((data: { imageUrl: string, imageName: string }) => {
-      this.imageUrl = data.imageUrl;
-      this.imageName = data.imageName;
-      this.imagePath = environment.blobStorageUrl
-      console.log("aaaa", this.imageUrl)
-    });
+    dialogRef.componentInstance.saveSuccess.subscribe(
+      (data: { imageUrl: string; imageName: string }) => {
+        this.imageUrl = data.imageUrl;
+        this.imageName = data.imageName;
+        this.imagePath = environment.blobStorageUrl;
+        console.log('aaaa', this.imageUrl);
+      }
+    );
   }
 
   openSuccess() {
@@ -111,6 +123,7 @@ export class CreateProductComponent implements OnInit {
       width: '420px',
       data: {
         module: 'Product',
+        operation: 'is created'
       },
     });
   }
@@ -157,9 +170,6 @@ export class DialogAnimationsDialog {
   base64imageData: string = '';
   imageName: string = '';
   imageUrl: string = '';
-  
-  
-  
 
   handleDragEnter() {
     this.dragging = true;
@@ -199,10 +209,11 @@ export class DialogAnimationsDialog {
     this.imageSrc = reader.result;
     const dataURLParts = this.imageSrc?.split(';base64,');
     this.base64imageData = dataURLParts[1];
-    console.log("bbbb",this.base64imageData)
+    console.log('bbbb', this.base64imageData);
     this.loaded = true;
   }
-  @Output() saveSuccess: EventEmitter<{ imageUrl: string, imageName: string }> = new EventEmitter<{ imageUrl: string, imageName: string }>();
+  @Output() saveSuccess: EventEmitter<{ imageUrl: string; imageName: string }> =
+    new EventEmitter<{ imageUrl: string; imageName: string }>();
   handleSave() {
     if (this.base64imageData) {
       const payload = {
@@ -213,10 +224,12 @@ export class DialogAnimationsDialog {
         .uploadImage(payload)
         .subscribe((res) => {
           this.imageUrl = res.data.blobURL;
-          this.saveSuccess.emit({ imageUrl: this.imageUrl, imageName: this.imageName });
+          this.saveSuccess.emit({
+            imageUrl: this.imageUrl,
+            imageName: this.imageName,
+          });
         });
     }
-   
   }
 
   cancel() {

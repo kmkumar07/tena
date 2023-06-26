@@ -1,13 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { DialogAnimationsDialog } from '../create-product/create-product.component';
-import {
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ProductsService } from '../../services/products.service';
 import { Observable, Subscription, pipe, tap } from 'rxjs';
@@ -39,8 +32,15 @@ export class EditProductComponent implements OnInit {
   productsData = [];
   postForm = this.formBuilder.group({
     productId: ['', Validators.required],
-    name: ['', Validators.required],
-    description: [''],
+    name: [
+      '',
+      [
+        Validators.required,
+        Validators.maxLength(20),
+        Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+      ],
+    ],
+    description: ['', Validators.maxLength(500)],
     status: [true],
     imageUrl: ['', Validators.required],
   });
@@ -51,7 +51,7 @@ export class EditProductComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     public dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
@@ -72,11 +72,12 @@ export class EditProductComponent implements OnInit {
       .subscribe((data) => {
         console.log('subscribe', data);
         this.openSuccess();
-        console.log()
+        console.log();
         this.router.navigate([`/products/view-product/${data.productId}`]);
       });
-
-    this.postForm.reset();
+  }
+  onDelete() {
+    this.router.navigate(['/products']);
   }
 
   openDialog(
@@ -90,7 +91,6 @@ export class EditProductComponent implements OnInit {
     });
     dialogRef.componentInstance.saveSuccess.subscribe((imageUrl: string) => {
       this.imageUrl = imageUrl;
-      console.log('akas', this.imageUrl);
     });
   }
 
@@ -98,7 +98,8 @@ export class EditProductComponent implements OnInit {
     this.dialog.open(SuccessDialogComponent, {
       width: '420px',
       data: {
-        module: 'Plan',
+        module: 'Product',
+        operation: 'is updated',
       },
     });
   }

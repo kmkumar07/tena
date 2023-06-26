@@ -80,7 +80,7 @@ export class ProductsService {
   }
   editProduct(productId: string, updatedProduct: any): Observable<Product> {
     const url = `${environment.apiUrl}/products/{productId}?productId=${productId}`;
-    return this.http.patch(url, updatedProduct).pipe(
+    return this.http.put(url, updatedProduct).pipe(
       map((res: any) => {
         this.productSubject.next(res.data);
         return res.data;

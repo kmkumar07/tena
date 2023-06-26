@@ -77,7 +77,14 @@ export class CreateFeatureComponent {
     this.featureForm = this.formBuilder.group({
       featureId: ['', Validators.required],
       productID: ['', Validators.required],
-      name: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+        ],
+      ],
       description: ['', Validators.maxLength(500)],
       type: ['', Validators.required],
       unit: ['', Validators.required],
@@ -105,7 +112,7 @@ export class CreateFeatureComponent {
     return levelList;
   }
   addLevels() {
-    this.position = this.levels.controls.length - 1;
+    this.position = this.levels.controls.length + 1;
     this.levels.insert(
       this.position,
       this.formBuilder.group({
@@ -175,6 +182,18 @@ export class CreateFeatureComponent {
         unit: this.featureForm.value.unit,
         levels: this.featureForm.value.levels,
       };
+    } else if (this.featureForm.value.type === 'custom') {
+      const levels = this.featureForm.value.levels.map((level: any) => {
+        return {
+          ...level,
+          isUnlimited: '',
+        };
+      });
+      feature = {
+        ...feature,
+        unit: this.featureForm.value.unit,
+        levels: levels,
+      };
     }
 
     this.subscription = this.featureService.addFeature(feature).subscribe({
@@ -190,7 +209,7 @@ export class CreateFeatureComponent {
   }
 
   onDelete() {
-    this.featureForm.reset();
+    this.routes.navigate(['/features'])
   }
 
   openSuccess() {
