@@ -11,7 +11,7 @@
             [routerLink]="'/features'"
             >keyboard_backspace</mat-icon
           >
-          <span class="mat-h1 primary-text text-main ml-2">Create</span>
+          <span class="mat-h1 primary-text text-main ml-2">Edit Feature</span>
         </div>
         <span class="pl-8 grey-text text-lighten-9 fs-lg">
           Fill in the details to create a new item
@@ -50,6 +50,17 @@
               placeholder="Enter here"
               formControlName="name"
             />
+            <mat-error *ngIf="featureForm.controls['name'].invalid && featureForm.controls['name'].touched">
+              <ng-container *ngIf="featureForm.controls['name'].errors['required']">
+                Name is required and cannot be left empty.
+              </ng-container>
+              <ng-container *ngIf="featureForm.controls['name'].errors['maxlength']">
+                Name cannot exceed 20 characters.
+              </ng-container>
+              <ng-container *ngIf="featureForm.controls['name'].errors['pattern']">
+                Name cannot contain special characters.
+              </ng-container>
+            </mat-error>
           </mat-form-field>
         </div>
         <div class="input-wrapper">
@@ -172,12 +183,17 @@
               placeholder="Enter here..."
               formControlName="description"
             ></textarea>
+            <mat-error *ngIf="featureForm.controls['description'].invalid && featureForm.controls['description'].touched">
+              <ng-container *ngIf="featureForm.controls['description'].errors['maxlength']">
+                Description cannot exceed 500 characters.
+              </ng-container>
+            </mat-error>
           </mat-form-field>
         </div>
         <div
           class="input-wrapper"
           *ngIf="
-            this.featureForm.value.type && this.featureForm.value.type != 1
+            this.featureForm.value.type && this.featureForm.value.type != 1 && this.featureForm.value.type !== 'switch'
           "
         >
           <div class="flex align-center mb-2">
@@ -313,8 +329,9 @@
               class="large"
               type="button"
               (click)="onSubmit()"
+              [disabled]="featureForm.invalid && this.featureForm.value.type !== 'switch'"
             >
-              Create
+              Update
             </button>
           </div>
         </div>

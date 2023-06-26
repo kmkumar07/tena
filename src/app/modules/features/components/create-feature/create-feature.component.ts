@@ -113,7 +113,7 @@ export class CreateFeatureComponent {
     return levelList;
   }
   addLevels() {
-    this.position = this.levels.controls.length - 1;
+    this.position = this.levels.controls.length + 1;
     this.levels.insert(
       this.position,
       this.formBuilder.group({
@@ -199,6 +199,18 @@ export class CreateFeatureComponent {
         unit: this.featureForm.value.unit,
         levels: this.featureForm.value.levels,
       };
+    } else if (this.featureForm.value.type === 'custom') {
+      const levels = this.featureForm.value.levels.map((level: any) => {
+        return {
+          ...level,
+          isUnlimited: '',
+        };
+      });
+      feature = {
+        ...feature,
+        unit: this.featureForm.value.unit,
+        levels: levels,
+      };
     }
 
     if (this.featureForm.value.type === 'range') {
@@ -221,7 +233,7 @@ export class CreateFeatureComponent {
   }
 
   onDelete() {
-    this.featureForm.reset();
+    this.routes.navigate(['/features'])
   }
 
   openSuccess() {

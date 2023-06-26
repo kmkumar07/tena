@@ -41,11 +41,18 @@ export class EditFeatureComponent {
   limit: any = '';
   search: string = '';
   productId = [];
-  featureForm: any = this.formBuilder.group({
-    featureId: [null, Validators.required],
-    productID: [null, Validators.required],
-    name: ['', Validators.required],
-    description: ['', Validators.required],
+  featureForm: FormGroup = this.formBuilder.group({
+    featureId: ['', Validators.required],
+    productID: ['', Validators.required],
+    name: [
+      '',
+      [
+        Validators.required,
+        Validators.maxLength(20),
+        Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+      ],
+    ],
+    description: ['', Validators.maxLength(500)],
     type: ['', Validators.required],
     unit: [null, Validators.required],
     status: [false],
@@ -83,8 +90,6 @@ export class EditFeatureComponent {
     const id = this.route.snapshot.params['id'];
 
     this.featureService.getFeatureById(id).subscribe((data) => {
-      console.log('a', data);
-
       this.updateForm(data);
     });
   }
@@ -97,7 +102,7 @@ export class EditFeatureComponent {
     return levelList;
   }
   addLevels() {
-    this.position = this.levels.controls.length - 1;
+    this.position = this.levels.controls.length + 1;
     this.levels.insert(
       this.position,
       this.formBuilder.group({
@@ -219,7 +224,7 @@ export class EditFeatureComponent {
       width: '420px',
       data: {
         module: 'Feature',
-        operation: 'Updated',
+        operation: 'is updated',
       },
     });
   }
