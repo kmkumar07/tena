@@ -141,8 +141,8 @@ export class CreateFeatureComponent {
     } else {
       lastLevel.patchValue({
         isUnlimited: true,
-        value: 'Unlimited',
-        name: 'Unlimited' + ' ' + this.postName,
+        value: 'unlimited',
+        name: 'unlimited' + ' ' + this.postName+'s',
       });
       this.unlimitedButtonLabel = 'Set Custom Maximum';
     }
