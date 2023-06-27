@@ -2,15 +2,14 @@ import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { HeaderComponent } from '../header.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatChipsModule } from '@angular/material/chips';
-import { CommonModule } from '@angular/common';
-import { SftSearchbarModule } from '../../searchbar/searchbar.module';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
+import { ProfileComponent } from '../../profile/profile.component';
+import { SearchbarComponent } from '../../searchbar/searchbar.component';
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
 const meta: Meta<HeaderComponent> = {
@@ -27,87 +26,112 @@ const meta: Meta<HeaderComponent> = {
   decorators: [
     moduleMetadata({
       imports: [
-        MatMenuModule,
-        MatCardModule,
-        MatDialogModule,
-        MatDialogModule,
-        MatButtonModule,
+        AngularMaterialModule,
         BrowserAnimationsModule,
-        MatIconModule,
-        MatTabsModule,
-        MatChipsModule,
-        SftSearchbarModule,
-        CommonModule
       ],
+      declarations: [ProfileComponent, SearchbarComponent],
     }),
   ],
+
   parameters: {
     docs: {
       source: {
         code: `
-        <div class="user-profile pointer" [matMenuTriggerFor]="menu">
-          <div class="user-image">
-            <img src="/profile-avatar-1.png" />
-          </div>
-          <div class="user-info">
-            <span class="name">John Smith</span>
-            <span class="role">Founder</span>
-          </div>
-        </div>
-        <mat-menu
-          #menu="matMenu"
-          class="profile-menu"
-          backdropClass="alert-menu"
-        >
-          <div class="profile-menu-outer">
-            <div class="grad-bg">
-              <div class="user-initials">JS</div>
+          <div class="header-wrapper border-2">
+            <sft-searchbar></sft-searchbar>
+            <div class="header-right">
+              <div
+                class="notifications-section pointer"
+                [matMenuTriggerFor]="notificationsMenu"
+                matBadge="3"
+                matBadgeSize="small"
+                matBadgeColor="warn"
+              >
+                <img src="/icons/notifications.svg" alt="notifications-icon" />
+              </div>
+              <mat-menu
+                #notificationsMenu="matMenu"
+                class="notifications-menu border-2"
+                backdropClass="right-menu"
+              >
+                <div class="notifications-header">
+                  <div class="flex align-center justify-between">
+                    <div class="label">Notifications</div>
+                    <mat-chip class="basic-chip"> 4 New </mat-chip>
+                  </div>
+                  <div class="tab-panel" (click)="preventClose($event)">
+                    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+                      <mat-tab label="All (4)">
+                        <div
+                          class="relative h-55"
+                          *ngIf="notificationsData.length == 0"
+                        >
+                          <div class="absolute position-center text-center w-full">
+                            <img src="/notifications-icon.png" alt="no data" />
+                            <span class="block mt-6">
+                              Hey! You have no notifications.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="notification-list"
+                          (click)="preventClose($event)"
+                          *ngIf="notificationsData.length > 0"
+                        ></div>
+                      </mat-tab>
+                      <mat-tab label="Messages">
+                        <div
+                          class="relative h-55"
+                          *ngIf="notificationsData.length == 0"
+                        >
+                          <div class="absolute position-center text-center w-full">
+                            <img src="/notifications-icon.png" alt="no data" />
+                            <span class="block mt-6">
+                              Hey! You have no notifications.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="message-list"
+                          (click)="preventClose($event)"
+                          *ngIf="notificationsData.length > 0"
+                        >
+                          My Messages
+                        </div>
+                      </mat-tab>
+                      <mat-tab label="Alerts">
+                        <div
+                          class="relative h-55"
+                          *ngIf="notificationsData.length == 0"
+                        >
+                          <div class="absolute position-center text-center w-full">
+                            <img src="/notifications-icon.png" alt="no data" />
+                            <span class="block mt-6">
+                              Hey! You have no notifications.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="message-list"
+                          (click)="preventClose($event)"
+                          *ngIf="notificationsData.length > 0"
+                        >
+                          Alerts
+                        </div>
+                      </mat-tab>
+                    </mat-tab-group>
+                  </div>
+                  <div
+                    class="text-center modal-footer pointer"
+                    (click)="preventClose($event)"
+                  >
+                    <span class="block py-4"> View All </span>
+                  </div>
+                </div>
+              </mat-menu>
+              <sft-profile></sft-profile>
             </div>
-            <div class="profile-inner">
-              <p class="mat-h1 fw-600 m-0">John Smith</p>
-              <p class="m-0 mt-1">Founder</p>
-            </div>
-            <div class="profile-paths">
-              <a
-                class="flex align-center justify-between user-link"
-              >
-                <div class="flex align-center">
-                  <mat-icon class="material-symbols-outlined">account_circle</mat-icon>
-                  <span class="ml-3">John</span>
-                </div>
-                <div >
-                  <mat-slide-toggle
-                    color="primary"
-                  ></mat-slide-toggle>
-                </div>
-              </a>
-              <a
-                class="flex align-center justify-between user-link"
-              >
-                <div class="flex align-center">
-                  <mat-icon class="material-symbols-outlined">inbox_outline</mat-icon>
-                  <span class="ml-3">My Inbox</span>
-                </div>
-              </a>
-              <a
-                class="flex align-center justify-between user-link"
-              >
-                <div class="flex align-center">
-                  <mat-icon class="material-symbols-outlined">clear_day</mat-icon>
-                  <span class="ml-3">Dark Mode</span>
-                </div>
-              </a>
-              <a
-                class="flex align-center justify-between user-link"
-              >
-                <div class="flex align-center">
-                  <mat-icon class="material-symbols-outlined">live_help</mat-icon>
-                  <span class="ml-3">Help</span>
-                </div>
-              </a>
-            </div>
           </div>
-        </mat-menu>
         `,
       },
     },

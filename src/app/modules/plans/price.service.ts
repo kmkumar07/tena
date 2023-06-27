@@ -13,7 +13,7 @@ export class PriceService {
 
   constructor(private http: HttpClient) { }
   createPrice(price): Observable<any> {
-    return this.http.post(`${environment.price}`, price).pipe(
+    return this.http.post(`${environment.apiUrl}/pricing`, price).pipe(
       map((res: any) => {
         this.priceSubject.next(res.data);        
         return res.data;

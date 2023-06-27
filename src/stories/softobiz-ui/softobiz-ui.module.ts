@@ -7,8 +7,9 @@ import { SftButtonModule } from './button/button.module';
 // import { SftExpensionModule } from './expansion-panel/expansion.module';
 import { NgxTippyModule } from 'ngx-tippy-wrapper';
 import { TypographyComponent } from './Typography/typography.component';
+import { DashboardLayoutModule } from './dashboardLayout/dashboardLayout.module';
 
-const SFT_UI_MODULES = [SftButtonModule, NgxTippyModule];
+const SFT_UI_MODULES = [SftButtonModule, NgxTippyModule, DashboardLayoutModule];
 
 /**
  * HumaUI shared modules
@@ -16,8 +17,6 @@ const SFT_UI_MODULES = [SftButtonModule, NgxTippyModule];
 @NgModule({
   imports: SFT_UI_MODULES,
   exports: SFT_UI_MODULES,
-  declarations: [
-    TypographyComponent,
-  ],
+  declarations: [TypographyComponent],
 })
 export class SoftobizUiModule {}

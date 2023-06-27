@@ -1,15 +1,5 @@
-<mat-sidenav-content>
-  <!-- Header for application starts here! -->
+
   <div class="header-wrapper border-2">
-    <!-- <div class="global-search basic mr-6 border-2">
-      <span class="search-icon pointer">
-        <img
-          src="/icons/search.svg"
-          alt="search-icon"
-        />
-      </span>
-      <input type="text" placeholder="Search..." />
-    </div> -->
     <sft-searchbar></sft-searchbar>
     <div class="header-right">
       <div
@@ -19,10 +9,7 @@
         matBadgeSize="small"
         matBadgeColor="warn"
       >
-        <img
-          src="/icons/notifications.svg"
-          alt="notifications-icon"
-        />
+        <img src="/icons/notifications.svg" alt="notifications-icon" />
       </div>
       <mat-menu
         #notificationsMenu="matMenu"
@@ -42,10 +29,7 @@
                   *ngIf="notificationsData.length == 0"
                 >
                   <div class="absolute position-center text-center w-full">
-                    <img
-                      src="/notifications-icon.png"
-                      alt="no data"
-                    />
+                    <img src="/notifications-icon.png" alt="no data" />
                     <span class="block mt-6">
                       Hey! You have no notifications.
                     </span>
@@ -63,10 +47,7 @@
                   *ngIf="notificationsData.length == 0"
                 >
                   <div class="absolute position-center text-center w-full">
-                    <img
-                      src="/notifications-icon.png"
-                      alt="no data"
-                    />
+                    <img src="/notifications-icon.png" alt="no data" />
                     <span class="block mt-6">
                       Hey! You have no notifications.
                     </span>
@@ -86,10 +67,7 @@
                   *ngIf="notificationsData.length == 0"
                 >
                   <div class="absolute position-center text-center w-full">
-                    <img
-                      src="/notifications-icon.png"
-                      alt="no data"
-                    />
+                    <img src="/notifications-icon.png" alt="no data" />
                     <span class="block mt-6">
                       Hey! You have no notifications.
                     </span>
@@ -113,72 +91,6 @@
           </div>
         </div>
       </mat-menu>
-      <div class="user-profile pointer" [matMenuTriggerFor]="menu">
-        <div class="user-image">
-          <img src="/profile-avatar-1.png" />
-        </div>
-        <div class="user-info">
-          <span class="name">John Smith</span>
-          <span class="role">Founder</span>
-        </div>
-      </div>
-      <mat-menu
-        #menu="matMenu"
-        class="profile-menu"
-        backdropClass="alert-menu"
-      >
-        <div class="profile-menu-outer">
-          <div class="grad-bg">
-            <div class="user-initials">JS</div>
-          </div>
-          <div class="profile-inner">
-            <p class="mat-h1 fw-600 m-0">John Smith</p>
-            <p class="m-0 mt-1">Founder</p>
-          </div>
-          <div class="profile-paths">
-            <a
-              class="flex align-center justify-between user-link"
-            >
-              <div class="flex align-center">
-                <mat-icon class="material-symbols-outlined">account_circle</mat-icon>
-                <span class="ml-3">John</span>
-              </div>
-              <div >
-                <mat-slide-toggle
-                  color="primary"
-                ></mat-slide-toggle>
-              </div>
-            </a>
-            <a
-              class="flex align-center justify-between user-link"
-            >
-              <div class="flex align-center">
-                <mat-icon class="material-symbols-outlined">inbox_outline</mat-icon>
-                <span class="ml-3">My Inbox</span>
-              </div>
-            </a>
-            <a
-              class="flex align-center justify-between user-link"
-            >
-              <div class="flex align-center">
-                <mat-icon class="material-symbols-outlined">clear_day</mat-icon>
-                <span class="ml-3">Dark Mode</span>
-              </div>
-            </a>
-            <a
-              class="flex align-center justify-between user-link"
-            >
-              <div class="flex align-center">
-                <mat-icon class="material-symbols-outlined">live_help</mat-icon>
-                <span class="ml-3">Help</span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </mat-menu>
+      <sft-profile></sft-profile>
     </div>
   </div>
-  <div class="pt-6 main-content-height">
-    <router-outlet></router-outlet>
-  </div>
-</mat-sidenav-content>

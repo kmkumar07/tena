@@ -1,4 +1,4 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj, componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { CalendarComponent } from '../calendar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +8,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';                                
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
 const meta: Meta<CalendarComponent> = {
@@ -22,6 +25,7 @@ const meta: Meta<CalendarComponent> = {
   }),
   argTypes: {},
   decorators: [
+    componentWrapperDecorator((story) => `<div class="storybook-calendar" >${story}</div>`),
     moduleMetadata({
       imports: [
         MatMenuModule,
@@ -33,6 +37,9 @@ const meta: Meta<CalendarComponent> = {
         MatDatepickerModule,
         MatNativeDateModule,
         FormsModule,
+        MatFormFieldModule,
+        MatInputModule ,
+        MatTabsModule
       ],
     }),
   ],
@@ -40,15 +47,33 @@ const meta: Meta<CalendarComponent> = {
     docs: {
       source: {
         code: `
-        <mat-icon class="material-symbols-outlined" [matMenuTriggerFor]="actionsMenu">
-          more_vert
-        </mat-icon>
-        <mat-menu #actionsMenu="matMenu" class="actions-menu" backdropClass="edit-menu">
-          <button mat-menu-item disableRipple>Edit</button>
-          <button mat-menu-item disableRipple >
-            Delete
-          </button>
-        </mat-menu>
+        <div class="py-2 px-6">
+        <div class="flex align-center input-wrapper px-2">
+          <div class="block filter-input mr-4">
+            <span class="block mat-body-1 pl-2 mb-1"> Start </span>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Start Date"
+                [(ngModel)]="startDate"
+
+
+              />
+            </mat-form-field>
+          </div>
+          <div class="block filter-input">
+            <span class="block mat-body-1 pl-2 mb-1"> End </span>
+            <mat-form-field>
+              <input matInput type="text" placeholder="end Date" />
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-calendar></mat-calendar>
+        <div class="w-full flex justify-end align-center">
+          <button mat-stroked-button color="primary" class="mr-3">Cancel</button>
+          <button mat-flat-button color="primary">Apply</button>
+        </div>
+        </div>
         `,
       },
     },

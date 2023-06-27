@@ -13,11 +13,6 @@ const meta: Meta<TabsComponent> = {
     },
   }),
   argTypes: {
-    // periodUnit: ['Tab1', 'Tab2', 'Tab3', 'Tab4'],
-    // periodUnit: {
-    //   options: [['Another Item One', 'Another Item Two', 'Another Item Three']],
-    // },
-    // tablabel: { control: 'array' },
   },
   decorators: [
     moduleMetadata({

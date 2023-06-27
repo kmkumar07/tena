@@ -1,13 +1,16 @@
-import { Component, ViewEncapsulation, ViewChild, Input } from '@angular/core';
-import { Notifications_Data } from 'src/app/shared/constants/consants';
+import { Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { MENUITEMS, Config_Menu, Menu_Headings, User_Options, Notifications_Data } from 'src/app/shared/constants/consants';
 @Component({
-  selector: 'sft-header-button',
+  selector: 'sft-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  menuItems = MENUITEMS;
+  configOptions = Config_Menu;
+  Menu_Headings = Menu_Headings;
+  userProfile = User_Options;
   notificationsData = Notifications_Data;
   constructor() {}
 
@@ -19,10 +22,10 @@ export class HeaderComponent {
     this.opened = event;
   }
 
-  // getList(item: string) {
-  //   let list = [];
-  //   return (list = this.menuItems.filter((ele) => ele.category == item));
-  // }
+  getList(item: string) {
+    let list = [];
+    return (list = this.menuItems.filter((ele) => ele.category == item));
+  }
   preventClose(event: any) {
     event.stopPropagation();
   }

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormGroup, FormControl, FormsModule } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -14,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import { CalendarComponent } from './calendar.component';
 import { CustomDateHeaderComponent } from 'src/app/shared/components/custom-date-header/custom-date-header.component';
+import { MatTabsModule } from '@angular/material/tabs';
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
 
@@ -25,7 +25,6 @@ import { CustomDateHeaderComponent } from 'src/app/shared/components/custom-date
     FormGroup,
     FormControl,
     MatNativeDateModule,
-    BrowserModule,
     BrowserAnimationsModule,
     MatDatepickerInputEvent,
     MatFormFieldModule,
@@ -34,7 +33,9 @@ import { CustomDateHeaderComponent } from 'src/app/shared/components/custom-date
     MatIconModule,
     MatSelectModule,
     MatNativeDateModule,
-    CustomDateHeaderComponent
+    CustomDateHeaderComponent,
+    MatFormFieldModule,
+    MatTabsModule
   ],
   declarations: [CalendarComponent],
   exports: [CalendarComponent, MatDatepickerModule],

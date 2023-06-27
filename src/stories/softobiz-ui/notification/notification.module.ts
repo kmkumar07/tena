@@ -1,24 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuComponent } from './menu.component';
-import { PortalModule } from '@angular/cdk/portal';
+import { NotificationComponent } from './notification.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
 @NgModule({
-  declarations: [MenuComponent],
+  declarations: [NotificationComponent],
   imports: [
     CommonModule,
     MatMenuModule,
-    PortalModule,
-    MatFormFieldModule,
-    MatDialogModule,
     MatButtonModule,
     BrowserAnimationsModule,
     MatIconModule,
+    MatBadgeModule
   ],
 })
 export class MenuModule {}
