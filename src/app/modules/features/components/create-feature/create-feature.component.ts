@@ -60,8 +60,6 @@ export class CreateFeatureComponent {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    console.log('id', this.id);
-
     this.productService
       .getProducts(this.PageNumber, this.limit, this.search)
       .subscribe((data) => {
@@ -69,14 +67,25 @@ export class CreateFeatureComponent {
         this.featureForm.patchValue({ productID: this.id });
       });
     this.feature();
+    this.featureForm.controls['name'].valueChanges.subscribe((value) => {
+      const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
+      this.featureForm.controls['featureId'].setValue(idValue);
+    });
   }
 
   feature() {
     this.featureForm = this.formBuilder.group({
       featureId: ['', Validators.required],
       productID: ['', Validators.required],
-      name: ['', Validators.required],
-      description: ['', Validators.required],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+        ],
+      ],
+      description: ['', Validators.maxLength(500)],
       type: ['', Validators.required],
       unit: ['', Validators.required],
       status: [false],
@@ -93,8 +102,6 @@ export class CreateFeatureComponent {
         }),
       ]),
     });
-
-    // this.featureForm.get('productID').setValue(this.id)
   }
 
   get levels() {
@@ -105,7 +112,7 @@ export class CreateFeatureComponent {
     return levelList;
   }
   addLevels() {
-    this.position = this.levels.controls.length - 1;
+    this.position = this.levels.controls.length + 1;
     this.levels.insert(
       this.position,
       this.formBuilder.group({
@@ -175,8 +182,19 @@ export class CreateFeatureComponent {
         unit: this.featureForm.value.unit,
         levels: this.featureForm.value.levels,
       };
+    } else if (this.featureForm.value.type === 'custom') {
+      const levels = this.featureForm.value.levels.map((level: any) => {
+        return {
+          ...level,
+          isUnlimited: '',
+        };
+      });
+      feature = {
+        ...feature,
+        unit: this.featureForm.value.unit,
+        levels: levels,
+      };
     }
-    console.log('feature', feature);
 
     this.subscription = this.featureService.addFeature(feature).subscribe({
       next: (res: any) => {
@@ -191,7 +209,7 @@ export class CreateFeatureComponent {
   }
 
   onDelete() {
-    this.routes.navigate(['/features']);
+    this.routes.navigate(['/features'])
   }
 
   openSuccess() {
@@ -199,7 +217,7 @@ export class CreateFeatureComponent {
       width: '420px',
       data: {
         module: 'Feature',
-        operation: 'Created',
+        operation: 'is created',
       },
     });
   }

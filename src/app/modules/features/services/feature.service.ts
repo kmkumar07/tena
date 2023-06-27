@@ -77,7 +77,7 @@ export class FeatureService {
 
   updateFeature(featureId: string, updatedFeature: any): Observable<Feature> {
     const url = `${environment.apiUrl}/feature?featureId=${featureId}`;
-    return this.http.patch(url, updatedFeature).pipe(
+    return this.http.put(url, updatedFeature).pipe(
       map((res: any) => {
         this.featureSubject.next(res.data);
         return res.data;
