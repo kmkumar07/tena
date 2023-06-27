@@ -1,3 +1,4 @@
+<div *ngIf="errorMsg" class="error-message">{{ errorMsg }}</div>
 <div class="create-product-wrapper">
   <div class="header-section pt-6 pb-6">
     <div class="flex align-center">
@@ -9,6 +10,9 @@
   </div>
   <div class="form-block pt-6">
     <div class="form-block pt-6">
+      <div *ngIf="uploadMessage" class="upload-message" [ngClass]="{'success': uploadSuccess, 'error': !uploadSuccess}">
+        {{ uploadMessage }}
+      </div>
       <div class="user-img-wrapper flex align-center">
         <div class="user-avatar flex align-center justify-center">
            <img src="{{ imagePath + imageUrl }}" alt="{{imageName}}" />

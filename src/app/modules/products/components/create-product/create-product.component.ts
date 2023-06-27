@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -32,7 +33,6 @@ import { environment } from 'src/environments/environment';
       ]),
     ]),
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateProductComponent implements OnInit {
   subscription: Subscription;
@@ -44,11 +44,15 @@ export class CreateProductComponent implements OnInit {
   imageName: string = '';
   data: string = '';
   imagePath: string = '';
+  errorMsg: string = '';
+  uploadMessage: string = '';
+  uploadSuccess: boolean = false;
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private cdr: ChangeDetectorRef
   ) {}
   ngOnInit() {
     this.productForm = this.formBuilder.group({
@@ -88,15 +92,33 @@ export class CreateProductComponent implements OnInit {
       ...this.productForm.value,
       status: status,
     };
-    this.subscription = this.productService
-      .createProduct(product)
-      .subscribe((res) => {
+    this.subscription = this.productService.createProduct(product).subscribe({
+      next: (res) => {
         this.openSuccess();
         this.router.navigate([`/products/view-product/${res.productId}`]);
-      });
+      },
+      error: (error: any) => {
+        if (error.status === 409) {
+          this.errorMsg = 'Product with the same ID already exists.';
+          this.startMessageTimer();
+        } else {
+          this.errorMsg = 'An error occurred. Please try again later.';
+          console.log('Error:', error);
+        }
+      },
+    });
   }
   onDelete() {
     this.router.navigate(['/products']);
+  }
+
+  startMessageTimer(): void {
+    const duration = 5000;
+    setTimeout(() => {
+      this.errorMsg = '';
+      this.uploadSuccess = false;
+      this.uploadMessage = '';
+    }, duration);
   }
 
   openDialog(
@@ -114,8 +136,16 @@ export class CreateProductComponent implements OnInit {
         this.imageName = data.imageName;
         this.imagePath = environment.blobStorageUrl;
         console.log('aaaa', this.imageUrl);
+        this.uploadSuccess = true;
+        this.uploadMessage = 'Image upload successful';
+        this.startMessageTimer();
       }
     );
+    dialogRef.componentInstance.saveError.subscribe((res: any) => {
+      this.uploadSuccess = false;
+      this.uploadMessage = 'Image upload failed. Please try again.';
+      this.startMessageTimer();
+    });
   }
 
   openSuccess() {
@@ -123,7 +153,7 @@ export class CreateProductComponent implements OnInit {
       width: '420px',
       data: {
         module: 'Product',
-        operation: 'is created'
+        operation: 'is created',
       },
     });
   }
@@ -170,6 +200,8 @@ export class DialogAnimationsDialog {
   base64imageData: string = '';
   imageName: string = '';
   imageUrl: string = '';
+  uploadMessage: string = '';
+  uploadSuccess: boolean = false;
 
   handleDragEnter() {
     this.dragging = true;
@@ -214,25 +246,37 @@ export class DialogAnimationsDialog {
   }
   @Output() saveSuccess: EventEmitter<{ imageUrl: string; imageName: string }> =
     new EventEmitter<{ imageUrl: string; imageName: string }>();
+  @Output() saveError: EventEmitter<any> = new EventEmitter<any>();
   handleSave() {
     if (this.base64imageData) {
       const payload = {
         image: this.base64imageData,
         imageName: this.imageName,
       };
-      this.subscription = this.productService
-        .uploadImage(payload)
-        .subscribe((res) => {
+      this.subscription = this.productService.uploadImage(payload).subscribe({
+        next: (res) => {
           this.imageUrl = res.data.blobURL;
+          this.uploadSuccess = true;
+          this.uploadMessage = 'Image upload successful';
+        },
+        error: (error: any) => {
+          console.log('a', error);
+
+          this.uploadSuccess = false;
+          this.uploadMessage = 'Image upload failed. Please try again.';
+          this.saveError.emit(error);
+        },
+        complete: () => {
           this.saveSuccess.emit({
             imageUrl: this.imageUrl,
             imageName: this.imageName,
           });
-        });
+        },
+      });
     }
   }
 
   cancel() {
-    this.imageSrc = 'null';
+    this.dialogRef.close();
   }
 }

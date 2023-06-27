@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 
 
 export interface DialogData {
+  module: string;
   deleteId: number;
 }
 @Component({
@@ -15,7 +16,8 @@ export class DeleteConfirmationComponent {
   @Output() confirmed: EventEmitter<boolean> = new EventEmitter<boolean>();
   constructor(
     public dialogRef: MatDialogRef<DeleteConfirmationComponent>,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
   // dialogRef: any;
 

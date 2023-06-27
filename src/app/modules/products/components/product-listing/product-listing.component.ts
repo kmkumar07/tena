@@ -35,7 +35,13 @@ export class ProductListingComponent implements OnInit {
   limit = 5;
   search: string = '';
   productsData = [];
-  filteredProducts: Data_Type[];
+  filteredProducts: any = [];
+  maxLimit: number = 100;
+  allProduct: number;
+  NoPage: any = '';
+  Nolimit: any = '';
+  hasNextPage: boolean = false;
+  totalPages: number = 0;
 
   selection = new SelectionModel<Data_Type>(true, []);
 
@@ -66,13 +72,7 @@ export class ProductListingComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.getProduct(this.PageNumber, this.limit, this.search);
-    this.productService.product$.subscribe((data) => {
-      if (data) {
-        this.productsData = data;
-        this.filteredProducts = data;
-        this.loading = false;
-      }
-    });
+    this.getAllProduct(this.NoPage, this.Nolimit, this.search);
 
     this.searchSubscription = this.searchQueryChanged
       .pipe(debounceTime(500), distinctUntilChanged())
@@ -83,12 +83,30 @@ export class ProductListingComponent implements OnInit {
       });
   }
 
+  getAllProduct(PageNumber: number, limit: number, search: string) {
+    this.loading = true;
+    this.productService
+      .getProducts(this.NoPage, this.Nolimit, this.search)
+      .subscribe((data) => {
+        if (data) {
+          this.allProduct = data.length;
+          this.loading = false;
+        }
+      });
+  }
+
   getProduct(PageNumber: number, limit: number, search: string) {
     this.loading = true;
     this.productService
       .getProducts(this.PageNumber, this.limit, this.search)
-      .subscribe(() => {
-        this.loading = false;
+      .subscribe((data) => {
+        if (data) {
+          this.productsData = data;
+          this.filteredProducts = data;
+          this.totalPages = Math.ceil(this.allProduct / limit);
+          this.hasNextPage = PageNumber < this.totalPages;
+          this.loading = false;
+        }
       });
   }
 
@@ -112,19 +130,24 @@ export class ProductListingComponent implements OnInit {
 
   sendElementId(elementId: string) {
     this.productService.deleteProduct(elementId).subscribe(() => {
-      this.data$.subscribe((data) => {});
+      this.getProduct(this.PageNumber, this.limit, this.search);
+      this.getAllProduct(this.NoPage, this.Nolimit, this.search);
     });
   }
   openDelete(id: any) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       width: '420px',
       panelClass: 'dialog-curved',
+      data: {
+        module: 'Product',
+        deleteId: id,
+      },
     });
 
     this.dialogRef.afterClosed().subscribe((res: any) => {
       if (res) {
         this.sendElementId(id);
-      } 
+      }
     });
   }
 

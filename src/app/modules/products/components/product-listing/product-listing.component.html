@@ -16,7 +16,7 @@
     <div class="flex align-center">
       <h1 class="text-text text-dark">Products</h1>
       <mat-chip class="chip-dark ml-3">
-        {{ productsData.length }}
+        {{ allProduct }}
       </mat-chip>
     </div>
     <div class="flex align-center">
@@ -155,7 +155,7 @@
           *matCellDef="let element"
           [routerLink]="['/products/view-product/' + element.productId]"
         >
-          {{ element.createdOn | date: 'd MMMM y'}}
+          {{ element.createdOn | date : "d MMMM y" }}
         </td>
       </ng-container>
 
@@ -228,7 +228,7 @@
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="50">50</option>
-              <option value="100">100</option>
+              <option [value]="maxLimit">100</option>
             </select>
 
             entries</label
@@ -243,11 +243,18 @@
               <a
                 class="btn btn-primary btn-sm notActive"
                 (click)="onPrevious()"
+                *ngIf="PageNumber > 1 && limit != maxLimit"
               >
                 Previous
               </a>
-              <a class="btn btn-primary btn-sm active" style="margin: 0 20px;">{{ PageNumber }}</a>
-              <a class="btn btn-primary btn-sm notActive" (click)="onNext()"
+              <a class="btn btn-primary btn-sm active" style="margin: 0 20px">{{
+                PageNumber
+              }}</a>
+              <a
+                class="btn btn-primary btn-sm notActive"
+                (click)="onNext()"
+                [ngClass]="{ disabled: !hasNextPage }"
+                *ngIf="limit != maxLimit"
                 >Next
               </a>
             </div>
