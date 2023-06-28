@@ -16,7 +16,7 @@ import { PageNotFoundComponent } from './shared/components/page-not-found/page-n
 import { FeatureDetailsPopupComponent } from './shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 import { CouponsDeleteSuccessComponent } from './shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { SignInComponent } from './modules/sign-in/components/sign-in.component';
-import { SharedDataService } from './shared/shareddata.service';
+import { SharedDataService } from './shared/sharedData.service';
 
 @NgModule({
   declarations: [

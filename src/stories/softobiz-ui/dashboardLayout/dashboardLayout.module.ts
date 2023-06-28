@@ -22,7 +22,7 @@ import { HeaderComponent } from '../header/header.component';
 import { HeaderModule } from '../header/header.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { LeftNavigationComponent } from '../leftNavigation/leftNavigation.component';
+// import { LeftNavigationComponent } from '../leftNavigation/leftNavigation.component';
 
 @NgModule({
   declarations: [

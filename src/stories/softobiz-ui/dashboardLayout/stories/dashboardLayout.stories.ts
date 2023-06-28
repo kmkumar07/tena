@@ -27,7 +27,7 @@ import { HeaderModule } from '../../header/header.module';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { LeftNavigationComponent } from '../../leftNavigation/leftNavigation.component';
+// import { LeftNavigationComponent } from '../../leftNavigation/leftNavigation.component';
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
 const meta: Meta<DashboardLayoutComponent> = {

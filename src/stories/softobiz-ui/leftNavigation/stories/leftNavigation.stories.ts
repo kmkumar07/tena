@@ -6,11 +6,18 @@ import {
 } from '@storybook/angular';
 import { LeftNavigationComponent } from '../leftNavigation.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
+import { ProfileComponent } from '../../profile/profile.component';
+import { SearchbarComponent } from '../../searchbar/searchbar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidebarComponent } from 'src/app/core/layouts/sidebar/sidebar.component';
+import { ActivatedRoute } from '@angular/router';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatListModule } from '@angular/material/list';
@@ -55,6 +62,7 @@ const meta: Meta<LeftNavigationComponent> = {
         BrowserAnimationsModule,
         MatChipsModule,
         MatSidenavModule,
+        // ActivatedRoute,
         MatChipsModule,
         MatSlideToggleModule,
         RouterTestingModule,
