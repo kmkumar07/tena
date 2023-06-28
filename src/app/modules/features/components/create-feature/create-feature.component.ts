@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { LogViewComponent } from 'src/app/modules/payment-history/logs/components/log-view/log-view.component';
 
 export interface menuOptions {
   value: number;
@@ -45,6 +46,7 @@ export class CreateFeatureComponent {
   search: string = '';
   productArray = [];
   id: string;
+  isRangeSelected: boolean = false;
 
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -139,8 +141,8 @@ export class CreateFeatureComponent {
     } else {
       lastLevel.patchValue({
         isUnlimited: true,
-        value: 'Unlimited',
-        name: 'Unlimited' + ' ' + this.postName,
+        value: 'unlimited',
+        name: 'unlimited' + ' ' + this.postName+'s',
       });
       this.unlimitedButtonLabel = 'Set Custom Maximum';
     }
@@ -156,7 +158,39 @@ export class CreateFeatureComponent {
       name: displayName,
     });
   }
+  onTypeSelection(value: string) {
+    if (value === 'range') {
+      this.isRangeSelected = true;
+      this.featureForm.controls['unit'].reset();
+      while (this.levels.length > 2) {
+        this.levels.removeAt(2); // Remove form groups starting from index 2
+      }
+      for (let i = 0; i < this.levels.length; i++) {
+        const formGroup = this.levels.at(i); // Get the specific form group
+        formGroup.patchValue({
+          value: '',
+          name: '',
+        });
+      }
 
+    }
+   else if (value === 'quantity') {
+      this.isRangeSelected = false;
+      this.featureForm.controls['unit'].reset();
+
+      for (let i = 0; i < this.levels.length; i++) {
+        const formGroup = this.levels.at(i); // Get the specific form group
+        formGroup.patchValue({
+          value: '',
+          name: '',
+        });
+      }
+
+    }
+     else {
+      this.isRangeSelected = false;
+    }
+  }
   onSubmit() {
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
@@ -196,6 +230,13 @@ export class CreateFeatureComponent {
       };
     }
 
+    if (this.featureForm.value.type === 'range') {
+      feature = {
+        ...feature,
+        unit: this.featureForm.value.unit,
+        levels: this.featureForm.value.levels,
+      };
+    }
     this.subscription = this.featureService.addFeature(feature).subscribe({
       next: (res: any) => {
         this.openSuccess();
@@ -209,7 +250,7 @@ export class CreateFeatureComponent {
   }
 
   onDelete() {
-    this.routes.navigate(['/features'])
+    this.routes.navigate(['/features']);
   }
 
   openSuccess() {
