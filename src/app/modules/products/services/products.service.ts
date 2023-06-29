@@ -31,7 +31,7 @@ export class ProductsService {
     );
   }
   uploadImage(image: any): Observable<any> {
-    return this.http.post(`${environment.uploadUrl}`, image).pipe(
+    return this.http.post(`${environment.uploadUrl}/blob/upload`, image).pipe(
       map((data: any) => {
         this.uploadImageSubject.next(data);
         return data;
