@@ -24,11 +24,5 @@ export class DeleteConfirmationComponent {
   onCancelClick(): void {
     this.dialogRef.close(false);
   }
-  onYesClick(): void {
-    const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
-      width: '422px',
-      panelClass: 'dialog-curved',
-    });
-  }
 
 }

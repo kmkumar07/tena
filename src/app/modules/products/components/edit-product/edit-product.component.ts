@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { DialogAnimationsDialog } from '../create-product/create-product.component';
 import { FormBuilder, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -7,6 +12,8 @@ import { Observable, Subscription, pipe, tap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
+import { MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-product',
@@ -45,6 +52,9 @@ export class EditProductComponent implements OnInit {
     imageUrl: ['', Validators.required],
   });
 
+  @ViewChild(SnackBarComponent, { static: false })
+  snackbarComponent: SnackBarComponent;
+
   constructor(
     private productService: ProductsService,
     private route: ActivatedRoute,
@@ -60,6 +70,13 @@ export class EditProductComponent implements OnInit {
     });
   }
 
+  openSnackbar(message: string) {
+    const config: MatSnackBarConfig = {
+      duration: 5000,
+    };
+    this.snackbarComponent.open(message, config);
+  }
+
   onSubmit() {
     this.postForm.get('imageUrl')?.setValue(this.imageUrl);
     const status = this.postForm.value.status ? 'active' : 'disabled';
@@ -69,11 +86,14 @@ export class EditProductComponent implements OnInit {
     };
     this.subscription = this.productService
       .editProduct(this.postForm.value.productId, product)
-      .subscribe((data) => {
-        console.log('subscribe', data);
-        this.openSuccess();
-        console.log();
-        this.router.navigate([`/products/view-product/${data.productId}`]);
+      .subscribe({
+        next: (data) => {
+          this.openSuccess();
+          this.router.navigate([`/products/view-product/${data.productId}`]);
+        },
+        error: (error: any) => {
+          this.openSnackbar(error.error.message);
+        },
       });
   }
   onDelete() {

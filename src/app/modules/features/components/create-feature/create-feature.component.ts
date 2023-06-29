@@ -19,6 +19,8 @@ import { Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
+import { MatSnackBarConfig } from '@angular/material/snack-bar';
 
 export interface menuOptions {
   value: number;
@@ -45,6 +47,9 @@ export class CreateFeatureComponent {
   search: string = '';
   productArray = [];
   id: string;
+
+  @ViewChild(SnackBarComponent, { static: false })
+  snackbarComponent: SnackBarComponent;
 
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -88,7 +93,7 @@ export class CreateFeatureComponent {
       description: ['', Validators.maxLength(500)],
       type: ['', Validators.required],
       unit: ['', Validators.required],
-      status: [false],
+      status: [true],
       levels: this.formBuilder.array([
         this.formBuilder.group({
           isUnlimited: [false],
@@ -157,6 +162,13 @@ export class CreateFeatureComponent {
     });
   }
 
+  openSnackbar(message: string) {
+    const config: MatSnackBarConfig = {
+      duration: 5000
+    };
+    this.snackbarComponent.open(message, config);
+  }
+
   onSubmit() {
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
@@ -202,8 +214,8 @@ export class CreateFeatureComponent {
         this.routes.navigate([`/features/view/${res.featureId}`]);
         return res;
       },
-      error: (err: any) => {
-        console.log('something wrong occured', err);
+      error: (error: any) => {
+        this.openSnackbar(error.error.message); 
       },
     });
   }

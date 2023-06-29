@@ -12,6 +12,9 @@ import {
 import { Data_Type, noProducts } from 'src/app/shared/constants/consants';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
+import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
+import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 
 @Component({
   selector: 'app-product-listing',
@@ -36,7 +39,6 @@ export class ProductListingComponent implements OnInit {
   search: string = '';
   productsData = [];
   filteredProducts: any = [];
-  maxLimit: number = 100;
   allProduct: number;
   NoPage: any = '';
   Nolimit: any = '';
@@ -44,6 +46,9 @@ export class ProductListingComponent implements OnInit {
   totalPages: number = 0;
 
   selection = new SelectionModel<Data_Type>(true, []);
+
+  @ViewChild(SnackBarComponent, { static: false })
+  snackbarComponent: SnackBarComponent;
 
   @ViewChild(MatSort) sort: MatSort;
   searchQuery: string;
@@ -71,8 +76,8 @@ export class ProductListingComponent implements OnInit {
   data$ = this.productService.product$;
   ngOnInit(): void {
     this.loading = true;
-    this.getProduct(this.PageNumber, this.limit, this.search);
     this.getAllProduct(this.NoPage, this.Nolimit, this.search);
+    this.getProduct(this.PageNumber, this.limit, this.search);
 
     this.searchSubscription = this.searchQueryChanged
       .pipe(debounceTime(500), distinctUntilChanged())
@@ -103,9 +108,9 @@ export class ProductListingComponent implements OnInit {
         if (data) {
           this.productsData = data;
           this.filteredProducts = data;
+          this.loading = false;
           this.totalPages = Math.ceil(this.allProduct / limit);
           this.hasNextPage = PageNumber < this.totalPages;
-          this.loading = false;
         }
       });
   }
@@ -128,10 +133,33 @@ export class ProductListingComponent implements OnInit {
     this.getProduct(this.PageNumber, this.limit, this.search);
   }
 
+  openSnackbar(message: string) {
+    const config: MatSnackBarConfig = {
+      duration: 5000,
+    };
+    this.snackbarComponent.open(message, config);
+  }
+
   sendElementId(elementId: string) {
-    this.productService.deleteProduct(elementId).subscribe(() => {
-      this.getProduct(this.PageNumber, this.limit, this.search);
-      this.getAllProduct(this.NoPage, this.Nolimit, this.search);
+    this.productService.deleteProduct(elementId).subscribe({
+      next: (res) => {
+        this.getProduct(this.PageNumber, this.limit, this.search);
+        this.getAllProduct(this.NoPage, this.Nolimit, this.search);
+        this.deleteSuccess(elementId);
+      },
+      error: (error: any) => {
+        this.openSnackbar(error.error.message);
+      },
+    });
+  }
+  deleteSuccess(id: any) {
+    const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
+      width: '422px',
+      panelClass: 'dialog-curved',
+      data: {
+        module: 'Product',
+        deleteId: id,
+      },
     });
   }
   openDelete(id: any) {

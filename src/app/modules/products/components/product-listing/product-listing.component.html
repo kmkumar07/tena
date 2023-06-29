@@ -228,7 +228,7 @@
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="50">50</option>
-              <option [value]="maxLimit">100</option>
+              <option value="100">100</option>
             </select>
 
             entries</label
@@ -243,7 +243,7 @@
               <a
                 class="btn btn-primary btn-sm notActive"
                 (click)="onPrevious()"
-                *ngIf="PageNumber > 1 && limit != maxLimit"
+                [ngClass]="{ 'disabled': PageNumber == 1 }"
               >
                 Previous
               </a>
@@ -253,8 +253,7 @@
               <a
                 class="btn btn-primary btn-sm notActive"
                 (click)="onNext()"
-                [ngClass]="{ disabled: !hasNextPage }"
-                *ngIf="limit != maxLimit"
+                [ngClass]="{ 'disabled': !hasNextPage }"
                 >Next
               </a>
             </div>
@@ -263,4 +262,5 @@
       </div>
     </div>
   </div>
+  <app-snack-bar></app-snack-bar>
 </div>

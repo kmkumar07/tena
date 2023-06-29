@@ -1,8 +1,10 @@
-<div *ngIf="errorMsg" class="error-message">{{ errorMsg }}</div>
 <div class="create-product-wrapper">
   <div class="header-section pt-6 pb-6">
     <div class="flex align-center">
-      <mat-icon class="material-symbols-outlined pointer" color="primary" [routerLink]="'/products'"
+      <mat-icon
+        class="material-symbols-outlined pointer"
+        color="primary"
+        [routerLink]="'/products'"
         >keyboard_backspace</mat-icon
       >
       <p class="mat-h1 primary-text text-main">Create Products</p>
@@ -10,12 +12,16 @@
   </div>
   <div class="form-block pt-6">
     <div class="form-block pt-6">
-      <div *ngIf="uploadMessage" class="upload-message" [ngClass]="{'success': uploadSuccess, 'error': !uploadSuccess}">
+      <div
+        *ngIf="uploadMessage"
+        class="upload-message"
+        [ngClass]="{ success: uploadSuccess, error: !uploadSuccess }"
+      >
         {{ uploadMessage }}
       </div>
       <div class="user-img-wrapper flex align-center">
         <div class="user-avatar flex align-center justify-center">
-           <img src="{{ imagePath + imageUrl }}" alt="{{imageName}}" />
+          <img src="{{ imagePath + imageUrl }}" alt="{{ imageName }}" />
           <!-- <img src="../.././../../assets/images/teams.png" alt="teams-img" /> -->
           <p class="mat-body-1 mb-0">LOGO</p>
         </div>
@@ -72,14 +78,25 @@
               placeholder="Enter here..."
               formControlName="name"
             />
-            <mat-error *ngIf="productForm.controls['name'].invalid && productForm.controls['name'].touched">
-              <ng-container *ngIf="productForm.controls['name'].errors['required']">
+            <mat-error
+              *ngIf="
+                productForm.controls['name'].invalid &&
+                productForm.controls['name'].touched
+              "
+            >
+              <ng-container
+                *ngIf="productForm.controls['name'].errors['required']"
+              >
                 Name is required and cannot be left empty.
               </ng-container>
-              <ng-container *ngIf="productForm.controls['name'].errors['maxlength']">
+              <ng-container
+                *ngIf="productForm.controls['name'].errors['maxlength']"
+              >
                 Name cannot exceed 20 characters.
               </ng-container>
-              <ng-container *ngIf="productForm.controls['name'].errors['pattern']">
+              <ng-container
+                *ngIf="productForm.controls['name'].errors['pattern']"
+              >
                 Name cannot contain special characters.
               </ng-container>
             </mat-error>
@@ -97,8 +114,15 @@
               placeholder="Enter here..."
               formControlName="description"
             ></textarea>
-            <mat-error *ngIf="productForm.controls['description'].invalid && productForm.controls['description'].touched">
-              <ng-container *ngIf="productForm.controls['description'].errors['maxlength']">
+            <mat-error
+              *ngIf="
+                productForm.controls['description'].invalid &&
+                productForm.controls['description'].touched
+              "
+            >
+              <ng-container
+                *ngIf="productForm.controls['description'].errors['maxlength']"
+              >
                 Description cannot exceed 500 characters.
               </ng-container>
             </mat-error>
@@ -138,10 +162,23 @@
             >Active</mat-checkbox
           >
           <div>
-            <button mat-stroked-button color="primary" class="mr-2 large" [mat-dialog-close]="true" (click)="onDelete()">
+            <button
+              mat-stroked-button
+              color="primary"
+              class="mr-2 large"
+              [mat-dialog-close]="true"
+              (click)="onDelete()"
+            >
               Dismiss
             </button>
-            <button mat-flat-button color="primary" class="large" type="submit" [disabled]="productForm.invalid" (click)="onSubmit()">
+            <button
+              mat-flat-button
+              color="primary"
+              class="large"
+              type="submit"
+              [disabled]="productForm.invalid"
+              (click)="onSubmit()"
+            >
               Create
             </button>
           </div>
@@ -149,5 +186,6 @@
       </form>
     </div>
   </div>
+  <app-snack-bar></app-snack-bar>
   <!-- </div> -->
 </div>

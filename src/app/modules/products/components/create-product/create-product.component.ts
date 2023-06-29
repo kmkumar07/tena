@@ -1,6 +1,4 @@
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -13,10 +11,12 @@ import { trigger, transition, animate, style } from '@angular/animations';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
+import { MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-product',
@@ -35,6 +35,8 @@ import { environment } from 'src/environments/environment';
   ],
 })
 export class CreateProductComponent implements OnInit {
+  @ViewChild(SnackBarComponent, { static: false })
+  snackbarComponent: SnackBarComponent;
   subscription: Subscription;
   @ViewChild('tippyTemplate', { read: ElementRef, static: true })
   tippyTemplate: ElementRef;
@@ -44,15 +46,13 @@ export class CreateProductComponent implements OnInit {
   imageName: string = '';
   data: string = '';
   imagePath: string = '';
-  errorMsg: string = '';
   uploadMessage: string = '';
   uploadSuccess: boolean = false;
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private productService: ProductsService,
-    private cdr: ChangeDetectorRef
+    private productService: ProductsService
   ) {}
   ngOnInit() {
     this.productForm = this.formBuilder.group({
@@ -85,6 +85,13 @@ export class CreateProductComponent implements OnInit {
     this.productForm.get('status')?.setValue(newStatus);
   }
 
+  openSnackbar(message: string) {
+    const config: MatSnackBarConfig = {
+      duration: 5000,
+    };
+    this.snackbarComponent.open(message, config);
+  }
+
   onSubmit() {
     this.productForm.get('imageUrl')?.setValue(this.imageUrl);
     const status = this.productForm.value.status ? 'active' : 'disabled';
@@ -98,13 +105,7 @@ export class CreateProductComponent implements OnInit {
         this.router.navigate([`/products/view-product/${res.productId}`]);
       },
       error: (error: any) => {
-        if (error.status === 409) {
-          this.errorMsg = 'Product with the same ID already exists.';
-          this.startMessageTimer();
-        } else {
-          this.errorMsg = 'An error occurred. Please try again later.';
-          console.log('Error:', error);
-        }
+        this.openSnackbar(error.error.message);
       },
     });
   }
@@ -115,7 +116,6 @@ export class CreateProductComponent implements OnInit {
   startMessageTimer(): void {
     const duration = 5000;
     setTimeout(() => {
-      this.errorMsg = '';
       this.uploadSuccess = false;
       this.uploadMessage = '';
     }, duration);
