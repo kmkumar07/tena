@@ -112,7 +112,7 @@ export class CreateProductComponent implements OnInit {
       (data: { imageUrl: string; imageName: string }) => {
         this.imageUrl = data.imageUrl;
         this.imageName = data.imageName;
-        this.imagePath = environment.blobStorageUrl;
+        this.imagePath = environment.blobStorage;
         console.log('aaaa', this.imageUrl);
       }
     );

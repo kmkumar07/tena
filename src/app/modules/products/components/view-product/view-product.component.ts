@@ -42,7 +42,7 @@ export class ViewProductComponent {
         this.status = this.productDetail?.status
         this.imageUrl = this.productDetail?.imageUrl,
         this.imageName = this.imageUrl?.substring(this.imageUrl.lastIndexOf('/') + 1);
-        this.imagePath=this.environment.blobStorageUrl
+        this.imagePath=this.environment.blobStorage
         this.feature = this.productDetail?.feature || [];
       })
 

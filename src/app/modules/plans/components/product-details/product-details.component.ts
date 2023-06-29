@@ -140,13 +140,13 @@ export class ProductDetailsComponent implements OnInit {
           '',
           [
             Validators.required,
-            Validators.min(minValue),
-            Validators.max(maxValue),
+            Validators.min(Math.min(minValue, maxValue)),
+            Validators.max(Math.max(minValue, maxValue)),
           ],
         ];
         rangeFormControls[feature.featureId] = rangeValue;
-        feature.minValue = minValue;
-        feature.maxValue = maxValue;
+        feature.minValue = Math.min(minValue, maxValue);
+        feature.maxValue = Math.max(minValue, maxValue);
       }
     });
 
