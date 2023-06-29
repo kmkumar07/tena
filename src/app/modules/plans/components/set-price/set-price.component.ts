@@ -11,7 +11,7 @@ import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/suc
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { PlanService } from '../../services/plan.service';
-import { SharedDataService } from 'src/app/shared/shareddata.service';
+import { SharedDataService } from 'src/app/shared/shared-data.service';
 
 export class PlanValue {
   planId: string;

@@ -10,7 +10,7 @@ import {
   plan_add_empty_data,
 } from 'src/app/shared/constants/consants';
 import { PlanService } from '../../services/plan.service';
-import { SharedDataService } from 'src/app/shared/shareddata.service';
+import { SharedDataService } from 'src/app/shared/shared-data.service';
 
 export interface PeriodicElement {
   PricingCycle: string;
