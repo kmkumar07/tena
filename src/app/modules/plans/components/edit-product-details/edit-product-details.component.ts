@@ -6,8 +6,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { Subscription } from 'rxjs';
 import { PlanService } from '../../services/plan.service';
+import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface PeriodicElement {
+  featureId: string;
+  value: string;
+  type?: string;
+  levels: { featureID: string; value: string }[];
   name: string;
   position: number | string;
   status: string;
@@ -39,7 +45,9 @@ export class EditProductDetailsComponent implements OnInit {
   featureDetails: any = [];
   subscription: Subscription;
   isProductIdSelected: boolean = true;
-  selectedProduct: any
+  selectedProduct: any;
+  selectedFeatures: PeriodicElement[] = [];
+  isAvailable: boolean = true;
 
   productForm: FormGroup = this.formBuilder.group({
     productID: ['', Validators.required],
@@ -52,7 +60,8 @@ export class EditProductDetailsComponent implements OnInit {
     private routes: Router,
     private productService: ProductsService,
     private route: ActivatedRoute,
-    private planService: PlanService
+    private planService: PlanService,
+    public dialog: MatDialog
   ) {}
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
@@ -83,7 +92,7 @@ export class EditProductDetailsComponent implements OnInit {
     if (this.selectedProduct) {
       this.productForm.patchValue({
         productName: this.selectedProduct.name,
-        description: this.selectedProduct.description
+        description: this.selectedProduct.description,
       });
     }
   }
@@ -92,15 +101,47 @@ export class EditProductDetailsComponent implements OnInit {
     const productVariant = {
       type: 'base',
       status: 'active',
-      features: this.featureDetails,
+      features: this.selectedFeatures.map((features) => {
+        if (features.type === 'quantity') {
+          return {
+            featureID: features.featureId,
+            value: features.value,
+          };
+        } else {
+          return {
+            featureID: features.featureId,
+            value: this.isAvailable ? true : false,
+          };
+        }
+      }),
     };
+
     this.subscription = this.planService
       .updateProductVariant(this.id, productVariant)
-      .subscribe((res) => {
-        console.log('b', res);
-
-        return res;
+      .subscribe({
+        next: (res: any) => {
+          this.openSuccess();
+          this.routes.navigate(['/plans/create']);
+          return res;
+        },
+        error: (err: any) => {
+          console.log('something wrong occured', err);
+        },
       });
+  }
+
+  onDelete() {
+    this.routes.navigate(['/plans/create']);
+  }
+
+  openSuccess() {
+    this.dialog.open(SuccessDialogComponent, {
+      width: '420px',
+      data: {
+        module: 'Product-variant',
+        operation: 'is updated',
+      },
+    });
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -126,5 +167,19 @@ export class EditProductDetailsComponent implements OnInit {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row `;
+  }
+
+  toggleCheckbox(row: PeriodicElement) {
+    this.selection.toggle(row);
+    if (this.selection.isSelected(row)) {
+      this.selectedFeatures.push(row);
+    } else {
+      const index = this.selectedFeatures.findIndex(
+        (feature) => feature.featureId === row.featureId
+      );
+      if (index !== -1) {
+        this.selectedFeatures.splice(index, 1);
+      }
+    }
   }
 }

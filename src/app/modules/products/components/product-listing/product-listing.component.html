@@ -16,7 +16,7 @@
     <div class="flex align-center">
       <h1 class="text-text text-dark">Products</h1>
       <mat-chip class="chip-dark ml-3">
-        {{ productsData.length }}
+        {{ allProduct }}
       </mat-chip>
     </div>
     <div class="flex align-center">
@@ -155,7 +155,7 @@
           *matCellDef="let element"
           [routerLink]="['/products/view-product/' + element.productId]"
         >
-          {{ element.createdOn | date: 'd MMMM y'}}
+          {{ element.createdOn | date : "d MMMM y" }}
         </td>
       </ng-container>
 
@@ -243,11 +243,17 @@
               <a
                 class="btn btn-primary btn-sm notActive"
                 (click)="onPrevious()"
+                [ngClass]="{ 'disabled': PageNumber == 1 }"
               >
                 Previous
               </a>
-              <a class="btn btn-primary btn-sm active" style="margin: 0 20px;">{{ PageNumber }}</a>
-              <a class="btn btn-primary btn-sm notActive" (click)="onNext()"
+              <a class="btn btn-primary btn-sm active" style="margin: 0 20px">{{
+                PageNumber
+              }}</a>
+              <a
+                class="btn btn-primary btn-sm notActive"
+                (click)="onNext()"
+                [ngClass]="{ 'disabled': !hasNextPage }"
                 >Next
               </a>
             </div>
@@ -256,4 +262,5 @@
       </div>
     </div>
   </div>
+  <app-snack-bar></app-snack-bar>
 </div>

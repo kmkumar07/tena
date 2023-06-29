@@ -27,15 +27,15 @@
             </p>
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-              [ngxTippy]="selectProduct"
+              [ngxTippy]="featureName"
               [tippyProps]="{ placement: 'right' }"
               >help</mat-icon
             >
-            <ng-template #selectProduct let-name class="t-template">
+            <ng-template #featureName let-name class="t-template">
               <div class="help-info-tooltip">
                 <div class="heading-with-background">Feature name</div>
                 <div class="details">
-                  Please select a product to create a feature to it.
+                  Enter a name that helps you identify this Feature.
                 </div>
                 <button mat-button color="primary" class="px-0">
                   Learn more
@@ -115,11 +115,13 @@
               <div class="help-info-tooltip">
                 <div class="heading-with-background">Feature id</div>
                 <div class="details">
-                  Microsoft Teams is the ultimate messaging app for your
-                  organization—a workspace for real-time collaboration and
-                  communication, meetings, file and app sharing, and even the
-                  occasional emoji! All in one place, all in the open, all
-                  accessible to everyone.
+                  Please enter a Customized Id.If user do not enter this field,
+                  the system will generate a 'Customized Human-Readable-id'
+                  based on the Name field.
+                  <div>
+                    e.g. Feature Name: "Analytics Reporting" FeatureId:
+                    "analytics-reporting-01".
+                  </div>
                 </div>
               </div>
             </ng-template>
@@ -141,11 +143,11 @@
             </p>
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-              [ngxTippy]="selectProduct"
+              [ngxTippy]="type"
               [tippyProps]="{ placement: 'right' }"
               >help</mat-icon
             >
-            <ng-template #selectProduct let-name class="t-template">
+            <ng-template #type let-name class="t-template">
               <div class="help-info-tooltip">
                 <div class="heading-with-background">Feature type</div>
                 <div class="details">
@@ -383,4 +385,5 @@
       </div>
     </div>
   </div>
+  <app-snack-bar></app-snack-bar>
 </div>

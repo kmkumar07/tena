@@ -8,10 +8,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBarConfig } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
+import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import {
   Data_Type,
   feature_types,
@@ -41,6 +43,7 @@ export class EditFeatureComponent {
   limit: any = '';
   search: string = '';
   productId = [];
+  status: boolean
   featureForm: FormGroup = this.formBuilder.group({
     featureId: ['', Validators.required],
     productID: ['', Validators.required],
@@ -70,6 +73,9 @@ export class EditFeatureComponent {
     ]),
   });
 
+  @ViewChild(SnackBarComponent, { static: false })
+  snackbarComponent: SnackBarComponent;
+
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   constructor(
@@ -90,6 +96,7 @@ export class EditFeatureComponent {
     const id = this.route.snapshot.params['id'];
 
     this.featureService.getFeatureById(id).subscribe((data) => {
+      console.log('a', data)
       this.updateForm(data);
     });
   }
@@ -147,14 +154,26 @@ export class EditFeatureComponent {
     });
   }
 
+  openSnackbar(message: string) {
+    const config: MatSnackBarConfig = {
+      duration: 5000
+    };
+    this.snackbarComponent.open(message, config);
+  }
+
   updateForm(res: any) {
+    if (res.status === 'active') {
+      this.status = true;
+    } else if (res.status === 'disabled') {
+      this.status = false;
+    }
     this.featureForm.patchValue({
       featureId: res.featureId,
       productID: res.product.productId,
       name: res.name,
       description: res.description,
       type: res.type,
-      status: res.status,
+      status: this.status,
       unit: res.unit,
       levels: res.levels,
     });
@@ -209,8 +228,8 @@ export class EditFeatureComponent {
           this.routes.navigate([`/features/view/${res.featureId}`]);
           return res;
         },
-        error: (err: any) => {
-          console.log('something wrong occured', err);
+        error: (error: any) => {
+          this.openSnackbar(error.error.message); 
         },
       });
   }

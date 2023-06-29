@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DialogData {
+  module: string;
   deleteId: number;
 }
 
@@ -13,7 +14,8 @@ export interface DialogData {
 export class CouponsDeleteSuccessComponent {
   @Output() confirmed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(public dialogRef: MatDialogRef<CouponsDeleteSuccessComponent>) {}
+  constructor(public dialogRef: MatDialogRef<CouponsDeleteSuccessComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   onCancelClick(): void {
     this.dialogRef.close(false);

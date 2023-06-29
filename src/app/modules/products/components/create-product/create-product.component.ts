@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -12,10 +11,12 @@ import { trigger, transition, animate, style } from '@angular/animations';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
+import { MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-product',
@@ -32,9 +33,10 @@ import { environment } from 'src/environments/environment';
       ]),
     ]),
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateProductComponent implements OnInit {
+  @ViewChild(SnackBarComponent, { static: false })
+  snackbarComponent: SnackBarComponent;
   subscription: Subscription;
   @ViewChild('tippyTemplate', { read: ElementRef, static: true })
   tippyTemplate: ElementRef;
@@ -44,6 +46,8 @@ export class CreateProductComponent implements OnInit {
   imageName: string = '';
   data: string = '';
   imagePath: string = '';
+  uploadMessage: string = '';
+  uploadSuccess: boolean = false;
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -81,6 +85,13 @@ export class CreateProductComponent implements OnInit {
     this.productForm.get('status')?.setValue(newStatus);
   }
 
+  openSnackbar(message: string) {
+    const config: MatSnackBarConfig = {
+      duration: 5000,
+    };
+    this.snackbarComponent.open(message, config);
+  }
+
   onSubmit() {
     this.productForm.get('imageUrl')?.setValue(this.imageUrl);
     const status = this.productForm.value.status ? 'active' : 'disabled';
@@ -88,15 +99,26 @@ export class CreateProductComponent implements OnInit {
       ...this.productForm.value,
       status: status,
     };
-    this.subscription = this.productService
-      .createProduct(product)
-      .subscribe((res) => {
+    this.subscription = this.productService.createProduct(product).subscribe({
+      next: (res) => {
         this.openSuccess();
         this.router.navigate([`/products/view-product/${res.productId}`]);
-      });
+      },
+      error: (error: any) => {
+        this.openSnackbar(error.error.message);
+      },
+    });
   }
   onDelete() {
     this.router.navigate(['/products']);
+  }
+
+  startMessageTimer(): void {
+    const duration = 5000;
+    setTimeout(() => {
+      this.uploadSuccess = false;
+      this.uploadMessage = '';
+    }, duration);
   }
 
   openDialog(
@@ -114,8 +136,16 @@ export class CreateProductComponent implements OnInit {
         this.imageName = data.imageName;
         this.imagePath = environment.blobStorage;
         console.log('aaaa', this.imageUrl);
+        this.uploadSuccess = true;
+        this.uploadMessage = 'Image upload successful';
+        this.startMessageTimer();
       }
     );
+    dialogRef.componentInstance.saveError.subscribe((res: any) => {
+      this.uploadSuccess = false;
+      this.uploadMessage = 'Image upload failed. Please try again.';
+      this.startMessageTimer();
+    });
   }
 
   openSuccess() {
@@ -123,7 +153,7 @@ export class CreateProductComponent implements OnInit {
       width: '420px',
       data: {
         module: 'Product',
-        operation: 'is created'
+        operation: 'is created',
       },
     });
   }
@@ -170,6 +200,8 @@ export class DialogAnimationsDialog {
   base64imageData: string = '';
   imageName: string = '';
   imageUrl: string = '';
+  uploadMessage: string = '';
+  uploadSuccess: boolean = false;
 
   handleDragEnter() {
     this.dragging = true;
@@ -214,25 +246,37 @@ export class DialogAnimationsDialog {
   }
   @Output() saveSuccess: EventEmitter<{ imageUrl: string; imageName: string }> =
     new EventEmitter<{ imageUrl: string; imageName: string }>();
+  @Output() saveError: EventEmitter<any> = new EventEmitter<any>();
   handleSave() {
     if (this.base64imageData) {
       const payload = {
         image: this.base64imageData,
         imageName: this.imageName,
       };
-      this.subscription = this.productService
-        .uploadImage(payload)
-        .subscribe((res) => {
+      this.subscription = this.productService.uploadImage(payload).subscribe({
+        next: (res) => {
           this.imageUrl = res.data.blobURL;
+          this.uploadSuccess = true;
+          this.uploadMessage = 'Image upload successful';
+        },
+        error: (error: any) => {
+          console.log('a', error);
+
+          this.uploadSuccess = false;
+          this.uploadMessage = 'Image upload failed. Please try again.';
+          this.saveError.emit(error);
+        },
+        complete: () => {
           this.saveSuccess.emit({
             imageUrl: this.imageUrl,
             imageName: this.imageName,
           });
-        });
+        },
+      });
     }
   }
 
   cancel() {
-    this.imageSrc = 'null';
+    this.dialogRef.close();
   }
 }
