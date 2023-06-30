@@ -32,7 +32,6 @@ export interface menuOptions {
   selector: 'app-create-feature',
   templateUrl: './create-feature.component.html',
   styleUrls: ['./create-feature.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateFeatureComponent {
   productName: Data_Type[] = User_Data;
@@ -147,7 +146,7 @@ export class CreateFeatureComponent {
       lastLevel.patchValue({
         isUnlimited: true,
         value: 'unlimited',
-        name: 'unlimited' + ' ' + this.postName+'s',
+        name: 'unlimited' + ' ' + this.postName + 's',
       });
       this.unlimitedButtonLabel = 'Set Custom Maximum';
     }
@@ -177,9 +176,7 @@ export class CreateFeatureComponent {
           name: '',
         });
       }
-
-    }
-   else if (value === 'quantity') {
+    } else if (value === 'quantity') {
       this.isRangeSelected = false;
       this.featureForm.controls['unit'].reset();
 
@@ -190,15 +187,13 @@ export class CreateFeatureComponent {
           name: '',
         });
       }
-
-    }
-     else {
+    } else {
       this.isRangeSelected = false;
     }
   }
   openSnackbar(message: string) {
     const config: MatSnackBarConfig = {
-      duration: 5000
+      duration: 5000,
     };
     this.snackbarComponent.open(message, config);
   }
@@ -232,7 +227,7 @@ export class CreateFeatureComponent {
       const levels = this.featureForm.value.levels.map((level: any) => {
         return {
           ...level,
-          isUnlimited: '',
+          isUnlimited: ' ',
         };
       });
       feature = {
@@ -256,7 +251,7 @@ export class CreateFeatureComponent {
         return res;
       },
       error: (error: any) => {
-        this.openSnackbar(error.error.message); 
+        this.openSnackbar(error.error.message);
       },
     });
   }

@@ -14,6 +14,7 @@ import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/suc
 import { MatDialog } from '@angular/material/dialog';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-edit-product',
@@ -30,13 +31,18 @@ import { MatSnackBarConfig } from '@angular/material/snack-bar';
       ]),
     ]),
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditProductComponent implements OnInit {
   imageUrl: string = '';
+  isImageUploaded: boolean = false;
+  getProductImageUrl: string;
+  environment = environment;
+  imagePath: string;
   product$: Observable<any>;
   subscription: Subscription;
   productsData = [];
+  status: boolean;
+  imageUrlName: string;
   postForm = this.formBuilder.group({
     productId: ['', Validators.required],
     name: [
@@ -67,6 +73,8 @@ export class EditProductComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     this.productService.getProductById(id).subscribe((data) => {
       this.populateForm(data);
+      this.getProductImageUrl = data.imageUrl;
+      this.imagePath = this.environment.blobStorage;
     });
   }
 
@@ -78,7 +86,7 @@ export class EditProductComponent implements OnInit {
   }
 
   onSubmit() {
-    this.postForm.get('imageUrl')?.setValue(this.imageUrl);
+    this.postForm.get('imageUrl')?.setValue(this.imageUrlName);
     const status = this.postForm.value.status ? 'active' : 'disabled';
     const product = {
       ...this.postForm.value,
@@ -111,6 +119,8 @@ export class EditProductComponent implements OnInit {
     });
     dialogRef.componentInstance.saveSuccess.subscribe((imageUrl: string) => {
       this.imageUrl = imageUrl;
+      this.imageUrlName = this.imageUrl['imageUrl'];
+      this.isImageUploaded = true;
     });
   }
 
@@ -125,11 +135,16 @@ export class EditProductComponent implements OnInit {
   }
 
   populateForm(res: any) {
+    if (res.status === 'active') {
+      this.status = true;
+    } else if (res.status === 'disabled') {
+      this.status = false;
+    }
     this.postForm.setValue({
       name: res.name,
       description: res.description,
       productId: res.productId,
-      status: res.status,
+      status: this.status,
       imageUrl: res.imageUrl,
     });
   }

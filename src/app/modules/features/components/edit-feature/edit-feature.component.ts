@@ -38,12 +38,14 @@ export class EditFeatureComponent {
   preName: string = '';
   postName: string = '';
   position: any;
+  isRangeSelected: boolean = false;
+
   unlimitedButtonLabel: string = 'Set Unlimited';
   PageNumber: any = '';
   limit: any = '';
   search: string = '';
   productId = [];
-  status: boolean
+  status: boolean;
   featureForm: FormGroup = this.formBuilder.group({
     featureId: ['', Validators.required],
     productID: ['', Validators.required],
@@ -96,7 +98,6 @@ export class EditFeatureComponent {
     const id = this.route.snapshot.params['id'];
 
     this.featureService.getFeatureById(id).subscribe((data) => {
-      console.log('a', data)
       this.updateForm(data);
     });
   }
@@ -156,16 +157,55 @@ export class EditFeatureComponent {
 
   openSnackbar(message: string) {
     const config: MatSnackBarConfig = {
-      duration: 5000
+      duration: 5000,
     };
     this.snackbarComponent.open(message, config);
   }
+  onTypeSelection(value: string) {
+    if (value === 'switch') {
+      this.featureForm.removeControl('unit');
+    }
+    if (value === 'range') {
+      this.featureForm.addControl(
+        'unit',
+        this.formBuilder.control(null, Validators.required)
+      );
+      this.isRangeSelected = true;
+      let i = 0;
+      if (this.levels.length == 0) {
+        while (i < 2) {
+          this.addLevels();
+          i++;
+        }
+      }
+      while (this.levels.length > 2) {
+        this.levels.removeAt(2);
+      }
+    }
+    if (value === 'quantity' || value === 'custom') {
+      this.isRangeSelected = false;
+      this.featureForm.addControl(
+        'unit',
+        this.formBuilder.control(null, Validators.required)
+      );
 
+      let i = 0;
+      if (this.levels.length == 0) {
+        while (i < 2) {
+          this.addLevels();
+          i++;
+        }
+      }
+    }
+  }
   updateForm(res: any) {
     if (res.status === 'active') {
       this.status = true;
     } else if (res.status === 'disabled') {
       this.status = false;
+    }
+    if (res.type === 'range') {
+      this.isRangeSelected = true;
     }
     this.featureForm.patchValue({
       featureId: res.featureId,
@@ -219,6 +259,26 @@ export class EditFeatureComponent {
         unit: this.featureForm.value.unit,
         levels: this.featureForm.value.levels,
       };
+    } else if (this.featureForm.value.type === 'custom') {
+      const levels = this.featureForm.value.levels.map((level: any) => {
+        return {
+          ...level,
+          isUnlimited: '',
+        };
+      });
+      feature = {
+        ...feature,
+        unit: this.featureForm.value.unit,
+        levels: levels,
+      };
+    }
+
+    if (this.featureForm.value.type === 'range') {
+      feature = {
+        ...feature,
+        unit: this.featureForm.value.unit,
+        levels: this.featureForm.value.levels,
+      };
     }
     this.subscription = this.featureService
       .updateFeature(this.featureForm.value.featureId, feature)
@@ -229,7 +289,7 @@ export class EditFeatureComponent {
           return res;
         },
         error: (error: any) => {
-          this.openSnackbar(error.error.message); 
+          this.openSnackbar(error.error.message);
         },
       });
   }
