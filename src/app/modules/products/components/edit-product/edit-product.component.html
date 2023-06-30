@@ -12,6 +12,14 @@
   </div>
   <div class="form-block pt-6">
     <div class="form-block pt-6">
+      <div
+        *ngIf="uploadMessage"
+        class="upload-message"
+        [ngClass]="{ success: uploadSuccess, error: !uploadSuccess }"
+      >
+        {{ uploadMessage }}
+      </div>
+
       <div class="user-img-wrapper flex align-center">
         <div
           class="user-avatar flex align-center justify-center"
@@ -24,12 +32,12 @@
         >
           <img src="{{ imagePath + getProductImageUrl }}" />
         </div>
-        <div
+        <!-- <div
           class="user-avatar flex align-center justify-center"
-          *ngIf="imageUrlName && imageUrlName.length > 0 && isImageUploaded"
+          *ngIf="imageUrlName && imageUrlName.length > 0"
         >
           <img src="{{ imagePath + imageUrlName }}" />
-        </div>
+        </div> -->
 
         <ng-template #upload>
           <div class="user-avatar flex align-center justify-center">

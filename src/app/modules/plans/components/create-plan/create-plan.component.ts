@@ -117,7 +117,7 @@ export class CreatePlanComponent implements OnInit {
   }
 
   onSubmit() {
-    const status = this.planForm.value.status ? 'active' : 'disabled';
+    const status = this.planForm.value.status ? 'active' : 'draft';
     const type = 'base';
     const plan = {
       ...this.planForm.value,

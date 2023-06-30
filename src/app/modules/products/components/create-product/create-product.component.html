@@ -21,8 +21,12 @@
       </div>
       <div class="user-img-wrapper flex align-center">
         <div class="user-avatar flex align-center justify-center">
-          <img src="{{ imagePath + imageUrl }}" alt="{{ imageName }}" />
-          <p class="mat-body-1 mb-0">LOGO</p>
+          <ng-container *ngIf="imageUrl">
+            <img src="{{ imagePath + imageUrl }}" alt="{{ imageName }}" />
+          </ng-container>
+          <ng-container *ngIf="!imageUrl">
+            <p class="mat-body-1 mb-0">LOGO</p>
+          </ng-container>
         </div>
         <div class="ml-6">
           <div class="upload-actions">
