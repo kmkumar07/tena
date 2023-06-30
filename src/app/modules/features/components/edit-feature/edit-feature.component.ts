@@ -201,7 +201,7 @@ export class EditFeatureComponent {
   updateForm(res: any) {
     if (res.status === 'active') {
       this.status = true;
-    } else if (res.status === 'disabled') {
+    } else if (res.status === 'draft') {
       this.status = false;
     }
     if (res.type === 'range') {
@@ -243,7 +243,7 @@ export class EditFeatureComponent {
       }
     });
 
-    const status = this.featureForm.value.status ? 'active' : 'disabled';
+    const status = this.featureForm.value.status ? 'active' : 'draft';
     let feature: any = {
       featureId: this.featureForm.value.featureId,
       productID: this.featureForm.value.productID,

@@ -81,7 +81,7 @@ export class CreateProductComponent implements OnInit {
   }
 
   toggleStatus(checked: boolean): void {
-    const newStatus = checked ? 'active' : 'disabled';
+    const newStatus = checked ? 'active' : 'draft';
     this.productForm.get('status')?.setValue(newStatus);
   }
 
@@ -94,7 +94,7 @@ export class CreateProductComponent implements OnInit {
 
   onSubmit() {
     this.productForm.get('imageUrl')?.setValue(this.imageUrl);
-    const status = this.productForm.value.status ? 'active' : 'disabled';
+    const status = this.productForm.value.status ? 'active' : 'draft';
     const product = {
       ...this.productForm.value,
       status: status,
@@ -199,8 +199,6 @@ export class DialogAnimationsDialog {
   base64imageData: string = '';
   imageName: string = '';
   imageUrl: string = '';
-  uploadMessage: string = '';
-  uploadSuccess: boolean = false;
 
   handleDragEnter() {
     this.dragging = true;
@@ -254,14 +252,8 @@ export class DialogAnimationsDialog {
       this.subscription = this.productService.uploadImage(payload).subscribe({
         next: (res) => {
           this.imageUrl = res.data.blobURL;
-          this.uploadSuccess = true;
-          this.uploadMessage = 'Image upload successful';
         },
         error: (error: any) => {
-          console.log('a', error);
-
-          this.uploadSuccess = false;
-          this.uploadMessage = 'Image upload failed. Please try again.';
           this.saveError.emit(error);
         },
         complete: () => {

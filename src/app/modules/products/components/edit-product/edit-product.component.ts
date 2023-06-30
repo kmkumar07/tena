@@ -8,7 +8,7 @@ import { DialogAnimationsDialog } from '../create-product/create-product.compone
 import { FormBuilder, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ProductsService } from '../../services/products.service';
-import { Observable, Subscription, pipe, tap } from 'rxjs';
+import { Observable, Subscription} from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -43,6 +43,8 @@ export class EditProductComponent implements OnInit {
   productsData = [];
   status: boolean;
   imageUrlName: string;
+  uploadMessage: string = '';
+  uploadSuccess: boolean = false;
   postForm = this.formBuilder.group({
     productId: ['', Validators.required],
     name: [
@@ -77,6 +79,13 @@ export class EditProductComponent implements OnInit {
       this.imagePath = this.environment.blobStorage;
     });
   }
+  startMessageTimer(): void {
+    const duration = 5000;
+    setTimeout(() => {
+      this.isImageUploaded = false;
+      this.uploadMessage = '';
+    }, duration);
+  }
 
   openSnackbar(message: string) {
     const config: MatSnackBarConfig = {
@@ -87,7 +96,7 @@ export class EditProductComponent implements OnInit {
 
   onSubmit() {
     this.postForm.get('imageUrl')?.setValue(this.imageUrlName);
-    const status = this.postForm.value.status ? 'active' : 'disabled';
+    const status = this.postForm.value.status ? 'active' : 'draft';
     const product = {
       ...this.postForm.value,
       status: status,
@@ -120,7 +129,15 @@ export class EditProductComponent implements OnInit {
     dialogRef.componentInstance.saveSuccess.subscribe((imageUrl: string) => {
       this.imageUrl = imageUrl;
       this.imageUrlName = this.imageUrl['imageUrl'];
-      this.isImageUploaded = true;
+      this.uploadSuccess = true;
+      this.uploadMessage = 'Image upload successful';
+      this.startMessageTimer();
+    }
+    );
+    dialogRef.componentInstance.saveError.subscribe((res: any) => {
+      this.uploadSuccess = false;
+      this.uploadMessage = 'Image upload failed. Please try again.';
+      this.startMessageTimer();
     });
   }
 
@@ -137,7 +154,7 @@ export class EditProductComponent implements OnInit {
   populateForm(res: any) {
     if (res.status === 'active') {
       this.status = true;
-    } else if (res.status === 'disabled') {
+    } else if (res.status === 'draft') {
       this.status = false;
     }
     this.postForm.setValue({

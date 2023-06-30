@@ -207,7 +207,7 @@ export class CreateFeatureComponent {
       }
     });
 
-    const status = this.featureForm.value.status ? 'active' : 'disabled';
+    const status = this.featureForm.value.status ? 'active' : 'draft';
     let feature: any = {
       featureId: this.featureForm.value.featureId,
       productID: this.featureForm.value.productID,
