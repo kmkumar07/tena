@@ -135,7 +135,6 @@ export class CreateProductComponent implements OnInit {
         this.imageUrl = data.imageUrl;
         this.imageName = data.imageName;
         this.imagePath = environment.blobStorage;
-        console.log('aaaa', this.imageUrl);
         this.uploadSuccess = true;
         this.uploadMessage = 'Image upload successful';
         this.startMessageTimer();
@@ -241,7 +240,6 @@ export class DialogAnimationsDialog {
     this.imageSrc = reader.result;
     const dataURLParts = this.imageSrc?.split(';base64,');
     this.base64imageData = dataURLParts[1];
-    console.log('bbbb', this.base64imageData);
     this.loaded = true;
   }
   @Output() saveSuccess: EventEmitter<{ imageUrl: string; imageName: string }> =

@@ -9,7 +9,12 @@ import {
 } from 'src/app/shared/constants/consants';
 import { FeatureService } from '../../services/feature.service';
 import { MatPaginator } from '@angular/material/paginator';
-import { Subject, Subscription } from 'rxjs';
+import {
+  Subject,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+} from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
@@ -34,6 +39,9 @@ export class FeaturesListingComponent implements OnInit {
   ];
 
   featuresData = [];
+  totalNumberOfFeature: number = 0;
+  NumberOfPage: any = '';
+  NumberOfLimit: any = '';
   selection = new SelectionModel<features>(true, []);
   emptyFeature = noFeatures;
   subscription: Subscription;
@@ -42,6 +50,8 @@ export class FeaturesListingComponent implements OnInit {
   data: any;
   PageNumber = 1;
   limit = 5;
+  hasNextPage: boolean = false;
+  totalPages: number = 0;
   dialogRef: any;
   loading = false;
   search: string = '';
@@ -73,23 +83,40 @@ export class FeaturesListingComponent implements OnInit {
   }
   ngOnInit(): void {
     this.loading = true;
+    this.getAllFeature(this.NumberOfPage, this.NumberOfLimit, this.search);
     this.getFeature(this.PageNumber, this.limit, this.search);
-
-    this.featureService.feature$.subscribe((data) => {
-      if (data) {
-        this.featuresData = data;
-        this.filteredFeature = data;
-        this.loading = false;
-      }
-    });
+    this.searchSubscription = this.searchQueryChanged
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((value) => {
+        this.loading = true;
+        this.search = value;
+        this.getFeature(this.PageNumber, this.limit, this.search);
+      });
   }
 
   getFeature(PageNumber: number, limit: number, search: string) {
     this.loading = true;
     this.featureService
       .getFeatures(this.PageNumber, this.limit, this.search)
-      .subscribe((res) => {
-        this.loading = false;
+      .subscribe((data) => {
+        if (data) {
+          this.featuresData = data;
+          this.filteredFeature = data;
+          this.loading = false;
+          this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
+          this.hasNextPage = PageNumber < this.totalPages;
+        }
+      });
+  }
+  getAllFeature(PageNumber: string, limit: string, search: string) {
+    this.loading = true;
+    this.featureService
+      .getFeatures(this.NumberOfPage, this.NumberOfLimit, this.search)
+      .subscribe((data) => {
+        if (data) {
+          this.totalNumberOfFeature = data.length;
+          this.loading = false;
+        }
       });
   }
   ngOnDestroy(): void {
@@ -100,7 +127,6 @@ export class FeaturesListingComponent implements OnInit {
   onPrevious() {
     if (this.PageNumber > 1) {
       this.PageNumber--;
-
       this.getFeature(this.PageNumber, this.limit, this.search);
     }
   }
@@ -120,7 +146,6 @@ export class FeaturesListingComponent implements OnInit {
   deleteElementById(elementId: number) {
     this.featureService.deleteFeature(elementId).subscribe({
       next: (res) => {
-        this.data$.subscribe((data) => {});
         this.deleteSuccess(elementId);
       },
       error: (error: any) => {
@@ -138,6 +163,8 @@ export class FeaturesListingComponent implements OnInit {
         deleteId: id,
       },
     });
+    this.getAllFeature(this.NumberOfPage, this.NumberOfLimit, this.search);
+    this.getFeature(this.PageNumber, this.limit, this.search);
   }
 
   openDelete(id: any) {
