@@ -65,7 +65,7 @@ export class SetPriceComponent {
       isExpirable: [true],
       noOfCycle: ['', Validators.required],
       status: 'active',
-      tiers: this.form.array([
+      multiPricing: this.form.array([
         this.form.group({
           startingUnit: { value: '1', disabled: true },
           endingUnit: { value: '&above', disabled: true },
@@ -75,7 +75,7 @@ export class SetPriceComponent {
     });
   }
   getLevelList(index: number) {
-    const tierList = this.tiers.at(index) as FormGroup;
+    const tierList = this.multiPricing.at(index) as FormGroup;
     return tierList;
   }
   setPeriod(periodSelected: string) {
@@ -83,19 +83,19 @@ export class SetPriceComponent {
       periodUnit: periodSelected,
     });
   }
-  get tiers() {
-    return this.setPriceForm.controls['tiers'] as FormArray;
+  get multiPricing() {
+    return this.setPriceForm.controls['multiPricing'] as FormArray;
   }
   lastObj() {
-    const checkCurrent = this.tiers.length - 1;
+    const checkCurrent = this.multiPricing.length - 1;
     return this.getLevelList(checkCurrent);
   }
   secondLastObj() {
-    const checkPrev = this.tiers.length - 2;
+    const checkPrev = this.multiPricing.length - 2;
     return this.getLevelList(checkPrev);
   }
-  addTiers() {
-    this.tiers.push(
+  addMultiPricing() {
+    this.multiPricing.push(
       this.form.group({
         startingUnit: { value: '', disabled: true },
         endingUnit: ['&above'],
@@ -110,7 +110,7 @@ export class SetPriceComponent {
     });
     lastIdx.get('endingUnit')?.disable();
     prevIdx.patchValue({
-      endingUnit: "",
+      endingUnit: '',
     });
     prevIdx.get('endingUnit')?.enable();
   }
@@ -130,8 +130,8 @@ export class SetPriceComponent {
   onDropdownKey(event: number): void {
     this.dropKey = event;
   }
-  deleteTier(tierIndex: number) {
-    this.tiers.removeAt(tierIndex);
+  deleteMultiPricing(tierIndex: number) {
+    this.multiPricing.removeAt(tierIndex);
     const lastIdx = this.lastObj();
     lastIdx.get('endingUnit')?.setValue('&above');
     lastIdx.get('endingUnit')?.disable();
@@ -153,9 +153,9 @@ export class SetPriceComponent {
     }
   }
   pricingModelSetEndingUnitEmpty(price: any) {
-    for (let i = 0; i < price.tiers.length; i++) {
-      if (price.tiers[i].endingUnit == '&above') {
-        price.tiers[i].endingUnit = "";
+    for (let i = 0; i < price.multiPricing.length; i++) {
+      if (price.multiPricing[i].endingUnit == '&above') {
+        price.multiPricing[i].endingUnit = '';
       }
     }
   }
@@ -169,11 +169,11 @@ export class SetPriceComponent {
     }
     if (price.pricingModel == 1) {
       price.pricingModel = 'flat_fee';
-      price.tiers = [];
+      price.multiPricing = [];
     }
     if (price.pricingModel == 2) {
       price.pricingModel = 'per_unit';
-      price.tiers = [];
+      price.multiPricing = [];
     }
     if (price.pricingModel == 3) {
       price.pricingModel = 'tiered';
@@ -191,12 +191,17 @@ export class SetPriceComponent {
   submitValues() {
     this.price = this.setPriceForm.getRawValue();
     this.pricingModelValueToName(this.price);
-    this.subscription = this.priceService
-      .createPrice(this.price)
-      .subscribe((res) => {
+    this.subscription = this.priceService.createPrice(this.price).subscribe({
+      next: (res: any) => {
         this.openSuccess();
         this.router.navigate(['/plans']);
-      });
+        return res;
+      },
+      error: (err: any) => {
+        console.log('something wrong occured', err);
+      },
+    });
+    this.setPriceForm.reset();
   }
   openSuccess() {
     this.dialog.open(SuccessDialogComponent, {
@@ -209,7 +214,7 @@ export class SetPriceComponent {
   }
 
   checkIndex(index: number) {
-    const position = this.tiers.length - 1;
+    const position = this.multiPricing.length - 1;
     if (index > 0 && index !== position) {
       return (this.readOnly = true);
     } else {
@@ -235,7 +240,7 @@ export class SetPriceComponent {
   }
   getPreviewPrice(event: any) {
     let input = parseInt(event.target.value);
-    const arr = this.setPriceForm.value.tiers;
+    const arr = this.setPriceForm.value.multiPricing;
     let i = 0;
     let total1 = 0;
     let startUnit = 1;
