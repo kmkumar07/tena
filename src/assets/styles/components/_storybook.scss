@@ -1,0 +1,40 @@
+@import "https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap";
+
+// storybook style
+.left-navigation {
+  .mat-sidenav {
+    width: 16.375rem;
+  }
+}
+
+.color-box {
+  border-radius: .625rem;
+
+  &.large-box {
+    height: 3.125rem;
+    width: 5rem;
+  }
+
+  &.medium {
+    height: 3.125rem;
+    width: 3.125rem;
+  }
+
+  &.small {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+
+  &.border-outline {
+    border: .0625rem solid color("grey", "Outline");
+  }
+
+  &.extent {
+    width: 5rem;
+  }
+}
+
+.error-page{
+  height: 100vh;
+  width: 100%;
+}
