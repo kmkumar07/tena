@@ -117,6 +117,9 @@ label {
 .border-4 {
   border-radius: 1rem;
 }
+.basic-border {
+  border: 0.0625rem solid #ededed;
+}
 // font-weight
 .fw-500 {
   font-weight: 500 !important;
@@ -247,7 +250,7 @@ label {
 .fixed {
   position: fixed;
 }
-.sticky{
+.sticky {
   position: sticky;
 }
 .inset-0 {
@@ -266,6 +269,7 @@ label {
   left: 0;
 }
 .position-center {
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -412,8 +416,8 @@ label {
 .primary-light-6-bg {
   background-color: color("primary", "lighten-6"); //#7868e61a
 }
-.primary-bg{
-  background-color: color("primary" , "main"); //#7868E6
+.primary-bg {
+  background-color: color("primary", "main"); //#7868E6
 }
 .main-content-height {
   height: calc(100% - 4.25rem);
@@ -432,9 +436,9 @@ label {
     letter-spacing: 0 !important;
   }
 }
-  .mdc-button__label {
-    display: flex;
- }
+.mdc-button__label {
+  display: flex;
+}
 .small-icon {
   font-size: 1rem;
   width: 1.125rem;
@@ -472,22 +476,27 @@ label {
   align-items: center;
   cursor: pointer;
 }
-.section-heading{
-  border-bottom: 0.0625rem solid color('grey', 'border-2');
+.section-heading {
+  border-bottom: 0.0625rem solid color("grey", "border-2");
 }
-.img-contain{
+.img-contain {
   @include image(6.625rem, 7.3125rem);
   border-radius: 0.25rem;
-  img{
+  img {
     width: 100%;
     min-height: 100%;
     object-fit: contain;
   }
 }
 
-.gap-2 {
-  gap: .5rem;
+// loader Scss
+.loader {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(249, 246, 246, 0.477);
+  z-index: 9999;
 }
+
 // 5. Angular Material
 
 .mat-mdc-menu-content.mdc-list {

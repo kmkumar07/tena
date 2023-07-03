@@ -6,16 +6,16 @@ import {
   periodUnit,
 } from 'src/app/shared/constants/consants';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { Subscription } from 'rxjs';
+import { Subscription, takeUntil } from 'rxjs';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PlanService } from '../../services/plan.service';
-import { SharedDataService } from 'src/app/shared/shared-data.service';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 export class PlanValue {
   planId: string;
-  externalName: string;
+  internalName: string;
 }
 @Component({
   selector: 'app-set-price',
@@ -32,29 +32,69 @@ export class SetPriceComponent {
   volumeTotal: number;
   stairTotal: number;
   price: any;
-  planValue: PlanValue = new PlanValue();
+  planValue: any = {};
   monthlyBilling = ['3', '4', '5'];
   readOnly: boolean = false;
   start = 0;
   check: string;
   dropKey: number;
+  planId: string;
+  editPriceStatus: boolean;
   public setPriceForm: FormGroup;
+
   constructor(
     private form: FormBuilder,
-    private priceService: PlanService,
+    private global: GlobalService,
+    private planService: PlanService,
     public dialog: MatDialog,
     private router: Router,
-    private dataService: SharedDataService
+    private route: ActivatedRoute
   ) {}
+
   ngOnInit() {
-    this.planValue = this.dataService.getplanValue();
+    this.planId = this.route.snapshot.params['id'];
     this.formData();
+    // this.getPriceVal();
+    this.getCurrPLan();
   }
+
+  // getPriceVal() {
+  //   this.planService
+  //     .getEditPrice()
+  //     .pipe(takeUntil(this.global.componentDestroyed(this)))
+  //     .subscribe((res) => {
+  //       this.editPriceStatus = res;
+  //       if (this.editPriceStatus) {
+  //         this.planService
+  //           .getPriceById(this.planId)
+  //           .subscribe((res) => console.log('price', res));
+  //       } else {
+  //         this.getCurrPLan();
+  //       }
+  //     });
+  // }
+
+  getCurrPLan() {
+    this.planService
+      .getPlanById(this.planId)
+      .pipe(takeUntil(this.global.componentDestroyed(this)))
+      .subscribe((res) => {
+        this.planValue = res.data;
+      });
+  }
+
+  patchValue() {
+    this.setPriceForm.patchValue({
+      planId: this.planValue.planId,
+      name: this.planValue.internalName,
+    });
+  }
+
   formData() {
     this.setPriceForm = this.form.group({
       priceId: ['', Validators.required],
-      planId: [this.planValue.planId, Validators.required],
-      name: [this.planValue.externalName, Validators.required],
+      planId: ['', Validators.required],
+      name: ['', Validators.required],
       description: ['', Validators.required],
       invoiceNotes: ['', Validators.required],
       currencyCode: ['USD', Validators.required],
@@ -74,26 +114,32 @@ export class SetPriceComponent {
       ]),
     });
   }
+
   getLevelList(index: number) {
     const tierList = this.multiPricing.at(index) as FormGroup;
     return tierList;
   }
+
   setPeriod(periodSelected: string) {
     this.setPriceForm.patchValue({
       periodUnit: periodSelected,
     });
   }
+
   get multiPricing() {
     return this.setPriceForm.controls['multiPricing'] as FormArray;
   }
+
   lastObj() {
     const checkCurrent = this.multiPricing.length - 1;
     return this.getLevelList(checkCurrent);
   }
+
   secondLastObj() {
     const checkPrev = this.multiPricing.length - 2;
     return this.getLevelList(checkPrev);
   }
+
   addMultiPricing() {
     this.multiPricing.push(
       this.form.group({
@@ -114,6 +160,7 @@ export class SetPriceComponent {
     });
     prevIdx.get('endingUnit')?.enable();
   }
+
   onTabChange(event: MatTabChangeEvent): void {
     this.formData();
     this.selectedTab = event.index;
@@ -127,10 +174,12 @@ export class SetPriceComponent {
       this.setPeriod('yearly');
     }
   }
+
   onDropdownKey(event: number): void {
     this.dropKey = event;
   }
-  deleteMultiPricing(tierIndex: number) {
+
+  deleteTier(tierIndex: number) {
     this.multiPricing.removeAt(tierIndex);
     const lastIdx = this.lastObj();
     lastIdx.get('endingUnit')?.setValue('&above');
@@ -152,6 +201,7 @@ export class SetPriceComponent {
       });
     }
   }
+
   pricingModelSetEndingUnitEmpty(price: any) {
     for (let i = 0; i < price.multiPricing.length; i++) {
       if (price.multiPricing[i].endingUnit == '&above') {
@@ -188,21 +238,23 @@ export class SetPriceComponent {
       this.pricingModelSetEndingUnitEmpty(price);
     }
   }
+
   submitValues() {
+    this.patchValue();
+    this.global.showLoader();
     this.price = this.setPriceForm.getRawValue();
     this.pricingModelValueToName(this.price);
-    this.subscription = this.priceService.createPrice(this.price).subscribe({
-      next: (res: any) => {
+    this.subscription = this.planService
+      .createPrice(this.price)
+      .subscribe((res) => {
         this.openSuccess();
-        this.router.navigate(['/plans']);
-        return res;
-      },
-      error: (err: any) => {
-        console.log('something wrong occured', err);
-      },
-    });
-    this.setPriceForm.reset();
+        this.planService.setData(this.price, 'priceInfo');
+        this.router.navigate([`/plans/create/${this.planValue.planId}`]);
+        this.global.hideLoader();
+      });
+    this.global.hideLoader();
   }
+
   openSuccess() {
     this.dialog.open(SuccessDialogComponent, {
       width: '420px',
@@ -235,9 +287,7 @@ export class SetPriceComponent {
       this.check = 'plz put above value from startingunit';
     }
   }
-  PreviewPrice(event: any) {
-    let input = parseInt(event.target.value);
-  }
+
   getPreviewPrice(event: any) {
     let input = parseInt(event.target.value);
     const arr = this.setPriceForm.value.multiPricing;
@@ -254,6 +304,7 @@ export class SetPriceComponent {
         gap = arr[0].endingUnit;
       } else {
         gap = arr[i].endingUnit - arr[i - 1].endingUnit;
+        break;
       }
 
       if (input >= gap) {
@@ -262,9 +313,11 @@ export class SetPriceComponent {
       } else {
         total1 += arr[i].price * input;
         input = 0;
+        break;
       }
 
       i++;
+      break;
     }
 
     this.tiredTotal = total1;

@@ -11,11 +11,15 @@ import { EditProductDetailsComponent } from './components/edit-product-details/e
 
 const routes: Routes = [
   { path: '', component: PlansListingComponent },
-  { path: 'view', component: ViewPlansComponent },
+  { path: 'view/:id', component: ViewPlansComponent },
   { path: 'create', component: CreatePlanComponent },
   { path: 'create/set-price', component: SetPriceComponent},
   { path: 'create/product-detail', component: ProductDetailsComponent},
   { path: 'create/edit-product-detail/:id', component: EditProductDetailsComponent},
+  { path: 'create/:id', component: CreatePlanComponent },
+  { path: 'create/set-price/:id', component: SetPriceComponent},
+  { path: 'create/set-price/:id/:id', component: SetPriceComponent},
+  { path: 'create/product-detail/:id', component: ProductDetailsComponent},
   { path: 'create/add-ons', component:AddOnsDetailsComponent},
 ];
 
