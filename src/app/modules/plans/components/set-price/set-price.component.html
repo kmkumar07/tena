@@ -62,8 +62,8 @@
             >
               <mat-option
                 *ngFor="let option of pricingModelTypes"
-                value="{{ option.value }}" (click)="onDropdownKey(option.value)"
-
+                value="{{ option.value }}"
+                (click)="onDropdownKey(option.value)"
               >
                 {{ option.title }}
               </mat-option>
@@ -100,12 +100,18 @@
                 </div>
               </div>
               <div>
-                <ng-container formArrayName="tiers">
+                <ng-container formArrayName="multiPricing">
                   <ng-container
-                    *ngFor="let tiersGroup of tiers.controls; let i = index"
+                    *ngFor="
+                      let tiersGroup of multiPricing.controls;
+                      let i = index
+                    "
                   >
-                    <div formGroupName="{{i}}" class="flex align-center relative">
-                      <div class="input-wrapper small mr-2 relative ">
+                    <div
+                      formGroupName="{{ i }}"
+                      class="flex align-center relative"
+                    >
+                      <div class="input-wrapper small mr-2 relative">
                         <mat-form-field appearance="outline" class="border-2">
                           <input
                             required
@@ -117,7 +123,7 @@
                         </mat-form-field>
                       </div>
                       <div class="input-wrapper small mr-2">
-                        <mat-form-field appearance="outline"class="border-2">
+                        <mat-form-field appearance="outline" class="border-2">
                           <input
                             required
                             matInput
@@ -146,8 +152,8 @@
                         mat-icon-button
                         color="warn"
                         class="light-bg small rounded-1 absolute delete-tier-btn"
-                        *ngIf="i == tiers.length - 1 && i > 0"
-                        (click)="deleteTier(i)"
+                        *ngIf="i == multiPricing.length - 1 && i > 0"
+                        (click)="deleteMultiPricing(i)"
                       >
                         <mat-icon
                           class="material-symbols-outlined mr-0"
@@ -167,14 +173,17 @@
               mat-button
               type="button"
               class="primary-text text-main"
-              (click)="addTiers()"
+              (click)="addMultiPricing()"
             >
               + Add More
             </button>
           </div>
         </div>
         <!-- Price Field -->
-        <div class="input-wrapper" *ngIf="!monthlyBilling.includes(setPriceForm.value.pricingModel)">
+        <div
+          class="input-wrapper"
+          *ngIf="!monthlyBilling.includes(setPriceForm.value.pricingModel)"
+        >
           <div class="flex align-center mb-2">
             <p class="mat-subtitle-2 font-weight-500 input-label">Price</p>
             <mat-icon
@@ -205,8 +214,15 @@
               type="number"
               min="0"
             />
-            <mat-error *ngIf="setPriceForm.controls['price'].invalid && setPriceForm.controls['price'].touched">
-              <ng-container *ngIf="setPriceForm.controls['price'].errors['required']">
+            <mat-error
+              *ngIf="
+                setPriceForm.controls['price'].invalid &&
+                setPriceForm.controls['price'].touched
+              "
+            >
+              <ng-container
+                *ngIf="setPriceForm.controls['price'].errors['required']"
+              >
                 Price is required and cannot be left empty.
               </ng-container>
             </mat-error>
@@ -233,22 +249,36 @@
                 />
               </mat-form-field>
             </div>
-            <p class="mat-subtitle-2 font-weight-500 input-label mb-2" *ngIf="dropKey ==1">
+            <p
+              class="mat-subtitle-2 font-weight-500 input-label mb-2"
+              *ngIf="dropKey == 1"
+            >
               Units. The total amount payable will be USD {{ previePrice }}
             </p>
-            <p class="mat-subtitle-2 font-weight-500 input-label mb-2" *ngIf="dropKey ==2">
+            <p
+              class="mat-subtitle-2 font-weight-500 input-label mb-2"
+              *ngIf="dropKey == 2"
+            >
               Units. The total amount payable will be USD {{ previePrice }}
             </p>
-            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 3" >
+            <p
+              class="mat-subtitle-2 font-weight-500 input-label mb-2"
+              *ngIf="dropKey == 3"
+            >
               Units. The total amount payable will be USD {{ tiredTotal }}
             </p>
-            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 4" >
-              Units. The total amount payable will be USD {{volumeTotal}}
+            <p
+              class="mat-subtitle-2 font-weight-500 input-label mb-2"
+              *ngIf="dropKey == 4"
+            >
+              Units. The total amount payable will be USD {{ volumeTotal }}
             </p>
-            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 5" >
-              Units. The total amount payable will be USD {{stairTotal}}
+            <p
+              class="mat-subtitle-2 font-weight-500 input-label mb-2"
+              *ngIf="dropKey == 5"
+            >
+              Units. The total amount payable will be USD {{ stairTotal }}
             </p>
-            
           </div>
         </div>
         <!-- Billing Cycle -->
@@ -277,24 +307,52 @@
             </ng-template>
           </div>
           <mat-form-field appearance="outline" class="border-2">
-            <mat-select required placeholder="select"  (selectionChange)="cycleValue($event)">
+            <mat-select
+              required
+              placeholder="select"
+              (selectionChange)="cycleValue($event)"
+            >
               <mat-option value="1">Fixed</mat-option>
               <mat-option value="2">Forever</mat-option>
             </mat-select>
           </mat-form-field>
           <div *ngIf="selectedOption == '1'">
             <mat-form-field appearance="outline" class="border-2">
-              <input matInput type="text" placeholder="noOfCycle" formControlName="noOfCycle"  name="noOfCycle">
-              <mat-error *ngIf="setPriceForm.controls['noOfCycle'].invalid && setPriceForm.controls['noOfCycle'].touched">
-                <ng-container *ngIf="setPriceForm.controls['noOfCycle'].errors['required']">
+              <input
+                matInput
+                type="text"
+                placeholder="noOfCycle"
+                formControlName="noOfCycle"
+                name="noOfCycle"
+              />
+              <mat-error
+                *ngIf="
+                  setPriceForm.controls['noOfCycle'].invalid &&
+                  setPriceForm.controls['noOfCycle'].touched
+                "
+              >
+                <ng-container
+                  *ngIf="setPriceForm.controls['noOfCycle'].errors['required']"
+                >
                   noOfCycle is required and cannot be left empty.
                 </ng-container>
               </mat-error>
             </mat-form-field>
+          </div>
         </div>
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="
+            setPriceForm.invalid &&
+            this.setPriceForm.value.pricingModel !== '2' &&
+            this.setPriceForm.value.pricingModel !== '3'
+          "
+          type="submit"
+        >
+          Set Price
+        </button>
       </div>
-      <button mat-flat-button color="primary" [disabled]="setPriceForm.invalid && this.setPriceForm.value.pricingModel!=='2' && this.setPriceForm.value.pricingModel!=='3'" type="submit">Set Price</button>
     </div>
-  </div>
   </form>
 </div>

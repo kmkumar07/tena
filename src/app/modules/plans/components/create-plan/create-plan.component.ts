@@ -41,8 +41,8 @@ export class CreatePlanComponent implements OnInit {
   data$ = this.planService.plan$;
   productDetails: any = [];
   productID: string;
-  planId:string;
-  externalName:string;
+  planId: string;
+  externalName: string;
   name: string;
   featureId: string;
   entitlement: string;
@@ -64,7 +64,6 @@ export class CreatePlanComponent implements OnInit {
     private router: Router,
     private planService: PlanService,
     private dataService: SharedDataService
-
   ) {}
 
   ngOnInit(): void {
@@ -103,8 +102,22 @@ export class CreatePlanComponent implements OnInit {
   planDetails() {
     this.planForm = this.formBuilder.group({
       planId: ['', Validators.required],
-      internalName: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
-      externalName: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
+      internalName: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+        ],
+      ],
+      externalName: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+        ],
+      ],
       type: [''],
       description: ['', Validators.maxLength(500)],
       status: [true],
@@ -124,11 +137,10 @@ export class CreatePlanComponent implements OnInit {
       type: type,
       status: status,
     };
-    this.planId=plan.planId;
-    this.externalName=plan.externalName;
-    this.dataService.setplanValue(this.planId,this.externalName);
+    this.planId = plan.planId;
+    this.externalName = plan.externalName;
+    this.dataService.setplanValue(this.planId, this.externalName);
 
-    console.log("asdfghbnm,.-09",this.planId);
     this.subscription = this.planService.addPlan(plan).subscribe({
       next: (res: any) => {
         this.openSuccess();
