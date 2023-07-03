@@ -34,10 +34,7 @@
             src="../../../../../../assets/images/icons/carbon_document-multiple-02.svg"
             alt="carbon_document-multiple-icon"
           />
-          <abbr
-            class="mat-headline-5 text-dark"
-            >Plan Information</abbr
-          >
+          <abbr class="mat-headline-5 text-dark">Plan Information</abbr>
         </div>
         <form [formGroup]="planForm">
           <div class="info-form">
@@ -74,15 +71,33 @@
                     matInput
                     placeholder="Enter here..."
                     formControlName="internalName"
+                    (input)="setPlanId($event)"
                   />
-                  <mat-error *ngIf="planForm.controls['internalName'].invalid && planForm.controls['internalName'].touched">
-                    <ng-container *ngIf="planForm.controls['internalName'].errors['required']">
+                  <mat-error
+                    *ngIf="
+                      planForm.controls['internalName'].invalid &&
+                      planForm.controls['internalName'].touched
+                    "
+                  >
+                    <ng-container
+                      *ngIf="
+                        planForm.controls['internalName'].errors['required']
+                      "
+                    >
                       InternalName is required and cannot be left empty.
                     </ng-container>
-                    <ng-container *ngIf="planForm.controls['internalName'].errors['maxlength']">
+                    <ng-container
+                      *ngIf="
+                        planForm.controls['internalName'].errors['maxlength']
+                      "
+                    >
                       InternalName cannot exceed 20 characters.
                     </ng-container>
-                    <ng-container *ngIf="planForm.controls['internalName'].errors['pattern']">
+                    <ng-container
+                      *ngIf="
+                        planForm.controls['internalName'].errors['pattern']
+                      "
+                    >
                       InternalName cannot contain special characters.
                     </ng-container>
                   </mat-error>
@@ -120,14 +135,31 @@
                     placeholder="Enter here..."
                     formControlName="externalName"
                   />
-                  <mat-error *ngIf="planForm.controls['externalName'].invalid && planForm.controls['externalName'].touched">
-                    <ng-container *ngIf="planForm.controls['externalName'].errors['required']">
+                  <mat-error
+                    *ngIf="
+                      planForm.controls['externalName'].invalid &&
+                      planForm.controls['externalName'].touched
+                    "
+                  >
+                    <ng-container
+                      *ngIf="
+                        planForm.controls['externalName'].errors['required']
+                      "
+                    >
                       ExternalName is required and cannot be left empty.
                     </ng-container>
-                    <ng-container *ngIf="planForm.controls['externalName'].errors['maxlength']">
+                    <ng-container
+                      *ngIf="
+                        planForm.controls['externalName'].errors['maxlength']
+                      "
+                    >
                       ExternalName cannot exceed 20 characters.
                     </ng-container>
-                    <ng-container *ngIf="planForm.controls['externalName'].errors['pattern']">
+                    <ng-container
+                      *ngIf="
+                        planForm.controls['externalName'].errors['pattern']
+                      "
+                    >
                       ExternalName cannot contain special characters.
                     </ng-container>
                   </mat-error>
@@ -162,6 +194,15 @@
                 </div>
                 <mat-form-field appearance="outline">
                   <input
+                    *ngIf="!editable"
+                    required
+                    matInput
+                    placeholder="Enter here..."
+                    formControlName="planId"
+                  />
+                  <input
+                    *ngIf="editable"
+                    readonly
                     required
                     matInput
                     placeholder="Enter here..."
@@ -181,8 +222,17 @@
                     placeholder="Enter here..."
                     formControlName="description"
                   ></textarea>
-                  <mat-error *ngIf="planForm.controls['description'].invalid && planForm.controls['description'].touched">
-                    <ng-container *ngIf="planForm.controls['description'].errors['maxlength']">
+                  <mat-error
+                    *ngIf="
+                      planForm.controls['description'].invalid &&
+                      planForm.controls['description'].touched
+                    "
+                  >
+                    <ng-container
+                      *ngIf="
+                        planForm.controls['description'].errors['maxlength']
+                      "
+                    >
                       Description cannot exceed 500 characters.
                     </ng-container>
                   </mat-error>
@@ -205,6 +255,7 @@
                     Dismiss
                   </button>
                   <button
+                    *ngIf="!editable"
                     mat-flat-button
                     color="primary"
                     class="large"
@@ -213,6 +264,16 @@
                     [disabled]="planForm.invalid"
                   >
                     Create
+                  </button>
+                  <button
+                    *ngIf="editable"
+                    mat-flat-button
+                    color="primary"
+                    class="large"
+                    type="button"
+                    (click)="onSubmit()"
+                  >
+                    Update
                   </button>
                 </div>
               </div>
@@ -236,7 +297,10 @@
           />
           <h5 class="mat-headline-5 text-dark">Pricing Plan</h5>
         </div>
-        <div class="empty-add-section mt-6 border-1">
+        <div
+          *ngIf="this.priceData.length == 0"
+          class="empty-add-section mt-6 border-1"
+        >
           <div class="text-center">
             <p class="mat-body-1 text-dark-1">
               Please click the “Add” button below to add a new pricing plans.
@@ -247,21 +311,159 @@
               mat-flat-button
               color="primary"
               class="mt-11 large"
-              [routerLink]="'/plans/create/set-price'"
+              [routerLink]="['/plans/create/set-price/'] + planId"
               [disabled]="!stepOneCompleted"
             >
               Add Pricing
             </button>
           </div>
         </div>
+        <div *ngIf="this.priceData.length > 0" class="info-form">
+          <div class="flag-wrapper flex align-center pt-8 pb-2">
+            <img
+              src="../../../../../../assets/images/flags.png"
+              alt="flags"
+              class="mr-3"
+            />
+            <span class="mat-subtitle-2 text-headline-dark">USD</span>
+          </div>
+          <div class="table-wrapper mt-3">
+            <table mat-table [dataSource]="priceData" class="">
+              <ng-container matColumnDef="PricingCycle">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="mat-subtitle-2 text-headline-dark"
+                >
+                  Pricing Cycle
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  class="mat-subtitle-2 text-headline-light"
+                >
+                  {{ element.periodUnit }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="PricingModel">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="mat-subtitle-2 text-headline-dark"
+                >
+                  Pricing Model
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  class="mat-subtitle-2 text-headline-light"
+                >
+                  {{ element.pricingModel }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="BillingCycle">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="mat-subtitle-2 text-headline-dark"
+                >
+                  Billing Cycle
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  <span
+                    *ngIf="element.isExpirable"
+                    class="mat-subtitle-2 text-headline-light billing-fixed px-2 py-1 border-1"
+                    >Fixed</span
+                  >
+                  <span
+                    *ngIf="!element.isExpirable"
+                    class="mat-subtitle-2 text-headline-light billing-fixed px-2 py-1 border-1"
+                    >Forever</span
+                  >
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Price">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="mat-subtitle-2 text-headline-dark"
+                >
+                  Price
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  class="mat-subtitle-2 text-headline-light price-cell"
+                >
+                  {{ element.price }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="mat-subtitle-2 text-headline-dark action-header"
+                >
+                  Action
+                </th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                  <div class="flex justify-end">
+                    <button
+                      class="flex edit-btn mat-caption mr-1"
+                      mat-button
+                      color="primary"
+                      [routerLink]="['/plans/create/set-price/'] + planId"
+                    >
+                      <mat-icon
+                        class="material-symbols-outlined mr-1"
+                        color="primary"
+                        >edit</mat-icon
+                      >Edit
+                    </button>
+                    <button
+                      mat-icon-button
+                      color="warn"
+                      class="light-bg small rounded-1"
+                      (click)="removeType(i)"
+                    >
+                      <mat-icon
+                        class="material-symbols-outlined mr-0"
+                        color="warn"
+                        >close</mat-icon
+                      >
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="priceColumn"></tr>
+              <tr
+                mat-row
+                (click)="clickedRows.add(row)"
+                [class.demo-row-is-clicked]="clickedRows.has(row)"
+                *matRowDef="let row; columns: priceColumn"
+              ></tr>
+            </table>
+          </div>
+          <button
+            mat-flat-button
+            color="primary"
+            class="mt-11 large ml-auto"
+            [routerLink]="['/plans/create/set-price/'] + planId"
+          >
+            Add Pricing
+          </button>
+        </div>
       </div>
     </div>
 
     <div
       #step3
-      id="step2"
+      id="step3"
       class="plan-section-block flex-center border-2 p-11 mb-4"
-      *ngIf="productDetails?.length === 0"
     >
       <div class="plan-info-block inner-wrapper">
         <div class="heading flex align-center">
@@ -293,7 +495,7 @@
     </div>
 
     <!-- Product Details inner -->
-    <div
+    <!-- <div
       #step3
       id="step3"
       class="plan-section-block flex-center border-2 p-11 mb-4"
@@ -375,9 +577,7 @@
           </button>
         </div>
       </div>
-    </div>
-
-    <!-- <app-add-plan-pricing></app-add-plan-pricing> -->
+    </div> -->
 
     <!-- add-on view section  -->
     <div
