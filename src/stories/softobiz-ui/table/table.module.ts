@@ -10,7 +10,7 @@ import {
 } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [],
+  declarations: [TableComponent],
   imports: [
     CommonModule,
     MatTableModule,

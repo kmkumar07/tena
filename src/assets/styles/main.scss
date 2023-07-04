@@ -79,6 +79,7 @@ $my-theme: mat.define-light-theme((
 @import './components/custom';
 @import './components/grid';
 @import './components/storybook';
+@import './components/modal';
 
 //modules
 @import './components/modules/products/product';
