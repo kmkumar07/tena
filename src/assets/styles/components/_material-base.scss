@@ -5,6 +5,7 @@
 // 5. ul with green mark
 // 6. chip with success-bg
 // 7. coupons dialog
+// 8. mat-paginator
 
 // 1. mat-chip
 .basic-chip.mat-mdc-chip {
@@ -558,5 +559,24 @@ ul {
         }
       }
     }
+  }
+}
+
+// 8. mat-paginator
+.mat-mdc-paginator{
+  font-size: .875rem;
+  .mat-mdc-paginator-container{
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+  .mdc-notched-outline__trailing{
+    border: none;
+  }
+  .mdc-notched-outline__leading{
+    border: none;
+  }
+  .mat-mdc-select-value {
+    width: auto;
+    margin-right: 4px;
   }
 }

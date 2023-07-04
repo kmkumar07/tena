@@ -1,11 +1,11 @@
 @import "https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap";
 
 // storybook style
-.left-navigation {
-  .mat-sidenav {
-    width: 16.375rem;
-  }
-}
+// .left-navigation {
+//   .mat-sidenav {
+//     width: 16.375rem;
+//   }
+// }
 
 .color-box {
   border-radius: .625rem;
@@ -37,4 +37,8 @@
 .error-page{
   height: 100vh;
   width: 100%;
+}
+
+.tooltip-wrapper{
+  height: 300px;
 }
