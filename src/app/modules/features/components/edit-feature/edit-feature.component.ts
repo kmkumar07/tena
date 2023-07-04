@@ -8,10 +8,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBarConfig } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
+import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import {
   Data_Type,
   feature_types,
@@ -36,11 +38,14 @@ export class EditFeatureComponent {
   preName: string = '';
   postName: string = '';
   position: any;
+  isRangeSelected: boolean = false;
+
   unlimitedButtonLabel: string = 'Set Unlimited';
   PageNumber: any = '';
   limit: any = '';
   search: string = '';
   productId = [];
+  status: boolean;
   featureForm: FormGroup = this.formBuilder.group({
     featureId: ['', Validators.required],
     productID: ['', Validators.required],
@@ -69,6 +74,9 @@ export class EditFeatureComponent {
       }),
     ]),
   });
+
+  @ViewChild(SnackBarComponent, { static: false })
+  snackbarComponent: SnackBarComponent;
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -147,14 +155,65 @@ export class EditFeatureComponent {
     });
   }
 
+  openSnackbar(message: string) {
+    const config: MatSnackBarConfig = {
+      duration: 5000,
+    };
+    this.snackbarComponent.open(message, config);
+  }
+  onTypeSelection(value: string) {
+    if (value === 'switch') {
+      this.featureForm.removeControl('unit');
+    }
+    if (value === 'range') {
+      this.featureForm.addControl(
+        'unit',
+        this.formBuilder.control(null, Validators.required)
+      );
+      this.isRangeSelected = true;
+      let i = 0;
+      if (this.levels.length == 0) {
+        while (i < 2) {
+          this.addLevels();
+          i++;
+        }
+      }
+      while (this.levels.length > 2) {
+        this.levels.removeAt(2);
+      }
+    }
+    if (value === 'quantity' || value === 'custom') {
+      this.isRangeSelected = false;
+      this.featureForm.addControl(
+        'unit',
+        this.formBuilder.control(null, Validators.required)
+      );
+
+      let i = 0;
+      if (this.levels.length == 0) {
+        while (i < 2) {
+          this.addLevels();
+          i++;
+        }
+      }
+    }
+  }
   updateForm(res: any) {
+    if (res.status === 'active') {
+      this.status = true;
+    } else if (res.status === 'draft') {
+      this.status = false;
+    }
+    if (res.type === 'range') {
+      this.isRangeSelected = true;
+    }
     this.featureForm.patchValue({
       featureId: res.featureId,
       productID: res.product.productId,
       name: res.name,
       description: res.description,
       type: res.type,
-      status: res.status,
+      status: this.status,
       unit: res.unit,
       levels: res.levels,
     });
@@ -184,7 +243,7 @@ export class EditFeatureComponent {
       }
     });
 
-    const status = this.featureForm.value.status ? 'active' : 'disabled';
+    const status = this.featureForm.value.status ? 'active' : 'draft';
     let feature: any = {
       featureId: this.featureForm.value.featureId,
       productID: this.featureForm.value.productID,
@@ -200,6 +259,26 @@ export class EditFeatureComponent {
         unit: this.featureForm.value.unit,
         levels: this.featureForm.value.levels,
       };
+    } else if (this.featureForm.value.type === 'custom') {
+      const levels = this.featureForm.value.levels.map((level: any) => {
+        return {
+          ...level,
+          isUnlimited: '',
+        };
+      });
+      feature = {
+        ...feature,
+        unit: this.featureForm.value.unit,
+        levels: levels,
+      };
+    }
+
+    if (this.featureForm.value.type === 'range') {
+      feature = {
+        ...feature,
+        unit: this.featureForm.value.unit,
+        levels: this.featureForm.value.levels,
+      };
     }
     this.subscription = this.featureService
       .updateFeature(this.featureForm.value.featureId, feature)
@@ -209,8 +288,8 @@ export class EditFeatureComponent {
           this.routes.navigate([`/features/view/${res.featureId}`]);
           return res;
         },
-        error: (err: any) => {
-          console.log('something wrong occured', err);
+        error: (error: any) => {
+          this.openSnackbar(error.error.message);
         },
       });
   }

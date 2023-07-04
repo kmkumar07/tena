@@ -1,26 +1,19 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { FeatureService } from 'src/app/modules/features/services/feature.service';
-import {
-  Observable,
-  Subscription,
-  debounceTime,
-  distinctUntilChanged,
-  filter,
-  map,
-} from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { ProductDetailsService } from '../../services/product-details.service';
+import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Router } from '@angular/router';
 
 export interface PeriodicElement {
-  featureId:string;
-  value:string
+  featureId: string;
+  value: string;
   name: string;
-  type?:string;
-  levels: {featureID:string, value: string }[];
+  type?: string;
   position: number | string;
   status: string;
   symbol: string;
@@ -37,24 +30,26 @@ export class ProductDetailsComponent implements OnInit {
   PageNumber: any = '';
   limit: any = '';
   search: string = '';
-  productArray = [];
   productData = [];
-  featureValue: any;
   filteredFeatures = [];
   selectedFeatures: PeriodicElement[] = [];
-  filteredFeatureId: string = '';
-  productVariantFeatureValue = [];
-  productId = '';
+  productId: string = '';
   isProductSelected: boolean = false;
   isButtonDisabled: boolean = true;
-  isAvailable: boolean = true;
-  productName$: Observable<string>;
-  description$: Observable<string>;
+  selectedOption: boolean;
+  disabled: boolean;
+  isCheckboxChecked: boolean = false;
+  selectedLevelFromDropdown: { [key: string]: any } = {};
+  clicked = false;
+  rangeForm: FormGroup;
+  loading = false;
   constructor(
+    public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private productService: ProductsService,
-    private productDetailsService: ProductDetailsService
-  ) {}
+    private productDetailsService: ProductDetailsService,
+    private routes: Router
+  ) { }
 
   displayedColumns: string[] = [
     'select',
@@ -83,12 +78,10 @@ export class ProductDetailsComponent implements OnInit {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    console.log("akash", numSelected)
     const numRows = this.productData.length;
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -98,79 +91,138 @@ export class ProductDetailsComponent implements OnInit {
     this.selection.select(...this.productData);
   }
 
-  /** The label for the checkbox on the passed row */
   checkboxLabel(row?: PeriodicElement): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row `;
   }
+  selectedOptions: { [key: string]: boolean } = {};
 
-  toggleCheckbox(row: PeriodicElement) {
-    this.selection.toggle(row);
-    if (this.selection.isSelected(row)) {
-      console.log("raw",row)
+  toggleCheckbox(event: MatCheckboxChange, row: PeriodicElement) {
+    if (event.checked) {
+      this.isButtonDisabled = false;
+      this.selection.select(row);
       this.selectedFeatures.push(row);
     } else {
+      this.selection.deselect(row);
       const index = this.selectedFeatures.findIndex(
-        (feature) => feature.position === row.position
+        (feature) => feature.featureId === row.featureId
       );
       if (index !== -1) {
         this.selectedFeatures.splice(index, 1);
       }
     }
   }
-   
+
+  onSelectedLevelChange(featureId: string, level: any) {
+    this.selectedLevelFromDropdown[featureId] = level;
+  }
 
   getProduct(PageNumber: number, limit: number, search: string) {
     this.productService
       .getProducts(this.PageNumber, this.limit, this.search)
-      .subscribe(() => {});
+      .subscribe(() => { });
   }
-  
+
   selectProduct(product) {
     this.productId = product.productId;
     this.isProductSelected = true;
-    this.isButtonDisabled = false;
     this.formGroup.controls.productName.patchValue(product.name);
     this.formGroup.controls.description.patchValue(product.description);
-    this.filteredFeatures = product.feature
-    console.log("akkk", this.filteredFeatures)
+    this.filteredFeatures = product.feature;
+    const rangeFormControls = {};
+    this.filteredFeatures.forEach((feature) => {
+      const minValue = feature.levels[0]?.value;
+      const maxValue = feature.levels[1]?.value;
+      if (feature.type === 'range') {
+        const rangeValue = [
+          '',
+          [
+            Validators.required,
+            Validators.min(Math.min(minValue, maxValue)),
+            Validators.max(Math.max(minValue, maxValue)),
+          ],
+        ];
+        rangeFormControls[feature.featureId] = rangeValue;
+        feature.minValue = Math.min(minValue, maxValue);
+        feature.maxValue = Math.max(minValue, maxValue);
+      }
+    });
+
+    this.rangeForm = this.formBuilder.group(rangeFormControls);
   }
+  openSuccess() {
+    this.dialog.open(SuccessDialogComponent, {
+      width: '420px',
+      data: {
+        module: 'Product-variant',
+        operation: 'Created',
+      },
+    });
+  }
+
   onSubmit() {
+    this.loading = true;
     const formData = this.formGroup.value;
     const productVariantName = formData.productName + ' product Variant';
     const productVariantId = productVariantName
       .replace(/\s+/g, '-')
       .toLowerCase();
-    const features = this.selectedFeatures.map((productVariantFeature)=>{
-      if (productVariantFeature.type === 'quantity') {
-        const values = productVariantFeature.levels.map((level) => level.value).join(', ');
-        return {
-          featureID: productVariantFeature.featureId,
-          value: values
-        };
-      } else {
-        return {
-          featureID: productVariantFeature.featureId,
-          value: this.isAvailable ? 'true' : 'false'
-        };
+
+    const features = this.selectedFeatures.map((productVariantFeature) => {
+      switch (productVariantFeature.type) {
+        case 'quantity':
+        case 'custom':
+          const values = this.selectedLevelFromDropdown[productVariantFeature.featureId];
+          return {
+            featureID: productVariantFeature.featureId,
+            value: values,
+          };
+        case 'switch':
+          return {
+            featureID: productVariantFeature.featureId,
+            value: this.selectedOptions[productVariantFeature.featureId],
+          };
+        case 'range':
+          return {
+            featureID: productVariantFeature.featureId,
+            value: this.rangeForm.get(productVariantFeature.featureId).value,
+          };
+        default:
+          return null;
       }
-    })
+    });
     const payload = {
       productVariantId: productVariantId,
-      name: formData.productName + ' product Variant',
+      name: productVariantName,
       productID: this.productId,
       type: 'base',
       features: features,
       status: 'active',
     };
-    console.log("paylaod",payload)
+    this.clicked = false;
     this.subscription = this.productDetailsService
       .createProductVariant(payload)
-      .subscribe((res) => {
-        this.isButtonDisabled = true;
-        return res;
+      .subscribe({
+        next: (res) => {
+          this.loading = false;
+          this.isButtonDisabled = true;
+          this.openSuccess();
+          this.routes.navigate([`/plans/create`]);
+          this.formGroup.reset();
+          this.rangeForm.reset();
+          this.selectedFeatures = [];
+          return res;
+        },
+        error: (err: any) => {
+          this.loading = false;
+          this.formGroup.reset();
+          this.rangeForm.reset();
+          this.routes.navigate([`/plans/create`]);
+          this.selectedFeatures = [];
+          console.log('something wrong occured', err.error.message);
+        },
       });
   }
 }

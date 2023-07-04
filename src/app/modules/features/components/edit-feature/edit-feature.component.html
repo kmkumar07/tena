@@ -27,15 +27,15 @@
             </p>
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-              [ngxTippy]="selectProduct"
+              [ngxTippy]="featureName"
               [tippyProps]="{ placement: 'right' }"
               >help</mat-icon
             >
-            <ng-template #selectProduct let-name class="t-template">
+            <ng-template #featureName let-name class="t-template">
               <div class="help-info-tooltip">
                 <div class="heading-with-background">Feature name</div>
                 <div class="details">
-                  Please select a product to create a feature to it.
+                  Enter a name that helps you identify this Feature.
                 </div>
                 <button mat-button color="primary" class="px-0">
                   Learn more
@@ -50,14 +50,25 @@
               placeholder="Enter here"
               formControlName="name"
             />
-            <mat-error *ngIf="featureForm.controls['name'].invalid && featureForm.controls['name'].touched">
-              <ng-container *ngIf="featureForm.controls['name'].errors['required']">
+            <mat-error
+              *ngIf="
+                featureForm.controls['name'].invalid &&
+                featureForm.controls['name'].touched
+              "
+            >
+              <ng-container
+                *ngIf="featureForm.controls['name'].errors['required']"
+              >
                 Name is required and cannot be left empty.
               </ng-container>
-              <ng-container *ngIf="featureForm.controls['name'].errors['maxlength']">
+              <ng-container
+                *ngIf="featureForm.controls['name'].errors['maxlength']"
+              >
                 Name cannot exceed 20 characters.
               </ng-container>
-              <ng-container *ngIf="featureForm.controls['name'].errors['pattern']">
+              <ng-container
+                *ngIf="featureForm.controls['name'].errors['pattern']"
+              >
                 Name cannot contain special characters.
               </ng-container>
             </mat-error>
@@ -94,8 +105,8 @@
               placeholder="select"
             >
               <mat-option
-              *ngFor="let product of productId"
-              value="{{ product }}"
+                *ngFor="let product of productId"
+                value="{{ product }}"
               >
                 {{ product }}
               </mat-option>
@@ -115,11 +126,13 @@
               <div class="help-info-tooltip">
                 <div class="heading-with-background">Feature id</div>
                 <div class="details">
-                  Microsoft Teams is the ultimate messaging app for your
-                  organization—a workspace for real-time collaboration and
-                  communication, meetings, file and app sharing, and even the
-                  occasional emoji! All in one place, all in the open, all
-                  accessible to everyone.
+                  Please enter a Customized Id.If user do not enter this field,
+                  the system will generate a 'Customized Human-Readable-id'
+                  based on the Name field.
+                  <div>
+                    e.g. Feature Name: "Analytics Reporting" FeatureId:
+                    "analytics-reporting-01".
+                  </div>
                 </div>
               </div>
             </ng-template>
@@ -141,11 +154,11 @@
             </p>
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-              [ngxTippy]="selectProduct"
+              [ngxTippy]="type"
               [tippyProps]="{ placement: 'right' }"
               >help</mat-icon
             >
-            <ng-template #selectProduct let-name class="t-template">
+            <ng-template #type let-name class="t-template">
               <div class="help-info-tooltip">
                 <div class="heading-with-background">Feature type</div>
                 <div class="details">
@@ -163,6 +176,7 @@
               <mat-option
                 *ngFor="let type of featureType"
                 value="{{ type.title }}"
+                (click)="onTypeSelection(type.title)"
               >
                 {{ type.title }}
               </mat-option>
@@ -183,8 +197,15 @@
               placeholder="Enter here..."
               formControlName="description"
             ></textarea>
-            <mat-error *ngIf="featureForm.controls['description'].invalid && featureForm.controls['description'].touched">
-              <ng-container *ngIf="featureForm.controls['description'].errors['maxlength']">
+            <mat-error
+              *ngIf="
+                featureForm.controls['description'].invalid &&
+                featureForm.controls['description'].touched
+              "
+            >
+              <ng-container
+                *ngIf="featureForm.controls['description'].errors['maxlength']"
+              >
                 Description cannot exceed 500 characters.
               </ng-container>
             </mat-error>
@@ -193,7 +214,9 @@
         <div
           class="input-wrapper"
           *ngIf="
-            this.featureForm.value.type && this.featureForm.value.type != 1 && this.featureForm.value.type !== 'switch'
+            this.featureForm.value.type &&
+            this.featureForm.value.type != 1 &&
+            this.featureForm.value.type !== 'switch'
           "
         >
           <div class="flex align-center mb-2">
@@ -303,7 +326,11 @@
               >{{ unlimitedButtonLabel }}
             </button>
           </div>
-          <button mat-stroked-button (click)="addLevels()">
+          <button
+            mat-stroked-button
+            (click)="addLevels()"
+            *ngIf="!isRangeSelected"
+          >
             <mat-icon class="add-course-btn"></mat-icon>Add Entitlement
           </button>
         </div>
@@ -329,7 +356,9 @@
               class="large"
               type="button"
               (click)="onSubmit()"
-              [disabled]="featureForm.invalid && this.featureForm.value.type !== 'switch'"
+              [disabled]="
+                featureForm.invalid && this.featureForm.value.type !== 'switch'
+              "
             >
               Update
             </button>
@@ -383,4 +412,5 @@
       </div>
     </div>
   </div>
+  <app-snack-bar></app-snack-bar>
 </div>

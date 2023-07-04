@@ -1,27 +1,16 @@
-<div
-  class="plan-product-details main-bg w-full h-full overflow-auto border-2 py-8 pl-11 pr-10"
->
+<div class="plan-product-details main-bg w-full h-full overflow-auto border-2 py-8 pl-11 pr-10">
   <div class="flex align-center justify-between mb-2">
     <div class="flex align-center">
-      <mat-icon
-        class="material-symbols-outlined pointer"
-        color="primary"
-        [routerLink]="'/features'"
-        >keyboard_backspace</mat-icon
-      >
+      <mat-icon class="material-symbols-outlined pointer" color="primary"
+        [routerLink]="'/features'">keyboard_backspace</mat-icon>
 
       <span class="mat-h1 primary-text text-main ml-2">Create Plan</span>
     </div>
 
     <div class="flex align-center">
       <button mat-stroked-button color="primary" class="mr-2">Dismiss</button>
-
-      <button
-        mat-flat-button
-        color="primary"
-        [disabled]="isButtonDisabled"
-        (click)="onSubmit()"
-      >
+      <button mat-flat-button [disabled]="clicked || isButtonDisabled" (click)="onSubmit(); clicked = true"
+        color="primary">
         Add
       </button>
     </div>
@@ -38,12 +27,8 @@
       <div class="input-wrapper">
         <div class="flex align-center mb-2">
           <p class="mat-subtitle-2 font-weight-500 input-label">Product</p>
-          <mat-icon
-            class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-            [ngxTippy]="producthelpinfotooltip"
-            [tippyProps]="{ placement: 'right' }"
-            >help</mat-icon
-          >
+          <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+            [ngxTippy]="producthelpinfotooltip" [tippyProps]="{ placement: 'right' }">help</mat-icon>
           <ng-template #producthelpinfotooltip let-name>
             <div class="help-info-tooltip">
               <div class="heading-with-background">Product</div>
@@ -56,17 +41,16 @@
             </div>
           </ng-template>
         </div>
-        <mat-form-field appearance="outline" class="border-2">
-          <mat-select required formControlName="productID" placeholder="select">
-            <mat-option
-              *ngFor="let product of productData"
-              (click)="selectProduct(product)"
-              [value]="product.productId"
-            >
-              {{ product.productId }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <ng-container [formGroup]="formGroup">
+          <mat-form-field appearance="outline" class="border-2">
+            <mat-select required formControlName="productID" placeholder="select">
+              <mat-option *ngFor="let product of productData" (click)="selectProduct(product)"
+                [value]="product.productId">
+                {{ product.productId }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
 
         <div>
           <div class="flex align-center mb-2">
@@ -75,13 +59,8 @@
             </p>
           </div>
           <mat-form-field appearance="outline">
-            <input
-              matInput
-              [disabled]="true"
-              placeholder="Select"
-              [value]="formGroup.controls.productName.value"
-              formControlName="productName"
-            />
+            <input matInput [disabled]="true" placeholder="Select" [value]="formGroup.controls.productName.value"
+              formControlName="productName" />
           </mat-form-field>
         </div>
 
@@ -92,20 +71,17 @@
             </p>
           </div>
           <mat-form-field appearance="outline">
-            <textarea
-              matInput
-              [disabled]="true"
-              placeholder="Enter "
-              [value]="formGroup.controls.description.value"
-              formControlName="description"
-            ></textarea>
+            <textarea matInput [disabled]="true" placeholder="Enter " [value]="formGroup.controls.description.value"
+              formControlName="description"></textarea>
           </mat-form-field>
+        </div>
+    <!-----loader ------>
+       <div class="loader" *ngIf="loading">
+          <mat-spinner></mat-spinner>
         </div>
 
         <div *ngIf="isProductSelected" class="add-product-table">
-          <p
-            class="mat-subtitle-2 font-weight-500 text-primary py-2 mb-3 table-heading"
-          >
+          <p class="mat-subtitle-2 font-weight-500 text-primary py-2 mb-3 table-heading">
             Feature for this plan
           </p>
           <div class="relative main-bg border-2">
@@ -114,21 +90,15 @@
                 <!-- Checkbox Column -->
                 <ng-container matColumnDef="select">
                   <th mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox
-                      (change)="$event ? toggleAllRows() : null"
+                    <mat-checkbox (change)="$event ? toggleAllRows() : null"
                       [checked]="selection.hasValue() && isAllSelected()"
-                      [indeterminate]="selection.hasValue() && !isAllSelected()"
-                      [aria-label]="checkboxLabel()"
-                    >
+                      [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
                     </mat-checkbox>
                   </th>
                   <td mat-cell *matCellDef="let row">
-                    <mat-checkbox
-                      (click)="$event.stopPropagation()"
-                      (change)="$event ? toggleCheckbox(row) : null"
-                      [checked]="selection.isSelected(row)"
-                      [aria-label]="checkboxLabel(row)"
-                    >
+                    <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? toggleCheckbox($event, row) : null"
+                      [checked]="selection.isSelected(row) && isCheckboxChecked" [aria-label]="checkboxLabel(row)">
                     </mat-checkbox>
                   </td>
                 </ng-container>
@@ -156,11 +126,7 @@
                   <th mat-header-cell *matHeaderCellDef class="font-weight-500">
                     Status
                   </th>
-                  <td
-                    mat-cell
-                    *matCellDef="let element"
-                    [ngClass]="element.status"
-                  >
+                  <td mat-cell *matCellDef="let element" [ngClass]="element.status">
                     {{ element.status }}
                   </td>
                 </ng-container>
@@ -171,37 +137,63 @@
                     Entitlements
                   </th>
                   <td mat-cell *matCellDef="let element">
-                    <ng-container
-                      *ngIf="element.type === 'quantity'; else switchFeature"
-                    >
-                      <ng-container
-                        *ngIf="element.levels && element.levels.length > 0"
-                      >
-                        <div *ngFor="let level of element.levels">
-                          <div>{{ level.name }}</div>
-                        </div>
+                    <ng-container *ngIf="element.type === 'quantity' || element.type === 'custom' ">
+                      <ng-container *ngIf="element.levels && element.levels.length > 0">
+                        <mat-form-field appearance="fill" subscriptSizing="dynamic">
+                          <mat-select [value]="selectedLevelFromDropdown" placeholder="select">
+                            <mat-option *ngFor="let level of element.levels" [value]="level.value" (click)="
+                                onSelectedLevelChange(
+                                  element.featureId,
+                                  level.value
+                                )
+                              ">
+                              {{ level.name }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
                       </ng-container>
                     </ng-container>
-                    <ng-template #switchFeature>
-                      <mat-form-field
-                        appearance="fill"
-                        subscriptSizing="dynamic"
-                      >
-                        <mat-select [(value)]="isAvailable" errorState="false">
+                    <ng-container *ngIf="element.type === 'switch'">
+                      <mat-form-field appearance="fill" subscriptSizing="dynamic">
+                        <mat-select [(ngModel)]="selectedOptions[element.featureId]" errorState="false"
+                          placeholder="select">
                           <mat-option [value]="true">Available</mat-option>
                           <mat-option [value]="false">Not available</mat-option>
                         </mat-select>
                       </mat-form-field>
-                    </ng-template>
+                    </ng-container>
+
+                    <ng-container *ngIf="element.type === 'range'">
+                      <form [formGroup]="rangeForm">
+                        <mat-form-field appearance="outline" class="border-2" subscriptSizing="dynamic">
+                          <input matInput placeholder="Enter the value" [formControlName]="element.featureId" (input)="rangeForm.controls[element.featureId].markAsTouched()" pattern="[0-9]*" required />
+                           <mat-hint>
+                          Between {{ element.minValue }} and {{ element.maxValue }}
+                          </mat-hint>
+                          <mat-error *ngIf="
+                              rangeForm.controls[element.featureId].invalid &&
+                              rangeForm.controls[element.featureId].touched
+                            ">
+                            <ng-container *ngIf="rangeForm.controls[element.featureId].errors['required']">
+                              Value is required and cannot be left empty.
+                            </ng-container>
+                              <ng-container *ngIf="rangeForm.controls[element.featureId].errors['pattern']">
+                             Only number are allowed.
+                             </ng-container>
+                           <ng-container *ngIf="rangeForm.controls[element.featureId].errors['min']">
+                          Value should above {{ element.minValue }}.
+                          </ng-container>
+                       <ng-container *ngIf="rangeForm.controls[element.featureId].errors['max']">
+                        Between {{ element.minValue }} and {{ element.maxValue }}
+                     </ng-container>
+                          </mat-error>
+                        </mat-form-field>
+                      </form>
+                    </ng-container>
                   </td>
                 </ng-container>
-
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr
-                  mat-row
-                  *matRowDef="let row; columns: displayedColumns"
-                  (click)="selection.toggle(row)"
-                ></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
               </table>
             </div>
           </div>
