@@ -464,3 +464,64 @@
   height: 1.15rem !important;
   font-size: 1.2rem !important;
 }
+
+// //sidenav-wrapper
+// .sidenav-wrapper {
+//   .sidebar-wrapper {
+//     .sidebar {
+//       .category-heading {
+//         margin: 1.5rem 0rem 0.9375rem 0rem;
+//         height: 0.0625rem;
+//         background-color: #78869c33;
+//         transition: 400ms;
+//         h1 {
+//           transform: translate(-9.25rem, 0);
+//           // opacity: 0;
+//           // position: absolute;
+//           // left: -6.125rem;
+//           transition: 40ms;
+//         }
+//       }
+//       .nav-list-item {
+//         .icon-wrapper {
+//           justify-content: space-between;
+//           overflow: hidden;
+//           .sidebar-icon-wraper {
+//             width: 1.75rem;
+//           }
+//           .content-wrapper {
+//             overflow: hidden;
+//             position: absolute;
+//             left: 2.75rem;
+//             .content {
+//               display: block;
+//               transform: translate(-100px, 0);
+//               // opacity: 0;
+//               // position: absolute;
+//               // left: -6.125rem;
+//               transition: 400ms;
+//             }
+//           }
+//         }
+//       }
+//     }
+//     .image-wrapper {
+//       position: absolute;
+//       left: -18.75rem;
+//       transition: 400ms;
+//     }
+//     .logo {
+//       grid-template-columns: 3.4rem auto;
+//       transition: 400ms;
+//       .logo-img {
+//         transition: 400ms;
+//         justify-self: flex-start;
+//         width: 100%;
+//       }
+//       .text-wrapper {
+//         transform: translate(-25rem);
+//         transition: 400ms;
+//       }
+//     }
+//   }
+// }

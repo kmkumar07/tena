@@ -19,9 +19,6 @@ const meta: Meta<UploadLogoComponent> = {
     },
   }),
   argTypes: {
-    withIcon: {
-      control: 'boolean',
-    },
   },
   decorators: [
     moduleMetadata({
@@ -83,8 +80,5 @@ type Story = StoryObj<UploadLogoComponent>;
 // More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
 
 export const UploadLogo: Story = {
-  args: {
-    withIcon: false,
-  },
 };
 
