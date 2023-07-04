@@ -11,6 +11,7 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
 const meta: Meta<TableComponent> = {
@@ -69,6 +70,7 @@ const meta: Meta<TableComponent> = {
         AngularMaterialModule,
         // MatDialog,
         MatDialogModule,
+        SharedModule
         // MatDialogRef
       ],
       declarations: [],

@@ -8,6 +8,7 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
 
 @NgModule({
   declarations: [TableComponent],
@@ -17,6 +18,7 @@ import {
     AngularMaterialModule,
     // MatDialog,
     MatDialogModule,
+    SharedModule
     // MatDialogRef,
   ],
   exports: [TableComponent],

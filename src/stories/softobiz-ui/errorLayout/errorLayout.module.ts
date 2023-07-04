@@ -15,8 +15,6 @@ import { ButtonComponent } from '../button/button.component';
     BrowserAnimationsModule,
     CommonModule,
     NgModule,
-   
-    
   ],
   exports: [ErrorLayoutComponent],
 })

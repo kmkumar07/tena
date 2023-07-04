@@ -16,6 +16,9 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
+    // storySort: {
+    //   order: ['Atom', 'Molecules', 'Organism', 'Pages', 'Layout'],
+    // },
     docs: {
       theme: themes.light,
     },
