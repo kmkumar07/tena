@@ -126,7 +126,14 @@
             "browserTarget": "tenant-portal:build",
             "compodoc": true,
             "compodocArgs": ["-e", "json", "-d", "."],
-            "port": 6006
+            "port": 6006,
+            "assets": [
+              {
+                "glob": "style.css",
+                "input": "./.storybook/",
+                "output": "/"
+              }
+            ]
           }
         },
         "build-storybook": {

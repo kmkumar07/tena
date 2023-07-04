@@ -1,5 +1,8 @@
 <!-- checked table -->
-<div class="primary-table overflow-visible mt-8 px-1 pb-2">
+<div
+  *ngIf="variant === 'primary'"
+  class="primary-table overflow-visible mt-8 px-1 pb-2"
+>
   <table
     mat-table
     [dataSource]="couponsData"
@@ -46,7 +49,7 @@
         mat-sort-header
         sortActionDescription="Sort by title"
       >
-      Coupon Name
+        Coupon Name
       </th>
       <td mat-cell *matCellDef="let element">{{ element.coupon_name }}</td>
     </ng-container>
@@ -67,9 +70,7 @@
           <div class="help-info-tooltip">
             <div class="heading-with-background">Description</div>
             <p class="py-3 black-text">{{ element.description }}</p>
-            <button mat-button color="primary" class="px-0">
-              Learn more
-            </button>
+            <button mat-button color="primary" class="px-0">Learn more</button>
           </div>
         </ng-template>
       </td>
@@ -127,8 +128,8 @@
   </table>
 </div>
 
-
 <!-- simple table -->
+<div *ngIf="variant === 'secondary' ">
 <div
   *ngIf="LogsData.length == 0"
   class="relative main-bg border-2 w-full h-full p-7 overflow-scroll"
@@ -176,4 +177,5 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
     </table>
   </div>
+</div>
 </div>

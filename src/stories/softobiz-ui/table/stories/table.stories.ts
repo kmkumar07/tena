@@ -6,8 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-
+import {
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
 const meta: Meta<TableComponent> = {
@@ -21,6 +24,25 @@ const meta: Meta<TableComponent> = {
     },
   }),
   argTypes: {
+    variant: {
+      control: 'select',
+      options: ['primary', 'secondary'],
+    },
+
+    couponsData: { table: { disable: true } },
+    dialog: { table: { disable: true } },
+    dialogRef: { table: { disable: true } },
+    displayedColumns1: { table: { disable: true } },
+    selection: { table: { disable: true } },
+    announceSortChange: { table: { disable: true } },
+    checkboxLabel: { table: { disable: true } },
+    isAllSelected: { table: { disable: true } },
+    openDelete: { table: { disable: true } },
+    selectAll: { table: { disable: true } },
+    selectedRow: { table: { disable: true } },
+    sendElementId: { table: { disable: true } },
+    toggleAllRows: { table: { disable: true } },
+    sort: { table: { disable: true } },
     customHeader: { table: { disable: true } },
     displayedColumns: { table: { disable: true } },
     emptyCoupons: { table: { disable: true } },
@@ -196,5 +218,79 @@ type Story = StoryObj<TableComponent>;
 // More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
 
 export const Table: Story = {
-  args: {},
+  args: {
+    variant: 'primary',
+  },
+};
+
+export const TableSecondary: Story = {
+  args: {
+    variant: 'secondary',
+  },
+  parameters: {
+    storybook: {
+      hideNoControlsWarning: true,
+    },
+    docs: {
+      source: {
+        code: `
+        <div>
+        <div
+          *ngIf="LogsData.length == 0"
+          class="relative main-bg border-2 w-full h-full p-7 overflow-scroll"
+        >
+          <app-empty-listing [items]="emptyCoupons"></app-empty-listing>
+        </div>
+        <div
+          *ngIf="LogsData.length > 0"
+          class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll logs-list"
+        >
+          <!-- </div> -->
+          <div class="primary-table overflow-visible mt-8 px-1 pb-2 table-wrapper">
+            <table mat-table [dataSource]="LogsData">
+              <!-- TimestampColumn -->
+              <ng-container matColumnDef="Timestamp">
+                <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+                <td mat-cell *matCellDef="let element">{{ element.Timestamp }}</td>
+              </ng-container>
+        
+              <!-- Events Column -->
+              <ng-container matColumnDef="Events">
+                <th mat-header-cell *matHeaderCellDef>Events</th>
+                <td mat-cell *matCellDef="let element">{{ element.Events }}</td>
+              </ng-container>
+        
+              <!-- Description Column -->
+              <ng-container matColumnDef="Customer_Info">
+                <th mat-header-cell *matHeaderCellDef>Customer Info</th>
+                <td mat-cell *matCellDef="let element">
+                  <p>{{ element.Customer_Info }}</p>
+                </td>
+              </ng-container>
+        
+              <!-- Created Date Column -->
+              <ng-container matColumnDef="Event_Source">
+                <th mat-header-cell *matHeaderCellDef>Event Source</th>
+                <td mat-cell *matCellDef="let element">
+                  <span class="primary-light-6-bg p-1 border-1 text-primary">
+                    {{ element.Event_Source }}
+                  </span>
+                </td>
+              </ng-container>
+        
+              <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+            </table>
+          </div>
+        </div>
+        </div>
+         `,
+      },
+    },
+    // sidebar: { disable: true },
+    // sidebarHide: ['TableSecondary']
+    // 'storybook-addon-storyshots': {
+    //   variantLabel: '',
+    // },
+  },
 };

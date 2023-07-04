@@ -535,3 +535,17 @@ ul.breadcrumb {
 // .left-navigation {
 //   width: 261px;
 // }
+
+#storybook-explorer-menu {
+  a[id*="softobiz-ui"] {
+    display: none;
+  }
+
+  button + div a[id*="softobiz-ui"] {
+    display: block;
+  }
+
+  button + div + div a[id*="softobiz-ui"] {
+    display: block;
+  }
+}

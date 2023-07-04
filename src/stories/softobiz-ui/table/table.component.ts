@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -50,6 +50,9 @@ class CustomDateAdapter extends MomentDateAdapter {
   ],
 })
 export class TableComponent {
+  // variant input
+  @Input() variant: string = 'primary';
+
   // for checked table
   displayedColumns: string[] = [
     'select',
@@ -66,7 +69,6 @@ export class TableComponent {
   @ViewChild(MatSort) sort: MatSort;
   dialogRef: any;
 
-  
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -88,7 +90,7 @@ export class TableComponent {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?:coupon): string {
+  checkboxLabel(row?: coupon): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
@@ -97,8 +99,8 @@ export class TableComponent {
     }`;
   }
 
-   /** Announce the change in sort state for assistive technology. */
-   announceSortChange(sortState: Sort) {
+  /** Announce the change in sort state for assistive technology. */
+  announceSortChange(sortState: Sort) {
     // This example uses English messages. If your application supports
     // multiple language, you would internationalize these strings.
     // Furthermore, you can customize the message to add additional
