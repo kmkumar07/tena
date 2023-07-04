@@ -554,7 +554,7 @@ export const noPlans = [
     text: "Seems like you haven't added any Plan. Start adding plan by click on “Create Plan” button",
     showButton: true,
     buttonTxt: 'Create Plan',
-    path: '/plans/view',
+    path: '/plans/create',
   },
 ];
 export const noPageFound = [

@@ -160,7 +160,7 @@
       }
     }
 
-    @media only screen and (max-width: 1280px) {
+    @media only screen and (max-width: 80rem) {
       th,
       td,
       .billing-fixed {
@@ -296,7 +296,7 @@
       text-align: right;
     }
 
-    @media only screen and (max-width: 1280px) {
+    @media only screen and (max-width: 80rem) {
       th,
       td,
       .billing-fixed {
@@ -540,8 +540,8 @@
         object-fit: cover;
       }
     }
-}
-  @media only screen and (max-width: 1280px) {
+  }
+  @media only screen and (max-width: 80rem) {
     .mat-mdc-chip.mat-mdc-standard-chip.primary-light-chip {
       padding: 0.375rem 0.625rem;
     }
@@ -567,7 +567,7 @@
 }
 .add-on-details-wrapper {
   background-color: $primay-light-bg-color;
-  @media only screen and (max-width: 1280px) {
+  @media only screen and (max-width: 80rem) {
     .add-on-detail {
       .chip-wrapper {
         gap: 0.625rem;
@@ -576,7 +576,7 @@
   }
 
   .heading-content {
-    border-left: 3px solid $primary-color-light;
+    border-left: 0.1875rem solid $primary-color-light;
   }
 }
 .bottom-margin {

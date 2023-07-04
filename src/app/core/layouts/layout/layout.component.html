@@ -162,7 +162,12 @@
           </mat-menu>
         </div>
       </div>
-      <div class="pt-6 main-content-height">
+      <div class="pt-6 main-content-height relative">
+        <div class="loader" *ngIf="loading">
+          <div class="position-center">
+            <mat-spinner ></mat-spinner>
+          </div>
+        </div>
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

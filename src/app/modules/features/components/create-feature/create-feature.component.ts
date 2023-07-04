@@ -19,6 +19,9 @@ import { Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { LogViewComponent } from 'src/app/modules/payment-history/logs/components/log-view/log-view.component';
+import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
+import { MatSnackBarConfig } from '@angular/material/snack-bar';
 
 export interface menuOptions {
   value: number;
@@ -29,7 +32,6 @@ export interface menuOptions {
   selector: 'app-create-feature',
   templateUrl: './create-feature.component.html',
   styleUrls: ['./create-feature.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateFeatureComponent {
   productName: Data_Type[] = User_Data;
@@ -45,6 +47,10 @@ export class CreateFeatureComponent {
   search: string = '';
   productArray = [];
   id: string;
+  isRangeSelected: boolean = false;
+
+  @ViewChild(SnackBarComponent, { static: false })
+  snackbarComponent: SnackBarComponent;
 
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -88,7 +94,7 @@ export class CreateFeatureComponent {
       description: ['', Validators.maxLength(500)],
       type: ['', Validators.required],
       unit: ['', Validators.required],
-      status: [false],
+      status: [true],
       levels: this.formBuilder.array([
         this.formBuilder.group({
           isUnlimited: [false],
@@ -139,8 +145,8 @@ export class CreateFeatureComponent {
     } else {
       lastLevel.patchValue({
         isUnlimited: true,
-        value: 'Unlimited',
-        name: 'Unlimited' + ' ' + this.postName,
+        value: 'unlimited',
+        name: 'unlimited' + ' ' + this.postName + 's',
       });
       this.unlimitedButtonLabel = 'Set Custom Maximum';
     }
@@ -156,6 +162,41 @@ export class CreateFeatureComponent {
       name: displayName,
     });
   }
+  onTypeSelection(value: string) {
+    if (value === 'range') {
+      this.isRangeSelected = true;
+      this.featureForm.controls['unit'].reset();
+      while (this.levels.length > 2) {
+        this.levels.removeAt(2); // Remove form groups starting from index 2
+      }
+      for (let i = 0; i < this.levels.length; i++) {
+        const formGroup = this.levels.at(i); // Get the specific form group
+        formGroup.patchValue({
+          value: '',
+          name: '',
+        });
+      }
+    } else if (value === 'quantity') {
+      this.isRangeSelected = false;
+      this.featureForm.controls['unit'].reset();
+
+      for (let i = 0; i < this.levels.length; i++) {
+        const formGroup = this.levels.at(i); // Get the specific form group
+        formGroup.patchValue({
+          value: '',
+          name: '',
+        });
+      }
+    } else {
+      this.isRangeSelected = false;
+    }
+  }
+  openSnackbar(message: string) {
+    const config: MatSnackBarConfig = {
+      duration: 5000,
+    };
+    this.snackbarComponent.open(message, config);
+  }
 
   onSubmit() {
     this.levels.controls.forEach((ele, index) => {
@@ -166,7 +207,7 @@ export class CreateFeatureComponent {
       }
     });
 
-    const status = this.featureForm.value.status ? 'active' : 'disabled';
+    const status = this.featureForm.value.status ? 'active' : 'draft';
     let feature: any = {
       featureId: this.featureForm.value.featureId,
       productID: this.featureForm.value.productID,
@@ -186,7 +227,7 @@ export class CreateFeatureComponent {
       const levels = this.featureForm.value.levels.map((level: any) => {
         return {
           ...level,
-          isUnlimited: '',
+          isUnlimited: ' ',
         };
       });
       feature = {
@@ -196,20 +237,27 @@ export class CreateFeatureComponent {
       };
     }
 
+    if (this.featureForm.value.type === 'range') {
+      feature = {
+        ...feature,
+        unit: this.featureForm.value.unit,
+        levels: this.featureForm.value.levels,
+      };
+    }
     this.subscription = this.featureService.addFeature(feature).subscribe({
       next: (res: any) => {
         this.openSuccess();
         this.routes.navigate([`/features/view/${res.featureId}`]);
         return res;
       },
-      error: (err: any) => {
-        console.log('something wrong occured', err);
+      error: (error: any) => {
+        this.openSnackbar(error.error.message);
       },
     });
   }
 
   onDelete() {
-    this.routes.navigate(['/features'])
+    this.routes.navigate(['/features']);
   }
 
   openSuccess() {

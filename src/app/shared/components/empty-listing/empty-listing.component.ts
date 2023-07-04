@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./empty-listing.component.scss']
 })
 export class EmptyListingComponent {
-  @Input() items: any[] = [];
+  @Input() items: any;
   constructor(){}
 }
