@@ -27,7 +27,6 @@ export class ProductListingComponent implements OnInit {
   displayedColumns: string[] = [
     'productId',
     'name',
-    'description',
     'feature',
     'createdOn',
     'status',
@@ -37,7 +36,7 @@ export class ProductListingComponent implements OnInit {
   featureLength:number
   emptyProductPros = noProducts;
   PageNumber = 1;
-  limit = 5;
+  limit = 10;
   search: string = '';
   productsData = [];
   filteredProducts: any = [];
