@@ -75,6 +75,31 @@
 // Input Wrapper
 .input-wrapper {
   max-width: 47.5625rem;
+  &.small {
+    max-width: 14.5625rem;
+    width: 100%;
+    .mat-mdc-form-field {
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+    }
+  }
+  &.no-sub {
+    .mat-mdc-form-field {
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+    }
+  }
+  &.price-digits {
+    max-width: 5.8125rem;
+    width: 100%;
+    .mat-mdc-form-field {
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+    }
+  }
   .help-icon {
     font-size: 1rem;
     height: 1rem;
@@ -97,6 +122,31 @@
 
       p {
         color: color("grey", "lighten-9");
+      }
+    }
+  }
+  .mat-mdc-form-field {
+    .mat-mdc-text-field-wrapper {
+      .mat-mdc-form-field-flex {
+        .mdc-notched-outline {
+          .mdc-notched-outline__leading {
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+          }
+          .mdc-notched-outline__trailing {
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+          }
+        }
+      }
+      .mat-mdc-form-field-flex {
+        .mat-mdc-form-field-infix {
+          padding-top: 0.75rem;
+          padding-bottom: 0.75rem;
+          input {
+            padding-top: 0.25rem;
+          }
+        }
       }
     }
   }

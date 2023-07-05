@@ -22,7 +22,7 @@
   </div>
   <div class="sidebar-wrapper">
     <div class="logo pointer">
-      <div class="pointer">
+      <div class="logo-img pointer">
         <img src="../../../../assets/images/framework-logo.png" alt="logo" />
       </div>
       <div class="text-wrapper">
@@ -32,23 +32,29 @@
     </div>
     <div class="sidebar-scrollable mt-11">
       <mat-nav-list class="sidebar p-0">
-        <div *ngFor="let element of Menu_Headings">
+        <div *ngFor="let element of Menu_Headings" class="transition-400">
           <div *ngIf="element.name != 'Dashboard'" class="category-heading">
             <h1>{{ element.name }}</h1>
           </div>
           <mat-list-item
-            class="nav-list-item p-0"
+            class="nav-list-item p-0 w-full"
             *ngFor="let item of getList(element.category)"
           >
             <a
               class="icon-wrapper flex align-center"
-              [ngClass]="{'active': (activateRoute == '{{item.state}}')}"
-              [routerLink]="['/', item.state]"
+
+              routerLinkActive="active"
+              [ngClass]="{'active': (activeRoute.includes(item.state) || currentRoute == item.state)}"
+              [routerLink]="[item.state]"
             >
-              <mat-icon class="material-symbols-outlined m-0">{{
-                item.icon
-              }}</mat-icon>
-              <span class="content">{{ item.name }}</span>
+              <div class="flex justify-center sidebar-icon-wraper">
+                <mat-icon class="material-symbols-outlined m-0 sidebar-icon">{{
+                  item.icon
+                }}</mat-icon>
+              </div>
+              <div class="content-wrapper">
+                <span class="content">{{ item.name }}</span>
+              </div>
             </a>
           </mat-list-item>
         </div>
@@ -78,10 +84,12 @@
         class="icon-wrapper flex align-center"
           [routerLink]="['/', item.state]"
         >
-          <mat-icon class="material-symbols-outlined m-0">{{
+          <mat-icon class="material-symbols-outlined m-0 sidebar-icon">{{
             item.icon
           }}</mat-icon>
-          <span class="content">{{ item.name }}</span>
+          <div class="content-wrapper">
+            <span class="content">{{ item.name }}</span>
+          </div>
         </a>
       </mat-list-item>
     </mat-nav-list>

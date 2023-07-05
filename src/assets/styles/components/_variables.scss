@@ -16,6 +16,7 @@
 //  8. Flow Text
 //  9. Collections
 //  10. Progress Bar
+//  11. checkbox
 
 // 1. Colors
 // ==========================================================================
@@ -24,6 +25,7 @@ $primary-color: color("primary", "light4") !default;
 $selected-row: color('primary', 'main');
 // $primary-color-light: lighten($primary-color, 15%) !default;
 $primary-color-dark: color("plum-purple", "darken-1") !default;
+$primary-color-light: color("purple", "darken-1") !default;
 
 $secondary-color: color("green", "base") !default;
 $success-color: color("green", "base") !default;
@@ -32,6 +34,12 @@ $link-color: color("blue", "lighten-1") !default;
 $border-color: color("grey", "border") !default;
 
 $primay-light-bg-color: color("primary", "lighten-4"); // #F5F3FF
+$primay-extra-light-bg-color: color("primary", "lighten-5"); // #FBF9FD
+$green-dark-3:color("green","darken-3");  //#4DA63E
+$grey-darken-6:color("grey","darken-6"); //#495057
+$grey-darken-7:color("grey","darken-7"); //#1B1B1E
+
+$input-border-color: color('grey', 'lighten-11');
 
 // 2. Buttons
 // ==========================================================================
@@ -86,7 +94,7 @@ $button-floating-radius: 50% !default;
 
 // Text Inputs + Textarea
 $input-height: 44px !default;
-$input-border-color: #ceced2 !default;
+// $input-border-color: #ceced2 !default;
 $input-border: 1px solid $input-border-color !default;
 $input-background: #fff !default;
 $input-error-color: $error-color !default;
@@ -234,7 +242,17 @@ $text-dark-1: color('grey', 'darken-6');
 $text-headline-dark: color('text', 'dark'); // #2C2466   
 $text-headline-light: rgba(color('text', 'dark'), .6); // #2C2466   
 $headline-light: color('text', 'primary'); // #405189
-$text-primary: color('primary', 'main');
+$text-primary: color('primary', 'main'); //#7868E6
+$text-lighten-2:color('text','lighten-2'); //#9CA8BA
+$text-lighten-4:color('text','lighten-4'); //#7A7E83
+$text-black:color('shades','black');
+$text-white:color('shades','white');
+$text-purple-dark-2:color('purple' , 'dark-2'); //#364A63
+$text-grey-lighten-11:color('grey','lighten-2'); //#5E7080
+$text-grey-darken-8:color('grey','darken-8'); //#333333
+
+
+
 
 // Header Styles
 $h1-fontsize: 4.8rem !default;
@@ -355,3 +373,6 @@ $width-full:100%;
 $height-full:100%;
 $dimensions: 0.3125rem;
 $spacing: 0.25rem;
+
+// 11. checkbox
+$checkbox-border: .25rem;

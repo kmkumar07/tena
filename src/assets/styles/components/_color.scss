@@ -7,6 +7,7 @@ $blue: (
   "base": #070029,
   "darken": #090039,
   "darken-2": #1272ca,
+  "darken-3": #0D76EE,
   "lighten": #3a4580,
   "lighten-1": #e7e8f0,
   "lighten-2": #e5f5ff,
@@ -23,6 +24,7 @@ $green: (
   "darken": #00af5a,
   "darken-2": #16a883,
   "darken-3": #4DA63E,
+  "darken-4": #00A885,
   "lighten": #e7faf6,
   "lighten-1": #e1fbf5,
   "lighten-2": #e9f5f0,
@@ -42,8 +44,11 @@ $orange: (
 $red: (
   "base": #ed5267,
   "darken": #c42339,
+  "darken-1": #FF6F6F,
+  "darken-2": #EA3829,
   "lighten": #e44258,
   "lighten-2": #f9dade,
+  "lighten-3": #FBF5FB,
 );
 $shades: (
   "black": #000000,
@@ -58,7 +63,9 @@ $primary: (
   "hover": #5456cc,
   "light2": #f0ecff,
   "light3": #696cff,
-  "lighten-4": #F5F3FF
+  "lighten-4": #F5F3FF,
+  "lighten-5":  #FBF9FD,
+  "lighten-6":  #7868e61a,
 );
 $text: (
   "primary": #405189,
@@ -67,18 +74,24 @@ $text: (
   "lighten": #748291,
   "lighten-1": #92929d,
   "red": #e97272,
-  "lighten-2": #9CA8BA
+  "lighten-2": #9CA8BA,
+  "lighten-3": #8B97BD,
+  "lighten-4": #7A7E83,
+
 );
 $error: (
   "main": #e34f4f,
   "light": #ff5b3f,
   "dark": #e8381a,
+  "primary": #ff3030,
 );
 // empty-state Classes
 $purple: (
   "lighten": #696cff,
   "darken": #444791,
   "darken-1": #3A3742,
+  "dark-2": #364A63,
+  "lighten-1":#5B3CC6,
 );
 $grey: (
   "base": #000000,
@@ -88,7 +101,10 @@ $grey: (
   "darken-4": #979797,
   "darken-5": #2a2a2a,
   "darken-6": #495057,
+  "darken-7": #1B1B1E,
+  "darken-8": #333333,
   "light": #6e6d76,
+  "lighten-1": #E0E0E0,
   "lighten-2": #b1b9c1,
   "lighten-3": #f5f5f9,
   "lighten-4": #8592a3,
@@ -98,8 +114,14 @@ $grey: (
   "lighten-8": #EDEDED,
   "lighten-9": #AAAAAA,
   "lighten-10": #EAE7FF,
+  "lighten-11": #E5E7EB,
+  "lighten-12": #8394A4,
+  "lighten-13": #5E7080,
   "primary": #f9f9f9,
-  "border": #D6D6D6
+  "border": #D6D6D6,
+  "border-2": #D9D9D9,
+  "stepper-border":#AFABC9,
+  "form-caption": #6C6c6C
 );
 
 //not is use

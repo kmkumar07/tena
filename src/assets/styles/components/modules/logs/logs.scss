@@ -1,0 +1,113 @@
+.logs-view {
+  .title {
+    padding: 1.125rem 1.5rem 1rem;
+    margin-bottom: 2.125rem;
+    border-bottom: 0.0625rem solid color("grey", "border-2");
+  }
+
+  .inner-wrapper {
+    max-width: 1221px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 58px 20px 20px;
+
+    .table-wrapper {
+      border: 0.0625rem solid color("grey", "border-2");
+
+      table {
+        padding: 0 1.5rem 1.5rem;
+
+        tr {
+          th {
+            padding: 1.4375rem 0 1.125rem;
+            border-bottom: 0.0625rem solid color("grey", "border-2");
+
+            .chip-active {
+              height: 1.1875rem;
+              padding: 0 0.5625rem;
+              border-radius: 0.125rem;
+              background-color: color("green", "darken-4");
+            }
+          }
+
+          td {
+            padding: 10px 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.logs-list {
+  .tab-wrapper {
+    min-width: 223px;
+    border: 0.0625rem solid color("grey", "lighten-1");
+    border-radius: 0.3125rem;
+  }
+
+  .table-wrapper {
+    .mdc-data-table__cell,
+    .mdc-data-table__header-cell {
+      &:first-child {
+        padding-left: 3.75rem;
+      }
+    }
+  }
+}
+.filter-input {
+  .mat-mdc-form-field {
+    margin-bottom: 0 !important;
+    height: 1.5625rem;
+    max-width: 8.125rem;
+    .mat-mdc-text-field-wrapper {
+      background-color: transparent;
+      border: 0.0625rem solid color("grey", "lighten-1");
+      border-radius: 0.1875rem;
+      .mat-mdc-form-field-flex {
+        height: 100%;
+        .mat-mdc-form-field-infix {
+          padding: 0;
+        }
+      }
+      .mdc-line-ripple {
+        display: none;
+      }
+    }
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+  }
+}
+.mat-mdc-tab-body-content {
+  .mat-calendar {
+    .mat-calendar-header {
+      .mat-calendar-controls {
+        margin: 0;
+        .mat-calendar-period-button {
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, 0);
+          color: color("primary", "main");
+          .mdc-button__label {
+            svg {
+              display: none;
+            }
+          }
+        }
+        .mat-calendar-previous-button {
+          position: absolute;
+          color: color("primary", "main");
+        }
+        .mat-calendar-next-button {
+          color: color("primary", "main");
+        }
+      }
+    }
+  }
+}
+.tab-wrapper{
+  .mdc-button{
+    height: 1.5rem !important;
+  }
+}

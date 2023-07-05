@@ -60,4 +60,52 @@ table {
       background-color: $primay-light-bg-color;
     }
   }
+
+  &.simple-table {
+    th,
+    td {
+      padding: 0.75rem 1rem .75rem .5rem;
+    }
+
+    border-spacing: 0;
+  }
+
+  &.mat-mdc-table {
+    &.primary-lighten-bg {
+      background-color: color("primary", "lighten-4");
+      .mdc-data-table__header-row{
+        height: 2.25rem;
+      }
+      .mdc-data-table__row{
+        height: 2.4375rem;
+      }
+      thead{
+        tr{
+          th{
+            padding: 0 1.5rem;
+            &:nth-last-child(1) {
+            text-align: right;
+            }
+          }
+        }
+      }
+        tbody{
+          tr{
+            td{
+              padding: 0 1.5rem;
+              font-size: 15px;
+              &:nth-last-child(1) {
+              text-align: right;
+              }
+            }
+          }
+        }
+      
+      .mdc-data-table__cell,
+      .mdc-data-table__header-cell {
+        border-bottom-width: 0;
+      }
+
+    }
+  }
 }

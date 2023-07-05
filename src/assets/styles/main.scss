@@ -45,6 +45,7 @@ $my-custom-level: mat.define-typography-level(
 
 $my-custom-typography-config: mat.define-typography-config(
   $headline-5: mat.define-typography-level(24px, 20px, 500), /* h1, headline .mat-headline-5*/
+  $subtitle-1: mat.define-typography-level(18px, 21px, 400, 0.1px),  /* h3,.mat-subtitle-1*/
   $subtitle-2: mat.define-typography-level(16px, 20px, 400, 0.1px),  /* h4, sub-heading .mat-subtitle-2*/
   $body-1: mat.define-typography-level(14px, 20px, 400),  /* table-content .mat-body-1*/
   $caption: mat.define-typography-level(12px, 20px, 500, 0.1px),  /* subtext .mat-caption*/
@@ -65,10 +66,10 @@ $my-theme: mat.define-light-theme((
 
 @import './components/color.scss';
 @import './components/variables';
+@import './components/mixins';
 @import './components/global';
 @import './components/variables.scss';
 @import './components/typography';
-@import './components/mixins';
 @import './components/base';
 @import './components/_buttons.scss';
 @import './components/_input.scss';
@@ -81,5 +82,12 @@ $my-theme: mat.define-light-theme((
 //modules
 @import './components/modules/products/product';
 @import './components/modules/features/features';
+@import './components/modules/plans/plans';
+@import './components/modules/coupons/coupons';
+@import './components/modules/transaction/transaction';
+@import './components/modules/invoice/invoice.scss';
+@import './components/modules/logs/logs.scss';
+@import './components/modules/sign-in/sign-in.scss';
+@import './components/modules/customers/customer';
 @import 'tippy.js/dist/tippy.css';
 @import '/node_modules/tippy.js/dist/tippy.css'

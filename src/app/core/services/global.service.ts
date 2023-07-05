@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { StaticRoutes } from 'src/app/shared/constants/consants';
 
 @Injectable({
@@ -7,8 +7,18 @@ import { StaticRoutes } from 'src/app/shared/constants/consants';
 })
 export class GlobalService {
   staticRoutes: any = StaticRoutes;
+  public isLoading = new BehaviorSubject<boolean>(false);
   constructor() {}
 
+  showLoader() {
+    this.isLoading.next(true);
+  }
+  hideLoader() {
+    this.isLoading.next(false);
+  }
+  loaderStatus() {
+    return this.isLoading.asObservable();
+  }
   isRouteActive(routeSteps: any) {
     if (routeSteps.length >= 4) {
       for (let obj in this.staticRoutes) {
@@ -27,11 +37,13 @@ export class GlobalService {
   }
 
   componentDestroyed(component: any) {
+    const oldNgOnDestroy = component.ngOnDestroy;
     const destroyed$ = new ReplaySubject<void>(1);
-
-    if (component.subscriptionsAll) {
-      component.subscriptionsAll.push(destroyed$);
-    }
+    component.ngOnDestroy = () => {
+      oldNgOnDestroy.apply(component);
+      destroyed$.next(undefined);
+      destroyed$.complete();
+    };
     return destroyed$;
   }
 }

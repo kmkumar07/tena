@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { takeUntil } from 'rxjs';
 import {
   Config_Menu,
   MENUITEMS,
@@ -16,6 +15,8 @@ import {
   Notifications_Data,
 } from 'src/app/shared/constants/consants';
 import { GlobalService } from '../../services/global.service';
+import { filter } from 'rxjs/operators';
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -27,25 +28,25 @@ export class SidebarComponent {
   Menu_Headings = Menu_Headings;
   userProfile = User_Options;
   notificationsData = Notifications_Data;
-  activateRoute = ''
+  activeRoute: string[];
+  currentRoute: string;
+
   constructor(
     public globalService: GlobalService,
     private router: Router,
     public route: ActivatedRoute
   ) {
-    // this.router.events
-    //   .pipe(takeUntil(this.globalService.componentDestroyed(this)))
-    //   .subscribe((val) => {
-    //     if (val instanceof NavigationEnd) {
-    //       this.activateRoute = this.globalService.isRouteActive(
-    //         val.urlAfterRedirects.split('/')
-    //       );
-          
-    //     }
-    //   });
+    this.router.events
+      .pipe(filter((event: any) => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.currentRoute = event.url;
+        this.activeRoute = this.currentRoute.split('/')
+      });
   }
+
   @ViewChild('sidenav') sidenav: MatSidenav;
   @Output() newItemEvent = new EventEmitter<boolean>();
+
   opened: boolean = true;
   toggleSidenav() {
     // this.sidenav.toggle();

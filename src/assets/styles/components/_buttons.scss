@@ -114,8 +114,8 @@
 .mdc-button {
   &.small {
     height: 2rem;
-    padding: 0 .5rem;
-    font-size: .75rem;
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
   }
 
   &.medium {
@@ -124,12 +124,74 @@
   }
 
   &.large {
-    height: 2.5rem;
+    height: 2.625rem;
     padding: 0 1.5rem;
   }
+  //link-btn
+  &.mat-mdc-button.link-text{
+    height: 1.5rem;
+    padding: .25rem .5rem;
+    color: color("blue", "darken-3");
+    
+    &:hover {
+    --mat-mdc-button-persistent-ripple-color: color("shades", "transparent");
+    }
+  }
+  //btn-icon
+  &.icon-text {
+    height: 2rem;
+    .mat-icon {
+      width: 1rem;
+      height: 1rem;
+      font-size: 1rem;
+    }
+    &.primary{
+      background-color: color("primary","main");
+      color: color("shades","white");
+      .mat-icon{
+      color: color("shades","white");
+      }
+    }
+  }
+}
 
-  // &.btn-small {
-  //   height: 26px;
-  //   padding: 0 14px;
-  // }
+.mdc-icon-button {
+  &.mat-mdc-icon-button .mat-mdc-button-persistent-ripple{
+  border-radius: 0;
+  }
+  &.light-bg {
+    &.mat-warn {
+      background-color: color("red", "lighten-3");
+      .mat-icon {
+        color: color("red", "darken-1");
+      }
+    }
+    &.rounded {
+      border-radius: .25rem;
+    }
+    &.rounded-1 {
+      border-radius: .175rem;
+    }
+    &.small {
+           height: 2rem;
+            min-width: 2rem;
+            width: 2rem;         
+            padding: 0; 
+
+
+            .mat-icon{
+                width: 1.0625rem;
+                height: 1.0625rem;
+                font-size: 1.0625rem;
+            }
+    }
+  }
+  &.x-small{
+    height: 2rem;
+    width: 2rem;
+    padding:0.3125rem;
+    .mat-icon{
+      color: color("shades","black");
+    }
+  }
 }

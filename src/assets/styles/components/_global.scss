@@ -19,7 +19,6 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: color("primary", "main");
   font-family: "Roboto", sans-serif;
 }
 
@@ -54,8 +53,14 @@ input {
 }
 // Material Symbols Outlined
 .material-symbols-outlined {
-  font-family: "Material Symbols Outlined" !important;
+  font-family: "Material Symbols Rounded" !important;
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+}
+
+// Material Symbols filled
+.material-symbols-filled {
+  font-family: "Material Symbols Rounded" !important;
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
 }
 .m-0 {
   margin: 0 !important;
@@ -99,19 +104,21 @@ label {
   background: #f3f3f3;
 }
 
-//need to shift this class
-.w-100 {
-  width: 100%;
-}
-.mt-1 {
-  margin-top: 0.25rem !important;
-}
 // global border classes
 .border-1 {
   border-radius: 0.25rem;
 }
 .border-2 {
   border-radius: 0.5rem;
+}
+.border-3 {
+  border-radius: 0.75rem;
+}
+.border-4 {
+  border-radius: 1rem;
+}
+.basic-border {
+  border: 0.0625rem solid #ededed;
 }
 // font-weight
 .fw-500 {
@@ -122,6 +129,9 @@ label {
 }
 .text-center {
   text-align: center;
+}
+.text-right {
+  text-align: right;
 }
 
 // ATOMIC SCSS
@@ -158,6 +168,10 @@ label {
   justify-content: flex-end;
 }
 
+.justify-start {
+  justify-content: flex-start;
+}
+
 .justify-center {
   justify-content: center;
 }
@@ -187,12 +201,16 @@ label {
   align-items: center;
   justify-content: center;
 }
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
 // 2. Width & Height
 
 .h-screen {
   height: 100vh;
 }
-.h-auto{
+.h-auto {
   height: auto;
 }
 .h-full {
@@ -201,7 +219,7 @@ label {
 .w-full {
   width: 100%;
 }
-.w-half{
+.w-half {
   width: 44%;
 }
 @for $i from 0 through 100 {
@@ -218,11 +236,11 @@ label {
 
 // 3. Position
 .relative {
-  position: relative;
+  position: relative !important;
 }
 
 .absolute {
-  position: absolute;
+  position: absolute !important;
 }
 
 .inherit {
@@ -231,6 +249,9 @@ label {
 
 .fixed {
   position: fixed;
+}
+.sticky {
+  position: sticky;
 }
 .inset-0 {
   inset: 0;
@@ -248,6 +269,7 @@ label {
   left: 0;
 }
 .position-center {
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -264,7 +286,7 @@ label {
 // 4. Display
 
 .block {
-  display: block;
+  display: block !important;
 }
 .inline {
   display: inline;
@@ -283,8 +305,33 @@ label {
 .overflow-hidden {
   overflow: hidden;
 }
+.overflow-visible {
+  overflow: visible;
+}
 
 // SPACING
+// Auto Margin
+.m-auto {
+  margin: auto;
+}
+.my-auto {
+  margin: auto 0;
+}
+.mx-auto {
+  margin: 0 auto;
+}
+.ml-auto {
+  margin-left: auto;
+}
+.mr-auto {
+  margin-right: auto;
+}
+.mt-auto {
+  margin-top: auto;
+}
+.mb-auto {
+  margin-bottom: auto;
+}
 // Margin Loop
 @for $i from 0 through 12 {
   .mt-#{$i} {
@@ -362,6 +409,16 @@ label {
 .main-bg {
   background-color: color("shades", "white");
 }
+.primary-light-bg {
+  background-color: color("primary", "light"); //#F3F1FF
+}
+
+.primary-light-6-bg {
+  background-color: color("primary", "lighten-6"); //#7868e61a
+}
+.primary-bg {
+  background-color: color("primary", "main"); //#7868E6
+}
 .main-content-height {
   height: calc(100% - 4.25rem);
 }
@@ -374,14 +431,23 @@ label {
 .create-btn {
   min-width: 10rem !important;
   height: 2.625rem !important;
+  border-radius: 0.25rem !important;
   .letter-spacing-0 {
     letter-spacing: 0 !important;
   }
 }
+.mdc-button__label {
+  display: flex;
+}
+.small-icon {
+  font-size: 1rem;
+  width: 1.125rem;
+  height: 1.125rem;
+}
 .lg-icon {
   font-size: 1.25rem !important;
 }
-.upper-case{
+.upper-case {
   text-transform: uppercase;
 }
 .text-underline {
@@ -392,9 +458,45 @@ label {
   font-size: 1rem;
   padding: 0.75rem 0.625rem;
   background-color: #f3f1ff;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   font-weight: 500;
 }
+.heading-bt-br {
+  padding: 1.125rem 1.5rem 1rem;
+  border-bottom: 0.0625rem solid color("grey", "border-2");
+}
+.input-suffix {
+  position: absolute;
+  right: -0.1875rem;
+  top: 0;
+  padding-left: 0.8125rem;
+  border-left: 0.0625rem solid color("grey", "lighten-11");
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.section-heading {
+  border-bottom: 0.0625rem solid color("grey", "border-2");
+}
+.img-contain {
+  @include image(6.625rem, 7.3125rem);
+  border-radius: 0.25rem;
+  img {
+    width: 100%;
+    min-height: 100%;
+    object-fit: contain;
+  }
+}
+
+// loader Scss
+.loader {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(249, 246, 246, 0.477);
+  z-index: 9999;
+}
+
 // 5. Angular Material
 
 .mat-mdc-menu-content.mdc-list {
@@ -406,11 +508,14 @@ table {
   &.odd-bg-color {
     th,
     td {
-      padding: .75rem 1rem;
+      padding: 0.75rem 1rem;
     }
     border-spacing: 0;
     tr:nth-child(even) {
       background-color: $primay-light-bg-color;
     }
   }
+}
+.transition-400 {
+  transition: 10s;
 }

@@ -31,7 +31,11 @@ a {
 }
 
 .font-weight-600 {
-  font-weight: 600;
+  font-weight: 600 !important;
+}
+
+.font-weight-700 {
+  font-weight: 700 !important;
 }
 
 // typography colors
@@ -41,7 +45,7 @@ a {
 }
 
 .text-headline-dark {
-  color: $text-headline-dark;
+  color: $text-headline-dark; //#2C2466
 }
 
 .text-dark {
@@ -53,13 +57,50 @@ a {
 }
 
 .text-headline-light {
-  color: $headline-light;
+  color: $headline-light; //#405189
 }
 
 .text-primary {
-  color: $text-primary
+  color: $text-primary;
 }
 
+.text-lighten-2 {
+  color: $text-lighten-2; //#9CA8BA
+}
+
+.text-lighten-4 {
+  color: $text-lighten-4; //#7A7E83
+}
+
+.text-green-dark-3{
+  color: $green-dark-3; //#4DA63E
+}
+
+.text-grey-darken-6{
+  color: $grey-darken-6; //#495057
+}
+
+.text-grey-darken-7{
+  color: $grey-darken-7; //#1B1B1E
+}
+
+.text-purple-dark-2{
+  color:$text-purple-dark-2; //#364A63
+}
+
+.text-grey-lighten-11{
+color: $text-grey-lighten-11; //#5E7080
+}
+.text-black{
+  color: $text-black;
+}
+.text-white{
+  color: $text-white;
+}
 .fs-lg {
   font-size: 1rem;
+}
+
+.text-uppercase{
+  text-transform: uppercase;
 }

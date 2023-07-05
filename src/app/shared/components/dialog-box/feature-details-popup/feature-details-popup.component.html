@@ -1,0 +1,31 @@
+<div class="feature-details-popup p-5">
+    <div class="title">
+        <div class="flex justify-between align-center pb-4 pt-2 px-2">
+            <h5 class="mat-subtitle-1 font-weight-500 text-dark mb-0">Feature Details</h5>
+            <button mat-icon-button class="x-small" [disableRipple]="true" (click)="closePopup()">
+            <mat-icon class="material-symbols-outlined mr-0">close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <table class="w-full simple-table">
+      <tr>
+        <th class="mat-subtitle-2 font-weight-500 text-dark">Name</th>
+        <td class="mat-subtitle-2 text-grey-darken-6">{{data.featureName}}</td>
+      </tr>
+      <tr>
+        <th class="mat-subtitle-2 font-weight-500 text-dark">Type</th>
+        <td class="mat-subtitle-2 text-grey-darken-6">{{data.featureType}}</td>
+      </tr>
+      <tr>
+        <th class="mat-subtitle-2 font-weight-500 text-dark">Entitlements</th>
+        <td class="mat-subtitle-2 text-grey-darken-6">{{data.entitlement}}</td>
+      </tr>
+      <tr>
+        <th class="mat-subtitle-2 font-weight-500 text-dark">Status</th>
+        <td class="mat-subtitle-2 text-green-dark-3">{{data.status}}</td>
+      </tr>
+    </table>
+    <div class="py-4 px-2 text-right">
+      <button class="flex icon-text primary mat-caption" mat-button (click)="editFeature()"><mat-icon class="material-symbols-outlined mr-1">edit</mat-icon>Edit</button>
+    </div>
+  </div>

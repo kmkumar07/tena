@@ -7,6 +7,8 @@ import {
   Menu_Headings,
   Notifications_Data,
 } from 'src/app/shared/constants/consants';
+import { GlobalService } from '../../services/global.service';
+import { takeUntil } from 'rxjs';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -18,11 +20,17 @@ export class LayoutComponent {
   Menu_Headings = Menu_Headings;
   userProfile = User_Options;
   notificationsData = Notifications_Data;
-  constructor() {
-    console.log('1234', this.opened);
-  }
+  loading: boolean = false;
+  constructor(private global: GlobalService) {}
 
   @ViewChild('sidenav') sidenav: MatSidenav;
+
+  ngOnInit() {
+    this.global
+      .loaderStatus()
+      .pipe(takeUntil(this.global.componentDestroyed(this)))
+      .subscribe((res) => this.loading = res);
+  }
 
   opened: boolean = true;
   toggleSidenav(event: any) {
