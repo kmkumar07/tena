@@ -36,7 +36,7 @@ export class FeatureService {
       .pipe(
         map((res) => {
           this.featureSubject.next(res.data);
-          this.features = res.data;
+          this.features = res.data;          
           return res.data;
         }),
         catchError((err) => {

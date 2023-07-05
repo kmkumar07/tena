@@ -32,14 +32,14 @@ export class FeaturesListingComponent implements OnInit {
     'productName',
     'name',
     'type',
-    'description',
     'createdOn',
     'status',
     'action',
   ];
 
   featuresData = [];
-  totalNumberOfFeature: number = 0;
+  searchLength:number;
+  totalNumberOfFeature: number;
   NumberOfPage: any = '';
   NumberOfLimit: any = '';
   selection = new SelectionModel<features>(true, []);
@@ -49,7 +49,7 @@ export class FeaturesListingComponent implements OnInit {
   elementId: number;
   data: any;
   PageNumber = 1;
-  limit = 5;
+  limit = 10;
   hasNextPage: boolean = false;
   totalPages: number = 0;
   dialogRef: any;
@@ -59,6 +59,7 @@ export class FeaturesListingComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchQuery: string;
+  searchData=[];
   private searchQueryChanged: Subject<string> = new Subject<string>();
   private searchSubscription: Subscription;
 
@@ -80,6 +81,7 @@ export class FeaturesListingComponent implements OnInit {
   ) {}
   onSearchInput() {
     this.searchQueryChanged.next(this.searchQuery);
+    
   }
   ngOnInit(): void {
     this.loading = true;
@@ -90,7 +92,7 @@ export class FeaturesListingComponent implements OnInit {
       .subscribe((value) => {
         this.loading = true;
         this.search = value;
-        this.getFeature(this.PageNumber, this.limit, this.search);
+        this.getAllFeature(this.NumberOfPage, this.NumberOfLimit, this.search);
       });
   }
 
@@ -105,6 +107,7 @@ export class FeaturesListingComponent implements OnInit {
           this.loading = false;
           this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
           this.hasNextPage = PageNumber < this.totalPages;
+          this.searchLength=data.length
         }
       });
   }
@@ -115,6 +118,7 @@ export class FeaturesListingComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.totalNumberOfFeature = data.length;
+          this.searchData=data
           this.loading = false;
         }
       });
