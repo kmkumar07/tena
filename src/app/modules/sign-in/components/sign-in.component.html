@@ -1,67 +1,99 @@
 <div class="sign-page flex h-screen">
-    <div class="side-page primary-bg h-screen">
-        <div class="relative inner-side h-full w-full flex-center vertical">
-        <div class="top-line absolute top-0 left-0 right-0">
-            <img src="../../../../assets/images/top-line.png" class="w-full" alt="top line">
-        </div>
-        <div class="img-wrapper">
-            <img src="../../../../assets/images/sub-sign.png" alt="sign-in">
-        </div>
-            <p class="text-white mat-subtitle-1 mb-0">
-                Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum. 
-            </p>
-            <div class="bottom-line inline-flex absolute bottom-0 left-0 right-0">
-                <img src="../../../../assets/images/bottom-line.png" class="w-full" alt="bottom line">
-            </div>
-        </div>
+  <div class="side-page primary-bg h-screen">
+    <div class="relative inner-side h-full w-full flex-center vertical">
+      <div class="top-line absolute top-0 left-0 right-0">
+        <img
+          src="../../../../assets/images/top-line.png"
+          class="w-full"
+          alt="top line"
+        />
+      </div>
+      <div class="img-wrapper">
+        <img src="../../../../assets/images/sub-sign.png" alt="sign-in" />
+      </div>
+      <p class="text-white mat-subtitle-1 mb-0">
+        Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
+        cillum dolor. Voluptate exercitation incididunt aliquip deserunt
+        reprehenderit elit laborum.
+      </p>
+      <div class="bottom-line inline-flex absolute bottom-0 left-0 right-0">
+        <img
+          src="../../../../assets/images/bottom-line.png"
+          class="w-full"
+          alt="bottom line"
+        />
+      </div>
     </div>
-    <div class="main-page main-bg h-screen overflow-auto relative">
-        
-        <div class="flex align-center justify-between title sticky top-0">
-            <img src="../../../../assets/images/logo-main.png" alt="logo">
-            <!-- <div class="flex align-center">
+  </div>
+  <div class="main-page main-bg h-screen overflow-auto relative">
+    <div class="flex align-center justify-between title sticky top-0">
+      <img src="../../../../assets/images/logo-main.png" alt="logo" />
+      <!-- <div class="flex align-center">
                 <span class="mr-6 text-grey-darken-8">No Account?</span>
                 <button mat-flat-button color="primary">Create One!</button>
             </div> -->
-        </div>
-        <div class="inner-wrapper flex justify-center vertical">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <h2 class="mat-headline-5 text-grey-darken-8 mb-2">Log in</h2>
-            <h2 class="mat-headline-5 fw-600 text-primary">Welcome Back</h2>
-            <p class="text-grey-darken-8 my-4">
-                Welcome to Digital Framework , Please put your login credentails
-                below to continue..
-            </p>
-            <div class="form-weap w-full">
-                <div class="">
-                    <p class="mat-subtitle-2 font-weight-500 input-label mb-2">
-                        Email
-                    </p>
-                    <mat-form-field appearance="outline">
-                        <input matInput placeholder="eg, john@gmail.com" formControlName="password_identifier"/>
-                    </mat-form-field>
-                </div>
-                <div class="">
-                    <p class="mat-subtitle-2 font-weight-500 input-label mb-2">
-                        Password
-                    </p>
-                    <mat-form-field appearance="outline">
-                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                          <mat-icon class="material-symbols-outlined">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
-                      </mat-form-field>
-                </div>
-            </div>
-            <button mat-flat-button color="primary" class="w-full mat-subtitle-1 font-weight-500 large mb-8" type="submit">
-                LOG IN
-            </button>
-            <p>
-                By Clicking on sign In you agree the <a href="" class="text-primary">Terms of Service</a>  and
-                <a href="" class="text-primary">Privacy Policy.</a>
-            </p>
-            </form>
-        </div>
-
     </div>
+    <div class="inner-wrapper flex justify-center vertical">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <h2 class="mat-headline-5 text-grey-darken-8 mb-2">Log in</h2>
+        <h2 class="mat-headline-5 fw-600 text-primary">Welcome Back</h2>
+        <p class="text-grey-darken-8 my-4">
+          Welcome to Digital Framework , Please put your login credentails below
+          to continue..
+        </p>
+        <div class="form-weap w-full">
+          <div class="">
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2">Email</p>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                placeholder="eg, john@gmail.com"
+                formControlName="password_identifier"
+              />
+            </mat-form-field>
+          </div>
+          <div class="">
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2">
+              Password
+            </p>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                formControlName="password"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon class="material-symbols-outlined">{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+            </mat-form-field>
+            <!-----loader ------>
+            <div class="loader" *ngIf="loading">
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <button
+          mat-flat-button
+          color="primary"
+          class="w-full mat-subtitle-1 font-weight-500 large mb-8"
+          type="submit"
+        >
+          LOG IN
+        </button>
+        <p>
+          By Clicking on sign In you agree the
+          <a href="" class="text-primary">Terms of Service</a> and
+          <a href="" class="text-primary">Privacy Policy.</a>
+        </p>
+      </form>
+    </div>
+  </div>
 </div>
