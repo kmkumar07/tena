@@ -1,14 +1,5 @@
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  ViewChild,
-} from '@angular/core';
-import {
-  Plans_Data,
-  noPlans,
-  plansFields,
-} from 'src/app/shared/constants/consants';
+import { Component, ViewChild } from '@angular/core';
+import { noPlans, plansFields } from 'src/app/shared/constants/consants';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -29,11 +20,9 @@ export class PlansListingComponent {
   limit: number = 5;
   search: string = '';
   displayedColumns: string[] = [
-    'select',
     'plan_ID',
     'external_name',
     'internal_name',
-    'description',
     'created_at',
     'status',
     'action',
@@ -41,12 +30,7 @@ export class PlansListingComponent {
   selection = new SelectionModel<plansFields>(true, []);
   @ViewChild(MatSort) sort: MatSort;
   dialogRef: any;
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.plansData.length;
-    return numSelected === numRows;
-  }
+
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private plans: PlanService,
@@ -59,37 +43,16 @@ export class PlansListingComponent {
       this.getPlans(this.pageNumber, this.limit, this.search);
     });
   }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-    this.selection.select(...this.plansData);
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: plansFields): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.plan_ID + 1
-    }`;
-  }
   getPlans(pageNumber, limit, search) {
     this.global.showLoader();
     this.plans
       .getPlans(pageNumber, limit, search)
       .pipe(takeUntil(this.global.componentDestroyed(this)))
       .subscribe((res) => {
-        if (res.data.length >0) {
+        if (res.data.length > 0) {
           this.plansData = res.data;
           this.global.hideLoader();
-          console.log(this.plansData, 'dvjk')
-        }
-        else{
+        } else {
           this.global.hideLoader();
         }
       });
@@ -107,24 +70,7 @@ export class PlansListingComponent {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-  selectedRow(selectedID: string, event: any) {
-    const selectedRow = document.getElementById(`${selectedID}`);
-    if (selectedRow != null) {
-      selectedRow.classList.toggle('selected-row');
-    }
-    event.stopPropagation();
-  }
-  selectAll(data: any[]) {
-    if (this.isAllSelected()) {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.add('selected-row');
-      });
-    } else {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.remove('selected-row');
-      });
-    }
-  }
+  
   onDelete(id) {
     this.plans.deletePlan(id).subscribe((res) => res);
     this.getPlans(this.pageNumber, this.limit, this.search);
@@ -147,7 +93,6 @@ export class PlansListingComponent {
       this.getPlans(this.pageNumber, this.limit, this.search);
     }
   }
-
   onNext() {
     this.pageNumber++;
     this.getPlans(this.pageNumber, this.limit, this.search);
@@ -155,5 +100,10 @@ export class PlansListingComponent {
   setLimit(event: any) {
     this.limit = event.value;
     this.getPlans(this.pageNumber, this.limit, this.search);
+  }
+  searchItem(event: any) {
+    const search = event.target.value;
+    this.getPlans(this.pageNumber, this.limit, search);
+    console.log(search, 'hmmfph');
   }
 }

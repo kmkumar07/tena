@@ -107,7 +107,7 @@ export class CreatePlanComponent implements OnInit {
         (res) =>
           (this.priceData = res.data.filter((item) => {
             if (item.planId === this.planId) {
-              console.log('res.data', res.data)
+              console.log('res.data', item);
               return item;
             }
           }))
@@ -188,23 +188,25 @@ export class CreatePlanComponent implements OnInit {
     };
     this.stepOneCompleted = true;
     if (!this.editable) {
-      this.subscription = this.planService.addPlan(plan).subscribe({
-        next: (res: any) => {
-          this.openSuccess(plan.planId);
-          this.global.hideLoader();
-          return res;
-        },
-        error: (err: any) => {
-          console.log('something wrong occured', err);
-        },
-      });
+      this.planService
+        .addPlan(plan)
+        .pipe(takeUntil(this.global.componentDestroyed(this)))
+        .subscribe({
+          next: (res: any) => {
+            this.openSuccess(plan.planId);
+            this.global.hideLoader();
+            return res;
+          },
+          error: (err: any) => {
+            console.log('something wrong occured', err);
+          },
+        });
     } else if (this.editable) {
       this.planService
         .updatePlan(plan, this.planId)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
           this.openSuccess(plan.planId);
-          console.log(res, 'check update');
           this.global.hideLoader();
         });
     }

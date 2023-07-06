@@ -20,6 +20,7 @@ import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-bo
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
   selector: 'app-features-listing',
@@ -55,7 +56,6 @@ export class FeaturesListingComponent implements OnInit {
   hasNextPage: boolean = false;
   totalPages: number = 0;
   dialogRef: any;
-  loading = false;
   search: string = '';
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -68,24 +68,16 @@ export class FeaturesListingComponent implements OnInit {
   @ViewChild(SnackBarComponent, { static: false })
   snackbarComponent: SnackBarComponent;
 
-  /** Whether the number of selected elements matches the total number of rows. */
-
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.featuresData.length;
-    return numSelected === numRows;
-  }
-
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private featureService: FeatureService,
+    private global: GlobalService,
     public dialog: MatDialog
   ) {}
   onSearchInput() {
     this.searchQueryChanged.next(this.searchQuery);
   }
   ngOnInit(): void {
-    this.loading = true;
     this.getAllFeature(
       this.NumberOfPage,
       this.NumberOfLimit,
@@ -103,7 +95,6 @@ export class FeaturesListingComponent implements OnInit {
     this.searchSubscription = this.searchQueryChanged
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
-        this.loading = true;
         this.search = value;
         this.getFeature(
           this.NumberOfPage,
@@ -122,7 +113,7 @@ export class FeaturesListingComponent implements OnInit {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-    this.loading = true;
+    this.global.showLoader();
     this.featureService
       .getFeatures(
         this.PageNumber,
@@ -134,7 +125,7 @@ export class FeaturesListingComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.featuresData = data;
-          this.loading = false;
+          this.global.hideLoader();
           this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
           this.hasNextPage = PageNumber < this.totalPages;
           this.searchLength = data.length;
@@ -148,7 +139,7 @@ export class FeaturesListingComponent implements OnInit {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-    this.loading = true;
+    this.global.showLoader();
     this.featureService
       .getFeatures(
         this.NumberOfPage,
@@ -159,16 +150,15 @@ export class FeaturesListingComponent implements OnInit {
       )
       .subscribe((data) => {
         if (data) {
-          //this.searchData=data
-          //console.log(this.searchData);
           this.totalNumberOfFeature = data.length;
+          this.global.hideLoader();
+
           if (
             this.totalNumberOfFeature > this.allFeaturesData ||
             this.totalNumberOfFeature == 0
           ) {
             this.allFeaturesData = this.totalNumberOfFeature;            
           }
-          this.loading = false;
         }
       });
   }
@@ -261,27 +251,6 @@ export class FeaturesListingComponent implements OnInit {
     });
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-    this.selection.select(...this.featuresData);
-  }
-
-  /** The label for the checkbox on the passed row */
-
-  checkboxLabel(row?: features): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.feature_id + 1
-    }`;
-  }
-
   /** Announce the change in sort state for assistive technology. */
 
   announceSortChange(sortState: Sort) {
@@ -294,27 +263,5 @@ export class FeaturesListingComponent implements OnInit {
       this.sortBy,
       this.sortOrder
     );
-  }
-
-  selectedRow(selectedID: string, event: any) {
-    const selectedRow = document.getElementById(`${selectedID}`);
-
-    if (selectedRow != null) {
-      selectedRow.classList.toggle('selected-row');
-    }
-
-    event.stopPropagation();
-  }
-
-  selectAll(data: any[]) {
-    if (this.isAllSelected()) {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.add('selected-row');
-      });
-    } else {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.remove('selected-row');
-      });
-    }
   }
 }

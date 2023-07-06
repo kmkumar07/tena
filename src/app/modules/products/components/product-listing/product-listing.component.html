@@ -1,6 +1,4 @@
-<div class="loader" *ngIf="loading">
-  <mat-spinner></mat-spinner>
-</div>
+
 
 <div
   *ngIf="allProductsData > 0; else noDataList"
@@ -27,10 +25,6 @@
           [(ngModel)]="searchQuery"
           (input)="onSearchInput()"
         />
-        <div class="loader" *ngIf="loading">
-          <mat-spinner></mat-spinner>
-          <!-- <span>Loading...</span> -->
-        </div>
       </div>
       <button
         mat-flat-button
@@ -252,8 +246,7 @@
   </div>
   <ng-template #noDataFound>
     <div class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
-      <!-- <app-empty-listing [items]="emptyFeature"></app-empty-listing> -->
-      <h2>no data found in product</h2>
+      <app-no-item-found></app-no-item-found>
     </div>
   </ng-template>
   <app-snack-bar></app-snack-bar>
