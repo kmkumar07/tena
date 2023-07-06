@@ -63,4 +63,4 @@ stages:
     - script: |
           echo $(Build.BuildId)
           pwd && ls -lrta
-          helm upgrade --recreate-pods -i df-tenant-portal --set image.tag=df-tenant-portal-$(Build.BuildId) -f devops/helm-charts/app/values.yaml devops/helm-charts/app -n dev
+          helm upgrade --recreate-pods -i df-tenant-portal --set image.tag=df-tenant-portal-$(Build.BuildId) -f devops/helm-charts/app/values/values-dev.yaml devops/helm-charts/app/charts -n dev
