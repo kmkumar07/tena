@@ -283,7 +283,7 @@
           </mat-form-field>
           <div *ngIf="selectedOption == '1'">
             <mat-form-field appearance="outline" class="border-2">
-              <input matInput type="text" placeholder="noOfCycle" formControlName="noOfCycle"  name="noOfCycle">
+              <input matInput type="text" placeholder="Number Of Cycle" formControlName="noOfCycle"  name="noOfCycle">
               <mat-error *ngIf="setPriceForm.controls['noOfCycle'].invalid && setPriceForm.controls['noOfCycle'].touched">
                 <ng-container *ngIf="setPriceForm.controls['noOfCycle'].errors['required']">
                   noOfCycle is required and cannot be left empty.

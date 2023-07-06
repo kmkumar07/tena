@@ -32,14 +32,16 @@ export class ProductListingComponent implements OnInit {
     'status',
     'action',
   ];
+  getfeaturedata: any;
+  featureLength: number;
+  allProductsData: number = 0;
   emptyProductPros = noProducts;
   PageNumber = 1;
-  limit = 5;
+  limit = 10;
   search: string = '';
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
   productsData = [];
-  filteredProducts: any = [];
   allProduct: number;
   NoPage: any = '';
   Nolimit: any = '';
@@ -105,7 +107,7 @@ export class ProductListingComponent implements OnInit {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-    this.global.showLoader()
+    this.global.showLoader();
     this.productService
       .getProducts(
         this.NoPage,
@@ -117,7 +119,11 @@ export class ProductListingComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.allProduct = data.length;
-          this.global.hideLoader()
+          this.global.hideLoader();
+
+          if (this.allProduct > this.allProductsData || this.allProduct == 0) {
+            this.allProductsData = this.allProduct;
+          }
         }
       });
   }
@@ -129,7 +135,7 @@ export class ProductListingComponent implements OnInit {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-    this.global.showLoader()
+    this.global.showLoader();
     this.productService
       .getProducts(
         this.PageNumber,
@@ -141,8 +147,7 @@ export class ProductListingComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.productsData = data;
-          this.filteredProducts = data;
-          this.global.hideLoader()
+          this.global.hideLoader();
           this.totalPages = Math.ceil(this.allProduct / limit);
           this.hasNextPage = PageNumber < this.totalPages;
         }
@@ -220,19 +225,31 @@ export class ProductListingComponent implements OnInit {
       },
     });
   }
-  openDelete(id: any) {
-    this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      width: '420px',
-      panelClass: 'dialog-curved',
-      data: {
-        module: 'Product',
-        deleteId: id,
-      },
-    });
 
-    this.dialogRef.afterClosed().subscribe((res: any) => {
-      if (res) {
-        this.sendElementId(id);
+  openDelete(id: any) {
+    this.productService.getProductById(id).subscribe((data) => {
+      this.getfeaturedata = data;
+      this.featureLength = this.getfeaturedata.feature.length;
+      let productName = data.name;
+      if (this.featureLength) {
+        this.openSnackbar(
+          `Unable to delete ${productName}. Please remove associated features first.`
+        );
+      } else {
+        this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+          width: '420px',
+          panelClass: 'dialog-curved',
+          data: {
+            module: 'Product',
+            deleteId: id,
+          },
+        });
+
+        this.dialogRef.afterClosed().subscribe((res: any) => {
+          if (res) {
+            this.sendElementId(id);
+          }
+        });
       }
     });
   }

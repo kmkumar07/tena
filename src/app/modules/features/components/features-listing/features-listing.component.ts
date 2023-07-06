@@ -20,6 +20,7 @@ import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-bo
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
   selector: 'app-features-listing',
@@ -38,7 +39,8 @@ export class FeaturesListingComponent implements OnInit {
   ];
 
   featuresData = [];
-  totalNumberOfFeature: number = 0;
+  searchLength: number;
+  totalNumberOfFeature: number;
   NumberOfPage: any = '';
   NumberOfLimit: any = '';
   selection = new SelectionModel<features>(true, []);
@@ -48,18 +50,18 @@ export class FeaturesListingComponent implements OnInit {
   elementId: number;
   data: any;
   PageNumber = 1;
-  limit = 5;
+  limit = 10;
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
   hasNextPage: boolean = false;
   totalPages: number = 0;
   dialogRef: any;
-  loading = false;
   search: string = '';
-  filteredFeature: FeatureList[];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchQuery: string;
+  searchData = [];
+  allFeaturesData: number = 0;
   private searchQueryChanged: Subject<string> = new Subject<string>();
   private searchSubscription: Subscription;
 
@@ -69,13 +71,13 @@ export class FeaturesListingComponent implements OnInit {
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private featureService: FeatureService,
+    private global: GlobalService,
     public dialog: MatDialog
   ) {}
   onSearchInput() {
     this.searchQueryChanged.next(this.searchQuery);
   }
   ngOnInit(): void {
-    this.loading = true;
     this.getAllFeature(
       this.NumberOfPage,
       this.NumberOfLimit,
@@ -93,11 +95,10 @@ export class FeaturesListingComponent implements OnInit {
     this.searchSubscription = this.searchQueryChanged
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
-        this.loading = true;
         this.search = value;
         this.getFeature(
-          this.PageNumber,
-          this.limit,
+          this.NumberOfPage,
+          this.NumberOfLimit,
           this.search,
           this.sortBy,
           this.sortOrder
@@ -112,7 +113,7 @@ export class FeaturesListingComponent implements OnInit {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-    this.loading = true;
+    this.global.showLoader();
     this.featureService
       .getFeatures(
         this.PageNumber,
@@ -124,10 +125,10 @@ export class FeaturesListingComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.featuresData = data;
-          this.filteredFeature = data;
-          this.loading = false;
+          this.global.hideLoader();
           this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
           this.hasNextPage = PageNumber < this.totalPages;
+          this.searchLength = data.length;
         }
       });
   }
@@ -138,7 +139,7 @@ export class FeaturesListingComponent implements OnInit {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-    this.loading = true;
+    this.global.showLoader();
     this.featureService
       .getFeatures(
         this.NumberOfPage,
@@ -150,7 +151,14 @@ export class FeaturesListingComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.totalNumberOfFeature = data.length;
-          this.loading = false;
+          this.global.hideLoader();
+
+          if (
+            this.totalNumberOfFeature > this.allFeaturesData ||
+            this.totalNumberOfFeature == 0
+          ) {
+            this.allFeaturesData = this.totalNumberOfFeature;            
+          }
         }
       });
   }

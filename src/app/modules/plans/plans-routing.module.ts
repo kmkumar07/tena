@@ -14,12 +14,12 @@ const routes: Routes = [
   { path: 'view/:id', component: ViewPlansComponent },
   { path: 'create', component: CreatePlanComponent },
   { path: 'create/set-price', component: SetPriceComponent},
-  { path: 'create/product-detail', component: ProductDetailsComponent},
-  { path: 'create/edit-product-detail/:id', component: EditProductDetailsComponent},
+  { path: 'create/product-variant', component: ProductDetailsComponent},
+  { path: 'create/edit-product-variant/:id', component: EditProductDetailsComponent},
   { path: 'create/:id', component: CreatePlanComponent },
   { path: 'create/set-price/:id', component: SetPriceComponent},
   { path: 'create/set-price/:id/:id', component: SetPriceComponent},
-  { path: 'create/product-detail/:id', component: ProductDetailsComponent},
+  { path: 'create/product-variant/:id', component: ProductDetailsComponent},
   { path: 'create/add-ons', component:AddOnsDetailsComponent},
 ];
 
