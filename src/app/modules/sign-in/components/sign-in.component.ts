@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
 })
 export class SignInComponent implements OnInit {
   hide = true;
-  loginForm:FormGroup;
+  loading = false;
+  loginForm: FormGroup;
   subscription: Subscription;
 
   constructor(
@@ -27,6 +28,7 @@ export class SignInComponent implements OnInit {
     });
   }
   onSubmit() {
+    this.loading = true
     let login: any = {
       method: "password",
       password_identifier: this.loginForm.value.password_identifier,
@@ -34,8 +36,15 @@ export class SignInComponent implements OnInit {
     };
     this.subscription = this.kratos.loginIdentity(login).subscribe({
       next: (res: any) => {
-        this.router.navigate([`/`]);
-        return res;
+        this.loading = false
+        if (res?.session) {
+          // Store the session in the local storage
+          localStorage.setItem("session", JSON.stringify(res.session));
+          this.router.navigate([`/`]);
+        } else {
+          // Handle invalid response or missing session
+          console.error("Invalid response or missing session data.");
+        }
       },
       error: (err: any) => {
         console.log('something wrong occured', err);
