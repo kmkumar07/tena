@@ -27,7 +27,6 @@ export class ProductListingComponent implements OnInit {
   displayedColumns: string[] = [
     'productId',
     'name',
-    'description',
     'feature',
     'createdOn',
     'status',
@@ -55,13 +54,6 @@ export class ProductListingComponent implements OnInit {
   private searchQueryChanged: Subject<string> = new Subject<string>();
   private searchSubscription: Subscription;
   dialogRef: any;
-
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.productsData.length;
-    return numSelected === numRows;
-  }
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
@@ -179,50 +171,11 @@ export class ProductListingComponent implements OnInit {
     });
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-    this.selection.select(...this.productsData);
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Data_Type): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.product_ID + 1
-    }`;
-  }
-
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
-
-  selectedRow(selectedID: string, event: any) {
-    const selectedRow = document.getElementById(`${selectedID}`);
-    if (selectedRow != null) {
-      selectedRow.classList.toggle('selected-row');
-    }
-    event.stopPropagation();
-  }
-
-  selectAll(data: any[]) {
-    if (this.isAllSelected()) {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.add('selected-row');
-      });
-    } else {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.remove('selected-row');
-      });
     }
   }
 }

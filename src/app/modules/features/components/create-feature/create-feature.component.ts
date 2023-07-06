@@ -199,6 +199,7 @@ export class CreateFeatureComponent {
   }
 
   onSubmit() {
+    console.log('haya', this.levels.valid)
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
         (<FormGroup>ele).addControl('level', new FormControl(index));
