@@ -2,11 +2,8 @@
   <mat-spinner></mat-spinner>
 </div>
 
-
-
 <div
-*ngIf="featuresData.length>0; else noDataList"
-
+  *ngIf="allFeaturesData > 0; else noDataList"
   class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll"
 >
   <div class="flex justify-between align-center px-1">
@@ -37,7 +34,6 @@
           <mat-spinner></mat-spinner>
           <!-- <span>Loading...</span> -->
         </div>
-        
       </div>
 
       <button
@@ -56,11 +52,14 @@
       </button>
     </div>
   </div>
- 
-  <div  *ngIf="searchData.length> 0;else noDataFound" class="primary-table mt-8 px-1 pb-2">
+
+  <div
+    *ngIf="featuresData.length > 0; else noDataFound"
+    class="primary-table mt-8 px-1 pb-2"
+  >
     <table
       mat-table
-      [dataSource]="filteredFeature"
+      [dataSource]="featuresData"
       matSort
       (matSortChange)="announceSortChange($event)"
     >
@@ -140,7 +139,14 @@
       <!-- Created Date Column -->
 
       <ng-container matColumnDef="createdOn">
-        <th mat-header-cell *matHeaderCellDef>Created On</th>
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by date"
+        >
+          Created On
+        </th>
 
         <td
           mat-cell
@@ -212,58 +218,65 @@
       ></tr>
     </table>
 
-  <div class="row">
-    <div class="col-2">
-      <div class="dataTables_length">
-        <label
-          >Show
+    <div class="row">
+      <div class="col-2">
+        <div class="dataTables_length">
+          <label
+            >Show
 
-          <select
-            [(ngModel)]="limit"
-            (change)="this.getFeature(this.PageNumber, this.limit, this.search)"
-          >
-            <option value="10">10</option>
-
-            <option value="20">20</option>
-
-            <option value="50">50</option>
-
-            <option value="100">100</option>
-          </select>
-
-          entries</label
-        >
-      </div>
-    </div>
-
-    <div class="col-md-10" style="float: right; text-align: right">
-      <div class="paginations">
-        <div>
-          <div class="btn-group" id="radioBtn">
-            <a
-              class="btn btn-primary btn-sm notActive"
-              (click)="onPrevious()"
-              [ngClass]="{ disabled: PageNumber == 1 }"
+            <select
+              [(ngModel)]="limit"
+              (change)="
+                this.getFeature(
+                  this.PageNumber,
+                  this.limit,
+                  this.search,
+                  this.sortBy,
+                  this.sortOrder
+                )
+              "
             >
-              Previous
-            </a>
+              <option value="10">10</option>
 
-            <a class="btn btn-primary btn-sm active" style="margin: 0 20px">{{
-              PageNumber
-            }}</a>
+              <option value="20">20</option>
 
-            <a
-              class="btn btn-primary btn-sm notActive"
-              (click)="onNext()"
-              [ngClass]="{ disabled: !hasNextPage }"
-              >Next
-            </a>
+              <option value="50">50</option>
+
+              <option value="100">100</option>
+            </select>
+
+            entries</label
+          >
+        </div>
+      </div>
+
+      <div class="col-md-10" style="float: right; text-align: right">
+        <div class="paginations">
+          <div>
+            <div class="btn-group" id="radioBtn">
+              <a
+                class="btn btn-primary btn-sm notActive"
+                (click)="onPrevious()"
+                [ngClass]="{ disabled: PageNumber == 1 }"
+              >
+                Previous
+              </a>
+
+              <a class="btn btn-primary btn-sm active" style="margin: 0 20px">{{
+                PageNumber
+              }}</a>
+
+              <a
+                class="btn btn-primary btn-sm notActive"
+                (click)="onNext()"
+                [ngClass]="{ disabled: !hasNextPage }"
+                >Next
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
   </div>
   <ng-template #noDataFound>
     <div class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
@@ -273,16 +286,7 @@
   </ng-template>
   <app-snack-bar></app-snack-bar>
 </div>
-<!-- <ng-template #noRecordFound>
-  <h1>data not found</h1>
-</ng-template>
 
-<div
-  *ngIf="featuresData.length == 0 && !searchQuery; else noRecordFound"
-  class="relative main-bg border-2 w-full h-full p-7 overflow-scroll"
->
-  <app-empty-listing [items]="emptyFeature"></app-empty-listing>
-</div> -->
 <ng-template #noDataList>
   <div class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
     <app-empty-listing [items]="emptyFeature"></app-empty-listing>

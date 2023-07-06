@@ -38,6 +38,8 @@ export class ProductListingComponent implements OnInit {
   PageNumber = 1;
   limit = 10;
   search: string = '';
+  sortBy: 'name' | 'createdOn';
+  sortOrder: 'asc' | 'desc';
   productsData = [];
   filteredProducts: any = [];
   allProduct: number;
@@ -77,22 +79,52 @@ export class ProductListingComponent implements OnInit {
   data$ = this.productService.product$;
   ngOnInit(): void {
     this.loading = true;
-    this.getAllProduct(this.NoPage, this.Nolimit, this.search);
-    this.getProduct(this.PageNumber, this.limit, this.search);
+    this.getAllProduct(
+      this.NoPage,
+      this.Nolimit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
+    this.getProduct(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
 
     this.searchSubscription = this.searchQueryChanged
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
         this.loading = true;
         this.search = value;
-        this.getProduct(this.PageNumber, this.limit, this.search);
+        this.getProduct(
+          this.PageNumber,
+          this.limit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
       });
   }
 
-  getAllProduct(PageNumber: number, limit: number, search: string) {
+  getAllProduct(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
     this.loading = true;
     this.productService
-      .getProducts(this.NoPage, this.Nolimit, this.search)
+      .getProducts(
+        this.NoPage,
+        this.Nolimit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
       .subscribe((data) => {
         if (data) {
           this.allProduct = data.length;
@@ -101,10 +133,22 @@ export class ProductListingComponent implements OnInit {
       });
   }
 
-  getProduct(PageNumber: number, limit: number, search: string) {
+  getProduct(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
     this.loading = true;
     this.productService
-      .getProducts(this.PageNumber, this.limit, this.search)
+      .getProducts(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
       .subscribe((data) => {
         if (data) {
           this.productsData = data;
@@ -125,13 +169,25 @@ export class ProductListingComponent implements OnInit {
   onPrevious() {
     if (this.PageNumber > 1) {
       this.PageNumber--;
-      this.getProduct(this.PageNumber, this.limit, this.search);
+      this.getProduct(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      );
     }
   }
 
   onNext() {
     this.PageNumber++;
-    this.getProduct(this.PageNumber, this.limit, this.search);
+    this.getProduct(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
   }
 
   openSnackbar(message: string) {
@@ -144,8 +200,20 @@ export class ProductListingComponent implements OnInit {
   sendElementId(elementId: string) {
     this.productService.deleteProduct(elementId).subscribe({
       next: (res) => {
-        this.getProduct(this.PageNumber, this.limit, this.search);
-        this.getAllProduct(this.NoPage, this.Nolimit, this.search);
+        this.getProduct(
+          this.PageNumber,
+          this.limit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
+        this.getAllProduct(
+          this.NoPage,
+          this.Nolimit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
         this.deleteSuccess(elementId);
       },
       error: (error: any) => {
@@ -210,11 +278,15 @@ export class ProductListingComponent implements OnInit {
   }
 
   announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
+    this.sortBy = sortState.active as 'name' | 'createdOn';
+    this.sortOrder = sortState.direction as 'asc' | 'desc';
+    this.getProduct(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
   }
 
   selectedRow(selectedID: string, event: any) {
