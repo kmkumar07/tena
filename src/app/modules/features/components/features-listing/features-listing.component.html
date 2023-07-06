@@ -86,25 +86,6 @@
         </td>
       </ng-container>
 
-      <!-- Description Column -->
-
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef>Description</th>
-
-        <td mat-cell *matCellDef="let element" class="description-col" [ngxTippy]="fullDescription"
-          [tippyProps]="{ placement: 'right' }" [routerLink]="'/features/view/' + element.featureId">
-          <p>{{ element.description }}</p>
-
-          <ng-template #fullDescription let-name class="t-template">
-            <div class="help-info-tooltip">
-              <div class="heading-with-background">Description</div>
-
-              <p class="py-3 black-text">{{ element.description }}</p>
-            </div>
-          </ng-template>
-        </td>
-      </ng-container>
-
       <!-- Created Date Column -->
 
       <ng-container matColumnDef="createdOn">

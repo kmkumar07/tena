@@ -42,9 +42,11 @@
           >
             <a
               class="icon-wrapper flex align-center"
-
               routerLinkActive="active"
-              [ngClass]="{'active': (activeRoute.includes(item.state) || currentRoute == item.state)}"
+              [ngClass]="{
+                active:
+                  activeRoute.includes(item.name)
+              }"
               [routerLink]="[item.state]"
             >
               <div class="flex justify-center sidebar-icon-wraper">
@@ -77,16 +79,18 @@
     </div>
     <mat-nav-list class="config-section sidebar">
       <mat-list-item
-        class="nav-list-item p-0" 
+        class="nav-list-item p-0"
         *ngFor="let item of configOptions"
       >
         <a
-        class="icon-wrapper flex align-center"
+          class="icon-wrapper flex align-center"
           [routerLink]="['/', item.state]"
         >
-          <mat-icon class="material-symbols-outlined m-0 sidebar-icon">{{
-            item.icon
-          }}</mat-icon>
+          <div class="flex justify-center sidebar-icon-wraper">
+            <mat-icon class="material-symbols-outlined m-0 sidebar-icon">{{
+              item.icon
+            }}</mat-icon>
+          </div>
           <div class="content-wrapper">
             <span class="content">{{ item.name }}</span>
           </div>

@@ -1,7 +1,3 @@
-<div class="loader" *ngIf="loading">
-  <mat-spinner></mat-spinner>
-  <!-- <span>Loading...</span> -->
-</div>
 <div *ngIf="productsData?.length == 0" class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
   <app-empty-listing [items]="emptyProductPros"></app-empty-listing>
 </div>
@@ -19,10 +15,6 @@
           <img src="../../../../assets/images/icons/search.svg" alt="search-icon" />
         </span>
         <input type="text" placeholder="Search anything..." [(ngModel)]="searchQuery" (input)="onSearchInput()" />
-        <div class="loader" *ngIf="loading">
-          <mat-spinner></mat-spinner>
-          <!-- <span>Loading...</span> -->
-        </div>
       </div>
       <button mat-flat-button color="primary" class="create-btn" [routerLink]="['create']">
         <mat-icon class="material-symbols-outlined m-0 white-text">add_circle</mat-icon>
@@ -47,21 +39,6 @@
         </th>
         <td mat-cell *matCellDef="let element" [routerLink]="['/products/view-product/' + element.productId]">
           {{ element.name }}
-        </td>
-      </ng-container>
-
-      <!-- Description Column -->
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell *matCellDef="let element" class="description-col" [ngxTippy]="fullDescription"
-          [tippyProps]="{ placement: 'right' }" [routerLink]="['/products/view-product/' + element.productId]">
-          <p>{{ element.description }}</p>
-          <ng-template #fullDescription let-name class="t-template">
-            <div class="help-info-tooltip">
-              <div class="heading-with-background">Description</div>
-              <p class="py-3 black-text">{{ element.description }}</p>
-            </div>
-          </ng-template>
         </td>
       </ng-container>
 

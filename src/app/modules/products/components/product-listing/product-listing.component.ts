@@ -15,6 +15,7 @@ import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-bo
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { MatSnackBarConfig } from '@angular/material/snack-bar';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
   selector: 'app-product-listing',
@@ -22,12 +23,10 @@ import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-
   styleUrls: ['./product-listing.component.scss'],
 })
 export class ProductListingComponent implements OnInit {
-  loading = false;
   id: string = '';
   displayedColumns: string[] = [
     'productId',
     'name',
-    'description',
     'feature',
     'createdOn',
     'status',
@@ -58,17 +57,10 @@ export class ProductListingComponent implements OnInit {
   private searchSubscription: Subscription;
   dialogRef: any;
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.productsData.length;
-    return numSelected === numRows;
-  }
-
   constructor(
-    private _liveAnnouncer: LiveAnnouncer,
     public dialog: MatDialog,
-    protected productService: ProductsService
+    protected productService: ProductsService,
+    private global: GlobalService
   ) {}
 
   onSearchInput() {
@@ -76,8 +68,7 @@ export class ProductListingComponent implements OnInit {
   }
 
   data$ = this.productService.product$;
-  ngOnInit(): void {
-    this.loading = true;
+  ngOnInit() {
     this.getAllProduct(
       this.NoPage,
       this.Nolimit,
@@ -96,7 +87,6 @@ export class ProductListingComponent implements OnInit {
     this.searchSubscription = this.searchQueryChanged
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
-        this.loading = true;
         this.search = value;
         this.getProduct(
           this.PageNumber,
@@ -115,7 +105,7 @@ export class ProductListingComponent implements OnInit {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-    this.loading = true;
+    this.global.showLoader()
     this.productService
       .getProducts(
         this.NoPage,
@@ -127,7 +117,7 @@ export class ProductListingComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.allProduct = data.length;
-          this.loading = false;
+          this.global.hideLoader()
         }
       });
   }
@@ -139,7 +129,7 @@ export class ProductListingComponent implements OnInit {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-    this.loading = true;
+    this.global.showLoader()
     this.productService
       .getProducts(
         this.PageNumber,
@@ -152,7 +142,7 @@ export class ProductListingComponent implements OnInit {
         if (data) {
           this.productsData = data;
           this.filteredProducts = data;
-          this.loading = false;
+          this.global.hideLoader()
           this.totalPages = Math.ceil(this.allProduct / limit);
           this.hasNextPage = PageNumber < this.totalPages;
         }
@@ -247,25 +237,6 @@ export class ProductListingComponent implements OnInit {
     });
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-    this.selection.select(...this.productsData);
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Data_Type): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.product_ID + 1
-    }`;
-  }
-
   announceSortChange(sortState: Sort) {
     this.sortBy = sortState.active as 'name' | 'createdOn';
     this.sortOrder = sortState.direction as 'asc' | 'desc';
@@ -276,25 +247,5 @@ export class ProductListingComponent implements OnInit {
       this.sortBy,
       this.sortOrder
     );
-  }
-
-  selectedRow(selectedID: string, event: any) {
-    const selectedRow = document.getElementById(`${selectedID}`);
-    if (selectedRow != null) {
-      selectedRow.classList.toggle('selected-row');
-    }
-    event.stopPropagation();
-  }
-
-  selectAll(data: any[]) {
-    if (this.isAllSelected()) {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.add('selected-row');
-      });
-    } else {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.remove('selected-row');
-      });
-    }
   }
 }
