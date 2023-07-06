@@ -32,8 +32,9 @@ export class ProductListingComponent implements OnInit {
     'status',
     'action',
   ];
-  getfeaturedata:any;
-  featureLength:number
+  getfeaturedata: any;
+  featureLength: number;
+  allProductsData: number = 0;
   emptyProductPros = noProducts;
   PageNumber = 1;
   limit = 10;
@@ -41,7 +42,6 @@ export class ProductListingComponent implements OnInit {
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
   productsData = [];
-  filteredProducts: any = [];
   allProduct: number;
   NoPage: any = '';
   Nolimit: any = '';
@@ -128,6 +128,9 @@ export class ProductListingComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.allProduct = data.length;
+          if (this.allProduct > this.allProductsData || this.allProduct == 0) {
+            this.allProductsData = this.allProduct;
+          }
           this.loading = false;
         }
       });
@@ -152,10 +155,10 @@ export class ProductListingComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.productsData = data;
-          this.filteredProducts = data;
           this.loading = false;
           this.totalPages = Math.ceil(this.allProduct / limit);
           this.hasNextPage = PageNumber < this.totalPages;
+        
         }
       });
   }
@@ -231,14 +234,16 @@ export class ProductListingComponent implements OnInit {
       },
     });
   }
-  
+
   openDelete(id: any) {
     this.productService.getProductById(id).subscribe((data) => {
       this.getfeaturedata = data;
       this.featureLength = this.getfeaturedata.feature.length;
-      let productName=data.name
+      let productName = data.name;
       if (this.featureLength) {
-        this.openSnackbar(`Unable to delete ${productName}. Please remove associated features first.`);
+        this.openSnackbar(
+          `Unable to delete ${productName}. Please remove associated features first.`
+        );
       } else {
         this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
           width: '420px',
@@ -248,7 +253,7 @@ export class ProductListingComponent implements OnInit {
             deleteId: id,
           },
         });
-  
+
         this.dialogRef.afterClosed().subscribe((res: any) => {
           if (res) {
             this.sendElementId(id);
@@ -257,7 +262,7 @@ export class ProductListingComponent implements OnInit {
       }
     });
   }
-  
+
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
