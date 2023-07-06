@@ -15,6 +15,7 @@ import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-bo
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { MatSnackBarConfig } from '@angular/material/snack-bar';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
   selector: 'app-product-listing',
@@ -22,7 +23,6 @@ import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-
   styleUrls: ['./product-listing.component.scss'],
 })
 export class ProductListingComponent implements OnInit {
-  loading = false;
   id: string = '';
   displayedColumns: string[] = [
     'productId',
@@ -36,6 +36,8 @@ export class ProductListingComponent implements OnInit {
   PageNumber = 1;
   limit = 5;
   search: string = '';
+  sortBy: 'name' | 'createdOn';
+  sortOrder: 'asc' | 'desc';
   productsData = [];
   filteredProducts: any = [];
   allProduct: number;
@@ -56,9 +58,9 @@ export class ProductListingComponent implements OnInit {
   dialogRef: any;
 
   constructor(
-    private _liveAnnouncer: LiveAnnouncer,
     public dialog: MatDialog,
-    protected productService: ProductsService
+    protected productService: ProductsService,
+    private global: GlobalService
   ) {}
 
   onSearchInput() {
@@ -66,41 +68,81 @@ export class ProductListingComponent implements OnInit {
   }
 
   data$ = this.productService.product$;
-  ngOnInit(): void {
-    this.loading = true;
-    this.getAllProduct(this.NoPage, this.Nolimit, this.search);
-    this.getProduct(this.PageNumber, this.limit, this.search);
+  ngOnInit() {
+    this.getAllProduct(
+      this.NoPage,
+      this.Nolimit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
+    this.getProduct(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
 
     this.searchSubscription = this.searchQueryChanged
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
-        this.loading = true;
         this.search = value;
-        this.getProduct(this.PageNumber, this.limit, this.search);
+        this.getProduct(
+          this.PageNumber,
+          this.limit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
       });
   }
 
-  getAllProduct(PageNumber: number, limit: number, search: string) {
-    this.loading = true;
+  getAllProduct(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.global.showLoader()
     this.productService
-      .getProducts(this.NoPage, this.Nolimit, this.search)
+      .getProducts(
+        this.NoPage,
+        this.Nolimit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
       .subscribe((data) => {
         if (data) {
           this.allProduct = data.length;
-          this.loading = false;
+          this.global.hideLoader()
         }
       });
   }
 
-  getProduct(PageNumber: number, limit: number, search: string) {
-    this.loading = true;
+  getProduct(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.global.showLoader()
     this.productService
-      .getProducts(this.PageNumber, this.limit, this.search)
+      .getProducts(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
       .subscribe((data) => {
         if (data) {
           this.productsData = data;
           this.filteredProducts = data;
-          this.loading = false;
+          this.global.hideLoader()
           this.totalPages = Math.ceil(this.allProduct / limit);
           this.hasNextPage = PageNumber < this.totalPages;
         }
@@ -116,13 +158,25 @@ export class ProductListingComponent implements OnInit {
   onPrevious() {
     if (this.PageNumber > 1) {
       this.PageNumber--;
-      this.getProduct(this.PageNumber, this.limit, this.search);
+      this.getProduct(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      );
     }
   }
 
   onNext() {
     this.PageNumber++;
-    this.getProduct(this.PageNumber, this.limit, this.search);
+    this.getProduct(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
   }
 
   openSnackbar(message: string) {
@@ -135,8 +189,20 @@ export class ProductListingComponent implements OnInit {
   sendElementId(elementId: string) {
     this.productService.deleteProduct(elementId).subscribe({
       next: (res) => {
-        this.getProduct(this.PageNumber, this.limit, this.search);
-        this.getAllProduct(this.NoPage, this.Nolimit, this.search);
+        this.getProduct(
+          this.PageNumber,
+          this.limit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
+        this.getAllProduct(
+          this.NoPage,
+          this.Nolimit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
         this.deleteSuccess(elementId);
       },
       error: (error: any) => {
@@ -172,10 +238,14 @@ export class ProductListingComponent implements OnInit {
   }
 
   announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
+    this.sortBy = sortState.active as 'name' | 'createdOn';
+    this.sortOrder = sortState.direction as 'asc' | 'desc';
+    this.getProduct(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
   }
 }

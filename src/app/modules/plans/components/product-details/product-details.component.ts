@@ -30,6 +30,8 @@ export class ProductDetailsComponent implements OnInit {
   PageNumber: any = '';
   limit: any = '';
   search: string = '';
+  sortBy: 'name' | 'createdOn';
+  sortOrder: 'asc' | 'desc';
   productData = [];
   filteredFeatures = [];
   selectedFeatures: PeriodicElement[] = [];
@@ -49,7 +51,7 @@ export class ProductDetailsComponent implements OnInit {
     private productService: ProductsService,
     private productDetailsService: ProductDetailsService,
     private routes: Router
-  ) { }
+  ) {}
 
   displayedColumns: string[] = [
     'select',
@@ -121,8 +123,14 @@ export class ProductDetailsComponent implements OnInit {
 
   getProduct(PageNumber: number, limit: number, search: string) {
     this.productService
-      .getProducts(this.PageNumber, this.limit, this.search)
-      .subscribe(() => { });
+      .getProducts(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
+      .subscribe(() => {});
   }
 
   selectProduct(product) {
@@ -174,7 +182,8 @@ export class ProductDetailsComponent implements OnInit {
       switch (productVariantFeature.type) {
         case 'quantity':
         case 'custom':
-          const values = this.selectedLevelFromDropdown[productVariantFeature.featureId];
+          const values =
+            this.selectedLevelFromDropdown[productVariantFeature.featureId];
           return {
             featureID: productVariantFeature.featureId,
             value: values,

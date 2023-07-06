@@ -1,17 +1,11 @@
 <div class="loader" *ngIf="loading">
   <mat-spinner></mat-spinner>
 </div>
-<div
-  *ngIf="featuresData.length == 0"
-  class="relative main-bg border-2 w-full h-full p-7 overflow-scroll"
->
+<div *ngIf="featuresData.length == 0" class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
   <app-empty-listing [items]="emptyFeature"></app-empty-listing>
 </div>
 
-<div
-  *ngIf="featuresData.length > 0"
-  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll"
->
+<div *ngIf="featuresData.length > 0" class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll">
   <div class="flex justify-between align-center px-1">
     <div class="flex align-center">
       <h1 class="text-text text-dark">Features</h1>
@@ -24,48 +18,26 @@
     <div class="flex align-center">
       <div class="global-search light mr-6 border-2">
         <span class="search-icon pointer">
-          <img
-            src="../../../../assets/images/icons/search.svg"
-            alt="search-icon"
-          />
+          <img src="../../../../assets/images/icons/search.svg" alt="search-icon" />
         </span>
 
-        <input
-          type="text"
-          placeholder="Search anything..."
-          [(ngModel)]="searchQuery"
-          (input)="onSearchInput()"
-        />
+        <input type="text" placeholder="Search anything..." [(ngModel)]="searchQuery" (input)="onSearchInput()" />
         <div class="loader" *ngIf="loading">
           <mat-spinner></mat-spinner>
           <!-- <span>Loading...</span> -->
         </div>
       </div>
 
-      <button
-        mat-flat-button
-        color="primary"
-        class="create-btn"
-        [routerLink]="['create']"
-      >
-        <mat-icon class="material-symbols-outlined m-0 white-text"
-          >add_circle</mat-icon
-        >
+      <button mat-flat-button color="primary" class="create-btn" [routerLink]="['create']">
+        <mat-icon class="material-symbols-outlined m-0 white-text">add_circle</mat-icon>
 
-        <span class="text-nowrap block ml-2 letter-spacing-0"
-          >Create Feature</span
-        >
+        <span class="text-nowrap block ml-2 letter-spacing-0">Create Feature</span>
       </button>
     </div>
   </div>
 
   <div class="primary-table mt-8 px-1 pb-2">
-    <table
-      mat-table
-      [dataSource]="filteredFeature"
-      matSort
-      (matSortChange)="announceSortChange($event)"
-    >
+    <table mat-table [dataSource]="filteredFeature" matSort (matSortChange)="announceSortChange($event)">
       <!--- Note that these columns can be defined in any order.
 
               The actual rendered columns are set as a property on the row definition" -->
@@ -75,11 +47,7 @@
       <ng-container matColumnDef="featureId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Feature ID</th>
 
-        <td
-          mat-cell
-          *matCellDef="let element"
-          [routerLink]="'/features/view/' + element.featureId"
-        >
+        <td mat-cell *matCellDef="let element" [routerLink]="'/features/view/' + element.featureId">
           {{ element.featureId }}
         </td>
       </ng-container>
@@ -87,20 +55,11 @@
       <!-- Product Name Column -->
 
       <ng-container matColumnDef="productName">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          sortActionDescription="Sort by title"
-        >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by title">
           Product Name
         </th>
 
-        <td
-          mat-cell
-          *matCellDef="let element"
-          [routerLink]="'/features/view/' + element.featureId"
-        >
+        <td mat-cell *matCellDef="let element" [routerLink]="'/features/view/' + element.featureId">
           {{ element.productName }}
         </td>
       </ng-container>
@@ -108,20 +67,11 @@
       <!-- Product Name Column -->
 
       <ng-container matColumnDef="name">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          sortActionDescription="Sort by title"
-        >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by title">
           Feature Name
         </th>
 
-        <td
-          mat-cell
-          *matCellDef="let element"
-          [routerLink]="'/features/view/' + element.featureId"
-        >
+        <td mat-cell *matCellDef="let element" [routerLink]="'/features/view/' + element.featureId">
           {{ element.name }}
         </td>
       </ng-container>
@@ -131,11 +81,7 @@
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef>Feature Type</th>
 
-        <td
-          mat-cell
-          *matCellDef="let element"
-          [routerLink]="'/features/view/' + element.featureId"
-        >
+        <td mat-cell *matCellDef="let element" [routerLink]="'/features/view/' + element.featureId">
           <p>{{ element.type }}</p>
         </td>
       </ng-container>
@@ -143,13 +89,9 @@
       <!-- Created Date Column -->
 
       <ng-container matColumnDef="createdOn">
-        <th mat-header-cell *matHeaderCellDef>Created On</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date">Created On</th>
 
-        <td
-          mat-cell
-          *matCellDef="let element"
-          [routerLink]="'/features/view/' + element.featureId"
-        >
+        <td mat-cell *matCellDef="let element" [routerLink]="'/features/view/' + element.featureId">
           {{ element.createdOn | date : "d MMMM y" }}
         </td>
       </ng-container>
@@ -159,12 +101,8 @@
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef>Status</th>
 
-        <td
-          mat-cell
-          *matCellDef="let element"
-          [ngClass]="element.status"
-          [routerLink]="'/features/view/' + element.featureId"
-        >
+        <td mat-cell *matCellDef="let element" [ngClass]="element.status"
+          [routerLink]="'/features/view/' + element.featureId">
           {{ element.status }}
         </td>
       </ng-container>
@@ -175,31 +113,16 @@
         <th mat-header-cell *matHeaderCellDef>Action</th>
 
         <td mat-cell *matCellDef="let element">
-          <mat-icon
-            class="material-symbols-outlined"
-            [matMenuTriggerFor]="actionsMenu"
-          >
+          <mat-icon class="material-symbols-outlined" [matMenuTriggerFor]="actionsMenu">
             more_vert
           </mat-icon>
 
-          <mat-menu
-            #actionsMenu="matMenu"
-            class="actions-menu"
-            backdropClass="edit-menu"
-          >
-            <button
-              mat-menu-item
-              disableRipple
-              [routerLink]="['edit-feature/' + element.featureId]"
-            >
+          <mat-menu #actionsMenu="matMenu" class="actions-menu" backdropClass="edit-menu">
+            <button mat-menu-item disableRipple [routerLink]="['edit-feature/' + element.featureId]">
               Edit
             </button>
 
-            <button
-              mat-menu-item
-              disableRipple
-              (click)="openDelete(element.featureId)"
-            >
+            <button mat-menu-item disableRipple (click)="openDelete(element.featureId)">
               Delete
             </button>
           </mat-menu>
@@ -208,24 +131,17 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        [id]="row.id"
-      ></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" [id]="row.id"></tr>
     </table>
   </div>
 
   <div class="row">
     <div class="col-2">
       <div class="dataTables_length">
-        <label
-          >Show
+        <label>Show
 
-          <select
-            [(ngModel)]="limit"
-            (change)="this.getFeature(this.PageNumber, this.limit, this.search)"
-          >
+          <select [(ngModel)]="limit" (change)="this.getFeature(this.PageNumber, this.limit, this.search, this.sortBy,
+            this.sortOrder)">
             <option value="5">5</option>
 
             <option value="10">10</option>
@@ -237,8 +153,7 @@
             <option value="100">100</option>
           </select>
 
-          entries</label
-        >
+          entries</label>
       </div>
     </div>
 
@@ -246,23 +161,16 @@
       <div class="paginations">
         <div>
           <div class="btn-group" id="radioBtn">
-            <a
-              class="btn btn-primary btn-sm notActive"
-              (click)="onPrevious()"
-              [ngClass]="{ disabled: PageNumber == 1 }"
-            >
+            <a class="btn btn-primary btn-sm notActive" (click)="onPrevious()"
+              [ngClass]="{ disabled: PageNumber == 1 }">
               Previous
             </a>
 
             <a class="btn btn-primary btn-sm active" style="margin: 0 20px">{{
               PageNumber
-            }}</a>
+              }}</a>
 
-            <a
-              class="btn btn-primary btn-sm notActive"
-              (click)="onNext()"
-              [ngClass]="{ disabled: !hasNextPage }"
-              >Next
+            <a class="btn btn-primary btn-sm notActive" (click)="onNext()" [ngClass]="{ disabled: !hasNextPage }">Next
             </a>
           </div>
         </div>
