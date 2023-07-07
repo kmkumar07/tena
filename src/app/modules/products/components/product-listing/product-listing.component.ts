@@ -12,8 +12,7 @@ import {
 import { Data_Type, noProducts } from 'src/app/shared/constants/consants';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
-import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
-import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 
 @Component({
@@ -47,9 +46,6 @@ export class ProductListingComponent implements OnInit {
 
   selection = new SelectionModel<Data_Type>(true, []);
 
-  @ViewChild(SnackBarComponent, { static: false })
-  snackbarComponent: SnackBarComponent;
-
   @ViewChild(MatSort) sort: MatSort;
   searchQuery: string;
   private searchQueryChanged: Subject<string> = new Subject<string>();
@@ -66,7 +62,8 @@ export class ProductListingComponent implements OnInit {
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     public dialog: MatDialog,
-    protected productService: ProductsService
+    protected productService: ProductsService,
+    private snackBar: MatSnackBar
   ) {}
 
   onSearchInput() {
@@ -133,13 +130,6 @@ export class ProductListingComponent implements OnInit {
     this.getProduct(this.PageNumber, this.limit, this.search);
   }
 
-  openSnackbar(message: string) {
-    const config: MatSnackBarConfig = {
-      duration: 5000,
-    };
-    this.snackbarComponent.open(message, config);
-  }
-
   sendElementId(elementId: string) {
     this.productService.deleteProduct(elementId).subscribe({
       next: (res) => {
@@ -148,7 +138,11 @@ export class ProductListingComponent implements OnInit {
         this.deleteSuccess(elementId);
       },
       error: (error: any) => {
-        this.openSnackbar(error.error.message);
+        this.snackBar.open(error.error.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right'
+        })
       },
     });
   }

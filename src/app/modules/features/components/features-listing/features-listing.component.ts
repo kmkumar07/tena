@@ -18,8 +18,7 @@ import {
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
-import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
-import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-features-listing',
@@ -62,9 +61,6 @@ export class FeaturesListingComponent implements OnInit {
   private searchQueryChanged: Subject<string> = new Subject<string>();
   private searchSubscription: Subscription;
 
-  @ViewChild(SnackBarComponent, { static: false })
-  snackbarComponent: SnackBarComponent;
-
   /** Whether the number of selected elements matches the total number of rows. */
 
   isAllSelected() {
@@ -76,7 +72,8 @@ export class FeaturesListingComponent implements OnInit {
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private featureService: FeatureService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
   onSearchInput() {
     this.searchQueryChanged.next(this.searchQuery);
@@ -136,20 +133,17 @@ export class FeaturesListingComponent implements OnInit {
     this.getFeature(this.PageNumber, this.limit, this.search);
   }
 
-  openSnackbar(message: string) {
-    const config: MatSnackBarConfig = {
-      duration: 5000,
-    };
-    this.snackbarComponent.open(message, config);
-  }
-
   deleteElementById(elementId: number) {
     this.featureService.deleteFeature(elementId).subscribe({
       next: (res) => {
         this.deleteSuccess(elementId);
       },
       error: (error: any) => {
-        this.openSnackbar(error.error.message);
+        this.snackBar.open(error.error.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right'
+        })
       },
     });
   }

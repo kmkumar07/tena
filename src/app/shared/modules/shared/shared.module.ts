@@ -7,16 +7,17 @@ import { AngularMaterialModule } from '../angular-material/angular-material.modu
 import { CustomDateHeaderComponent } from '../../components/custom-date-header/custom-date-header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EditCustomerDetailsComponent } from '../../components/dialog-box/edit-customer-details/edit-customer-details.component';
-import { SnackBarComponent } from '../../components/snack-bar/snack-bar.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
-  declarations: [EmptyListingComponent, CustomDateHeaderComponent, EditCustomerDetailsComponent, SnackBarComponent],
+  declarations: [EmptyListingComponent, CustomDateHeaderComponent, EditCustomerDetailsComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule
   ],
   exports: [
     NgxTippyModule,
@@ -24,8 +25,7 @@ import { SnackBarComponent } from '../../components/snack-bar/snack-bar.componen
     ReactiveFormsModule,
     EmptyListingComponent,
     CustomDateHeaderComponent,
-    EditCustomerDetailsComponent,
-    SnackBarComponent
+    EditCustomerDetailsComponent
   ],
 })
 export class SharedModule {}

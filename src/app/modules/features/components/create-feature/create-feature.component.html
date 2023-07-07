@@ -190,7 +190,6 @@
           </div>
           <mat-form-field appearance="outline">
             <textarea
-              required
               rows="4"
               matInput
               placeholder="Enter here..."
@@ -266,7 +265,7 @@
                     </div>
                     <mat-form-field appearance="outline" class="border-2">
                       <input
-                        (change)="setName(i)"
+                        (input)="setName(i)"
                         required
                         matInput
                         placeholder="Enter here"
@@ -413,5 +412,4 @@
       </div>
     </div>
   </div>
-  <app-snack-bar></app-snack-bar>
 </div>

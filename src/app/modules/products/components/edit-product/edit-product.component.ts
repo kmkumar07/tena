@@ -1,8 +1,6 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 import { DialogAnimationsDialog } from '../create-product/create-product.component';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -12,8 +10,7 @@ import { Observable, Subscription} from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
-import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -60,15 +57,13 @@ export class EditProductComponent implements OnInit {
     imageUrl: ['', Validators.required],
   });
 
-  @ViewChild(SnackBarComponent, { static: false })
-  snackbarComponent: SnackBarComponent;
-
   constructor(
     private productService: ProductsService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -87,13 +82,6 @@ export class EditProductComponent implements OnInit {
     }, duration);
   }
 
-  openSnackbar(message: string) {
-    const config: MatSnackBarConfig = {
-      duration: 5000,
-    };
-    this.snackbarComponent.open(message, config);
-  }
-
   onSubmit() {
     this.postForm.get('imageUrl')?.setValue(this.imageUrlName);
     const status = this.postForm.value.status ? 'active' : 'draft';
@@ -109,7 +97,11 @@ export class EditProductComponent implements OnInit {
           this.router.navigate([`/products/view-product/${data.productId}`]);
         },
         error: (error: any) => {
-          this.openSnackbar(error.error.message);
+          this.snackBar.open(error.error.message, '', {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right'
+          })
         },
       });
   }
