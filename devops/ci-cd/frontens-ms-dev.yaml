@@ -44,7 +44,9 @@ stages:
         # sed -i '/frontend-app-var03/c\  apiUrl:`https://dev-kong-saasframework.symple.co.in/pcm/api/v1/feature`,' src/environments/environment.ts
         # sed -i '6i  frontend-app-var04' src/environments/environment.ts
         # sed -i '/frontend-app-var04/c\  featureUrl:`https://dev-kong-saasframework.symple.co.in/pcm/api/v1/feature`,' src/environments/environment.ts
-        # cat src/environments/environment.ts        
+        # cat src/environments/environment.ts
+        sed -i  '6d' Dockerfile
+        sed -i '6i RUN npm run build:dev' Dockerfile
 
     - task: Docker@2
       displayName: buildAndPush
