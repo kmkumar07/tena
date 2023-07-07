@@ -15,6 +15,7 @@ import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-bo
 import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import { MatSnackBarConfig } from '@angular/material/snack-bar';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
   selector: 'app-product-listing',
@@ -22,25 +23,25 @@ import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-
   styleUrls: ['./product-listing.component.scss'],
 })
 export class ProductListingComponent implements OnInit {
-  loading = false;
   id: string = '';
   displayedColumns: string[] = [
     'productId',
     'name',
-    'description',
     'feature',
     'createdOn',
     'status',
     'action',
   ];
+  getfeaturedata: any;
+  featureLength: number;
+  allProductsData: number = 0;
   emptyProductPros = noProducts;
   PageNumber = 1;
-  limit = 5;
+  limit = 10;
   search: string = '';
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
   productsData = [];
-  filteredProducts: any = [];
   allProduct: number;
   NoPage: any = '';
   Nolimit: any = '';
@@ -58,17 +59,10 @@ export class ProductListingComponent implements OnInit {
   private searchSubscription: Subscription;
   dialogRef: any;
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.productsData.length;
-    return numSelected === numRows;
-  }
-
   constructor(
-    private _liveAnnouncer: LiveAnnouncer,
     public dialog: MatDialog,
-    protected productService: ProductsService
+    protected productService: ProductsService,
+    private global: GlobalService
   ) {}
 
   onSearchInput() {
@@ -76,8 +70,7 @@ export class ProductListingComponent implements OnInit {
   }
 
   data$ = this.productService.product$;
-  ngOnInit(): void {
-    this.loading = true;
+  ngOnInit() {
     this.getAllProduct(
       this.NoPage,
       this.Nolimit,
@@ -96,7 +89,6 @@ export class ProductListingComponent implements OnInit {
     this.searchSubscription = this.searchQueryChanged
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
-        this.loading = true;
         this.search = value;
         this.getProduct(
           this.PageNumber,
@@ -115,7 +107,7 @@ export class ProductListingComponent implements OnInit {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-    this.loading = true;
+    this.global.showLoader();
     this.productService
       .getProducts(
         this.NoPage,
@@ -127,7 +119,11 @@ export class ProductListingComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.allProduct = data.length;
-          this.loading = false;
+          this.global.hideLoader();
+
+          if (this.allProduct > this.allProductsData || this.allProduct == 0) {
+            this.allProductsData = this.allProduct;
+          }
         }
       });
   }
@@ -139,7 +135,7 @@ export class ProductListingComponent implements OnInit {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-    this.loading = true;
+    this.global.showLoader();
     this.productService
       .getProducts(
         this.PageNumber,
@@ -151,8 +147,7 @@ export class ProductListingComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.productsData = data;
-          this.filteredProducts = data;
-          this.loading = false;
+          this.global.hideLoader();
           this.totalPages = Math.ceil(this.allProduct / limit);
           this.hasNextPage = PageNumber < this.totalPages;
         }
@@ -230,40 +225,33 @@ export class ProductListingComponent implements OnInit {
       },
     });
   }
-  openDelete(id: any) {
-    this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      width: '420px',
-      panelClass: 'dialog-curved',
-      data: {
-        module: 'Product',
-        deleteId: id,
-      },
-    });
 
-    this.dialogRef.afterClosed().subscribe((res: any) => {
-      if (res) {
-        this.sendElementId(id);
+  openDelete(id: any) {
+    this.productService.getProductById(id).subscribe((data) => {
+      this.getfeaturedata = data;
+      this.featureLength = this.getfeaturedata.feature.length;
+      let productName = data.name;
+      if (this.featureLength) {
+        this.openSnackbar(
+          `Unable to delete ${productName}. Please remove associated features first.`
+        );
+      } else {
+        this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+          width: '420px',
+          panelClass: 'dialog-curved',
+          data: {
+            module: 'Product',
+            deleteId: id,
+          },
+        });
+
+        this.dialogRef.afterClosed().subscribe((res: any) => {
+          if (res) {
+            this.sendElementId(id);
+          }
+        });
       }
     });
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-    this.selection.select(...this.productsData);
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Data_Type): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.product_ID + 1
-    }`;
   }
 
   announceSortChange(sortState: Sort) {
@@ -276,25 +264,5 @@ export class ProductListingComponent implements OnInit {
       this.sortBy,
       this.sortOrder
     );
-  }
-
-  selectedRow(selectedID: string, event: any) {
-    const selectedRow = document.getElementById(`${selectedID}`);
-    if (selectedRow != null) {
-      selectedRow.classList.toggle('selected-row');
-    }
-    event.stopPropagation();
-  }
-
-  selectAll(data: any[]) {
-    if (this.isAllSelected()) {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.add('selected-row');
-      });
-    } else {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.remove('selected-row');
-      });
-    }
   }
 }

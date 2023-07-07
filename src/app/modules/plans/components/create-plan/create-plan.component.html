@@ -398,7 +398,43 @@
                   *matCellDef="let element"
                   class="mat-subtitle-2 text-headline-light price-cell"
                 >
-                  {{ element.price }}
+                  <div
+                    *ngIf="
+                      element.multiPricing && element.multiPricing.length == 0
+                    "
+                    class="flex align-center"
+                  >
+                    {{ element.price }}
+                  </div>
+                  <div
+                    *ngIf="
+                      element.multiPricing && element.multiPricing.length > 0
+                    "
+                    class="flex align-center"
+                    [ngxTippy]="fullDescription"
+                    [tippyProps]="{ placement: 'right' }"
+                  >
+                    {{ element.multiPricing[0].price }}
+                    <ng-template #fullDescription let-name class="t-template">
+                      <table class="black-text">
+                        <thead>
+                          <th class="pr-4">Starting Unit</th>
+                          <th class="pr-4">Ending Unit</th>
+                          <th class="pr-4">Price</th>
+                        </thead>
+                        <tbody>
+                          <tr
+                            class="p-3"
+                            *ngFor="let item of element.multiPricing"
+                          >
+                            <td>{{ item.startingUnit }}</td>
+                            <td>{{ item.endingUnit }}</td>
+                            <td>{{ item.price }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </ng-template>
+                  </div>
                 </td>
               </ng-container>
 
@@ -484,7 +520,7 @@
               mat-flat-button
               color="primary"
               class="mt-11 large"
-              [routerLink]="'/plans/create/product-detail'"
+              [routerLink]="'/plans/create/product-variant'"
               [disabled]="!stepOneCompleted"
             >
               Add product
@@ -570,7 +606,7 @@
             mat-flat-button
             color="primary"
             class="large"
-            [routerLink]="'/plans/create/product-detail'"
+            [routerLink]="'/plans/create/product-variant'"
             [disabled]="!stepOneCompleted"
           >
             Add Product

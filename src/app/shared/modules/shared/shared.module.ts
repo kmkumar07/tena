@@ -8,9 +8,10 @@ import { CustomDateHeaderComponent } from '../../components/custom-date-header/c
 import { HttpClientModule } from '@angular/common/http';
 import { EditCustomerDetailsComponent } from '../../components/dialog-box/edit-customer-details/edit-customer-details.component';
 import { SnackBarComponent } from '../../components/snack-bar/snack-bar.component';
+import { NoItemFoundComponent } from '../../components/no-item-found/no-item-found.component';
 
 @NgModule({
-  declarations: [EmptyListingComponent, CustomDateHeaderComponent, EditCustomerDetailsComponent, SnackBarComponent],
+  declarations: [EmptyListingComponent, CustomDateHeaderComponent, EditCustomerDetailsComponent, SnackBarComponent, NoItemFoundComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -25,7 +26,8 @@ import { SnackBarComponent } from '../../components/snack-bar/snack-bar.componen
     EmptyListingComponent,
     CustomDateHeaderComponent,
     EditCustomerDetailsComponent,
-    SnackBarComponent
+    SnackBarComponent,
+    NoItemFoundComponent
   ],
 })
 export class SharedModule {}
