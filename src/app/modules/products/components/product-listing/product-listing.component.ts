@@ -68,6 +68,9 @@ export class ProductListingComponent implements OnInit {
 
   data$ = this.productService.product$;
   ngOnInit() {
+    this.sortBy = 'createdOn';
+    this.sortOrder = 'desc';
+    
     this.getAllProduct(
       this.NoPage,
       this.Nolimit,

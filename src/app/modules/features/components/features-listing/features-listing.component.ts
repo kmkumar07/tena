@@ -83,6 +83,9 @@ export class FeaturesListingComponent implements OnInit {
     this.searchQueryChanged.next(this.searchQuery);
   }
   ngOnInit(): void {
+    this.sortBy = 'createdOn';
+    this.sortOrder = 'desc';
+    
     this.getAllFeature(
       this.NumberOfPage,
       this.NumberOfLimit,
