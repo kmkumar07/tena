@@ -43,6 +43,8 @@ export class CreateFeatureComponent {
   PageNumber: any = '';
   limit: any = '';
   search: string = '';
+  sortBy: 'name' | 'createdOn';
+  sortOrder: 'asc' | 'desc';
   productArray = [];
   id: string;
   isRangeSelected: boolean = false;
@@ -63,7 +65,13 @@ export class CreateFeatureComponent {
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
     this.productService
-      .getProducts(this.PageNumber, this.limit, this.search)
+      .getProducts(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
       .subscribe((data) => {
         this.productArray = data.map((res) => res.productId);
         this.featureForm.patchValue({ productID: this.id });
@@ -188,6 +196,7 @@ export class CreateFeatureComponent {
     }
   }
   onSubmit() {
+    console.log('haya', this.levels.valid)
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
         (<FormGroup>ele).addControl('level', new FormControl(index));

@@ -1,9 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
+import { FeatureService } from 'src/app/modules/features/services/feature.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
+import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-view-product',
   templateUrl: './view-product.component.html',
@@ -15,6 +19,7 @@ export class ViewProductComponent {
   productDetail: any;
   productId: string;
   name: string;
+  dialogRef: any;
   description: string;
   modifiedOn: string;
   createdOn: string;
@@ -25,10 +30,14 @@ export class ViewProductComponent {
   imageName: string;
   feature: any;
   id: string;
+  
   constructor(
     private productService: ProductsService,
+    private featureService: FeatureService,
     private route: ActivatedRoute,
-    private router: Router
+    public dialog: MatDialog,
+    private router: Router,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -53,4 +62,49 @@ export class ViewProductComponent {
   navigateToFeatures() {
     this.router.navigate(['/features/create/products/', this.id]);
   }
+  
+  deleteElementById(elementId: number) {
+    this.featureService.deleteFeature(elementId).subscribe({
+      next: (res) => {
+        this.deleteSuccess(elementId);
+      },
+      error: (error: any) => {
+        this.snackBar.open(error.error.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right'
+        })
+      },
+    });
+  }
+
+  deleteSuccess(id: any) {
+    const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
+      width: '422px',
+      panelClass: 'dialog-curved',
+      data: {
+        module: 'Feature',
+        deleteId: id,
+      },
+    });
+    this.router.navigate(['/features']);
+  }
+
+  openDelete(id: any) {
+    this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      width: '420px',
+      panelClass: 'dialog-curved',
+      data: {
+        module: 'Feature',
+        deleteId: id,
+      },
+    });
+
+    this.dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.deleteElementById(id);
+      }
+    });
+  }
+
 }

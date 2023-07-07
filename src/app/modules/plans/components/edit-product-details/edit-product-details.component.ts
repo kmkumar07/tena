@@ -39,6 +39,8 @@ export class EditProductDetailsComponent implements OnInit {
   PageNumber: any = '';
   limit: any = '';
   search: string = '';
+  sortBy: 'name' | 'createdOn';
+  sortOrder: 'asc' | 'desc';
   productData: any = [];
   id: string;
   selectProductId: string = '';
@@ -71,7 +73,13 @@ export class EditProductDetailsComponent implements OnInit {
       this.featureDetails = data.features;
 
       this.productService
-        .getProducts(this.PageNumber, this.limit, this.search)
+        .getProducts(
+          this.PageNumber,
+          this.limit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        )
         .subscribe((data) => {
           this.productData = data;
 

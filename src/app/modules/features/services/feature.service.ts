@@ -31,12 +31,21 @@ export class FeatureService {
     );
   }
 
-  getFeatures(PageNumber: number, limit: number, search: string): Observable<FeatureList[]> {
-    return this.http .get<any>(`${environment.apiUrl}/feature?page=${PageNumber}&limit=${limit}&search=${search}`)
+  getFeatures(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ): Observable<FeatureList[]> {
+    return this.http
+      .get<any>(
+        `${environment.apiUrl}/feature?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+      )
       .pipe(
         map((res) => {
           this.featureSubject.next(res.data);
-          this.features = res.data;
+          this.features = res.data;          
           return res.data;
         }),
         catchError((err) => {
@@ -63,16 +72,18 @@ export class FeatureService {
     );
   }
   getFeatureById(id: string): Observable<GetFeature> {
-    return this.http.get<any>(`${environment.apiUrl}/feature/{featureId}?featureId=${id}`).pipe(
-      map((res) => {
-        this.featureSubject.next(res);
-        return res.data;
-      }),
-      catchError((err) => {
-        this.error$.next(err.message);
-        throw err;
-      })
-    );
+    return this.http
+      .get<any>(`${environment.apiUrl}/feature/{featureId}?featureId=${id}`)
+      .pipe(
+        map((res) => {
+          this.featureSubject.next(res);
+          return res.data;
+        }),
+        catchError((err) => {
+          this.error$.next(err.message);
+          throw err;
+        })
+      );
   }
 
   updateFeature(featureId: string, updatedFeature: any): Observable<Feature> {

@@ -43,6 +43,8 @@ export class EditFeatureComponent {
   PageNumber: any = '';
   limit: any = '';
   search: string = '';
+  sortBy: 'name' | 'createdOn';
+  sortOrder: 'asc' | 'desc';
   productId = [];
   status: boolean;
   featureForm: FormGroup = this.formBuilder.group({
@@ -88,7 +90,13 @@ export class EditFeatureComponent {
 
   ngOnInit() {
     this.productService
-      .getProducts(this.PageNumber, this.limit, this.search)
+      .getProducts(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
       .subscribe((data) => {
         this.productId = data.map((res) => res.productId);
       });

@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
   selector: 'app-product-listing',
@@ -21,23 +22,25 @@ import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-
   styleUrls: ['./product-listing.component.scss'],
 })
 export class ProductListingComponent implements OnInit {
-  loading = false;
   id: string = '';
   displayedColumns: string[] = [
     'productId',
     'name',
-    'description',
     'feature',
     'createdOn',
     'status',
     'action',
   ];
+  getfeaturedata: any;
+  featureLength: number;
+  allProductsData: number = 0;
   emptyProductPros = noProducts;
   PageNumber = 1;
-  limit = 5;
+  limit = 10;
   search: string = '';
+  sortBy: 'name' | 'createdOn';
+  sortOrder: 'asc' | 'desc';
   productsData = [];
-  filteredProducts: any = [];
   allProduct: number;
   NoPage: any = '';
   Nolimit: any = '';
@@ -52,18 +55,11 @@ export class ProductListingComponent implements OnInit {
   private searchSubscription: Subscription;
   dialogRef: any;
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.productsData.length;
-    return numSelected === numRows;
-  }
-
   constructor(
-    private _liveAnnouncer: LiveAnnouncer,
     public dialog: MatDialog,
     protected productService: ProductsService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private global: GlobalService
   ) {}
 
   onSearchInput() {
@@ -71,41 +67,84 @@ export class ProductListingComponent implements OnInit {
   }
 
   data$ = this.productService.product$;
-  ngOnInit(): void {
-    this.loading = true;
-    this.getAllProduct(this.NoPage, this.Nolimit, this.search);
-    this.getProduct(this.PageNumber, this.limit, this.search);
+  ngOnInit() {
+    this.getAllProduct(
+      this.NoPage,
+      this.Nolimit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
+    this.getProduct(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
 
     this.searchSubscription = this.searchQueryChanged
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
-        this.loading = true;
         this.search = value;
-        this.getProduct(this.PageNumber, this.limit, this.search);
+        this.getProduct(
+          this.PageNumber,
+          this.limit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
       });
   }
 
-  getAllProduct(PageNumber: number, limit: number, search: string) {
-    this.loading = true;
+  getAllProduct(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.global.showLoader();
     this.productService
-      .getProducts(this.NoPage, this.Nolimit, this.search)
+      .getProducts(
+        this.NoPage,
+        this.Nolimit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
       .subscribe((data) => {
         if (data) {
           this.allProduct = data.length;
-          this.loading = false;
+          this.global.hideLoader();
+
+          if (this.allProduct > this.allProductsData || this.allProduct == 0) {
+            this.allProductsData = this.allProduct;
+          }
         }
       });
   }
 
-  getProduct(PageNumber: number, limit: number, search: string) {
-    this.loading = true;
+  getProduct(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.global.showLoader();
     this.productService
-      .getProducts(this.PageNumber, this.limit, this.search)
+      .getProducts(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
       .subscribe((data) => {
         if (data) {
           this.productsData = data;
-          this.filteredProducts = data;
-          this.loading = false;
+          this.global.hideLoader();
           this.totalPages = Math.ceil(this.allProduct / limit);
           this.hasNextPage = PageNumber < this.totalPages;
         }
@@ -121,28 +160,52 @@ export class ProductListingComponent implements OnInit {
   onPrevious() {
     if (this.PageNumber > 1) {
       this.PageNumber--;
-      this.getProduct(this.PageNumber, this.limit, this.search);
+      this.getProduct(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      );
     }
   }
 
   onNext() {
     this.PageNumber++;
-    this.getProduct(this.PageNumber, this.limit, this.search);
+    this.getProduct(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
   }
 
   sendElementId(elementId: string) {
     this.productService.deleteProduct(elementId).subscribe({
       next: (res) => {
-        this.getProduct(this.PageNumber, this.limit, this.search);
-        this.getAllProduct(this.NoPage, this.Nolimit, this.search);
+        this.getProduct(
+          this.PageNumber,
+          this.limit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
+        this.getAllProduct(
+          this.NoPage,
+          this.Nolimit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
         this.deleteSuccess(elementId);
       },
       error: (error: any) => {
         this.snackBar.open(error.error.message, '', {
           duration: 5000,
           verticalPosition: 'top',
-          horizontalPosition: 'right'
-        })
+          horizontalPosition: 'right',
+        });
       },
     });
   }
@@ -156,67 +219,50 @@ export class ProductListingComponent implements OnInit {
       },
     });
   }
-  openDelete(id: any) {
-    this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      width: '420px',
-      panelClass: 'dialog-curved',
-      data: {
-        module: 'Product',
-        deleteId: id,
-      },
-    });
 
-    this.dialogRef.afterClosed().subscribe((res: any) => {
-      if (res) {
-        this.sendElementId(id);
+  openDelete(id: any) {
+    this.productService.getProductById(id).subscribe((data) => {
+      this.getfeaturedata = data;
+      this.featureLength = this.getfeaturedata.feature.length;
+      let productName = data.name;
+      if (this.featureLength) {
+        this.snackBar.open(
+          `Unable to delete ${productName}. Please remove associated features first.`,
+          '',
+          {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          }
+        );
+      } else {
+        this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+          width: '420px',
+          panelClass: 'dialog-curved',
+          data: {
+            module: 'Product',
+            deleteId: id,
+          },
+        });
+
+        this.dialogRef.afterClosed().subscribe((res: any) => {
+          if (res) {
+            this.sendElementId(id);
+          }
+        });
       }
     });
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-    this.selection.select(...this.productsData);
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Data_Type): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.product_ID + 1
-    }`;
-  }
-
   announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
-
-  selectedRow(selectedID: string, event: any) {
-    const selectedRow = document.getElementById(`${selectedID}`);
-    if (selectedRow != null) {
-      selectedRow.classList.toggle('selected-row');
-    }
-    event.stopPropagation();
-  }
-
-  selectAll(data: any[]) {
-    if (this.isAllSelected()) {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.add('selected-row');
-      });
-    } else {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.remove('selected-row');
-      });
-    }
+    this.sortBy = sortState.active as 'name' | 'createdOn';
+    this.sortOrder = sortState.direction as 'asc' | 'desc';
+    this.getProduct(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
   }
 }

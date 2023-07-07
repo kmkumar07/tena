@@ -7,10 +7,11 @@ import { AngularMaterialModule } from '../angular-material/angular-material.modu
 import { CustomDateHeaderComponent } from '../../components/custom-date-header/custom-date-header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EditCustomerDetailsComponent } from '../../components/dialog-box/edit-customer-details/edit-customer-details.component';
+import { NoItemFoundComponent } from '../../components/no-item-found/no-item-found.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
-  declarations: [EmptyListingComponent, CustomDateHeaderComponent, EditCustomerDetailsComponent],
+  declarations: [EmptyListingComponent, CustomDateHeaderComponent, EditCustomerDetailsComponent, NoItemFoundComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -25,7 +26,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ReactiveFormsModule,
     EmptyListingComponent,
     CustomDateHeaderComponent,
-    EditCustomerDetailsComponent
+    EditCustomerDetailsComponent,
+    NoItemFoundComponent
   ],
 })
 export class SharedModule {}
