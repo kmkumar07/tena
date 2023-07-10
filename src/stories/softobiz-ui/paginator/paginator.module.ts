@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PaginatorComponent } from './paginator.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatIconModule,
     BrowserAnimationsModule,
     MatStepperModule,
+    AngularMaterialModule
   ],
   declarations: [PaginatorComponent],
   exports: [PaginatorComponent],

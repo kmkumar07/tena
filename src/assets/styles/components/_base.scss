@@ -11,12 +11,21 @@ textarea.mat-input-element {
 
 textarea {
   min-height: 9.375rem;
-  color: color("grey", "darken-6") !important;
+  color: color("grey", "darken-6");
+
+  // @include dark-theme {
+  //   color: #ffffff;
+  // }
 }
 
 //mat-checkbox
 .mat-mdc-checkbox label {
-  color: color('purple', 'darken-1');
+  color: color("purple", "darken-1");
+
+  // @include dark-theme {
+  //   color: #ffffff;
+  // }
+
   font-weight: 500;
   font-size: 1rem;
 }

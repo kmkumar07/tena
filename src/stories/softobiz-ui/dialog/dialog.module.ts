@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogComponent } from './dialog.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/a
     MatIconModule,
     BrowserAnimationsModule,
     MatStepperModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    MatButtonModule
   ],
   declarations: [DialogComponent],
   exports: [DialogComponent],

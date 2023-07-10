@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorLayoutComponent } from './errorLayout.component';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
+import { SftButtonModule } from '../button/button.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ButtonComponent } from '../button/button.component';
     BrowserAnimationsModule,
     CommonModule,
     NgModule,
+    SftButtonModule
   ],
   exports: [ErrorLayoutComponent],
 })

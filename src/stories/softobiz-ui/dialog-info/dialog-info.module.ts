@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DialogInfoComponent } from './dialog-info.component';
+import {
+  DialogInfoComponent,
+  DialogInfoDeleteSuccess,
+} from './dialog-info.component';
 import { PortalModule } from '@angular/cdk/portal';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,7 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
 @NgModule({
-  declarations: [DialogInfoComponent],
+  declarations: [DialogInfoComponent, DialogInfoDeleteSuccess],
   imports: [
     CommonModule,
     MatMenuModule,
@@ -23,4 +26,4 @@ import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/a
     AngularMaterialModule,
   ],
 })
-export class MenuModule {}
+export class SftDialogInfoModule {}

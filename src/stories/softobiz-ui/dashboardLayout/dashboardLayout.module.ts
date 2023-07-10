@@ -33,10 +33,10 @@ import { MatInputModule } from '@angular/material/input';
   imports: [
     AngularMaterialModule,
     BrowserAnimationsModule,
-    SidebarComponent,
-    HeaderComponent,
-    ProfileComponent,
-    SearchbarComponent,
+    // SidebarComponent,
+    // HeaderComponent,
+    // ProfileComponent,
+    // SearchbarComponent,
     RouterTestingModule,
     AngularMaterialModule
   ],

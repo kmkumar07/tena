@@ -1,6 +1,8 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 @include mat.core();
+
+@import "../../themes/dark.scss";
 
 $my-primary: (
   50: #eeeafb,
@@ -28,7 +30,7 @@ $my-primary: (
     A200: rgba(#ffffff, 0.87),
     A400: rgba(#ffffff, 0.87),
     A700: rgba(#ffffff, 0.87),
-  )
+  ),
 );
 
 $my-primary: mat.define-palette($my-primary, 400, 200, 900);
@@ -53,47 +55,60 @@ $my-custom-typography-config: mat.define-typography-config(
 
 $my-typography: $my-custom-typography-config;
 
-$my-theme: mat.define-light-theme((
- color: (
-   primary: $my-primary,
-   accent: $my-accent,
- ),
- typography: $my-typography,
- density: 0,
-));
+// Define a dark theme
+// $dark-theme: mat.define-dark-theme((
+//  color: (
+//    primary: mat.define-palette(mat.$pink-palette),
+//    accent: mat.define-palette(mat.$blue-grey-palette),
+//  ),
+//   // Only include `typography` and `density` in the default dark theme.
+//   typography: mat.define-typography-config(),
+//   density: 0,
+// ));
+
+// Define a light theme
+$my-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+    ),
+    typography: $my-typography,
+    density: 0,
+  )
+);
 @include mat.typography-hierarchy($my-typography);
 @include mat.all-component-themes($my-theme);
 
-@import './components/color.scss';
-@import './components/variables';
-@import './components/mixins';
-@import './components/global';
-@import './components/variables.scss';
-@import './components/typography';
-@import './components/base';
-@import './components/_buttons.scss';
-@import './components/_input.scss';
-@import './components/navbar';
-@import './components/material-base.scss';
-@import './components/icons-material-design';
-@import './components/custom';
-@import './components/grid';
-@import './components/storybook';
-@import './components/modal';
+@import "./components/color.scss";
+@import "./components/variables";
+@import "./components/mixins";
+@import "./components/global";
+@import "./components/variables.scss";
+@import "./components/typography";
+@import "./components/base";
+@import "./components/_buttons.scss";
+@import "./components/_input.scss";
+@import "./components/navbar";
+@import "./components/material-base.scss";
+@import "./components/icons-material-design";
+@import "./components/custom";
+@import "./components/grid";
+@import "./components/storybook";
+@import "./components/modal";
 
 //modules
-@import './components/modules/products/product';
-@import './components/modules/features/features';
-@import './components/modules/plans/plans';
-@import './components/modules/coupons/coupons';
-@import './components/modules/transaction/transaction';
-@import './components/modules/invoice/invoice.scss';
-@import './components/modules/logs/logs.scss';
-@import './components/modules/sign-in/sign-in.scss';
-@import './components/modules/customers/customer';
-@import 'tippy.js/dist/tippy.css';
-@import '/node_modules/tippy.js/dist/tippy.css';
-
+@import "./components/modules/products/product";
+@import "./components/modules/features/features";
+@import "./components/modules/plans/plans";
+@import "./components/modules/coupons/coupons";
+@import "./components/modules/transaction/transaction";
+@import "./components/modules/invoice/invoice.scss";
+@import "./components/modules/logs/logs.scss";
+@import "./components/modules/sign-in/sign-in.scss";
+@import "./components/modules/customers/customer";
+@import "tippy.js/dist/tippy.css";
+@import "/node_modules/tippy.js/dist/tippy.css";
 
 a[id*="softobiz-ui"] {
   display: none;

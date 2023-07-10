@@ -1,11 +1,15 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { DialogInfoComponent } from '../dialog-info.component';
+import {
+  DialogInfoDeleteSuccess,
+  DialogInfoComponent,
+} from '../dialog-info.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
+import { SftErrorLayoutModule } from '../../errorLayout/errorLayout.module';
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
 const meta: Meta<DialogInfoComponent> = {
@@ -25,11 +29,12 @@ const meta: Meta<DialogInfoComponent> = {
         MatMenuModule,
         MatButtonModule,
         MatDialogModule,
-        MatButtonModule,
         BrowserAnimationsModule,
         MatIconModule,
         AngularMaterialModule,
+        SftErrorLayoutModule,
       ],
+      declarations: [DialogInfoComponent,DialogInfoDeleteSuccess],
     }),
   ],
 

@@ -29,9 +29,9 @@ export class DashboardLayoutComponent {
   //   let list = [];
   //   return (list = this.menuItems.filter((ele) => ele.category == item));
   // }
-  // preventClose(event: any) {
-  //   event.stopPropagation();
-  // }
+  preventClose(event: any) {
+    event.stopPropagation();
+  }
   menuItems = MENUITEMS;
   configOptions = Config_Menu;
   Menu_Headings = Menu_Headings;

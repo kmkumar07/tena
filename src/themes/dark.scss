@@ -1,0 +1,73 @@
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+// Define a light theme
+$light-primary: mat.define-palette(mat.$indigo-palette);
+$light-accent: mat.define-palette(mat.$pink-palette);
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $light-primary,
+      accent: $light-accent,
+    ),
+  )
+);
+
+// Define a dark theme
+$dark-primary: mat.define-palette(mat.$pink-palette);
+$dark-accent: mat.define-palette(mat.$purple-palette, 900);
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+    ),
+  )
+);
+
+[data-app-theme="dark"] {
+  .mat-app-background {
+    background: #121212;
+  }
+  @include mat.core-theme($dark-theme);
+  @include mat.button-theme($dark-theme);
+  @include mat.card-theme($dark-theme);
+  @include mat.progress-bar-theme($dark-theme);
+  @include mat.chips-theme($dark-theme);
+  @include mat.badge-theme($dark-theme);
+  @include mat.button-toggle-theme($dark-theme);
+  @include mat.checkbox-theme($dark-theme);
+  @include mat.sidenav-theme($dark-theme);
+  @include mat.list-theme($dark-theme);
+  @include mat.form-field-theme($dark-theme);
+  @include mat.icon-theme($dark-theme);
+  @include mat.select-theme($dark-theme);
+}
+
+// Apply the dark theme by default
+
+[data-app-theme="light"] {
+  @include mat.core-color($light-theme);
+  @include mat.button-color($light-theme);
+  @include mat.card-theme($light-theme);
+  @include mat.progress-bar-theme($light-theme);
+  @include mat.chips-theme($light-theme);
+  @include mat.badge-theme($light-theme);
+  @include mat.button-toggle-theme($light-theme);
+  @include mat.checkbox-theme($light-theme);
+  // @include mat.sidenav-theme($light-theme);
+  @include mat.list-theme($light-theme);
+  // @include mat.form-field-theme($light-theme);
+  @include mat.icon-theme($light-theme);
+  @include mat.select-theme($light-theme);
+}
+
+// style for dark theme
+
+[data-app-theme="dark"] {
+
+  textarea {
+    color: #ffffff;
+  }
+}

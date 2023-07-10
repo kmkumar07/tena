@@ -3,6 +3,7 @@ import { DialogComponent } from '../dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
+import { DialogInfoComponent, DialogInfoDeleteSuccess } from '../../dialog-info/dialog-info.component';
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
 const meta: Meta<DialogComponent> = {
@@ -18,7 +19,8 @@ const meta: Meta<DialogComponent> = {
   argTypes: {},
   decorators: [
     moduleMetadata({
-      imports: [BrowserAnimationsModule, MatIconModule, AngularMaterialModule]
+      imports: [BrowserAnimationsModule, MatIconModule, AngularMaterialModule],
+      declarations: [DialogInfoComponent,DialogInfoDeleteSuccess],
     }),
   ],
   parameters: {

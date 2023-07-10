@@ -17,9 +17,14 @@
 
 .input-label {
   color: color("purple", "darken-1");
+
+  // @include dark-theme {
+  //   color: color("shades", "white");
+  // }
+  
   font-weight: 500 !important;
   &.disabled {
-    opacity: .5;
+    opacity: 0.5;
   }
 }
 

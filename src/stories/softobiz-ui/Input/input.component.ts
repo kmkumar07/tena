@@ -7,8 +7,8 @@ import { NgxTippyModule } from 'ngx-tippy-wrapper';
 @Component({
   selector: 'sft-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./input.component.scss', '../../../themes/dark.scss'],
+  encapsulation: ViewEncapsulation.None, 
 })
 export class InputComponent {
   @Input() label: string = 'Label';

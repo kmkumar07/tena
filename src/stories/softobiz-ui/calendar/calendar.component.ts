@@ -4,7 +4,7 @@ import { CustomDateHeaderComponent } from 'src/app/shared/components/custom-date
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss'],
+  styleUrls: ['./calendar.component.scss', '../../../themes/dark.scss'],
 })
 export class CalendarComponent {
   customHeader = CustomDateHeaderComponent;
