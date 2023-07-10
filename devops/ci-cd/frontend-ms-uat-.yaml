@@ -1,7 +1,7 @@
 trigger: none
 
-pool: DF-UAT-selfhost
-  #vmImage: 'ubuntu-latest'
+pool: 
+  vmImage: 'ubuntu-latest'
 
 stages:
 - stage: Build_Frontend_Application_uat
@@ -58,6 +58,7 @@ stages:
     
 - stage: Deploy_Frontend_Application_uat
   displayName: 'Helm Deploy to Frontend application uat'
+  pool: DF-UAT-selfhost
   jobs:
   - job: Deploy  
     displayName: Deploying Application into uat Environment
