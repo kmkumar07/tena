@@ -22,14 +22,12 @@
   display: inline-flex;
 }
 
-
 @mixin flex($values) {
   -moz-box-flex: $values;
   -webkit-flex: $values;
   -ms-flex: $values;
   flex: $values;
 }
-
 
 @mixin flex-wrap($wrap) {
   -webkit-flex-wrap: $wrap;
@@ -38,29 +36,19 @@
   flex-wrap: $wrap;
 }
 
-
-
 @mixin justify-content($value: flex-start) {
   @if $value==flex-start {
     -webkit-box-pack: start;
     -ms-flex-pack: start;
-  }
-
-  @else if $value==flex-end {
+  } @else if $value==flex-end {
     -webkit-box-pack: end;
     -ms-flex-pack: end;
-  }
-
-  @else if $value==space-between {
+  } @else if $value==space-between {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-  }
-
-  @else if $value==space-around {
+  } @else if $value==space-around {
     -ms-flex-pack: distribute;
-  }
-
-  @else {
+  } @else {
     -webkit-box-pack: $value;
     -ms-flex-pack: $value;
   }
@@ -70,79 +58,57 @@
   justify-content: $value;
 }
 
-
-
 @mixin align-items($properties) {
-  @if $properties=='flex-start' {
+  @if $properties== "flex-start" {
     -webkit-align-items: flex-start;
     -ms-flex-align: start;
     align-items: flex-start;
-  }
-
-  @else if $properties=='flex-end' {
+  } @else if $properties== "flex-end" {
     -webkit-align-items: flex-end;
     -ms-flex-align: end;
     align-items: flex-end;
-  }
-
-  @else if $properties=='center' {
+  } @else if $properties== "center" {
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-  }
-
-  @else if $properties=='baseline' {
+  } @else if $properties== "baseline" {
     -webkit-align-items: baseline;
     -ms-flex-align: baseline;
     align-items: baseline;
-  }
-
-  @else if $properties=='stretch' {
+  } @else if $properties== "stretch" {
     -webkit-align-items: stretch;
     -ms-flex-align: stretch;
     align-items: stretch;
   }
 }
 
-
 @mixin align-self($properties) {
-  @if $properties=='auto' {
+  @if $properties== "auto" {
     -webkit-align-self: auto;
     -ms-flex-item-align: auto;
     align-self: auto;
-  }
-
-  @else if $properties=='flex-start' {
+  } @else if $properties== "flex-start" {
     -webkit-align-self: flex-start;
     -ms-flex-item-align: start;
     align-self: flex-start;
-  }
-
-  @else if $properties=='flex-end' {
+  } @else if $properties== "flex-end" {
     -webkit-align-self: flex-end;
     -ms-flex-item-align: end;
     align-self: flex-end;
-  }
-
-  @else if $properties=='center' {
+  } @else if $properties== "center" {
     -webkit-align-self: center;
     -ms-flex-item-align: center;
     align-self: center;
-  }
-
-  @else if $properties=='baseline' {
+  } @else if $properties== "baseline" {
     -webkit-align-self: baseline;
     -ms-flex-item-align: baseline;
     align-self: baseline;
-  }
-
-  @else if $properties=='stretch' {
+  } @else if $properties== "stretch" {
     -webkit-align-self: stretch;
     -ms-flex-item-align: stretch;
     align-self: stretch;
   }
 }
-
 
 @mixin order($val) {
   -webkit-box-ordinal-group: $val;
@@ -151,7 +117,6 @@
   -webkit-order: $val;
   order: $val;
 }
-
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
@@ -162,9 +127,7 @@
 
 /* box-shadow mixins */
 
-
 // @include box-shadow(0, 0, 0, rgba(0,0,0,1));
-
 
 @mixin box-shadow($leftshadow, $topshadow, $blurshadow, $colorShadow) {
   -webkit-box-shadow: $leftshadow $topshadow $blurshadow $colorShadow;
@@ -172,24 +135,18 @@
   box-shadow: $leftshadow $topshadow $blurshadow $colorShadow;
 }
 
-
-
 /* margin-padding mixins */
 
 @mixin margin-padding($m-direction, $m-amount, $p-direction, $p-amount) {
   @if $m-direction==all {
     margin: $m-amount;
-  }
-
-  @else {
+  } @else {
     margin-#{$m-direction}: $m-amount;
   }
 
   @if $p-direction==all {
     padding: $p-amount;
-  }
-
-  @else {
+  } @else {
     padding-#{$p-direction}: $p-amount;
   }
 }
@@ -211,7 +168,7 @@
 
 /* pseudo-mixins */
 
-@mixin pseudo($display: block, $pos: absolute, $content: '') {
+@mixin pseudo($display: block, $pos: absolute, $content: "") {
   content: $content;
   display: $display;
   position: $pos;
@@ -243,7 +200,7 @@
   @each $o in top right bottom left {
     $i: index($args, $o);
 
-    @if $i and $i+1 <=length($args) and type-of(nth($args, $i + 1))==number {
+    @if $i and $i + 1 <=length($args) and type-of(nth($args, $i + 1)) ==number {
       #{$o}: nth($args, $i + 1);
     }
   }
@@ -266,36 +223,36 @@
 
 // toggle helpers
 
-@mixin can-toggle-branding($can-toggle-off-color: #EEEFF2,
-  $can-toggle-on-color: #EEEFF2,
-  $can-toggle-inactive-text: #EEEFF2,
-  $can-toggle-transition: cubic-bezier(0, 1, 0.5, 1)) {
-
+@mixin can-toggle-branding(
+  $can-toggle-off-color: #eeeff2,
+  $can-toggle-on-color: #eeeff2,
+  $can-toggle-inactive-text: #eeeff2,
+  $can-toggle-transition: cubic-bezier(0, 1, 0.5, 1)
+) {
   input[type="checkbox"] {
-
-    &[disabled]~label {
+    &[disabled] ~ label {
       color: rgba($can-toggle-off-color, 1);
     }
 
-    &:focus~label,
-    &:hover~label {
+    &:focus ~ label,
+    &:hover ~ label {
       .can-toggle__switch {
         background-color: $can-toggle-off-color;
 
         &:after {
           color: color("shades", "white");
           background-color: #000;
-          box-shadow: none !important
+          box-shadow: none !important;
         }
       }
     }
 
-    &:hover~label {
+    &:hover ~ label {
       color: $can-toggle-off-color;
     }
 
     &:checked {
-      ~label {
+      ~ label {
         &:hover {
           color: $can-toggle-on-color;
         }
@@ -313,7 +270,7 @@
 
       &:focus,
       &:hover {
-        ~label {
+        ~ label {
           .can-toggle__switch {
             background-color: $can-toggle-on-color;
 
@@ -327,7 +284,6 @@
   }
 
   label {
-
     .can-toggle__label-text {
       flex: 1;
     }
@@ -337,7 +293,7 @@
       background: $can-toggle-off-color;
 
       &:before {
-        color: #2C2B30;
+        color: #2c2b30;
       }
 
       &:after {
@@ -345,38 +301,41 @@
         -webkit-transition: -webkit-transform 0.3s $can-toggle-transition;
         transition: transform 0.3s $can-toggle-transition;
         color: color("shades", "white");
-        background-color: #2C2B30;
+        background-color: #2c2b30;
       }
     }
-
   }
 }
 
-@mixin can-toggle-appearance ($can-toggle-width: 100px,
+@mixin can-toggle-appearance(
+  $can-toggle-width: 100px,
   $can-toggle-height: 29px,
   $can-toggle-border-radius: 5px,
   $can-toggle-offset: 2px,
   $can-toggle-label-font-size: 14px,
   $can-toggle-switch-font-size: 13px,
-  $can-toggle-shadow: 0 3px 3px rgba(black, 0.4)) {
+  $can-toggle-shadow: 0 3px 3px rgba(black, 0.4)
+) {
   $can-toggle-switch-width: calc($can-toggle-width/2);
 
   input[type="checkbox"] {
-
-    &:focus~label,
-
+    &:focus ~ label,
     &:checked {
-      ~label {
+      ~ label {
         .can-toggle__switch {
           &:after {
-            transform: translate3d($can-toggle-width - ($can-toggle-switch-width), 0, 0);
+            transform: translate3d(
+              $can-toggle-width - ($can-toggle-switch-width),
+              0,
+              0
+            );
           }
         }
       }
 
       &:focus,
       &:hover {
-        ~label {
+        ~ label {
           .can-toggle__switch {
             &:after {
               box-shadow: $can-toggle-shadow;
@@ -444,7 +403,7 @@
     top: 0;
     left: 0;
 
-    &[disabled]~label {
+    &[disabled] ~ label {
       pointer-events: none;
 
       .can-toggle__switch {
@@ -453,10 +412,8 @@
     }
 
     &:checked {
-      ~label {
-
+      ~ label {
         .can-toggle__switch {
-
           &:before {
             content: attr(data-unchecked);
             left: 0;
@@ -467,11 +424,6 @@
           }
         }
       }
-
-      //&:focus
-      // &:hover {
-      //   ~label {}
-      // }
     }
   }
 
@@ -503,12 +455,10 @@
         z-index: 5;
         text-transform: uppercase;
         text-align: center;
-        background: #EEEFF2;
+        background: #eeeff2;
         transform: translate3d(0, 0, 0);
       }
-
     }
-
   }
 
   // Default values for .can-toggle class
@@ -517,33 +467,46 @@
 
   // Create toggles of different sizes by overriding the can-toggle-appearance mixin defaults
   &.can-toggle--size-small {
-    @include can-toggle-appearance (90px, // Toggle width
-      28px, // Toggle height
-      2px, // Toggle border radius
-      1px, // Offset (distance btw switch and box)
-      13px, // Label font size
-      10px, // Switch font size
+    @include can-toggle-appearance(
+      90px,
+      // Toggle width
+      28px,
+      // Toggle height
+      2px,
+      // Toggle border radius
+      1px,
+      // Offset (distance btw switch and box)
+      13px,
+      // Label font size
+      10px,
+      // Switch font size
       0 2px 2px rgba(black, 0.4) // Switch shadow on hover/focus
     );
   }
 
-
   &.demo-rebrand-2 {
-    @include can-toggle-branding (#EEEFF2, // Off state color
-      #69be28, // On state color
+    @include can-toggle-branding(
+      #eeeff2,
+      // Off state color
+      #69be28,
+      // On state color
     );
   }
-
 }
 
-$border-radius: ("4": 4px, "8": 8px, "12": 12px, "16": 16px);
+$border-radius: (
+  "4": 4px,
+  "8": 8px,
+  "12": 12px,
+  "16": 16px,
+);
 @each $border, $border-value in $border-radius {
-    .border-radius-#{$border} {
-        border-radius: $border-value !important;
-    }
+  .border-radius-#{$border} {
+    border-radius: $border-value !important;
+  }
 }
 //  Mixin used for Sass Framework
-@mixin circle($size){
+@mixin circle($size) {
   width: $size;
   height: $size;
   border-radius: 50%;
@@ -551,7 +514,16 @@ $border-radius: ("4": 4px, "8": 8px, "12": 12px, "16": 16px);
   min-width: $size;
   max-width: $size;
 }
-@mixin square($size, $radius){
+@mixin circle-with-bg($size, $color) {
+  width: $size;
+  height: $size;
+  border-radius: $size/2;
+  overflow: hidden;
+  min-width: $size;
+  max-width: $size;
+  background-color: $color;
+}
+@mixin square($size, $radius) {
   width: $size;
   height: $size;
   border-radius: $radius;
@@ -559,18 +531,22 @@ $border-radius: ("4": 4px, "8": 8px, "12": 12px, "16": 16px);
   min-width: $size;
   max-width: $size;
 }
-@mixin flex-position($content, $item){
+@mixin flex-position($content, $item) {
   display: flex;
   justify-content: $content;
   align-items: $item;
 }
-@mixin text-ellipsis($width){
+@mixin flex-align($item) {
+  display: flex;
+  align-items: $item;
+}
+@mixin text-ellipsis($width) {
   overflow: hidden;
   text-overflow: ellipsis;
   width: $width;
   white-space: nowrap;
 }
-@mixin image($width, $height){
+@mixin image($width, $height) {
   overflow: hidden;
   max-height: $height;
   height: $height;

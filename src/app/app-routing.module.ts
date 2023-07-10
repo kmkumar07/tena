@@ -3,11 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './core/layouts/layout/layout.component';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { SignInComponent } from './modules/sign-in/components/sign-in.component';
+import { AuthGuard } from './modules/sign-in/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -63,4 +65,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

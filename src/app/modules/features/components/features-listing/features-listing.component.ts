@@ -15,11 +15,11 @@ import {
   debounceTime,
   distinctUntilChanged,
 } from 'rxjs';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
-import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
-import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
   selector: 'app-features-listing',
@@ -32,14 +32,14 @@ export class FeaturesListingComponent implements OnInit {
     'productName',
     'name',
     'type',
-    'description',
     'createdOn',
     'status',
     'action',
   ];
 
   featuresData = [];
-  totalNumberOfFeature: number = 0;
+  searchLength: number;
+  totalNumberOfFeature: number;
   NumberOfPage: any = '';
   NumberOfLimit: any = '';
   selection = new SelectionModel<features>(true, []);
@@ -49,21 +49,20 @@ export class FeaturesListingComponent implements OnInit {
   elementId: number;
   data: any;
   PageNumber = 1;
-  limit = 5;
+  limit = 10;
+  sortBy: 'name' | 'createdOn';
+  sortOrder: 'asc' | 'desc';
   hasNextPage: boolean = false;
   totalPages: number = 0;
   dialogRef: any;
-  loading = false;
   search: string = '';
-  filteredFeature: FeatureList[];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchQuery: string;
+  searchData = [];
+  allFeaturesData: number = 0;
   private searchQueryChanged: Subject<string> = new Subject<string>();
   private searchSubscription: Subscription;
-
-  @ViewChild(SnackBarComponent, { static: false })
-  snackbarComponent: SnackBarComponent;
 
   /** Whether the number of selected elements matches the total number of rows. */
 
@@ -76,46 +75,98 @@ export class FeaturesListingComponent implements OnInit {
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private featureService: FeatureService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private global: GlobalService,
   ) {}
   onSearchInput() {
     this.searchQueryChanged.next(this.searchQuery);
   }
   ngOnInit(): void {
-    this.loading = true;
-    this.getAllFeature(this.NumberOfPage, this.NumberOfLimit, this.search);
-    this.getFeature(this.PageNumber, this.limit, this.search);
+    this.sortBy = 'createdOn';
+    this.sortOrder = 'desc';
+    
+    this.getAllFeature(
+      this.NumberOfPage,
+      this.NumberOfLimit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
+    this.getFeature(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
     this.searchSubscription = this.searchQueryChanged
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
-        this.loading = true;
         this.search = value;
-        this.getFeature(this.PageNumber, this.limit, this.search);
+        this.getFeature(
+          this.NumberOfPage,
+          this.NumberOfLimit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
       });
   }
 
-  getFeature(PageNumber: number, limit: number, search: string) {
-    this.loading = true;
+  getFeature(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.global.showLoader();
     this.featureService
-      .getFeatures(this.PageNumber, this.limit, this.search)
+      .getFeatures(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
       .subscribe((data) => {
         if (data) {
           this.featuresData = data;
-          this.filteredFeature = data;
-          this.loading = false;
+          this.global.hideLoader();
           this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
           this.hasNextPage = PageNumber < this.totalPages;
+          this.searchLength = data.length;
         }
       });
   }
-  getAllFeature(PageNumber: string, limit: string, search: string) {
-    this.loading = true;
+  getAllFeature(
+    PageNumber: string,
+    limit: string,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.global.showLoader();
     this.featureService
-      .getFeatures(this.NumberOfPage, this.NumberOfLimit, this.search)
+      .getFeatures(
+        this.NumberOfPage,
+        this.NumberOfLimit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
       .subscribe((data) => {
         if (data) {
           this.totalNumberOfFeature = data.length;
-          this.loading = false;
+          this.global.hideLoader();
+
+          if (
+            this.totalNumberOfFeature > this.allFeaturesData ||
+            this.totalNumberOfFeature == 0
+          ) {
+            this.allFeaturesData = this.totalNumberOfFeature;            
+          }
         }
       });
   }
@@ -127,20 +178,25 @@ export class FeaturesListingComponent implements OnInit {
   onPrevious() {
     if (this.PageNumber > 1) {
       this.PageNumber--;
-      this.getFeature(this.PageNumber, this.limit, this.search);
+      this.getFeature(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      );
     }
   }
 
   onNext() {
     this.PageNumber++;
-    this.getFeature(this.PageNumber, this.limit, this.search);
-  }
-
-  openSnackbar(message: string) {
-    const config: MatSnackBarConfig = {
-      duration: 5000,
-    };
-    this.snackbarComponent.open(message, config);
+    this.getFeature(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
   }
 
   deleteElementById(elementId: number) {
@@ -149,7 +205,11 @@ export class FeaturesListingComponent implements OnInit {
         this.deleteSuccess(elementId);
       },
       error: (error: any) => {
-        this.openSnackbar(error.error.message);
+        this.snackBar.open(error.error.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right'
+        })
       },
     });
   }
@@ -163,8 +223,20 @@ export class FeaturesListingComponent implements OnInit {
         deleteId: id,
       },
     });
-    this.getAllFeature(this.NumberOfPage, this.NumberOfLimit, this.search);
-    this.getFeature(this.PageNumber, this.limit, this.search);
+    this.getAllFeature(
+      this.NumberOfPage,
+      this.NumberOfLimit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
+    this.getFeature(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
   }
 
   openDelete(id: any) {
@@ -184,61 +256,17 @@ export class FeaturesListingComponent implements OnInit {
     });
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-    this.selection.select(...this.featuresData);
-  }
-
-  /** The label for the checkbox on the passed row */
-
-  checkboxLabel(row?: features): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.feature_id + 1
-    }`;
-  }
-
   /** Announce the change in sort state for assistive technology. */
 
   announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
-
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
-
-  selectedRow(selectedID: string, event: any) {
-    const selectedRow = document.getElementById(`${selectedID}`);
-
-    if (selectedRow != null) {
-      selectedRow.classList.toggle('selected-row');
-    }
-
-    event.stopPropagation();
-  }
-
-  selectAll(data: any[]) {
-    if (this.isAllSelected()) {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.add('selected-row');
-      });
-    } else {
-      data.map((element: any) => {
-        document.getElementById(element.id)?.classList.remove('selected-row');
-      });
-    }
+    this.sortBy = sortState.active as 'name' | 'createdOn';
+    this.sortOrder = sortState.direction as 'asc' | 'desc';
+    this.getFeature(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
   }
 }

@@ -1,7 +1,7 @@
 trigger: none
 
-pool: DF-UAT-selfhost
-  #vmImage: 'ubuntu-latest'
+pool: 
+  vmImage: 'ubuntu-latest'
 
 stages:
 - stage: Build_Frontend_Application_uat
@@ -35,16 +35,9 @@ stages:
     - script: |
         echo $(Build.BuildId)
         pwd && ls -l
-        # sed -i  '3,6d' src/environments/environment.ts
-        # sed -i '3i  frontend-app-var01' src/environments/environment.ts
-        # sed -i '/frontend-app-var01/c\  productData:`https://uat-kong-saasframework.symple.co.in/pcm/api/v1/products`,' src/environments/environment.ts
-        # sed -i '4i  frontend-app-var02' src/environments/environment.ts
-        # sed -i '/frontend-app-var02/c\  uploadUrl:`https://uat-kong-saasframework.symple.co.in/pcm/api/v1/blob/upload`,' src/environments/environment.ts
-        # sed -i '5i  frontend-app-var03' src/environments/environment.ts
-        # sed -i '/frontend-app-var03/c\  apiUrl:`https://uat-kong-saasframework.symple.co.in/pcm/api/v1/feature`,' src/environments/environment.ts
-        # sed -i '6i  frontend-app-var04' src/environments/environment.ts
-        # sed -i '/frontend-app-var04/c\  featureUrl:`https://uat-kong-saasframework.symple.co.in/pcm/api/v1/feature`,' src/environments/environment.ts
-        # cat src/environments/environment.ts        
+        sed -i  '6d' Dockerfile
+        sed -i '6i RUN npm run build:uat' Dockerfile
+        cat Dockerfile
 
     - task: Docker@2
       displayName: buildAndPush
@@ -56,6 +49,7 @@ stages:
     
 - stage: Deploy_Frontend_Application_uat
   displayName: 'Helm Deploy to Frontend application uat'
+  pool: DF-UAT-selfhost
   jobs:
   - job: Deploy  
     displayName: Deploying Application into uat Environment
@@ -63,4 +57,4 @@ stages:
     - script: |
           echo $(Build.BuildId)
           pwd && ls -lrta
-          helm upgrade --recreate-pods -i df-tenant-portal --set image.tag=df-tenant-portal-$(Build.BuildId) -f devops/helm-charts/app/values.yaml devops/helm-charts/app -n df-uat
+          helm upgrade --recreate-pods -i df-tenant-portal --set image.tag=df-tenant-portal-$(Build.BuildId) -f devops/helm-charts/app/values/values-dev.yaml devops/helm-charts/app/charts -n df-uat
