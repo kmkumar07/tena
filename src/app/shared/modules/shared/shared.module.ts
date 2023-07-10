@@ -7,17 +7,18 @@ import { AngularMaterialModule } from '../angular-material/angular-material.modu
 import { CustomDateHeaderComponent } from '../../components/custom-date-header/custom-date-header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EditCustomerDetailsComponent } from '../../components/dialog-box/edit-customer-details/edit-customer-details.component';
-import { SnackBarComponent } from '../../components/snack-bar/snack-bar.component';
 import { NoItemFoundComponent } from '../../components/no-item-found/no-item-found.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
-  declarations: [EmptyListingComponent, CustomDateHeaderComponent, EditCustomerDetailsComponent, SnackBarComponent, NoItemFoundComponent],
+  declarations: [EmptyListingComponent, CustomDateHeaderComponent, EditCustomerDetailsComponent, NoItemFoundComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule
   ],
   exports: [
     NgxTippyModule,
@@ -26,7 +27,6 @@ import { NoItemFoundComponent } from '../../components/no-item-found/no-item-fou
     EmptyListingComponent,
     CustomDateHeaderComponent,
     EditCustomerDetailsComponent,
-    SnackBarComponent,
     NoItemFoundComponent
   ],
 })

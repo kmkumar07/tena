@@ -14,7 +14,7 @@
           <span class="mat-h1 primary-text text-main ml-2">Edit Feature</span>
         </div>
         <span class="pl-8 grey-text text-lighten-9 fs-lg">
-          Fill in the details to create a new item
+          Fill in the details to update a new item
         </span>
       </div>
     </div>
@@ -191,7 +191,6 @@
           </div>
           <mat-form-field appearance="outline">
             <textarea
-              required
               rows="4"
               matInput
               placeholder="Enter here..."
@@ -265,7 +264,7 @@
                     </div>
                     <mat-form-field appearance="outline" class="border-2">
                       <input
-                        (change)="setName(i)"
+                        (input)="setName(i)"
                         required
                         matInput
                         placeholder="Enter here"
@@ -412,5 +411,4 @@
       </div>
     </div>
   </div>
-  <app-snack-bar></app-snack-bar>
 </div>

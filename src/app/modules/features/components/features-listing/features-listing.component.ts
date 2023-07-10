@@ -15,11 +15,10 @@ import {
   debounceTime,
   distinctUntilChanged,
 } from 'rxjs';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
-import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
-import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
@@ -65,19 +64,28 @@ export class FeaturesListingComponent implements OnInit {
   private searchQueryChanged: Subject<string> = new Subject<string>();
   private searchSubscription: Subscription;
 
-  @ViewChild(SnackBarComponent, { static: false })
-  snackbarComponent: SnackBarComponent;
+  /** Whether the number of selected elements matches the total number of rows. */
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.featuresData.length;
+    return numSelected === numRows;
+  }
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private featureService: FeatureService,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private global: GlobalService,
-    public dialog: MatDialog
   ) {}
   onSearchInput() {
     this.searchQueryChanged.next(this.searchQuery);
   }
   ngOnInit(): void {
+    this.sortBy = 'createdOn';
+    this.sortOrder = 'desc';
+    
     this.getAllFeature(
       this.NumberOfPage,
       this.NumberOfLimit,
@@ -191,20 +199,17 @@ export class FeaturesListingComponent implements OnInit {
     );
   }
 
-  openSnackbar(message: string) {
-    const config: MatSnackBarConfig = {
-      duration: 5000,
-    };
-    this.snackbarComponent.open(message, config);
-  }
-
   deleteElementById(elementId: number) {
     this.featureService.deleteFeature(elementId).subscribe({
       next: (res) => {
         this.deleteSuccess(elementId);
       },
       error: (error: any) => {
-        this.openSnackbar(error.error.message);
+        this.snackBar.open(error.error.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right'
+        })
       },
     });
   }
