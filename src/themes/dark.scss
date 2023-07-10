@@ -21,14 +21,14 @@ $dark-theme: mat.define-dark-theme(
   (
     color: (
       primary: $dark-primary,
-      accent: $dark-accent,
+      accent: $dark-accent
     ),
   )
 );
 
 [data-app-theme="dark"] {
-  .mat-app-background {
-    background: #121212;
+  .mat-app-background, .outer-layout {
+    background: #303030;
   }
   @include mat.core-theme($dark-theme);
   @include mat.button-theme($dark-theme);
@@ -43,6 +43,7 @@ $dark-theme: mat.define-dark-theme(
   @include mat.form-field-theme($dark-theme);
   @include mat.icon-theme($dark-theme);
   @include mat.select-theme($dark-theme);
+  @include mat.dialog-theme($dark-theme);
 }
 
 // Apply the dark theme by default
@@ -66,7 +67,6 @@ $dark-theme: mat.define-dark-theme(
 // style for dark theme
 
 [data-app-theme="dark"] {
-
   textarea {
     color: #ffffff;
   }

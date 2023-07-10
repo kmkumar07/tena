@@ -21,8 +21,8 @@
   transition: 400ms;
 }
 .mat-sidenav-content {
-  background-color: color("primary", "light");
-
+  // background-color: color("primary", "light");
+  padding-left: 1.5rem;
   // @include dark-theme {
   //   background-color: color("shades", "black");
   // }
@@ -38,17 +38,18 @@
     }
   }
   .mat-sidenav-content {
-    margin-left: 17.875rem !important;
+    margin-left: 16.375rem !important;
   }
 }
 .mat-sidenav-content {
-  margin-left: 6.8125rem !important;
+  margin-left: 5.3125rem !important;
 }
 .sidenav-slider.mat-drawer {
   transform: none !important;
   visibility: visible !important;
   display: block !important;
   overflow: visible;
+  border-radius: $half-rem !important;
   .mat-drawer-inner-container {
     overflow: visible;
     .sidenav-wrapper {
@@ -70,10 +71,8 @@
         @include flex-position("center", "center");
         .toggle-sidenav {
           outline: 0.125rem solid color("primary", "light");
-          width: 1.75rem !important;
-          height: 1.75rem !important;
+          @include circle(1.75rem !important);
           box-shadow: none;
-          background-color: #ed79ae;
           .mdc-button__label {
             height: 0.875rem;
             margin-left: 0.125rem;

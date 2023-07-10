@@ -32,9 +32,37 @@ $my-primary: (
     A700: rgba(#ffffff, 0.87),
   ),
 );
+$my-accent: (
+  50: #f2eff0,
+  100: #eac7d7,
+  200: #e8a7c4,
+  300: #e995bb,
+  400: #ea81b0,
+  500: #ed79ae,
+  600: #ec61a0,
+  700: #ec4690,
+  800: #ea1877,
+  900: #e7046a,
+  contrast: (
+    50: rgba(#ffffff, 0.87),
+    100: rgba(#ffffff, 0.87),
+    200: rgba(#ffffff, 0.87),
+    300: rgba(#ffffff, 0.87),
+    400: rgba(#ffffff, 0.87),
+    500: rgba(#ffffff, 0.87),
+    600: rgba(#ffffff, 0.87),
+    700: rgba(#ffffff, 0.87),
+    800: rgba(#ffffff, 0.87),
+    900: rgba(#ffffff, 0.87),
+    A100: rgba(#ffffff, 0.87),
+    A200: rgba(#ffffff, 0.87),
+    A400: rgba(#ffffff, 0.87),
+    A700: rgba(#ffffff, 0.87),
+  ),
+);
 
 $my-primary: mat.define-palette($my-primary, 400, 200, 900);
-$my-accent: mat.define-palette(mat.$indigo-palette, A200, A100, A400);
+$my-accent: mat.define-palette($my-accent, 500, 200, 900);
 
 //typography
 $my-custom-level: mat.define-typography-level(
