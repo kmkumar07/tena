@@ -8,12 +8,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
-import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
 import {
   Data_Type,
   feature_types,
@@ -77,9 +76,6 @@ export class EditFeatureComponent {
     ]),
   });
 
-  @ViewChild(SnackBarComponent, { static: false })
-  snackbarComponent: SnackBarComponent;
-
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   constructor(
@@ -88,7 +84,8 @@ export class EditFeatureComponent {
     private routes: Router,
     private route: ActivatedRoute,
     private productService: ProductsService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -163,12 +160,6 @@ export class EditFeatureComponent {
     });
   }
 
-  openSnackbar(message: string) {
-    const config: MatSnackBarConfig = {
-      duration: 5000,
-    };
-    this.snackbarComponent.open(message, config);
-  }
   onTypeSelection(value: string) {
     if (value === 'switch') {
       this.featureForm.removeControl('unit');
@@ -297,7 +288,11 @@ export class EditFeatureComponent {
           return res;
         },
         error: (error: any) => {
-          this.openSnackbar(error.error.message);
+          this.snackBar.open(error.error.message, '', {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right'
+          })
         },
       });
   }

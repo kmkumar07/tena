@@ -19,9 +19,7 @@ import { Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { LogViewComponent } from 'src/app/modules/payment-history/logs/components/log-view/log-view.component';
-import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
-import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface menuOptions {
   value: number;
@@ -51,9 +49,6 @@ export class CreateFeatureComponent {
   id: string;
   isRangeSelected: boolean = false;
 
-  @ViewChild(SnackBarComponent, { static: false })
-  snackbarComponent: SnackBarComponent;
-
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -63,7 +58,8 @@ export class CreateFeatureComponent {
     private routes: Router,
     private productService: ProductsService,
     private route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -199,13 +195,6 @@ export class CreateFeatureComponent {
       this.isRangeSelected = false;
     }
   }
-  openSnackbar(message: string) {
-    const config: MatSnackBarConfig = {
-      duration: 5000,
-    };
-    this.snackbarComponent.open(message, config);
-  }
-
   onSubmit() {
     console.log('haya', this.levels.valid)
     this.levels.controls.forEach((ele, index) => {
@@ -260,7 +249,11 @@ export class CreateFeatureComponent {
         return res;
       },
       error: (error: any) => {
-        this.openSnackbar(error.error.message);
+        this.snackBar.open(error.error.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right'
+        })
       },
     });
   }

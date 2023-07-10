@@ -12,8 +12,7 @@ import {
 import { Data_Type, noProducts } from 'src/app/shared/constants/consants';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
-import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
-import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { GlobalService } from 'src/app/core/services/global.service';
 
@@ -50,9 +49,6 @@ export class ProductListingComponent implements OnInit {
 
   selection = new SelectionModel<Data_Type>(true, []);
 
-  @ViewChild(SnackBarComponent, { static: false })
-  snackbarComponent: SnackBarComponent;
-
   @ViewChild(MatSort) sort: MatSort;
   searchQuery: string;
   private searchQueryChanged: Subject<string> = new Subject<string>();
@@ -62,6 +58,7 @@ export class ProductListingComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     protected productService: ProductsService,
+    private snackBar: MatSnackBar,
     private global: GlobalService
   ) {}
 
@@ -71,6 +68,9 @@ export class ProductListingComponent implements OnInit {
 
   data$ = this.productService.product$;
   ngOnInit() {
+    this.sortBy = 'createdOn';
+    this.sortOrder = 'desc';
+    
     this.getAllProduct(
       this.NoPage,
       this.Nolimit,
@@ -184,13 +184,6 @@ export class ProductListingComponent implements OnInit {
     );
   }
 
-  openSnackbar(message: string) {
-    const config: MatSnackBarConfig = {
-      duration: 5000,
-    };
-    this.snackbarComponent.open(message, config);
-  }
-
   sendElementId(elementId: string) {
     this.productService.deleteProduct(elementId).subscribe({
       next: (res) => {
@@ -211,7 +204,11 @@ export class ProductListingComponent implements OnInit {
         this.deleteSuccess(elementId);
       },
       error: (error: any) => {
-        this.openSnackbar(error.error.message);
+        this.snackBar.open(error.error.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
       },
     });
   }
@@ -232,8 +229,14 @@ export class ProductListingComponent implements OnInit {
       this.featureLength = this.getfeaturedata.feature.length;
       let productName = data.name;
       if (this.featureLength) {
-        this.openSnackbar(
-          `Unable to delete ${productName}. Please remove associated features first.`
+        this.snackBar.open(
+          `Unable to delete ${productName}. Please remove associated features first.`,
+          '',
+          {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          }
         );
       } else {
         this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
