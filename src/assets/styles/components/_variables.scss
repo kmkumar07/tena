@@ -379,3 +379,7 @@ $spacing: 0.25rem;
 // 11. checkbox
 $checkbox-border: .25rem;
 $half-rem: .5rem;
+$list-active: color("primary", "main");
+[data-app-theme="dark"] {
+    $list-active: red !important;
+}

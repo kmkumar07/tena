@@ -13,7 +13,6 @@
   .mat-drawer-content {
     transition: $sidebar-transition;
     transition-timing-function: inherit !important;
-    background-color: color("primary", "light");
   }
 }
 .mat-sidenav {
@@ -215,7 +214,7 @@
       border-radius: 0.25rem;
       height: 2.5625rem;
       .active {
-        background-color: color("primary", "main");
+        background-color: $list-active;
         .mat-icon,
         .content {
           color: color("shades", "white") !important;
