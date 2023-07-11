@@ -25,6 +25,5 @@ import { EditFeatureComponent } from './components/edit-feature/edit-feature.com
 })
 export class FeaturesModule {
   constructor() {
-    console.log('this is features module');
   }
 }

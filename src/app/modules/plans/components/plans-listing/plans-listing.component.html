@@ -7,7 +7,7 @@
       <div class="flex align-center">
         <h1 class="text-text text-dark">Plans</h1>
         <mat-chip class="chip-dark ml-3">
-          {{ plansData.length }}
+          {{ planLength }}
         </mat-chip>
       </div>
       <div class="flex align-center">
@@ -39,11 +39,11 @@
         </button>
       </div>
     </div>
-    <ng-container *ngIf="plansData.length > 0; else noRecordFound">
+    <ng-container *ngIf="plan.length > 0; else noRecordFound">
       <div class="primary-table mt-8 px-1 pb-2">
         <table
           mat-table
-          [dataSource]="plansData"
+          [dataSource]="plan"
           matSort
           (matSortChange)="announceSortChange($event)"
         >

@@ -1,7 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ProductsService } from '../../services/products.service';
 import {
   Subject,
@@ -32,6 +31,7 @@ export class ProductListingComponent implements OnInit {
     'action',
   ];
   getfeaturedata: any;
+  productsSearchData: any;
   featureLength: number;
   allProductsData: number = 0;
   emptyProductPros = noProducts;
@@ -40,8 +40,8 @@ export class ProductListingComponent implements OnInit {
   search: string = '';
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
-  productsData = [];
-  allProduct: number;
+  totalNumberOfProduct: number;
+  products: any;
   NoPage: any = '';
   Nolimit: any = '';
   hasNextPage: boolean = false;
@@ -70,14 +70,7 @@ export class ProductListingComponent implements OnInit {
   ngOnInit() {
     this.sortBy = 'createdOn';
     this.sortOrder = 'desc';
-    
-    this.getAllProduct(
-      this.NoPage,
-      this.Nolimit,
-      this.search,
-      this.sortBy,
-      this.sortOrder
-    );
+
     this.getProduct(
       this.PageNumber,
       this.limit,
@@ -90,41 +83,13 @@ export class ProductListingComponent implements OnInit {
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
         this.search = value;
-        this.getProduct(
+        this.getSearchProduct(
           this.PageNumber,
           this.limit,
           this.search,
           this.sortBy,
           this.sortOrder
         );
-      });
-  }
-
-  getAllProduct(
-    PageNumber: number,
-    limit: number,
-    search: string,
-    sortBy: 'name' | 'createdOn',
-    sortOrder: 'asc' | 'desc'
-  ) {
-    this.global.showLoader();
-    this.productService
-      .getProducts(
-        this.NoPage,
-        this.Nolimit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
-      )
-      .subscribe((data) => {
-        if (data) {
-          this.allProduct = data.length;
-          this.global.hideLoader();
-
-          if (this.allProduct > this.allProductsData || this.allProduct == 0) {
-            this.allProductsData = this.allProduct;
-          }
-        }
       });
   }
 
@@ -146,10 +111,51 @@ export class ProductListingComponent implements OnInit {
       )
       .subscribe((data) => {
         if (data) {
-          this.productsData = data;
+          this.products = data;
+          this.totalNumberOfProduct = this.products.totalCount;
+          this.productsSearchData = this.products.products;
           this.global.hideLoader();
-          this.totalPages = Math.ceil(this.allProduct / limit);
+          if (
+            this.totalNumberOfProduct > this.allProductsData ||
+            this.totalNumberOfProduct == 0
+          ) {
+            this.allProductsData = this.totalNumberOfProduct;
+          }
+
+          this.totalPages = Math.ceil(this.totalNumberOfProduct / limit);
           this.hasNextPage = PageNumber < this.totalPages;
+        }
+      });
+  }
+
+  getSearchProduct(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.global.showLoader();
+    this.productService
+      .getProducts(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
+      .subscribe((data) => {
+        if (data) {
+          this.products = data;
+          this.productsSearchData = this.products.products;
+
+          this.global.hideLoader();
+          if (
+            this.totalNumberOfProduct > this.allProductsData ||
+            this.totalNumberOfProduct == 0
+          ) {
+            this.allProductsData = this.totalNumberOfProduct;
+          }
         }
       });
   }
@@ -187,20 +193,6 @@ export class ProductListingComponent implements OnInit {
   sendElementId(elementId: string) {
     this.productService.deleteProduct(elementId).subscribe({
       next: (res) => {
-        this.getProduct(
-          this.PageNumber,
-          this.limit,
-          this.search,
-          this.sortBy,
-          this.sortOrder
-        );
-        this.getAllProduct(
-          this.NoPage,
-          this.Nolimit,
-          this.search,
-          this.sortBy,
-          this.sortOrder
-        );
         this.deleteSuccess(elementId);
       },
       error: (error: any) => {
@@ -221,40 +213,50 @@ export class ProductListingComponent implements OnInit {
         deleteId: id,
       },
     });
+    this.getProduct(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
   }
 
   openDelete(id: any) {
-    this.productService.getProductById(id).subscribe((data) => {
-      this.getfeaturedata = data;
-      this.featureLength = this.getfeaturedata.feature.length;
-      let productName = data.name;
-      if (this.featureLength) {
-        this.snackBar.open(
-          `Unable to delete ${productName}. Please remove associated features first.`,
-          '',
-          {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          }
-        );
-      } else {
-        this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-          width: '420px',
-          panelClass: 'dialog-curved',
-          data: {
-            module: 'Product',
-            deleteId: id,
-          },
-        });
-
-        this.dialogRef.afterClosed().subscribe((res: any) => {
-          if (res) {
-            this.sendElementId(id);
-          }
-        });
+    for (let i = 0; i < this.productsSearchData.length; i++) {
+      if (this.productsSearchData[i].productId === id) {
+        this.getfeaturedata = this.productsSearchData[i];
       }
-    });
+    }
+
+    this.featureLength = this.getfeaturedata.feature.length;
+    let productName = this.getfeaturedata.name;
+    if (this.featureLength) {
+      this.snackBar.open(
+        `Unable to delete ${productName}. Please remove associated features first.`,
+        '',
+        {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        }
+      );
+    } else {
+      this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+        width: '420px',
+        panelClass: 'dialog-curved',
+        data: {
+          module: 'Product',
+          deleteId: id,
+        },
+      });
+
+      this.dialogRef.afterClosed().subscribe((res: any) => {
+        if (res) {
+          this.sendElementId(id);
+        }
+      });
+    }
   }
 
   announceSortChange(sortState: Sort) {
