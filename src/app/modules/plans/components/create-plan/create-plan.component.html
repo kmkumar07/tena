@@ -47,7 +47,7 @@
                   <mat-icon
                     class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
                     [ngxTippy]="productnameinfo"
-                    [tippyProps]="{ placement: 'right' }"
+                    [tippyProps]="{ placement: 'right', interactive: true }"
                     tippyName="content"
                     >help</mat-icon
                   >
@@ -111,7 +111,7 @@
                   <mat-icon
                     class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
                     [ngxTippy]="productnameinfo"
-                    [tippyProps]="{ placement: 'right' }"
+                    [tippyProps]="{ placement: 'right', interactive: true }"
                     >help</mat-icon
                   >
                   <ng-template #productnameinfo let-name class="t-template">
@@ -173,7 +173,7 @@
                   <mat-icon
                     class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
                     [ngxTippy]="helpinfotooltip"
-                    [tippyProps]="{ placement: 'right' }"
+                    [tippyProps]="{ placement: 'right', interactive: true }"
                     >help</mat-icon
                   >
                   <ng-template #helpinfotooltip let-name>
@@ -767,7 +767,7 @@
               <mat-icon
                 class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
                 [ngxTippy]="chargesInfo"
-                [tippyProps]="{ placement: 'right' }"
+                [tippyProps]="{ placement: 'right', interactive: true }"
                 >help</mat-icon
               >
               <ng-template #chargesInfo let-name>
@@ -810,14 +810,14 @@
         <div class="fee-input-wrapper">
           <div class="fee-input flex align-center justify-between">
             <span class="mat-subtitle-2">Setup fee</span>
-            <div class="flex align-start">
+            <div class="flex">
               <mat-form-field appearance="outline" class="mb-0">
                 <input matInput placeholder="Enter here..." />
               </mat-form-field>
               <button
                 mat-icon-button
                 color="warn"
-                class="close-icon-btn light-bg rounded ml-2 mt-1"
+                class="close-icon-btn light-bg rounded ml-2"
                 [disabled]="!stepOneCompleted"
               >
                 <mat-icon class="material-symbols-outlined mr-0" color="warn"
@@ -828,14 +828,14 @@
           </div>
           <div class="fee-input flex align-center justify-between">
             <span class="mat-subtitle-2">Activation fee</span>
-            <div class="flex align-start">
+            <div class="flex">
               <mat-form-field appearance="outline" class="mb-0">
                 <input matInput placeholder="Enter here..." />
               </mat-form-field>
               <button
                 mat-icon-button
                 color="warn"
-                class="close-icon-btn light-bg rounded ml-2 mt-1"
+                class="close-icon-btn light-bg rounded ml-2"
                 [disabled]="!stepOneCompleted"
               >
                 <mat-icon class="material-symbols-outlined mr-0" color="warn"

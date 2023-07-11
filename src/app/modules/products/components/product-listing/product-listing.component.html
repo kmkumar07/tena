@@ -20,7 +20,7 @@
       </mat-chip>
     </div>
     <div class="flex align-center">
-      <div class="global-search light mr-6 border-2">
+      <div class="global-search light mr-2 border-1">
         <span class="search-icon pointer">
           <img
             src="../../../../assets/images/icons/search.svg"
@@ -99,7 +99,7 @@
           *matCellDef="let element"
           class="description-col"
           [ngxTippy]="fullDescription"
-          [tippyProps]="{ placement: 'right' }"
+          [tippyProps]="{ placement: 'right', interactive: true}"
           [routerLink]="['/products/view-product/' + element.productId]"
         >
           <p>{{ element.description }}</p>
