@@ -38,7 +38,7 @@ export class EditFeatureComponent {
   postName: string = '';
   position: any;
   isRangeSelected: boolean = false;
-
+  product:any;
   unlimitedButtonLabel: string = 'Set Unlimited';
   PageNumber: any = '';
   limit: any = '';
@@ -98,7 +98,8 @@ export class EditFeatureComponent {
         this.sortOrder
       )
       .subscribe((data) => {
-        this.productId = data.map((res) => res.productId);
+        this.product=data;
+        this.productId =  this.product.products.map((res) => res.productId);
       });
     const id = this.route.snapshot.params['id'];
 
