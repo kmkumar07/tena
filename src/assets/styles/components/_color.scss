@@ -80,7 +80,7 @@ $red: (
   "darken-2": #EA3829,
   "lighten": #e44258,
   "lighten-2": #f9dade,
-  "lighten-3": #FBF5FB,
+  "lighten-3": #ed79ae,
   "lighten-100":#FFEBE7,
   "lighten-200":#FFDDD6,
   "lighten-300":#FFCDC3,
@@ -110,6 +110,11 @@ $primary: (
   "lighten-5":  #FBF9FD,
   "lighten-6":  #7868e61a,
 );
+[data-app-theme="dark"] {
+  $primary: (
+    "main": red,
+  )
+}
 $text: (
   "primary": #405189,
   "secondary": #1A3447,

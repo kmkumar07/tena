@@ -105,6 +105,7 @@ $input-margin-bottom: 8px;
 $input-margin: 0 0 $input-margin-bottom 0 !default;
 $input-padding: 0 15px !default;
 $input-transition: all .3s !default;
+$sidebar-transition: 400ms;
 $label-font-size: 0.929em !default;
 $input-disabled-color: #ceced2 !default;
 $input-disabled-solid-color: #949494 !default;
@@ -377,3 +378,8 @@ $spacing: 0.25rem;
 
 // 11. checkbox
 $checkbox-border: .25rem;
+$half-rem: .5rem;
+$list-active: color("primary", "main");
+[data-app-theme="dark"] {
+    $list-active: red !important;
+}

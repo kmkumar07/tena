@@ -48,11 +48,13 @@ export class ProductsService {
   getProducts(
     PageNumber: number,
     limit: number,
-    search: string
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
   ): Observable<Product[]> {
     return this.http
       .get<any>(
-        `${environment.apiUrl}/products?page=${PageNumber}&limit=${limit}&search=${search}`
+        `${environment.apiUrl}/products?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`
       )
       .pipe(
         map((res) => {

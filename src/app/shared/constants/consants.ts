@@ -156,7 +156,7 @@ export const MENUITEMS = [
     type: 'link',
     name: 'Overview',
     icon: 'space_dashboard',
-    category: 'Dashboard',
+    category: 'Dashboard'
   },
   {
     state: '/customers',

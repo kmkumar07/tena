@@ -1,5 +1,4 @@
 @use "@angular/material" as mat;
-
 @include mat.core();
 
 // Define a light theme
@@ -21,14 +20,14 @@ $dark-theme: mat.define-dark-theme(
   (
     color: (
       primary: $dark-primary,
-      accent: $dark-accent,
+      accent: $dark-accent
     ),
   )
 );
 
 [data-app-theme="dark"] {
-  .mat-app-background {
-    background: #121212;
+  .mat-app-background, .outer-layout {
+    background: #303030;
   }
   @include mat.all-component-themes($dark-theme); 
 }
@@ -54,7 +53,6 @@ $dark-theme: mat.define-dark-theme(
 // style for dark theme
 
 [data-app-theme="dark"] {
-
   textarea {
     color: #ffffff;
   }

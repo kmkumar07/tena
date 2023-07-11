@@ -15,8 +15,7 @@ import { Router } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { SnackBarComponent } from 'src/app/shared/components/snack-bar/snack-bar.component';
-import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-product',
@@ -35,8 +34,6 @@ import { MatSnackBarConfig } from '@angular/material/snack-bar';
   ],
 })
 export class CreateProductComponent implements OnInit {
-  @ViewChild(SnackBarComponent, { static: false })
-  snackbarComponent: SnackBarComponent;
   subscription: Subscription;
   @ViewChild('tippyTemplate', { read: ElementRef, static: true })
   tippyTemplate: ElementRef;
@@ -52,7 +49,8 @@ export class CreateProductComponent implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private snackBar: MatSnackBar
   ) {}
   ngOnInit() {
     this.productForm = this.formBuilder.group({
@@ -85,13 +83,6 @@ export class CreateProductComponent implements OnInit {
     this.productForm.get('status')?.setValue(newStatus);
   }
 
-  openSnackbar(message: string) {
-    const config: MatSnackBarConfig = {
-      duration: 5000,
-    };
-    this.snackbarComponent.open(message, config);
-  }
-
   onSubmit() {
     this.productForm.get('imageUrl')?.setValue(this.imageUrl);
     const status = this.productForm.value.status ? 'active' : 'draft';
@@ -105,7 +96,11 @@ export class CreateProductComponent implements OnInit {
         this.router.navigate([`/products/view-product/${res.productId}`]);
       },
       error: (error: any) => {
-        this.openSnackbar(error.error.message);
+        this.snackBar.open(error.error.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right'
+        })
       },
     });
   }
