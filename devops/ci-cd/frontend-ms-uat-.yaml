@@ -7,7 +7,7 @@ stages:
 - stage: Build_Frontend_Application_uat
   displayName: 'Build stage for Frontend application'
   variables:
-  - group: ory-authorization-uat  
+  - group: DF-PCM-PipelineVariables  
   jobs:
   # - job: Sonarqube
   #   displayName: Sonarqube
