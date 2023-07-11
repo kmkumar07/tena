@@ -7,7 +7,7 @@ stages:
 - stage: Build_Frontend_Application_Dev
   displayName: 'Build stage for Frontend application'
   variables:
-  - group: DF-PCM-PipelineVariables  
+  - group: DF-TP-PipelineVariables
   jobs:
   # - job: Sonarqube
   #   displayName: Sonarqube
