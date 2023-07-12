@@ -41,15 +41,45 @@ $grey-palette: (
     A700: $light-primary-text,
   ),
 );
-
+$pink-palette: (
+  50: #fce4ec,
+  100: #f8bbd0,
+  200: #f48fb1,
+  300: #f06292,
+  400: #ec407a,
+  500: #e91e63,
+  600: #d81b60,
+  700: #c2185b,
+  800: #ad1457,
+  900: #880e4f,
+  A100: #ff80ab,
+  A200: #ff4081,
+  A400: #f50057,
+  A700: #c51162,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
 $custom-dark-theme-background-palette: (
   status-bar: black,
-  app-bar: map.get($grey-palette, 900),
+  app-bar: map.get($grey-palette, 800),
   background: #303030,
   hover: rgba(white, 0.04),
-  // TODO(kara): check style with Material Design UX
   card: map.get($grey-palette, 800),
-  dialog: red,
+  dialog:  map.get($grey-palette, 800),
   disabled-button: rgba(white, 0.12),
   raised-button: map.get($grey-palette, 800),
   focused-button: $light-focused,
@@ -100,7 +130,7 @@ $light-theme: mat.define-light-theme(
 );
 
 // Define a dark theme
-$dark-primary: mat.define-palette(mat.$pink-palette);
+$dark-primary: mat.define-palette(mat.$pink-palette, 400, 200, 900);
 $dark-accent: mat.define-palette(mat.$purple-palette, 900);
 $custom-dark-theme: custom-dark-theme($dark-primary, $dark-accent);
 // $dark-theme: mat.define-dark-theme(
@@ -119,21 +149,6 @@ $custom-dark-theme: custom-dark-theme($dark-primary, $dark-accent);
     background: #303030;
   }
   @include mat.all-component-themes($custom-dark-theme);
-  // @include mat.sidenav-theme
-  // @include mat.color($dark-theme);
-  // @include mat.core-theme($dark-theme);
-  // @include mat.button-theme($dark-theme);
-  // @include mat.card-theme($dark-theme);
-  // @include mat.progress-bar-theme($dark-theme);
-  // @include mat.chips-theme($dark-theme);
-  // @include mat.badge-theme($dark-theme);
-  // @include mat.button-toggle-theme($dark-theme);
-  // @include mat.checkbox-theme($dark-theme);
-  // @include mat.list-theme($dark-theme);
-  // @include mat.form-field-theme($dark-theme);
-  // @include mat.icon-theme($dark-theme);
-  // @include mat.select-theme($dark-theme);
-  // @include mat.dialog-theme($dark-theme);
 }
 
 // Apply the dark theme by default

@@ -1,4 +1,4 @@
-<div
+<mat-card
   *ngIf="allFeaturesData > 0; else noDataList"
   class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll"
 >
@@ -275,10 +275,10 @@
       <app-no-item-found></app-no-item-found>
     </div>
   </ng-template>
-</div>
+</mat-card>
 
 <ng-template #noDataList>
-  <div class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
+  <mat-card class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
     <app-empty-listing [items]="emptyFeature"></app-empty-listing>
-  </div>
+  </mat-card>
 </ng-template>

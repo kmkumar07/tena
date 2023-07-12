@@ -8,8 +8,10 @@ import { StaticRoutes } from 'src/app/shared/constants/consants';
 export class GlobalService {
   staticRoutes: any = StaticRoutes;
   public isLoading = new BehaviorSubject<boolean>(false);
+  public isDarkMode = new BehaviorSubject<boolean>(false);
   constructor() {}
 
+  // loader functions
   showLoader() {
     this.isLoading.next(true);
   }
@@ -19,6 +21,18 @@ export class GlobalService {
   loaderStatus() {
     return this.isLoading.asObservable();
   }
+
+  // Dark Mode Functions
+  switchDark() {
+    this.isDarkMode.next(true);
+  }
+  switchLight() {
+    this.isDarkMode.next(false);
+  }
+  themeModeStatus() {
+    return this.isDarkMode.asObservable()
+  }
+
   isRouteActive(routeSteps: any) {
     if (routeSteps.length >= 4) {
       for (let obj in this.staticRoutes) {

@@ -149,11 +149,11 @@ label {
 }
 
 .horizontal {
-  flex-direction: row;
+  flex-direction: row !important;
 }
 
 .vertical {
-  flex-direction: column;
+  flex-direction: column !important;
 }
 
 .inline-flex {
@@ -406,9 +406,9 @@ label {
 .pointer {
   cursor: pointer;
 }
-.main-bg {
-  background-color: color("shades", "white");
-}
+// .main-bg {
+//   background-color: color("shades", "white");
+// }
 .primary-light-bg {
   background-color: color("primary", "light"); //#F3F1FF
 }
@@ -722,7 +722,7 @@ label {
   background-color: color("red" , "lighten-1000"); //#B40000
 }
 .main-content-height {
-  height: calc(100% - 4.25rem);
+  height: calc(100% - 5.75rem);
 }
 .p-main {
   padding: 1.6875rem 1.8125rem;
