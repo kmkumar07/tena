@@ -1,4 +1,4 @@
-@use 'sass:map';
+@use "sass:map";
 @use "@angular/material" as mat;
 
 @include mat.core();
@@ -8,9 +8,9 @@
 $my-primary: (
   50: #eeeafb,
   100: #d2caf5,
-  200: #ECEBFF,
+  200: #ecebff,
   300: #9484eb,
-  400: #7868E6,
+  400: #7868e6,
   500: #5c4ee1,
   600: #5049da,
   700: #3d41d0,
@@ -65,15 +65,26 @@ $my-accent: (
 $my-primary: mat.define-palette($my-primary, 400, 200, 900);
 $my-accent: mat.define-palette($my-accent, 500, 200, 900);
 
+// $list-active: mat.define-palette($my-primary, 400);
+$list-active: map.get($my-primary, 400);
+
+.mat-mdc-list-item {
+  .mdc-list-item__content {
+    a.active {
+      background-color: $list-active;
+    }
+  }
+}
 
 // Background palette for light themes.
 $light-theme-background-palette: (
   status-bar: map.get($my-primary, 300),
-  app-bar:    map.get($my-primary, 100),
+  app-bar: map.get($my-primary, 100),
   background: blue,
-  hover:      rgba(black, 0.04), // TODO(kara): check style with Material Design UX
-  card:       white,
-  dialog:     white,
+  hover: rgba(black, 0.04),
+  // TODO(kara): check style with Material Design UX
+  card: white,
+  dialog: white,
   disabled-button: rgba(black, 0.12),
   raised-button: white,
   // focused-button: $dark-focused,
@@ -85,14 +96,24 @@ $light-theme-background-palette: (
   tooltip: map.get($my-primary, 700),
 );
 
+
+// .mat-mdc-list-item {
+//   .mdc-list-item__content {
+//     a.active {
+//       background-color: palette.$light-theme-background-palette;
+//     }
+//   }
+// }
+
 // Background palette for dark themes.
 $dark-theme-background-palette: (
   status-bar: black,
-  app-bar:    map.get($my-primary, 900),
+  app-bar: map.get($my-primary, 900),
   background: purple,
-  hover:      rgba(white, 0.04), // TODO(kara): check style with Material Design UX
-  card:       map.get($my-primary, 800),
-  dialog:     map.get($my-primary, 800),
+  hover: rgba(white, 0.04),
+  // TODO(kara): check style with Material Design UX
+  card: map.get($my-primary, 800),
+  dialog: map.get($my-primary, 800),
   disabled-button: rgba(white, 0.12),
   raised-button: map.get($my-primary, 800),
   // focused-button: $light-focused,
@@ -104,20 +125,6 @@ $dark-theme-background-palette: (
   tooltip: map.get($my-primary, 700),
 );
 
-@function _mat-create-dark-color-config($my-primary) {
-  @return (
-    primary: $my-primary,
-    // accent: $accent,
-    // warn: if($warn != null, $warn, define-palette(palette.$red-palette)),
-    is-dark: true,
-    // foreground: $dark-theme-foreground-palette,
-    background: $dark-theme-background-palette,
-  );
-}
-
-$custom-theme: _mat-create-dark-color-config($my-primary);
-
-
 //typography
 $my-custom-level: mat.define-typography-level(
   $font-family: Roboto,
@@ -128,11 +135,16 @@ $my-custom-level: mat.define-typography-level(
 );
 
 $my-custom-typography-config: mat.define-typography-config(
-  $headline-5: mat.define-typography-level(24px, 20px, 500), /* h1, headline .mat-headline-5*/
-  $subtitle-1: mat.define-typography-level(18px, 21px, 400, 0.1px),  /* h3,.mat-subtitle-1*/
-  $subtitle-2: mat.define-typography-level(16px, 20px, 400, 0.1px),  /* h4, sub-heading .mat-subtitle-2*/
-  $body-1: mat.define-typography-level(14px, 20px, 400),  /* table-content .mat-body-1*/
-  $caption: mat.define-typography-level(12px, 20px, 500, 0.1px),  /* subtext .mat-caption*/
+  $headline-5: mat.define-typography-level(24px, 20px, 500),
+  /* h1, headline .mat-headline-5*/ $subtitle-1:
+    mat.define-typography-level(18px, 21px, 400, 0.1px),
+  /* h3,.mat-subtitle-1*/ $subtitle-2:
+    mat.define-typography-level(16px, 20px, 400, 0.1px),
+  /* h4, sub-heading .mat-subtitle-2*/ $body-1:
+    mat.define-typography-level(14px, 20px, 400),
+  /* table-content .mat-body-1*/ $caption:
+    mat.define-typography-level(12px, 20px, 500, 0.1px),
+  /* subtext .mat-caption*/
 );
 
 $my-typography: $my-custom-typography-config;
@@ -161,8 +173,6 @@ $my-theme: mat.define-light-theme(
 );
 @include mat.typography-hierarchy($my-typography);
 @include mat.all-component-themes($my-theme);
-// Use the custom theme in your Angular Material styles
-@include angular-material-theme($custom-theme);
 
 @import "./components/color.scss";
 @import "./components/variables";
