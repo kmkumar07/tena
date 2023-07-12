@@ -135,7 +135,7 @@
                   class="flex align-center justify-between user-link"
                   *ngFor="let element of userProfile"
                 >
-                  <div class="flex align-center">
+                  <div class="flex align-center" (click)="logOut(element.logOut)">
                     <mat-icon class="material-symbols-outlined">{{
                       element.icon
                     }}</mat-icon>

@@ -1,0 +1,34 @@
+<!-- Component is yet to be designed by UX designer, This is temporary html -->
+<div class="border-2 text-center coupons-dialog">
+  <div class="close-dialog-icon">
+    <mat-icon (click)="onCancelClick()" class="material-symbols-outlined"
+      >close</mat-icon
+    >
+  </div>
+  <div class="mb-6">
+    <mat-icon class="mat-primary material-symbols-outlined mat-headline-5"> logout </mat-icon>
+  </div>
+  <h1 class="mb-4">Log Out Confirmation</h1>
+  <span class="mat-body-1 mb-8 block"
+    >Are you sure you want to Log Out of the Application?</span
+  >
+  <div class="flex-center">
+    <button
+      mat-stroked-button
+      color="primary"
+      mat-dialog-close
+      (click)="onCancelClick()"
+      class="px-6 medium"
+    >
+      Cancel
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="medium ml-2"
+      [mat-dialog-close]="true"
+    >
+      Yes
+    </button>
+  </div>
+</div>

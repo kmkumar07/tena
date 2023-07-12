@@ -9,16 +9,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { EditCustomerDetailsComponent } from '../../components/dialog-box/edit-customer-details/edit-customer-details.component';
 import { NoItemFoundComponent } from '../../components/no-item-found/no-item-found.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { LogoutComponent } from '../../components/dialog-box/logout/logout.component';
 
 @NgModule({
-  declarations: [EmptyListingComponent, CustomDateHeaderComponent, EditCustomerDetailsComponent, NoItemFoundComponent],
+  declarations: [
+    EmptyListingComponent,
+    CustomDateHeaderComponent,
+    EditCustomerDetailsComponent,
+    NoItemFoundComponent,
+    LogoutComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   exports: [
     NgxTippyModule,
@@ -27,7 +34,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     EmptyListingComponent,
     CustomDateHeaderComponent,
     EditCustomerDetailsComponent,
-    NoItemFoundComponent
+    NoItemFoundComponent,
+    LogoutComponent,
   ],
 })
 export class SharedModule {}

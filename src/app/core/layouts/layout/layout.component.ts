@@ -9,6 +9,8 @@ import {
 } from 'src/app/shared/constants/consants';
 import { GlobalService } from '../../services/global.service';
 import { takeUntil } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { LogoutComponent } from 'src/app/shared/components/dialog-box/logout/logout.component';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -21,7 +23,7 @@ export class LayoutComponent {
   userProfile = User_Options;
   notificationsData = Notifications_Data;
   loading: boolean = false;
-  constructor(private global: GlobalService) {}
+  constructor(private global: GlobalService, public dialog: MatDialog) {}
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
@@ -29,7 +31,7 @@ export class LayoutComponent {
     this.global
       .loaderStatus()
       .pipe(takeUntil(this.global.componentDestroyed(this)))
-      .subscribe((res) => this.loading = res);
+      .subscribe((res) => (this.loading = res));
   }
 
   opened: boolean = true;
@@ -44,5 +46,14 @@ export class LayoutComponent {
   }
   preventClose(event: any) {
     event.stopPropagation();
+  }
+  logOut(status) {
+    if (status) {
+      const dialogRef = this.dialog.open(LogoutComponent, {
+        width: '422px',
+        panelClass: 'dialog-curved',
+        data: {},
+      });
+    }
   }
 }
