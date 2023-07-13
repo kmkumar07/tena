@@ -111,6 +111,7 @@
           color="primary"
           class="w-full mat-subtitle-1 font-weight-500 large mb-8"
           type="submit"
+          [disabled]="!loginForm.valid" 
         >
           LOG IN
         </button>
