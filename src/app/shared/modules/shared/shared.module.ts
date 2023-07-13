@@ -9,7 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { EditCustomerDetailsComponent } from '../../components/dialog-box/edit-customer-details/edit-customer-details.component';
 import { NoItemFoundComponent } from '../../components/no-item-found/no-item-found.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { LogoutComponent } from '../../components/dialog-box/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +16,6 @@ import { LogoutComponent } from '../../components/dialog-box/logout/logout.compo
     CustomDateHeaderComponent,
     EditCustomerDetailsComponent,
     NoItemFoundComponent,
-    LogoutComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +33,6 @@ import { LogoutComponent } from '../../components/dialog-box/logout/logout.compo
     CustomDateHeaderComponent,
     EditCustomerDetailsComponent,
     NoItemFoundComponent,
-    LogoutComponent,
   ],
 })
 export class SharedModule {}

@@ -10,7 +10,8 @@ import {
 import { GlobalService } from '../../services/global.service';
 import { takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { LogoutComponent } from 'src/app/shared/components/dialog-box/logout/logout.component';
+import { kratosService } from 'src/app/modules/sign-in/services/kratos.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -23,7 +24,14 @@ export class LayoutComponent {
   userProfile = User_Options;
   notificationsData = Notifications_Data;
   loading: boolean = false;
-  constructor(private global: GlobalService, public dialog: MatDialog) {}
+  userName:string
+  constructor(
+    private snackBar: MatSnackBar,
+    private kratos: kratosService,
+    private global: GlobalService,
+    public dialog: MatDialog
+
+  ) {}
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
@@ -32,6 +40,9 @@ export class LayoutComponent {
       .loaderStatus()
       .pipe(takeUntil(this.global.componentDestroyed(this)))
       .subscribe((res) => (this.loading = res));
+    const session = JSON.parse(window.localStorage.getItem('session'));
+    this.userName = session.identity.traits.name.first + " " +session.identity.traits.name.last
+ 
   }
 
   opened: boolean = true;
@@ -48,12 +59,23 @@ export class LayoutComponent {
     event.stopPropagation();
   }
   logOut(status) {
+    this.global.showLoader()
     if (status) {
-      const dialogRef = this.dialog.open(LogoutComponent, {
-        width: '422px',
-        panelClass: 'dialog-curved',
-        data: {},
-      });
+      this.kratos.logout().subscribe(
+        {
+          next: (res) => {
+            this.global.hideLoader()
+          },
+          error: (error: any) => {
+            console.error('Error during logout:', error);
+            this.snackBar.open(error.message, '', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right'
+            })
+          },
+        }
+      )
     }
   }
 }

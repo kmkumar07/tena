@@ -50,7 +50,20 @@
                 placeholder="eg, john@gmail.com"
                 formControlName="password_identifier"
               />
+              <mat-error
+              *ngIf="
+                loginForm.controls['password_identifier'].invalid &&
+                loginForm.controls['password_identifier'].touched
+              "
+            >
+              <ng-container
+                *ngIf="loginForm.controls['password_identifier'].errors['required']"
+              >
+               Property identifier is missing.
+              </ng-container>
+              </mat-error>
             </mat-form-field>
+
           </div>
           <div class="">
             <p class="mat-subtitle-2 font-weight-500 input-label mb-2">
@@ -62,6 +75,18 @@
                 [type]="hide ? 'password' : 'text'"
                 formControlName="password"
               />
+               <mat-error
+              *ngIf="
+                loginForm.controls['password'].invalid &&
+                loginForm.controls['password'].touched
+              "
+            >
+              <ng-container
+                *ngIf="loginForm.controls['password'].errors['required']"
+              >
+               Property password is missing.
+              </ng-container>
+              </mat-error>
               <button
                 mat-icon-button
                 matSuffix
@@ -80,6 +105,7 @@
             </div>
           </div>
         </div>
+        <mat-error  *ngIf="errorMessage">{{ errorMessage }}</mat-error>
         <button
           mat-flat-button
           color="primary"
