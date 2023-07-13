@@ -1,31 +1,11 @@
-<div   *ngIf="variant === 'E404'">
-    <div class="absolute position-center text-center">
-      <div class="">
-        <img src="404-page.png" alt="No Page Found" />
-        <div class="my-10">
-          <p class="mat-h1 purple-text text-darken-1"> Oops! Why you’re here?</p>
-          <p class="desc-info mt-6 text-text text-lighten-2">
-          We are very sorry for inconvenience. It looks like you’re try to access a page that either has been deleted or never existed.
-          </p>
-        </div>
-        <a href="">
-          <sft-button [label]="'Back To Home'" [color]="'primary'" [variant]="'flat'" [disable]="false"
-            [disableRipple]="false" [size]="'medium'" [onClick]="'funtion()'"></sft-button>
-        </a>
-      </div>
-    </div>
-</div>
-
-
-
-<div   *ngIf="variant === 'E505'">
+<div>
   <div class="absolute position-center text-center">
     <div class="">
-      <img src="505-page.png" alt="No Page Found" />
+      <img src="{{imgUrl}}" alt="No Page Found" />
       <div class="my-10">
-        <p class="mat-h1 purple-text text-darken-1">Gateway Timeout Error</p>
+        <p class="mat-h1 purple-text text-darken-1">{{subHeader}} </p>
         <p class="desc-info mt-6 text-text text-lighten-2">
-        We are very sorry for inconvenience. It looks like some how our server did not receive a timely response.
+          {{details}}
         </p>
       </div>
       <a href="">
@@ -35,3 +15,23 @@
     </div>
   </div>
 </div>
+
+
+
+<!-- <div *ngIf="variant === 'E505'">
+  <div class="absolute position-center text-center">
+    <div class="">
+      <img src="{{imgUrl}}" alt="No Page Found" />
+      <div class="my-10">
+        <p class="mat-h1 purple-text text-darken-1">{{subHeader}} </p>
+        <p class="desc-info mt-6 text-text text-lighten-2">
+          {{details}}
+        </p>
+      </div>
+      <a href="">
+        <sft-button [label]="'Back To Home'" [color]="'primary'" [variant]="'flat'" [disable]="false"
+          [disableRipple]="false" [size]="'medium'" [onClick]="'funtion()'"></sft-button>
+      </a>
+    </div>
+  </div>
+</div> -->

@@ -6,5 +6,8 @@ import { Component , Input } from '@angular/core';
   styleUrls: ['./errorLayout.component.scss']
 })
 export class ErrorLayoutComponent {
-
+  @Input() variant: string = "";
+  @Input() imgUrl: string = '';
+  @Input() subHeader: string = '';
+  @Input() details: string = '';
 }

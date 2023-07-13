@@ -27,6 +27,10 @@ const meta: Meta<ErrorLayoutComponent> = {
       control: 'select',
       options: ['E404', 'E505'],
     },
+    imgUrl: { control: 'text' },
+    subHeader:{ control: 'text' },
+    details:{ control: 'text' },
+
   },
   decorators: [
     componentWrapperDecorator(
@@ -43,13 +47,30 @@ const meta: Meta<ErrorLayoutComponent> = {
       ],
     }),
   ],
+ 
+};
 
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        
-        <div class="absolute position-center text-center">
+export default meta;
+type Story = StoryObj<ErrorLayoutComponent>;
+
+// More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
+
+export const Error404: Story = {
+    args: {
+      variant: 'E404',
+      imgUrl:'404-page.png',
+      subHeader:'Oops! Why you’re here?',
+      details:'We are very sorry for inconvenience. It looks like you’re try to access a page that either has been deleted or never existed.',
+    },
+    parameters: {
+      storybook: {
+        hideNoControlsWarning: true,
+      },
+      docs: {
+        source: {
+          code: `
+          <div>
+          <div class="absolute position-center text-center">
         <div class="">
           <img src="404-page.png" alt="No Page Found" />
           <div class="my-10">
@@ -63,26 +84,21 @@ const meta: Meta<ErrorLayoutComponent> = {
               [disableRipple]="false" [size]="'medium'" [onClick]="'funtion()'"></sft-button>
           </a>
         </div>
-      </div>
-        `,
+        </div>
+        </div>
+           `,
+        },
       },
-    },
-  },  
-};
 
-export default meta;
-type Story = StoryObj<ErrorLayoutComponent>;
-
-// More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
-
-export const Error404: Story = {
-    args: {
-      variant: 'E404',
     },
 };
 export const Error505: Story = {
     args: {
-      variant: 'E505',
+      variant: 'E504',
+      imgUrl:'505-page.png',
+      subHeader:'Gateway Timeout Error',
+      details:'We are very sorry for inconvenience. It looks like some how our server did not receive a timely response.',
+      
     },
     parameters: {
       storybook: {
