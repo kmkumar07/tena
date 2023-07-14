@@ -118,4 +118,7 @@ color: $text-grey-lighten-11; //#5E7080
   .text-text.text-primary{
     color: var(--on-surface) !important;
   }
+  .text-light,.purple-text.text-darken-1,.text-dark,.purple-text,.text-darken-1,.text-light,.text-headline-dark,.text-dark-1,.text-headline-light,.text-lighten-2,.text-lighten-4,.text-green-dark-3,.text-grey-darken-6,.text-grey-darken-7,.text-purple-dark-2,.text-grey-lighten-11,.text-purple-lighten-1,.text-black,.text-white{
+    color: white !important;
+  }
 }
