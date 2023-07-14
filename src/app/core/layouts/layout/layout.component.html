@@ -5,7 +5,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <!-- Header for application starts here! -->
-      <div class="header-wrapper border-2">
+      <mat-toolbar class="header-wrapper border-2">
         <div class="header-right">
           <div
             class="notifications-section pointer"
@@ -24,7 +24,7 @@
             class="notifications-menu border-2"
             backdropClass="right-menu"
           >
-            <div class="notifications-header">
+            <div class="notifications-header mat-purple">
               <div class="flex align-center justify-between">
                 <div class="label">Notifications</div>
                 <mat-chip class="basic-chip"> 4 New </mat-chip>
@@ -122,7 +122,7 @@
             class="profile-menu"
             backdropClass="alert-menu"
           >
-            <div class="profile-menu-outer">
+            <div class="profile-menu-outer" (click)="preventClose($event)">
               <div class="grad-bg">
                 <div class="user-initials">JS</div>
               </div>
@@ -145,6 +145,7 @@
                     <mat-slide-toggle
                       color="primary"
                       (click)="preventClose($event)"
+                      (change)="switchDark($event)"
                     ></mat-slide-toggle>
                   </div>
                 </a>
@@ -152,8 +153,8 @@
             </div>
           </mat-menu>
         </div>
-      </div>
-      <div class="pt-6 main-content-height relative">
+      </mat-toolbar>
+      <div class="mt-6 main-content-height relative">
         <div class="loader" *ngIf="loading">
           <div class="position-center">
             <mat-spinner ></mat-spinner>

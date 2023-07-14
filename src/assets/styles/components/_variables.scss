@@ -22,7 +22,7 @@
 // ==========================================================================
 
 $primary-color: color("primary", "light4") !default;
-$selected-row: color('primary', 'main');
+$selected-row: color("primary", "main");
 // $primary-color-light: lighten($primary-color, 15%) !default;
 $primary-color-dark: color("plum-purple", "darken-1") !default;
 $primary-color-light: color("purple", "darken-1") !default;
@@ -35,11 +35,11 @@ $border-color: color("grey", "border") !default;
 
 $primay-light-bg-color: color("primary", "lighten-4"); // #F5F3FF
 $primay-extra-light-bg-color: color("primary", "lighten-5"); // #FBF9FD
-$green-dark-3:color("green","darken-3");  //#4DA63E
-$grey-darken-6:color("grey","darken-6"); //#495057
-$grey-darken-7:color("grey","darken-7"); //#1B1B1E
+$green-dark-3: color("green", "darken-3"); //#4DA63E
+$grey-darken-6: color("grey", "darken-6"); //#495057
+$grey-darken-7: color("grey", "darken-7"); //#1B1B1E
 
-$input-border-color: color('grey', 'lighten-11');
+$input-border-color: color("grey", "lighten-11");
 
 // 2. Buttons
 // ==========================================================================
@@ -54,22 +54,23 @@ $button-padding: 0 1.071em !default;
 $button-radius: 50px !default;
 $button-radius-default: 4px;
 $form-fields-radius: 0.8rem;
-$radius-15:15px;
-$radius-btn-standard:8px;
+$radius-15: 15px;
+$radius-btn-standard: 8px;
 $small-button-padding: 3px 40px;
 $medium-button-padding: 3px 16px;
 $large-button-padding: 13px 63px;
 $standard-padding: 10px;
 
 // Disabled styles
-$button-disabled-background: #DFDFDF !default;
-$button-disabled-color: #9F9F9F !default;
-
-
+$button-disabled-background: #dfdfdf !default;
+$button-disabled-color: #9f9f9f !default;
 
 // Raised buttons
 $button-raised-background: color("blue", "base") !default;
-$button-raised-background-hover: lighten($button-raised-background, 5%) !default;
+$button-raised-background-hover: lighten(
+  $button-raised-background,
+  5%
+) !default;
 $button-raised-color: #fff !default;
 
 // Large buttons
@@ -104,7 +105,7 @@ $input-font-size: 1rem !default;
 $input-margin-bottom: 8px;
 $input-margin: 0 0 $input-margin-bottom 0 !default;
 $input-padding: 0 15px !default;
-$input-transition: all .3s !default;
+$input-transition: all 0.3s !default;
 $sidebar-transition: 400ms;
 $label-font-size: 0.929em !default;
 $input-disabled-color: #ceced2 !default;
@@ -125,20 +126,23 @@ $track-height: 3px !default;
 
 // Select
 $select-border: 1px solid #f2f2f2 !default;
-$select-background: rgba(255, 255, 255, 0.90) !default;
+$select-background: rgba(255, 255, 255, 0.9) !default;
 $select-focus: 1px solid lighten($secondary-color, 47%) !default;
-$select-option-hover: rgba(0,0,0,.08) !default;
-$select-option-focus: rgba(0,0,0,.08) !default;
-$select-option-selected: rgba(0,0,0,.03) !default;
+$select-option-hover: rgba(0, 0, 0, 0.08) !default;
+$select-option-focus: rgba(0, 0, 0, 0.08) !default;
+$select-option-selected: rgba(0, 0, 0, 0.03) !default;
 $select-padding: 5px !default;
 $select-radius: 2px !default;
-$select-disabled-color: rgba(0,0,0,.3) !default;
+$select-disabled-color: rgba(0, 0, 0, 0.3) !default;
 
 // Switches
 $switch-bg-color: $radio-fill-color !default;
-$switch-checked-lever-bg: desaturate(lighten($switch-bg-color, 25%), 25%) !default;
-$switch-unchecked-bg: #F1F1F1 !default;
-$switch-unchecked-lever-bg: rgba(0,0,0,.38) !default;
+$switch-checked-lever-bg: desaturate(
+  lighten($switch-bg-color, 25%),
+  25%
+) !default;
+$switch-unchecked-bg: #f1f1f1 !default;
+$switch-unchecked-lever-bg: rgba(0, 0, 0, 0.38) !default;
 $switch-radius: 15px !default;
 $medium-button-min-height: 40px !default;
 
@@ -189,7 +193,7 @@ $large-desktop-middle-down: "only screen and (max-width : #{$large-desktop-middl
 $large-desktop-middle-down-center: "only screen and (max-width : #{$large-desktop-middle-down-center})" !default;
 
 // 1280 To 1366
-$medium-desktop: "only screen and (min-width : #{$large-desktop-down}) and (max-width : #{$large-desktop-up})" !default; 
+$medium-desktop: "only screen and (min-width : #{$large-desktop-down}) and (max-width : #{$large-desktop-up})" !default;
 // Max -width 1280
 $small-desktop-down: "only screen and (max-width : #{$large-desktop-down})" !default;
 // Max -width 1280
@@ -197,32 +201,25 @@ $large-desktop-down-center: "only screen and (max-width : #{$large-desktop-down-
 // min-width: 1799
 $extra-large-desktop-up: "only screen and (min-width : #{$large-desktop-down-center})" !default;
 
-
-
-
-
-
 // 12. Grid
 // ==========================================================================
 
 $num-cols: 12 !default;
 $gutter-width: 3rem !default;
 $element-top-margin: calc($gutter-width/3) !default;
-$element-bottom-margin: calc(($gutter-width*2)/3) !default;
+$element-bottom-margin: calc(($gutter-width * 2) / 3) !default;
 
 // 16. Spinners | Loaders
 // ==========================================================================
 
 $spinner-default-color: $secondary-color !default;
 
-
-
 // 18. Tables
 // ==========================================================================
 
 $table-border-color: $border-color !default;
 $table-striped-color: rgba(242, 242, 242, 0.5) !default;
-$primary-table-border:  0.0625rem solid $table-border-color;
+$primary-table-border: 0.0625rem solid $table-border-color;
 $primary-table-border-radius: 0.25rem;
 $primary-table-selected-row: 0.0625rem solid $selected-row;
 // 19. Toasts
@@ -233,37 +230,32 @@ $toast-color: #323232 !default;
 $toast-text-color: #fff !default;
 $toast-action-color: #eeff41;
 
-
 // 20. Typography (used in SAAS framework)
 
 // ==========================================================================
-$text-light: color('text', 'lighten-1');
-$text-dark: color('purple', 'darken-1'); // #3A3742
-$text-dark-1: color('grey', 'darken-6');
-$text-headline-dark: color('text', 'dark'); // #2C2466   
-$text-headline-light: rgba(color('text', 'dark'), .6); // #2C2466   
-$headline-light: color('text', 'primary'); // #405189
-$text-primary: color('primary', 'main'); //#7868E6
-$text-lighten-2:color('text','lighten-2'); //#9CA8BA
-$text-lighten-4:color('text','lighten-4'); //#7A7E83
-$text-black:color('shades','black');
-$text-white:color('shades','white');
-$text-purple-dark-2:color('purple' , 'dark-2'); //#364A63
-$text-grey-lighten-11:color('grey','lighten-2'); //#5E7080
-$text-grey-darken-8:color('grey','darken-8'); //#333333
-$text-purple-lighten-1:color('purple' ,'lighten-1');  //#5B3CC6
-
-
-
+$text-light: color("text", "lighten-1");
+$text-dark: color("purple", "darken-1"); // #3A3742
+$text-dark-1: color("grey", "darken-6");
+$text-headline-dark: color("text", "dark"); // #2C2466
+$text-headline-light: rgba(color("text", "dark"), 0.6); // #2C2466
+$headline-light: color("text", "primary"); // #405189
+$text-primary: color("primary", "main"); //#7868E6
+$text-lighten-2: color("text", "lighten-2"); //#9CA8BA
+$text-lighten-4: color("text", "lighten-4"); //#7A7E83
+$text-black: color("shades", "black");
+$text-white: color("shades", "white");
+$text-purple-dark-2: color("purple", "dark-2"); //#364A63
+$text-grey-lighten-11: color("grey", "lighten-2"); //#5E7080
+$text-grey-darken-8: color("grey", "darken-8"); //#333333
+$text-purple-lighten-1: color("purple", "lighten-1"); //#5B3CC6
 
 // Header Styles
 $h1-fontsize: 4.8rem !default;
 $h2-fontsize: 3.6rem !default;
-$h3-fontsize: 3.0rem !default;
+$h3-fontsize: 3rem !default;
 $h4-fontsize: 2.2rem !default;
-$h5-fontsize: 2.0rem !default;
+$h5-fontsize: 2rem !default;
 $h6-fontsize: 1.6rem !default;
-
 
 // font weight
 $normal: 400 !default;
@@ -271,16 +263,14 @@ $medium: 500 !default;
 $font-bold: 700 !default;
 $font-bold-size: 700 !default;
 
-$font-color : color("grey", "darken");
-
+$font-color: color("grey", "darken");
 
 // 22. Flow Text
 // ==========================================================================
 
-$range : $large-screen - $small-screen !default;
+$range: $large-screen - $small-screen !default;
 $intervals: 20 !default;
 $interval-size: calc($range / $intervals) !default;
-
 
 // 23. Collections
 // ==========================================================================
@@ -293,15 +283,13 @@ $collection-hover-bg-color: #ddd !default;
 $collection-link-color: $secondary-color !default;
 $collection-line-height: 1.5rem !default;
 
-
 // 24. Progress Bar
 // ==========================================================================
 
 $progress-bar-color: $secondary-color !default;
 
-
-$margin-padding1:1rem;
-$margin-padding2:2rem;
+$margin-padding1: 1rem;
+$margin-padding2: 2rem;
 $padding-top3: 3rem;
 $padding-top4: 4rem;
 $padding-top5: 5rem;
@@ -366,20 +354,22 @@ $margin-bottom8: 8rem;
 $margin-bottom9: 9rem;
 $margin-bottom10: 10rem;
 
-$standard-margin:1rem;
-$top-bottom:1rem 0;
-$left-right:0 1rem;
+$standard-margin: 1rem;
+$top-bottom: 1rem 0;
+$left-right: 0 1rem;
 
-$width-full:100%;
+$width-full: 100%;
 
-$height-full:100%;
+$height-full: 100%;
 $dimensions: 0.3125rem;
 $spacing: 0.25rem;
 
 // 11. checkbox
-$checkbox-border: .25rem;
-$half-rem: .5rem;
-$list-active: color("primary", "main");
-[data-app-theme="dark"] {
-    $list-active: red !important;
+$checkbox-border: 0.25rem;
+$half-rem: 0.5rem;
+:root {
+  --list-active: #7868e6;
+  [data-app-theme="dark"] {
+    --list-active: #ec407a;
+  }
 }

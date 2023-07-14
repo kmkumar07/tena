@@ -45,4 +45,7 @@ export class LayoutComponent {
   preventClose(event: any) {
     event.stopPropagation();
   }
+  switchDark(event: any){
+    
+  }
 }

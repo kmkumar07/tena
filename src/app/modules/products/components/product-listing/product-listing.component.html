@@ -1,15 +1,15 @@
 
 
-<div
+<mat-card
   *ngIf="allProductsData > 0; else noDataList"
-  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll"
+  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll mat-primary"
 >
   <div class="flex justify-between align-center px-1">
     <div class="flex align-center">
       <h1 class="text-text text-dark">Products</h1>
-      <mat-chip class="chip-dark ml-3">
+      <mat-chip-option class="chip-dark ml-3" color="primary" selected>
         {{ allProduct }}
-      </mat-chip>
+      </mat-chip-option>
     </div>
     <div class="flex align-center">
       <div class="global-search light mr-6 border-2">
@@ -249,9 +249,9 @@
       <app-no-item-found></app-no-item-found>
     </div>
   </ng-template>
-</div>
+</mat-card>
 <ng-template #noDataList>
-  <div class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
+  <mat-card class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
     <app-empty-listing [items]="emptyProductPros"></app-empty-listing>
-  </div>
+  </mat-card>
 </ng-template>

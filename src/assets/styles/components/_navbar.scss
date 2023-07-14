@@ -16,7 +16,6 @@
   }
 }
 .mat-sidenav {
-  background-color: color("primary", "light");
   border: 0rem;
   width: 5.3125rem;
   transition: $sidebar-transition;
@@ -51,14 +50,9 @@
     overflow: visible;
     .sidenav-wrapper {
       position: relative;
-      background-color: color("shades", "white");
-
-      // @include dark-theme {
-      //   background-color: color("grey", "darken");
-      // }
       z-index: 1003;
       height: 100%;
-      border-right: 0.0625rem solid #e6e9ef;
+      // border-right: 0.0625rem solid #e6e9ef;
       @include justify-content(center);
       @include flex-wrap(wrap);
       .sidebar-toggle {
@@ -67,7 +61,7 @@
         top: 4rem;
         @include flex-position(center, center);
         .toggle-sidenav {
-          outline: 0.125rem solid color("primary", "light");
+          outline: 0.125rem solid color("shades", "transparent");
           @include circle(1.75rem !important);
           box-shadow: none;
           .mdc-button__label {
@@ -81,11 +75,11 @@
 }
 
 // Header css
-.header-wrapper {
+.header-wrapper.mat-toolbar-single-row {
   height: 4.25rem;
   padding: 0.8125rem 0.75rem 0.8125rem 0.75rem;
   border-radius: 0.5rem;
-  background-color: color("shades", "white");
+  line-height: inherit;
   @include flex-position(flex-end, center);
   .header-right {
     @include flex-align(center);
@@ -214,7 +208,7 @@
       border-radius: 0.25rem;
       height: 2.5625rem;
       .active {
-        background-color: $list-active;
+        background-color: var(--list-active);
         .mat-icon,
         .content {
           color: color("shades", "white") !important;
@@ -371,7 +365,6 @@
             align-items: flex-end;
             .mat-mdc-tab {
               font-size: 0.875rem;
-              color: color("shades", "white");
               min-width: fit-content;
               height: 2rem;
               border-top-left-radius: 0.25rem;
@@ -379,12 +372,8 @@
               padding: 0 1rem;
               .mdc-tab__text-label {
                 letter-spacing: 0.0625rem;
-                color: color("shades", "white");
               }
               &.mdc-tab--active {
-                .mdc-tab__text-label {
-                  color: color("primary", "main");
-                }
                 background-color: color("shades", "white");
               }
               .mdc-tab-indicator {
