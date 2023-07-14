@@ -16,6 +16,7 @@ import { PageNotFoundComponent } from './shared/components/page-not-found/page-n
 import { FeatureDetailsPopupComponent } from './shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 import { CouponsDeleteSuccessComponent } from './shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { SignInComponent } from './modules/sign-in/components/sign-in.component';
+import { FeaturesPopupComponent } from './shared/components/dialog-box/features-popup/features-popup/features-popup.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SignInComponent } from './modules/sign-in/components/sign-in.component'
     PageNotFoundComponent,
     FeatureDetailsPopupComponent,
     CouponsDeleteSuccessComponent,
-    SignInComponent
+    SignInComponent,
+    FeaturesPopupComponent
   ],
   imports: [
     BrowserModule,
