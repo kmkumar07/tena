@@ -1,7 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ProductsService } from '../../services/products.service';
 import {
   Subject,
@@ -70,7 +69,7 @@ export class ProductListingComponent implements OnInit {
   ngOnInit() {
     this.sortBy = 'createdOn';
     this.sortOrder = 'desc';
-    
+
     this.getAllProduct(
       this.NoPage,
       this.Nolimit,

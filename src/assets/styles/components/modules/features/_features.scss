@@ -30,7 +30,7 @@
       }
 
       .subtitle {
-        color: rgba(color("text", "primary"), 0.6);
+        color: rgba(var( --on-surface), 0.6);
         margin-bottom: 0.1875rem;
       }
     }

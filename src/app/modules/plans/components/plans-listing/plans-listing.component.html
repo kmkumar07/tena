@@ -1,4 +1,4 @@
-<mat-card
+<div
   *ngIf="plansData; else noDataList"
   class="relative main-bg border-2 w-full h-full p-7 overflow-scroll"
 >
@@ -189,9 +189,9 @@
     </ng-container>
     <ng-template #noRecordFound> No Data is Visible </ng-template>
   </div>
-</mat-card>
+</div>
 <ng-template #noDataList>
-  <mat-card class="relative border-2 w-full h-full p-7 overflow-scroll">
+  <div class="relative border-2 w-full h-full p-7 overflow-scroll main-bg">
     <app-empty-listing [items]="emptyList"></app-empty-listing>
-  </mat-card>
+  </div>
 </ng-template>

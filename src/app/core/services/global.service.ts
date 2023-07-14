@@ -11,7 +11,7 @@ export class GlobalService {
   public isDarkMode = new BehaviorSubject<boolean>(false);
   constructor() {}
 
-  // loader functions
+  // loader operations
   showLoader() {
     this.isLoading.next(true);
   }
@@ -20,17 +20,6 @@ export class GlobalService {
   }
   loaderStatus() {
     return this.isLoading.asObservable();
-  }
-
-  // Dark Mode Functions
-  switchDark() {
-    this.isDarkMode.next(true);
-  }
-  switchLight() {
-    this.isDarkMode.next(false);
-  }
-  themeModeStatus() {
-    return this.isDarkMode.asObservable()
   }
 
   isRouteActive(routeSteps: any) {

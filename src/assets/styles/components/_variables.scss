@@ -221,7 +221,7 @@ $table-border-color: $border-color !default;
 $table-striped-color: rgba(242, 242, 242, 0.5) !default;
 $primary-table-border: 0.0625rem solid $table-border-color;
 $primary-table-border-radius: 0.25rem;
-$primary-table-selected-row: 0.0625rem solid $selected-row;
+$primary-table-selected-row: 0.0625rem solid var(--primary-main);
 // 19. Toasts
 // ==========================================================================
 
@@ -367,9 +367,24 @@ $spacing: 0.25rem;
 // 11. checkbox
 $checkbox-border: 0.25rem;
 $half-rem: 0.5rem;
+
+// Color Variables
 :root {
-  --list-active: #7868e6;
-  [data-app-theme="dark"] {
-    --list-active: #ec407a;
+  // primary
+  --primary-main: #7868e6;
+  --primary-light: #f3f1ff;
+  // surface
+  --shades-bg: #ffffff; //rename to --surface-bg
+  // on surface
+  --on-surface: #405189;
+  [data-app-theme="dark"],
+  .dark-mode {
+    // primary dark
+    --primary-main: #ec407a;
+    --primary-light: #e7c8d7cc;
+    // surface dark
+    --shades-bg: #424242;
+    // on surface dark
+    --on-surface: #ffffff;
   }
 }

@@ -116,7 +116,7 @@
   }
 
   .plan-section-block {
-    background-color: #ffffff;
+    background-color: var(--shades-bg);
     border-radius: 0 0.5rem 0.5rem 0;
     .inner-wrapper {
       max-width: 44.75rem;
@@ -256,7 +256,7 @@
     }
   }
   .plan-section-block {
-    background-color: color("shades", "white");
+    background-color: var(--shades-bg);
     border-radius: 0 0.5rem 0.5rem 0;
     .inner-wrapper {
       max-width: 44.75rem;
@@ -340,7 +340,7 @@
       }
 
       .subtitle {
-        color: rgba(color("text", "primary"), 0.6);
+        color: rgba(var( --on-surface), 0.6);
         margin-bottom: 0.1875rem;
       }
       .active-text {
@@ -353,7 +353,7 @@
     }
     .pricing-box {
       padding: 0 3.125rem 0 3.0625rem;
-      border-right: 0.0625rem solid rgba(color("text", "primary"), 0.2);
+      border-right: 0.0625rem solid rgba(var( --on-surface), 0.2);
       &:first-child {
         padding-left: 0;
       }
@@ -406,7 +406,7 @@
     .product-inner {
       .product-box {
         padding-left: 0.875rem;
-        border-left: 0.1875rem solid color("text", "primary");
+        border-left: 0.1875rem solid var( --on-surface);
         .product-img {
           max-width: 3.75rem;
           width: 100%;

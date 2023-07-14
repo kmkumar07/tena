@@ -1,4 +1,4 @@
-<mat-card class="flex w-full h-full">
+<div class="flex w-full h-full">
   <div class="stepper-wrapper">
     <mat-stepper orientation="vertical" #stepper [disableRipple]="true">
       <ng-container *ngFor="let step of stepsTitle; let i = index">
@@ -23,7 +23,7 @@
       </ng-container>
     </mat-stepper>
   </div>
-  <mat-card
+  <div
     #contentSection
     class="create-plan-main-wrapper h-full overflow-auto relative"
   >
@@ -905,5 +905,5 @@
         </div>
       </div>
     </div>
-  </mat-card>
-</mat-card>
+  </div>
+</div>
