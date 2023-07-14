@@ -3,7 +3,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import {
-  FeatureList,
   features,
   noFeatures,
 } from 'src/app/shared/constants/consants';

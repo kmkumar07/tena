@@ -110,11 +110,6 @@ $primary: (
   "lighten-5":  #FBF9FD,
   "lighten-6":  #7868e61a,
 );
-[data-app-theme="dark"] {
-  $primary: (
-    "main": red,
-  )
-}
 $text: (
   "primary": #405189,
   "secondary": #1A3447,

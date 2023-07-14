@@ -11,7 +11,7 @@
 .basic-chip.mat-mdc-chip {
   background-color: #ffffff33 !important;
   border-radius: 0.25rem;
-  height: 1.5rem;
+  height: 1.5rem !important;
 
   .mat-mdc-chip-action {
     padding: 0 0.5rem;
@@ -25,6 +25,7 @@
   // background-color: #000080 !important;
   border-radius: 3rem;
   height: 1.375rem;
+  // .mdc-evolution-chip__cell{}
   .mat-mdc-chip-action {
     padding: 0 0.5rem;
     .mat-mdc-chip-action-label {
@@ -91,7 +92,7 @@
               top: 0;
               bottom: 0;
               left: 0;
-              background-color: color("primary", "main");
+              background-color: var(--primary-main);
             }
           }
         }
@@ -146,7 +147,7 @@
     width: 0.9375rem;
   }
   .mat-mdc-table {
-    border: 1px solid color("primary", "light");
+    border: 1px solid var(--primary-light);
     border-radius: 0.5rem;
     border-spacing: 0 0.25rem;
 
@@ -287,7 +288,7 @@
   border-radius: 0.5rem;
   .mat-mdc-option.mdc-list-item {
     min-height: 1.75rem;
-    color: color("text", "primary");
+    color: var( --on-surface);
   }
 }
 .dialog-curved {
@@ -430,9 +431,6 @@ ul {
     position: absolute;
     top: 2.9375rem;
     right: 2.9375rem;
-    .mat-icon {
-      color: color("shades", "black");
-    }
   }
 }
 

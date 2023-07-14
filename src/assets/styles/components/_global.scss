@@ -406,9 +406,9 @@ label {
 .pointer {
   cursor: pointer;
 }
-// .main-bg {
-//   background-color: color("shades", "white");
-// }
+.main-bg {
+  background-color: var(--shades-bg);
+}
 .primary-light-bg {
   background-color: color("primary", "light"); //#F3F1FF
 }

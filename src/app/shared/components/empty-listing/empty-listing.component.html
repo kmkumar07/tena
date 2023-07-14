@@ -1,21 +1,21 @@
 <div *ngIf="items.length">
-<div *ngFor="let item of items">
-  <h1 class="text-text text-dark">{{ item.heading }}</h1>
-  <div class="absolute position-center text-center">
-    <div class="">
-      <img src="{{ item.imgPath }}" alt="{{ item.alt }}" />
-      <div class="my-10">
-        <p class="mat-h1 purple-text text-darken-1">{{ item.subtext }}</p>
-        <p class="desc-info mt-6 text-text text-lighten-2">
-          {{ item.text }}
-        </p>
+  <div *ngFor="let item of items">
+    <h1 class="text-text text-dark">{{ item.heading }}</h1>
+    <div class="absolute position-center text-center">
+      <div class="">
+        <img src="{{ item.imgPath }}" alt="{{ item.alt }}" />
+        <div class="my-10">
+          <p class="mat-h1 purple-text text-darken-1">{{ item.subtext }}</p>
+          <p class="desc-info mt-6 text-text text-lighten-2">
+            {{ item.text }}
+          </p>
+        </div>
+        <a *ngIf="item.showButton" href="{{ item.path }}">
+          <button mat-flat-button color="primary" class="medium">
+            {{ item.buttonTxt }}
+          </button>
+        </a>
       </div>
-      <a *ngIf="item.showButton" href="{{ item.path }}">
-        <button mat-flat-button color="primary" class="medium">
-          {{ item.buttonTxt }}
-        </button>
-      </a>
     </div>
   </div>
-</div>
 </div>

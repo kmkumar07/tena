@@ -70,7 +70,7 @@ export class PlansListingComponent {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-  
+
   onDelete(id) {
     this.plans.deletePlan(id).subscribe((res) => res);
     this.getPlans(this.pageNumber, this.limit, this.search);
@@ -104,6 +104,5 @@ export class PlansListingComponent {
   searchItem(event: any) {
     const search = event.target.value;
     this.getPlans(this.pageNumber, this.limit, search);
-    console.log(search, 'hmmfph');
   }
 }

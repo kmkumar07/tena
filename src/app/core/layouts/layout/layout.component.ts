@@ -29,7 +29,7 @@ export class LayoutComponent {
     this.global
       .loaderStatus()
       .pipe(takeUntil(this.global.componentDestroyed(this)))
-      .subscribe((res) => this.loading = res);
+      .subscribe((res) => (this.loading = res));
   }
 
   opened: boolean = true;
@@ -45,7 +45,8 @@ export class LayoutComponent {
   preventClose(event: any) {
     event.stopPropagation();
   }
-  switchDark(event: any){
-    
+  switchDark(event: any) {
+    const body = document.getElementById('body');
+    body.classList.toggle('dark-mode');
   }
 }

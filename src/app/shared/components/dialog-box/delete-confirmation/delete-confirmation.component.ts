@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
-
 
 export interface DialogData {
   module: string;
@@ -10,7 +13,7 @@ export interface DialogData {
 @Component({
   selector: 'app-delete-confirmation',
   templateUrl: './delete-confirmation.component.html',
-  styleUrls: ['./delete-confirmation.component.scss']
+  styleUrls: ['./delete-confirmation.component.scss'],
 })
 export class DeleteConfirmationComponent {
   @Output() confirmed: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -24,5 +27,4 @@ export class DeleteConfirmationComponent {
   onCancelClick(): void {
     this.dialogRef.close(false);
   }
-
 }
