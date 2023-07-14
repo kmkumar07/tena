@@ -50,7 +50,12 @@ export class LayoutComponent {
     this.sidenav.toggle();
     this.opened = event;
   }
-
+  getInitials(userName: string): string {
+    const names = userName.split(' ');
+    const firstNameInitial = names[0].charAt(0).toUpperCase();
+    const lastNameInitial = names[1].charAt(0).toUpperCase();
+    return `${firstNameInitial}${lastNameInitial}`;
+  }
   getList(item: string) {
     let list = [];
     return (list = this.menuItems.filter((ele) => ele.category == item));

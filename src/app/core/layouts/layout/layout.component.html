@@ -109,8 +109,8 @@
             </div>
           </mat-menu>
           <div class="user-profile pointer" [matMenuTriggerFor]="menu">
-            <div class="user-image">
-              <img src="../../../../assets/images/profile-avatar-1.png" />
+            <div class="user-image font-weight-500">
+              {{ getInitials(userName) }}
             </div>
             <div class="user-info">
               <span class="name">{{userName}}</span>
@@ -123,7 +123,7 @@
           >
             <div class="profile-menu-outer">
               <div class="grad-bg">
-                <div class="user-initials">JS</div>
+               <div class="user-initials">{{ getInitials(userName) }}</div>
               </div>
               <div class="profile-inner">
                 <p class="mat-h1 fw-600 m-0">{{userName}}</p>
