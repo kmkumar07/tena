@@ -285,4 +285,8 @@ $custom-dark-theme: custom-dark-theme($dark-primary, $dark-accent);
   textarea {
     color: #ffffff;
   }
+  // for svg icon having alt="..-icon"
+  img[alt*="icon"] {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(48deg) brightness(105%) contrast(105%);
+  }
 }
