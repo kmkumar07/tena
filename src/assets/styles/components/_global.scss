@@ -407,10 +407,10 @@ label {
   cursor: pointer;
 }
 .main-bg {
-  background-color: var(--shades-bg);
+  background-color: var(--surface-bg);
 }
 .primary-light-bg {
-  background-color: color("primary", "light"); //#F3F1FF
+  background-color: var(--primary-light) //#F3F1FF
 }
 .primary-dark-1-bg {
   background-color: color("primary", "dark-1"); //#2C2466
@@ -762,7 +762,7 @@ label {
   color: #000000;
   font-size: 1rem;
   padding: 0.75rem 0.625rem;
-  background-color: #f3f1ff;
+  background-color: var(--primary-light);
   border-radius: 0.25rem;
   font-weight: 500;
 }

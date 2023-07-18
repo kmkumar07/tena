@@ -132,13 +132,13 @@
 <div *ngIf="variant === 'secondary' ">
 <div
   *ngIf="LogsData.length == 0"
-  class="relative main-bg border-2 w-full h-full p-7 overflow-scroll"
+  class="relative main-bg border-2 w-full h-full p-7 overflow-auto"
 >
   <app-empty-listing [items]="emptyCoupons"></app-empty-listing>
 </div>
 <div
   *ngIf="LogsData.length > 0"
-  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll logs-list"
+  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-auto logs-list"
 >
   <!-- </div> -->
   <div class="primary-table overflow-visible mt-8 px-1 pb-2 table-wrapper">

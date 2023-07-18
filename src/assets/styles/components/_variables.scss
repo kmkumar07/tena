@@ -370,21 +370,21 @@ $half-rem: 0.5rem;
 
 // Color Variables
 :root {
+  // surface
+  --surface-bg: #ffffff;
+  // on surface
+  --on-surface: #405189;
   // primary
   --primary-main: #7868e6;
   --primary-light: #f3f1ff;
-  // surface
-  --shades-bg: #ffffff; //rename to --surface-bg
-  // on surface
-  --on-surface: #405189;
   [data-app-theme="dark"],
   .dark-mode {
-    // primary dark
-    --primary-main: #ec407a;
-    --primary-light: #e7c8d7cc;
     // surface dark
-    --shades-bg: #424242;
+    --surface-bg: #424242;
     // on surface dark
     --on-surface: #ffffff;
+    // primary dark
+    --primary-main: #ec407a;
+    --primary-light: #fff3f9;
   }
 }

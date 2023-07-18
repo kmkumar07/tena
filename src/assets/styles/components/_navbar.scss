@@ -216,10 +216,9 @@
       }
       &:hover {
         background-color: var(--primary-light);
-
-        // @include dark-theme {
-        //   background-color: color("grey", "base");
-        // }
+        .content{
+          color: var(--primary-main) !important;
+        }
       }
       .icon-wrapper {
         padding: 0.625rem 0.875rem;
@@ -235,10 +234,6 @@
             font-size: 0.875rem;
             margin-left: 0.5rem;
             color: var( --on-surface);
-
-            // @include dark-theme {
-            //   color: color("grey", "lighten-10");
-            // }
             margin-top: 0.0625rem;
             transition: $sidebar-transition;
             transform: translate(0);
@@ -374,7 +369,7 @@
                 letter-spacing: 0.0625rem;
               }
               &.mdc-tab--active {
-                background-color: color("shades", "white");
+                background-color: var(--surface-bg);
               }
               .mdc-tab-indicator {
                 .mdc-tab-indicator__content {
@@ -416,7 +411,7 @@
         justify-content: center;
         align-items: center;
         @include circle(5rem);
-        border: 0.25rem solid var(--shades-bg);
+        border: 0.25rem solid var(--surface-bg);
         background: linear-gradient(180deg, #b9aeff 0%, #ffa7c5 100%);
         font-size: 2rem;
       }
