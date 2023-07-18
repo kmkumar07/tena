@@ -1,4 +1,5 @@
-trigger: none
+trigger:
+- uat
 
 pool: 
   vmImage: 'ubuntu-latest'
