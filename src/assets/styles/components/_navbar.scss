@@ -99,13 +99,13 @@
           display: block;
           font-weight: $medium;
           font-size: 0.875rem;
-          color: color("text", "secondary");
+          // color: color("text", "secondary");
           @include text-ellipsis(100%);
         }
         .role {
           font-size: 0.75rem;
           font-weight: $normal;
-          color: color("text", "dark");
+          // color: color("text", "dark");
         }
       }
     }

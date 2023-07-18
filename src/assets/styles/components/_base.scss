@@ -20,12 +20,11 @@ textarea {
 
 //mat-checkbox
 .mat-mdc-checkbox label {
-  color: color("purple", "darken-1");
+  color: var(--on-suface);
 
   // @include dark-theme {
   //   color: #ffffff;
   // }
-
   font-weight: 500;
   font-size: 1rem;
 }

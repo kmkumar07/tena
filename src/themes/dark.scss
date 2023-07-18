@@ -8,6 +8,10 @@ $light-focused: rgba(white, 0.12);
 $light-dividers: rgba(white, 0.12);
 $light-disabled-text: rgba(white, 0.5);
 $light-secondary-text: rgba(white, 0.7);
+$dark-secondary-text: rgba(black, 0.54);
+$dark-disabled-text: rgba(black, 0.38);
+$dark-dividers: rgba(black, 0.12);
+$dark-focused: rgba(black, 0.12);
 // Define a light theme
 $grey-palette: (
   50: #fafafa,
@@ -73,6 +77,106 @@ $pink-palette: (
     A700: $light-primary-text,
   )
 );
+
+// $my-primary: (
+//   50: #eeeafb,
+//   100: #d2caf5,
+//   200: #ecebff,
+//   300: #9484eb,
+//   400: #7868e6,
+//   500: #5c4ee1,
+//   600: #5049da,
+//   700: #3d41d0,
+//   800: #293bc8,
+//   900: #2c2466,
+//   contrast: (
+//     50: rgba(#ffffff, 0.87),
+//     100: rgba(#ffffff, 0.87),
+//     200: rgba(#ffffff, 0.87),
+//     300: rgba(#ffffff, 0.87),
+//     400: rgba(#ffffff, 0.87),
+//     500: rgba(#ffffff, 0.87),
+//     600: rgba(#ffffff, 0.87),
+//     700: rgba(#ffffff, 0.87),
+//     800: rgba(#ffffff, 0.87),
+//     900: rgba(#ffffff, 0.87),
+//     A100: rgba(#ffffff, 0.87),
+//     A200: rgba(#ffffff, 0.87),
+//     A400: rgba(#ffffff, 0.87),
+//     A700: rgba(#ffffff, 0.87),
+//   ),
+// );
+// $my-accent: (
+//   50: #f2eff0,
+//   100: #eac7d7,
+//   200: #e8a7c4,
+//   300: #e995bb,
+//   400: #ea81b0,
+//   500: #ed79ae,
+//   600: #ec61a0,
+//   700: #ec4690,
+//   800: #ea1877,
+//   900: #e7046a,
+//   contrast: (
+//     50: rgba(#ffffff, 0.87),
+//     100: rgba(#ffffff, 0.87),
+//     200: rgba(#ffffff, 0.87),
+//     300: rgba(#ffffff, 0.87),
+//     400: rgba(#ffffff, 0.87),
+//     500: rgba(#ffffff, 0.87),
+//     600: rgba(#ffffff, 0.87),
+//     700: rgba(#ffffff, 0.87),
+//     800: rgba(#ffffff, 0.87),
+//     900: rgba(#ffffff, 0.87),
+//     A100: rgba(#ffffff, 0.87),
+//     A200: rgba(#ffffff, 0.87),
+//     A400: rgba(#ffffff, 0.87),
+//     A700: rgba(#ffffff, 0.87),
+//   ),
+// );
+
+// $my-primary: mat.define-palette($my-primary, 400, 200, 900);
+// $my-accent: mat.define-palette($my-accent, 500, 200, 900);
+
+
+// Foreground palette for light themes.
+// $custom-light-theme-foreground-palette: (
+//   base:              black,
+//   divider:           $dark-dividers,
+//   dividers:          $dark-dividers,
+//   disabled:          $dark-disabled-text,
+//   disabled-button:   rgba(black, 0.26),
+//   disabled-text:     $dark-disabled-text,
+//   elevation:         black,
+//   hint-text:         $dark-disabled-text,
+//   secondary-text:    $dark-secondary-text,
+//   icon:              rgba(black, 0.54),
+//   icons:             rgba(black, 0.54),
+//   text:              rgba(black, 0.87),
+//   slider-min:        rgba(black, 0.87),
+//   slider-off:        rgba(black, 0.26),
+//   slider-off-active: rgba(black, 0.38),
+// );
+
+// // Background palette for light themes.
+// $custom-light-theme-background-palette: (
+//   status-bar: map.get($grey-palette, 300),
+//   app-bar:    map.get($grey-palette, 100),
+//   background: map.get($grey-palette, 50),
+//   hover:      rgba(black, 0.04), // TODO(kara): check style with Material Design UX
+//   card:       white,
+//   dialog:     white,
+//   disabled-button: rgba(black, 0.12),
+//   raised-button: white,
+//   focused-button: $dark-focused,
+//   selected-button: map.get($grey-palette, 300),
+//   selected-disabled-button: map.get($grey-palette, 400),
+//   disabled-button-toggle: map.get($grey-palette, 200),
+//   unselected-chip: map.get($grey-palette, 300),
+//   disabled-list-option: map.get($grey-palette, 200),
+//   tooltip: map.get($grey-palette, 700),
+// );
+
 $custom-dark-theme-background-palette: (
   status-bar: black,
   app-bar: map.get($grey-palette, 800),
@@ -118,7 +222,17 @@ $custom-dark-theme-foreground-palette: (
   );
 }
 
-$light-primary: mat.define-palette(mat.$indigo-palette);
+// @function custom-light-theme($primary, $accent) {
+//   @return (
+//     primary: $primary,
+//     accent: $accent,
+//     warn: $primary,
+//     foreground: $custom-light-theme-foreground-palette,
+//     background: $custom-light-theme-background-palette
+//   );
+// }
+
+$light-primary: mat.define-palette(mat.$indigo-palette, A700);
 $light-accent: mat.define-palette(mat.$pink-palette);
 $light-theme: mat.define-light-theme(
   (
@@ -129,41 +243,41 @@ $light-theme: mat.define-light-theme(
   )
 );
 
+// Define a light theme
+// $light-primary: mat.define-palette(mat.$purple-palette, 900);
+// $light-accent: mat.define-palette(mat.$pink-palette, 400, 200, 900);
+// $custom-light-theme: custom-light-theme($my-primary, $my-accent);
+
 // Define a dark theme
 $dark-primary: mat.define-palette(mat.$pink-palette, 400, 200, 900);
 $dark-accent: mat.define-palette(mat.$purple-palette, 900);
 $custom-dark-theme: custom-dark-theme($dark-primary, $dark-accent);
+
+// @include mat.all-component-themes($light-theme);
 
 [data-app-theme="dark"], .dark-mode {
   .mat-app-background,
   .outer-layout {
     background: #303030;
   }
-  @include mat.all-component-themes($custom-dark-theme);
+  @include mat.all-component-colors($custom-dark-theme);
 }
 
 // Apply the dark theme by default
 
-[data-app-theme="light"] {
-  @include mat.core-color($light-theme);
-  @include mat.button-color($light-theme);
-  @include mat.card-theme($light-theme);
-  @include mat.progress-bar-theme($light-theme);
-  @include mat.chips-theme($light-theme);
-  @include mat.badge-theme($light-theme);
-  @include mat.button-toggle-theme($light-theme);
-  @include mat.checkbox-theme($light-theme);
-  // @include mat.sidenav-theme($light-theme);
-  @include mat.list-theme($light-theme);
-  // @include mat.form-field-theme($light-theme);
-  @include mat.icon-theme($light-theme);
-  @include mat.select-theme($light-theme);
-}
+// [data-app-theme="light"] {
+//   @include mat.core-color($light-theme);
+//   @include mat.all-component-themes($light-theme);
+// }
 
 // style for dark theme
 
 [data-app-theme="dark"], .dark-mode {
   textarea {
     color: #ffffff;
+  }
+  // for svg icon having alt="..-icon"
+  img[alt*="icon"] {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(48deg) brightness(105%) contrast(105%);
   }
 }
