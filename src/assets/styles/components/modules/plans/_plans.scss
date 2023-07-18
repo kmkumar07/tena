@@ -33,7 +33,7 @@
     }
 
     .mat-step-icon {
-      background-color: color("shades", "white");
+      background-color: var(--shades-bg);
       border: 0.0938rem solid color("grey", "stepper-border");
     }
   }
@@ -176,10 +176,10 @@
 
 .empty-add-section {
   padding: 8.6875rem 3.75rem 5.6875rem;
-  background-color: $primay-extra-light-bg-color;
+  background-color: var(--primay-extra-light-bg);
 }
 .mat-step-header[aria-selected="true"] {
-  background-color: color("shades", "white") !important;
+  background-color: var(--shades-bg) !important;
   border-left: 0.25rem solid color("primary", "main") !important;
   border-radius: 0.5rem 0 0 0.5rem;
   position: relative;
@@ -312,7 +312,7 @@
 
 .empty-add-section {
   padding: 8.6875rem 3.75rem 5.6875rem;
-  background-color: $primay-extra-light-bg-color;
+  background-color: var(--primay-extra-light-bg);
 }
 
 .add-new-btn-list.mat-mdc-button {
@@ -323,11 +323,9 @@
 
 // view plan section
 .view-plan-wrapper {
-  background-color: color("shades", "white");
   padding: 0.6875rem;
   .header-block {
     padding: 1.125rem 1.5rem 1.5rem;
-    background-color: rgba(color("primary", "light"), 0.83);
 
     .heading {
       margin-bottom: 3.9375rem;
