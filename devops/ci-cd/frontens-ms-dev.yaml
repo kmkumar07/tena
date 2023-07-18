@@ -3,6 +3,9 @@ trigger: none
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+- group: DF-TP-PipelineVariables
+
 stages:
 - stage: Build_Frontend_Application_Dev
   displayName: 'Build stage for Frontend application'
@@ -57,4 +60,4 @@ stages:
     - script: |
           echo $(Build.BuildId)
           pwd && ls -lrta
-          helm upgrade --recreate-pods -i df-tenant-portal --set image.tag=df-tenant-portal-$(Build.BuildId) -f devops/helm-charts/app/values/values-dev.yaml devops/helm-charts/app/charts -n dev
+          helm upgrade --recreate-pods -i df-tenant-portal --set image.tag=df-tenant-portal-$(Build.BuildId) -f devops/helm-charts/app/values/values-dev.yaml devops/helm-charts/app/charts -n $(K8sNamespace-DEV)
