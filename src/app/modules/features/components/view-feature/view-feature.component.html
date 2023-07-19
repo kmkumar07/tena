@@ -1,5 +1,5 @@
 <div class="view-feature-wrapper main-bg">
-  <div class="header-block border-2">
+  <div class="header-block border-2 secondary-light-bg">
     <h3 class="mat-headline-5 heading text-text text-primary">View Feature</h3>
     <div class="flex align-center justify-between">
       <div class="brand-info flex align-end">
@@ -46,7 +46,7 @@
   <div class="content-block p-6">
     <div class="date-block flex align-center mb-8">
       <div class="flex align-center">
-        <mat-icon class="material-symbols-outlined mr-3"
+        <mat-icon class="material-symbols-outlined mr-3 text-lighten-2"
           >calendar_today</mat-icon
         >
         <p class="mat-subtitle-2 text-dark">
@@ -55,7 +55,7 @@
       </div>
       <div class="vertical-divider mx-6"></div>
       <div class="flex align-center">
-        <mat-icon class="material-symbols-outlined mr-3"
+        <mat-icon class="material-symbols-outlined mr-3 text-lighten-2"
           >calendar_today</mat-icon
         >
         <p class="mat-subtitle-2 text-dark">
@@ -115,7 +115,7 @@
       <!-- -----------------------switch type-------------------- -->
 
       <!-- ----------------range type--------------------------- -->
-      <div class="switch-type pt-4 border-2 flex align-center">
+      <div class="switch-type pt-4 border-2 flex align-center secondary-light-bg">
         <mat-icon
           *ngIf="featureType === 'range'"
           class="material-symbols-outlined text-darken-3"
@@ -130,7 +130,7 @@
 
         <mat-icon
           *ngIf="featureType === 'quantity' || featureType === 'custom'"
-          class="material-symbols-outlined text-darken-3"
+          class="material-symbols-outlined text-darken-3 text-lighten-2"
           >production_quantity_limits</mat-icon
         >
 
@@ -167,7 +167,7 @@
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
         Range Details
       </h4>
-      <div class="range-detail py-2 px-3 border-2 mb-4">
+      <div class="range-detail py-2 px-3 border-2 mb-4 secondary-light-bg">
         <p class="mat-body-1 text-headline-dark">Entitlements Units</p>
         <span class="mat-body-1 font-weight-500 text-primary">{{ unit }}</span>
       </div>

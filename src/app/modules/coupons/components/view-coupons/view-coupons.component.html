@@ -1,5 +1,5 @@
-<div class="view-plan-wrapper overflow-auto border-2 w-full h-full">
-    <div class="header-block border-2">
+<div class="view-plan-wrapper overflow-auto border-2 w-full h-full main-bg">
+    <div class="header-block border-2 secondary-light-bg">
       <h3 class="mat-headline-5 heading text-text text-primary">View Coupon</h3>
   
       <div class="brand-info flex align-center justify-between">
@@ -54,7 +54,7 @@
       </div>
       <div class="my-10">
         <div class="coupon-table-details mb-6">
-          <table mat-table [dataSource]="dataSource" class="primary-lighten-bg border-2 overflow-hidden py-4">
+          <table mat-table [dataSource]="dataSource" class="secondary-light-bg border-2 overflow-hidden py-4">
             <!-- Discount Column -->
             <ng-container matColumnDef="Discount">
               <th
@@ -100,7 +100,7 @@
           </table>
         </div>
         <div class="coupon-table-details mb-6">
-            <table mat-table [dataSource]="dataDuration" class="primary-lighten-bg border-2 overflow-hidden py-4">
+            <table mat-table [dataSource]="dataDuration" class="secondary-light-bg border-2 overflow-hidden py-4">
               <!-- Duration Column -->
               <ng-container matColumnDef="Duration">
                 <th
@@ -146,7 +146,7 @@
             </table>
           </div>
           <div class="coupon-table-details mb-6">
-            <table mat-table [dataSource]="dataValidity" class="primary-lighten-bg border-2 overflow-hidden py-4">
+            <table mat-table [dataSource]="dataValidity" class="secondary-light-bg border-2 overflow-hidden py-4">
               <!-- Validity Column -->
               <ng-container matColumnDef="Validity">
                 <th

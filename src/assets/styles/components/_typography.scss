@@ -95,12 +95,23 @@ a {
 .text-purple-lighten-1 {
   color: $text-purple-lighten-1; //#5B3CC6
 }
+
+.text-secondary {
+  color: $text-secondary; //#1A3447
+}
+
+.text-grey-darken-8 {
+  color: $text-grey-darken-8; //#333333
+}
+
 .text-black {
   color: $text-black;
 }
+
 .text-white {
   color: $text-white;
 }
+
 .fs-lg {
   font-size: 1rem;
 }
@@ -112,12 +123,15 @@ a {
   .text-text.text-dark {
     color: #e7046a !important;
   }
+
   .primary-text.text-main {
     color: var(--primary-main) !important;
   }
+
   .text-text.text-primary {
     color: var(--on-surface) !important;
   }
+
   .text-light,
   .purple-text.text-darken-1,
   .text-dark,
@@ -135,8 +149,22 @@ a {
   .text-purple-dark-2,
   .text-grey-lighten-11,
   .text-purple-lighten-1,
+  .grey-text.text-darken-6,
   .text-black,
-  .text-white {
-    color: $text-white !important;
+  .text-white,
+  .text-secondary,
+  .text-grey-darken-8,
+  .grey-text.text-form-caption {
+    color: white !important;
+  }
+}
+
+
+.text-dark,
+.grey-text.text-darken-6,
+.text-text.text-primary,
+.primary-text.text-main {
+  @include dark-theme {
+    color: white !important;
   }
 }

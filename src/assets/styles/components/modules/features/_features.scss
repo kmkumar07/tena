@@ -16,7 +16,6 @@
   }
   .header-block {
     padding: 1.125rem 1.5rem 1.5rem;
-    background-color: color("primary", "light");
 
     .heading {
       margin-bottom: 3.9375rem;
@@ -65,12 +64,8 @@
         margin-right: 0.875rem;
       }
       .switch-type {
-        background-color: $primay-light-bg-color;
         padding: 1.125rem;
       }
-    }
-    .range-detail {
-      background-color: $primay-light-bg-color;
     }
     .detail-info {
       border: 1px solid var(--primary-light);
