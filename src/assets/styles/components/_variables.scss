@@ -379,15 +379,15 @@ $half-rem: 0.5rem;
   --primary-main: #7868e6;
   --primary-light: #f3f1ff;
   // surface
-  --shades-bg: #ffffff; //rename to --surface-bg
-  // on surface
-  --on-surface: #405189;
   //primary Light bg
   --secondary-light:#F5F3FF;
   //primay-extra-light-bg-color
   --primay-extra-light-bg:#FBF9FD;
   [data-app-theme="dark"],
   .dark-mode {
+    // primary
+    --primary-main: #ec407a;
+    --primary-light: #e7c8d7cc;
     // surface dark
     --surface-bg: #424242;
     // on surface dark

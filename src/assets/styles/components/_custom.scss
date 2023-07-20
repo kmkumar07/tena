@@ -11,16 +11,16 @@
   border-radius: 8px;
 
   .tippy-arrow {
-    color: #ffffff;
+    color: var(--surface-bg);
   }
 
   .tippy-content {
     padding: 1rem 0.9375rem;
     width: 16.25rem;
-    background-color: var(--shades-bg);
+    background-color: var(--surface-bg);
 
     .details {
-      color: #405189;
+      color: var(--on-surface);
       margin-top: 0.5rem;
       line-height: 161.52%;
     }

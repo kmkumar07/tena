@@ -408,6 +408,8 @@ label {
 }
 .main-bg {
   background-color: var(--surface-bg);
+  transition: $sidebar-transition;
+  transition-property: background-color;
 }
 .secondary-light-bg{
   background-color: var(--secondary-light) !important;
