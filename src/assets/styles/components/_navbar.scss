@@ -91,6 +91,9 @@
       @include flex-align(center);
       .user-image {
         @include circle(2.625rem);
+        @extend .flex-center;
+        text-transform: uppercase;
+        background: linear-gradient(180deg, #b9aeff 0%, #ffa7c5 100%);
       }
       .user-info {
         margin-left: 0.625rem;

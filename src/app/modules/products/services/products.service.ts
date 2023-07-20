@@ -11,7 +11,7 @@ export class ProductsService {
   private productSubject = new BehaviorSubject<any>(null);
   private uploadImageSubject = new BehaviorSubject<any>(null);
   public product$ = this.productSubject.asObservable();
-  products: Product[] = [];
+  products = [];
   error$ = new Subject<string>();
 
   constructor(private http: HttpClient) {}
@@ -97,10 +97,6 @@ export class ProductsService {
     const url = `${environment.apiUrl}/products/${id}?productId=${id}`;
     return this.http.delete(url).pipe(
       map((res) => {
-        this.products = this.products.filter(
-          (product) => product.productId !== id
-        );
-        this.productSubject.next(this.products);
         return res;
       }),
       catchError((err) => {

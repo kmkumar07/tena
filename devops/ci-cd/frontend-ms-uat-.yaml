@@ -1,13 +1,17 @@
-trigger: none
+trigger:
+- uat
 
 pool: 
   vmImage: 'ubuntu-latest'
+
+variables:
+- group: DF-TP-PipelineVariables
 
 stages:
 - stage: Build_Frontend_Application_uat
   displayName: 'Build stage for Frontend application'
   variables:
-  - group: ory-authorization-uat  
+  - group: DF-TP-PipelineVariables
   jobs:
   # - job: Sonarqube
   #   displayName: Sonarqube
@@ -57,4 +61,4 @@ stages:
     - script: |
           echo $(Build.BuildId)
           pwd && ls -lrta
-          helm upgrade --recreate-pods -i df-tenant-portal --set image.tag=df-tenant-portal-$(Build.BuildId) -f devops/helm-charts/app/values/values-dev.yaml devops/helm-charts/app/charts -n df-uat
+          helm upgrade --recreate-pods -i df-tenant-portal --set image.tag=df-tenant-portal-$(Build.BuildId) -f devops/helm-charts/app/values/values-dev.yaml devops/helm-charts/app/charts -n $(K8sNamespace-UAT)

@@ -47,6 +47,7 @@ export class CreateFeatureComponent {
   sortOrder: 'asc' | 'desc';
   productArray = [];
   id: string;
+  product:any
   isRangeSelected: boolean = false;
 
   public featureForm: FormGroup | null;
@@ -72,8 +73,9 @@ export class CreateFeatureComponent {
         this.sortBy,
         this.sortOrder
       )
-      .subscribe((data) => {
-        this.productArray = data.map((res) => res.productId);
+      .subscribe((data) => {        
+        this.product=data;
+        this.productArray = this.product.products.map((res) => res.productId);
         this.featureForm.patchValue({ productID: this.id });
       });
     this.feature();

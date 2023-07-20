@@ -59,10 +59,6 @@ export class FeatureService {
     const url = `${environment.apiUrl}/feature/{featureId}?featureId=${id}`;
     return this.http.delete(url).pipe(
       map((res) => {
-        this.features = this.features.filter(
-          (feature) => feature.featureId !== id
-        );
-        this.featureSubject.next(this.features);
         return res;
       }),
       catchError((err) => {

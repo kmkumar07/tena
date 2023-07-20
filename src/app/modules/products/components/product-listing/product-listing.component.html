@@ -5,8 +5,8 @@
   <div class="flex justify-between align-center px-1">
     <div class="flex align-center">
       <h1 class="text-text text-dark">Products</h1>
-      <mat-chip class="chip-dark ml-3" selected>
-        {{ allProduct }}
+      <mat-chip class="chip-dark ml-3">
+        {{ totalNumberOfProduct }}
       </mat-chip>
     </div>
     <div class="flex align-center">
@@ -40,12 +40,12 @@
     </div>
   </div>
   <div
-    *ngIf="productsData.length > 0; else noDataFound"
+    *ngIf="productsSearchData.length > 0; else noDataFound"
     class="primary-table mt-8 px-1 pb-2"
   >
     <table
       mat-table
-      [dataSource]="productsData"
+      [dataSource]="productsSearchData"
       matSort
       (matSortChange)="announceSortChange($event)"
     >
