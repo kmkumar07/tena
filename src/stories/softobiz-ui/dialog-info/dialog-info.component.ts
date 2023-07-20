@@ -1,8 +1,6 @@
 import { Component, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { CouponsDeleteSuccessComponent, DialogData } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
-import { ErrorLayoutComponent } from '../errorLayout/errorLayout.component';
-import { ChipComponent } from '../Chip/chip.component';
+import { DialogData } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 
 @Component({
   selector: 'app-dialog-info',
