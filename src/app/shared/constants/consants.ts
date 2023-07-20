@@ -672,6 +672,6 @@ export interface ProductVariants {
   name: string;
   productID: string;
   type: string;
-  features: [];
+  features: { featureID: string; value: string }[];
   status: string;
 }

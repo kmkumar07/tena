@@ -3,4 +3,8 @@
 }
 .coupon-table-details{
     width: 32.3125rem;
+    .mdc-data-table__cell, .mdc-data-table__header-cell {
+        border-bottom-width: 0;
+        border-bottom-style: none;
+    }
 }

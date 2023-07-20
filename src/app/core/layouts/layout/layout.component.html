@@ -5,7 +5,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <!-- Header for application starts here! -->
-      <div class="header-wrapper border-2">
+      <mat-toolbar class="header-wrapper border-2 main-bg">
         <div class="header-right">
           <div
             class="notifications-section pointer"
@@ -24,7 +24,7 @@
             class="notifications-menu border-2"
             backdropClass="right-menu"
           >
-            <div class="notifications-header">
+            <div class="notifications-header mat-purple">
               <div class="flex align-center justify-between">
                 <div class="label">Notifications</div>
                 <mat-chip class="basic-chip"> 4 New </mat-chip>
@@ -39,7 +39,7 @@
                       <div class="absolute position-center text-center w-full">
                         <img
                           src="../../../../assets/images/notifications-icon.png"
-                          alt="no data"
+                          alt="notification-icon"
                         />
                         <span class="block mt-6">
                           Hey! You have no notifications.
@@ -60,7 +60,7 @@
                       <div class="absolute position-center text-center w-full">
                         <img
                           src="../../../../assets/images/notifications-icon.png"
-                          alt="no data"
+                          alt="notifications-icon"
                         />
                         <span class="block mt-6">
                           Hey! You have no notifications.
@@ -83,7 +83,7 @@
                       <div class="absolute position-center text-center w-full">
                         <img
                           src="../../../../assets/images/notifications-icon.png"
-                          alt="no data"
+                          alt="notifications-icon"
                         />
                         <span class="block mt-6">
                           Hey! You have no notifications.
@@ -121,7 +121,7 @@
             class="profile-menu"
             backdropClass="alert-menu"
           >
-            <div class="profile-menu-outer">
+            <div class="profile-menu-outer" (click)="preventClose($event)">
               <div class="grad-bg">
                <div class="user-initials">{{ getInitials(userName) }}</div>
               </div>
@@ -134,7 +134,7 @@
                   *ngFor="let element of userProfile"
                 >
                   <div class="flex align-center" (click)="logOut(element.logOut)">
-                    <mat-icon class="material-symbols-outlined">{{
+                    <mat-icon class="material-symbols-outlined mat-primary">{{
                       element.icon
                     }}</mat-icon>
                     <span class="ml-3">{{ element.name }}</span>
@@ -143,6 +143,7 @@
                     <mat-slide-toggle
                       color="primary"
                       (click)="preventClose($event)"
+                      (change)="switchDark($event)"
                     ></mat-slide-toggle>
                   </div>
                 </a>
@@ -150,8 +151,8 @@
             </div>
           </mat-menu>
         </div>
-      </div>
-      <div class="pt-6 main-content-height relative">
+      </mat-toolbar>
+      <div class="mt-6 main-content-height relative">
         <div class="loader" *ngIf="loading">
           <div class="position-center">
             <mat-spinner ></mat-spinner>

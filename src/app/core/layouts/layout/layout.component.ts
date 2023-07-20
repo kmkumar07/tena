@@ -83,4 +83,8 @@ export class LayoutComponent {
       )
     }
   }
+  switchDark(event: any) {
+    const body = document.getElementById('body');
+    body.classList.toggle('dark-mode');
+  }
 }

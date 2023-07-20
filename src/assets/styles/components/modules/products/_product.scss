@@ -1,6 +1,5 @@
 // product listing section
 .product-listing-wrapper {
-  background: white;
   border-radius: 0.5rem;
   padding: 1.6875rem 1.8125rem;
   height: 100%;
@@ -35,7 +34,6 @@
 
 // create product section
 .create-product-wrapper {
-  background: white;
   border-radius: 0.5rem;
   padding: 1.6875rem 1.8125rem;
   height: 100%;
@@ -154,7 +152,6 @@
 
 //view product section
 .view-product-wrapper {
-  background-color: color("shades", "white");
   border-radius: 0.5rem;
   padding: 0.625rem;
   height: 100%;
@@ -162,7 +159,7 @@
 
   .header-block {
     padding: 1.125rem 1.5rem 1.5rem;
-    background-color: rgba(color("primary", "light"), 0.83);
+    background-color: rgba(var(--primary-light), 0.83);
 
     .heading {
       margin-bottom: 1.9375rem;
@@ -175,7 +172,7 @@
       }
 
       .subtitle {
-        color: rgba(color("text", "primary"), 0.6);
+        color: rgba(var( --on-surface), 0.6);
         margin-bottom: 0.1875rem;
       }
 
@@ -229,7 +226,6 @@
       .features-wrapper {
         padding-top: 1.875rem;
         .feature-item {
-          background-color: $primay-light-bg-color;
           padding: 0.75rem 0.9375rem;
           margin-bottom: 1.125rem;
 
@@ -249,7 +245,7 @@
           height: 2.3125rem;
           width: 2.3125rem;
           overflow: hidden;
-          background-color: #ffffff;
+          // background-color: #ffffff;
 
           img {
             width: 100%;

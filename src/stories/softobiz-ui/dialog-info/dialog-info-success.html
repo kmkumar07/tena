@@ -1,0 +1,17 @@
+<div class="border-2 text-center coupons-dialog">
+  <div class="close-dialog-icon">
+      <mat-icon (click)="onCancelClick()" class="material-symbols-outlined">close</mat-icon>
+  </div>
+  <div class="mb-6">
+      <img src="/coupons-delete-success.png" alt="coupons-delete-success">
+  </div>
+  <h1 class="mb-4">Success</h1>
+  <!-- <span class="mat-body-1 mb-8 block">{{data.module}} {{data.deleteId}} deleted successfully</span
+  > -->
+  <span class="mat-body-1 mb-8 block"> deleted successfully</span
+  >
+  <div class="flex-center">
+    <button mat-flat-button color="primary" class="medium ml-2" [mat-dialog-close]="true" (click)="onCancelClick()">Okay</button>
+  </div>
+</div>
+

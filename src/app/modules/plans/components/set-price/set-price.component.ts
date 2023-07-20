@@ -185,6 +185,7 @@ export class SetPriceComponent {
     lastIdx.get('endingUnit')?.setValue('&above');
     lastIdx.get('endingUnit')?.disable();
   }
+
   selectedOption: string;
   inputValue: string;
   cycleValue(event: any) {
@@ -315,7 +316,6 @@ export class SetPriceComponent {
         input = 0;
         break;
       }
-
       i++;
       break;
     }

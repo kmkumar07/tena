@@ -509,7 +509,7 @@ $border-radius: (
 @mixin circle($size) {
   width: $size;
   height: $size;
-  border-radius: $size/2;
+  border-radius: 50%;
   overflow: hidden;
   min-width: $size;
   max-width: $size;
@@ -552,4 +552,10 @@ $border-radius: (
   height: $height;
   max-width: $width;
   width: 100%;
+}
+
+@mixin dark-theme {
+  [data-app-theme="dark"] & {
+    @content;
+  }
 }
