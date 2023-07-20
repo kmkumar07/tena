@@ -66,4 +66,8 @@ export class DashboardLayoutComponent {
     let list = [];
     return (list = this.menuItems.filter((ele) => ele.category == item));
   }
+  switchDark(event: any) {
+    const body = document.getElementById('storybook-root');
+    body.classList.toggle('dark-mode');
+  }
 }
