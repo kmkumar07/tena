@@ -85,7 +85,7 @@
           position: absolute;
           left: 50%;
           transform: translate(-50%, 0);
-          color: color("primary", "main");
+          color: var(--primary-main);
           .mdc-button__label {
             svg {
               display: none;
@@ -94,10 +94,10 @@
         }
         .mat-calendar-previous-button {
           position: absolute;
-          color: color("primary", "main");
+          color: var(--primary-main);
         }
         .mat-calendar-next-button {
-          color: color("primary", "main");
+          color: var(--primary-main);
         }
       }
     }

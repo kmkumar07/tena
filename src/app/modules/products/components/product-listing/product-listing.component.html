@@ -1,8 +1,6 @@
-
-
 <div
   *ngIf="allProductsData > 0; else noDataList"
-  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll"
+  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-auto mat-primary"
 >
   <div class="flex justify-between align-center px-1">
     <div class="flex align-center">
@@ -153,7 +151,7 @@
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let element">
           <mat-icon
-            class="material-symbols-outlined"
+            class="material-symbols-outlined mat-primary"
             [matMenuTriggerFor]="actionsMenu"
           >
             more_vert
@@ -245,13 +243,13 @@
     </div>
   </div>
   <ng-template #noDataFound>
-    <div class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
+    <div class="relative main-bg border-2 w-full h-full p-7 overflow-auto">
       <app-no-item-found></app-no-item-found>
     </div>
   </ng-template>
 </div>
 <ng-template #noDataList>
-  <div class="relative main-bg border-2 w-full h-full p-7 overflow-scroll">
+  <div class="relative main-bg border-2 w-full h-full p-7 overflow-auto">
     <app-empty-listing [items]="emptyProductPros"></app-empty-listing>
   </div>
 </ng-template>

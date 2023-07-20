@@ -1,0 +1,17 @@
+<mat-icon class="material-symbols-outlined mat-primary" [matMenuTriggerFor]="actionsMenu">
+  more_vert
+</mat-icon>
+<mat-menu #actionsMenu="matMenu" class="actions-menu" backdropClass="edit-menu">
+  <button mat-menu-item disableRipple>
+    <mat-icon *ngIf="withIcon" class="material-symbols-outlined"
+      ><img src="/icons/bunny.svg" alt="bunny-icon" class="mr-3"
+    /></mat-icon>
+    Edit
+  </button>
+  <button mat-menu-item disableRipple>
+    <mat-icon *ngIf="withIcon" class="material-symbols-outlined"
+      ><img src="/icons/bunny.svg" alt="bunny-icon" class="mr-3"
+    /></mat-icon>
+    Delete
+  </button>
+</mat-menu>

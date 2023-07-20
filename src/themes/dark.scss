@@ -1,0 +1,283 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+@include mat.core();
+
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: white;
+$light-focused: rgba(white, 0.12);
+$light-dividers: rgba(white, 0.12);
+$light-disabled-text: rgba(white, 0.5);
+$light-secondary-text: rgba(white, 0.7);
+$dark-secondary-text: rgba(black, 0.54);
+$dark-disabled-text: rgba(black, 0.38);
+$dark-dividers: rgba(black, 0.12);
+$dark-focused: rgba(black, 0.12);
+// Define a light theme
+$grey-palette: (
+  50: #fafafa,
+  100: #f5f5f5,
+  200: #eeeeee,
+  300: #e0e0e0,
+  400: #bdbdbd,
+  500: #9e9e9e,
+  600: #757575,
+  700: #616161,
+  800: #424242,
+  900: #212121,
+  A100: #ffffff,
+  A200: #eeeeee,
+  A400: #bdbdbd,
+  A700: #616161,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $light-primary-text,
+  ),
+);
+$pink-palette: (
+  50: #fce4ec,
+  100: #f8bbd0,
+  200: #f48fb1,
+  300: #f06292,
+  400: #ec407a,
+  500: #e91e63,
+  600: #d81b60,
+  700: #c2185b,
+  800: #ad1457,
+  900: #880e4f,
+  A100: #ff80ab,
+  A200: #ff4081,
+  A400: #f50057,
+  A700: #c51162,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+// $my-primary: (
+//   50: #eeeafb,
+//   100: #d2caf5,
+//   200: #ecebff,
+//   300: #9484eb,
+//   400: #7868e6,
+//   500: #5c4ee1,
+//   600: #5049da,
+//   700: #3d41d0,
+//   800: #293bc8,
+//   900: #2c2466,
+//   contrast: (
+//     50: rgba(#ffffff, 0.87),
+//     100: rgba(#ffffff, 0.87),
+//     200: rgba(#ffffff, 0.87),
+//     300: rgba(#ffffff, 0.87),
+//     400: rgba(#ffffff, 0.87),
+//     500: rgba(#ffffff, 0.87),
+//     600: rgba(#ffffff, 0.87),
+//     700: rgba(#ffffff, 0.87),
+//     800: rgba(#ffffff, 0.87),
+//     900: rgba(#ffffff, 0.87),
+//     A100: rgba(#ffffff, 0.87),
+//     A200: rgba(#ffffff, 0.87),
+//     A400: rgba(#ffffff, 0.87),
+//     A700: rgba(#ffffff, 0.87),
+//   ),
+// );
+// $my-accent: (
+//   50: #f2eff0,
+//   100: #eac7d7,
+//   200: #e8a7c4,
+//   300: #e995bb,
+//   400: #ea81b0,
+//   500: #ed79ae,
+//   600: #ec61a0,
+//   700: #ec4690,
+//   800: #ea1877,
+//   900: #e7046a,
+//   contrast: (
+//     50: rgba(#ffffff, 0.87),
+//     100: rgba(#ffffff, 0.87),
+//     200: rgba(#ffffff, 0.87),
+//     300: rgba(#ffffff, 0.87),
+//     400: rgba(#ffffff, 0.87),
+//     500: rgba(#ffffff, 0.87),
+//     600: rgba(#ffffff, 0.87),
+//     700: rgba(#ffffff, 0.87),
+//     800: rgba(#ffffff, 0.87),
+//     900: rgba(#ffffff, 0.87),
+//     A100: rgba(#ffffff, 0.87),
+//     A200: rgba(#ffffff, 0.87),
+//     A400: rgba(#ffffff, 0.87),
+//     A700: rgba(#ffffff, 0.87),
+//   ),
+// );
+
+// $my-primary: mat.define-palette($my-primary, 400, 200, 900);
+// $my-accent: mat.define-palette($my-accent, 500, 200, 900);
+
+
+// Foreground palette for light themes.
+// $custom-light-theme-foreground-palette: (
+//   base:              black,
+//   divider:           $dark-dividers,
+//   dividers:          $dark-dividers,
+//   disabled:          $dark-disabled-text,
+//   disabled-button:   rgba(black, 0.26),
+//   disabled-text:     $dark-disabled-text,
+//   elevation:         black,
+//   hint-text:         $dark-disabled-text,
+//   secondary-text:    $dark-secondary-text,
+//   icon:              rgba(black, 0.54),
+//   icons:             rgba(black, 0.54),
+//   text:              rgba(black, 0.87),
+//   slider-min:        rgba(black, 0.87),
+//   slider-off:        rgba(black, 0.26),
+//   slider-off-active: rgba(black, 0.38),
+// );
+
+// // Background palette for light themes.
+// $custom-light-theme-background-palette: (
+//   status-bar: map.get($grey-palette, 300),
+//   app-bar:    map.get($grey-palette, 100),
+//   background: map.get($grey-palette, 50),
+//   hover:      rgba(black, 0.04), // TODO(kara): check style with Material Design UX
+//   card:       white,
+//   dialog:     white,
+//   disabled-button: rgba(black, 0.12),
+//   raised-button: white,
+//   focused-button: $dark-focused,
+//   selected-button: map.get($grey-palette, 300),
+//   selected-disabled-button: map.get($grey-palette, 400),
+//   disabled-button-toggle: map.get($grey-palette, 200),
+//   unselected-chip: map.get($grey-palette, 300),
+//   disabled-list-option: map.get($grey-palette, 200),
+//   tooltip: map.get($grey-palette, 700),
+// );
+
+$custom-dark-theme-background-palette: (
+  status-bar: black,
+  app-bar: map.get($grey-palette, 800),
+  background: #303030,
+  hover: rgba(white, 0.04),
+  card: map.get($grey-palette, 800),
+  dialog:  map.get($grey-palette, 800),
+  disabled-button: rgba(white, 0.12),
+  raised-button: map.get($grey-palette, 800),
+  focused-button: $light-focused,
+  selected-button: map.get($grey-palette, 900),
+  selected-disabled-button: map.get($grey-palette, 800),
+  disabled-button-toggle: black,
+  unselected-chip: map.get($grey-palette, 700),
+  disabled-list-option: rgba(white, 0.12),
+  tooltip: map.get($grey-palette, 700),
+);
+$custom-dark-theme-foreground-palette: (
+  base: white,
+  divider: $light-dividers,
+  dividers: $light-dividers,
+  disabled: $light-disabled-text,
+  disabled-button: rgba(white, 0.3),
+  disabled-text: $light-disabled-text,
+  elevation: black,
+  hint-text: $light-disabled-text,
+  secondary-text: $light-secondary-text,
+  icon: white,
+  icons: white,
+  text: white,
+  slider-min: white,
+  slider-off: rgba(white, 0.3),
+  slider-off-active: rgba(white, 0.3),
+);
+@function custom-dark-theme($primary, $accent) {
+  @return (
+    primary: $primary,
+    accent: $accent,
+    warn: $primary,
+    is-dark: true,
+    foreground: $custom-dark-theme-foreground-palette,
+    background: $custom-dark-theme-background-palette
+  );
+}
+
+// @function custom-light-theme($primary, $accent) {
+//   @return (
+//     primary: $primary,
+//     accent: $accent,
+//     warn: $primary,
+//     foreground: $custom-light-theme-foreground-palette,
+//     background: $custom-light-theme-background-palette
+//   );
+// }
+
+$light-primary: mat.define-palette(mat.$indigo-palette, A700);
+$light-accent: mat.define-palette(mat.$pink-palette);
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $light-primary,
+      accent: $light-accent,
+    ),
+  )
+);
+
+// Define a light theme
+// $light-primary: mat.define-palette(mat.$purple-palette, 900);
+// $light-accent: mat.define-palette(mat.$pink-palette, 400, 200, 900);
+// $custom-light-theme: custom-light-theme($my-primary, $my-accent);
+
+// Define a dark theme
+$dark-primary: mat.define-palette(mat.$pink-palette, 400, 200, 900);
+$dark-accent: mat.define-palette(mat.$purple-palette, 900);
+$custom-dark-theme: custom-dark-theme($dark-primary, $dark-accent);
+
+// @include mat.all-component-themes($light-theme);
+
+[data-app-theme="dark"], .dark-mode {
+  .mat-app-background,
+  .outer-layout {
+    background: #303030;
+  }
+  @include mat.all-component-colors($custom-dark-theme);
+}
+
+// Apply the dark theme by default
+
+// [data-app-theme="light"] {
+//   @include mat.core-color($light-theme);
+//   @include mat.all-component-themes($light-theme);
+// }
+
+// style for dark theme
+
+[data-app-theme="dark"], .dark-mode {
+  textarea {
+    color: #ffffff;
+  }
+  // for svg icon having alt="..-icon"
+  img[alt*="icon"] {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(48deg) brightness(105%) contrast(105%);
+  }
+}

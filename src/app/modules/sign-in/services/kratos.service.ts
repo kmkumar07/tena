@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 export class kratosService {
 
   constructor(private http: HttpClient) { }
+
   loginIdentity(payload: loginCredientials): Observable<any> {
     return this.http.get(`${environment.kratosUrl}/login/browser`, {
       withCredentials: true
@@ -36,11 +37,28 @@ export class kratosService {
             return loginResponse;
           }),
           catchError((error: any) => {
-            console.error('error while login:', error);
+            // console.error('error while login:', error);
             throw error;
           })
         );
       })
     );
+  }
+
+  // logout
+  logout(): Observable<any> {
+    const logoutUrl = `${environment.kratosUrl}/logout/browser`;
+    return this.http.get(logoutUrl, { withCredentials: true })
+      .pipe(
+        map((logoutResponse: any) => {
+          const token = logoutResponse.logout_token;
+          localStorage.clear()
+          window.location.href = `${environment.kratosUrl}/logout?token=${token}`;
+        }),
+        catchError((error: any) => {
+          console.error('error while logout:', error);
+          throw error;
+        })
+      );
   }
 }

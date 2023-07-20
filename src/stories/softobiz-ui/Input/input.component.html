@@ -1,0 +1,34 @@
+<div class="input-wrapper">
+  <div class="flex align-center mb-2">
+    <p class="mat-subtitle-2 font-weight-500 input-label">{{ label }}</p>
+    <mat-icon
+      *ngIf="infoIcon"
+      class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+      [ngxTippy]="helpinfotooltip"
+      [tippyProps]="{ placement: 'right' }"
+      >help</mat-icon
+    >
+    <ng-template #helpinfotooltip let-name>
+      <div class="help-info-tooltip">
+        <div class="heading-with-background">{{infoTitle}}</div>
+        <div class="details">
+          {{infoDetail}}
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <mat-form-field appearance="outline" [class]="'border-2' + ' ' + class">
+    <mat-hint *ngIf="hint" align="start"
+      ><strong>{{ hint }}</strong>
+    </mat-hint>
+    <input
+      [required]="required"
+      matInput
+      [placeholder]="placeholder"
+      formControlName="id"
+      [readonly]="readonly"
+      [disabled]="disable"
+      [value]="value"
+    />
+  </mat-form-field>
+</div>

@@ -34,10 +34,10 @@ export interface coupon {
   status: string;
 }
 export interface loginCredientials {
-  csrf_token:string,
-  method: string,
-  password_identifier: string,
-  password: string
+  csrf_token: string;
+  method: string;
+  password_identifier: string;
+  password: string;
 }
 export interface Product {
   productId: string;
@@ -91,10 +91,10 @@ export interface Customer {
   id: string;
   name: string;
   companyName: string;
-  email: string,
-  workPhone: string,
-  website: string,
-  subscription: string
+  email: string;
+  workPhone: string;
+  website: string;
+  subscription: string;
 }
 export interface GetFeature {
   featureId: string;
@@ -143,12 +143,11 @@ export interface PlanList {
 
 export interface ProductVariant {
   productVariantId: string;
-  name: string,
+  name: string;
   productID: string;
   type: string;
   features: { featureID: string; value: string }[];
   status: string;
-
 }
 export const MENUITEMS = [
   {
@@ -156,7 +155,7 @@ export const MENUITEMS = [
     type: 'link',
     name: 'Overview',
     icon: 'space_dashboard',
-    category: 'Dashboard'
+    category: 'Dashboard',
   },
   {
     state: '/customers',
@@ -260,13 +259,6 @@ export const Config_Menu = [
     icon: 'settings',
     category: 'Config',
   },
-  {
-    state: 'stepper',
-    type: 'link',
-    name: 'LogOut ',
-    icon: 'logout',
-    category: 'Confog',
-  },
 ];
 export const User_Options = [
   {
@@ -278,6 +270,13 @@ export const User_Options = [
   { path: '/inbox', icon: 'inbox_outline', name: 'My Inbox', toggle: false },
   { path: '', icon: 'clear_day', name: 'Dark Mode', toggle: true },
   { path: '/help', icon: 'live_help', name: 'Help', toggle: false },
+  {
+    path: '',
+    icon: 'logout',
+    name: 'LogOut ',
+    toggle: false,
+    logOut: true
+  },
 ];
 // Product listing
 export const User_Data = [
@@ -673,6 +672,6 @@ export interface ProductVariants {
   name: string;
   productID: string;
   type: string;
-  features: [];
+  features: { featureID: string; value: string }[];
   status: string;
 }

@@ -1,11 +1,11 @@
 <div
-  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll"
+  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-auto"
   *ngIf="InvoiceData.length == 0"
 >
   <app-empty-listing [items]="noContent"></app-empty-listing>
 </div>
 <div
-  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll"
+  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-auto"
   *ngIf="InvoiceData.length > 0"
 >
   <div class="flex justify-between align-center px-1">

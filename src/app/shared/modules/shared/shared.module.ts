@@ -11,14 +11,19 @@ import { NoItemFoundComponent } from '../../components/no-item-found/no-item-fou
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
-  declarations: [EmptyListingComponent, CustomDateHeaderComponent, EditCustomerDetailsComponent, NoItemFoundComponent],
+  declarations: [
+    EmptyListingComponent,
+    CustomDateHeaderComponent,
+    EditCustomerDetailsComponent,
+    NoItemFoundComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   exports: [
     NgxTippyModule,
@@ -27,7 +32,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     EmptyListingComponent,
     CustomDateHeaderComponent,
     EditCustomerDetailsComponent,
-    NoItemFoundComponent
+    NoItemFoundComponent,
   ],
 })
 export class SharedModule {}
