@@ -253,31 +253,22 @@ $dark-primary: mat.define-palette(mat.$pink-palette, 400, 200, 900);
 $dark-accent: mat.define-palette(mat.$purple-palette, 900);
 $custom-dark-theme: custom-dark-theme($dark-primary, $dark-accent);
 
+// @include mat.all-component-themes($light-theme);
+
 [data-app-theme="dark"], .dark-mode {
   .mat-app-background,
   .outer-layout {
     background: #303030;
   }
-  @include mat.all-component-themes($custom-dark-theme);
+  @include mat.all-component-colors($custom-dark-theme);
 }
 
 // Apply the dark theme by default
 
-[data-app-theme="light"] {
-  @include mat.core-color($light-theme);
-  @include mat.button-color($light-theme);
-  @include mat.card-theme($light-theme);
-  @include mat.progress-bar-theme($light-theme);
-  @include mat.chips-theme($light-theme);
-  @include mat.badge-theme($light-theme);
-  @include mat.button-toggle-theme($light-theme);
-  @include mat.checkbox-theme($light-theme);
-  // @include mat.sidenav-theme($light-theme);
-  @include mat.list-theme($light-theme);
-  // @include mat.form-field-theme($light-theme);
-  @include mat.icon-theme($light-theme);
-  @include mat.select-theme($light-theme);
-}
+// [data-app-theme="light"] {
+//   @include mat.core-color($light-theme);
+//   @include mat.all-component-themes($light-theme);
+// }
 
 // style for dark theme
 

@@ -16,8 +16,6 @@ export interface Task {
 })
 export class CheckboxComponent {
 
-  @Input() task: string = '';
-
   //Checkbox label
   @Input() label: string = '';
 
