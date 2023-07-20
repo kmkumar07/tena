@@ -90,6 +90,9 @@
       @include flex-align(center);
       .user-image {
         @include circle(2.625rem);
+        @extend .flex-center;
+        text-transform: uppercase;
+        background: linear-gradient(180deg, #b9aeff 0%, #ffa7c5 100%);
       }
       .user-info {
         margin-left: 0.625rem;
@@ -124,7 +127,7 @@
   &.light {
     background-color: color("primary", "light");
   }
-  &.full{
+  &.full {
     max-width: 100%;
     margin-bottom: 0.375rem !important;
   }
@@ -301,7 +304,7 @@
             }
           }
         }
-        .config-section{
+        .config-section {
           padding-right: 0.3125rem;
         }
         .image-wrapper {

@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class SignInComponent implements OnInit {
   hide = true;
   loading = false;
+  errorMessage: string;
   loginForm: FormGroup;
   subscription: Subscription;
 
@@ -47,7 +48,14 @@ export class SignInComponent implements OnInit {
         }
       },
       error: (err: any) => {
-        console.log('something wrong occured', err);
+        this.loading = false
+        if (err?.status === 400 || err?.error.ui.messages[0]?.id === 4000006) {
+          this.errorMessage = err?.error.ui.messages[0]?.text
+       } else if (err?.status === 500) {
+          this.errorMessage = "An internal server error occurred. Please try again later.";
+        } else {
+          this.errorMessage = "An error occurred. Please try again later.";
+        }
       },
     });
   }
