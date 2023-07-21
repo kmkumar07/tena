@@ -304,7 +304,6 @@ export class SetPriceComponent {
         gap = arr[0].endingUnit;
       } else {
         gap = arr[i].endingUnit - arr[i - 1].endingUnit;
-        break;
       }
 
       if (input >= gap) {
@@ -313,11 +312,9 @@ export class SetPriceComponent {
       } else {
         total1 += arr[i].price * input;
         input = 0;
-        break;
       }
 
       i++;
-      break;
     }
 
     this.tiredTotal = total1;
