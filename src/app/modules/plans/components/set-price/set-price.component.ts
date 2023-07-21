@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlanService } from '../../services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class PlanValue {
   planId: string;
@@ -48,7 +49,8 @@ export class SetPriceComponent {
     private planService: PlanService,
     public dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -247,12 +249,22 @@ export class SetPriceComponent {
     this.pricingModelValueToName(this.price);
     this.subscription = this.planService
       .createPrice(this.price)
-      .subscribe((res) => {
+      .subscribe({
+        next: (res) => {
         this.openSuccess();
         this.planService.setData(this.price, 'priceInfo');
         this.router.navigate([`/plans/create/${this.planValue.planId}`]);
         this.global.hideLoader();
-      });
+      },
+
+      error: (err: any)=> {
+        this.snackBar.open(err.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right'
+        })
+      },
+    });
     this.global.hideLoader();
   }
 
