@@ -1,0 +1,11 @@
+<nav>
+  <ul [class]="'breadcrumb' + ' ' + class">
+    <li *ngFor="let item of items; let last = last">
+      <a *ngIf="item.link">{{ item.label }}</a>
+      <span *ngIf="!item.link">{{ item.label }}</span>
+      <mat-icon *ngIf="!last" class="material-symbols-outlined small-icon">
+        chevron_right
+      </mat-icon>
+    </li>
+  </ul>
+</nav>

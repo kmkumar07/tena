@@ -18,7 +18,6 @@ export class ApiService {
     return new HttpHeaders(headersConfig);
   }
 
-
   private formatErrors(err: any) {
     console.log('api call error:: ', err);
     return throwError(err?.error);

@@ -1,11 +1,11 @@
 <div
   *ngIf="customers.length == 0"
-  class="relative main-bg border-2 w-full h-full p-7 overflow-scroll"
+  class="relative main-bg border-2 w-full h-full p-7 overflow-auto"
 >
   <app-empty-listing [items]="emptyList"></app-empty-listing>
 </div>
 <div
-  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll"
+  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-auto"
   *ngIf="customers.length > 0"
 >
   <div class="flex justify-between align-center px-1">
