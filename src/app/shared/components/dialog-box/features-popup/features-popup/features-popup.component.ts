@@ -19,7 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface menuOptions {
@@ -60,7 +60,8 @@ export class FeaturesPopupComponent {
     private productService: ProductsService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<FeaturesPopupComponent>,
   ) {}
 
   ngOnInit() {
@@ -245,7 +246,8 @@ export class FeaturesPopupComponent {
     }
     this.subscription = this.featureService.addFeature(feature).subscribe({
       next: (res: any) => {
-        this.openSuccess();
+        // this.openSuccess();
+        this.onDelete();
         this.routes.navigate([`/features/view/${res.featureId}`]);
         return res;
       },
@@ -260,7 +262,8 @@ export class FeaturesPopupComponent {
   }
 
   onDelete() {
-    this.routes.navigate(['/features']);
+    // this.routes.navigate(['/features']);
+    this.dialogRef.close(false);
   }
 
   openSuccess() {
