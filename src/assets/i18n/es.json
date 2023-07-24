@@ -1,0 +1,13 @@
+{
+    "overview": "revisar",
+    "customer": "Cliente",
+    "subscription": "Suscripción",
+    "plans": "Aviones",
+    "features":"Características",
+    "products":"Productos", 
+    "addOns": "Añadir ONS",
+    "coupons": "cupones",
+    "transactions": "Actas",
+    "invoices": "Facturas",
+    "logs": "Registro"
+}

@@ -12,6 +12,7 @@ import { takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { kratosService } from 'src/app/modules/sign-in/services/kratos.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateLoader, TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -29,9 +30,14 @@ export class LayoutComponent {
     private snackBar: MatSnackBar,
     private kratos: kratosService,
     private global: GlobalService,
-    public dialog: MatDialog
-
-  ) {}
+    public dialog: MatDialog,
+    private translate: TranslateService, 
+    private translateLoader: TranslateLoader
+  ) {
+    translate.addLangs(["en", "es"]);
+    translate.setDefaultLang("en");
+    translate.use("en");
+  }
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
@@ -86,5 +92,11 @@ export class LayoutComponent {
   switchDark(event: any) {
     const body = document.getElementById('root');
     body.classList.toggle('dark-mode');
+  }
+  changeLanguage(lang: string){
+    this.translateLoader.getTranslation(lang).subscribe((translations) => {
+      this.translate.setTranslation(lang, translations);
+      this.translate.use(lang)
+    })
   }
 }

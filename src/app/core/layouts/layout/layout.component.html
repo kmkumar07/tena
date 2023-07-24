@@ -8,6 +8,12 @@
       <mat-toolbar class="header-wrapper border-2 main-bg">
         <div class="header-right">
           <div
+          class="notifications-section pointer"
+          (click)="changeLanguage('es')"
+        >
+          <mat-icon>edit</mat-icon>
+        </div>
+          <div
             class="notifications-section pointer"
             [matMenuTriggerFor]="notificationsMenu"
             matBadge="3"
