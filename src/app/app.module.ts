@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './shared/modules/angular-material/angular-material.module';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +16,8 @@ import { PageNotFoundComponent } from './shared/components/page-not-found/page-n
 import { FeatureDetailsPopupComponent } from './shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 import { CouponsDeleteSuccessComponent } from './shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { SignInComponent } from './modules/sign-in/components/sign-in.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { CustomTranslateLoader } from './core/utils/functions/custom/custom-translate-loader';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,7 @@ import { SignInComponent } from './modules/sign-in/components/sign-in.component'
     PageNotFoundComponent,
     FeatureDetailsPopupComponent,
     CouponsDeleteSuccessComponent,
-    SignInComponent
+    SignInComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,9 +39,17 @@ import { SignInComponent } from './modules/sign-in/components/sign-in.component'
     BrowserAnimationsModule,
     MatButtonModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useClass: CustomTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
   ],
+  exports: [TranslateModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

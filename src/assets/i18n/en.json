@@ -1,0 +1,13 @@
+{
+  "overview": "Overview",
+  "customer": "Customer",
+  "subscription": "Subscription",
+  "plans": "Plans",
+  "features":"Features",
+  "products":"Products", 
+  "addOns": "Add Ons",
+  "coupons": "Coupons",
+  "transactions": "Transactions",
+  "invoices": "Invoices",
+  "logs": "Logs"
+}
