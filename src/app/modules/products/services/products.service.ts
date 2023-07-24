@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 export class ProductsService {
   private productSubject = new BehaviorSubject<any>(null);
   private uploadImageSubject = new BehaviorSubject<any>(null);
+  private removeImageSubject = new BehaviorSubject<any>(null);
   public product$ = this.productSubject.asObservable();
   products = [];
   error$ = new Subject<string>();
@@ -34,6 +35,21 @@ export class ProductsService {
     return this.http.post(`${environment.apiUrl}/blob/upload`, image).pipe(
       map((data: any) => {
         this.uploadImageSubject.next(data);
+        return data;
+      }),
+
+      catchError((err) => {
+        console.log(err);
+        this.error$.next(err.message);
+        throw err;
+      })
+    );
+  }
+
+  removeImage(image: any): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/blob/deleteImage`, image).pipe(
+      map((data: any) => {
+        this.removeImageSubject.next(data);
         return data;
       }),
 

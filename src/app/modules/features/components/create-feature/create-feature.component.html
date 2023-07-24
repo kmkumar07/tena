@@ -110,6 +110,7 @@
               >
                 {{ product }}
               </mat-option>
+
             </mat-select>
           </mat-form-field>
         </div>
@@ -214,7 +215,9 @@
           *ngIf="
             this.featureForm.value.type &&
             this.featureForm.value.type != 1 &&
-            this.featureForm.value.type !== 'switch'
+            this.featureForm.value.type !== 'switch' &&
+            this.featureForm.value.type !== 'custom' 
+
             || this.isRangeSelected
 
           "
@@ -250,7 +253,7 @@
             />
           </mat-form-field>
         </div>
-        <div *ngIf="this.featureForm.value.unit">
+        <div *ngIf="this.featureForm.value.unit || this.featureForm.value.type == 'custom'">
           <ng-container formArrayName="levels">
             <ng-container
               *ngFor="let element of levels.controls; let i = index"
@@ -357,7 +360,7 @@
               type="button"
               (click)="onSubmit()"
               [disabled]="
-                featureForm.invalid && this.featureForm.value.type !== 'switch'
+                featureForm.invalid && this.featureForm.value.type !== 'switch' && this.featureForm.value.type !== 'custom'
               "
             >
               Create
@@ -376,7 +379,7 @@
           This feature type has 2 entitlement levels- "available" and "not
           available".
         </p>
-        <button mat-button color="primary" class="medium px-1">
+        <button mat-button color="primary" class="medium px-1" (click)="switchSample()">
           Try a Sample
         </button>
       </div>
@@ -386,7 +389,7 @@
           This feature supports range based entitlements. For eg : Customer’s
           access can be between 100 and 300 API / minute.
         </p>
-        <button mat-button color="primary" class="medium px-1">
+        <button mat-button color="primary" class="medium px-1" (click)="rangeSample()">
           Try a Sample
         </button>
       </div>
@@ -396,7 +399,7 @@
           This feature type has numbered entitlement levels- For eg : 2,3,4 or
           10 user licenses.
         </p>
-        <button mat-button color="primary" class="medium px-1">
+        <button mat-button color="primary" class="medium px-1" (click)="quantitySample()">
           Try a Sample
         </button>
       </div>
@@ -406,7 +409,7 @@
           This feature supports range based entitlements. For eg : Customer’s
           access can be between 100 and 300 API / minute.
         </p>
-        <button mat-button color="primary" class="medium px-1">
+        <button mat-button color="primary" class="medium px-1" (click)="customSample()">
           Try a Sample
         </button>
       </div>

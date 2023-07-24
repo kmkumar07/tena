@@ -215,7 +215,8 @@
           *ngIf="
             this.featureForm.value.type &&
             this.featureForm.value.type != 1 &&
-            this.featureForm.value.type !== 'switch'
+            this.featureForm.value.type !== 'switch' &&
+            this.featureForm.value.type !== 'custom' 
           "
         >
           <div class="flex align-center mb-2">
@@ -249,7 +250,7 @@
             />
           </mat-form-field>
         </div>
-        <div *ngIf="this.featureForm.value.unit">
+        <div *ngIf="this.featureForm.value.unit || this.featureForm.value.type == 'custom'">
           <ng-container formArrayName="levels">
             <ng-container
               *ngFor="let element of levels.controls; let i = index"

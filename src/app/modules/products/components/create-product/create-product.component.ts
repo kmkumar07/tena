@@ -16,6 +16,7 @@ import { ProductsService } from '../../services/products.service';
 import { Subject, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
@@ -83,9 +84,9 @@ export class CreateProductComponent implements OnInit {
     this.productForm.get('status')?.setValue(newStatus);
   }
   navigateToViewFeature(res:any) {
-   // this.router.navigate(['']);
-     this.router.navigate([`/products/view-product/${res.productId}`]);
-    }
+    // this.router.navigate(['']);
+    this.router.navigate([`/products/view-product/${res.productId}`]);
+  }
   onSubmit() {
     this.productForm.get('imageUrl')?.setValue(this.imageUrl);
     const status = this.productForm.value.status ? 'active' : 'draft';
@@ -144,6 +145,19 @@ export class CreateProductComponent implements OnInit {
       this.uploadMessage = 'Image upload failed. Please try again.';
       this.startMessageTimer();
     });
+  }
+
+  deleteImage() {
+    const removeImagePayload = {
+      image: this.imageName
+    }
+    this.productService.removeImage(removeImagePayload).subscribe((res) => {
+      this.imageUrl = res.data.blobURL;
+      this.imageName = res.data.blobName;
+      this.imagePath = ''
+      this.uploadMessage = 'Image removed successfully.';
+      this.startMessageTimer();
+    })
   }
 
   openSuccess() {
