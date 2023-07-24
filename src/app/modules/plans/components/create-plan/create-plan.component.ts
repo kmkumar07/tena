@@ -11,6 +11,7 @@ import {
 } from 'src/app/shared/constants/consants';
 import { PlanService } from '../../services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface PeriodicElement {
   PricingCycle: string;
@@ -38,6 +39,7 @@ export class CreatePlanComponent implements OnInit {
     'Price',
     'action',
   ];
+  status:boolean;
   priceData: any[] = [];
   planAddEmptyData = plan_add_empty_data;
   stepsTitle = Stepper;
@@ -73,7 +75,8 @@ export class CreatePlanComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private planService: PlanService,
-    private global: GlobalService
+    private global: GlobalService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -107,7 +110,6 @@ export class CreatePlanComponent implements OnInit {
         (res) =>
           (this.priceData = res.data.filter((item) => {
             if (item.planId === this.planId) {
-              console.log('res.data', item);
               return item;
             }
           }))
@@ -124,6 +126,7 @@ export class CreatePlanComponent implements OnInit {
         .subscribe((res) => {
           this.patchValue(res.data);
           this.editable = true;
+          
         });
     } else {
       this.stepOneCompleted = false;
@@ -131,13 +134,18 @@ export class CreatePlanComponent implements OnInit {
     }
   }
   patchValue(data) {
+    if (data.status === 'active') {
+      this.status = true;
+    } else if (data.status === 'draft') {
+      this.status = false;
+    }
     this.planForm.patchValue({
       planId: data.planId,
       internalName: data.internalName,
       externalName: data.externalName,
       type: data.type,
       description: data.description,
-      status: data.status,
+      status: this.status,
     });
     this.global.hideLoader();
   }
@@ -178,8 +186,8 @@ export class CreatePlanComponent implements OnInit {
 
   onSubmit() {
     this.global.showLoader();
-    console.log('check new form');
-    const status = this.planForm.value.status ? 'active' : 'disabled';
+    const status = this.planForm.value.status ? 'active' : 'draft';
+   
     const type = 'base';
     const plan = {
       ...this.planForm.value,
@@ -198,7 +206,12 @@ export class CreatePlanComponent implements OnInit {
             return res;
           },
           error: (err: any) => {
-            console.log('something wrong occured', err);
+            this.snackBar.open(err.message, '', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            });
+            this.global.hideLoader();
           },
         });
     } else if (this.editable) {

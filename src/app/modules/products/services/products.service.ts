@@ -16,7 +16,7 @@ export class ProductsService {
 
   constructor(private http: HttpClient) {}
 
-  createProduct(product: Product): Observable<Product> {
+  createProduct(product: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}/products`, product).pipe(
       map((res: any) => {
         this.productSubject.next(res.data);
