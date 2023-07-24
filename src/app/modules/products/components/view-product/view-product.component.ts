@@ -36,7 +36,7 @@ export class ViewProductComponent {
     private featureService: FeatureService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private router: Router,
+    public router: Router,
     private snackBar: MatSnackBar,
   ) {}
 
@@ -62,7 +62,9 @@ export class ViewProductComponent {
   navigateToFeatures() {
     this.router.navigate(['/features/create/products/', this.id]);
   }
-  
+  navigateToGetAllFeatures() {
+    this.router.navigate(['/features']);
+  }
   deleteElementById(elementId: number) {
     this.featureService.deleteFeature(elementId).subscribe({
       next: (res) => {
@@ -87,7 +89,7 @@ export class ViewProductComponent {
         deleteId: id,
       },
     });
-    this.router.navigate(['/features']);
+    this.navigateToGetAllFeatures();
   }
 
   openDelete(id: any) {

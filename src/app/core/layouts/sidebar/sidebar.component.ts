@@ -16,6 +16,7 @@ import {
 } from 'src/app/shared/constants/consants';
 import { GlobalService } from '../../services/global.service';
 import { filter } from 'rxjs/operators';
+import { TranslateLoader, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -34,7 +35,9 @@ export class SidebarComponent {
   constructor(
     public globalService: GlobalService,
     private router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private translate: TranslateService, 
+    private translateLoader: TranslateLoader
   ) {
     this.router.events
       .pipe(filter((event: any) => event instanceof NavigationEnd))
@@ -42,6 +45,9 @@ export class SidebarComponent {
         this.currentRoute = event.url;
         this.activeRoute = this.currentRoute.split('/')
       });
+    translate.addLangs(["en", "es"]);
+    translate.setDefaultLang("en");
+    translate.use("en");
   }
 
   @ViewChild('sidenav') sidenav: MatSidenav;
