@@ -22,11 +22,7 @@ const routes: Routes = [
   {
     path: 'view-product/:id',
     component: ViewProductComponent
-  },
-  {
-    path: 'view-product',
-    component: ViewProductComponent
-  },
+  }
 
 ];
 
