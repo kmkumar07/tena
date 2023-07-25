@@ -5,8 +5,14 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <!-- Header for application starts here! -->
-      <mat-toolbar class="header-wrapper border-2">
+      <mat-toolbar class="header-wrapper border-2 main-bg">
         <div class="header-right">
+          <div
+          class="notifications-section pointer"
+          (click)="changeLanguage('es')"
+        >
+          <mat-icon>edit</mat-icon>
+        </div>
           <div
             class="notifications-section pointer"
             [matMenuTriggerFor]="notificationsMenu"
@@ -39,7 +45,7 @@
                       <div class="absolute position-center text-center w-full">
                         <img
                           src="../../../../assets/images/notifications-icon.png"
-                          alt="no data"
+                          alt="notification-icon"
                         />
                         <span class="block mt-6">
                           Hey! You have no notifications.
@@ -60,7 +66,7 @@
                       <div class="absolute position-center text-center w-full">
                         <img
                           src="../../../../assets/images/notifications-icon.png"
-                          alt="no data"
+                          alt="notifications-icon"
                         />
                         <span class="block mt-6">
                           Hey! You have no notifications.
@@ -83,7 +89,7 @@
                       <div class="absolute position-center text-center w-full">
                         <img
                           src="../../../../assets/images/notifications-icon.png"
-                          alt="no data"
+                          alt="notifications-icon"
                         />
                         <span class="block mt-6">
                           Hey! You have no notifications.
@@ -109,12 +115,11 @@
             </div>
           </mat-menu>
           <div class="user-profile pointer" [matMenuTriggerFor]="menu">
-            <div class="user-image">
-              <img src="../../../../assets/images/profile-avatar-1.png" />
+            <div class="user-image font-weight-500">
+              {{ getInitials(userName) }}
             </div>
             <div class="user-info">
-              <span class="name">John Smith</span>
-              <span class="role">Founder</span>
+              <span class="name">{{userName}}</span>
             </div>
           </div>
           <mat-menu
@@ -124,18 +129,17 @@
           >
             <div class="profile-menu-outer" (click)="preventClose($event)">
               <div class="grad-bg">
-                <div class="user-initials">JS</div>
+               <div class="user-initials">{{ getInitials(userName) }}</div>
               </div>
               <div class="profile-inner">
-                <p class="mat-h1 fw-600 m-0">John Smith</p>
-                <p class="m-0 mt-1">Founder</p>
+                <p class="mat-h1 fw-600 m-0">{{userName}}</p>
               </div>
               <div class="profile-paths">
                 <a
                   class="flex align-center justify-between user-link"
                   *ngFor="let element of userProfile"
                 >
-                  <div class="flex align-center">
+                  <div class="flex align-center" (click)="logOut(element.logOut)">
                     <mat-icon class="material-symbols-outlined mat-primary">{{
                       element.icon
                     }}</mat-icon>

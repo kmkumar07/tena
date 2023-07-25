@@ -8,12 +8,12 @@ import {
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NgxTippyProps } from 'ngx-tippy-wrapper';
 import { trigger, transition, animate, style } from '@angular/animations';
-import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
+import { SuccessDialogComponent } from '../../../../shared/components/dialog-box/success-dialog/success-dialog.component';
 import { OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -45,10 +45,11 @@ export class CreateProductComponent implements OnInit {
   imagePath: string = '';
   uploadMessage: string = '';
   uploadSuccess: boolean = false;
+  error: string;
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private router: Router,
+    public router: Router,
     private productService: ProductsService,
     private snackBar: MatSnackBar
   ) {}
@@ -82,7 +83,10 @@ export class CreateProductComponent implements OnInit {
     const newStatus = checked ? 'active' : 'draft';
     this.productForm.get('status')?.setValue(newStatus);
   }
-
+  navigateToViewFeature(res:any) {
+    // this.router.navigate(['']);
+    this.router.navigate([`/products/view-product/${res.productId}`]);
+  }
   onSubmit() {
     this.productForm.get('imageUrl')?.setValue(this.imageUrl);
     const status = this.productForm.value.status ? 'active' : 'draft';
@@ -93,14 +97,15 @@ export class CreateProductComponent implements OnInit {
     this.subscription = this.productService.createProduct(product).subscribe({
       next: (res) => {
         this.openSuccess();
-        this.router.navigate([`/products/view-product/${res.productId}`]);
+        this.navigateToViewFeature(res);
       },
       error: (error: any) => {
-        this.snackBar.open(error.error.message, '', {
+        this.error = error?.error?.message ||'Database error';
+        this.snackBar.open(this.error, '', {
           duration: 5000,
           verticalPosition: 'top',
-          horizontalPosition: 'right'
-        })
+          horizontalPosition: 'right',
+        });
       },
     });
   }
@@ -140,6 +145,19 @@ export class CreateProductComponent implements OnInit {
       this.uploadMessage = 'Image upload failed. Please try again.';
       this.startMessageTimer();
     });
+  }
+
+  deleteImage() {
+    const removeImagePayload = {
+      image: this.imageName
+    }
+    this.productService.removeImage(removeImagePayload).subscribe((res) => {
+      this.imageUrl = res.data.blobURL;
+      this.imageName = res.data.blobName;
+      this.imagePath = ''
+      this.uploadMessage = 'Image removed successfully.';
+      this.startMessageTimer();
+    })
   }
 
   openSuccess() {

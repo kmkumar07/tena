@@ -16,7 +16,7 @@
 }
 
 .input-label {
-  color: color("purple", "darken-1");
+  color: var(--on-suface);
 
   // @include dark-theme {
   //   color: color("shades", "white");

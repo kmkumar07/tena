@@ -1,13 +1,13 @@
 <div
   *ngIf="plansData; else noDataList"
-  class="relative main-bg border-2 w-full h-full p-7 overflow-scroll"
+  class="relative main-bg border-2 w-full h-full p-7 overflow-auto"
 >
   <div>
     <div class="flex justify-between align-center px-1">
       <div class="flex align-center">
         <h1 class="text-text text-dark">Plans</h1>
         <mat-chip class="chip-dark ml-3">
-          {{ plansData.length }}
+          {{ planLength }}
         </mat-chip>
       </div>
       <div class="flex align-center">
@@ -39,11 +39,11 @@
         </button>
       </div>
     </div>
-    <ng-container *ngIf="plansData.length > 0; else noRecordFound">
+    <ng-container *ngIf="plan.length > 0; else noRecordFound">
       <div class="primary-table mt-8 px-1 pb-2">
         <table
           mat-table
-          [dataSource]="plansData"
+          [dataSource]="plan"
           matSort
           (matSortChange)="announceSortChange($event)"
         >
@@ -114,7 +114,7 @@
             <th mat-header-cell *matHeaderCellDef>Action</th>
             <td mat-cell *matCellDef="let element">
               <mat-icon
-                class="material-symbols-outlined"
+                class="material-symbols-outlined mat-primary"
                 [matMenuTriggerFor]="actionsMenu"
               >
                 more_vert
@@ -191,7 +191,7 @@
   </div>
 </div>
 <ng-template #noDataList>
-  <div class="relative border-2 w-full h-full p-7 overflow-scroll main-bg">
+  <div class="relative border-2 w-full h-full p-7 overflow-auto main-bg">
     <app-empty-listing [items]="emptyList"></app-empty-listing>
   </div>
 </ng-template>

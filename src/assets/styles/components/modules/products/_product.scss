@@ -226,7 +226,6 @@
       .features-wrapper {
         padding-top: 1.875rem;
         .feature-item {
-          background-color: $primay-light-bg-color;
           padding: 0.75rem 0.9375rem;
           margin-bottom: 1.125rem;
 
@@ -246,7 +245,7 @@
           height: 2.3125rem;
           width: 2.3125rem;
           overflow: hidden;
-          background-color: #ffffff;
+          // background-color: #ffffff;
 
           img {
             width: 100%;

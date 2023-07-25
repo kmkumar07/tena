@@ -35,8 +35,8 @@ export class FeaturesListingComponent implements OnInit {
     'status',
     'action',
   ];
-
-  featuresData = [];
+  featuresSearchData: any;
+  featuresData: any;
   searchLength: number;
   totalNumberOfFeature: number;
   NumberOfPage: any = '';
@@ -76,7 +76,7 @@ export class FeaturesListingComponent implements OnInit {
     private featureService: FeatureService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private global: GlobalService,
+    private global: GlobalService
   ) {}
   onSearchInput() {
     this.searchQueryChanged.next(this.searchQuery);
@@ -84,14 +84,7 @@ export class FeaturesListingComponent implements OnInit {
   ngOnInit(): void {
     this.sortBy = 'createdOn';
     this.sortOrder = 'desc';
-    
-    this.getAllFeature(
-      this.NumberOfPage,
-      this.NumberOfLimit,
-      this.search,
-      this.sortBy,
-      this.sortOrder
-    );
+
     this.getFeature(
       this.PageNumber,
       this.limit,
@@ -103,7 +96,7 @@ export class FeaturesListingComponent implements OnInit {
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
         this.search = value;
-        this.getFeature(
+        this.getSearchFeature(
           this.NumberOfPage,
           this.NumberOfLimit,
           this.search,
@@ -132,16 +125,24 @@ export class FeaturesListingComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.featuresData = data;
+          this.totalNumberOfFeature = this.featuresData.totalCount;
+          this.featuresSearchData = this.featuresData.features;
           this.global.hideLoader();
+          if (
+            this.totalNumberOfFeature > this.allFeaturesData ||
+            this.totalNumberOfFeature == 0
+          ) {
+            this.allFeaturesData = this.totalNumberOfFeature;
+          }
+
           this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
           this.hasNextPage = PageNumber < this.totalPages;
-          this.searchLength = data.length;
         }
       });
   }
-  getAllFeature(
-    PageNumber: string,
-    limit: string,
+  getSearchFeature(
+    PageNumber: number,
+    limit: number,
     search: string,
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
@@ -149,22 +150,23 @@ export class FeaturesListingComponent implements OnInit {
     this.global.showLoader();
     this.featureService
       .getFeatures(
-        this.NumberOfPage,
-        this.NumberOfLimit,
+        this.PageNumber,
+        this.limit,
         this.search,
         this.sortBy,
         this.sortOrder
       )
       .subscribe((data) => {
         if (data) {
-          this.totalNumberOfFeature = data.length;
-          this.global.hideLoader();
+          this.featuresData = data;
+          this.featuresSearchData = this.featuresData.features;
 
+          this.global.hideLoader();
           if (
             this.totalNumberOfFeature > this.allFeaturesData ||
             this.totalNumberOfFeature == 0
           ) {
-            this.allFeaturesData = this.totalNumberOfFeature;            
+            this.allFeaturesData = this.totalNumberOfFeature;
           }
         }
       });
@@ -207,8 +209,8 @@ export class FeaturesListingComponent implements OnInit {
         this.snackBar.open(error.error.message, '', {
           duration: 5000,
           verticalPosition: 'top',
-          horizontalPosition: 'right'
-        })
+          horizontalPosition: 'right',
+        });
       },
     });
   }
@@ -222,13 +224,6 @@ export class FeaturesListingComponent implements OnInit {
         deleteId: id,
       },
     });
-    this.getAllFeature(
-      this.NumberOfPage,
-      this.NumberOfLimit,
-      this.search,
-      this.sortBy,
-      this.sortOrder
-    );
     this.getFeature(
       this.PageNumber,
       this.limit,

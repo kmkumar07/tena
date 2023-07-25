@@ -99,6 +99,14 @@ a {
 .text-grey-darken-9{
  color: $text-grey-darken-9;  //#1D2335
 }
+.text-secondary {
+  color: $text-secondary; //#1A3447
+}
+
+.text-grey-darken-8 {
+  color: $text-grey-darken-8; //#333333
+}
+
 .text-black {
   color: $text-black;
 }
@@ -114,7 +122,6 @@ a {
 .text-uppercase {
   text-transform: uppercase;
 }
-
 .dark-mode {
   .text-text.text-dark {
     color: #e7046a !important;
@@ -145,9 +152,23 @@ a {
   .text-purple-dark-2,
   .text-grey-lighten-11,
   .text-purple-lighten-1,
-  .text-grey-darken-9,
+  .grey-text.text-darken-6,
   .text-black,
-  .text-white {
+  .text-white,
+  .text-secondary,
+  .text-grey-darken-8,
+  .grey-text.text-form-caption,
+  .text-grey-darken-9 {
+    color: white !important;
+  }
+}
+
+
+.text-dark,
+.grey-text.text-darken-6,
+.text-text.text-primary,
+.primary-text.text-main {
+  @include dark-theme {
     color: white !important;
   }
 }

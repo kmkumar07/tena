@@ -2,7 +2,6 @@
 
 //view product section
 .view-feature-wrapper {
-  background-color: color("shades", "white");
   border-radius: 0.5rem;
   padding: 0.625rem;
   height: 100%;
@@ -17,7 +16,6 @@
   }
   .header-block {
     padding: 1.125rem 1.5rem 1.5rem;
-    background-color: rgba(color("primary", "light"), 0.83);
 
     .heading {
       margin-bottom: 3.9375rem;
@@ -66,15 +64,11 @@
         margin-right: 0.875rem;
       }
       .switch-type {
-        background-color: $primay-light-bg-color;
         padding: 1.125rem;
       }
     }
-    .range-detail {
-      background-color: $primay-light-bg-color;
-    }
     .detail-info {
-      border: 1px solid color("primary", "light");
+      border: 1px solid var(--primary-light);
 
       .range-td {
         width: 10.875rem;

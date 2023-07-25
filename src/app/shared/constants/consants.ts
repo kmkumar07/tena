@@ -34,10 +34,10 @@ export interface coupon {
   status: string;
 }
 export interface loginCredientials {
-  csrf_token:string,
-  method: string,
-  password_identifier: string,
-  password: string
+  csrf_token: string;
+  method: string;
+  password_identifier: string;
+  password: string;
 }
 export interface Product {
   productId: string;
@@ -91,10 +91,10 @@ export interface Customer {
   id: string;
   name: string;
   companyName: string;
-  email: string,
-  workPhone: string,
-  website: string,
-  subscription: string
+  email: string;
+  workPhone: string;
+  website: string;
+  subscription: string;
 }
 export interface GetFeature {
   featureId: string;
@@ -143,88 +143,87 @@ export interface PlanList {
 
 export interface ProductVariant {
   productVariantId: string;
-  name: string,
+  name: string;
   productID: string;
   type: string;
   features: { featureID: string; value: string }[];
   status: string;
-
 }
 export const MENUITEMS = [
   {
     state: '/overview',
     type: 'link',
-    name: 'Overview',
+    name: 'overview',
     icon: 'space_dashboard',
-    category: 'Dashboard'
+    category: 'Dashboard',
   },
   {
     state: '/customers',
     type: 'link',
-    name: 'Customer',
+    name: 'customer',
     icon: 'account_box',
     category: 'Dashboard',
   },
   {
     state: '/subscription',
     type: 'link',
-    name: 'Subscription',
+    name: 'subscription',
     icon: 'card_membership',
     category: 'Dashboard',
   },
   {
     state: '/products',
     type: 'link',
-    name: 'Products',
+    name: 'products',
     icon: 'local_mall',
     category: 'Product_Catalog',
   },
   {
     state: '/features',
     type: 'link',
-    name: 'Features',
+    name: 'features',
     icon: 'featured_play_list',
     category: 'Product_Catalog',
   },
   {
     state: '/plans',
     type: 'link',
-    name: 'Plans',
+    name: 'plans',
     icon: 'quick_reference_all',
     category: 'Product_Catalog',
   },
   {
     state: '/stepper',
     type: 'link',
-    name: 'Add Ons',
+    name: 'addOns',
     icon: 'add_notes',
     category: 'Product_Catalog',
   },
   {
     state: '/coupons',
     type: 'link',
-    name: 'Coupons',
+    name: 'coupons',
     icon: 'confirmation_number',
     category: 'Product_Catalog',
   },
   {
     state: '/payment/transactions',
     type: 'link',
-    name: 'Transactions',
+    name: 'transactions',
     icon: 'compare_arrows',
     category: 'Payment History',
   },
   {
     state: '/payment/invoices',
     type: 'link',
-    name: 'Invoices',
+    name: 'invoices',
     icon: 'receipt_long',
     category: 'Payment History',
   },
   {
     state: '/payment/logs',
     type: 'link',
-    name: 'Logs',
+    name: 'logs',
     icon: 'list_alt',
     category: 'Payment History',
   },
@@ -278,6 +277,13 @@ export const User_Options = [
   { path: '/inbox', icon: 'inbox_outline', name: 'My Inbox', toggle: false },
   { path: '', icon: 'clear_day', name: 'Dark Mode', toggle: true },
   { path: '/help', icon: 'live_help', name: 'Help', toggle: false },
+  {
+    path: '',
+    icon: 'logout',
+    name: 'LogOut ',
+    toggle: false,
+    logOut: true
+  },
 ];
 // Product listing
 export const User_Data = [

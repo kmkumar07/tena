@@ -16,6 +16,9 @@ import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-bo
 export class PlansListingComponent {
   emptyList = noPlans;
   plansData: Array<any>;
+  planAllData:any;
+  plan:Array<any>
+  planLength:number
   pageNumber: number = 1;
   limit: number = 5;
   search: string = '';
@@ -49,8 +52,11 @@ export class PlansListingComponent {
       .getPlans(pageNumber, limit, search)
       .pipe(takeUntil(this.global.componentDestroyed(this)))
       .subscribe((res) => {
-        if (res.data.length > 0) {
-          this.plansData = res.data;
+        if (res) {
+          this.plansData = res.data; 
+          this.planAllData=this.plansData
+          this.plan=this.planAllData.plans
+          this.planLength=this.planAllData.totalCount;
           this.global.hideLoader();
         } else {
           this.global.hideLoader();
