@@ -248,6 +248,8 @@ $text-purple-dark-2: color("purple", "dark-2"); //#364A63
 $text-grey-lighten-11: color("grey", "lighten-2"); //#5E7080
 $text-grey-darken-8: color("grey", "darken-8"); //#333333
 $text-purple-lighten-1: color("purple", "lighten-1"); //#5B3CC6
+$text-grey-darken-9: color("grey", "darken-9"); //#1D2335
+
 
 // Header Styles
 $h1-fontsize: 4.8rem !default;
@@ -371,12 +373,12 @@ $half-rem: 0.5rem;
 // Color Variables
 :root {
   // primary
-  --primary-main: #7868e6;
+  --primary-main: #5B3CC6;
   --primary-light: #f3f1ff;
   // surface
   --shades-bg: #ffffff; //rename to --surface-bg
   // on surface
-  --on-surface: #405189;
+  --on-surface: #2B2B30;
   [data-app-theme="dark"],
   .dark-mode {
     // primary dark

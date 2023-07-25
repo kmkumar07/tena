@@ -45,13 +45,14 @@
   visibility: visible !important;
   display: block !important;
   overflow: visible;
-  border-radius: $half-rem !important;
+  // border-radius: $half-rem !important;
   .mat-drawer-inner-container {
     overflow: visible;
     .sidenav-wrapper {
       position: relative;
       z-index: 1003;
       height: 100%;
+      box-shadow: 1px 0px 5px 0px #00000014;
       // border-right: 0.0625rem solid #e6e9ef;
       @include justify-content(center);
       @include flex-wrap(wrap);
@@ -195,22 +196,19 @@
     }
     h1 {
       margin: 0;
-      font-size: 0.75rem;
-      font-weight: 700;
       color: var( --on-surface);
       opacity: 0.7;
-      padding: 1.5rem 0 0.75rem 1.125rem;
+      padding: 1.25rem 0 0.75rem 1.125rem;
       text-transform: uppercase;
       transition: $sidebar-transition;
     }
     .nav-list-item {
       color: var( --on-surface);
       border-radius: 0.25rem;
-      height: 2.5625rem;
+      height: 2.375rem;
       .active {
         background-color: var(--primary-main);
-        .mat-icon,
-        .content {
+        .mat-icon, span {
           color: color("shades", "white") !important;
         }
       }
@@ -223,7 +221,7 @@
       }
       .icon-wrapper {
         padding: 0.625rem 0.875rem;
-        height: 2.5625rem;
+        height: 2.375rem;
         .content-wrapper {
           transition: $sidebar-transition;
           position: relative;

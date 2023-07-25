@@ -260,13 +260,13 @@ export const Config_Menu = [
     icon: 'settings',
     category: 'Config',
   },
-  {
-    state: 'stepper',
-    type: 'link',
-    name: 'LogOut ',
-    icon: 'logout',
-    category: 'Confog',
-  },
+  // {
+  //   state: 'stepper',
+  //   type: 'link',
+  //   name: 'LogOut ',
+  //   icon: 'logout',
+  //   category: 'Confog',
+  // },
 ];
 export const User_Options = [
   {

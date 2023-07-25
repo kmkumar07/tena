@@ -1,5 +1,5 @@
-<div class="sidenav-wrapper border-2">
-  <div class="sidebar-toggle">
+<div class="sidenav-wrapper">
+  <!-- <div class="sidebar-toggle">
     <button
       mat-mini-fab
       color="accent"
@@ -19,22 +19,16 @@
         />
       </svg>
     </button>
-  </div>
+  </div> -->
   <div class="sidebar-wrapper">
-    <div class="logo pointer">
-      <div class="logo-img pointer">
-        <img src="../../../../assets/images/framework-logo.png" alt="logo" />
-      </div>
-      <div class="text-wrapper">
-        <h3>Digital</h3>
-        <span class="logo-text">Framework</span>
-      </div>
+    <div class="">
+      <h3 class="mat-headline-5 font-weight-700 text-purple-lighten-1">Digital Framework</h3>
     </div>
-    <div class="sidebar-scrollable mt-11">
+    <div class="sidebar-scrollable mt-12">
       <mat-nav-list class="sidebar p-0">
-        <div *ngFor="let element of Menu_Headings" class="transition-400">
+        <div *ngFor="let element of Menu_Headings" class="transition-400 list-wrapper">
           <div *ngIf="element.name != 'Dashboard'" class="category-heading">
-            <h1>{{ element.name }}</h1>
+            <h1 class="mat-caption font-weight-600">{{ element.name }}</h1>
           </div>
           <mat-list-item
             class="nav-list-item p-0 w-full"
@@ -55,7 +49,7 @@
                 }}</mat-icon>
               </div>
               <div class="content-wrapper">
-                <span class="content">{{ item.name }}</span>
+                <span class="mat-subtitle-2 ml-2 text-grey-darken-9">{{ item.name }}</span>
               </div>
             </a>
           </mat-list-item>
@@ -92,7 +86,7 @@
             }}</mat-icon>
           </div>
           <div class="content-wrapper">
-            <span class="content">{{ item.name }}</span>
+            <span class="mat-subtitle-2 ml-2 text-grey-darken-9">{{ item.name }}</span>
           </div>
         </a>
       </mat-list-item>

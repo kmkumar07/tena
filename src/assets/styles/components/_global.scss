@@ -845,3 +845,11 @@ ul.breadcrumb {
   }
 }
 
+//list bottom line
+.list-wrapper{
+  border-bottom: .0625rem solid color("grey", "darken-10");
+  padding-bottom: .375rem;
+  &:last-child{
+    border-bottom: none;
+  }
+}
