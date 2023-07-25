@@ -25,19 +25,13 @@
           class="user-avatar flex align-center justify-center"
           *ngIf="
             getProductImageUrl &&
-              getProductImageUrl.length > 0 &&
+              getProductImageUrl.length > 1 &&
               !isImageUploaded;
             else upload
           "
         >
           <img src="{{ imagePath + getProductImageUrl }}" />
         </div>
-        <!-- <div
-          class="user-avatar flex align-center justify-center"
-          *ngIf="imageUrlName && imageUrlName.length > 0"
-        >
-          <img src="{{ imagePath + imageUrlName }}" />
-        </div> -->
 
         <ng-template #upload>
           <div class="user-avatar flex align-center justify-center">
@@ -51,7 +45,7 @@
         <div class="ml-6">
           <div class="upload-actions">
             <div class="flex align-center">
-              <button mat-stroked-button color="primary" class="mr-3">
+              <button mat-stroked-button color="primary" class="mr-3"  (click)="deleteImage()" [disabled]="!(getProductImageUrl && getProductImageUrl.length>1)">
                 Remove
               </button>
               <button
