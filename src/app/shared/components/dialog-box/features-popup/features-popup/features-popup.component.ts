@@ -30,7 +30,7 @@ export interface menuOptions {
 @Component({
   selector: 'app-features-popup',
   templateUrl: './features-popup.component.html',
-  styleUrls: ['./features-popup.component.scss']
+  styleUrls: ['./features-popup.component.scss'],
 })
 export class FeaturesPopupComponent {
   productName: Data_Type[] = User_Data;
@@ -61,7 +61,7 @@ export class FeaturesPopupComponent {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<FeaturesPopupComponent>,
+    public dialogRef: MatDialogRef<FeaturesPopupComponent>
   ) {}
 
   ngOnInit() {
@@ -198,7 +198,7 @@ export class FeaturesPopupComponent {
     }
   }
   onSubmit() {
-    console.log('haya', this.levels.valid)
+    console.log('haya', this.levels.valid);
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
         (<FormGroup>ele).addControl('level', new FormControl(index));
@@ -255,14 +255,13 @@ export class FeaturesPopupComponent {
         this.snackBar.open(error.error.message, '', {
           duration: 5000,
           verticalPosition: 'top',
-          horizontalPosition: 'right'
-        })
+          horizontalPosition: 'right',
+        });
       },
     });
   }
 
   onDelete() {
-    // this.routes.navigate(['/features']);
     this.dialogRef.close(false);
   }
 
@@ -274,5 +273,101 @@ export class FeaturesPopupComponent {
         operation: 'is created',
       },
     });
+  }
+  switchSample() {
+    0;
+    this.featureForm.removeControl('unit');
+    this.isRangeSelected = false;
+
+    this.featureForm.patchValue({
+      productID: this.productArray[0],
+      name: 'Whiteboard',
+      description: ` This feature type has 2 entitlement levels- "available" and "notavailable"`,
+      type: 'switch',
+      status: [true],
+    });
+  }
+
+  rangeSample() {
+    this.featureForm.addControl(
+      'unit',
+      this.formBuilder.control('', Validators.required)
+    );
+
+    this.isRangeSelected = true;
+    this.featureForm.patchValue({
+      productID: this.productArray[0],
+      name: 'API Call',
+      description: `This feature supports range based entitlements. For eg : Customer’s
+          access can be between 100 and 300 API / minute`,
+      type: 'range',
+      status: [true],
+      unit: 'License',
+    });
+
+    const values = [
+      { value: '10', name: 'License' },
+      { value: '20', name: 'License' },
+    ];
+
+    for (let i = 0; i < 2; i++) {
+      const formGroup = this.levels.at(i);
+      formGroup?.patchValue(values[i]);
+    }
+  }
+
+  quantitySample() {
+    this.featureForm.addControl(
+      'unit',
+      this.formBuilder.control('', Validators.required)
+    );
+    this.isRangeSelected = false;
+    this.featureForm.patchValue({
+      productID: this.productArray[0],
+      name: 'API Call',
+      description: ` This feature type has numbered entitlement levels- For eg : 2,3,4 or
+          10 user licenses.`,
+      type: 'quantity',
+      status: [true],
+      unit: 'License',
+    });
+
+    const values = [
+      { value: '3', name: 'License' },
+      { value: '10', name: 'License' },
+      { value: '20', name: 'License' },
+    ];
+
+    values.forEach((item, index) => {
+      this.levels.at(index)?.patchValue(item);
+    });
+  }
+
+  customSample() {
+    this.featureForm.addControl(
+      'unit',
+      this.formBuilder.control('', Validators.required)
+    );
+
+    this.isRangeSelected = false;
+    this.featureForm.patchValue({
+      productID: this.productArray[0],
+      name: 'Email Support',
+      description: ` This feature supports range based entitlements. For eg : Customer’s
+          access can be between 100 and 300 API / minute`,
+      type: 'custom',
+      status: [true],
+    });
+
+    const values = [
+      { value: '12', name: 'Working hours' },
+      { value: '24', name: 'Weekdays' },
+      { value: '20', name: 'Month' },
+    ];
+
+    for (let i = 0; i < 3; i++) {
+      const formGroup = this.levels.at(i);
+      formGroup?.patchValue(values[i]);
+    }
   }
 }
