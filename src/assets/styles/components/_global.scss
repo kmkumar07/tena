@@ -767,7 +767,7 @@ label {
   color: #000000;
   font-size: 1rem;
   padding: 0.75rem 0.625rem;
-  background-color: color('grey', 'lighten-14');
+  background-color: var(--chip-grey-bg);
   border-radius: 0.25rem;
   font-weight: 500;
 }
