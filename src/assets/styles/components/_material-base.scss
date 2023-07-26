@@ -428,12 +428,15 @@ ul {
     align-items: center;
   }
   &.mat-mdc-chip-highlighted {
-    background-color: color("primary", "light");
+    background-color: var(--primary-light);
     .mdc-evolution-chip__text-label {
       color: #1b1b1e;
+      @include dark-theme {
+        color: white;
+      }
     }
-    --mdc-chip-elevated-container-color: color("primary", "light");
-    --mdc-chip-elevated-disabled-container-color: color("primary", "light");
+    --mdc-chip-elevated-container-color: var(--primary-light);
+    --mdc-chip-elevated-disabled-container-color: var(--primary-light);
   }
 }
 
