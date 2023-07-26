@@ -104,6 +104,10 @@ a {
   color: $text-grey-darken-8; //#333333
 }
 
+.text-blue-darken{
+  color: $text-blue-darken;  //#090039
+}
+
 .text-black {
   color: $text-black;
 }
@@ -154,7 +158,8 @@ a {
   .text-white,
   .text-secondary,
   .text-grey-darken-8,
-  .grey-text.text-form-caption {
+  .grey-text.text-form-caption,
+  .text-blue-darken {
     color: white !important;
   }
 }
