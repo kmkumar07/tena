@@ -1,18 +1,26 @@
 <div class="outer-layout">
-  <mat-sidenav-container [ngClass]="opened ? 'sidenav-open' : 'sidenav-closed'">
+  <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side" opened="true" class="sidenav-slider">
-      <app-sidebar (newItemEvent)="toggleSidenav($event)"></app-sidebar>
+      <app-sidebar></app-sidebar>
     </mat-sidenav>
     <mat-sidenav-content>
       <!-- Header for application starts here! -->
-      <mat-toolbar class="header-wrapper border-2 main-bg">
+      <mat-toolbar class="header-wrapper main-bg relative">
+        <div class="absolute left-header pointer">
+          <mat-icon
+            class="material-symbols-outlined mat-primary"
+            (click)="sidenav.toggle()"
+          >
+            menu_open
+          </mat-icon>
+        </div>
         <div class="header-right">
           <div
-          class="notifications-section pointer"
-          (click)="changeLanguage('es')"
-        >
-          <mat-icon>edit</mat-icon>
-        </div>
+            class="language-section pointer mr-4"
+            (click)="changeLanguage()"
+          >
+            <img src="../../../../assets/images/{{currLang}}.png" alt="language flag" />
+          </div>
           <div
             class="notifications-section pointer"
             [matMenuTriggerFor]="notificationsMenu"
@@ -48,7 +56,7 @@
                           alt="notification-icon"
                         />
                         <span class="block mt-6">
-                          Hey! You have no notifications.
+                          {{'Heyyouhavenonotifications' | translate}}
                         </span>
                       </div>
                     </div>
@@ -69,7 +77,7 @@
                           alt="notifications-icon"
                         />
                         <span class="block mt-6">
-                          Hey! You have no notifications.
+                          {{'Heyyouhavenonotifications' | translate}}
                         </span>
                       </div>
                     </div>
@@ -78,7 +86,7 @@
                       (click)="preventClose($event)"
                       *ngIf="notificationsData.length > 0"
                     >
-                      My Messages
+                      {{'myMessages' | translate}}
                     </div>
                   </mat-tab>
                   <mat-tab label="Alerts">
@@ -92,7 +100,7 @@
                           alt="notifications-icon"
                         />
                         <span class="block mt-6">
-                          Hey! You have no notifications.
+                          {{'Heyyouhavenonotifications' | translate}}
                         </span>
                       </div>
                     </div>
@@ -143,7 +151,7 @@
                     <mat-icon class="material-symbols-outlined mat-primary">{{
                       element.icon
                     }}</mat-icon>
-                    <span class="ml-3">{{ element.name }}</span>
+                    <span class="ml-3">{{ element.name | translate }}</span>
                   </div>
                   <div *ngIf="element.toggle">
                     <mat-slide-toggle

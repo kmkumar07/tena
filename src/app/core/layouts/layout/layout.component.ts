@@ -25,18 +25,19 @@ export class LayoutComponent {
   userProfile = User_Options;
   notificationsData = Notifications_Data;
   loading: boolean = false;
-  userName:string
+  userName: string;
+  currLang: string = 'en';
   constructor(
     private snackBar: MatSnackBar,
     private kratos: kratosService,
     private global: GlobalService,
     public dialog: MatDialog,
-    private translate: TranslateService, 
+    private translate: TranslateService,
     private translateLoader: TranslateLoader
   ) {
-    translate.addLangs(["en", "es"]);
-    translate.setDefaultLang("en");
-    translate.use("en");
+    translate.addLangs(['en', 'es']);
+    translate.setDefaultLang('en');
+    translate.use('en');
   }
 
   @ViewChild('sidenav') sidenav: MatSidenav;
@@ -90,13 +91,28 @@ export class LayoutComponent {
     }
   }
   switchDark(event: any) {
-    const body = document.getElementById('root');
-    body.classList.toggle('dark-mode');
+    if(event.checked){
+      const body = document.getElementById('root');
+      body.classList.add('dark-mode');
+    }
+    else {
+      const body = document.getElementById('root');
+      body.classList.remove('dark-mode');
+    }
   }
-  changeLanguage(lang: string){
+  changeLanguage() {
+    if (this.currLang == 'es') {
+      this.currLang = 'en';
+      this.setLang(this.currLang);
+    } else {
+      this.currLang = 'es';
+      this.setLang(this.currLang);
+    }
+  }
+  setLang(lang) {
     this.translateLoader.getTranslation(lang).subscribe((translations) => {
       this.translate.setTranslation(lang, translations);
-      this.translate.use(lang)
-    })
+      this.translate.use(lang);
+    });
   }
 }

@@ -35,9 +35,7 @@ export class SidebarComponent {
   constructor(
     public globalService: GlobalService,
     private router: Router,
-    public route: ActivatedRoute,
-    private translate: TranslateService, 
-    private translateLoader: TranslateLoader
+    public route: ActivatedRoute
   ) {
     this.router.events
       .pipe(filter((event: any) => event instanceof NavigationEnd))
@@ -45,9 +43,6 @@ export class SidebarComponent {
         this.currentRoute = event.url;
         this.activeRoute = this.currentRoute.split('/')
       });
-    translate.addLangs(["en", "es"]);
-    translate.setDefaultLang("en");
-    translate.use("en");
   }
 
   @ViewChild('sidenav') sidenav: MatSidenav;
@@ -55,7 +50,6 @@ export class SidebarComponent {
 
   opened: boolean = true;
   toggleSidenav() {
-    // this.sidenav.toggle();
     this.opened = !this.opened;
     this.newItemEvent.emit(this.opened);
   }

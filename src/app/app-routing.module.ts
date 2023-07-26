@@ -12,24 +12,24 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: 'products',
+        loadComponent: () =>
+          import(
+            '../app/core/components/listings/product-listing/product-listing.component'
+          ).then((x) => x.ProductListingComponent),
+      },
+      {
+        path: 'features',
+        loadComponent: () =>
+          import(
+            '../app/core/components/listings/features-listing/features-listing.component'
+          ).then((x) => x.FeaturesListingComponent),
+      },
+      {
         path: '',
         loadChildren: () =>
           import('../app/modules/dashboard/dashboard.module').then(
             (mod) => mod.DashboardModule
-          ),
-      },
-      {
-        path: 'products',
-        loadChildren: () =>
-          import('../app/modules/products/products.module').then(
-            (mod) => mod.ProductsModule
-          ),
-      },
-      {
-        path: 'features',
-        loadChildren: () =>
-          import('../app/modules/features/features.module').then(
-            (mod) => mod.FeaturesModule
           ),
       },
       {
@@ -56,7 +56,22 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'sign-in', component: SignInComponent
+    path: 'products',
+    loadChildren: () =>
+      import('../app/modules/products/products.module').then(
+        (mod) => mod.ProductsModule
+      ),
+  },
+  {
+    path: 'features',
+    loadChildren: () =>
+      import('../app/modules/features/features.module').then(
+        (mod) => mod.FeaturesModule
+      ),
+  },
+  {
+    path: 'sign-in',
+    component: SignInComponent,
   },
   { path: '**', component: PageNotFoundComponent },
 ];

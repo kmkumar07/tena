@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatButtonModule } from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -18,6 +17,8 @@ import { CouponsDeleteSuccessComponent } from './shared/components/dialog-box/co
 import { SignInComponent } from './modules/sign-in/components/sign-in.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CustomTranslateLoader } from './core/utils/functions/custom/custom-translate-loader';
+import { ProductListingComponent } from './core/components/listings/product-listing/product-listing.component';
+import { FeaturesListingComponent } from './core/components/listings/features-listing/features-listing.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { CustomTranslateLoader } from './core/utils/functions/custom/custom-tran
     PageNotFoundComponent,
     FeatureDetailsPopupComponent,
     CouponsDeleteSuccessComponent,
-    SignInComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
@@ -37,9 +38,10 @@ import { CustomTranslateLoader } from './core/utils/functions/custom/custom-tran
     AngularMaterialModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatButtonModule,
     FormsModule,
     SharedModule,
+    ProductListingComponent,
+    FeaturesListingComponent,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

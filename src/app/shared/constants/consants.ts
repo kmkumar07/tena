@@ -255,32 +255,25 @@ export const Config_Menu = [
   {
     state: 'stepper',
     type: 'link',
-    name: 'Settings',
+    name: 'settings',
     icon: 'settings',
     category: 'Config',
-  },
-  // {
-  //   state: 'stepper',
-  //   type: 'link',
-  //   name: 'LogOut ',
-  //   icon: 'logout',
-  //   category: 'Confog',
-  // },
+  }
 ];
 export const User_Options = [
   {
     path: '/user:id',
     icon: 'account_circle',
-    name: 'My Account',
+    name: 'myAccount',
     toggle: false,
   },
-  { path: '/inbox', icon: 'inbox_outline', name: 'My Inbox', toggle: false },
-  { path: '', icon: 'clear_day', name: 'Dark Mode', toggle: true },
-  { path: '/help', icon: 'live_help', name: 'Help', toggle: false },
+  { path: '/inbox', icon: 'inbox_outline', name: 'myInbox', toggle: false },
+  { path: '', icon: 'clear_day', name: 'darkMode', toggle: true },
+  { path: '/help', icon: 'live_help', name: 'help', toggle: false },
   {
     path: '',
     icon: 'logout',
-    name: 'LogOut ',
+    name: 'logOut ',
     toggle: false,
     logOut: true
   },
