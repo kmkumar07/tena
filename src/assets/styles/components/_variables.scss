@@ -67,10 +67,8 @@ $button-disabled-color: #9f9f9f !default;
 
 // Raised buttons
 $button-raised-background: color("blue", "base") !default;
-$button-raised-background-hover: lighten(
-  $button-raised-background,
-  5%
-) !default;
+$button-raised-background-hover: lighten($button-raised-background,
+    5%) !default;
 $button-raised-color: #fff !default;
 
 // Large buttons
@@ -137,10 +135,8 @@ $select-disabled-color: rgba(0, 0, 0, 0.3) !default;
 
 // Switches
 $switch-bg-color: $radio-fill-color !default;
-$switch-checked-lever-bg: desaturate(
-  lighten($switch-bg-color, 25%),
-  25%
-) !default;
+$switch-checked-lever-bg: desaturate(lighten($switch-bg-color, 25%),
+    25%) !default;
 $switch-unchecked-bg: #f1f1f1 !default;
 $switch-unchecked-lever-bg: rgba(0, 0, 0, 0.38) !default;
 $switch-radius: 15px !default;
@@ -251,7 +247,8 @@ $text-blue-darken:color('blue' , 'darken');  //#090039
 $text-grey-darken:color('grey' , 'darken');  //#2B2B30
 $text-purple-lighten-1: color("purple", "lighten-1"); //#5B3CC6
 $text-grey-darken-9: color("grey", "darken-9"); //#1D2335
-$text-secondary: color("text","secondary");  //#1A3447
+$text-secondary: color("text", "secondary"); //#1A3447
+$text-blue-darken : color("blue", "darken"); //#090039
 
 // Header Styles
 $h1-fontsize: 4.8rem !default;
@@ -386,9 +383,12 @@ $half-rem: 0.5rem;
   // surface
   --shades-bg: #ffffff; //rename to --surface-bg
   //primary Light bg
-  --secondary-light:#F5F3FF;
+  --secondary-light: #F5F3FF;
   //primay-extra-light-bg-color
-  --primay-extra-light-bg:#FBF9FD;
+  --primay-extra-light-bg: #FBF9FD;
+  // chip-color
+  --chip-grey-bg: #F5F7FB;
+
   [data-app-theme="dark"],
   .dark-mode {
     // primary
@@ -398,9 +398,11 @@ $half-rem: 0.5rem;
     --surface-bg: #424242;
     // on surface dark
     --on-surface: #ffffff;
-      //primary Light bg
-    --secondary-light:#303030;
-      //primay-extra-light-bg-color
-    --primay-extra-light-bg:#303030;
+    //primary Light bg
+    --secondary-light: #303030;
+    //primay-extra-light-bg-color
+    --primay-extra-light-bg: #303030;
+    // chip-color
+    --chip-grey-bg: #595959;
   }
 }

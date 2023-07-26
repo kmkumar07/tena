@@ -1,6 +1,6 @@
 <div
   *ngIf="allProductsData > 0; else noDataList"
-  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-auto mat-primary"
+  class="relative border-2 w-full h-full py-6 pl-5 pr-6 overflow-auto mat-primary"
 >
   <div class="flex justify-between align-center px-1">
     <div class="flex align-center">
@@ -10,7 +10,7 @@
       </mat-chip>
     </div>
     <div class="flex align-center">
-      <div class="global-search light mr-2 border-1">
+      <div class="global-search main-bg mr-6 border-2">
         <span class="search-icon pointer">
           <img
             src="../../../../assets/images/icons/search.svg"
@@ -51,7 +51,7 @@
     >
       <!-- Product ID Column -->
       <ng-container matColumnDef="productId">
-        <th mat-header-cell *matHeaderCellDef>#ID</th>
+        <th mat-header-cell *matHeaderCellDef class="text-blue-darken">#ID</th>
         <td
           mat-cell
           *matCellDef="let element"
@@ -68,6 +68,7 @@
           *matHeaderCellDef
           mat-sort-header
           sortActionDescription="Sort by title"
+          class="text-blue-darken"
         >
           Product Name
         </th>
@@ -82,7 +83,7 @@
 
       <!-- Features Column -->
       <ng-container matColumnDef="feature">
-        <th mat-header-cell *matHeaderCellDef>Features</th>
+        <th mat-header-cell *matHeaderCellDef class="text-blue-darken">Features</th>
         <td mat-cell *matCellDef="let element">
           <div
             class="flex align-center"
@@ -92,20 +93,20 @@
           >
             <mat-chip
               *ngIf="element.feature.length > 0"
-              class="table-chip m-2 ml-0"
+              class="table-chip m-2 ml-0 mat-body-1"
               disableRipple
               >{{ element.feature[0].name }}</mat-chip
             >
             <mat-chip
               *ngIf="element.feature.length > 1"
-              class="table-chip m-2 ml-0 pointer"
+              class="table-chip m-2 ml-0 pointer mat-body-1"
               >+{{ element.feature.length - 1 }}</mat-chip
             >
             <ng-template #featureListinfo let-name class="t-template">
               <div class="help-info-tooltip">
-                <div class="heading-with-background">Features</div>
+                <div class="heading-with-background text-blue-darken">Features</div>
                 <div *ngFor="let feature of element.feature">
-                  <button mat-button color="primary" class="p-2 py-3">
+                  <button mat-button class="p-2 py-3">
                     {{ feature.name }}
                   </button>
                 </div>
@@ -122,6 +123,7 @@
           *matHeaderCellDef
           mat-sort-header
           sortActionDescription="Sort by date"
+          class="text-blue-darken"
         >
           Created On
         </th>
@@ -136,10 +138,11 @@
 
       <!-- Created Date Column -->
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <th mat-header-cell *matHeaderCellDef class="text-blue-darken">Status</th>
         <td
           mat-cell
           *matCellDef="let element"
+          [ngClass]="element.status === 'Active' ? 'Active' : 'InActive'"
           [ngClass]="element.status"
           [routerLink]="['/products/view-product/' + element.productId]"
         >
@@ -148,7 +151,7 @@
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <th mat-header-cell *matHeaderCellDef class="text-blue-darken">Action</th>
         <td mat-cell *matCellDef="let element">
           <mat-icon
             class="material-symbols-outlined mat-primary"
