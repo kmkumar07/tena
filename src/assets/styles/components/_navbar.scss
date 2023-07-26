@@ -167,6 +167,9 @@
         font-weight: $medium;
         color: var(--primary-main);
       }
+      img{
+        max-width: 4.9375rem;
+      }
     }
   }
   .sidebar {

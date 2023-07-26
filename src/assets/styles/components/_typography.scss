@@ -107,6 +107,15 @@ a {
   color: $text-grey-darken-8; //#333333
 }
 
+
+.text-blue-darken{
+  color: $text-blue-darken;  //#090039
+}
+
+.text-grey-darken{
+  color: $text-grey-darken;  //#2B2B30
+}
+
 .text-black {
   color: $text-black;
 }
@@ -122,7 +131,8 @@ a {
 .text-uppercase {
   text-transform: uppercase;
 }
-.dark-mode {
+
+.dark-mode, [data-app-theme="dark"] {
   .text-text.text-dark {
     color: #e7046a !important;
   }
