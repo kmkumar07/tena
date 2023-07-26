@@ -31,7 +31,7 @@ $secondary-color: color("green", "base") !default;
 $success-color: color("green", "base") !default;
 $error-color: color("red", "base") !default;
 $link-color: color("blue", "lighten-1") !default;
-$border-color: color("grey", "border") !default;
+$border-color: color("grey", "lighten-7") !default;
 
 $primay-light-bg-color: color("primary", "lighten-4"); // #F5F3FF
 $primay-extra-light-bg-color: color("primary", "lighten-5"); // #FBF9FD

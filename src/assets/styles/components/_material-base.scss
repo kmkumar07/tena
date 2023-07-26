@@ -50,6 +50,9 @@
     border-collapse: separate;
     border-spacing: 0 0.5rem;
     background-color: transparent;
+    .mdc-data-table__cell, .mdc-data-table__header-cell {
+      border-bottom-color: color('grey', 'lighten-7');
+  }
     .mdc-data-table__header-row{
       height: 3.0625rem;
       background-color: var(--surface-bg);
