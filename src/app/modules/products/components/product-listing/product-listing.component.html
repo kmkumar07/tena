@@ -1,14 +1,27 @@
 <div
-  *ngIf="allProductsData > 0; else noDataList"
+  *ngIf="allProductsData > 0||search.length > 0; else noDataList"
   class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-auto mat-primary"
 >
   <div class="flex justify-between align-center px-1">
-    <div class="flex align-center">
+    <div
+      class="flex align-center"
+      *ngIf="search.length > 0; else allProductsFound"
+    >
       <h1 class="text-text text-dark">Products</h1>
       <mat-chip class="chip-dark ml-3">
-        {{ totalNumberOfProduct }}
+        {{ totalNumberOfProductBySearch }}
       </mat-chip>
     </div>
+
+    <ng-template #allProductsFound>
+      <div class="flex align-center">
+        <h1 class="text-text text-dark">Products</h1>
+        <mat-chip class="chip-dark ml-3">
+          {{ totalNumberOfProduct }}
+        </mat-chip>
+      </div>
+    </ng-template>
+
     <div class="flex align-center">
       <div class="global-search light mr-6 border-2">
         <span class="search-icon pointer">
@@ -205,8 +218,8 @@
                 )
               "
             >
-              <option value="10">10</option>
-              <option value="20">20</option>
+              <option value="3">3</option>
+              <option value="2">2</option>
               <option value="50">50</option>
               <option value="100">100</option>
             </select>
@@ -233,7 +246,7 @@
               <a
                 class="btn btn-primary btn-sm notActive"
                 (click)="onNext()"
-                [ngClass]="{ disabled: !hasNextPage }"
+                [ngClass]="{ disabled: !hasNextPage||searchDataNextPage }"
                 >Next
               </a>
             </div>

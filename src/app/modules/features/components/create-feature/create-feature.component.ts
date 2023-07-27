@@ -47,9 +47,9 @@ export class CreateFeatureComponent {
   sortOrder: 'asc' | 'desc';
   productArray = [];
   id: string;
-   product:any
+  product: any;
   isRangeSelected: boolean = false;
-  displayName: string
+  displayName: string;
 
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -62,7 +62,7 @@ export class CreateFeatureComponent {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -75,7 +75,7 @@ export class CreateFeatureComponent {
         this.sortOrder
       )
       .subscribe((data) => {
-        this.product=data;
+        this.product = data;
         this.productArray = this.product.products.map((res) => res.productId);
         this.featureForm.patchValue({ productID: this.id });
       });
@@ -150,20 +150,31 @@ export class CreateFeatureComponent {
       });
       this.unlimitedButtonLabel = 'Set Unlimited';
     } else {
-      lastLevel.patchValue({
-        isUnlimited: true,
-        value: 'unlimited',
-        name: 'unlimited' + ' ' + this.postName + 's',
-      });
-      this.unlimitedButtonLabel = 'Set Custom Maximum';
+      if (!this.postName) {
+        lastLevel.patchValue({
+          isUnlimited: true,
+          value: 'unlimited',
+          name: 'unlimited',
+        });
+        this.unlimitedButtonLabel = 'Set Custom Maximum';
+      } else {
+        lastLevel.patchValue({
+          isUnlimited: true,
+          value: 'unlimited',
+          name: 'unlimited' + ' ' + this.postName + 's',
+        });
+        this.unlimitedButtonLabel = 'Set Custom Maximum';
+      }
     }
     this.isUnlimited = !this.isUnlimited;
   }
 
   setName(index: number) {
     this.postName = this.featureForm.value.unit;
+
     this.preName = this.featureForm.value.levels[index].value;
-    if (this.postName.length > 0) {
+
+    if (this.postName.length > 0 && this.preName.length > 0) {
       this.displayName = this.preName + ' ' + this.postName + 's';
     }
     const currentIndex = this.getLevelList(index);
@@ -172,6 +183,10 @@ export class CreateFeatureComponent {
     });
   }
   onTypeSelection(value: string) {
+    // if (value === 'switch') {
+    //   this.featureForm.controls['unit'].reset();
+
+    // }
     if (value === 'range') {
       this.isRangeSelected = true;
       this.featureForm.controls['unit'].reset();
@@ -185,7 +200,7 @@ export class CreateFeatureComponent {
           name: '',
         });
       }
-    } else if (value === 'quantity') {
+    } else if (value === 'quantity' || value === 'custom') {
       this.isRangeSelected = false;
       this.featureForm.controls['unit'].reset();
 
@@ -200,6 +215,89 @@ export class CreateFeatureComponent {
       this.isRangeSelected = false;
     }
   }
+  createFeature() {
+    const type = this.featureForm.value.type;
+    const levels = this.featureForm.value.levels;
+    const unit = this.featureForm.value.unit;
+
+    const isAlphaNumeric = (input: string) => /^[a-zA-Z0-9]+$/.test(input);
+    const isNonEmptyAlphaNumeric = (input: string) =>
+      input.trim().length > 0 && isAlphaNumeric(input);
+
+    let levelValidation = false;
+    let levelValidationName = false;
+
+    let unitValidation = unit ? !isNonEmptyAlphaNumeric(unit) : false;
+
+    if (type === 'range' || type === 'quantity') {
+      levelValidation = levels.some(
+        (level) => !isNonEmptyAlphaNumeric(level.value)
+      );
+    } else if (type === 'custom') {
+      levelValidation = levels.some(
+        (level) => !isNonEmptyAlphaNumeric(level.value)
+      );
+      levelValidationName = levels.some(
+        (level) => !isNonEmptyAlphaNumeric(level.name)
+      );
+    } else if (type !== 'switch') {
+      levelValidation = levels.some(
+        (level) =>
+          !isNonEmptyAlphaNumeric(level.value) ||
+          !isNonEmptyAlphaNumeric(level.name)
+      );
+    }
+
+    if (levelValidation) {
+      this.snackBar.open(
+        'Entitlement should not be empty. Only alphabets and numbers are allowed.',
+        '',
+        {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        }
+      );
+      return;
+    }
+
+    if (levelValidationName) {
+      this.snackBar.open(
+        'Displayname should not be empty. Only alphabets and numbers are allowed.',
+        '',
+        {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        }
+      );
+      return;
+    }
+
+    if (unitValidation) {
+      this.snackBar.open(
+        'Entitlement unit should not be empty. Only alphabets and numbers are allowed.',
+        '',
+        {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        }
+      );
+      return;
+    }
+
+    // If type is "switch", "quantity", "range", or "custom", call onSubmit()
+    if (
+      type === 'switch' ||
+      type === 'quantity' ||
+      type === 'range' ||
+      type === 'custom'
+    ) {
+      this.onSubmit();
+    }
+  }
+
   onSubmit() {
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
@@ -246,6 +344,7 @@ export class CreateFeatureComponent {
         levels: this.featureForm.value.levels,
       };
     }
+
     this.subscription = this.featureService.addFeature(feature).subscribe({
       next: (res: any) => {
         this.openSuccess();

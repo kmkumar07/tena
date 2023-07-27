@@ -2,10 +2,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import {
-  features,
-  noFeatures,
-} from 'src/app/shared/constants/consants';
+import { features, noFeatures } from 'src/app/shared/constants/consants';
 import { FeatureService } from '../../services/feature.service';
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -39,6 +36,7 @@ export class FeaturesListingComponent implements OnInit {
   featuresData: any;
   searchLength: number;
   totalNumberOfFeature: number;
+  totalNumberOfFeatureBySearch: number;
   NumberOfPage: any = '';
   NumberOfLimit: any = '';
   selection = new SelectionModel<features>(true, []);
@@ -52,6 +50,7 @@ export class FeaturesListingComponent implements OnInit {
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
   hasNextPage: boolean = false;
+  fsearchDataNextPage: boolean = false;
   totalPages: number = 0;
   dialogRef: any;
   search: string = '';
@@ -137,6 +136,14 @@ export class FeaturesListingComponent implements OnInit {
 
           this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
           this.hasNextPage = PageNumber < this.totalPages;
+          if (this.search.length > 0) {
+            this.totalNumberOfFeatureBySearch = this.featuresData.totalCount;
+            this.fsearchDataNextPage =
+              this.totalNumberOfFeatureBySearch <= this.limit;
+          } else {
+            this.totalNumberOfFeature = this.featuresData.totalCount;
+            this.fsearchDataNextPage = false;
+          }
         }
       });
   }
@@ -160,7 +167,17 @@ export class FeaturesListingComponent implements OnInit {
         if (data) {
           this.featuresData = data;
           this.featuresSearchData = this.featuresData.features;
-
+          if (this.search.length > 0) {
+            this.totalNumberOfFeatureBySearch = this.featuresData.totalCount;
+            
+            this.fsearchDataNextPage =
+              this.totalNumberOfFeatureBySearch <= this.limit;
+          } else {
+            this.totalNumberOfFeature = this.featuresData.totalCount;
+            this.fsearchDataNextPage = false;
+            this.totalPages = Math.ceil(this.totalNumberOfFeature /this.limit);
+            this.hasNextPage = this.PageNumber < this.totalPages;
+          }
           this.global.hideLoader();
           if (
             this.totalNumberOfFeature > this.allFeaturesData ||

@@ -358,7 +358,7 @@
               color="primary"
               class="large"
               type="button"
-              (click)="onSubmit()"
+              (click)="createFeature()"
               [disabled]="
                 featureForm.invalid && this.featureForm.value.type !== 'switch' && this.featureForm.value.type !== 'custom'
               "

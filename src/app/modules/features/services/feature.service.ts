@@ -21,7 +21,7 @@ export class FeatureService {
   addFeature(feature: any): Observable<Feature> {
     return this.http.post(`${environment.apiUrl}/feature`, feature).pipe(
       map((res: any) => {
-        this.featureSubject.next(res.data);
+        this.featureSubject.next(res.data);        
         return res.data;
       }),
       catchError((err) => {
@@ -49,7 +49,6 @@ export class FeatureService {
           return res.data;
         }),
         catchError((err) => {
-          console.log(err);
           throw err;
         })
       );
@@ -62,7 +61,6 @@ export class FeatureService {
         return res;
       }),
       catchError((err) => {
-        console.log(err);
         throw err;
       })
     );
@@ -72,7 +70,7 @@ export class FeatureService {
       .get<any>(`${environment.apiUrl}/feature/{featureId}?featureId=${id}`)
       .pipe(
         map((res) => {
-          this.featureSubject.next(res);
+          this.featureSubject.next(res)          
           return res.data;
         }),
         catchError((err) => {

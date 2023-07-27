@@ -38,7 +38,7 @@ export class EditFeatureComponent {
   postName: string = '';
   position: any;
   isRangeSelected: boolean = false;
-  product:any;
+  product: any;
   unlimitedButtonLabel: string = 'Set Unlimited';
   PageNumber: any = '';
   limit: any = '';
@@ -60,17 +60,17 @@ export class EditFeatureComponent {
     ],
     description: ['', Validators.maxLength(500)],
     type: ['', Validators.required],
-    unit: [null, Validators.required],
+    unit: [null, [Validators.required]],
     status: [false],
     levels: this.formBuilder.array([
       this.formBuilder.group({
         isUnlimited: [false],
-        value: ['', Validators.required],
+        value: ['', [Validators.required]],
         name: ['', Validators.required],
       }),
       this.formBuilder.group({
         isUnlimited: [false],
-        value: ['', Validators.required],
+        value: ['', [Validators.required]],
         name: ['', Validators.required],
       }),
     ]),
@@ -98,8 +98,8 @@ export class EditFeatureComponent {
         this.sortOrder
       )
       .subscribe((data) => {
-        this.product=data;
-        this.productId =  this.product.products.map((res) => res.productId);
+        this.product = data;
+        this.productId = this.product.products.map((res) => res.productId);
       });
     const id = this.route.snapshot.params['id'];
 
@@ -233,7 +233,84 @@ export class EditFeatureComponent {
       });
     }
   }
+  updateFeature() {
+    const type = this.featureForm.value.type;
+    const levels = this.featureForm.value.levels;
+    const unit = this.featureForm.value.unit;
 
+    const isAlphaNumeric = (input: string) => /^[a-zA-Z0-9]+$/.test(input);
+    const isNonEmptyAlphaNumeric = (input: string) =>
+      input.trim().length > 0 && isAlphaNumeric(input);
+
+    let levelValidation = false;
+    let levelValidationName = false;
+
+    let unitValidation = unit ? !isNonEmptyAlphaNumeric(unit) : false;
+
+    if (type === 'range' || type === 'quantity' || type === 'custom') {
+      levelValidation = levels.some(
+        (level) => !isNonEmptyAlphaNumeric(level.value)
+      );
+      levelValidationName = levels.some(
+        (level) => !isNonEmptyAlphaNumeric(level.name)
+      );
+    } else if (type !== 'switch') {
+      levelValidation = levels.some(
+        (level) =>
+          !isNonEmptyAlphaNumeric(level.value) ||
+          !isNonEmptyAlphaNumeric(level.name)
+      );
+    }
+
+    if (levelValidation) {
+      this.snackBar.open(
+        'Entitlement should not be empty. Only alphabets and numbers are allowed.',
+        '',
+        {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        }
+      );
+      return;
+    }
+
+    if (levelValidationName) {
+      this.snackBar.open(
+        'Displayname should not be empty. Only alphabets and numbers are allowed.',
+        '',
+        {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        }
+      );
+      return;
+    }
+
+    if (unitValidation) {
+      this.snackBar.open(
+        'Entitlement unit should not be empty. Only alphabets and numbers are allowed.',
+        '',
+        {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        }
+      );
+      return;
+    }
+
+    // If type is "switch", "quantity", "range", or "custom", call onSubmit()
+    if (
+      type === 'switch' ||
+      type === 'quantity' ||
+      type === 'range' ||
+      type === 'custom'
+    ) {
+      this.onSubmit();
+    }
+  }
   onSubmit() {
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
@@ -292,8 +369,8 @@ export class EditFeatureComponent {
           this.snackBar.open(error.error.message, '', {
             duration: 5000,
             verticalPosition: 'top',
-            horizontalPosition: 'right'
-          })
+            horizontalPosition: 'right',
+          });
         },
       });
   }

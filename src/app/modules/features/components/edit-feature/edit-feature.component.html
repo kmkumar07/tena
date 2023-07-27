@@ -249,6 +249,7 @@
               formControlName="unit"
             />
           </mat-form-field>
+          
         </div>
         <div *ngIf="this.featureForm.value.unit || this.featureForm.value.type == 'custom'">
           <ng-container formArrayName="levels">
@@ -271,6 +272,7 @@
                         placeholder="Enter here"
                         formControlName="value"
                       />
+                    
                     </mat-form-field>
                   </div>
                   <div class="input-wrapper">
@@ -355,7 +357,7 @@
               color="primary"
               class="large"
               type="button"
-              (click)="onSubmit()"
+              (click)="updateFeature()"
               [disabled]="
                 featureForm.invalid && this.featureForm.value.type !== 'switch'
               "
