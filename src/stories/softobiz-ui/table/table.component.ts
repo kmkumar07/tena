@@ -9,11 +9,10 @@ import { CustomDateHeaderComponent } from 'src/app/shared/components/custom-date
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
 import {
   Coupon_Data,
-  Logs_Data,
+  Data_Type,
+  User_Data,
   coupon,
   listFilterOptions,
-  logs,
-  noLogs,
   nocoupons,
 } from 'src/app/shared/constants/consants';
 // import * as moment from 'moment';
@@ -153,12 +152,14 @@ export class TableComponent {
 
   isOpened: boolean = false;
   displayedColumns1: string[] = [
-    'Timestamp',
-    'Events',
-    'Customer_Info',
-    'Event_Source',
+    'productId',
+    'name',
+    'feature',
+    'created_at',
+    'status',
+    'action',
   ];
-  LogsData: logs[] = Logs_Data;
+  ProductData: Data_Type[] = User_Data;
   // emptyCoupons = noLogs;
   filterOptions: string[] = listFilterOptions;
   customHeader = CustomDateHeaderComponent;

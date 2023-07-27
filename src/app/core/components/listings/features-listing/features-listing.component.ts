@@ -1,91 +1,108 @@
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import { ProductsService } from '../../services/products.service';
+import {
+  features,
+  noFeatures,
+} from 'src/app/shared/constants/consants';
+import { FeatureService } from '../../../../modules/features/services/feature.service';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   Subject,
   Subscription,
   debounceTime,
   distinctUntilChanged,
 } from 'rxjs';
-import { Data_Type, noProducts } from 'src/app/shared/constants/consants';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { GlobalService } from 'src/app/core/services/global.service';
+import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
+import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
 
 @Component({
-  selector: 'app-product-listing',
-  templateUrl: './product-listing.component.html',
-  styleUrls: ['./product-listing.component.scss'],
+  standalone: true,
+  imports: [SharedModule, AngularMaterialModule],
+  selector: 'app-features-listing',
+  templateUrl: './features-listing.component.html',
+  styleUrls: ['./features-listing.component.scss'],
 })
-export class ProductListingComponent implements OnInit {
-  id: string = '';
+export class FeaturesListingComponent implements OnInit {
   displayedColumns: string[] = [
-    'productId',
+    'featureId',
+    'productName',
     'name',
-    'feature',
+    'type',
     'createdOn',
     'status',
     'action',
   ];
-  getfeaturedata: any;
-  productsSearchData: any;
-  featureLength: number;
-  allProductsData: number = 0;
-  emptyProductPros = noProducts;
+  featuresSearchData: any;
+  featuresData: any;
+  searchLength: number;
+  totalNumberOfFeature: number;
+  NumberOfPage: any = '';
+  NumberOfLimit: any = '';
+  selection = new SelectionModel<features>(true, []);
+  emptyFeature = noFeatures;
+  subscription: Subscription;
+  data$ = this.featureService.feature$;
+  elementId: number;
+  data: any;
   PageNumber = 1;
   limit = 10;
-  search: string = '';
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
-  totalNumberOfProduct: number;
-  products: any;
-  NoPage: any = '';
-  Nolimit: any = '';
   hasNextPage: boolean = false;
   totalPages: number = 0;
-
-  selection = new SelectionModel<Data_Type>(true, []);
-
+  dialogRef: any;
+  search: string = '';
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   searchQuery: string;
+  searchData = [];
+  allFeaturesData: number = 0;
   private searchQueryChanged: Subject<string> = new Subject<string>();
   private searchSubscription: Subscription;
-  dialogRef: any;
+
+  /** Whether the number of selected elements matches the total number of rows. */
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.featuresData.length;
+    return numSelected === numRows;
+  }
 
   constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    private featureService: FeatureService,
     public dialog: MatDialog,
-    protected productService: ProductsService,
     private snackBar: MatSnackBar,
     private global: GlobalService
   ) {}
-
   onSearchInput() {
     this.searchQueryChanged.next(this.searchQuery);
   }
-
-  data$ = this.productService.product$;
-  ngOnInit() {
+  ngOnInit(): void {
     this.sortBy = 'createdOn';
     this.sortOrder = 'desc';
 
-    this.getProduct(
+    this.getFeature(
       this.PageNumber,
       this.limit,
       this.search,
       this.sortBy,
       this.sortOrder
     );
-
     this.searchSubscription = this.searchQueryChanged
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
         this.search = value;
-        this.getSearchProduct(
-          this.PageNumber,
-          this.limit,
+        this.getSearchFeature(
+          this.NumberOfPage,
+          this.NumberOfLimit,
           this.search,
           this.sortBy,
           this.sortOrder
@@ -93,7 +110,7 @@ export class ProductListingComponent implements OnInit {
       });
   }
 
-  getProduct(
+  getFeature(
     PageNumber: number,
     limit: number,
     search: string,
@@ -101,8 +118,8 @@ export class ProductListingComponent implements OnInit {
     sortOrder: 'asc' | 'desc'
   ) {
     this.global.showLoader();
-    this.productService
-      .getProducts(
+    this.featureService
+      .getFeatures(
         this.PageNumber,
         this.limit,
         this.search,
@@ -111,24 +128,23 @@ export class ProductListingComponent implements OnInit {
       )
       .subscribe((data) => {
         if (data) {
-          this.products = data;
-          this.totalNumberOfProduct = this.products.totalCount;
-          this.productsSearchData = this.products.products;
+          this.featuresData = data;
+          this.totalNumberOfFeature = this.featuresData.totalCount;
+          this.featuresSearchData = this.featuresData.features;
           this.global.hideLoader();
           if (
-            this.totalNumberOfProduct > this.allProductsData ||
-            this.totalNumberOfProduct == 0
+            this.totalNumberOfFeature > this.allFeaturesData ||
+            this.totalNumberOfFeature == 0
           ) {
-            this.allProductsData = this.totalNumberOfProduct;
+            this.allFeaturesData = this.totalNumberOfFeature;
           }
 
-          this.totalPages = Math.ceil(this.totalNumberOfProduct / limit);
+          this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
           this.hasNextPage = PageNumber < this.totalPages;
         }
       });
   }
-
-  getSearchProduct(
+  getSearchFeature(
     PageNumber: number,
     limit: number,
     search: string,
@@ -136,8 +152,8 @@ export class ProductListingComponent implements OnInit {
     sortOrder: 'asc' | 'desc'
   ) {
     this.global.showLoader();
-    this.productService
-      .getProducts(
+    this.featureService
+      .getFeatures(
         this.PageNumber,
         this.limit,
         this.search,
@@ -146,30 +162,28 @@ export class ProductListingComponent implements OnInit {
       )
       .subscribe((data) => {
         if (data) {
-          this.products = data;
-          this.productsSearchData = this.products.products;
+          this.featuresData = data;
+          this.featuresSearchData = this.featuresData.features;
 
           this.global.hideLoader();
           if (
-            this.totalNumberOfProduct > this.allProductsData ||
-            this.totalNumberOfProduct == 0
+            this.totalNumberOfFeature > this.allFeaturesData ||
+            this.totalNumberOfFeature == 0
           ) {
-            this.allProductsData = this.totalNumberOfProduct;
+            this.allFeaturesData = this.totalNumberOfFeature;
           }
         }
       });
   }
-
   ngOnDestroy(): void {
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
     }
   }
-
   onPrevious() {
     if (this.PageNumber > 1) {
       this.PageNumber--;
-      this.getProduct(
+      this.getFeature(
         this.PageNumber,
         this.limit,
         this.search,
@@ -181,7 +195,7 @@ export class ProductListingComponent implements OnInit {
 
   onNext() {
     this.PageNumber++;
-    this.getProduct(
+    this.getFeature(
       this.PageNumber,
       this.limit,
       this.search,
@@ -190,8 +204,8 @@ export class ProductListingComponent implements OnInit {
     );
   }
 
-  sendElementId(elementId: string) {
-    this.productService.deleteProduct(elementId).subscribe({
+  deleteElementById(elementId: number) {
+    this.featureService.deleteFeature(elementId).subscribe({
       next: (res) => {
         this.deleteSuccess(elementId);
       },
@@ -204,16 +218,17 @@ export class ProductListingComponent implements OnInit {
       },
     });
   }
+
   deleteSuccess(id: any) {
     const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
       width: '422px',
       panelClass: 'dialog-curved',
       data: {
-        module: 'Product',
+        module: 'Feature',
         deleteId: id,
       },
     });
-    this.getProduct(
+    this.getFeature(
       this.PageNumber,
       this.limit,
       this.search,
@@ -223,46 +238,28 @@ export class ProductListingComponent implements OnInit {
   }
 
   openDelete(id: any) {
-    for (let i = 0; i < this.productsSearchData.length; i++) {
-      if (this.productsSearchData[i].productId === id) {
-        this.getfeaturedata = this.productsSearchData[i];
+    this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      width: '420px',
+      panelClass: 'dialog-curved',
+      data: {
+        module: 'Feature',
+        deleteId: id,
+      },
+    });
+
+    this.dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.deleteElementById(id);
       }
-    }
-
-    this.featureLength = this.getfeaturedata.feature.length;
-    let productName = this.getfeaturedata.name;
-    if (this.featureLength) {
-      this.snackBar.open(
-        `Unable to delete ${productName}. Please remove associated features first.`,
-        '',
-        {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        }
-      );
-    } else {
-      this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-        width: '420px',
-        panelClass: 'dialog-curved',
-        data: {
-          module: 'Product',
-          deleteId: id,
-        },
-      });
-
-      this.dialogRef.afterClosed().subscribe((res: any) => {
-        if (res) {
-          this.sendElementId(id);
-        }
-      });
-    }
+    });
   }
+
+  /** Announce the change in sort state for assistive technology. */
 
   announceSortChange(sortState: Sort) {
     this.sortBy = sortState.active as 'name' | 'createdOn';
     this.sortOrder = sortState.direction as 'asc' | 'desc';
-    this.getProduct(
+    this.getFeature(
       this.PageNumber,
       this.limit,
       this.search,

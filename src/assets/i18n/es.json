@@ -9,5 +9,13 @@
     "coupons": "cupones",
     "transactions": "Actas",
     "invoices": "Facturas",
-    "logs": "Registro"
+    "logs": "Registro",
+    "settings": "Ajustes",
+    "Heyyouhavenonotifications": "¡Ey!No tienes notificaciones.",
+    "myMessages": "Mis mensajes",
+    "myAccount": "My Account",
+    "myInbox": "Mi bandeja de entrada",
+    "darkMode": "Modo oscuro",
+    "help": "Ayuda",
+    "logOut": "Cerrar sesión"
 }

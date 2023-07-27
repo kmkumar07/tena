@@ -11,7 +11,7 @@ $my-primary: (
   100: #d2caf5,
   200: #ecebff,
   300: #9484eb,
-  400: #7868e6,
+  400: #5B3CC6,
   500: #5c4ee1,
   600: #5049da,
   700: #3d41d0,
@@ -65,6 +65,7 @@ $my-accent: (
 
 $my-primary: mat.define-palette($my-primary, 400, 200, 900);
 $my-accent: mat.define-palette($my-accent, 500, 200, 900);
+
 
 // $list-active: mat.define-palette($my-primary, 400);
 $list-active: map.get($my-primary, 400);
@@ -161,8 +162,12 @@ $my-theme: mat.define-light-theme(
     density: 0,
   )
 );
+[data-app-theme="light"] {
+  @include mat.all-component-themes($my-theme);
+}
 @include mat.typography-hierarchy($my-typography);
 @include mat.all-component-themes($my-theme);
+@include mat.icon-theme($my-theme);
 
 @import "./components/color.scss";
 @import "./components/variables";

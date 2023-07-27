@@ -767,7 +767,7 @@ label {
   color: #000000;
   font-size: 1rem;
   padding: 0.75rem 0.625rem;
-  background-color: var(--primary-light);
+  background-color: var(--chip-grey-bg);
   border-radius: 0.25rem;
   font-weight: 500;
 }
@@ -850,3 +850,14 @@ ul.breadcrumb {
   }
 }
 
+//list bottom line
+.list-wrapper{
+  border-bottom: .0625rem solid color("grey", "darken-10");
+  padding-bottom: .375rem;
+  &:last-child{
+    border-bottom: none;
+  }
+}
+.left-header{
+  left: 1.875rem;
+}
