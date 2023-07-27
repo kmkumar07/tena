@@ -61,7 +61,7 @@
     .inner-block{
       padding: .875rem 0 .875rem ;
       border-radius: .375rem;
-      background-color: color('grey' , 'darken-9');
+      background-color: var(--grey-bg);
       .title{
         border-bottom: 0.0625rem solid color("grey", "lighten-7");
         padding: 1rem .875rem .75rem 1.5rem;
