@@ -29,6 +29,35 @@
 
 // form with sample
 .form-with-sample {
+  max-width: 80.1875rem;
+  width: 100%;
+  margin: auto;
+  .header-section {
+    border-bottom: 0.0625rem solid color("grey", "lighten-7");
+  }
+  .form-left {
+    width: calc(100% - 26.375rem);
+    height: fit-content;
+    border: .0625rem solid color('grey','lighten-14');
+    .description-box{
+      textarea{
+        min-height: 4.5rem;
+      }
+    }
+  }
+  .sample-right {
+    width: 26.375rem;
+    border: .0625rem solid color('grey','lighten-14');
+    .inner-block{
+      padding: 2.5rem 2.75rem 1.625rem 2.5rem ;
+      .material-symbols-outlined{
+        font-size: 1.25rem;
+      }
+    }
+  }
+}
+// form with sample for popup
+.form-with-sample-popup {
   padding: 2.1875rem 1.125rem 2.1875rem 2.5rem;
   // .close-icon{
   //   width: 2.5rem;

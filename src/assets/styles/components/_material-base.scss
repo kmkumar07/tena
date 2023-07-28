@@ -6,6 +6,7 @@
 // 6. chip with success-bg
 // 7. coupons dialog
 // 8. mat-paginator
+// 9.input border color
 
 // 1. mat-chip
 .basic-chip.mat-mdc-chip {
@@ -597,4 +598,9 @@ ul {
     width: auto;
     margin-right: 4px;
   }
+}
+
+// 9.input border color
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+  border-color: color('grey','lighten-11');
 }
