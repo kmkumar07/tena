@@ -386,8 +386,8 @@ $half-rem: 0.5rem;
   --secondary-light: #F5F3FF;
   //primay-extra-light-bg-color
   --primay-extra-light-bg: #FBF9FD;
-  // chip-color
-  --chip-grey-bg: #F5F7FB;
+  // grey-color
+  --grey-bg: #F5F7FB;
 
   [data-app-theme="dark"],
   .dark-mode {
@@ -403,6 +403,6 @@ $half-rem: 0.5rem;
     //primay-extra-light-bg-color
     --primay-extra-light-bg: #303030;
     // chip-color
-    --chip-grey-bg: #595959;
+    --grey-bg: #595959;
   }
 }
