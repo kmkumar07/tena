@@ -32,23 +32,29 @@
   }
 }
 
+.header-section {
+  border-bottom: 1px solid color("grey", "lighten-7");
+  padding-left: 1.125rem;
+
+  p {
+    color: $primary-color;
+    padding-left: 0.625rem;
+  }
+}
+.footer-section {
+  border-top: 1px solid color("grey", "lighten-7");
+  padding-left: 1.125rem;
+
+  p {
+    color: $primary-color;
+    padding-left: 0.625rem;
+  }
+}
 // create product section
 .create-product-wrapper {
   border-radius: 0.5rem;
-  padding: 1.6875rem 1.8125rem;
-  height: 100%;
+  height: calc(100vh - 10.3125rem);
   overflow: auto;
-
-  .header-section {
-    border-bottom: 1px solid color("grey", "lighten-7");
-    padding-left: 1.125rem;
-
-    p {
-      color: $primary-color;
-      padding-left: 0.625rem;
-    }
-  }
-
   .form-block {
     .user-avatar {
       height: 7.5rem;
@@ -56,13 +62,11 @@
       background-color: color("grey", "lighten-8");
       border-radius: 50%;
       overflow: hidden;
-
       img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
-
       p {
         color: color("grey", "lighten-9");
       }

@@ -422,7 +422,9 @@ ul {
     background-color: color("shades", "white");
   }
 }
-
+.mat-app-background{
+  background-color: #F5F7FB;
+}
 // storybook chip
 .mat-mdc-standard-chip.mat-primary {
   .mdc-evolution-chip__text-label {
