@@ -5,7 +5,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { ProductListingComponent } from './product-listing.component';
-import { ProductsService } from '../../services/products.service';
+import { ProductsService } from '../../../../modules/products/services/products.service';
 import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
 
 describe('ProductListingComponent', () => {

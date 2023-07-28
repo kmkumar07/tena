@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import { ProductsService } from '../../services/products.service';
+import { ProductsService } from '../../../../modules/products/services/products.service';
 import {
   Subject,
   Subscription,
@@ -14,8 +14,12 @@ import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-bo
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { GlobalService } from 'src/app/core/services/global.service';
+import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
+import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
 
 @Component({
+  standalone: true,
+  imports: [SharedModule, AngularMaterialModule],
   selector: 'app-product-listing',
   templateUrl: './product-listing.component.html',
   styleUrls: ['./product-listing.component.scss'],

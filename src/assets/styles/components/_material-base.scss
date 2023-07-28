@@ -34,7 +34,7 @@
   }
 }
 .table-chip.mat-mdc-chip {
-  background-color: #e1e0ff !important;
+  background-color: var(--chip-grey-bg) !important;
   border-radius: 0.5rem;
   height: 2rem;
   .mat-mdc-chip-action {
@@ -45,9 +45,22 @@
 // 2. Tables
 .primary-table {
   overflow: auto;
+  background-color: transparent;
   .mat-mdc-table {
     border-collapse: separate;
     border-spacing: 0 0.5rem;
+    background-color: transparent;
+    .mdc-data-table__cell, .mdc-data-table__header-cell {
+      border-bottom-color: color('grey', 'lighten-7');
+  }
+    .mdc-data-table__header-row{
+      height: 3.0625rem;
+      background-color: var(--surface-bg);
+    }
+    .mdc-data-table__row{
+      height: 3rem;
+      background-color: var(--surface-bg);
+    }
     .mdc-data-table__header-cell {
       border: none;
       font-weight: 500;
@@ -60,6 +73,7 @@
       tr {
         cursor: pointer;
         &:hover {
+          background-color: var(--surface-bg);
           border: 1px solid #d6d6d6;
           box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.14);
           position: relative;
@@ -116,15 +130,19 @@
     }
     .mdc-data-table__row:first-child .mdc-data-table__cell:nth-child(1) {
       border-top-left-radius: $primary-table-border-radius;
+      border-bottom-left-radius: $primary-table-border-radius;
     }
     .mdc-data-table__row:first-child .mdc-data-table__cell:nth-last-child(1) {
       border-top-right-radius: $primary-table-border-radius;
+      border-bottom-right-radius: $primary-table-border-radius;
     }
     .mdc-data-table__row:last-child .mdc-data-table__cell:nth-child(1) {
       border-bottom-left-radius: $primary-table-border-radius;
+      border-top-left-radius: $primary-table-border-radius;
     }
     .mdc-data-table__row:last-child .mdc-data-table__cell:nth-last-child(1) {
       border-bottom-right-radius: $primary-table-border-radius;
+      border-top-right-radius: $primary-table-border-radius;
     }
     .mdc-data-table__row:last-child .mdc-data-table__cell {
       border-bottom: $primary-table-border;
@@ -409,17 +427,19 @@ ul {
 .mat-mdc-standard-chip.mat-primary {
   .mdc-evolution-chip__text-label {
     color: #1b1b1e;
-    font-weight: 600;
     display: flex;
     align-items: center;
   }
   &.mat-mdc-chip-highlighted {
-    background-color: color("primary", "light");
+    background-color: var(--primary-light);
     .mdc-evolution-chip__text-label {
       color: #1b1b1e;
+      @include dark-theme {
+        color: white;
+      }
     }
-    --mdc-chip-elevated-container-color: color("primary", "light");
-    --mdc-chip-elevated-disabled-container-color: color("primary", "light");
+    --mdc-chip-elevated-container-color: var(--primary-light);
+    --mdc-chip-elevated-disabled-container-color: var(--primary-light);
   }
 }
 
