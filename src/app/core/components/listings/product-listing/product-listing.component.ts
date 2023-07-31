@@ -40,7 +40,7 @@ export class ProductListingComponent implements OnInit {
   allProductsData: number = 0;
   emptyProductPros = noProducts;
   PageNumber = 1;
-  limit = 3;
+  limit = 10;
   search: string = '';
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
