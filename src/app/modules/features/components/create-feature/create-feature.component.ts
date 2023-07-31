@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {
   Data_Type,
@@ -15,7 +15,7 @@ import {
 import getUniqueId from 'src/app/core/utils/functions/getUniqueId';
 import { FeatureService } from '../../services/feature.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { map, Observable, startWith, Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -47,9 +47,10 @@ export class CreateFeatureComponent {
   sortOrder: 'asc' | 'desc';
   productArray = [];
   id: string;
-   product:any
+  product: any;
   isRangeSelected: boolean = false;
-  displayName: string
+  displayName: string;
+  filteredProducts: Observable<any[]>;
 
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -62,7 +63,7 @@ export class CreateFeatureComponent {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -75,15 +76,29 @@ export class CreateFeatureComponent {
         this.sortOrder
       )
       .subscribe((data) => {
-        this.product=data;
+        this.product = data;
         this.productArray = this.product.products.map((res) => res.productId);
         this.featureForm.patchValue({ productID: this.id });
+        this.filteredProducts = this.featureForm
+          .get('productID')!
+          .valueChanges.pipe(
+            startWith(''),
+            map((value) => this.filterProducts(value || ''))
+          );
       });
     this.feature();
     this.featureForm.controls['name'].valueChanges.subscribe((value) => {
       const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
       this.featureForm.controls['featureId'].setValue(idValue);
     });
+  }
+
+  filterProducts(value: string) {
+    const filterValue = value.toLowerCase();
+    const filteredProducts = this.productArray.filter((product) =>
+      product.toLowerCase().includes(filterValue)
+    );
+    return filteredProducts;
   }
 
   feature() {
@@ -196,6 +211,9 @@ export class CreateFeatureComponent {
           name: '',
         });
       }
+    } else if (value === 'switch') {
+      this.isRangeSelected = false;
+      this.featureForm.controls['unit'].reset();
     } else {
       this.isRangeSelected = false;
     }
