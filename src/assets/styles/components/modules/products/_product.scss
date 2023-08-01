@@ -171,7 +171,7 @@
         color: rgb(color("shades", "white"), 0.8);
     }
     .inner-block{
-    background-color: color('primary', 'lighten-7');
+    background-color: var(--primary-bg);
     padding: 1.3125rem 2.9375rem 1.125rem 1.9375rem;
     }
     .heading {
