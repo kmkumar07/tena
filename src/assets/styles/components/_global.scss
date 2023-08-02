@@ -222,6 +222,12 @@ label {
 .w-half {
   width: 44%;
 }
+.w-60p{
+  width: 60%;
+}
+.w-40p{
+  width: 40%;
+}
 @for $i from 0 through 100 {
   .width-#{$i},
   .w-#{$i} {
@@ -734,6 +740,17 @@ label {
 }
 .text-nowrap {
   white-space: nowrap;
+}
+.inner-form-wrapper{
+  max-width: 81.25rem;
+  width: 100%;
+  margin: auto;
+}
+.wrapper-border{
+  border: 0.0625rem solid $basic-border;
+}
+.divider-bt-black{
+  border-bottom: 0.0625rem solid $basic-border;
 }
 .create-btn {
   min-width: 10rem !important;

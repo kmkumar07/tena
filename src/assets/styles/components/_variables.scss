@@ -32,7 +32,7 @@ $success-color: color("green", "base") !default;
 $error-color: color("red", "base") !default;
 $link-color: color("blue", "lighten-1") !default;
 $border-color: color("grey", "lighten-7") !default;
-
+$basic-border: #E8E8EA;
 $primay-light-bg-color: color("primary", "lighten-4"); // #F5F3FF
 $primay-extra-light-bg-color: color("primary", "lighten-5"); // #FBF9FD
 $green-dark-3: color("green", "darken-3"); //#4DA63E
@@ -289,72 +289,6 @@ $collection-line-height: 1.5rem !default;
 
 $progress-bar-color: $secondary-color !default;
 
-$margin-padding1: 1rem;
-$margin-padding2: 2rem;
-$padding-top3: 3rem;
-$padding-top4: 4rem;
-$padding-top5: 5rem;
-$padding-top6: 6rem;
-$padding-top7: 7rem;
-$padding-top8: 8rem;
-$padding-top9: 9rem;
-$padding-top10: 10rem;
-
-$padding-bottom1: 1rem;
-$padding-bottom2: 2rem;
-$padding-bottom3: 3rem;
-$padding-bottom4: 4rem;
-$padding-bottom5: 5rem;
-$padding-bottom6: 6rem;
-$padding-bottom7: 7rem;
-$padding-bottom8: 8rem;
-$padding-bottom9: 9rem;
-$padding-bottom10: 10rem;
-
-$margin-top1: 1rem;
-$margin-top2: 2rem;
-$margin-top3: 3rem;
-$margin-top4: 4rem;
-$margin-top5: 5rem;
-$margin-top6: 6rem;
-$margin-top7: 7rem;
-$margin-top8: 8rem;
-$margin-top9: 9rem;
-$margin-top10: 10rem;
-
-$margin-left1: 1rem;
-$margin-left2: 2rem;
-$margin-left3: 3rem;
-$margin-left4: 4rem;
-$margin-left5: 5rem;
-$margin-left6: 6rem;
-$margin-left7: 7rem;
-$margin-left8: 8rem;
-$margin-left9: 9rem;
-$margin-left10: 10rem;
-
-$margin-right1: 1rem;
-$margin-right2: 2rem;
-$margin-right3: 3rem;
-$margin-right4: 4rem;
-$margin-right5: 5rem;
-$margin-right6: 6rem;
-$margin-right7: 7rem;
-$margin-right8: 8rem;
-$margin-right9: 9rem;
-$margin-right10: 10rem;
-
-$margin-bottom1: 1rem;
-$margin-bottom2: 2rem;
-$margin-bottom3: 3rem;
-$margin-bottom4: 4rem;
-$margin-bottom5: 5rem;
-$margin-bottom6: 6rem;
-$margin-bottom7: 7rem;
-$margin-bottom8: 8rem;
-$margin-bottom9: 9rem;
-$margin-bottom10: 10rem;
-
 $standard-margin: 1rem;
 $top-bottom: 1rem 0;
 $left-right: 0 1rem;
@@ -375,11 +309,12 @@ $half-rem: 0.5rem;
   --surface-bg: #ffffff;
   // // on surface
   // --on-surface: #405189;
-    // on surface
-    --on-surface: #2B2B30;
+  // on surface
+  --on-surface: #2B2B30;
   // primary
   --primary-main: #5B3CC6;
   --primary-light: #f3f1ff;
+  --primary-bg: #7478D1;
   // surface
   --shades-bg: #ffffff; //rename to --surface-bg
   //primary Light bg
@@ -394,6 +329,7 @@ $half-rem: 0.5rem;
     // primary
     --primary-main: #ec407a;
     --primary-light: #e7c8d7cc;
+    --primary-bg: #ec407a;
     // surface dark
     --surface-bg: #424242;
     // on surface dark

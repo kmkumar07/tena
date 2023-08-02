@@ -73,7 +73,7 @@
           {{ element.productId }}
         </td>
       </ng-container>
-
+      
       <!-- Product Name Column -->
       <ng-container matColumnDef="name">
         <th
@@ -259,13 +259,13 @@
     </div>
   </div>
   <ng-template #noDataFound>
-    <div class="relative main-bg border-2 w-full h-full p-7 overflow-auto">
+    <div class="relative border-2 w-full h-full p-7 overflow-auto">
       <app-no-item-found></app-no-item-found>
     </div>
   </ng-template>
 </div>
 <ng-template #noDataList>
-  <div class="relative main-bg border-2 w-full h-full p-7 overflow-auto">
+  <div class="relative border-2 w-full h-full p-7 overflow-auto">
     <app-empty-listing [items]="emptyProductPros"></app-empty-listing>
   </div>
 </ng-template>
