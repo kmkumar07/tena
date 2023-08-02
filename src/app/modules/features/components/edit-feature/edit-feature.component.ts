@@ -46,6 +46,7 @@ export class EditFeatureComponent {
   productId = [];
   status: boolean;
   filteredProducts: Observable<any[]>;
+  unlimitedValue: any;
   featureForm: FormGroup = this.formBuilder.group({
     featureId: ['', Validators.required],
     productID: ['', Validators.required],
@@ -59,7 +60,7 @@ export class EditFeatureComponent {
     ],
     description: ['', Validators.maxLength(500)],
     type: ['', Validators.required],
-    unit: [null, Validators.required],
+    unit: [null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
     status: [false],
     levels: this.formBuilder.array([
       this.formBuilder.group({
@@ -105,6 +106,7 @@ export class EditFeatureComponent {
             startWith(''),
             map((value) => this.filterProducts(value || ''))
           );
+
       });
     const id = this.route.snapshot.params['id'];
 
@@ -129,15 +131,27 @@ export class EditFeatureComponent {
     return levelList;
   }
   addLevels() {
-    this.position = this.levels.controls.length + 1;
-    this.levels.insert(
-      this.position,
-      this.formBuilder.group({
-        isUnlimited: [false],
-        value: ['', Validators.required],
-        name: ['', Validators.required],
-      })
-    );
+    if (this.isUnlimited) {
+      this.position = this.levels.controls.length - 1;
+      this.levels.insert(
+        this.position,
+        this.formBuilder.group({
+          isUnlimited: [false],
+          value: ['', Validators.required],
+          name: ['', Validators.required],
+        })
+      );
+    } else {
+      this.position = this.levels.controls.length + 1;
+      this.levels.insert(
+        this.position,
+        this.formBuilder.group({
+          isUnlimited: [false],
+          value: ['', Validators.required],
+          name: ['', Validators.required],
+        })
+      );
+    }
   }
 
   deleteLevels(levelIndex: number) {
@@ -149,6 +163,7 @@ export class EditFeatureComponent {
     this.postName = this.featureForm.value.unit;
     if (this.isUnlimited) {
       lastLevel.patchValue({
+        isUnlimited: false,
         value: '',
         name: '',
       });
@@ -156,8 +171,8 @@ export class EditFeatureComponent {
     } else {
       lastLevel.patchValue({
         isUnlimited: true,
-        value: 'Unlimited',
-        name: 'Unlimited' + ' ' + this.postName,
+        value: 'unlimited',
+        name: 'unlimited' + ' ' + this.postName,
       });
       this.unlimitedButtonLabel = 'Set Custom Maximum';
     }
@@ -172,6 +187,7 @@ export class EditFeatureComponent {
     currentIndex.patchValue({
       name: displayName,
     });
+    this.featureForm.get('levels.' + index + '.value').markAsTouched();
   }
 
   onTypeSelection(value: string) {
@@ -234,7 +250,7 @@ export class EditFeatureComponent {
       const levelsControl = this.featureForm.get('levels') as FormArray;
       levelsControl.clear();
 
-      res.levels.forEach((level: any) => {
+      res.levels.forEach((level: any, index: number) => {
         const levelGroup = this.formBuilder.group({
           isUnlimited: [level.isUnlimited],
           level: [level.level],
@@ -243,7 +259,15 @@ export class EditFeatureComponent {
         });
 
         levelsControl.push(levelGroup);
+        if (index === res.levels.length - 1) {
+          this.unlimitedValue = level.value
+        }
       });
+    }
+    if (this.unlimitedValue === 'unlimited') {
+      this.unlimitedButtonLabel = 'Set Custom Maximum';
+    } else {
+      this.unlimitedButtonLabel = 'Set Unlimited';
     }
   }
 

@@ -49,6 +49,7 @@
               matInput
               placeholder="Enter here"
               formControlName="name"
+              (input)="featureForm.controls['name'].markAsTouched()"
             />
             <mat-error
               *ngIf="
@@ -198,6 +199,7 @@
               matInput
               placeholder="Enter here..."
               formControlName="description"
+              (input)="featureForm.controls['description'].markAsTouched()"
             ></textarea>
             <mat-error
               *ngIf="
@@ -229,15 +231,16 @@
             </p>
             <mat-icon
               class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-              [ngxTippy]="selectProduct"
+              [ngxTippy]="selectUnit"
               [tippyProps]="{ placement: 'right', interactive: true }"
               >help</mat-icon
             >
-            <ng-template #selectProduct let-name class="t-template">
+            <ng-template #selectUnit let-name class="t-template">
               <div class="help-info-tooltip">
                 <div class="heading-with-background">Entitlement Units</div>
                 <div class="details">
-                  Please select a product to create a feature to it.
+                  Enter the unit used to measure entitlements to this feature
+                  (e.g "license" for user licenses)".
                 </div>
                 <button mat-button color="primary" class="px-0">
                   Learn more
@@ -251,7 +254,20 @@
               matInput
               placeholder="Enter here"
               formControlName="unit"
+              (input)="featureForm.controls['unit'].markAsTouched()"
             />
+            <mat-error
+              *ngIf="
+                featureForm.controls['unit'].invalid &&
+                featureForm.controls['unit'].touched
+              "
+            >
+              <ng-container
+                *ngIf="featureForm.controls['unit'].errors['pattern']"
+              >
+                Unit cannot contain special characters.
+              </ng-container>
+            </mat-error>
           </mat-form-field>
         </div>
         <div
@@ -279,7 +295,24 @@
                         matInput
                         placeholder="Enter here"
                         formControlName="value"
+                        pattern="[a-zA-Z0-9\s]*"
                       />
+                      <mat-error
+                        *ngIf="
+                          featureForm.get('levels.' + i + '.value').invalid &&
+                          featureForm.get('levels.' + i + '.value').touched
+                        "
+                      >
+                        <ng-container
+                          *ngIf="
+                            featureForm.get('levels.' + i + '.value').errors[
+                              'pattern'
+                            ]
+                          "
+                        >
+                          Entitlement cannot contain special characters.
+                        </ng-container>
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="input-wrapper">
@@ -293,7 +326,29 @@
                         matInput
                         placeholder="Enter here"
                         formControlName="name"
+                        (input)="
+                          featureForm
+                            .get('levels.' + i + '.name')
+                            .markAsTouched()
+                        "
+                        pattern="[a-zA-Z0-9\s]*"
                       />
+                      <mat-error
+                        *ngIf="
+                          featureForm.get('levels.' + i + '.name').invalid &&
+                          featureForm.get('levels.' + i + '.name').touched
+                        "
+                      >
+                        <ng-container
+                          *ngIf="
+                            featureForm.get('levels.' + i + '.name').errors[
+                              'pattern'
+                            ]
+                          "
+                        >
+                          Display Name cannot contain special characters.
+                        </ng-container>
+                      </mat-error>
                     </mat-form-field>
                   </div>
                 </div>

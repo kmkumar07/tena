@@ -49,9 +49,9 @@ export class CreateFeatureComponent {
   id: string;
   product: any;
   isRangeSelected: boolean = false;
-  displayName: string;
+   displayName: string;
   filteredProducts: Observable<any[]>;
-
+  
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -115,7 +115,7 @@ export class CreateFeatureComponent {
       ],
       description: ['', Validators.maxLength(500)],
       type: ['', Validators.required],
-      unit: ['', Validators.required],
+      unit: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
       status: [true],
       levels: this.formBuilder.array([
         this.formBuilder.group({
@@ -140,15 +140,27 @@ export class CreateFeatureComponent {
     return levelList;
   }
   addLevels() {
-    this.position = this.levels.controls.length + 1;
-    this.levels.insert(
-      this.position,
-      this.formBuilder.group({
-        isUnlimited: [false],
-        value: ['', Validators.required],
-        name: ['', Validators.required],
-      })
-    );
+    if (this.isUnlimited) {
+      this.position = this.levels.controls.length - 1;
+      this.levels.insert(
+        this.position,
+        this.formBuilder.group({
+          isUnlimited: [false],
+          value: ['', Validators.required],
+          name: ['', Validators.required],
+        })
+      );
+    } else {
+      this.position = this.levels.controls.length + 1;
+      this.levels.insert(
+        this.position,
+        this.formBuilder.group({
+          isUnlimited: [false],
+          value: ['', Validators.required],
+          name: ['', Validators.required],
+        })
+      );
+    }
   }
 
   deleteLevels(levelIndex: number) {
@@ -160,6 +172,7 @@ export class CreateFeatureComponent {
     this.postName = this.featureForm.value.unit;
     if (this.isUnlimited) {
       lastLevel.patchValue({
+        isUnlimited: false,
         value: '',
         name: '',
       });
@@ -185,6 +198,7 @@ export class CreateFeatureComponent {
     currentIndex.patchValue({
       name: this.displayName,
     });
+    this.featureForm.get('levels.' + index + '.value').markAsTouched();
   }
   onTypeSelection(value: string) {
     if (value === 'range') {
@@ -252,7 +266,6 @@ export class CreateFeatureComponent {
       });
       feature = {
         ...feature,
-        // unit: this.featureForm.value.unit,
         levels: levels,
       };
     }
