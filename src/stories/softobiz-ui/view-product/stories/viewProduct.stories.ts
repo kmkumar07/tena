@@ -1,5 +1,48 @@
-<div class="view-product-wrapper">
+import {
+  Meta,
+  StoryObj,
+  componentWrapperDecorator,
+  moduleMetadata,
+} from '@storybook/angular';
+import { viewProductComponent } from '../viewProduct.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
+import { CommonModule } from '@angular/common';
+import { ButtonComponent } from '../../button/button.component';
+
+
+// More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
+const meta: Meta<viewProductComponent> = {
+  component: viewProductComponent,
+  title: 'softobiz-ui/Pages/ViewProduct',
+  tags: ['autodocs'],
+  render: (args: viewProductComponent) => ({
+    props: {
+      backgroundColor: null,
+      ...args,
+    },
+  }),
+  argTypes: { },
+  decorators: [
+    moduleMetadata({
+      imports: [
+        CommonModule,
+        AngularMaterialModule,
+        BrowserAnimationsModule,
+      ],
+      declarations: [
+        ButtonComponent,
+      ],
+    }),
+  ],
+
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <div class="view-product-wrapper">
   <div class="header-block border-2">
+    <!-- <h3 class="mat-headline-5 heading text-text text-primary">View Product</h3> -->
     <div class="flex align-end justify-between inner-block">
       <div class="brand-info flex align-center">
         <div class="product-img mr-4 border-2"
@@ -9,14 +52,14 @@
         <ng-template #uploadImage>
           <div class="productImg-wrapper">
             <div class="product-img border-2">
-              <img src="../.././../../assets/images/no-image.logo.jpg" alt="product-img" />
+              <img src="no-image.logo.jpg" alt="product-img" />
             </div>
           </div>
         </ng-template>
         <div>
           <div class="">
             <h5 class="mat-headline-5  font-weight-600 text-white mb-2">
-             Microsoft Teams
+              Microsoft Teams
             </h5>
             <p class="mat-subtitle-2 font-weight-500 sub-title">
               O365ProPlusRetail
@@ -28,12 +71,12 @@
       <div class="date-block flex align-center mb-8">
         <div class="flex align-center">
           <mat-icon class="material-symbols-outlined mr-3 text-white">calendar_today</mat-icon>
-          <p class="mat-subtitle-2 text-white">Created {{createdOn | date: 'd MMMM y'}}</p>
+          <p class="mat-subtitle-2 text-white">Created 24 March, 2023</p>
         </div>
         <div class="vertical-divider mx-6"></div>
         <div class="flex align-center">
           <mat-icon class="material-symbols-outlined mr-3 text-white">calendar_today</mat-icon>
-          <p class="mat-subtitle-2 text-white"> Modified {{modifiedOn | date: 'd MMMM y'}}</p>
+          <p class="mat-subtitle-2 text-white"> Modified 24 Apr, 2023</p>
         </div>
       </div>
     </div>
@@ -106,4 +149,19 @@
       </div>
     </div>
   </div>
-</div>
+        `,
+      },
+    },
+  },  
+};
+
+export default meta;
+type Story = StoryObj<viewProductComponent>;
+
+// More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
+
+export const viewProduct: Story = {
+    args: {
+    },
+};
+
