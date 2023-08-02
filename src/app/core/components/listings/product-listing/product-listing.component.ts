@@ -52,6 +52,7 @@ export class ProductListingComponent implements OnInit {
   hasNextPage: boolean = false;
   searchDataNextPage: boolean = false;
   totalPages: number = 0;
+  productLength: any;
 
   selection = new SelectionModel<Data_Type>(true, []);
 
@@ -219,6 +220,8 @@ export class ProductListingComponent implements OnInit {
     this.productService.deleteProduct(elementId).subscribe({
       next: (res) => {
         this.deleteSuccess(elementId);
+        this.products = res;
+        console.log(this.products);
       },
       error: (error: any) => {
         this.snackBar.open(error.error.message, '', {
@@ -238,13 +241,29 @@ export class ProductListingComponent implements OnInit {
         deleteId: id,
       },
     });
-    this.getProduct(
-      this.PageNumber,
-      this.limit,
-      this.search,
-      this.sortBy,
-      this.sortOrder
-    );
+    this.productService
+      .getProducts(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
+      .subscribe((data) => {
+        this.productLength = data['products'].length;
+      });
+    dialogRef.afterClosed().subscribe(() => {
+      if (this.productLength === 0 && this.PageNumber > 1) {
+        this.onPrevious();
+      }
+      this.getProduct(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      );
+    });
   }
 
   openDelete(id: any) {

@@ -2,10 +2,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import {
-  features,
-  noFeatures,
-} from 'src/app/shared/constants/consants';
+import { features, noFeatures } from 'src/app/shared/constants/consants';
 import { FeatureService } from '../../../../modules/features/services/feature.service';
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -61,6 +58,7 @@ export class FeaturesListingComponent implements OnInit {
   totalPages: number = 0;
   dialogRef: any;
   search: string = '';
+  featureLength: any;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchQuery: string;
@@ -248,13 +246,29 @@ export class FeaturesListingComponent implements OnInit {
         deleteId: id,
       },
     });
-    this.getFeature(
-      this.PageNumber,
-      this.limit,
-      this.search,
-      this.sortBy,
-      this.sortOrder
-    );
+    this.featureService
+      .getFeatures(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
+      .subscribe((data) => {
+        this.featureLength = data['features'].length;
+      });
+    dialogRef.afterClosed().subscribe(() => {
+      if (this.featureLength === 0 && this.PageNumber > 1) {
+        this.onPrevious();
+      }
+      this.getFeature(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      );
+    });
   }
 
   openDelete(id: any) {

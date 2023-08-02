@@ -8,15 +8,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, startWith, Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import {
-  Data_Type,
   feature_types,
-  User_Data,
 } from 'src/app/shared/constants/consants';
 import { FeatureService } from '../../services/feature.service';
 
@@ -47,6 +45,8 @@ export class EditFeatureComponent {
   sortOrder: 'asc' | 'desc';
   productId = [];
   status: boolean;
+  filteredProducts: Observable<any[]>;
+  unlimitedValue: any;
   featureForm: FormGroup = this.formBuilder.group({
     featureId: ['', Validators.required],
     productID: ['', Validators.required],
@@ -60,7 +60,7 @@ export class EditFeatureComponent {
     ],
     description: ['', Validators.maxLength(500)],
     type: ['', Validators.required],
-    unit: [null, [Validators.required]],
+    unit: [null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
     status: [false],
     levels: this.formBuilder.array([
       this.formBuilder.group({
@@ -100,12 +100,27 @@ export class EditFeatureComponent {
       .subscribe((data) => {
         this.product = data;
         this.productId = this.product.products.map((res) => res.productId);
+        this.filteredProducts = this.featureForm
+          .get('productID')!
+          .valueChanges.pipe(
+            startWith(''),
+            map((value) => this.filterProducts(value || ''))
+          );
+
       });
     const id = this.route.snapshot.params['id'];
 
     this.featureService.getFeatureById(id).subscribe((data) => {
       this.updateForm(data);
     });
+  }
+
+  filterProducts(value: string) {
+    const filterValue = value.toLowerCase();
+    const filteredProducts = this.productId.filter((product) =>
+      product.toLowerCase().includes(filterValue)
+    );
+    return filteredProducts;
   }
 
   get levels() {
@@ -116,15 +131,27 @@ export class EditFeatureComponent {
     return levelList;
   }
   addLevels() {
-    this.position = this.levels.controls.length + 1;
-    this.levels.insert(
-      this.position,
-      this.formBuilder.group({
-        isUnlimited: [false],
-        value: ['', Validators.required],
-        name: ['', Validators.required],
-      })
-    );
+    if (this.isUnlimited) {
+      this.position = this.levels.controls.length - 1;
+      this.levels.insert(
+        this.position,
+        this.formBuilder.group({
+          isUnlimited: [false],
+          value: ['', Validators.required],
+          name: ['', Validators.required],
+        })
+      );
+    } else {
+      this.position = this.levels.controls.length + 1;
+      this.levels.insert(
+        this.position,
+        this.formBuilder.group({
+          isUnlimited: [false],
+          value: ['', Validators.required],
+          name: ['', Validators.required],
+        })
+      );
+    }
   }
 
   deleteLevels(levelIndex: number) {
@@ -136,6 +163,7 @@ export class EditFeatureComponent {
     this.postName = this.featureForm.value.unit;
     if (this.isUnlimited) {
       lastLevel.patchValue({
+        isUnlimited: false,
         value: '',
         name: '',
       });
@@ -151,8 +179,8 @@ export class EditFeatureComponent {
       }else{
          lastLevel.patchValue({
         isUnlimited: true,
-        value: 'Unlimited',
-        name: 'Unlimited' + ' ' + this.postName,
+        value: 'unlimited',
+        name: 'unlimited' + ' ' + this.postName,
       });
       }
      
@@ -169,6 +197,7 @@ export class EditFeatureComponent {
     currentIndex.patchValue({
       name: displayName,
     });
+    this.featureForm.get('levels.' + index + '.value').markAsTouched();
   }
 
   onTypeSelection(value: string) {
@@ -231,7 +260,7 @@ export class EditFeatureComponent {
       const levelsControl = this.featureForm.get('levels') as FormArray;
       levelsControl.clear();
 
-      res.levels.forEach((level: any) => {
+      res.levels.forEach((level: any, index: number) => {
         const levelGroup = this.formBuilder.group({
           isUnlimited: [level.isUnlimited],
           level: [level.level],
@@ -240,7 +269,15 @@ export class EditFeatureComponent {
         });
 
         levelsControl.push(levelGroup);
+        if (index === res.levels.length - 1) {
+          this.unlimitedValue = level.value
+        }
       });
+    }
+    if (this.unlimitedValue === 'unlimited') {
+      this.unlimitedButtonLabel = 'Set Custom Maximum';
+    } else {
+      this.unlimitedButtonLabel = 'Set Unlimited';
     }
   }
  

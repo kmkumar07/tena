@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {
   Data_Type,
@@ -15,7 +15,7 @@ import {
 import getUniqueId from 'src/app/core/utils/functions/getUniqueId';
 import { FeatureService } from '../../services/feature.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { map, Observable, startWith, Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -49,8 +49,9 @@ export class CreateFeatureComponent {
   id: string;
   product: any;
   isRangeSelected: boolean = false;
-  displayName: string;
-
+   displayName: string;
+  filteredProducts: Observable<any[]>;
+  
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -78,12 +79,26 @@ export class CreateFeatureComponent {
         this.product = data;
         this.productArray = this.product.products.map((res) => res.productId);
         this.featureForm.patchValue({ productID: this.id });
+        this.filteredProducts = this.featureForm
+          .get('productID')!
+          .valueChanges.pipe(
+            startWith(''),
+            map((value) => this.filterProducts(value || ''))
+          );
       });
     this.feature();
     this.featureForm.controls['name'].valueChanges.subscribe((value) => {
       const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
       this.featureForm.controls['featureId'].setValue(idValue);
     });
+  }
+
+  filterProducts(value: string) {
+    const filterValue = value.toLowerCase();
+    const filteredProducts = this.productArray.filter((product) =>
+      product.toLowerCase().includes(filterValue)
+    );
+    return filteredProducts;
   }
 
   feature() {
@@ -100,7 +115,7 @@ export class CreateFeatureComponent {
       ],
       description: ['', Validators.maxLength(500)],
       type: ['', Validators.required],
-      unit: ['', Validators.required],
+      unit: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
       status: [true],
       levels: this.formBuilder.array([
         this.formBuilder.group({
@@ -125,15 +140,27 @@ export class CreateFeatureComponent {
     return levelList;
   }
   addLevels() {
-    this.position = this.levels.controls.length + 1;
-    this.levels.insert(
-      this.position,
-      this.formBuilder.group({
-        isUnlimited: [false],
-        value: ['', Validators.required],
-        name: ['', Validators.required],
-      })
-    );
+    if (this.isUnlimited) {
+      this.position = this.levels.controls.length - 1;
+      this.levels.insert(
+        this.position,
+        this.formBuilder.group({
+          isUnlimited: [false],
+          value: ['', Validators.required],
+          name: ['', Validators.required],
+        })
+      );
+    } else {
+      this.position = this.levels.controls.length + 1;
+      this.levels.insert(
+        this.position,
+        this.formBuilder.group({
+          isUnlimited: [false],
+          value: ['', Validators.required],
+          name: ['', Validators.required],
+        })
+      );
+    }
   }
 
   deleteLevels(levelIndex: number) {
@@ -145,6 +172,7 @@ export class CreateFeatureComponent {
     this.postName = this.featureForm.value.unit;
     if (this.isUnlimited) {
       lastLevel.patchValue({
+        isUnlimited: false,
         value: '',
         name: '',
       });
@@ -181,6 +209,7 @@ export class CreateFeatureComponent {
     currentIndex.patchValue({
       name: this.displayName,
     });
+    this.featureForm.get('levels.' + index + '.value').markAsTouched();
   }
   onTypeSelection(value: string) {
     // if (value === 'switch') {
@@ -211,6 +240,9 @@ export class CreateFeatureComponent {
           name: '',
         });
       }
+    } else if (value === 'switch') {
+      this.isRangeSelected = false;
+      this.featureForm.controls['unit'].reset();
     } else {
       this.isRangeSelected = false;
     }
@@ -250,7 +282,6 @@ export class CreateFeatureComponent {
       });
       feature = {
         ...feature,
-        // unit: this.featureForm.value.unit,
         levels: levels,
       };
     }
