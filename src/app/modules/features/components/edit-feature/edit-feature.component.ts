@@ -141,11 +141,21 @@ export class EditFeatureComponent {
       });
       this.unlimitedButtonLabel = 'Set Unlimited';
     } else {
-      lastLevel.patchValue({
+      if (!this.postName) {
+        lastLevel.patchValue({
+          isUnlimited: true,
+          value: 'unlimited',
+          name: 'unlimited',
+        });
+        this.unlimitedButtonLabel = 'Set Custom Maximum';
+      }else{
+         lastLevel.patchValue({
         isUnlimited: true,
         value: 'Unlimited',
         name: 'Unlimited' + ' ' + this.postName,
       });
+      }
+     
       this.unlimitedButtonLabel = 'Set Custom Maximum';
     }
     this.isUnlimited = !this.isUnlimited;
