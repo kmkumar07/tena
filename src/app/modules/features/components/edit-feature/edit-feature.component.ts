@@ -8,15 +8,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, startWith, Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import {
-  Data_Type,
   feature_types,
-  User_Data,
 } from 'src/app/shared/constants/consants';
 import { FeatureService } from '../../services/feature.service';
 
@@ -38,7 +36,7 @@ export class EditFeatureComponent {
   postName: string = '';
   position: any;
   isRangeSelected: boolean = false;
-  product:any;
+  product: any;
   unlimitedButtonLabel: string = 'Set Unlimited';
   PageNumber: any = '';
   limit: any = '';
@@ -47,6 +45,7 @@ export class EditFeatureComponent {
   sortOrder: 'asc' | 'desc';
   productId = [];
   status: boolean;
+  filteredProducts: Observable<any[]>;
   featureForm: FormGroup = this.formBuilder.group({
     featureId: ['', Validators.required],
     productID: ['', Validators.required],
@@ -98,14 +97,28 @@ export class EditFeatureComponent {
         this.sortOrder
       )
       .subscribe((data) => {
-        this.product=data;
-        this.productId =  this.product.products.map((res) => res.productId);
+        this.product = data;
+        this.productId = this.product.products.map((res) => res.productId);
+        this.filteredProducts = this.featureForm
+          .get('productID')!
+          .valueChanges.pipe(
+            startWith(''),
+            map((value) => this.filterProducts(value || ''))
+          );
       });
     const id = this.route.snapshot.params['id'];
 
     this.featureService.getFeatureById(id).subscribe((data) => {
       this.updateForm(data);
     });
+  }
+
+  filterProducts(value: string) {
+    const filterValue = value.toLowerCase();
+    const filteredProducts = this.productId.filter((product) =>
+      product.toLowerCase().includes(filterValue)
+    );
+    return filteredProducts;
   }
 
   get levels() {
@@ -292,8 +305,8 @@ export class EditFeatureComponent {
           this.snackBar.open(error.error.message, '', {
             duration: 5000,
             verticalPosition: 'top',
-            horizontalPosition: 'right'
-          })
+            horizontalPosition: 'right',
+          });
         },
       });
   }
