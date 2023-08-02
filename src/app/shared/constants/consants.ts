@@ -104,6 +104,7 @@ export interface GetFeature {
   description: string;
   type: string;
   status: string;
+  levels:[]
 }
 
 export interface invoice {

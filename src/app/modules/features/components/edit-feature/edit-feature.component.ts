@@ -65,12 +65,12 @@ export class EditFeatureComponent {
     levels: this.formBuilder.array([
       this.formBuilder.group({
         isUnlimited: [false],
-        value: ['', Validators.required],
+        value: ['', [Validators.required]],
         name: ['', Validators.required],
       }),
       this.formBuilder.group({
         isUnlimited: [false],
-        value: ['', Validators.required],
+        value: ['', [Validators.required]],
         name: ['', Validators.required],
       }),
     ]),
@@ -169,11 +169,21 @@ export class EditFeatureComponent {
       });
       this.unlimitedButtonLabel = 'Set Unlimited';
     } else {
-      lastLevel.patchValue({
+      if (!this.postName) {
+        lastLevel.patchValue({
+          isUnlimited: true,
+          value: 'unlimited',
+          name: 'unlimited',
+        });
+        this.unlimitedButtonLabel = 'Set Custom Maximum';
+      }else{
+         lastLevel.patchValue({
         isUnlimited: true,
         value: 'unlimited',
         name: 'unlimited' + ' ' + this.postName,
       });
+      }
+     
       this.unlimitedButtonLabel = 'Set Custom Maximum';
     }
     this.isUnlimited = !this.isUnlimited;
@@ -270,7 +280,7 @@ export class EditFeatureComponent {
       this.unlimitedButtonLabel = 'Set Unlimited';
     }
   }
-
+ 
   onSubmit() {
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {

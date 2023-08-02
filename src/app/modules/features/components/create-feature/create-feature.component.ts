@@ -178,20 +178,31 @@ export class CreateFeatureComponent {
       });
       this.unlimitedButtonLabel = 'Set Unlimited';
     } else {
-      lastLevel.patchValue({
-        isUnlimited: true,
-        value: 'unlimited',
-        name: 'unlimited' + ' ' + this.postName + 's',
-      });
-      this.unlimitedButtonLabel = 'Set Custom Maximum';
+      if (!this.postName) {
+        lastLevel.patchValue({
+          isUnlimited: true,
+          value: 'unlimited',
+          name: 'unlimited',
+        });
+        this.unlimitedButtonLabel = 'Set Custom Maximum';
+      } else {
+        lastLevel.patchValue({
+          isUnlimited: true,
+          value: 'unlimited',
+          name: 'unlimited' + ' ' + this.postName + 's',
+        });
+        this.unlimitedButtonLabel = 'Set Custom Maximum';
+      }
     }
     this.isUnlimited = !this.isUnlimited;
   }
 
   setName(index: number) {
     this.postName = this.featureForm.value.unit;
+
     this.preName = this.featureForm.value.levels[index].value;
-    if (this.postName.length > 0) {
+
+    if (this.postName.length > 0 && this.preName.length > 0) {
       this.displayName = this.preName + ' ' + this.postName + 's';
     }
     const currentIndex = this.getLevelList(index);
@@ -201,6 +212,10 @@ export class CreateFeatureComponent {
     this.featureForm.get('levels.' + index + '.value').markAsTouched();
   }
   onTypeSelection(value: string) {
+    // if (value === 'switch') {
+    //   this.featureForm.controls['unit'].reset();
+
+    // }
     if (value === 'range') {
       this.isRangeSelected = true;
       this.featureForm.controls['unit'].reset();
@@ -214,7 +229,7 @@ export class CreateFeatureComponent {
           name: '',
         });
       }
-    } else if (value === 'quantity') {
+    } else if (value === 'quantity' || value === 'custom') {
       this.isRangeSelected = false;
       this.featureForm.controls['unit'].reset();
 
@@ -232,6 +247,7 @@ export class CreateFeatureComponent {
       this.isRangeSelected = false;
     }
   }
+ 
   onSubmit() {
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
@@ -277,6 +293,7 @@ export class CreateFeatureComponent {
         levels: this.featureForm.value.levels,
       };
     }
+
     this.subscription = this.featureService.addFeature(feature).subscribe({
       next: (res: any) => {
         this.openSuccess();

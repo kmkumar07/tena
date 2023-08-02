@@ -45,10 +45,12 @@ export class ProductListingComponent implements OnInit {
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
   totalNumberOfProduct: number;
+  totalNumberOfProductBySearch: number;
   products: any;
   NoPage: any = '';
   Nolimit: any = '';
   hasNextPage: boolean = false;
+  searchDataNextPage: boolean = false;
   totalPages: number = 0;
   productLength: any;
 
@@ -129,6 +131,15 @@ export class ProductListingComponent implements OnInit {
 
           this.totalPages = Math.ceil(this.totalNumberOfProduct / limit);
           this.hasNextPage = PageNumber < this.totalPages;
+
+          if (this.search.length > 0) {
+            this.totalNumberOfProductBySearch = this.products.totalCount;
+            this.searchDataNextPage =
+              this.totalNumberOfProductBySearch <= limit;
+          } else {
+            this.totalNumberOfProduct = this.products.totalCount;
+            this.searchDataNextPage = false;
+          }
         }
       });
   }
@@ -154,6 +165,16 @@ export class ProductListingComponent implements OnInit {
           this.products = data;
           this.productsSearchData = this.products.products;
 
+          if (this.search.length > 0) {
+            this.totalNumberOfProductBySearch = this.products.totalCount;
+            this.searchDataNextPage =
+              this.totalNumberOfProductBySearch <= limit;
+          } else {
+            this.totalNumberOfProduct = this.products.totalCount;
+            this.searchDataNextPage = false;
+            this.totalPages = Math.ceil(this.totalNumberOfProduct / limit);
+            this.hasNextPage = PageNumber < this.totalPages;
+          }
           this.global.hideLoader();
           if (
             this.totalNumberOfProduct > this.allProductsData ||
