@@ -2,11 +2,8 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import {
-  features,
-  noFeatures,
-} from 'src/app/shared/constants/consants';
-import { FeatureService } from '../../services/feature.service';
+import { features, noFeatures } from 'src/app/shared/constants/consants';
+import { FeatureService } from '../../../../modules/features/services/feature.service';
 import { MatPaginator } from '@angular/material/paginator';
 import {
   Subject,
@@ -19,8 +16,12 @@ import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-bo
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GlobalService } from 'src/app/core/services/global.service';
+import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
+import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
 
 @Component({
+  standalone: true,
+  imports: [SharedModule, AngularMaterialModule],
   selector: 'app-features-listing',
   templateUrl: './features-listing.component.html',
   styleUrls: ['./features-listing.component.scss'],
@@ -39,6 +40,7 @@ export class FeaturesListingComponent implements OnInit {
   featuresData: any;
   searchLength: number;
   totalNumberOfFeature: number;
+  totalNumberOfFeatureBySearch: number;
   NumberOfPage: any = '';
   NumberOfLimit: any = '';
   selection = new SelectionModel<features>(true, []);
@@ -52,9 +54,11 @@ export class FeaturesListingComponent implements OnInit {
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
   hasNextPage: boolean = false;
+  fsearchDataNextPage: boolean = false;
   totalPages: number = 0;
   dialogRef: any;
   search: string = '';
+  featureLength: any;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchQuery: string;
@@ -137,6 +141,14 @@ export class FeaturesListingComponent implements OnInit {
 
           this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
           this.hasNextPage = PageNumber < this.totalPages;
+          if (this.search.length > 0) {
+            this.totalNumberOfFeatureBySearch = this.featuresData.totalCount;
+            this.fsearchDataNextPage =
+              this.totalNumberOfFeatureBySearch <= this.limit;
+          } else {
+            this.totalNumberOfFeature = this.featuresData.totalCount;
+            this.fsearchDataNextPage = false;
+          }
         }
       });
   }
@@ -160,7 +172,17 @@ export class FeaturesListingComponent implements OnInit {
         if (data) {
           this.featuresData = data;
           this.featuresSearchData = this.featuresData.features;
-
+          if (this.search.length > 0) {
+            this.totalNumberOfFeatureBySearch = this.featuresData.totalCount;
+            
+            this.fsearchDataNextPage =
+              this.totalNumberOfFeatureBySearch <= this.limit;
+          } else {
+            this.totalNumberOfFeature = this.featuresData.totalCount;
+            this.fsearchDataNextPage = false;
+            this.totalPages = Math.ceil(this.totalNumberOfFeature /this.limit);
+            this.hasNextPage = this.PageNumber < this.totalPages;
+          }
           this.global.hideLoader();
           if (
             this.totalNumberOfFeature > this.allFeaturesData ||
@@ -224,13 +246,29 @@ export class FeaturesListingComponent implements OnInit {
         deleteId: id,
       },
     });
-    this.getFeature(
-      this.PageNumber,
-      this.limit,
-      this.search,
-      this.sortBy,
-      this.sortOrder
-    );
+    this.featureService
+      .getFeatures(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
+      .subscribe((data) => {
+        this.featureLength = data['features'].length;
+      });
+    dialogRef.afterClosed().subscribe(() => {
+      if (this.featureLength === 0 && this.PageNumber > 1) {
+        this.onPrevious();
+      }
+      this.getFeature(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      );
+    });
   }
 
   openDelete(id: any) {

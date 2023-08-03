@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatButtonModule } from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -16,8 +15,11 @@ import { PageNotFoundComponent } from './shared/components/page-not-found/page-n
 import { FeatureDetailsPopupComponent } from './shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 import { CouponsDeleteSuccessComponent } from './shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { SignInComponent } from './modules/sign-in/components/sign-in.component';
+import { FeaturesPopupComponent } from './shared/components/dialog-box/features-popup/features-popup/features-popup.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CustomTranslateLoader } from './core/utils/functions/custom/custom-translate-loader';
+import { ProductListingComponent } from './core/components/listings/product-listing/product-listing.component';
+import { FeaturesListingComponent } from './core/components/listings/features-listing/features-listing.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { CustomTranslateLoader } from './core/utils/functions/custom/custom-tran
     FeatureDetailsPopupComponent,
     CouponsDeleteSuccessComponent,
     SignInComponent,
+    FeaturesPopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,9 +40,10 @@ import { CustomTranslateLoader } from './core/utils/functions/custom/custom-tran
     AngularMaterialModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatButtonModule,
     FormsModule,
     SharedModule,
+    ProductListingComponent,
+    FeaturesListingComponent,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

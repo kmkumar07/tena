@@ -96,12 +96,23 @@ a {
   color: $text-purple-lighten-1; //#5B3CC6
 }
 
+.text-grey-darken-9{
+ color: $text-grey-darken-9;  //#1D2335
+}
 .text-secondary {
   color: $text-secondary; //#1A3447
 }
 
 .text-grey-darken-8 {
   color: $text-grey-darken-8; //#333333
+}
+
+.text-blue-darken{
+  color: $text-blue-darken;  //#090039
+}
+
+.text-grey-darken{
+  color: $text-grey-darken;  //#2B2B30
 }
 
 .text-black {
@@ -119,7 +130,8 @@ a {
 .text-uppercase {
   text-transform: uppercase;
 }
-.dark-mode {
+
+.dark-mode, [data-app-theme="dark"] {
   .text-text.text-dark {
     color: #e7046a !important;
   }
@@ -154,7 +166,9 @@ a {
   .text-white,
   .text-secondary,
   .text-grey-darken-8,
-  .grey-text.text-form-caption {
+  .grey-text.text-form-caption,
+  .text-blue-darken,
+  .text-grey-darken-9 {
     color: white !important;
   }
 }

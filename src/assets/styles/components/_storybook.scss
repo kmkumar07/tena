@@ -43,6 +43,10 @@
   height: 300px;
 }
 
+.mat-drawer-side{
+  border-right: none !important;
+}
+
 .header-right{
   display: flex;
   align-items: center;

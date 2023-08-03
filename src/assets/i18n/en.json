@@ -9,5 +9,13 @@
   "coupons": "Coupons",
   "transactions": "Transactions",
   "invoices": "Invoices",
-  "logs": "Logs"
+  "logs": "Logs",
+  "settings": "Settings",
+  "Heyyouhavenonotifications": "Hey! You have no notifications.",
+  "myMessages": "My Messages",
+  "myAccount": "My Account",
+  "myInbox": "My Inbox",
+  "darkMode": "Dark Mode",
+  "help": "Help",
+  "logOut": "LogOut"
 }

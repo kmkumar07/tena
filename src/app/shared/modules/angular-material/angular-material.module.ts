@@ -40,6 +40,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { PlatformModule } from '@angular/cdk/platform';
 import { ObserversModule } from '@angular/cdk/observers';
 import { PortalModule } from '@angular/cdk/portal';
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [],
   exports: [
@@ -70,6 +71,7 @@ import { PortalModule } from '@angular/cdk/portal';
     MatSidenavModule,
     MatSlideToggleModule,
     MatSliderModule,
+    CommonModule,
     MatSnackBarModule,
     MatSortModule,
     MatStepperModule,

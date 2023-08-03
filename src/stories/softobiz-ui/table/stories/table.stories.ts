@@ -50,7 +50,7 @@ const meta: Meta<TableComponent> = {
     endDate: { table: { disable: true } },
     filterOptions: { table: { disable: true } },
     isOpened: { table: { disable: true } },
-    LogsData: { table: { disable: true } },
+    ProductData: { table: { disable: true } },
     startDate: { table: { disable: true } },
     handleDateRangeSelection: { table: { disable: true } },
     openDatePicker: { table: { disable: true } },
@@ -238,53 +238,108 @@ export const TableSecondary: Story = {
         code: `
         <div>
         <div
-          *ngIf="LogsData.length == 0"
-          class="relative main-bg border-2 w-full h-full p-7 overflow-scroll"
-        >
-          <app-empty-listing [items]="emptyCoupons"></app-empty-listing>
+        *ngIf="ProductData.length > 0"
+        class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-auto logs-list"
+      >
+        <!-- </div> -->
+        <div class="primary-table overflow-visible mt-8 px-1 pb-2 table-wrapper">
+          <table mat-table [dataSource]="ProductData">
+            <!-- productId -->
+            <ng-container matColumnDef="productId">
+              <th mat-header-cell *matHeaderCellDef>#ID</th>
+              <td mat-cell *matCellDef="let element">{{ element.productId }}</td>
+            </ng-container>
+      
+            <!-- name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Product Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+            </ng-container>
+      
+           <!-- Features Column -->
+           <ng-container matColumnDef="feature">
+            <th mat-header-cell *matHeaderCellDef>Features</th>
+            <td mat-cell *matCellDef="let element">
+              <div
+                class="flex align-center"
+                [ngxTippy]="featureListinfo"
+                [tippyProps]="{ placement: 'right', interactive: true}"
+              >
+                <mat-chip
+                  *ngIf="element.feature.length > 0"
+                  class="table-chip m-2 ml-0"
+                  disableRipple
+                  >{{ element.feature[0].name }}</mat-chip
+                >
+                <mat-chip
+                  *ngIf="element.feature.length > 1"
+                  class="table-chip m-2 ml-0 pointer"
+                  >+{{ element.feature.length - 1 }}</mat-chip
+                >
+                <ng-template #featureListinfo let-name class="t-template">
+                  <div class="help-info-tooltip">
+                    <div class="heading-with-background">Features</div>
+                    <div *ngFor="let feature of element.feature">
+                      <button mat-button color="primary" class="p-2 py-3">
+                        {{ feature.name }}
+                      </button>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+            </td>
+          </ng-container>
+      
+            <!-- createdOn Column -->
+            <ng-container matColumnDef="createdOn">
+              <th mat-header-cell *matHeaderCellDef>Created on</th>
+              <td mat-cell *matCellDef="let element">
+                <p>{{ element.createdOn }}</p>
+              </td>
+            </ng-container>
+      
+            <!-- status Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let element">
+                <span class="">
+                  {{ element.status }}
+                </span>
+              </td>
+            </ng-container>
+      
+         <!-- Created Date Column -->
+         <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef class="text-right">Action</th>
+          <td mat-cell *matCellDef="let element" class="text-right">
+            <mat-icon
+              class="material-symbols-outlined mat-primary"
+              [matMenuTriggerFor]="actionsMenu"
+            >
+              more_vert
+            </mat-icon>
+            <mat-menu
+              #actionsMenu="matMenu"
+              class="actions-menu"
+              backdropClass="edit-menu"
+            >
+              <button mat-menu-item disableRipple>Edit</button>
+              <button
+                mat-menu-item
+                disableRipple
+                (click)="openDelete(element.productId)"
+              >
+                Delete
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+      
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+          </table>
         </div>
-        <div
-          *ngIf="LogsData.length > 0"
-          class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-scroll logs-list"
-        >
-          <!-- </div> -->
-          <div class="primary-table overflow-visible mt-8 px-1 pb-2 table-wrapper">
-            <table mat-table [dataSource]="LogsData">
-              <!-- TimestampColumn -->
-              <ng-container matColumnDef="Timestamp">
-                <th mat-header-cell *matHeaderCellDef>Timestamp</th>
-                <td mat-cell *matCellDef="let element">{{ element.Timestamp }}</td>
-              </ng-container>
-        
-              <!-- Events Column -->
-              <ng-container matColumnDef="Events">
-                <th mat-header-cell *matHeaderCellDef>Events</th>
-                <td mat-cell *matCellDef="let element">{{ element.Events }}</td>
-              </ng-container>
-        
-              <!-- Description Column -->
-              <ng-container matColumnDef="Customer_Info">
-                <th mat-header-cell *matHeaderCellDef>Customer Info</th>
-                <td mat-cell *matCellDef="let element">
-                  <p>{{ element.Customer_Info }}</p>
-                </td>
-              </ng-container>
-        
-              <!-- Created Date Column -->
-              <ng-container matColumnDef="Event_Source">
-                <th mat-header-cell *matHeaderCellDef>Event Source</th>
-                <td mat-cell *matCellDef="let element">
-                  <span class="primary-light-6-bg p-1 border-1 text-primary">
-                    {{ element.Event_Source }}
-                  </span>
-                </td>
-              </ng-container>
-        
-              <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
-            </table>
-          </div>
-        </div>
+      </div>
         </div>
          `,
       },

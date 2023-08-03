@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {
   Data_Type,
@@ -13,12 +13,13 @@ import {
   Validators,
 } from '@angular/forms';
 import getUniqueId from 'src/app/core/utils/functions/getUniqueId';
-import { FeatureService } from '../../services/feature.service';
+// import { FeatureService } from '../../services/feature.service';
+import { FeatureService } from '../../../../../modules/features/services/feature.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, Observable, startWith, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface menuOptions {
@@ -27,11 +28,11 @@ export interface menuOptions {
 }
 
 @Component({
-  selector: 'app-create-feature',
-  templateUrl: './create-feature.component.html',
-  styleUrls: ['./create-feature.component.scss'],
+  selector: 'app-features-popup',
+  templateUrl: './features-popup.component.html',
+  styleUrls: ['./features-popup.component.scss'],
 })
-export class CreateFeatureComponent {
+export class FeaturesPopupComponent {
   productName: Data_Type[] = User_Data;
   featureType: menuOptions[] = feature_types;
   subscription: Subscription;
@@ -47,11 +48,8 @@ export class CreateFeatureComponent {
   sortOrder: 'asc' | 'desc';
   productArray = [];
   id: string;
-  product: any;
   isRangeSelected: boolean = false;
-   displayName: string;
-  filteredProducts: Observable<any[]>;
-  
+
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -62,7 +60,8 @@ export class CreateFeatureComponent {
     private productService: ProductsService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<FeaturesPopupComponent>
   ) {}
 
   ngOnInit() {
@@ -76,29 +75,14 @@ export class CreateFeatureComponent {
         this.sortOrder
       )
       .subscribe((data) => {
-        this.product = data;
-        this.productArray = this.product.products.map((res) => res.productId);
+        this.productArray = data.map((res) => res.productId);
         this.featureForm.patchValue({ productID: this.id });
-        this.filteredProducts = this.featureForm
-          .get('productID')!
-          .valueChanges.pipe(
-            startWith(''),
-            map((value) => this.filterProducts(value || ''))
-          );
       });
     this.feature();
     this.featureForm.controls['name'].valueChanges.subscribe((value) => {
       const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
       this.featureForm.controls['featureId'].setValue(idValue);
     });
-  }
-
-  filterProducts(value: string) {
-    const filterValue = value.toLowerCase();
-    const filteredProducts = this.productArray.filter((product) =>
-      product.toLowerCase().includes(filterValue)
-    );
-    return filteredProducts;
   }
 
   feature() {
@@ -115,7 +99,7 @@ export class CreateFeatureComponent {
       ],
       description: ['', Validators.maxLength(500)],
       type: ['', Validators.required],
-      unit: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
+      unit: ['', Validators.required],
       status: [true],
       levels: this.formBuilder.array([
         this.formBuilder.group({
@@ -140,27 +124,15 @@ export class CreateFeatureComponent {
     return levelList;
   }
   addLevels() {
-    if (this.isUnlimited) {
-      this.position = this.levels.controls.length - 1;
-      this.levels.insert(
-        this.position,
-        this.formBuilder.group({
-          isUnlimited: [false],
-          value: ['', Validators.required],
-          name: ['', Validators.required],
-        })
-      );
-    } else {
-      this.position = this.levels.controls.length + 1;
-      this.levels.insert(
-        this.position,
-        this.formBuilder.group({
-          isUnlimited: [false],
-          value: ['', Validators.required],
-          name: ['', Validators.required],
-        })
-      );
-    }
+    this.position = this.levels.controls.length + 1;
+    this.levels.insert(
+      this.position,
+      this.formBuilder.group({
+        isUnlimited: [false],
+        value: ['', Validators.required],
+        name: ['', Validators.required],
+      })
+    );
   }
 
   deleteLevels(levelIndex: number) {
@@ -172,50 +144,31 @@ export class CreateFeatureComponent {
     this.postName = this.featureForm.value.unit;
     if (this.isUnlimited) {
       lastLevel.patchValue({
-        isUnlimited: false,
         value: '',
         name: '',
       });
       this.unlimitedButtonLabel = 'Set Unlimited';
     } else {
-      if (!this.postName) {
-        lastLevel.patchValue({
-          isUnlimited: true,
-          value: 'unlimited',
-          name: 'unlimited',
-        });
-        this.unlimitedButtonLabel = 'Set Custom Maximum';
-      } else {
-        lastLevel.patchValue({
-          isUnlimited: true,
-          value: 'unlimited',
-          name: 'unlimited' + ' ' + this.postName + 's',
-        });
-        this.unlimitedButtonLabel = 'Set Custom Maximum';
-      }
+      lastLevel.patchValue({
+        isUnlimited: true,
+        value: 'unlimited',
+        name: 'unlimited' + ' ' + this.postName + 's',
+      });
+      this.unlimitedButtonLabel = 'Set Custom Maximum';
     }
     this.isUnlimited = !this.isUnlimited;
   }
 
   setName(index: number) {
     this.postName = this.featureForm.value.unit;
-
     this.preName = this.featureForm.value.levels[index].value;
-
-    if (this.postName.length > 0 && this.preName.length > 0) {
-      this.displayName = this.preName + ' ' + this.postName + 's';
-    }
+    const displayName = this.preName + ' ' + this.postName + 's';
     const currentIndex = this.getLevelList(index);
     currentIndex.patchValue({
-      name: this.displayName,
+      name: displayName,
     });
-    this.featureForm.get('levels.' + index + '.value').markAsTouched();
   }
   onTypeSelection(value: string) {
-    // if (value === 'switch') {
-    //   this.featureForm.controls['unit'].reset();
-
-    // }
     if (value === 'range') {
       this.isRangeSelected = true;
       this.featureForm.controls['unit'].reset();
@@ -229,7 +182,7 @@ export class CreateFeatureComponent {
           name: '',
         });
       }
-    } else if (value === 'quantity' || value === 'custom') {
+    } else if (value === 'quantity') {
       this.isRangeSelected = false;
       this.featureForm.controls['unit'].reset();
 
@@ -240,15 +193,12 @@ export class CreateFeatureComponent {
           name: '',
         });
       }
-    } else if (value === 'switch') {
-      this.isRangeSelected = false;
-      this.featureForm.controls['unit'].reset();
     } else {
       this.isRangeSelected = false;
     }
   }
- 
   onSubmit() {
+    console.log('haya', this.levels.valid);
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
         (<FormGroup>ele).addControl('level', new FormControl(index));
@@ -282,6 +232,7 @@ export class CreateFeatureComponent {
       });
       feature = {
         ...feature,
+        unit: this.featureForm.value.unit,
         levels: levels,
       };
     }
@@ -293,10 +244,10 @@ export class CreateFeatureComponent {
         levels: this.featureForm.value.levels,
       };
     }
-
     this.subscription = this.featureService.addFeature(feature).subscribe({
       next: (res: any) => {
-        this.openSuccess();
+        // this.openSuccess();
+        this.onDelete();
         this.routes.navigate([`/features/view/${res.featureId}`]);
         return res;
       },
@@ -311,12 +262,12 @@ export class CreateFeatureComponent {
   }
 
   onDelete() {
-    this.routes.navigate(['/features']);
+    this.dialogRef.close(false);
   }
 
   openSuccess() {
     this.dialog.open(SuccessDialogComponent, {
-      width: '420px',
+      width: '411px',
       data: {
         module: 'Feature',
         operation: 'is created',
@@ -324,10 +275,10 @@ export class CreateFeatureComponent {
     });
   }
   switchSample() {
-    console.log('switch feature is clicked');
+    0;
     this.featureForm.removeControl('unit');
     this.isRangeSelected = false;
-    console.log('switch', this.featureForm.value);
+
     this.featureForm.patchValue({
       productID: this.productArray[0],
       name: 'Whiteboard',
@@ -342,6 +293,7 @@ export class CreateFeatureComponent {
       'unit',
       this.formBuilder.control('', Validators.required)
     );
+
     this.isRangeSelected = true;
     this.featureForm.patchValue({
       productID: this.productArray[0],
@@ -352,6 +304,7 @@ export class CreateFeatureComponent {
       status: [true],
       unit: 'License',
     });
+
     const values = [
       { value: '10', name: 'License' },
       { value: '20', name: 'License' },
@@ -362,6 +315,7 @@ export class CreateFeatureComponent {
       formGroup?.patchValue(values[i]);
     }
   }
+
   quantitySample() {
     this.featureForm.addControl(
       'unit',
@@ -377,22 +331,24 @@ export class CreateFeatureComponent {
       status: [true],
       unit: 'License',
     });
+
     const values = [
       { value: '3', name: 'License' },
       { value: '10', name: 'License' },
       { value: '20', name: 'License' },
     ];
 
-    for (let i = 0; i < 3; i++) {
-      const formGroup = this.levels.at(i);
-      formGroup?.patchValue(values[i]);
-    }
+    values.forEach((item, index) => {
+      this.levels.at(index)?.patchValue(item);
+    });
   }
+
   customSample() {
     this.featureForm.addControl(
       'unit',
       this.formBuilder.control('', Validators.required)
     );
+
     this.isRangeSelected = false;
     this.featureForm.patchValue({
       productID: this.productArray[0],
@@ -402,6 +358,7 @@ export class CreateFeatureComponent {
       type: 'custom',
       status: [true],
     });
+
     const values = [
       { value: '12', name: 'Working hours' },
       { value: '24', name: 'Weekdays' },
