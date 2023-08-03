@@ -6,6 +6,7 @@
 // 6. chip with success-bg
 // 7. coupons dialog
 // 8. mat-paginator
+// 9.input border color
 
 // 1. mat-chip
 .basic-chip.mat-mdc-chip {
@@ -34,7 +35,7 @@
   }
 }
 .table-chip.mat-mdc-chip {
-  background-color: var(--chip-grey-bg) !important;
+  background-color: var(--grey-bg) !important;
   border-radius: 0.5rem;
   height: 2rem;
   .mat-mdc-chip-action {
@@ -422,7 +423,9 @@ ul {
     background-color: color("shades", "white");
   }
 }
-
+.mat-app-background{
+  background-color: #F5F7FB;
+}
 // storybook chip
 .mat-mdc-standard-chip.mat-primary {
   .mdc-evolution-chip__text-label {
@@ -597,4 +600,9 @@ ul {
     width: auto;
     margin-right: 4px;
   }
+}
+
+// 9.input border color
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+  border-color: color('grey','lighten-11');
 }

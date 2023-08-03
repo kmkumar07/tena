@@ -222,6 +222,12 @@ label {
 .w-half {
   width: 44%;
 }
+.w-60p{
+  width: 60%;
+}
+.w-40p{
+  width: 40%;
+}
 @for $i from 0 through 100 {
   .width-#{$i},
   .w-#{$i} {
@@ -727,13 +733,24 @@ label {
   background-color: color("red" , "lighten-1000"); //#B40000
 }
 .main-content-height {
-  height: calc(100% - 5.75rem);
+  height: calc(100% - 4.25rem);
 }
 .p-main {
   padding: 1.6875rem 1.8125rem;
 }
 .text-nowrap {
   white-space: nowrap;
+}
+.inner-form-wrapper{
+  max-width: 81.25rem;
+  width: 100%;
+  margin: auto;
+}
+.wrapper-border{
+  border: 0.0625rem solid $basic-border;
+}
+.divider-bt-black{
+  border-bottom: 0.0625rem solid $basic-border;
 }
 .create-btn {
   min-width: 10rem !important;
@@ -767,7 +784,7 @@ label {
   color: #000000;
   font-size: 1rem;
   padding: 0.75rem 0.625rem;
-  background-color: var(--chip-grey-bg);
+  background-color: var(--grey-bg);
   border-radius: 0.25rem;
   font-weight: 500;
 }

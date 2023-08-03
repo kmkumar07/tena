@@ -1,6 +1,6 @@
 <div
   *ngIf="allFeaturesData > 0||search.length > 0; else noDataList"
-  class="relative main-bg border-2 w-full h-full py-6 pl-5 pr-6 overflow-auto"
+  class="relative border-2 w-full h-full py-6 pl-5 pr-6 overflow-auto"
 >
   <div class="flex justify-between align-center px-1">
     <div class="flex align-center"  *ngIf="search.length > 0; else allFeaturesFound"
@@ -279,14 +279,14 @@
     </div>
   </div>
   <ng-template #noDataFound>
-    <div class="relative main-bg border-2 w-full h-full p-7 overflow-auto">
+    <div class="relative border-2 w-full h-full p-7 overflow-auto">
       <app-no-item-found></app-no-item-found>
     </div>
   </ng-template>
 </div>
 
 <ng-template #noDataList>
-    <div class="relative main-bg border-2 w-full h-full p-7 overflow-auto">
+    <div class="relative border-2 w-full h-full p-7 overflow-auto">
       <app-empty-listing [items]="emptyFeature"></app-empty-listing>
     </div>
 </ng-template>

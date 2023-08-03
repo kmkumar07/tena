@@ -169,6 +169,9 @@ export class CreateProductComponent implements OnInit {
       },
     });
   }
+  activeChecked(event: any){
+    console.log(event, 'cjeck')
+  }
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

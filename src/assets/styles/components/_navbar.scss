@@ -95,9 +95,8 @@
 // Global Search
 .global-search {
   display: block;
-  max-width: 36.75rem;
-  // width: 100%;
-  width: 36.75rem;
+  max-width: 28rem;
+  width: 28rem;
   height: 2.625rem;
   position: relative;
   padding: 0 1.5rem 0 2.6875rem;
@@ -255,69 +254,6 @@
     }
   }
 }
-// .sidenav-closed.mat-drawer-container {
-//   .sidenav-slider.mat-drawer {
-//     .sidenav-wrapper {
-//       .sidebar-wrapper {
-//         .sidebar {
-//           .category-heading {
-//             margin: 1.5rem 0rem 0.9375rem 0rem;
-//             height: 0.0625rem;
-//             background-color: #78869c33;
-//             transition: $sidebar-transition;
-//             h1 {
-//               transform: translate(-9.25rem, 0);
-//               transition: 40ms;
-//             }
-//           }
-//           .nav-list-item {
-//             .icon-wrapper {
-//               justify-content: space-between;
-//               overflow: hidden;
-//               .sidebar-icon-wraper {
-//                 width: 1.75rem;
-//               }
-//               .content-wrapper {
-//                 overflow: hidden;
-//                 position: absolute;
-//                 left: 2.75rem;
-//                 .content {
-//                   display: block;
-//                   transform: translate(-100px, 0);
-//                   // opacity: 0;
-//                   // position: absolute;
-//                   // left: -6.125rem;
-//                   transition: $sidebar-transition;
-//                 }
-//               }
-//             }
-//           }
-//         }
-//         .config-section {
-//           padding-right: 0.3125rem;
-//         }
-//         .image-wrapper {
-//           position: absolute;
-//           left: -18.75rem;
-//           transition: $sidebar-transition;
-//         }
-//         .logo {
-//           grid-template-columns: 3.4rem auto;
-//           transition: $sidebar-transition;
-//           .logo-img {
-//             transition: $sidebar-transition;
-//             justify-self: flex-start;
-//             width: 100%;
-//           }
-//           .text-wrapper {
-//             transform: translate(-25rem);
-//             transition: $sidebar-transition;
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
 // Notifications Menu
 .notifications-menu.mat-mdc-menu-panel.mdc-menu-surface {
   width: 25rem;

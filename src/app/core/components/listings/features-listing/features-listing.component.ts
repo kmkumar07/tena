@@ -76,7 +76,6 @@ export class FeaturesListingComponent implements OnInit {
   }
 
   constructor(
-    private _liveAnnouncer: LiveAnnouncer,
     private featureService: FeatureService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
