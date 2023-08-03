@@ -17,10 +17,6 @@
 
 .input-label {
   color: var(--on-suface);
-
-  // @include dark-theme {
-  //   color: color("shades", "white");
-  // }
   
   font-weight: 500 !important;
   &.disabled {

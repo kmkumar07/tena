@@ -1,25 +1,23 @@
-<div
-  class="form-with-sample flex main-bg border-2 w-full h-full overflow-auto pt-2 pb- 5 px-6"
->
-  <div class="form-left">
-    <div class="header-section">
-      <div class="pt-10 pb-5 pl-6">
-        <div class="flex align-center mb-2">
-          <mat-icon
-            class="material-symbols-outlined pointer"
-            color="primary"
-            [routerLink]="'/features'"
-            >keyboard_backspace</mat-icon
-          >
-          <span class="mat-h1 primary-text text-main ml-2">Create Feature</span>
-        </div>
-        <span class="pl-8 grey-text text-lighten-9 fs-lg">
-          Fill in the details to create a new item
-        </span>
-      </div>
+<div class="header-section pt-6 pb-6 pr-6 main-bg mb-11">
+  <div class="flex align-center justify-between">
+    <div class="flex align-center">
+      <mat-icon
+        class="material-symbols-outlined pointer"
+        color="primary"
+        [routerLink]="'/features'"
+        >keyboard_backspace</mat-icon
+      >
+      <p class="fs-2xl fw-500 text-text text-dark">Create Feature</p>
+    </div>
+  </div>
+</div>
+<div class="form-with-sample flex align-start w-full h-full overflow-auto pb-5 px-6">
+  <div class="form-left main-bg mr-6 border-2 p-10">
+    <div class="header-section mb-6">
+      <span class="fs-xl text-text text-dark block fw-500 pb-4">Create Feature</span>
     </div>
     <form [formGroup]="featureForm">
-      <div class="form-container pl-6 pr-10">
+      <div class="form-container pr-10">
         <div class="input-wrapper">
           <div class="flex align-center mb-2">
             <p class="mat-subtitle-2 font-weight-500 input-label">
@@ -398,44 +396,11 @@
             <mat-icon class="add-course-btn"></mat-icon>Add Entitlement
           </button>
         </div>
-        <div class="action-btns flex align-center justify-between">
-          <mat-checkbox
-            color="primary"
-            formControlName="status"
-            class="font-weight-500 checkbox ml-n-3"
-            >Active</mat-checkbox
-          >
-          <div>
-            <button
-              mat-stroked-button
-              color="primary"
-              class="mr-2 large"
-              (click)="onDelete()"
-            >
-              Dismiss
-            </button>
-            <button
-              mat-flat-button
-              color="primary"
-              class="large"
-              type="button"
-              (click)="onSubmit()"
-              [disabled]="
-                !featureForm.valid &&
-                !featureForm.get('productID')?.value &&
-                this.featureForm.value.type !== 'switch' &&
-                this.featureForm.value.type !== 'custom'
-              "
-            >
-              Create
-            </button>
-          </div>
-        </div>
       </div>
     </form>
   </div>
-  <div class="sample-right h-auto">
-    <div class="py-5 pr-4 pl-8">
+  <div class="sample-right h-auto main-bg border-2">
+    <div class="p-10">
       <div class="heading-with-background mb-2">Sample Feature</div>
       <div class="text-text text-primary mb-2">
         <h3 class="fw-500 m-0">Switch Feature</h3>
@@ -497,6 +462,42 @@
           Try a Sample
         </button>
       </div>
+    </div>
+  </div>
+</div>
+<div class="footer-section pt-6 pb-6 pr-6 main-bg">
+  <div class="action-btns flex align-center justify-between">
+    <mat-checkbox
+      color="primary"
+      class="font-weight-500 checkbox ml-n-3"
+      checked
+      >Active</mat-checkbox
+    >
+    <div>
+      <button
+        mat-stroked-button
+        color="primary"
+        class="mr-2 large"
+        [mat-dialog-close]="true"
+        (click)="onDelete()"
+      >
+        Back
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        class="large"
+        type="submit"
+        (click)="onSubmit()"
+        [disabled]="
+          !featureForm.valid &&
+          !featureForm.get('productID')?.value &&
+          this.featureForm.value.type !== 'switch' &&
+          this.featureForm.value.type !== 'custom'
+        "
+      >
+        Create
+      </button>
     </div>
   </div>
 </div>

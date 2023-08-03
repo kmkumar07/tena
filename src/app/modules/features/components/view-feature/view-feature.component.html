@@ -1,14 +1,45 @@
-<div class="view-feature-wrapper main-bg">
-  <div class="header-block border-2 secondary-light-bg">
-    <h3 class="mat-headline-5 heading text-text text-primary">View Feature</h3>
+<div class="header-section pt-3 pb-3 pr-6 main-bg mb-11">
+  <div class="flex align-center justify-between">
+    <div class="flex align-center">
+      <mat-icon
+        class="material-symbols-outlined pointer"
+        color="primary"
+        [routerLink]="'/features'"
+        >keyboard_backspace</mat-icon
+      >
+      <p class="fs-xl fw-500 text-text text-dark">View Feature</p>
+    </div>
+    <div class="btn-section flex align-center">
+      <button
+        mat-stroked-button
+        color="primary"
+        class="mr-2 large"
+        (click)="editFeature()"
+      >
+        Edit
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        class="large"
+        [routerLink]="'/features'"
+      >
+        Back to list
+      </button>
+    </div>
+  </div>
+</div>
+<div class="view-feature-wrapper">
+  <div class="header-block">
     <div class="flex align-center justify-between">
       <div class="brand-info flex align-end">
-        <div>
+        <div class="p-2">
           <div class="flex align-center">
-            <p class="mat-headline-5 text-text text-dark title mb-1">
+            <p class="mat-headline-5 text-white title mb-1">
               {{ featureName }}
+              <span class="mat-subtitle-1 text-white">({{ productName }})</span>
             </p>
-            <div
+            <!-- <div
               class="active-text flex align-center green-text text-darken-3 ml-4"
             >
               <mat-icon
@@ -16,96 +47,36 @@
                 color="primary"
                 >check_circle</mat-icon
               ><span>{{ status }}</span>
-            </div>
+            </div> -->
           </div>
-          <span class="mat-subtitle-2 subtitle font-weight-500 block">{{
-            featureId
-          }}</span>
+          <div class="flex align-center">
+            <span class="mat-subtitle-2 subtitle text-white fw-500 block">{{
+              featureId
+            }}</span>
+            <span class="block feature-dot"></span>
+            <span class="block text-white mat-subtitle-2">{{
+              featureType
+            }}</span>
+            <span class="block feature-dot"></span>
+            <span class="block text-white mat-subtitle-2"
+              >Created {{ createdOn | date : "d MMMM y" }}</span
+            >
+          </div>
         </div>
       </div>
-      <div class="btn-section flex align-center">
-        <button
-          mat-stroked-button
-          color="primary"
-          class="mr-2 large"
-          (click)="editFeature()"
-        >
-          Edit
-        </button>
-        <button
-          mat-flat-button
-          color="primary"
-          class="large"
-          [routerLink]="'/features'"
-        >
-          Back to list
-        </button>
+      <div class="status-chip mat-body-1 text-white flex-center">
+        Feature Status: <span class="active-icon block"></span>{{ status }}
       </div>
     </div>
   </div>
-  <div class="content-block p-6">
-    <div class="date-block flex align-center mb-8">
-      <div class="flex align-center">
-        <mat-icon class="material-symbols-outlined mr-3 text-lighten-2"
-          >calendar_today</mat-icon
-        >
-        <p class="mat-subtitle-2 text-dark">
-          Created {{ createdOn | date : "d MMMM y" }}
-        </p>
-      </div>
-      <div class="vertical-divider mx-6"></div>
-      <div class="flex align-center">
-        <mat-icon class="material-symbols-outlined mr-3 text-lighten-2"
-          >calendar_today</mat-icon
-        >
-        <p class="mat-subtitle-2 text-dark">
-          modified {{ modifiedOn | date : "d MMMM y" }}
-        </p>
-      </div>
-    </div>
-    <div class="product-desc">
+  <div class="content-block py-6 px-10 main-bg">
+    <div class="product-desc pb-6">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
-        Product
+        Description
       </h4>
-      <div class="brand-info flex align-start">
-        <div
-          class="product-img mr-4 border-2"
-          *ngIf="
-            featureDetails?.product.imageUrl &&
-              featureDetails?.product.imageUrl.length > 0;
-            else uploadImage
-          "
-        >
-          <img src="{{ imagePath + imageUrl }}" />
-        </div>
-        <ng-template #uploadImage>
-          <div class="product-img mr-4 border-2">
-            <img
-              src="../.././../../assets/images/no-image.logo.jpg"
-              alt="product-img"
-            />
-          </div>
-        </ng-template>
-        <div>
-          <p
-            class="mat-subtitle-2 text-text text-dark title mb-1 font-weight-600"
-          >
-            {{ productName }}
-          </p>
-          <span class="mat-body-1 subtitle font-weight-500 block">{{
-            productId
-          }}</span>
-          <div
-            class="active-text flex align-center green-text text-darken-3 mt-1"
-          >
-            <mat-icon
-              class="material-symbols-outlined mr-1 green-text text-darken-3"
-              color="primary"
-              >check_circle</mat-icon
-            ><span>{{ productStatus }}</span>
-          </div>
-        </div>
-      </div>
+      <p class="mat-body-1">
+        {{ description }}
+      </p>
     </div>
     <div class="feature-type mt-8">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
@@ -115,7 +86,7 @@
       <!-- -----------------------switch type-------------------- -->
 
       <!-- ----------------range type--------------------------- -->
-      <div class="switch-type pt-4 border-2 flex align-center secondary-light-bg">
+      <div class="switch-type pt-4 border-2 flex align-center px-0 pb-2">
         <mat-icon
           *ngIf="featureType === 'range'"
           class="material-symbols-outlined text-darken-3"
@@ -141,24 +112,20 @@
               (featureType === "quantity" && "Quantity") ||
               (featureType === "custom" && "Custom")
           }}</span>
-          <p class="mat-body-1 text-dark mt-2">
-            {{
-              (featureType === "switch" &&
-                "This feature type has 2 entitlement levels- “available” and “not
-              available”.") ||
-                (featureType === "range" &&
-                  "This feature supports range based entitlements.
-              For eg : Customer’s access can be between 100 and 300 API / minute.") ||
-                (featureType === "quantity" &&
-                  "This feature type has numbered entitlement levels-
-                For eg : 2,3,4 or 10 user license's.") ||
-                (featureType === "custom" &&
-                  "This feature supports range based entitlements. For eg : Customer’s
-                  access can be between 100 and 300 API / minute.")
-            }}
-          </p>
         </div>
       </div>
+      <p class="mat-body-1 text-dark">
+        {{
+          (featureType === "switch" &&
+            "This feature type has 2 entitlement levels- “available” and “notavailable”.") ||
+            (featureType === "range" &&
+              "This feature supports range based entitlements. For eg : Customer’s access can be between 100 and 300 API / minute.") ||
+            (featureType === "quantity" &&
+              "This feature type has numbered entitlement levels-For eg : 2,3,4 or 10 user license's.") ||
+            (featureType === "custom" &&
+              "This feature supports range based entitlements. For eg : Customer’s access can be between 100 and 300 API / minute.")
+        }}
+      </p>
       <!-- ----------------range type--------------------------- -->
     </div>
 
@@ -225,14 +192,5 @@
     <!-- ----------------quantity details--------------------------- -->
 
     <!-- ----------------range type--------------------------- -->
-
-    <div class="product-desc mt-8">
-      <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
-        Description
-      </h4>
-      <p class="mat-body-1">
-        {{ description }}
-      </p>
-    </div>
   </div>
 </div>
