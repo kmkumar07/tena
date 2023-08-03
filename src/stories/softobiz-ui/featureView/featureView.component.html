@@ -1,29 +1,14 @@
 <div class="header-section pt-3 pb-3 pr-6 main-bg mb-11">
   <div class="flex align-center justify-between">
     <div class="flex align-center">
-      <mat-icon
-        class="material-symbols-outlined pointer"
-        color="primary"
-        [routerLink]="'/features'"
-        >keyboard_backspace</mat-icon
-      >
+      <mat-icon class="material-symbols-outlined pointer" color="primary">keyboard_backspace</mat-icon>
       <p class="fs-xl fw-500 text-text text-dark">View Feature</p>
     </div>
     <div class="btn-section flex align-center">
-      <button
-        mat-stroked-button
-        color="primary"
-        class="mr-2 large"
-        (click)="editFeature()"
-      >
+      <button mat-stroked-button color="primary" class="mr-2 large" (click)="editFeature()">
         Edit
       </button>
-      <button
-        mat-flat-button
-        color="primary"
-        class="large"
-        [routerLink]="'/features'"
-      >
+      <button mat-flat-button color="primary" class="large">
         Back to list
       </button>
     </div>
@@ -36,8 +21,8 @@
         <div class="p-2">
           <div class="flex align-center">
             <p class="mat-headline-5 text-white title mb-1">
-              {{ featureName }}
-              <span class="mat-subtitle-1 text-white">({{ productName }})</span>
+              f5
+              <span class="mat-subtitle-1 text-white">(Ice cream)</span>
             </p>
             <!-- <div
               class="active-text flex align-center green-text text-darken-3 ml-4"
@@ -50,22 +35,20 @@
             </div> -->
           </div>
           <div class="flex align-center">
-            <span class="mat-subtitle-2 subtitle text-white fw-500 block">{{
-              featureId
-            }}</span>
+            <span class="mat-subtitle-2 subtitle text-white fw-500 block">
+              f5
+            </span>
             <span class="block feature-dot"></span>
-            <span class="block text-white mat-subtitle-2">{{
-              featureType
-            }}</span>
+            <span class="block text-white mat-subtitle-2">
+              switch
+            </span>
             <span class="block feature-dot"></span>
-            <span class="block text-white mat-subtitle-2"
-              >Created {{ createdOn | date : "d MMMM y" }}</span
-            >
+            <span class="block text-white mat-subtitle-2">Created 2 August 2023</span>
           </div>
         </div>
       </div>
       <div class="status-chip mat-body-1 text-white flex-center">
-        Feature Status: <span class="active-icon block"></span>{{ status }}
+        Feature Status: <span class="active-icon block"></span>active
       </div>
     </div>
   </div>
@@ -75,7 +58,10 @@
         Description
       </h4>
       <p class="mat-body-1 mb-0">
-        {{ description }}
+        Teams allows users to communicate in two-way persistent chats with one or multiple participants. Participants
+        can message using text, emojis, stickers and gifs as well as sharing links and files. Messages can be marked as
+        urgent or important. In August 2022, the chat feature was updated for "chat with yourself"; allowing for the
+        organization of files, notes, comments, images, and videos within a private chat tab
       </p>
     </div>
     <div class="feature-type mt-6 end-line">
@@ -87,50 +73,27 @@
 
       <!-- ----------------range type--------------------------- -->
       <div class="switch-type pt-4 border-2 flex align-center px-0 pb-2">
-        <mat-icon
-          *ngIf="featureType === 'range'"
-          class="material-symbols-outlined text-darken-3"
-          >arrow_range</mat-icon
-        >
+        <!-- <mat-icon  class="material-symbols-outlined text-darken-3">arrow_range</mat-icon> -->
 
-        <img
-          *ngIf="featureType === 'switch'"
-          src="../../../../assets/images/icons/toggle-left.svg"
-          alt="toggle-left"
-        />
+        <img src="/icons/toggle-left.svg" alt="toggle-left" />
 
-        <mat-icon
-          *ngIf="featureType === 'quantity' || featureType === 'custom'"
-          class="material-symbols-outlined text-darken-3 text-lighten-2"
-          >production_quantity_limits</mat-icon
-        >
+        <!-- <mat-icon class="material-symbols-outlined text-darken-3 text-lighten-2">production_quantity_limits</mat-icon> -->
 
         <div>
-          <span class="mat-body-1 text-headline-light font-weight-500">{{
-            (featureType === "switch" && "Switch") ||
-              (featureType === "range" && "Range") ||
-              (featureType === "quantity" && "Quantity") ||
-              (featureType === "custom" && "Custom")
-          }}</span>
+          <span class="mat-body-1 text-headline-light font-weight-500">
+            Switch
+            </span>
         </div>
       </div>
       <p class="mat-body-1 text-dark">
-        {{
-          (featureType === "switch" &&
-            "This feature type has 2 entitlement levels- “available” and “notavailable”.") ||
-            (featureType === "range" &&
-              "This feature supports range based entitlements. For eg : Customer’s access can be between 100 and 300 API / minute.") ||
-            (featureType === "quantity" &&
-              "This feature type has numbered entitlement levels-For eg : 2,3,4 or 10 user license's.") ||
-            (featureType === "custom" &&
-              "This feature supports range based entitlements. For eg : Customer’s access can be between 100 and 300 API / minute.")
-        }}
+       
+        "This feature type has 2 entitlement levels- “available” and “notavailable”."
       </p>
       <!-- ----------------range type--------------------------- -->
     </div>
 
     <!-- ----------------range detail--------------------------- -->
-    <div *ngIf="featureType === 'range'" class="mt-8 range-detail-wrapper">
+    <!-- <div *ngIf="featureType === 'range'" class="mt-8 range-detail-wrapper">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
         Range Details
       </h4>
@@ -148,11 +111,11 @@
           </tr>
         </table>
       </div>
-    </div>
+    </div> -->
     <!-- ----------------range detail--------------------------- -->
 
     <!-- ----------------quantity and custom details--------------------------- -->
-    <div *ngIf="featureType === 'quantity'" class="mt-8 range-detail-wrapper">
+    <!-- <div *ngIf="featureType === 'quantity'" class="mt-8 range-detail-wrapper">
       <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
         Quantity Details
       </h4>
@@ -163,10 +126,7 @@
       <div class="detail-info border-2">
         <table class="w-full odd-bg-color">
           <th class="font-weight-500 text-darken-1">Entitlement Levels</th>
-          <tr
-            class="text-headline-light"
-            *ngFor="let displayName of displayNameArray"
-          >
+          <tr class="text-headline-light" *ngFor="let displayName of displayNameArray">
             <td>{{ displayName }}</td>
           </tr>
         </table>
@@ -180,15 +140,12 @@
       <div class="detail-info border-2">
         <table class="w-full odd-bg-color">
           <th class="font-weight-500 text-darken-1">Entitlement Levels</th>
-          <tr
-            class="text-headline-light"
-            *ngFor="let displayName of displayNameArray"
-          >
+          <tr class="text-headline-light" *ngFor="let displayName of displayNameArray">
             <td>{{ displayName }}</td>
           </tr>
         </table>
       </div>
-    </div>
+    </div> -->
     <!-- ----------------quantity details--------------------------- -->
 
     <!-- ----------------range type--------------------------- -->
