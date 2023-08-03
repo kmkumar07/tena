@@ -267,6 +267,9 @@
               >
                 Unit cannot contain special characters.
               </ng-container>
+              <ng-container *ngIf="featureForm.controls['unit'].errors['maxlength']">
+                Unit cannot exceed 50 characters.
+              </ng-container>
             </mat-error>
           </mat-form-field>
         </div>

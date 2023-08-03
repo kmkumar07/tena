@@ -115,7 +115,7 @@ export class CreateFeatureComponent {
       ],
       description: ['', Validators.maxLength(500)],
       type: ['', Validators.required],
-      unit: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
+      unit: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
       status: [true],
       levels: this.formBuilder.array([
         this.formBuilder.group({
