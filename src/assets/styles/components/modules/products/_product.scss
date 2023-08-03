@@ -44,7 +44,11 @@
 .footer-section {
   border-top: 1px solid color("grey", "lighten-7");
   padding-left: 1.125rem;
-
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
   p {
     color: $primary-color;
     padding-left: 0.625rem;
@@ -165,14 +169,14 @@
   overflow: auto;
 
   .header-block {
-    border: .0625rem solid color('grey', 'lighten-14');
+    border: 0.0625rem solid color("grey", "lighten-14");
     overflow: hidden;
-    .sub-title{
-        color: rgb(color("shades", "white"), 0.8);
+    .sub-title {
+      color: rgb(color("shades", "white"), 0.8);
     }
-    .inner-block{
-    background-color: var(--primary-bg);
-    padding: 1.3125rem 2.9375rem 1.125rem 1.9375rem;
+    .inner-block {
+      background-color: var(--primary-bg);
+      padding: 1.3125rem 2.9375rem 1.125rem 1.9375rem;
     }
     .heading {
       margin-bottom: 1.9375rem;
@@ -185,32 +189,32 @@
       }
 
       .subtitle {
-        color: rgba(var( --on-surface), 0.6);
+        color: rgba(var(--on-surface), 0.6);
         margin-bottom: 0.1875rem;
       }
-      
-      .productImg-wrapper{  
+
+      .productImg-wrapper {
         position: relative;
         margin-right: 1.9375rem;
-        &::before{
-          content: '';
+        &::before {
+          content: "";
           width: 1rem;
           height: 1rem;
           border-radius: 50%;
-          background-color: color('green', 'darken-3');
+          background-color: color("green", "darken-3");
           position: absolute;
-          bottom: .25rem;
-          right: .25rem;
+          bottom: 0.25rem;
+          right: 0.25rem;
         }
       }
       .product-img {
-        border: .25rem solid color("shades", "white");
+        border: 0.25rem solid color("shades", "white");
         height: 4.9375rem;
         width: 4.9375rem;
         border-radius: 50%;
         background-color: color("grey", "lighten-8");
         overflow: hidden;
-      
+
         img {
           width: 100%;
           height: 100%;
@@ -227,64 +231,63 @@
     }
   }
 
-    .product-desc{
-      padding: 1.625rem 1.75rem 1.625rem 2.75rem ;
+  .product-desc {
+    padding: 1.625rem 1.75rem 1.625rem 2.75rem;
+  }
+  .vertical-divider {
+    border: 1px solid color("shades", "white");
+    border-left: none;
+    height: 1.125rem;
+  }
+  .product-features {
+    padding: 1.5625rem 2.4375rem 1.5625rem 2.5rem;
+    .feature-add-block {
+      border: 1px dashed #9ca8ba;
+      border-radius: 0.5rem;
     }
-    .vertical-divider {
-      border: 1px solid color("shades", "white");
-      border-left: none;
-      height: 1.125rem;
-    }
-    .product-features {
-      padding: 1.5625rem 2.4375rem 1.5625rem 2.5rem;
-      .feature-add-block {
-        border: 1px dashed #9ca8ba;
+    .icon-with-bg {
+      position: relative;
+      width: fit-content;
+      .bg-box {
+        background: #f3f1ff;
+        height: 1.625rem;
+        width: 1.625rem;
+        position: absolute;
+        z-index: 0;
+        top: -0.625rem;
+        right: -0.5625rem;
         border-radius: 0.5rem;
       }
-      .icon-with-bg {
-        position: relative;
-        width: fit-content;
-        .bg-box {
-          background: #f3f1ff;
-          height: 1.625rem;
-          width: 1.625rem;
-          position: absolute;
-          z-index: 0;
-          top: -0.625rem;
-          right: -0.5625rem;
-          border-radius: 0.5rem;
+    }
+    .features-wrapper {
+      .feature-item {
+        padding: 0.75rem 0.9375rem;
+        margin-bottom: 1.125rem;
+
+        .details {
+          flex-grow: 1;
+        }
+
+        .action-btns {
+          .edit-icon {
+            font-size: 1rem;
+            width: 1rem;
+            height: 1rem;
+          }
         }
       }
-      .features-wrapper {
-        .feature-item {
-          padding: 0.75rem 0.9375rem;
-          margin-bottom: 1.125rem;
+      .feature-logo {
+        height: 2.3125rem;
+        width: 2.3125rem;
+        overflow: hidden;
+        // background-color: #ffffff;
 
-          .details {
-            flex-grow: 1;
-          }
-
-          .action-btns {
-            .edit-icon {
-              font-size: 1rem;
-              width: 1rem;
-              height: 1rem;
-            }
-          }
-        }
-        .feature-logo {
-          height: 2.3125rem;
-          width: 2.3125rem;
-          overflow: hidden;
-          // background-color: #ffffff;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
       }
     }
-  
+  }
 }
