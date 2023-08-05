@@ -70,7 +70,7 @@ export class ProductsService {
   ): Observable<Product[]> {
     return this.http
       .get<any>(
-        `${environment.apiUrl}/products?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+        `${environment.apiUrl}/products?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`, {withCredentials: true}
       )
       .pipe(
         map((res) => {
