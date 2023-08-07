@@ -18,47 +18,59 @@ export class ProductsService {
   constructor(private http: HttpClient) {}
 
   createProduct(product: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/products`, {withCredentials: true}, product).pipe(
-      map((res: any) => {
-        this.productSubject.next(res.data);
-        return res.data;
-      }),
-
-      catchError((err) => {
-        console.log(err);
-        this.error$.next(err.message);
-        throw err;
+    return this.http
+      .post(`${environment.apiUrl}/products`, product, {
+        withCredentials: true,
       })
-    );
+      .pipe(
+        map((res: any) => {
+          this.productSubject.next(res.data);
+          return res.data;
+        }),
+
+        catchError((err) => {
+          console.log(err);
+          this.error$.next(err.message);
+          throw err;
+        })
+      );
   }
   uploadImage(image: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/blob/upload`, {withCredentials: true}, image).pipe(
-      map((data: any) => {
-        this.uploadImageSubject.next(data);
-        return data;
-      }),
-
-      catchError((err) => {
-        console.log(err);
-        this.error$.next(err.message);
-        throw err;
+    return this.http
+      .post(`${environment.apiUrl}/blob/upload`, image, {
+        withCredentials: true,
       })
-    );
+      .pipe(
+        map((data: any) => {
+          this.uploadImageSubject.next(data);
+          return data;
+        }),
+
+        catchError((err) => {
+          console.log(err);
+          this.error$.next(err.message);
+          throw err;
+        })
+      );
   }
 
   removeImage(image: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/blob/deleteImage`, {withCredentials: true}, image).pipe(
-      map((data: any) => {
-        this.removeImageSubject.next(data);
-        return data;
-      }),
-
-      catchError((err) => {
-        console.log(err);
-        this.error$.next(err.message);
-        throw err;
+    return this.http
+      .post(`${environment.apiUrl}/blob/deleteImage`, image, {
+        withCredentials: true,
       })
-    );
+      .pipe(
+        map((data: any) => {
+          this.removeImageSubject.next(data);
+          return data;
+        }),
+
+        catchError((err) => {
+          console.log(err);
+          this.error$.next(err.message);
+          throw err;
+        })
+      );
   }
 
   getProducts(
@@ -70,7 +82,8 @@ export class ProductsService {
   ): Observable<Product[]> {
     return this.http
       .get<any>(
-        `${environment.apiUrl}/products?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`, {withCredentials: true}
+        `${environment.apiUrl}/products?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`,
+        { withCredentials: true }
       )
       .pipe(
         map((res) => {
@@ -85,20 +98,24 @@ export class ProductsService {
       );
   }
   getProductById(id: string): Observable<GetProduct> {
-    return this.http.get<any>(`${environment.apiUrl}/products/${id}`, {withCredentials: true}).pipe(
-      map((res) => {
-        return res.data;
-      }),
-
-      catchError((err) => {
-        console.log(err);
-        throw err;
+    return this.http
+      .get<any>(`${environment.apiUrl}/products/${id}`, {
+        withCredentials: true,
       })
-    );
+      .pipe(
+        map((res) => {
+          return res.data;
+        }),
+
+        catchError((err) => {
+          console.log(err);
+          throw err;
+        })
+      );
   }
   editProduct(productId: string, updatedProduct: any): Observable<Product> {
     const url = `${environment.apiUrl}/products/{productId}?productId=${productId}`;
-    return this.http.put(url, {withCredentials: true}, updatedProduct).pipe(
+    return this.http.put(url, updatedProduct, { withCredentials: true }).pipe(
       map((res: any) => {
         this.productSubject.next(res.data);
         return res.data;
@@ -111,7 +128,7 @@ export class ProductsService {
   }
   deleteProduct(id: string) {
     const url = `${environment.apiUrl}/products/${id}?productId=${id}`;
-    return this.http.delete(url, {withCredentials: true}).pipe(
+    return this.http.delete(url, { withCredentials: true }).pipe(
       map((res) => {
         return res;
       }),
