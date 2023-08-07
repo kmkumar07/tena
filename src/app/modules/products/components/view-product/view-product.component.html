@@ -1,14 +1,13 @@
 <div class="header-section pt-6 pb-6 pr-6 main-bg">
   <div class="flex align-center justify-between">
     <div class="flex align-center">
-      <mat-icon
-        class="material-symbols-outlined pointer"
-        color="primary"
-        [routerLink]="'/products'"
-        >keyboard_backspace</mat-icon
-      >
+      <mat-icon class="material-symbols-outlined pointer" color="primary"
+        [routerLink]="'/products'">keyboard_backspace</mat-icon>
       <p class="fs-xl fw-500 text-text text-dark">View Product</p>
     </div>
+    <button mat-stroked-button color="primary" class="mr-2 medium">
+      Edit
+    </button>
   </div>
 </div>
 <div class="view-product-wrapper">
@@ -29,7 +28,7 @@
         <div>
           <div class="">
             <h5 class="mat-headline-5  font-weight-600 text-white mb-2">
-             Microsoft Teams
+              Microsoft Teams
             </h5>
             <p class="mat-subtitle-2 font-weight-500 sub-title">
               O365ProPlusRetail
@@ -61,7 +60,7 @@
   </div>
   <div class="header-block border-2 mt-6 main-bg">
     <div class="product-features">
-        <h4 class="mat-subtitle-2 text-blue-darken font-weight-500 mb-4">Features</h4>
+      <h4 class="mat-subtitle-2 text-blue-darken font-weight-500 mb-4">Features</h4>
       <!-- with feature added -->
       <div class="features-wrapper">
         <div *ngIf="productDetail?.feature && productDetail.feature.length > 0; else noFeaturesBlock">
