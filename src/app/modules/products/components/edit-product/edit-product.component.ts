@@ -16,6 +16,7 @@ import { ProductsService } from '../../services/products.service';
 import { Subject, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogAnimationsDialog } from '../create-product/create-product.component';
 
 @Component({
   selector: 'app-edit-product',
@@ -178,110 +179,110 @@ export class EditProductComponent implements OnInit {
     }
   }
 }
-@Component({
-  selector: 'dialog-animations-dialog',
-  templateUrl:
-    '../../../../shared/components/dialog-box/dialog-animations-dialog.html',
-  styleUrls: [
-    '../../../../shared/components/dialog-box/dialog-animations.scss',
-  ],
-  animations: [
-    trigger('slideInOut', [
-      transition(':enter', [
-        style({ transform: 'translateX(-100%)' }),
-        animate('300ms ease-in', style({ transform: 'translateX(0%)' })),
-      ]),
-      transition(':leave', [
-        animate('300ms ease-in', style({ transform: 'translateX(-100%)' })),
-      ]),
-    ]),
-  ],
-})
-export class DialogAnimationsDialog {
-  subscription: Subscription;
-  constructor(
-    public dialogRef: MatDialogRef<DialogAnimationsDialog>,
-    private productService: ProductsService
-  ) {}
-  activeColor: string = 'green';
-  baseColor: string = '#ccc';
-  overlayColor: string = 'rgba(255,255,255,0.5)';
-  iconColor: string;
-  dragging: boolean = false;
-  loaded: boolean = false;
-  imageLoaded: boolean = false;
-  imageSrc: string = '';
-  base64imageData: string = '';
-  imageName: string = '';
-  imageUrl: string = '';
+// @Component({
+//   selector: 'dialog-animations-dialog',
+//   templateUrl:
+//     '../../../../shared/components/dialog-box/dialog-animations-dialog.html',
+//   styleUrls: [
+//     '../../../../shared/components/dialog-box/dialog-animations.scss',
+//   ],
+//   animations: [
+//     trigger('slideInOut', [
+//       transition(':enter', [
+//         style({ transform: 'translateX(-100%)' }),
+//         animate('300ms ease-in', style({ transform: 'translateX(0%)' })),
+//       ]),
+//       transition(':leave', [
+//         animate('300ms ease-in', style({ transform: 'translateX(-100%)' })),
+//       ]),
+//     ]),
+//   ],
+// })
+// export class DialogAnimationsDialog {
+//   subscription: Subscription;
+//   constructor(
+//     public dialogRef: MatDialogRef<DialogAnimationsDialog>,
+//     private productService: ProductsService
+//   ) {}
+//   activeColor: string = 'green';
+//   baseColor: string = '#ccc';
+//   overlayColor: string = 'rgba(255,255,255,0.5)';
+//   iconColor: string;
+//   dragging: boolean = false;
+//   loaded: boolean = false;
+//   imageLoaded: boolean = false;
+//   imageSrc: string = '';
+//   base64imageData: string = '';
+//   imageName: string = '';
+//   imageUrl: string = '';
 
-  handleDragEnter() {
-    this.dragging = true;
-  }
+//   handleDragEnter() {
+//     this.dragging = true;
+//   }
 
-  handleDragLeave() {
-    this.dragging = false;
-  }
+//   handleDragLeave() {
+//     this.dragging = false;
+//   }
 
-  handleDrop(e: any) {
-    e.preventDefault();
-    this.dragging = false;
-    this.handleFileInput(e);
-  }
+//   handleDrop(e: any) {
+//     e.preventDefault();
+//     this.dragging = false;
+//     this.handleFileInput(e);
+//   }
 
-  handleImageLoad() {
-    this.imageLoaded = true;
-    this.iconColor = this.overlayColor;
-  }
+//   handleImageLoad() {
+//     this.imageLoaded = true;
+//     this.iconColor = this.overlayColor;
+//   }
 
-  handleFileInput(e: any) {
-    var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
-    var pattern = /image-*/;
-    var reader = new FileReader();
-    if (!file.type.match(pattern)) {
-      alert('invalid format');
-      return;
-    }
-    this.loaded = false;
-    this.imageName = file.name;
-    reader.onload = this._handleReaderLoaded.bind(this);
-    reader.readAsDataURL(file);
-  }
+//   handleFileInput(e: any) {
+//     var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+//     var pattern = /image-*/;
+//     var reader = new FileReader();
+//     if (!file.type.match(pattern)) {
+//       alert('invalid format');
+//       return;
+//     }
+//     this.loaded = false;
+//     this.imageName = file.name;
+//     reader.onload = this._handleReaderLoaded.bind(this);
+//     reader.readAsDataURL(file);
+//   }
 
-  _handleReaderLoaded(e: any) {
-    var reader = e.target;
-    this.imageSrc = reader.result;
-    const dataURLParts = this.imageSrc?.split(';base64,');
-    this.base64imageData = dataURLParts[1];
-    this.loaded = true;
-  }
-  @Output() saveSuccess: EventEmitter<{ imageUrl: string; imageName: string }> =
-    new EventEmitter<{ imageUrl: string; imageName: string }>();
-  @Output() saveError: EventEmitter<any> = new EventEmitter<any>();
-  handleSave() {
-    if (this.base64imageData) {
-      const payload = {
-        image: this.base64imageData,
-        imageName: this.imageName,
-      };
-      this.subscription = this.productService.uploadImage(payload).subscribe({
-        next: (res) => {
-          this.imageUrl = res.data.blobURL;
-        },
-        error: (error: any) => {
-          this.saveError.emit(error);
-        },
-        complete: () => {
-          this.saveSuccess.emit({
-            imageUrl: this.imageUrl,
-            imageName: this.imageName,
-          });
-        },
-      });
-    }
-  }
+//   _handleReaderLoaded(e: any) {
+//     var reader = e.target;
+//     this.imageSrc = reader.result;
+//     const dataURLParts = this.imageSrc?.split(';base64,');
+//     this.base64imageData = dataURLParts[1];
+//     this.loaded = true;
+//   }
+//   @Output() saveSuccess: EventEmitter<{ imageUrl: string; imageName: string }> =
+//     new EventEmitter<{ imageUrl: string; imageName: string }>();
+//   @Output() saveError: EventEmitter<any> = new EventEmitter<any>();
+//   handleSave() {
+//     if (this.base64imageData) {
+//       const payload = {
+//         image: this.base64imageData,
+//         imageName: this.imageName,
+//       };
+//       this.subscription = this.productService.uploadImage(payload).subscribe({
+//         next: (res) => {
+//           this.imageUrl = res.data.blobURL;
+//         },
+//         error: (error: any) => {
+//           this.saveError.emit(error);
+//         },
+//         complete: () => {
+//           this.saveSuccess.emit({
+//             imageUrl: this.imageUrl,
+//             imageName: this.imageName,
+//           });
+//         },
+//       });
+//     }
+//   }
 
-  cancel() {
-    this.dialogRef.close();
-  }
-}
+//   cancel() {
+//     this.dialogRef.close();
+//   }
+// }
