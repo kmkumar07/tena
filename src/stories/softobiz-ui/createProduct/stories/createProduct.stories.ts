@@ -4,7 +4,7 @@ import {
   componentWrapperDecorator,
   moduleMetadata,
 } from '@storybook/angular';
-import { createFeatureComponent } from '../createFeature.component';
+import { createProductComponent } from '../createProduct.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
 import { CommonModule } from '@angular/common';
@@ -15,13 +15,12 @@ import { NgxTippyModule } from 'ngx-tippy-wrapper';
 import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
 
 
-
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
-const meta: Meta<createFeatureComponent> = {
-  component: createFeatureComponent,
-  title: 'softobiz-ui/Pages/createFeature',
+const meta: Meta<createProductComponent> = {
+  component: createProductComponent,
+  title: 'softobiz-ui/Pages/createProduct',
   tags: ['autodocs'],
-  render: (args: createFeatureComponent) => ({
+  render: (args: createProductComponent) => ({
     props: {
       backgroundColor: null,
       ...args,
@@ -41,7 +40,6 @@ const meta: Meta<createFeatureComponent> = {
         SharedModule
       ],
 
-
     }),
   ],
 
@@ -49,20 +47,8 @@ const meta: Meta<createFeatureComponent> = {
     docs: {
       source: {
         code: `
-        <div class="header-section pt-6 pb-6 pr-6 main-bg mb-11">
-        <div class="flex align-center justify-between">
-          <div class="flex align-center">
-            <mat-icon
-              class="material-symbols-outlined pointer"
-              color="primary"
-              >keyboard_backspace</mat-icon
-            >
-            <p class="fs-2xl fw-500 text-text text-dark">Create Feature</p>
-          </div>
-        </div>
-      </div>
-      <div class="form-with-sample flex border-2 w-full h-full overflow-auto px-6">
-        <div class="form-left pt-10 px-10 pb-6 mr-6 border-2 main-bg">
+        <div class="form-with-sample flex border-2 w-full h-full overflow-auto pt-2 pb- 5 px-6">
+        <div class="form-left p-10 mr-6 border-2">
           <div class="header-section">
             <h5 class="text-blue-darken mat-subtitle-1 font-weight-500">Features Details</h5>
           </div>
@@ -290,108 +276,88 @@ const meta: Meta<createFeatureComponent> = {
                   <mat-icon class="add-course-btn"></mat-icon>Add Entitlement
                 </button>
               </div>
+              <div class="action-btns flex align-center justify-between">
+                <mat-checkbox color="primary" formControlName="status"
+                  class="font-weight-500 checkbox ml-n-3">Active</mat-checkbox>
+                <div>
+                  <button mat-stroked-button color="primary" class="mr-2 large" (click)="onDelete()">
+                    Dismiss
+                  </button>
+                  <button mat-flat-button color="primary" class="large" type="button" (click)="onSubmit()" [disabled]="
+                      featureForm.invalid && this.featureForm.value.type !== 'switch' && this.featureForm.value.type !== 'custom'
+                    ">
+                    Create
+                  </button>
+                </div>
+              </div>
             </div>
           </form>
         </div>
-        <div class="sample-right h-auto">
-          <div class="inner-block border-2 main-bg">
+        <div class="sample-right h-auto border-2">
+          <div class="inner-block">
             <div class="header-section">
               <h5 class="text-blue-darken mat-subtitle-1 font-weight-500">Sample Feature</h5>
             </div>
             <div class="mt-4 mb-2">
-              <div class="flex">
-                <mat-icon class="material-symbols-outlined text-icon mr-2">
+              <div class="flex align-center">
+                <mat-icon class="material-symbols-outlined  mr-2">
                   toggle_off
                 </mat-icon>
                 <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">Switch Feature</h3>
               </div>
-              <p class="mat-h4 text-grey-darken mb-3">
+              <p class="mat-h4 text-grey-darken">
                 This feature type has 2 entitlement levels- "available" and "not
                 available".
               </p>
-              <button mat-button color="primary" class="medium px-1 mb-3 font-weight-500">
+              <button mat-button color="primary" class="medium px-1 mb-4 font-weight-500" (click)="switchSample()">
                 Try a Sample
               </button>
             </div>
             <div class="mb-2">
-              <div class="flex">
-                <mat-icon class="material-symbols-outlined text-icon mr-2">
+              <div class="flex align-center">
+                <mat-icon class="material-symbols-outlined  mr-2">
                   arrow_range
                 </mat-icon>
                 <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">Range Feature</h3>
               </div>
-              <p class="mat-h4 text-grey-darken mb-3">
+              <p class="mat-h4 text-grey-darken">
                 This feature supports range based entitlements. For eg : Customer’s
                 access can be between 100 and 300 API / minute.
               </p>
-              <button mat-button color="primary" class="medium px-1 mb-3 font-weight-500">
+              <button mat-button color="primary" class="medium px-1 mb-4 font-weight-500" (click)="rangeSample()">
                 Try a Sample
               </button>
             </div>
             <div class="mb-2">
-              <div class="flex">
-                <mat-icon class="material-symbols-outlined text-icon mr-2">
+              <div class="flex align-center">
+                <mat-icon class="material-symbols-outlined  mr-2">
                   production_quantity_limits
                 </mat-icon>
                 <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">Quantity Feature</h3>
               </div>
-              <p class="mat-h4 text-grey-darken mb-3">
+              <p class="mat-h4 text-grey-darken">
                 This feature type has numbered entitlement levels- For eg : 2,3,4 or
                 10 user licenses.
               </p>
-              <button mat-button color="primary" class="medium px-1 mb-3 font-weight-500">
+              <button mat-button color="primary" class="medium px-1 mb-4 font-weight-500" (click)="quantitySample()">
                 Try a Sample
               </button>
             </div>
             <div class="">
-              <div class="flex">
-                <mat-icon class="material-symbols-outlined text-icon mr-2">
+              <div class="flex align-center">
+                <mat-icon class="material-symbols-outlined  mr-2">
                   tune
                 </mat-icon>
                 <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">Custom Feature</h3>
               </div>
-              <p class="mat-h4 text-grey-darken mb-3">
+              <p class="mat-h4 text-grey-darken">
                 This feature supports range based entitlements. For eg : Customer’s
                 access can be between 100 and 300 API / minute.
               </p>
-              <button mat-button color="primary" class="medium px-1 font-weight-500">
+              <button mat-button color="primary" class="medium px-1 font-weight-500" (click)="customSample()">
                 Try a Sample
               </button>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="footer-section pt-6 pb-6 pr-6 main-bg">
-        <div class="action-btns flex align-center justify-between">
-          <mat-checkbox
-            color="primary"
-            class="font-weight-500 checkbox ml-n-3"
-            checked
-            >Active</mat-checkbox
-          >
-          <div>
-            <button
-              mat-stroked-button
-              color="primary"
-              class="mr-2 large"
-              [mat-dialog-close]="true"
-            >
-              Back
-            </button>
-            <button
-              mat-flat-button
-              color="primary"
-              class="large"
-              type="submit"
-              [disabled]="
-                !featureForm.valid &&
-                !featureForm.get('productID')?.value &&
-                this.featureForm.value.type !== 'switch' &&
-                this.featureForm.value.type !== 'custom'
-              "
-            >
-              Create
-            </button>
           </div>
         </div>
       </div>
@@ -402,11 +368,11 @@ const meta: Meta<createFeatureComponent> = {
 };
 
 export default meta;
-type Story = StoryObj<createFeatureComponent>;
+type Story = StoryObj<createProductComponent>;
 
 // More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
 
-export const createFeature: Story = {
+export const createProduct: Story = {
     args: {
     },
 };

@@ -51,7 +51,7 @@
       color: $text-headline-light;
     }
     .feature-type {
-      max-width: 45.6875rem;
+      // max-width: 45.6875rem;
       img {
         margin-right: 0.9375rem;
       }
@@ -94,4 +94,8 @@
   border-radius: 50%;
   overflow: hidden;
   background-color: #A5DE9B;
+}
+
+.end-line{
+  border-bottom: 1px solid #D9DDE766;
 }

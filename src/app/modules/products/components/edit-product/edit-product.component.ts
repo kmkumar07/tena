@@ -1,14 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { DialogAnimationsDialog } from '../create-product/create-product.component';
-import { FormBuilder, Validators } from '@angular/forms';
-import { animate, style, transition, trigger } from '@angular/animations';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { NgxTippyProps } from 'ngx-tippy-wrapper';
+import { trigger, transition, animate, style } from '@angular/animations';
+import { SuccessDialogComponent } from '../../../../shared/components/dialog-box/success-dialog/success-dialog.component';
+import { OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
-import { Observable, Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogAnimationsDialog } from '../create-product/create-product.component';
 
 @Component({
   selector: 'app-edit-product',
@@ -27,84 +35,91 @@ import { environment } from 'src/environments/environment';
   ],
 })
 export class EditProductComponent implements OnInit {
-  imageName: string = '';
-  imageUrl: string = '';
-  isImageUploaded: boolean = false;
-  getProductImageUrl: string;
-  environment = environment;
-  imagePath: string;
-  product$: Observable<any>;
   subscription: Subscription;
-  productsData = [];
-  status: boolean;
-  imageUrlName: string;
+  @ViewChild('tippyTemplate', { read: ElementRef, static: true })
+  tippyTemplate: ElementRef;
+  tippyContent: NgxTippyProps = {};
+  productForm: FormGroup;
+  imageUrl: string = '';
+  imageName: string = '';
+  data: string = '';
+  imagePath: string = '';
   uploadMessage: string = '';
   uploadSuccess: boolean = false;
-  postForm = this.formBuilder.group({
-    productId: ['', Validators.required],
-    name: [
-      '',
-      [
-        Validators.required,
-        Validators.maxLength(20),
-        Validators.pattern(/^[a-zA-Z0-9\s]*$/),
-      ],
-    ],
-    description: ['', Validators.maxLength(500)],
-    status: [true],
-    imageUrl: ['', Validators.required],
-  });
-
+  error: string;
   constructor(
-    private productService: ProductsService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private formBuilder: FormBuilder,
     public dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    public router: Router,
+    private productService: ProductsService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
+  ngOnInit() {
+    this.productForm = this.formBuilder.group({
+      productId: ['', Validators.required],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+        ],
+      ],
+      description: ['', Validators.maxLength(500)],
+      status: [true],
+      imageUrl: [],
+    });
 
-  ngOnInit(): void {
-    const id = this.route.snapshot.params['id'];
-    this.productService.getProductById(id).subscribe((data) => {
-      this.populateForm(data);
-      this.getProductImageUrl = data.imageUrl;
-      this.imagePath = this.environment.blobStorage;
+    this.productForm.controls['name'].valueChanges.subscribe((value) => {
+      const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
+      this.productForm.controls['productId'].setValue(idValue);
     });
   }
-  startMessageTimer(): void {
-    const duration = 5000;
-    setTimeout(() => {
-      this.isImageUploaded = false;
-      this.uploadMessage = '';
-    }, duration);
+  isChecked(): boolean {
+    const status = this.productForm.get('status')?.value;
+    return status === 'active';
   }
 
+  toggleStatus(checked: boolean): void {
+    const newStatus = checked ? 'active' : 'draft';
+    this.productForm.get('status')?.setValue(newStatus);
+  }
+  navigateToViewFeature(res:any) {
+    // this.router.navigate(['']);
+    this.router.navigate([`/products/view-product/${res.productId}`]);
+  }
   onSubmit() {
-    this.postForm.get('imageUrl')?.setValue(this.getProductImageUrl);
-    const status = this.postForm.value.status ? 'active' : 'draft';
+    this.productForm.get('imageUrl')?.setValue(this.imageUrl);
+    const status = this.productForm.value.status ? 'active' : 'draft';
     const product = {
-      ...this.postForm.value,
+      ...this.productForm.value,
       status: status,
     };
-    this.subscription = this.productService
-      .editProduct(this.postForm.value.productId, product)
-      .subscribe({
-        next: (data) => {
-          this.openSuccess();
-          this.router.navigate([`/products/view-product/${data.productId}`]);
-        },
-        error: (error: any) => {
-          this.snackBar.open(error.error.message, '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
-        },
-      });
+    this.subscription = this.productService.createProduct(product).subscribe({
+      next: (res) => {
+        this.openSuccess();
+        this.navigateToViewFeature(res);
+      },
+      error: (error: any) => {
+        this.error = error?.error?.message ||'Database error';
+        this.snackBar.open(this.error, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+      },
+    });
   }
   onDelete() {
     this.router.navigate(['/products']);
+  }
+
+  startMessageTimer(): void {
+    const duration = 5000;
+    setTimeout(() => {
+      this.uploadSuccess = false;
+      this.uploadMessage = '';
+    }, duration);
   }
 
   openDialog(
@@ -118,7 +133,7 @@ export class EditProductComponent implements OnInit {
     });
     dialogRef.componentInstance.saveSuccess.subscribe(
       (data: { imageUrl: string; imageName: string }) => {
-        this.getProductImageUrl = data.imageUrl;
+        this.imageUrl = data.imageUrl;
         this.imageName = data.imageName;
         this.imagePath = environment.blobStorage;
         this.uploadSuccess = true;
@@ -132,19 +147,18 @@ export class EditProductComponent implements OnInit {
       this.startMessageTimer();
     });
   }
+
   deleteImage() {
-    const imageUrlparts = this.getProductImageUrl?.split('/saasframework/');
-    const extractedImagePart = decodeURIComponent(imageUrlparts[1]);
     const removeImagePayload = {
-      image: extractedImagePart,
-    };
+      image: this.imageName
+    }
     this.productService.removeImage(removeImagePayload).subscribe((res) => {
-      this.getProductImageUrl = res.data.blobURL;
+      this.imageUrl = res.data.blobURL;
       this.imageName = res.data.blobName;
-      this.imagePath = '';
+      this.imagePath = ''
       this.uploadMessage = 'Image removed successfully.';
       this.startMessageTimer();
-    });
+    })
   }
 
   openSuccess() {
@@ -152,24 +166,12 @@ export class EditProductComponent implements OnInit {
       width: '420px',
       data: {
         module: 'Product',
-        operation: 'is updated',
+        operation: 'is created',
       },
     });
   }
-
-  populateForm(res: any) {
-    if (res.status === 'active') {
-      this.status = true;
-    } else if (res.status === 'draft') {
-      this.status = false;
-    }
-    this.postForm.setValue({
-      name: res.name,
-      description: res.description,
-      productId: res.productId,
-      status: this.status,
-      imageUrl: res.imageUrl,
-    });
+  activeChecked(event: any){
+    console.log(event, 'cjeck')
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -177,3 +179,110 @@ export class EditProductComponent implements OnInit {
     }
   }
 }
+// @Component({
+//   selector: 'dialog-animations-dialog',
+//   templateUrl:
+//     '../../../../shared/components/dialog-box/dialog-animations-dialog.html',
+//   styleUrls: [
+//     '../../../../shared/components/dialog-box/dialog-animations.scss',
+//   ],
+//   animations: [
+//     trigger('slideInOut', [
+//       transition(':enter', [
+//         style({ transform: 'translateX(-100%)' }),
+//         animate('300ms ease-in', style({ transform: 'translateX(0%)' })),
+//       ]),
+//       transition(':leave', [
+//         animate('300ms ease-in', style({ transform: 'translateX(-100%)' })),
+//       ]),
+//     ]),
+//   ],
+// })
+// export class DialogAnimationsDialog {
+//   subscription: Subscription;
+//   constructor(
+//     public dialogRef: MatDialogRef<DialogAnimationsDialog>,
+//     private productService: ProductsService
+//   ) {}
+//   activeColor: string = 'green';
+//   baseColor: string = '#ccc';
+//   overlayColor: string = 'rgba(255,255,255,0.5)';
+//   iconColor: string;
+//   dragging: boolean = false;
+//   loaded: boolean = false;
+//   imageLoaded: boolean = false;
+//   imageSrc: string = '';
+//   base64imageData: string = '';
+//   imageName: string = '';
+//   imageUrl: string = '';
+
+//   handleDragEnter() {
+//     this.dragging = true;
+//   }
+
+//   handleDragLeave() {
+//     this.dragging = false;
+//   }
+
+//   handleDrop(e: any) {
+//     e.preventDefault();
+//     this.dragging = false;
+//     this.handleFileInput(e);
+//   }
+
+//   handleImageLoad() {
+//     this.imageLoaded = true;
+//     this.iconColor = this.overlayColor;
+//   }
+
+//   handleFileInput(e: any) {
+//     var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+//     var pattern = /image-*/;
+//     var reader = new FileReader();
+//     if (!file.type.match(pattern)) {
+//       alert('invalid format');
+//       return;
+//     }
+//     this.loaded = false;
+//     this.imageName = file.name;
+//     reader.onload = this._handleReaderLoaded.bind(this);
+//     reader.readAsDataURL(file);
+//   }
+
+//   _handleReaderLoaded(e: any) {
+//     var reader = e.target;
+//     this.imageSrc = reader.result;
+//     const dataURLParts = this.imageSrc?.split(';base64,');
+//     this.base64imageData = dataURLParts[1];
+//     this.loaded = true;
+//   }
+//   @Output() saveSuccess: EventEmitter<{ imageUrl: string; imageName: string }> =
+//     new EventEmitter<{ imageUrl: string; imageName: string }>();
+//   @Output() saveError: EventEmitter<any> = new EventEmitter<any>();
+//   handleSave() {
+//     if (this.base64imageData) {
+//       const payload = {
+//         image: this.base64imageData,
+//         imageName: this.imageName,
+//       };
+//       this.subscription = this.productService.uploadImage(payload).subscribe({
+//         next: (res) => {
+//           this.imageUrl = res.data.blobURL;
+//         },
+//         error: (error: any) => {
+//           this.saveError.emit(error);
+//         },
+//         complete: () => {
+//           this.saveSuccess.emit({
+//             imageUrl: this.imageUrl,
+//             imageName: this.imageName,
+//           });
+//         },
+//       });
+//     }
+//   }
+
+//   cancel() {
+//     this.dialogRef.close();
+//   }
+// }

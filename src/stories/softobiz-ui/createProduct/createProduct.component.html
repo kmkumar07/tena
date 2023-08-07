@@ -4,7 +4,6 @@
       <mat-icon
         class="material-symbols-outlined pointer"
         color="primary"
-        [routerLink]="'/products'"
         >keyboard_backspace</mat-icon
       >
       <p class="fs-xl fw-500 text-text text-dark">Create Product</p>
@@ -18,7 +17,7 @@
         <h3 class="mat-subtitle-1 fw-500 text-text text-dark mb-0">Basic Product Details</h3>
       </div>
       <div class="input-wrapper mt-8">
-        <form [formGroup]="productForm">
+        <form>
           <div>
             <div class="flex align-center mb-2">
               <p class="mat-subtitle-2 font-weight-500 input-label">
@@ -47,30 +46,7 @@
               <input
                 matInput
                 placeholder="Enter here..."
-                formControlName="name"
               />
-              <mat-error
-                *ngIf="
-                  productForm.controls['name'].invalid &&
-                  productForm.controls['name'].touched
-                "
-              >
-                <ng-container
-                  *ngIf="productForm.controls['name'].errors['required']"
-                >
-                  Name is required and cannot be left empty.
-                </ng-container>
-                <ng-container
-                  *ngIf="productForm.controls['name'].errors['maxlength']"
-                >
-                  Name cannot exceed 20 characters.
-                </ng-container>
-                <ng-container
-                  *ngIf="productForm.controls['name'].errors['pattern']"
-                >
-                  Name cannot contain special characters.
-                </ng-container>
-              </mat-error>
             </mat-form-field>
           </div>
           <div>
@@ -97,7 +73,6 @@
               <input
                 matInput
                 placeholder="Enter here..."
-                formControlName="productId"
               />
             </mat-form-field>
           </div>
@@ -111,22 +86,7 @@
               <textarea
                 matInput
                 placeholder="Enter here..."
-                formControlName="description"
               ></textarea>
-              <mat-error
-                *ngIf="
-                  productForm.controls['description'].invalid &&
-                  productForm.controls['description'].touched
-                "
-              >
-                <ng-container
-                  *ngIf="
-                    productForm.controls['description'].errors['maxlength']
-                  "
-                >
-                  Description cannot exceed 500 characters.
-                </ng-container>
-              </mat-error>
             </mat-form-field>
           </div>
         </form>
@@ -168,10 +128,7 @@
       </div>
       <div class="user-img-wrapper flex align-center">
         <div class="user-avatar flex align-center justify-center">
-          <ng-container *ngIf="imageUrl">
-            <img src="{{ imagePath + imageUrl }}" alt="{{ imageName }}" />
-          </ng-container>
-          <ng-container *ngIf="!imageUrl">
+          <ng-container>
             <p class="mat-body-1 mb-0">LOGO</p>
           </ng-container>
         </div>
@@ -182,14 +139,12 @@
                 mat-stroked-button
                 color="primary"
                 class="mr-3"
-                (click)="deleteImage()"
               >
                 Remove
               </button>
               <button
                 mat-flat-button
                 color="primary"
-                (click)="openDialog('0ms', '0ms')"
               >
                 Upload
               </button>
@@ -209,7 +164,6 @@
       color="primary"
       class="font-weight-500 checkbox ml-n-3"
       checked
-      (click)="activeChecked($event)"
       >Active</mat-checkbox
     >
     <div>
@@ -218,7 +172,6 @@
         color="primary"
         class="mr-2 large"
         [mat-dialog-close]="true"
-        (click)="onDelete()"
       >
         Back
       </button>
@@ -227,11 +180,12 @@
         color="primary"
         class="large"
         type="submit"
-        [disabled]="productForm.invalid"
-        (click)="onSubmit()"
       >
         Create
       </button>
     </div>
   </div>
 </div>
+
+
+<!-- [disabled]="productForm.invalid" -->

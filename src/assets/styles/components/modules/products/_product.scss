@@ -291,3 +291,7 @@
     }
   }
 }
+.img-preview{
+  @include circle-with-bg(11.75rem, var(--shades-bg));
+  @extend .flex-center;
+}

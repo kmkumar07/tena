@@ -17,5 +17,7 @@
   "myInbox": "My Inbox",
   "darkMode": "Dark Mode",
   "help": "Help",
-  "logOut": "LogOut"
+  "logOut": "LogOut",
+  "imageHint": "Please select a jpg/jpeg, gif or png image file to update and crop an image to be your profile picture",
+  "imageSize": "Maximum Image Size - 2MB"
 }
