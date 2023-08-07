@@ -14,6 +14,8 @@ import { map, Observable, startWith, Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import {
+  Data_Type,
+  User_Data,
   feature_types,
 } from 'src/app/shared/constants/consants';
 import { FeatureService } from '../../services/feature.service';
@@ -29,66 +31,41 @@ export interface menuOptions {
   styleUrls: ['./edit-feature.component.scss'],
 })
 export class EditFeatureComponent {
+  productName: Data_Type[] = User_Data;
   featureType: menuOptions[] = feature_types;
   subscription: Subscription;
   isUnlimited: boolean = false;
   preName: string = '';
   postName: string = '';
   position: any;
-  isRangeSelected: boolean = false;
-  product: any;
   unlimitedButtonLabel: string = 'Set Unlimited';
   PageNumber: any = '';
   limit: any = '';
   search: string = '';
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
-  productId = [];
-  status: boolean;
+  productArray = [];
+  id: string;
+  product: any;
+  isRangeSelected: boolean = false;
+   displayName: string;
   filteredProducts: Observable<any[]>;
-  unlimitedValue: any;
-  featureForm: FormGroup = this.formBuilder.group({
-    featureId: ['', Validators.required],
-    productID: ['', Validators.required],
-    name: [
-      '',
-      [
-        Validators.required,
-        Validators.maxLength(20),
-        Validators.pattern(/^[a-zA-Z0-9\s]*$/),
-      ],
-    ],
-    description: ['', Validators.maxLength(500)],
-    type: ['', Validators.required],
-    unit: [null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
-    status: [false],
-    levels: this.formBuilder.array([
-      this.formBuilder.group({
-        isUnlimited: [false],
-        value: ['', [Validators.required]],
-        name: ['', Validators.required],
-      }),
-      this.formBuilder.group({
-        isUnlimited: [false],
-        value: ['', [Validators.required]],
-        name: ['', Validators.required],
-      }),
-    ]),
-  });
-
+  
+  public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   constructor(
     private formBuilder: FormBuilder,
     private featureService: FeatureService,
     private routes: Router,
-    private route: ActivatedRoute,
     private productService: ProductsService,
+    private route: ActivatedRoute,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
+    this.id = this.route.snapshot.params['id'];
     this.productService
       .getProducts(
         this.PageNumber,
@@ -99,28 +76,59 @@ export class EditFeatureComponent {
       )
       .subscribe((data) => {
         this.product = data;
-        this.productId = this.product.products.map((res) => res.productId);
+        this.productArray = this.product.products.map((res) => res.productId);
+        this.featureForm.patchValue({ productID: this.id });
         this.filteredProducts = this.featureForm
           .get('productID')!
           .valueChanges.pipe(
             startWith(''),
             map((value) => this.filterProducts(value || ''))
           );
-
       });
-    const id = this.route.snapshot.params['id'];
-
-    this.featureService.getFeatureById(id).subscribe((data) => {
-      this.updateForm(data);
+    this.feature();
+    this.featureForm.controls['name'].valueChanges.subscribe((value) => {
+      const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
+      this.featureForm.controls['featureId'].setValue(idValue);
     });
   }
 
   filterProducts(value: string) {
     const filterValue = value.toLowerCase();
-    const filteredProducts = this.productId.filter((product) =>
+    const filteredProducts = this.productArray.filter((product) =>
       product.toLowerCase().includes(filterValue)
     );
     return filteredProducts;
+  }
+
+  feature() {
+    this.featureForm = this.formBuilder.group({
+      featureId: ['', Validators.required],
+      productID: ['', Validators.required],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+        ],
+      ],
+      description: ['', Validators.maxLength(500)],
+      type: ['', Validators.required],
+      unit: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
+      status: [true],
+      levels: this.formBuilder.array([
+        this.formBuilder.group({
+          isUnlimited: [false],
+          value: ['', Validators.required],
+          name: ['', Validators.required],
+        }),
+        this.formBuilder.group({
+          isUnlimited: [false],
+          value: ['', Validators.required],
+          name: ['', Validators.required],
+        }),
+      ]),
+    });
   }
 
   get levels() {
@@ -176,108 +184,66 @@ export class EditFeatureComponent {
           name: 'unlimited',
         });
         this.unlimitedButtonLabel = 'Set Custom Maximum';
-      }else{
-         lastLevel.patchValue({
-        isUnlimited: true,
-        value: 'unlimited',
-        name: 'unlimited' + ' ' + this.postName,
-      });
+      } else {
+        lastLevel.patchValue({
+          isUnlimited: true,
+          value: 'unlimited',
+          name: 'unlimited' + ' ' + this.postName + 's',
+        });
+        this.unlimitedButtonLabel = 'Set Custom Maximum';
       }
-     
-      this.unlimitedButtonLabel = 'Set Custom Maximum';
     }
     this.isUnlimited = !this.isUnlimited;
   }
 
   setName(index: number) {
     this.postName = this.featureForm.value.unit;
+
     this.preName = this.featureForm.value.levels[index].value;
-    const displayName = this.preName + ' ' + this.postName + 's';
+
+    if (this.postName.length > 0 && this.preName.length > 0) {
+      this.displayName = this.preName + ' ' + this.postName + 's';
+    }
     const currentIndex = this.getLevelList(index);
     currentIndex.patchValue({
-      name: displayName,
+      name: this.displayName,
     });
     this.featureForm.get('levels.' + index + '.value').markAsTouched();
   }
-
   onTypeSelection(value: string) {
-    if (value === 'switch') {
-      this.featureForm.removeControl('unit');
-    }
+    // if (value === 'switch') {
+    //   this.featureForm.controls['unit'].reset();
+
+    // }
     if (value === 'range') {
-      this.featureForm.addControl(
-        'unit',
-        this.formBuilder.control(null, Validators.required)
-      );
       this.isRangeSelected = true;
-      let i = 0;
-      if (this.levels.length == 0) {
-        while (i < 2) {
-          this.addLevels();
-          i++;
-        }
-      }
+      this.featureForm.controls['unit'].reset();
       while (this.levels.length > 2) {
-        this.levels.removeAt(2);
+        this.levels.removeAt(2); // Remove form groups starting from index 2
       }
-    }
-    if (value === 'quantity' || value === 'custom') {
-      this.isRangeSelected = false;
-      this.featureForm.addControl(
-        'unit',
-        this.formBuilder.control(null, Validators.required)
-      );
-
-      let i = 0;
-      if (this.levels.length == 0) {
-        while (i < 2) {
-          this.addLevels();
-          i++;
-        }
-      }
-    }
-  }
-  updateForm(res: any) {
-    if (res.status === 'active') {
-      this.status = true;
-    } else if (res.status === 'draft') {
-      this.status = false;
-    }
-    if (res.type === 'range') {
-      this.isRangeSelected = true;
-    }
-    this.featureForm.patchValue({
-      featureId: res.featureId,
-      productID: res.product.productId,
-      name: res.name,
-      description: res.description,
-      type: res.type,
-      status: this.status,
-      unit: res.unit,
-      levels: res.levels,
-    });
-    if (Array.isArray(res.levels) && res.levels.length >= 0) {
-      const levelsControl = this.featureForm.get('levels') as FormArray;
-      levelsControl.clear();
-
-      res.levels.forEach((level: any, index: number) => {
-        const levelGroup = this.formBuilder.group({
-          isUnlimited: [level.isUnlimited],
-          level: [level.level],
-          name: [level.name],
-          value: [level.value],
+      for (let i = 0; i < this.levels.length; i++) {
+        const formGroup = this.levels.at(i); // Get the specific form group
+        formGroup.patchValue({
+          value: '',
+          name: '',
         });
+      }
+    } else if (value === 'quantity' || value === 'custom') {
+      this.isRangeSelected = false;
+      this.featureForm.controls['unit'].reset();
 
-        levelsControl.push(levelGroup);
-        if (index === res.levels.length - 1) {
-          this.unlimitedValue = level.value
-        }
-      });
-    }
-    if (this.unlimitedValue === 'unlimited') {
-      this.unlimitedButtonLabel = 'Set Custom Maximum';
+      for (let i = 0; i < this.levels.length; i++) {
+        const formGroup = this.levels.at(i); // Get the specific form group
+        formGroup.patchValue({
+          value: '',
+          name: '',
+        });
+      }
+    } else if (value === 'switch') {
+      this.isRangeSelected = false;
+      this.featureForm.controls['unit'].reset();
     } else {
-      this.unlimitedButtonLabel = 'Set Unlimited';
+      this.isRangeSelected = false;
     }
   }
  
@@ -310,12 +276,11 @@ export class EditFeatureComponent {
       const levels = this.featureForm.value.levels.map((level: any) => {
         return {
           ...level,
-          isUnlimited: '',
+          isUnlimited: ' ',
         };
       });
       feature = {
         ...feature,
-        unit: this.featureForm.value.unit,
         levels: levels,
       };
     }
@@ -327,22 +292,21 @@ export class EditFeatureComponent {
         levels: this.featureForm.value.levels,
       };
     }
-    this.subscription = this.featureService
-      .updateFeature(this.featureForm.value.featureId, feature)
-      .subscribe({
-        next: (res: any) => {
-          this.openSuccess();
-          this.routes.navigate([`/features/view/${res.featureId}`]);
-          return res;
-        },
-        error: (error: any) => {
-          this.snackBar.open(error.error.message, '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
-        },
-      });
+
+    this.subscription = this.featureService.addFeature(feature).subscribe({
+      next: (res: any) => {
+        this.openSuccess();
+        this.routes.navigate([`/features/view/${res.featureId}`]);
+        return res;
+      },
+      error: (error: any) => {
+        this.snackBar.open(error.error.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+      },
+    });
   }
 
   onDelete() {
@@ -354,8 +318,98 @@ export class EditFeatureComponent {
       width: '420px',
       data: {
         module: 'Feature',
-        operation: 'is updated',
+        operation: 'is created',
       },
     });
+  }
+  switchSample() {
+    console.log('switch feature is clicked');
+    this.featureForm.removeControl('unit');
+    this.isRangeSelected = false;
+    console.log('switch', this.featureForm.value);
+    this.featureForm.patchValue({
+      productID: this.productArray[0],
+      name: 'Whiteboard',
+      description: ` This feature type has 2 entitlement levels- "available" and "notavailable"`,
+      type: 'switch',
+      status: [true],
+    });
+  }
+
+  rangeSample() {
+    this.featureForm.addControl(
+      'unit',
+      this.formBuilder.control('', Validators.required)
+    );
+    this.isRangeSelected = true;
+    this.featureForm.patchValue({
+      productID: this.productArray[0],
+      name: 'API Call',
+      description: `This feature supports range based entitlements. For eg : Customer’s
+          access can be between 100 and 300 API / minute`,
+      type: 'range',
+      status: [true],
+      unit: 'License',
+    });
+    const values = [
+      { value: '10', name: 'License' },
+      { value: '20', name: 'License' },
+    ];
+
+    for (let i = 0; i < 2; i++) {
+      const formGroup = this.levels.at(i);
+      formGroup?.patchValue(values[i]);
+    }
+  }
+  quantitySample() {
+    this.featureForm.addControl(
+      'unit',
+      this.formBuilder.control('', Validators.required)
+    );
+    this.isRangeSelected = false;
+    this.featureForm.patchValue({
+      productID: this.productArray[0],
+      name: 'API Call',
+      description: ` This feature type has numbered entitlement levels- For eg : 2,3,4 or
+          10 user licenses.`,
+      type: 'quantity',
+      status: [true],
+      unit: 'License',
+    });
+    const values = [
+      { value: '3', name: 'License' },
+      { value: '10', name: 'License' },
+      { value: '20', name: 'License' },
+    ];
+
+    for (let i = 0; i < 3; i++) {
+      const formGroup = this.levels.at(i);
+      formGroup?.patchValue(values[i]);
+    }
+  }
+  customSample() {
+    this.featureForm.addControl(
+      'unit',
+      this.formBuilder.control('', Validators.required)
+    );
+    this.isRangeSelected = false;
+    this.featureForm.patchValue({
+      productID: this.productArray[0],
+      name: 'Email Support',
+      description: ` This feature supports range based entitlements. For eg : Customer’s
+          access can be between 100 and 300 API / minute`,
+      type: 'custom',
+      status: [true],
+    });
+    const values = [
+      { value: '12', name: 'Working hours' },
+      { value: '24', name: 'Weekdays' },
+      { value: '20', name: 'Month' },
+    ];
+
+    for (let i = 0; i < 3; i++) {
+      const formGroup = this.levels.at(i);
+      formGroup?.patchValue(values[i]);
+    }
   }
 }

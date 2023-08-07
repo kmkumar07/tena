@@ -43,16 +43,22 @@
     height: fit-content;
     border: .0625rem solid color('grey','lighten-14');
     .description-box{
+      .mat-mdc-text-field-wrapper , .mat-mdc-form-field-flex, .input-wrapper .mat-mdc-form-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-infix{
+        height: 4.5rem;
+      }
+      .mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input, .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control{
+        height: 3.4375rem;
+      }
       textarea{
-        min-height: 4.5rem;
+        min-height: 3.4375rem;
       }
     }
   }
   .sample-right {
     width: 26.375rem;
-    border: .0625rem solid color('grey','lighten-14');
     .inner-block{
-      padding: 2.5rem 2.75rem 1.625rem 2.5rem ;
+      padding: 2.5rem 2.625rem 2rem 2.5rem ;
+      border: .0625rem solid color('grey','lighten-14');
       .material-symbols-outlined{
         font-size: 1.25rem;
       }

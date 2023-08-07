@@ -111,7 +111,7 @@
 // .mat-mdc-button, .mat-mdc-outlined-button {
 //   --mat-mdc-button-persistent-ripple-color: transparent !important;
 // }
-.mdc-button {
+.mdc-button ,.mat-mdc-button.mat-mdc-button-base {
   &.small {
     height: 2rem;
     padding: 0 0.5rem;
