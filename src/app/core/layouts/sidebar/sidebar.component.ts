@@ -16,8 +16,6 @@ import {
 } from 'src/app/shared/constants/consants';
 import { GlobalService } from '../../services/global.service';
 import { filter } from 'rxjs/operators';
-import { TranslateLoader, TranslateService } from '@ngx-translate/core';
-
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',

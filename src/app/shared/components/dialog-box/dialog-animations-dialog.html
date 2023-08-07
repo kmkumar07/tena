@@ -1,4 +1,4 @@
-<div class="image-upload-dialog" [@slideInOut]>
+<!-- <div class="image-upload-dialog" [@slideInOut]>
   <h4 class="text-dark mat-subtitle-2 mb-2 font-weight-500">Upload Logo</h4>
   <p class="mat-caption grey-text text-darken-6">
     Allowed JPG, GIF or PNG. Max size of 800K
@@ -25,5 +25,43 @@
   <div class="action-btns flex align-center justify-end">
     <button mat-stroked-button color="primary" class="mr-2" mat-dialog-close (click)="cancel()">Dismiss</button>
     <button mat-flat-button color="primary" class="" mat-dialog-close (click)="handleSave()" >Save</button>
+  </div>
+</div> -->
+<div class="p-6 image-popup-dialog w-full">
+  <div class="flex align-center justify-between mb-2">
+    <span class="text-text text-dark fw-500 mat-subtitle-2">
+      Product Logo
+    </span>
+    <mat-icon class="material-symbols-outlined mat-primary"> close </mat-icon>
+  </div>
+  <p class="fw-500 mb-6">{{'imageHint' | translate}}</p>
+  <div class="flex mb-6">
+    <div class="w-half">
+      <div class="h-50 w-full grey darker-bg flex-center mb-5">
+        <div class="img-preview">
+          <mat-icon class="material-symbols-outlined mat-primary">
+            imagesmode
+          </mat-icon>
+        </div>
+      </div>
+      <div class="mb-4 flex-center">
+        <button mat-stroked-button color="primary">Browse</button>
+      </div>
+      <span class="text-center block">({{"imageSize" | translate}})</span>
+    </div>
+    <div class="w-half flex-center">
+      <div class="mb-6 flex vertical align-center">
+        <mat-icon class="material-symbols-outlined mat-primary"
+          >imagesmode</mat-icon
+        >
+        <span class="fw-500 text-text text-dark block"> Preview </span>
+      </div>
+    </div>
+  </div>
+  <div class="w-full flex justify-end">
+    <div class="flex align-center">
+      <button mat-stroked-button class="mr-1">Cancel</button>
+      <button mat-flat-button color="primary">Save As Product Logo</button>
+    </div>
   </div>
 </div>

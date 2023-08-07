@@ -17,5 +17,7 @@
     "myInbox": "Mi bandeja de entrada",
     "darkMode": "Modo oscuro",
     "help": "Ayuda",
-    "logOut": "Cerrar sesión"
+    "logOut": "Cerrar sesión",
+    "imageHint": "Seleccione un archivo de imagen JPG/JPEG, GIF o PNG para actualizar y recortar una imagen para que sea su foto de perfil",
+    "imageSize": "Tamaño máximo de imagen - 2MB"
 }

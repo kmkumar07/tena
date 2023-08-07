@@ -327,7 +327,6 @@ export class CreateFeatureComponent {
     console.log('switch feature is clicked');
     this.featureForm.removeControl('unit');
     this.isRangeSelected = false;
-    console.log('switch', this.featureForm.value);
     this.featureForm.patchValue({
       productID: this.productArray[0],
       name: 'Whiteboard',
