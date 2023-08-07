@@ -18,7 +18,7 @@ export class ProductsService {
   constructor(private http: HttpClient) {}
 
   createProduct(product: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/products`, {withCredentials: true}, product).pipe(
+    return this.http.post(`${environment.apiUrl}/products`, product).pipe(
       map((res: any) => {
         this.productSubject.next(res.data);
         return res.data;
@@ -32,7 +32,7 @@ export class ProductsService {
     );
   }
   uploadImage(image: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/blob/upload`, {withCredentials: true}, image).pipe(
+    return this.http.post(`${environment.apiUrl}/blob/upload`, image).pipe(
       map((data: any) => {
         this.uploadImageSubject.next(data);
         return data;
@@ -47,7 +47,7 @@ export class ProductsService {
   }
 
   removeImage(image: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/blob/deleteImage`, {withCredentials: true}, image).pipe(
+    return this.http.post(`${environment.apiUrl}/blob/deleteImage`, image).pipe(
       map((data: any) => {
         this.removeImageSubject.next(data);
         return data;
@@ -70,7 +70,7 @@ export class ProductsService {
   ): Observable<Product[]> {
     return this.http
       .get<any>(
-        `${environment.apiUrl}/products?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`, {withCredentials: true}
+        `${environment.apiUrl}/products?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`
       )
       .pipe(
         map((res) => {
@@ -85,7 +85,7 @@ export class ProductsService {
       );
   }
   getProductById(id: string): Observable<GetProduct> {
-    return this.http.get<any>(`${environment.apiUrl}/products/${id}`, {withCredentials: true}).pipe(
+    return this.http.get<any>(`${environment.apiUrl}/products/${id}`).pipe(
       map((res) => {
         return res.data;
       }),
@@ -98,7 +98,7 @@ export class ProductsService {
   }
   editProduct(productId: string, updatedProduct: any): Observable<Product> {
     const url = `${environment.apiUrl}/products/{productId}?productId=${productId}`;
-    return this.http.put(url, {withCredentials: true}, updatedProduct).pipe(
+    return this.http.put(url, updatedProduct).pipe(
       map((res: any) => {
         this.productSubject.next(res.data);
         return res.data;
@@ -111,7 +111,7 @@ export class ProductsService {
   }
   deleteProduct(id: string) {
     const url = `${environment.apiUrl}/products/${id}?productId=${id}`;
-    return this.http.delete(url, {withCredentials: true}).pipe(
+    return this.http.delete(url).pipe(
       map((res) => {
         return res;
       }),

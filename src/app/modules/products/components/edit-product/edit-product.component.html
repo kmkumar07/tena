@@ -18,7 +18,7 @@
         <h3 class="mat-subtitle-1 fw-500 text-text text-dark mb-0">Basic Product Details</h3>
       </div>
       <div class="input-wrapper mt-8">
-        <form [formGroup]="productForm">
+        <form [formGroup]="postForm">
           <div>
             <div class="flex align-center mb-2">
               <p class="mat-subtitle-2 font-weight-500 input-label">
@@ -51,22 +51,22 @@
               />
               <mat-error
                 *ngIf="
-                  productForm.controls['name'].invalid &&
-                  productForm.controls['name'].touched
+                  postForm.controls['name'].invalid &&
+                  postForm.controls['name'].touched
                 "
               >
                 <ng-container
-                  *ngIf="productForm.controls['name'].errors['required']"
+                  *ngIf="postForm.controls['name'].errors['required']"
                 >
                   Name is required and cannot be left empty.
                 </ng-container>
                 <ng-container
-                  *ngIf="productForm.controls['name'].errors['maxlength']"
+                  *ngIf="postForm.controls['name'].errors['maxlength']"
                 >
                   Name cannot exceed 20 characters.
                 </ng-container>
                 <ng-container
-                  *ngIf="productForm.controls['name'].errors['pattern']"
+                  *ngIf="postForm.controls['name'].errors['pattern']"
                 >
                   Name cannot contain special characters.
                 </ng-container>
@@ -115,13 +115,13 @@
               ></textarea>
               <mat-error
                 *ngIf="
-                  productForm.controls['description'].invalid &&
-                  productForm.controls['description'].touched
+                  postForm.controls['description'].invalid &&
+                  postForm.controls['description'].touched
                 "
               >
                 <ng-container
                   *ngIf="
-                    productForm.controls['description'].errors['maxlength']
+                    postForm.controls['description'].errors['maxlength']
                   "
                 >
                   Description cannot exceed 500 characters.
@@ -209,7 +209,6 @@
       color="primary"
       class="font-weight-500 checkbox ml-n-3"
       checked
-      (click)="activeChecked($event)"
       >Active</mat-checkbox
     >
     <div>
@@ -227,7 +226,7 @@
         color="primary"
         class="large"
         type="submit"
-        [disabled]="productForm.invalid"
+        [disabled]="postForm.invalid"
         (click)="onSubmit()"
       >
         Create
