@@ -19,7 +19,7 @@ export class FeatureService {
   constructor(private http: HttpClient) {}
 
   addFeature(feature: any): Observable<Feature> {
-    return this.http.post(`${environment.apiUrl}/feature`, feature).pipe(
+    return this.http.post(`${environment.apiUrl}/feature`, {withCredentials: true}, feature).pipe(
       map((res: any) => {
         this.featureSubject.next(res.data);        
         return res.data;
@@ -40,8 +40,7 @@ export class FeatureService {
   ): Observable<FeatureList[]> {
     return this.http
       .get<any>(
-        `${environment.apiUrl}/feature?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`
-      )
+        `${environment.apiUrl}/feature?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`, {withCredentials: true})
       .pipe(
         map((res) => {
           this.featureSubject.next(res.data);
@@ -56,7 +55,7 @@ export class FeatureService {
 
   deleteFeature(id: number) {
     const url = `${environment.apiUrl}/feature/{featureId}?featureId=${id}`;
-    return this.http.delete(url).pipe(
+    return this.http.delete(url, {withCredentials: true}).pipe(
       map((res) => {
         return res;
       }),
@@ -67,7 +66,7 @@ export class FeatureService {
   }
   getFeatureById(id: string): Observable<GetFeature> {
     return this.http
-      .get<any>(`${environment.apiUrl}/feature/{featureId}?featureId=${id}`)
+      .get<any>(`${environment.apiUrl}/feature/{featureId}?featureId=${id}`, {withCredentials: true})
       .pipe(
         map((res) => {
           this.featureSubject.next(res)          
@@ -82,7 +81,7 @@ export class FeatureService {
 
   updateFeature(featureId: string, updatedFeature: any): Observable<Feature> {
     const url = `${environment.apiUrl}/feature?featureId=${featureId}`;
-    return this.http.put(url, updatedFeature).pipe(
+    return this.http.put(url, {withCredentials: true}, updatedFeature).pipe(
       map((res: any) => {
         this.featureSubject.next(res.data);
         return res.data;
