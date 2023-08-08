@@ -207,9 +207,12 @@ export class CreateFeatureComponent {
   setName(index: number) {
     this.postName = this.featureForm.value.unit;
     this.preName = this.featureForm.value.levels[index].value;
-
-    if (this.postName.length > 0 && this.preName.length > 0) {
-      this.displayName = this.preName + ' ' + this.postName + 's';
+    if ( this.preName.length > 0) {
+      if(this.postName=== null){
+        this.displayName = this.preName;;
+      }else{
+        this.displayName = this.preName + ' ' + this.postName + 's';
+      }
     }
     const currentIndex = this.getLevelList(index);
     currentIndex.patchValue({
