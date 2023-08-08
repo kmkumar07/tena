@@ -96,6 +96,7 @@
             <mat-form-field appearance="outline">
               <input
                 matInput
+                readonly
                 placeholder="Enter here..."
                 formControlName="productId"
               />
@@ -226,10 +227,9 @@
         color="primary"
         class="large"
         type="submit"
-        [disabled]="postForm.invalid"
         (click)="onSubmit()"
       >
-        Create
+        Update
       </button>
     </div>
   </div>
