@@ -1,27 +1,19 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import {
-  Config_Menu,
-  MENUITEMS,
-  User_Options,
-  Menu_Headings,
-  Notifications_Data,
-} from 'src/app/shared/constants/consants';
-import { GlobalService } from '../../services/global.service';
-import { filter } from 'rxjs/operators';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs';
+import { GlobalService } from 'src/app/core/services/global.service';
+import { MENUITEMS, Config_Menu, Menu_Headings, User_Options, Notifications_Data, User_Data, Data_Type } from 'src/app/shared/constants/consants';
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+  selector: 'sft-productList',
+  templateUrl: './productList.component.html',
+  styleUrls: ['./productList.component.scss']
 })
-export class SidebarComponent {
+export class productListComponent {
+
+  preventClose(event: any) {
+    event.stopPropagation();
+  }
   menuItems = MENUITEMS;
   configOptions = Config_Menu;
   Menu_Headings = Menu_Headings;
@@ -48,6 +40,7 @@ export class SidebarComponent {
 
   opened: boolean = true;
   toggleSidenav() {
+    this.sidenav.toggle();
     this.opened = !this.opened;
     this.newItemEvent.emit(this.opened);
   }
@@ -55,4 +48,18 @@ export class SidebarComponent {
     let list = [];
     return (list = this.menuItems.filter((ele) => ele.category == item));
   }
+  switchDark(event: any) {
+    const body = document.getElementById('storybook-root');
+    body.classList.toggle('dark-mode');
+  }
+  isOpened: boolean = false;
+  displayedColumns1: string[] = [
+    'productId',
+    'name',
+    'feature',
+    'created_at',
+    'status',
+    'action',
+  ];
+  ProductData: Data_Type[] = User_Data;
 }

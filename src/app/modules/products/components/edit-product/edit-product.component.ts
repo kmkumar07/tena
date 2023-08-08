@@ -112,7 +112,7 @@ export class EditProductComponent implements OnInit {
     exitAnimationDuration: string
   ): void {
     const dialogRef = this.dialog.open(DialogAnimationsDialog, {
-      width: '',
+      width: '700px',
       enterAnimationDuration,
       exitAnimationDuration,
     });

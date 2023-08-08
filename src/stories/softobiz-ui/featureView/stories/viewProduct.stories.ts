@@ -1,17 +1,48 @@
-<div class="header-section pt-6 pb-6 pr-6 main-bg">
-  <div class="flex align-center justify-between">
-    <div class="flex align-center">
-      <mat-icon class="material-symbols-outlined pointer" color="primary"
-        [routerLink]="'/products'">keyboard_backspace</mat-icon>
-      <p class="fs-xl fw-500 text-text text-dark">View Product</p>
-    </div>
-    <button mat-stroked-button color="primary" class="mr-2 medium">
-      Edit
-    </button>
-  </div>
-</div>
-<div class="view-product-wrapper">
+import {
+  Meta,
+  StoryObj,
+  componentWrapperDecorator,
+  moduleMetadata,
+} from '@storybook/angular';
+import { featureViewComponent } from '../featureView.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
+import { CommonModule } from '@angular/common';
+import { ButtonComponent } from '../../button/button.component';
+
+
+// More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
+const meta: Meta<featureViewComponent> = {
+  component: featureViewComponent,
+  title: 'softobiz-ui/Pages/featureView',
+  tags: ['autodocs'],
+  render: (args: featureViewComponent) => ({
+    props: {
+      backgroundColor: null,
+      ...args,
+    },
+  }),
+  argTypes: { },
+  decorators: [
+    moduleMetadata({
+      imports: [
+        CommonModule,
+        AngularMaterialModule,
+        BrowserAnimationsModule,
+      ],
+      declarations: [
+        ButtonComponent,
+      ],
+    }),
+  ],
+
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <div class="view-product-wrapper">
   <div class="header-block border-2">
+    <!-- <h3 class="mat-headline-5 heading text-text text-primary">View Product</h3> -->
     <div class="flex align-end justify-between inner-block">
       <div class="brand-info flex align-center">
         <div class="product-img mr-4 border-2"
@@ -21,7 +52,7 @@
         <ng-template #uploadImage>
           <div class="productImg-wrapper">
             <div class="product-img border-2">
-              <img src="../.././../../assets/images/no-image.logo.jpg" alt="product-img" />
+              <img src="no-image.logo.jpg" alt="product-img" />
             </div>
           </div>
         </ng-template>
@@ -40,25 +71,27 @@
       <div class="date-block flex align-center mb-8">
         <div class="flex align-center">
           <mat-icon class="material-symbols-outlined mr-3 text-white">calendar_today</mat-icon>
-          <p class="mat-subtitle-2 text-white">Created {{createdOn | date: 'd MMMM y'}}</p>
+          <p class="mat-subtitle-2 text-white">Created 24 March, 2023</p>
         </div>
         <div class="vertical-divider mx-6"></div>
         <div class="flex align-center">
           <mat-icon class="material-symbols-outlined mr-3 text-white">calendar_today</mat-icon>
-          <p class="mat-subtitle-2 text-white"> Modified {{modifiedOn | date: 'd MMMM y'}}</p>
+          <p class="mat-subtitle-2 text-white"> Modified 24 Apr, 2023</p>
         </div>
       </div>
     </div>
-    <div class="product-desc main-bg">
+    <div class="product-desc">
       <h4 class="mat-subtitle-1 font-weight-500 mb-4 text-headline-dark">Description</h4>
       <p class="mat-subtitle-2 text-grey-darken">
-        {{description }}
+        Microsoft Teams is a proprietary business communication platform developed by Microsoft, as part of the
+        Microsoft 365 family of products. Teams primarily competes with the similar service Slack, offering workspace
+        chat and videoconferencing, file storage, and application integration.
       </p>
     </div>
   </div>
-  <div class="header-block border-2 mt-6 main-bg">
+  <div class="header-block border-2 mt-6">
     <div class="product-features">
-      <h4 class="mat-subtitle-2 text-blue-darken font-weight-500 mb-4">Features</h4>
+        <h4 class="mat-subtitle-2 text-blue-darken font-weight-500 mb-4">Features</h4>
       <!-- with feature added -->
       <div class="features-wrapper">
         <div *ngIf="productDetail?.feature && productDetail.feature.length > 0; else noFeaturesBlock">
@@ -116,4 +149,19 @@
       </div>
     </div>
   </div>
-</div>
+        `,
+      },
+    },
+  },  
+};
+
+export default meta;
+type Story = StoryObj<featureViewComponent>;
+
+// More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
+
+export const featureView: Story = {
+    args: {
+    },
+};
+
