@@ -49,9 +49,9 @@ export class CreateFeatureComponent {
   id: string;
   product: any;
   isRangeSelected: boolean = false;
-   displayName: string;
+  displayName: string;
   filteredProducts: Observable<any[]>;
-  
+
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -115,18 +115,25 @@ export class CreateFeatureComponent {
       ],
       description: ['', Validators.maxLength(500)],
       type: ['', Validators.required],
-      unit: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
+      unit: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+          Validators.maxLength(50),
+        ],
+      ],
       status: [true],
       levels: this.formBuilder.array([
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', Validators.required],
-          name: ['', Validators.required],
+          value: ['', [Validators.required, Validators.maxLength(50)]],
+          name: ['', [Validators.required, Validators.maxLength(50)]],
         }),
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', Validators.required],
-          name: ['', Validators.required],
+          value: ['', [Validators.required, Validators.maxLength(50)]],
+          name: ['', [Validators.required, Validators.maxLength(50)]],
         }),
       ]),
     });
@@ -146,8 +153,8 @@ export class CreateFeatureComponent {
         this.position,
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', Validators.required],
-          name: ['', Validators.required],
+          value: ['', [Validators.required, Validators.maxLength(50)]],
+          name: ['', [Validators.required, Validators.maxLength(50)]],
         })
       );
     } else {
@@ -156,8 +163,8 @@ export class CreateFeatureComponent {
         this.position,
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', Validators.required],
-          name: ['', Validators.required],
+          value: ['', [Validators.required, Validators.maxLength(50)]],
+          name: ['', [Validators.required, Validators.maxLength(50)]],
         })
       );
     }
@@ -199,7 +206,6 @@ export class CreateFeatureComponent {
 
   setName(index: number) {
     this.postName = this.featureForm.value.unit;
-
     this.preName = this.featureForm.value.levels[index].value;
 
     if (this.postName.length > 0 && this.preName.length > 0) {
@@ -211,11 +217,27 @@ export class CreateFeatureComponent {
     });
     this.featureForm.get('levels.' + index + '.value').markAsTouched();
   }
-  onTypeSelection(value: string) {
-    // if (value === 'switch') {
-    //   this.featureForm.controls['unit'].reset();
+  updateDisplayName(preName: string, postName: string): string {
+    if (preName.length > 0 && postName.length > 0) {
+      return preName + ' ' + postName + 's';
+    }
+    return '';
+  }
 
-    // }
+  setNameUnit() {
+    const unitValue = this.featureForm.value.unit;
+    const levels = this.featureForm.get('levels');
+
+    levels.value.forEach((level: any, index: number) => {
+      const displayName = this.updateDisplayName(level.value, unitValue);
+      const currentIndex = this.getLevelList(index);
+      currentIndex.patchValue({
+        name: displayName,
+      });
+    });
+  }
+
+  onTypeSelection(value: string) {
     if (value === 'range') {
       this.isRangeSelected = true;
       this.featureForm.controls['unit'].reset();
@@ -247,7 +269,7 @@ export class CreateFeatureComponent {
       this.isRangeSelected = false;
     }
   }
- 
+
   onSubmit() {
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
@@ -324,10 +346,8 @@ export class CreateFeatureComponent {
     });
   }
   switchSample() {
-    console.log('switch feature is clicked');
     this.featureForm.removeControl('unit');
     this.isRangeSelected = false;
-    console.log('switch', this.featureForm.value);
     this.featureForm.patchValue({
       productID: this.productArray[0],
       name: 'Whiteboard',

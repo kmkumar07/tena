@@ -248,6 +248,7 @@
           </div>
           <mat-form-field appearance="outline" class="border-2">
             <input
+            (input)="setNameUnit()"
               required
               matInput
               placeholder="Enter here"
@@ -313,6 +314,15 @@
                         >
                           Entitlement cannot contain special characters.
                         </ng-container>
+                        <ng-container
+                        *ngIf="
+                          featureForm.get('levels.' + i + '.value').errors[
+                            'maxlength'
+                          ]
+                        "
+                      >
+                        Entitlement cannot exceed 50 characters.
+                      </ng-container>
                       </mat-error>
                     </mat-form-field>
                   </div>
@@ -349,6 +359,15 @@
                         >
                           Display Name cannot contain special characters.
                         </ng-container>
+                        <ng-container
+                        *ngIf="
+                          featureForm.get('levels.' + i + '.value').errors[
+                            'maxlength'
+                          ]
+                        "
+                      >
+                      Display Name cannot exceed 50 characters.
+                      </ng-container>
                       </mat-error>
                     </mat-form-field>
                   </div>
