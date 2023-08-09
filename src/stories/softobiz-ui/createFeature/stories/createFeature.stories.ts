@@ -66,7 +66,7 @@ const meta: Meta<createFeatureComponent> = {
           <div class="header-section">
             <h5 class="text-blue-darken mat-subtitle-1 font-weight-500">Features Details</h5>
           </div>
-          <form [formGroup]="featureForm">
+          <form>
             <div class="form-container mt-6">
               <div class="input-wrapper">
                 <div class="flex align-center mb-2">
@@ -88,22 +88,8 @@ const meta: Meta<createFeatureComponent> = {
                   </ng-template>
                 </div>
                 <mat-form-field appearance="outline" class="border-2">
-                  <input required matInput placeholder="Enter here" formControlName="name" />
-                  <mat-error *ngIf="
-                      featureForm.controls['name'].invalid &&
-                      featureForm.controls['name'].touched
-                    ">
-                    <ng-container *ngIf="featureForm.controls['name'].errors['required']">
-                      Name is required and cannot be left empty.
-                    </ng-container>
-                    <ng-container *ngIf="featureForm.controls['name'].errors['maxlength']">
-                      Name cannot exceed 20 characters.
-                    </ng-container>
-                    <ng-container *ngIf="featureForm.controls['name'].errors['pattern']">
-                      Name cannot contain special characters.
-                    </ng-container>
-                  </mat-error>
-                </mat-form-field>
+                  <input required matInput placeholder="Enter here"/>
+                    </mat-form-field>
               </div>
               <div class="input-wrapper">
                 <div class="flex align-center mb-2">
@@ -126,9 +112,9 @@ const meta: Meta<createFeatureComponent> = {
                 </div>
                 <mat-form-field appearance="outline" class="border-2">
                   <!-- <mat-label> Select </mat-label> -->
-                  <mat-select required formControlName="productID" placeholder="select">
+                  <mat-select required placeholder="select">
                     <mat-option *ngFor="let product of productArray" [value]="product">
-                      {{ product }}
+                      <!-- {{ product }} -->
                     </mat-option>
       
                   </mat-select>
@@ -155,7 +141,7 @@ const meta: Meta<createFeatureComponent> = {
                   </ng-template>
                 </div>
                 <mat-form-field appearance="outline" class="border-2">
-                  <input required matInput placeholder="Enter here" formControlName="featureId" />
+                  <input required matInput placeholder="Enter here"/>
                 </mat-form-field>
               </div>
               <div class="input-wrapper">
@@ -179,10 +165,9 @@ const meta: Meta<createFeatureComponent> = {
                   </ng-template>
                 </div>
                 <mat-form-field appearance="outline" class="border-2">
-                  <mat-select required formControlName="type" placeholder="select">
-                    <mat-option *ngFor="let type of featureType" value="{{ type.title }}"
-                      (click)="onTypeSelection(type.title)">
-                      {{ type.title }}
+                  <mat-select required placeholder="select">
+                    <mat-option *ngFor="let type of featureType">
+                      <!-- {{ type.title }} -->
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -194,101 +179,8 @@ const meta: Meta<createFeatureComponent> = {
                   </p>
                 </div>
                 <mat-form-field appearance="outline" class="description-box">
-                  <textarea rows="4" matInput placeholder="Enter here..." formControlName="description"></textarea>
-                  <mat-error *ngIf="
-                      featureForm.controls['description'].invalid &&
-                      featureForm.controls['description'].touched
-                    ">
-                    <ng-container *ngIf="featureForm.controls['description'].errors['maxlength']">
-                      Description cannot exceed 500 characters.
-                    </ng-container>
-                  </mat-error>
+                  <textarea rows="4" matInput placeholder="Enter here..."></textarea>
                 </mat-form-field>
-              </div>
-              <div class="input-wrapper" *ngIf="
-                  this.featureForm.value.type &&
-                  this.featureForm.value.type != 1 &&
-                  this.featureForm.value.type !== 'switch' &&
-                  this.featureForm.value.type !== 'custom' 
-      
-                  || this.isRangeSelected
-      
-                ">
-                <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                    Entitlement Units
-                  </p>
-                  <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                    [ngxTippy]="selectProduct" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
-                  <ng-template #selectProduct let-name class="t-template">
-                    <div class="help-info-tooltip">
-                      <div class="heading-with-background">Entitlement Units</div>
-                      <div class="details">
-                        Please select a product to create a feature to it.
-                      </div>
-                      <button mat-button color="primary" class="px-0">
-                        Learn more
-                      </button>
-                    </div>
-                  </ng-template>
-                </div>
-                <mat-form-field appearance="outline" class="border-2">
-                  <input required matInput placeholder="Enter here" formControlName="unit" />
-                </mat-form-field>
-              </div>
-              <div *ngIf="this.featureForm.value.unit || this.featureForm.value.type == 'custom'">
-                <ng-container formArrayName="levels">
-                  <ng-container *ngFor="let element of levels.controls; let i = index">
-                    <div class="flex align-center wrap mb-3" [formGroupName]="i">
-                      <div class="flex align-center wrap w-88">
-                        <div class="input-wrapper pr-2">
-                          <div class="flex align-center mb-2">
-                            <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                              Entitlement
-                            </p>
-                          </div>
-                          <mat-form-field appearance="outline" class="border-2">
-                            <input (input)="setName(i)" required matInput placeholder="Enter here" formControlName="value" />
-                          </mat-form-field>
-                        </div>
-                        <div class="input-wrapper">
-                          <div class="flex align-center mb-2">
-                            <p class="mat-subtitle-2 font-weight-500 input-label">
-                              Display Name
-                            </p>
-                          </div>
-                          <mat-form-field appearance="outline" class="border-2">
-                            <input matInput placeholder="Enter here" formControlName="name" />
-                          </mat-form-field>
-                        </div>
-                      </div>
-                      <button *ngIf="i == 0" mat-stroked-button disableRipple
-                        class="upper-case primary light medium px-1 ml-2">
-                        Default
-                      </button>
-                      <button *ngIf="
-                          levels.controls.length > 1 &&
-                          i < levels.controls.length - 1 &&
-                          i != 0
-                        " mat-stroked-button disableRipple class="upper-case primary light medium px-1 ml-2"
-                        (click)="deleteLevels(i)">
-                        Remove
-                      </button>
-                      <button *ngIf="i == levels.controls.length - 1" mat-stroked-button disableRipple
-                        class="upper-case primary light medium px-1 ml-2">
-                        Maximum
-                      </button>
-                    </div>
-                  </ng-container>
-                </ng-container>
-                <div>
-                  <button mat-stroked-button (click)="toggleUnlimited()">
-                    <mat-icon class="add-course-btn"></mat-icon>{{ unlimitedButtonLabel }}
-                  </button>
-                </div>
-                <button mat-stroked-button (click)="addLevels()" *ngIf="!isRangeSelected">
-                  <mat-icon class="add-course-btn"></mat-icon>Add Entitlement
-                </button>
               </div>
             </div>
           </form>
@@ -383,12 +275,6 @@ const meta: Meta<createFeatureComponent> = {
               color="primary"
               class="large"
               type="submit"
-              [disabled]="
-                !featureForm.valid &&
-                !featureForm.get('productID')?.value &&
-                this.featureForm.value.type !== 'switch' &&
-                this.featureForm.value.type !== 'custom'
-              "
             >
               Create
             </button>

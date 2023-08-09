@@ -80,10 +80,8 @@ const meta: Meta<DashboardLayoutComponent> = {
         <div class="outer-layout">
         <mat-sidenav-container [ngClass]="opened ? 'sidenav-open' : 'sidenav-closed'">
           <mat-sidenav #sidenav mode="side" opened="true" class="sidenav-slider">
-            <!-- <app-sidebar (newItemEvent)="toggleSidenav($event)"></app-sidebar> -->
-            <!-- <sft-leftNavigation></sft-leftNavigation> -->
-            <div class="sidenav-wrapper border-2">
-              <div class="sidebar-toggle">
+            <div class="sidenav-wrapper">
+              <!-- <div class="sidebar-toggle">
                 <button
                   mat-mini-fab
                   color="accent"
@@ -103,25 +101,19 @@ const meta: Meta<DashboardLayoutComponent> = {
                     />
                   </svg>
                 </button>
-              </div>
+              </div> -->
               <div class="sidebar-wrapper">
-                <div class="logo pointer">
-                  <div class="logo-img pointer">
-                    <img src="/framework-logo.png" alt="logo" />
-                  </div>
-                  <div class="text-wrapper">
-                    <h3>Digital</h3>
-                    <span class="logo-text">Framework</span>
-                  </div>
+                <div class="">
+                  <h3 class="mat-headline-5 font-weight-700 text-purple-lighten-1">Digital Framework</h3>
                 </div>
-                <div class="sidebar-scrollable mt-11">
+                <div class="sidebar-scrollable mt-12">
                   <mat-nav-list class="sidebar p-0">
-                    <div *ngFor="let element of Menu_Headings" class="transition-400">
+                    <div *ngFor="let element of Menu_Headings" class="transition-400 list-wrapper">
                       <div
                         *ngIf="element.name != 'Dashboard'"
                         class="category-heading"
                       >
-                        <h1>{{ element.name }}</h1>
+                        <h1 class="mat-caption font-weight-600">{{ element.name }}</h1>
                       </div>
                       <mat-list-item
                         class="nav-list-item p-0 w-full"
@@ -132,29 +124,17 @@ const meta: Meta<DashboardLayoutComponent> = {
                         >
                           <div class="flex justify-center sidebar-icon-wraper">
                             <mat-icon
-                              class="material-symbols-outlined m-0 sidebar-icon"
+                              class="material-symbols-outlined m-0 sidebar-icon mat-primary"
                               >{{ item.icon }}</mat-icon
                             >
                           </div>
                           <div class="content-wrapper">
-                            <span class="content">{{ item.name }}</span>
+                            <span class="mat-subtitle-2 ml-2 text-grey-darken-9">{{ item.name }}</span>
                           </div>
                         </a>
                       </mat-list-item>
                     </div>
                   </mat-nav-list>
-                  <div class="image-wrapper">
-                    <div class="img">
-                      <img src="/dashboard-cat.png" alt="Dashboard Get Started" />
-                    </div>
-                    <div class="text">
-                      <h3>First steps</h3>
-                      <p class="description">
-                        Customize your dashboard and lean <br />about out features
-                      </p>
-                      <span class="pointer">Get Started</span>
-                    </div>
-                  </div>
                 </div>
                 <mat-nav-list class="config-section sidebar">
                   <mat-list-item
@@ -165,11 +145,11 @@ const meta: Meta<DashboardLayoutComponent> = {
                       class="icon-wrapper flex align-center"
                       [routerLink]="['/', item.state]"
                     >
-                      <mat-icon class="material-symbols-outlined m-0 sidebar-icon">{{
+                      <mat-icon class="material-symbols-outlined m-0 sidebar-icon mat-primary">{{
                         item.icon
                       }}</mat-icon>
                       <div class="content-wrapper">
-                        <span class="content">{{ item.name }}</span>
+                        <span class="mat-subtitle-2 ml-2 text-grey-darken-9">{{ item.name }}</span>
                       </div>
                     </a>
                   </mat-list-item>
@@ -179,13 +159,7 @@ const meta: Meta<DashboardLayoutComponent> = {
           </mat-sidenav>
           <mat-sidenav-content>
             <!-- Header for application starts here! -->
-            <div class="header-wrapper border-2">
-              <div class="global-search basic mr-6 border-2">
-                <span class="search-icon pointer">
-                  <img src="/icons/search.svg" alt="search-icon" />
-                </span>
-                <input type="text" placeholder="Search..." />
-              </div>
+            <mat-toolbar class="header-wrapper main-bg">
               <div class="header-right">
                 <div
                   class="notifications-section pointer"
@@ -214,7 +188,7 @@ const meta: Meta<DashboardLayoutComponent> = {
                             *ngIf="notificationsData.length == 0"
                           >
                             <div class="absolute position-center text-center w-full">
-                              <img src="/notifications-icon.png" alt="no data" />
+                              <img src="/notifications-icon.png" alt="notification-icon">
                               <span class="block mt-6">
                                 Hey! You have no notifications.
                               </span>
@@ -252,7 +226,7 @@ const meta: Meta<DashboardLayoutComponent> = {
                             *ngIf="notificationsData.length == 0"
                           >
                             <div class="absolute position-center text-center w-full">
-                              <img src="/notifications-icon.png" alt="no data" />
+                              <img src="/notifications-icon.png" alt="notifications-icon" />
                               <span class="block mt-6">
                                 Hey! You have no notifications.
                               </span>
@@ -304,7 +278,7 @@ const meta: Meta<DashboardLayoutComponent> = {
                         *ngFor="let element of userProfile"
                       >
                         <div class="flex align-center">
-                          <mat-icon class="material-symbols-outlined">{{
+                          <mat-icon class="material-symbols-outlined mat-primary">{{
                             element.icon
                           }}</mat-icon>
                           <span class="ml-3">{{ element.name }}</span>
@@ -313,6 +287,7 @@ const meta: Meta<DashboardLayoutComponent> = {
                           <mat-slide-toggle
                             color="primary"
                             (click)="preventClose($event)"
+                            (change)="switchDark($event)"
                           ></mat-slide-toggle>
                         </div>
                       </a>
@@ -320,13 +295,14 @@ const meta: Meta<DashboardLayoutComponent> = {
                   </div>
                 </mat-menu>
               </div>
-            </div>
+            </mat-toolbar>
             <div class="pt-6 main-content-height">
               <router-outlet></router-outlet>
             </div>
           </mat-sidenav-content>
         </mat-sidenav-container>
       </div>
+      
       
         `,
       },
