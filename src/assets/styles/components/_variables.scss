@@ -248,7 +248,6 @@ $text-grey-darken:color('grey' , 'darken');  //#2B2B30
 $text-purple-lighten-1: color("purple", "lighten-1"); //#5B3CC6
 $text-grey-darken-9: color("grey", "darken-9"); //#1D2335
 $text-secondary: color("text", "secondary"); //#1A3447
-$text-blue-darken : color("blue", "darken"); //#090039
 $text-icon : color("text", "icon"); //#647081
 
 // Header Styles
@@ -324,22 +323,22 @@ $half-rem: 0.5rem;
   --primay-extra-light-bg: #FBF9FD;
   // grey-color
   --grey-bg: #F5F7FB;
+}
 
-  [data-app-theme="dark"],
-  .dark-mode {
-    // primary
-    --primary-main: #ec407a;
-    --primary-light: #e7c8d7cc;
-    --primary-bg: #ec407a;
-    // surface dark
-    --surface-bg: #424242;
-    // on surface dark
-    --on-surface: #ffffff;
-    //primary Light bg
-    --secondary-light: #303030;
-    //primay-extra-light-bg-color
-    --primay-extra-light-bg: #303030;
-    // chip-color
-    --grey-bg: #595959;
-  }
+[data-app-theme="dark"],
+.dark-mode {
+  // primary
+  --primary-main: #ec407a;
+  --primary-light: #e7c8d7cc;
+  --primary-bg: #ec407a;
+  // surface dark
+  --surface-bg: #424242;
+  // on surface dark
+  --on-surface: #ffffff;
+  //primary Light bg
+  --secondary-light: #303030;
+  //primay-extra-light-bg-color
+  --primay-extra-light-bg: #303030;
+  // chip-color
+  --grey-bg: #595959;
 }
