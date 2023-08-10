@@ -274,6 +274,9 @@ label {
 .left-0 {
   left: 0;
 }
+.opacity-0{
+  opacity: 0;
+}
 .position-center {
   position: absolute;
   top: 50%;
@@ -877,6 +880,17 @@ ul.breadcrumb {
 }
 .left-header{
   left: 1.875rem;
+}
+
+//img crop
+.img-crop{
+  img{
+    height: 100%;
+    object-fit: cover;
+  }
+ .ngx-ic-overlay{
+    outline: none !important;
+  }
 }
 
 //inner-h
