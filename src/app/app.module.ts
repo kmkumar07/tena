@@ -20,6 +20,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CustomTranslateLoader } from './core/utils/functions/custom/custom-translate-loader';
 import { ProductListingComponent } from './core/components/listings/product-listing/product-listing.component';
 import { FeaturesListingComponent } from './core/components/listings/features-listing/features-listing.component';
+import { DialogAnimaComponent } from './shared/components/dialog-box/dialog-anima/dialog-anima.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FeaturesListingComponent } from './core/components/listings/features-li
     CouponsDeleteSuccessComponent,
     SignInComponent,
     FeaturesPopupComponent,
+    DialogAnimaComponent,
   ],
   imports: [
     BrowserModule,
