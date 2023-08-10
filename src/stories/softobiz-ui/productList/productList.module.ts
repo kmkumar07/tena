@@ -38,7 +38,6 @@ import { MatInputModule } from '@angular/material/input';
     // ProfileComponent,
     // SearchbarComponent,
     RouterTestingModule,
-    AngularMaterialModule
   ],
   exports: [productListComponent],
 })

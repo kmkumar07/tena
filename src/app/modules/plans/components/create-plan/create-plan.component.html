@@ -1,63 +1,38 @@
-<div class="flex w-full h-full">
-  <div class="stepper-wrapper">
-    <mat-stepper orientation="vertical" #stepper [disableRipple]="true">
-      <ng-container *ngFor="let step of stepsTitle; let i = index">
-        <mat-step id="foo-bar" [editable]="i === 0 || stepOneCompleted">
-          <ng-template matStepLabel>
-            <div
-              (click)="switchStepper(step)"
-              [ngClass]="{ 'disabled-step': i !== 0 && !stepOneCompleted }"
-            >
-              <span
-                id="{{ step.id }}"
-                class="block text-dark font-weight-500"
-                >{{ step.title }}</span
-              >
-              <span
-                class="block font-weight-600 mat-subtitle-2 text-headline-light"
-                >{{ step.caption }}</span
-              >
-            </div>
-          </ng-template>
-        </mat-step>
-      </ng-container>
-    </mat-stepper>
-  </div>
-  <div
-    #contentSection
-    class="create-plan-main-wrapper h-full overflow-auto relative"
-  >
-    <div #step1 id="step1" class="plan-section-block flex-center p-11 mb-4">
+<div class="flex w-full mt-11">
+  <div #contentSection class="create-plan-main-wrapper h-full relative">
+    <div class="flex align-center justify-between mb-6">
+      <div class="flex align-center">
+        <mat-icon class="material-symbols-outlined pointer mr-2" color="primary"
+          [routerLink]="'/plan'">keyboard_backspace</mat-icon>
+        <p class="fs-2xl fw-500 text-purple-lighten-1">Create Plan</p>
+      </div>
+    </div>
+    <div #step1 id="step1" class="plan-section-block flex-center p-10 mb-4 border-2">
       <div class="plan-info-block inner-wrapper">
-        <div class="heading flex align-center">
-          <img
-            src="../../../../../../assets/images/icons/carbon_document-multiple-02.svg"
-            alt="carbon_document-multiple-icon"
-          />
-          <abbr class="mat-headline-5 text-dark">Plan Information</abbr>
+        <div class="heading">
+          <abbr class="mat-headline-5 text-blue-darken">Plan Details</abbr>
+          <p class="text-grey-darken mt-1">Add plan details here</p>
         </div>
         <form [formGroup]="planForm">
           <div class="info-form">
-            <div class="input-wrapper mt-8">
+            <div class="input-wrapper mt-5">
               <div>
                 <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 input-label">
-                    Plan Name (Internal)
+                  <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
+                    Plan Id
                   </p>
-                  <mat-icon
-                    class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                    [ngxTippy]="productnameinfo"
-                    [tippyProps]="{ placement: 'right', interactive: true }"
-                    tippyName="content"
-                    >help</mat-icon
-                  >
-                  <ng-template #productnameinfo let-name class="t-template">
+                  <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                    [ngxTippy]="helpinfotooltip"
+                    [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
+                  <ng-template #helpinfotooltip let-name>
                     <div class="help-info-tooltip">
-                      <div class="heading-with-background">
-                        Plan name (Internal)
-                      </div>
+                      <div class="heading-with-background text-blue-darken font-weight-500">Plan id</div>
                       <div class="details">
-                        This is help you identify the Plan Internally
+                        <p class="text-grey-darken">
+                          Enter a Customized Id. If user do not enter this field, the system will generate a ‘Customized
+                          Human-Readable-id’ based on the Name fielde.g. Plan id Name: “Karisch plus Enterprise”Plan Id:
+                          “karish-plus-enteprise-01”
+                        </p>
                       </div>
                       <button mat-button color="primary" class="px-0">
                         Learn more
@@ -66,61 +41,28 @@
                   </ng-template>
                 </div>
                 <mat-form-field appearance="outline">
-                  <input
-                    required
-                    matInput
-                    placeholder="Enter here..."
-                    formControlName="internalName"
-                    (input)="setPlanId($event)"
-                  />
-                  <mat-error
-                    *ngIf="
-                      planForm.controls['internalName'].invalid &&
-                      planForm.controls['internalName'].touched
-                    "
-                  >
-                    <ng-container
-                      *ngIf="
-                        planForm.controls['internalName'].errors['required']
-                      "
-                    >
-                      InternalName is required and cannot be left empty.
-                    </ng-container>
-                    <ng-container
-                      *ngIf="
-                        planForm.controls['internalName'].errors['maxlength']
-                      "
-                    >
-                      InternalName cannot exceed 20 characters.
-                    </ng-container>
-                    <ng-container
-                      *ngIf="
-                        planForm.controls['internalName'].errors['pattern']
-                      "
-                    >
-                      InternalName cannot contain special characters.
-                    </ng-container>
-                  </mat-error>
+                  <input *ngIf="!editable" required matInput placeholder="Enter here..." formControlName="planId" />
+                  <input *ngIf="editable" readonly required matInput placeholder="Enter here..."
+                    formControlName="planId" />
                 </mat-form-field>
               </div>
               <div>
                 <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 input-label">
+                  <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
                     Plan Name (External)
                   </p>
-                  <mat-icon
-                    class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                  <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
                     [ngxTippy]="productnameinfo"
-                    [tippyProps]="{ placement: 'right', interactive: true }"
-                    >help</mat-icon
-                  >
+                    [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
                   <ng-template #productnameinfo let-name class="t-template">
                     <div class="help-info-tooltip">
-                      <div class="heading-with-background">
+                      <div class="heading-with-background text-blue-darken font-weight-500">
                         Plan name (External)
                       </div>
                       <div class="details">
-                        This name will be shown on the customer portal.
+                        <p class="text-grey-darken">
+                          This name will be shown on the customer portal.
+                        </p>
                       </div>
                       <button mat-button color="primary" class="px-0">
                         Learn more
@@ -129,37 +71,24 @@
                   </ng-template>
                 </div>
                 <mat-form-field appearance="outline">
-                  <input
-                    required
-                    matInput
-                    placeholder="Enter here..."
-                    formControlName="externalName"
-                  />
-                  <mat-error
-                    *ngIf="
+                  <input required matInput placeholder="Enter here..." formControlName="externalName" />
+                  <mat-error *ngIf="
                       planForm.controls['externalName'].invalid &&
                       planForm.controls['externalName'].touched
-                    "
-                  >
-                    <ng-container
-                      *ngIf="
+                    ">
+                    <ng-container *ngIf="
                         planForm.controls['externalName'].errors['required']
-                      "
-                    >
+                      ">
                       ExternalName is required and cannot be left empty.
                     </ng-container>
-                    <ng-container
-                      *ngIf="
+                    <ng-container *ngIf="
                         planForm.controls['externalName'].errors['maxlength']
-                      "
-                    >
+                      ">
                       ExternalName cannot exceed 20 characters.
                     </ng-container>
-                    <ng-container
-                      *ngIf="
+                    <ng-container *ngIf="
                         planForm.controls['externalName'].errors['pattern']
-                      "
-                    >
+                      ">
                       ExternalName cannot contain special characters.
                     </ng-container>
                   </mat-error>
@@ -167,24 +96,21 @@
               </div>
               <div>
                 <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 input-label">
-                    Plan Id
+                  <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
+                    Plan Name (Internal)
                   </p>
-                  <mat-icon
-                    class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                    [ngxTippy]="helpinfotooltip"
-                    [tippyProps]="{ placement: 'right', interactive: true }"
-                    >help</mat-icon
-                  >
-                  <ng-template #helpinfotooltip let-name>
+                  <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                    [ngxTippy]="productnameinfo" [tippyProps]="{ placement: 'right', interactive: true }"
+                    tippyName="content">help</mat-icon>
+                  <ng-template #productnameinfo let-name class="t-template">
                     <div class="help-info-tooltip">
-                      <div class="heading-with-background">Plan id</div>
+                      <div class="heading-with-background">
+                        Plan name (Internal)
+                      </div>
                       <div class="details">
-                        Enter a Customized Id. If user do not enter this field,
-                        the system will generate a 'Customized
-                        Human-Readable-id' based on the Name fielde.g. Plan id
-                        Name: “Karisch plus Enterprise”Plan Id:
-                        “karish-plus-enteprise-01”
+                        <p class="text-grey-darken">
+                          This is help you identify the Plan Internally
+                        </p>
                       </div>
                       <button mat-button color="primary" class="px-0">
                         Learn more
@@ -193,716 +119,69 @@
                   </ng-template>
                 </div>
                 <mat-form-field appearance="outline">
-                  <input
-                    *ngIf="!editable"
-                    required
-                    matInput
-                    placeholder="Enter here..."
-                    formControlName="planId"
-                  />
-                  <input
-                    *ngIf="editable"
-                    readonly
-                    required
-                    matInput
-                    placeholder="Enter here..."
-                    formControlName="planId"
-                  />
-                </mat-form-field>
-              </div>
-              <div>
-                <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 input-label">
-                    Description
-                  </p>
-                </div>
-                <mat-form-field appearance="outline">
-                  <textarea
-                    matInput
-                    placeholder="Enter here..."
-                    formControlName="description"
-                  ></textarea>
-                  <mat-error
-                    *ngIf="
-                      planForm.controls['description'].invalid &&
-                      planForm.controls['description'].touched
-                    "
-                  >
-                    <ng-container
-                      *ngIf="
-                        planForm.controls['description'].errors['maxlength']
-                      "
-                    >
-                      Description cannot exceed 500 characters.
+                  <input required matInput placeholder="Enter here..." formControlName="internalName"
+                    (input)="setPlanId($event)" />
+                  <mat-error *ngIf="
+                      planForm.controls['internalName'].invalid &&
+                      planForm.controls['internalName'].touched
+                    ">
+                    <ng-container *ngIf="
+                        planForm.controls['internalName'].errors['required']
+                      ">
+                      InternalName is required and cannot be left empty.
+                    </ng-container>
+                    <ng-container *ngIf="
+                        planForm.controls['internalName'].errors['maxlength']
+                      ">
+                      InternalName cannot exceed 20 characters.
+                    </ng-container>
+                    <ng-container *ngIf="
+                        planForm.controls['internalName'].errors['pattern']
+                      ">
+                      InternalName cannot contain special characters.
                     </ng-container>
                   </mat-error>
                 </mat-form-field>
               </div>
-              <div class="action-btns flex align-center justify-between">
-                <mat-checkbox
-                  color="primary"
-                  formControlName="status"
-                  class="font-weight-500 checkbox ml-n-3"
-                  >Active</mat-checkbox
-                >
-                <div>
-                  <button
-                    mat-stroked-button
-                    color="primary"
-                    class="mr-2 large"
-                    [routerLink]="'/plans'"
-                  >
-                    Dismiss
-                  </button>
-                  <button
-                    *ngIf="!editable"
-                    mat-flat-button
-                    color="primary"
-                    class="large"
-                    type="button"
-                    (click)="onSubmit()"
-                    [disabled]="planForm.invalid"
-                  >
-                    Create
-                  </button>
-                  <button
-                    *ngIf="editable"
-                    mat-flat-button
-                    color="primary"
-                    class="large"
-                    type="button"
-                    (click)="onSubmit()"
-                  >
-                    Update
-                  </button>
+              <div>
+                <div class="flex align-center mb-2">
+                  <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
+                    Description
+                  </p>
                 </div>
+                <mat-form-field appearance="outline">
+                  <textarea matInput placeholder="Enter here..." formControlName="description"></textarea>
+                  <mat-error *ngIf="
+                      planForm.controls['description'].invalid &&
+                      planForm.controls['description'].touched
+                    ">
+                    <ng-container *ngIf="
+                        planForm.controls['description'].errors['maxlength']
+                      ">
+                      Description cannot exceed 500 characters.
+                    </ng-container>
+                  </mat-error>
+                </mat-form-field>
               </div>
             </div>
           </div>
         </form>
       </div>
     </div>
-
-    <!-- pricing plan -->
-    <div
-      #step2
-      id="step2"
-      class="plan-section-block flex-center border-2 p-11 mb-4"
-    >
-      <div class="plan-info-block inner-wrapper">
-        <div class="heading flex align-center">
-          <img
-            src="../../../../../../assets/images/icons/basil_invoice-outline.svg"
-            alt="icon"
-          />
-          <h5 class="mat-headline-5 text-dark">Pricing Plan</h5>
-        </div>
-        <div
-          *ngIf="this.priceData.length == 0"
-          class="empty-add-section mt-6 border-1"
-        >
-          <div class="text-center">
-            <p class="mat-body-1 text-dark-1">
-              Please click the “Add” button below to add a new pricing plans.
-              Once you clicked the button, you will be prompted to enter pricing
-              and additional details.
-            </p>
-            <button
-              mat-flat-button
-              color="primary"
-              class="mt-11 large"
-              [routerLink]="['/plans/create/set-price/'] + planId"
-              [disabled]="!stepOneCompleted"
-            >
-              Add Pricing
-            </button>
-          </div>
-        </div>
-        <div *ngIf="this.priceData.length > 0" class="info-form">
-          <div class="flag-wrapper flex align-center pt-8 pb-2">
-            <img
-              src="../../../../../../assets/images/flags.png"
-              alt="flags"
-              class="mr-3"
-            />
-            <span class="mat-subtitle-2 text-headline-dark">USD</span>
-          </div>
-          <div class="table-wrapper mt-3">
-            <table mat-table [dataSource]="priceData" class="">
-              <ng-container matColumnDef="PricingCycle">
-                <th
-                  mat-header-cell
-                  *matHeaderCellDef
-                  class="mat-subtitle-2 text-headline-dark"
-                >
-                  Pricing Cycle
-                </th>
-                <td
-                  mat-cell
-                  *matCellDef="let element"
-                  class="mat-subtitle-2 text-headline-light"
-                >
-                  {{ element.periodUnit }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="PricingModel">
-                <th
-                  mat-header-cell
-                  *matHeaderCellDef
-                  class="mat-subtitle-2 text-headline-dark"
-                >
-                  Pricing Model
-                </th>
-                <td
-                  mat-cell
-                  *matCellDef="let element"
-                  class="mat-subtitle-2 text-headline-light"
-                >
-                  {{ element.pricingModel }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="BillingCycle">
-                <th
-                  mat-header-cell
-                  *matHeaderCellDef
-                  class="mat-subtitle-2 text-headline-dark"
-                >
-                  Billing Cycle
-                </th>
-                <td mat-cell *matCellDef="let element">
-                  <span
-                    *ngIf="element.isExpirable"
-                    class="mat-subtitle-2 text-headline-light billing-fixed px-2 py-1 border-1"
-                    >Fixed</span
-                  >
-                  <span
-                    *ngIf="!element.isExpirable"
-                    class="mat-subtitle-2 text-headline-light billing-fixed px-2 py-1 border-1"
-                    >Forever</span
-                  >
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="Price">
-                <th
-                  mat-header-cell
-                  *matHeaderCellDef
-                  class="mat-subtitle-2 text-headline-dark"
-                >
-                  Price
-                </th>
-                <td
-                  mat-cell
-                  *matCellDef="let element"
-                  class="mat-subtitle-2 text-headline-light price-cell"
-                >
-                  <div
-                    *ngIf="
-                      element.multiPricing && element.multiPricing.length == 0
-                    "
-                    class="flex align-center"
-                  >
-                    {{ element.price }}
-                  </div>
-                  <div
-                    *ngIf="
-                      element.multiPricing && element.multiPricing.length > 0
-                    "
-                    class="flex align-center"
-                    [ngxTippy]="fullDescription"
-                    [tippyProps]="{ placement: 'right' }"
-                  >
-                    {{ element.multiPricing[0].price }}
-                    <ng-template #fullDescription let-name class="t-template">
-                      <table class="black-text">
-                        <thead>
-                          <th class="pr-4">Starting Unit</th>
-                          <th class="pr-4">Ending Unit</th>
-                          <th class="pr-4">Price</th>
-                        </thead>
-                        <tbody>
-                          <tr
-                            class="p-3"
-                            *ngFor="let item of element.multiPricing"
-                          >
-                            <td>{{ item.startingUnit }}</td>
-                            <td>{{ item.endingUnit }}</td>
-                            <td>{{ item.price }}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </ng-template>
-                  </div>
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="action">
-                <th
-                  mat-header-cell
-                  *matHeaderCellDef
-                  class="mat-subtitle-2 text-headline-dark action-header"
-                >
-                  Action
-                </th>
-                <td mat-cell *matCellDef="let element; let i = index">
-                  <div class="flex justify-end">
-                    <button
-                      class="flex edit-btn mat-caption mr-1"
-                      mat-button
-                      color="primary"
-                      [routerLink]="['/plans/create/set-price/'] + planId"
-                    >
-                      <mat-icon
-                        class="material-symbols-outlined mr-1"
-                        color="primary"
-                        >edit</mat-icon
-                      >Edit
-                    </button>
-                    <button
-                      mat-icon-button
-                      color="warn"
-                      class="light-bg small rounded-1"
-                      (click)="removeType(i)"
-                    >
-                      <mat-icon
-                        class="material-symbols-outlined mr-0"
-                        color="warn"
-                        >close</mat-icon
-                      >
-                    </button>
-                  </div>
-                </td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="priceColumn"></tr>
-              <tr
-                mat-row
-                (click)="clickedRows.add(row)"
-                [class.demo-row-is-clicked]="clickedRows.has(row)"
-                *matRowDef="let row; columns: priceColumn"
-              ></tr>
-            </table>
-          </div>
-          <button
-            mat-flat-button
-            color="primary"
-            class="mt-11 large ml-auto"
-            [routerLink]="['/plans/create/set-price/'] + planId"
-          >
-            Add Pricing
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div
-      #step3
-      id="step3"
-      class="plan-section-block flex-center border-2 p-11 mb-4"
-    >
-      <div class="plan-info-block inner-wrapper">
-        <div class="heading flex align-center">
-          <img
-            src="../../../../../../assets/images/icons/basil_invoice-outline.svg"
-            alt="icon"
-          />
-          <h5 class="mat-headline-5 text-dark">Product Details</h5>
-        </div>
-        <div class="empty-add-section mt-6 border-1">
-          <div class="text-center">
-            <p class="mat-body-1 text-dark-1">
-              Please click the “Add” button below to add a new product. Once you
-              clicked the button, you will be prompted to enter the name of
-              product, description and additional details.
-            </p>
-            <button
-              mat-flat-button
-              color="primary"
-              class="mt-11 large"
-              [routerLink]="'/plans/create/product-variant'"
-              [disabled]="!stepOneCompleted"
-            >
-              Add product
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Product Details inner -->
-    <!-- <div
-      #step3
-      id="step3"
-      class="plan-section-block flex-center border-2 p-11 mb-4"
-      *ngIf="productDetails?.length > 0"
-    >
-      <div class="plan-info-block inner-wrapper">
-        <div class="heading flex align-center">
-          <img
-            src="../../../../../../assets/images/icons/basil_invoice-outline.svg"
-            alt="invoice-outline-icon"
-          />
-          <h5 class="mat-headline-5 text-dark">Product Details</h5>
-        </div>
-        <div
-          class="details-wrapper mt-6 p-3 border-2"
-          *ngFor="let product of productDetails"
-        >
-          <div class="details-inner flex justify-between">
-            <div class="flex align-center">
-              <div class="product-img p-2 mr-4">
-                <img
-                  src="../.././../../assets/images/teams.png"
-                  alt="product-img"
-                />
-              </div>
-              <div>
-                <h6 class="mat-subtitle-2 font-weight-500 text-dark mb-1">
-                  {{ product.productID }}
-                </h6>
-                <span class="mat-body-1 font-weight-500 text-dark"
-                  >{{ product.features.length }} Features included</span
-                >
-              </div>
-            </div>
-            <div class="flex align-center">
-              <button
-                class="flex icon-text mat-caption mr-4"
-                mat-button
-                color="primary"
-                (click)="editProductVariant(product.productVariantId)"
-              >
-                <mat-icon class="material-symbols-outlined mr-1" color="primary"
-                  >edit</mat-icon
-                >Edit
-              </button>
-              <button
-                mat-icon-button
-                color="warn"
-                class="light-bg small rounded-1"
-                (click)="onDelete(product.productVariantId)"
-                [disabled]="!stepOneCompleted"
-              >
-                <mat-icon class="material-symbols-outlined mr-0" color="warn"
-                  >close</mat-icon
-                >
-              </button>
-            </div>
-          </div>
-          <div class="flex-center gap-2 wrap mt-3">
-            <mat-chip
-              class="primary-light-chip mr-2"
-              *ngFor="let feature of product.features"
-              (click)="openPopup(feature)"
-              ><span class="mat-body-1 text-grey-darken-7"
-                >{{ feature.featureId }} {{ feature.value }}</span
-              >
-            </mat-chip>
-          </div>
-        </div>
-        <div class="mt-12 text-right">
-          <button
-            mat-flat-button
-            color="primary"
-            class="large"
-            [routerLink]="'/plans/create/product-variant'"
-            [disabled]="!stepOneCompleted"
-          >
-            Add Product
-          </button>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- add-on view section  -->
-    <div
-      #step4
-      id="step4"
-      class="plan-section-block flex-center border-2 p-11 mb-4"
-    >
-      <div class="plan-info-block inner-wrapper">
-        <div class="heading flex align-center">
-          <img
-            src="../../../../../../assets/images/icons/basil_invoice-outline.svg"
-            alt="add-on-icon"
-          />
-          <h5 class="mat-headline-5 text-dark">Add-ons Details</h5>
-        </div>
-        <div class="details-wrapper add-on-view-wrapper mt-6 p-3 border-2">
-          <div class="details-inner flex justify-between">
-            <div class="flex align-center">
-              <div class="product-img p-2 mr-4">
-                <img
-                  src="../.././../../assets/images/teams.png"
-                  alt="product-img"
-                />
-              </div>
-              <div>
-                <h6 class="mat-subtitle-2 font-weight-500 text-dark mb-1">
-                  MS Team
-                </h6>
-                <span class="mat-body-1 font-weight-500 text-dark"
-                  >3 Features included</span
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="content-wrapper">
-            <div class="mt-3">
-              <mat-chip class="primary-light-chip mr-2"
-                ><span class="mat-body-1 text-grey-darken-7"
-                  >Whiteboard (ON)</span
-                >
-              </mat-chip>
-              <mat-chip class="primary-light-chip mr-2"
-                ><span class="mat-body-1 text-grey-darken-7"
-                  >Email support (All Week)</span
-                >
-              </mat-chip>
-              <mat-chip class="primary-light-chip"
-                ><span class="mat-body-1 text-grey-darken-7"
-                  >User License (10 License)</span
-                >
-              </mat-chip>
-            </div>
-            <div class="flex mt-12">
-              <div class="add-on-details-wrapper secondary-light-bg px-2 py-3">
-                <div class="add-on-detail">
-                  <div class="heading-content text-headine-light pl-3">
-                    <span
-                      class="title font-weight-700 text-headline-light mat-subtitle-1"
-                      >Teamwork and communication</span
-                    >
-                    <p class="subtile mat-body-1 text-headline-light mt-2">
-                      It is a long established fact that a reader will be
-                      distracted.
-                    </p>
-                  </div>
-                  <div class="flex-center mt-3 flex-wrap chip-wrapper">
-                    <mat-chip class="primary-light-chip pointer main-bg mr-2"
-                      ><span class="mat-body-1 text-grey-darken-7"
-                        >Host online calls (1-50)</span
-                      >
-                    </mat-chip>
-                    <mat-chip class="primary-light-chip pointer main-bg mr-2"
-                      ><span class="mat-body-1 text-grey-darken-7"
-                        >Host webinars (50-100)</span
-                      >
-                    </mat-chip>
-                    <mat-chip class="primary-light-chip pointer main-bg"
-                      ><span class="mat-body-1 text-grey-darken-7"
-                        >Create team sites (ON)</span
-                      >
-                    </mat-chip>
-                  </div>
-                </div>
-              </div>
-              <button
-                mat-icon-button
-                color="warn"
-                class="light-bg small rounded-1 ml-2"
-                [disabled]="!stepOneCompleted"
-              >
-                <mat-icon class="material-symbols-outlined mr-0" color="warn"
-                  >close</mat-icon
-                >
-              </button>
-            </div>
-
-            <div class="info-form">
-              <div class="flag-wrapper flex align-center pt-8 pb-2">
-                <img
-                  src="../../../../../../assets/images/flags.png"
-                  alt="flags"
-                  class="mr-3"
-                />
-                <span class="mat-subtitle-2 text-headline-dark">USD</span>
-              </div>
-              <div class="table-wrapper mt-3">
-                <table mat-table [dataSource]="dataSource" class="">
-                  <!-- PricingCycle Column -->
-                  <ng-container matColumnDef="PricingCycle">
-                    <th
-                      mat-header-cell
-                      *matHeaderCellDef
-                      class="mat-subtitle-2 text-headline-dark secondary-light-bg"
-                    >
-                      Pricing Cycle
-                    </th>
-                    <td
-                      mat-cell
-                      *matCellDef="let element"
-                      class="mat-subtitle-2 text-headline-light"
-                    >
-                      {{ element.PricingCycle }}
-                    </td>
-                  </ng-container>
-
-                  <!-- Price Column -->
-                  <ng-container matColumnDef="Price">
-                    <th
-                      mat-header-cell
-                      *matHeaderCellDef
-                      class="mat-subtitle-2 text-headline-dark secondary-light-bg"
-                    >
-                      Price
-                    </th>
-                    <td
-                      mat-cell
-                      *matCellDef="let element"
-                      class="mat-subtitle-2 text-headline-light price-cell"
-                    >
-                      <div class="flex align-center">
-                        {{ element.Price
-                        }}<mat-icon
-                          class="material-symbols-outlined ml-2"
-                          color="primary"
-                          >arrow_right_alt</mat-icon
-                        >
-                      </div>
-                    </td>
-                  </ng-container>
-
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr
-                    mat-row
-                    (click)="clickedRows.add(row)"
-                    [class.demo-row-is-clicked]="clickedRows.has(row)"
-                    *matRowDef="let row; columns: displayedColumns"
-                  ></tr>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- add-on view section  -->
-
-    <!-- Charges -->
-    <div
-      #step5
-      id="step5"
-      class="plan-section-block flex-center border-2 p-11 mb-4 bottom-margin"
-    >
-      <div class="plan-info-block inner-wrapper">
-        <div class="heading flex align-center">
-          <img
-            src="../../../../../assets/images/icons/money.svg"
-            alt="money-icon"
-          />
-          <h5 class="mat-headline-5 text-dark">Charges</h5>
-        </div>
-        <div class="input-wrapper mt-8">
-          <div class="mt-6">
-            <div class="flex align-center mb-2">
-              <p class="mat-subtitle-2 font-weight-500 input-label">Charges</p>
-              <mat-icon
-                class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                [ngxTippy]="chargesInfo"
-                [tippyProps]="{ placement: 'right', interactive: true }"
-                >help</mat-icon
-              >
-              <ng-template #chargesInfo let-name>
-                <div class="help-info-tooltip">
-                  <div class="heading-with-background">Charges</div>
-                  <div class="details">
-                    You can create and select charges to include it in the plan
-                  </div>
-                  <button mat-button color="primary" class="px-0">
-                    Learn more
-                  </button>
-                </div>
-              </ng-template>
-            </div>
-            <mat-form-field
-              appearance="outline"
-              class="border-2 with-footer-btn"
-            >
-              <!-- <mat-label> Select </mat-label> -->
-              <mat-select required placeholder="select" multiple>
-                <mat-option value="Setup Fee"> Setup Fee </mat-option>
-                <mat-option value="Activation Fee"> Activation Fee </mat-option>
-                <mat-option value="Implementation Charges">
-                  Implementation Charges
-                </mat-option>
-                <button
-                  mat-button
-                  color="primary"
-                  class="px-0 w-full add-new-btn-list pl-4 mat-body-1 large"
-                >
-                  <mat-icon class="material-symbols-outlined" color="primary"
-                    >add_circle</mat-icon
-                  >Add New Charge
-                </button>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-        <!-- setup fee inputs -->
-        <div class="fee-input-wrapper">
-          <div class="fee-input flex align-center justify-between">
-            <span class="mat-subtitle-2">Setup fee</span>
-            <div class="flex">
-              <mat-form-field appearance="outline" class="mb-0">
-                <input matInput placeholder="Enter here..." />
-              </mat-form-field>
-              <button
-                mat-icon-button
-                color="warn"
-                class="close-icon-btn light-bg rounded ml-2"
-                [disabled]="!stepOneCompleted"
-              >
-                <mat-icon class="material-symbols-outlined mr-0" color="warn"
-                  >close</mat-icon
-                >
-              </button>
-            </div>
-          </div>
-          <div class="fee-input flex align-center justify-between">
-            <span class="mat-subtitle-2">Activation fee</span>
-            <div class="flex">
-              <mat-form-field appearance="outline" class="mb-0">
-                <input matInput placeholder="Enter here..." />
-              </mat-form-field>
-              <button
-                mat-icon-button
-                color="warn"
-                class="close-icon-btn light-bg rounded ml-2"
-                [disabled]="!stepOneCompleted"
-              >
-                <mat-icon class="material-symbols-outlined mr-0" color="warn"
-                  >close</mat-icon
-                >
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- setup fee inputs -->
-        <div class="action-btns flex align-center justify-end">
-          <div>
-            <button
-              mat-stroked-button
-              color="primary"
-              class="mr-2 large"
-              [disabled]="!stepOneCompleted"
-            >
-              Dismiss
-            </button>
-            <button
-              mat-flat-button
-              color="primary"
-              class="large"
-              type="submit"
-              [disabled]="!stepOneCompleted"
-            >
-              Save
-            </button>
-          </div>
-        </div>
+    <div class="action-btns flex align-center justify-between pl-1">
+      <mat-checkbox color="primary" formControlName="status" [disableRipple]="true"
+        class="font-weight-500 checkbox ml-n-3 disable-ripple-checkbox">Active</mat-checkbox>
+      <div>
+        <button mat-stroked-button color="primary" class="mr-2 large" [routerLink]="'/plans'">
+          Back
+        </button>
+        <button *ngIf="!editable" mat-flat-button color="primary" class="large" type="button" (click)="onSubmit()"
+          [disabled]="planForm.invalid">
+          Create
+        </button>
+        <button *ngIf="editable" mat-flat-button color="primary" class="large" type="button" (click)="onSubmit()">
+          Update
+        </button>
       </div>
     </div>
   </div>

@@ -92,13 +92,14 @@
 
 // create plan section
 .create-plan-main-wrapper {
+  width: 52.3125rem;
+  margin: auto;
   .with-footer-btn {
     .add-new-btn-list {
       display: flex;
       justify-content: start;
     }
   }
-  width: calc(100% - 19.25rem);
 
   .plan-info-block {
     .heading {
@@ -116,8 +117,8 @@
   }
 
   .plan-section-block {
+    border: 0.0625rem solid color("grey", "lighten-14");
     background-color: var(--surface-bg);
-    border-radius: 0 0.5rem 0.5rem 0;
     .inner-wrapper {
       max-width: 44.75rem;
       width: 100%;
