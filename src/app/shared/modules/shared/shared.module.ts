@@ -12,6 +12,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CustomTranslateLoader } from 'src/app/core/utils/functions/custom/custom-translate-loader';
+import { ImageCropperModule } from 'ngx-image-cropper';
 @NgModule({
   declarations: [
     EmptyListingComponent,
@@ -27,6 +28,7 @@ import { CustomTranslateLoader } from 'src/app/core/utils/functions/custom/custo
     HttpClientModule,
     MatSnackBarModule,
     RouterModule,
+    ImageCropperModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -46,6 +48,7 @@ import { CustomTranslateLoader } from 'src/app/core/utils/functions/custom/custo
     NoItemFoundComponent,
     HttpClientModule,
     MatSnackBarModule,
+    ImageCropperModule,
     RouterModule
   ],
 })
