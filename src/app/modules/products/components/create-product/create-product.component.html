@@ -168,8 +168,8 @@
       </div>
       <div class="user-img-wrapper flex align-center">
         <div class="user-avatar flex align-center justify-center">
-          <ng-container *ngIf="imageUrl">
-            <img src="{{ imagePath + imageUrl }}" alt="{{ imageName }}" />
+          <ng-container *ngIf="receivedCroppedImage">
+            <img src="{{ receivedCroppedImage }}" alt="{{ receivedCroppedImage }}" />
           </ng-container>
           <ng-container *ngIf="!imageUrl">
             <p class="mat-body-1 mb-0">LOGO</p>

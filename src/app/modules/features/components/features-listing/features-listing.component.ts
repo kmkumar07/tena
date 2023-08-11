@@ -3,7 +3,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { features, noFeatures } from 'src/app/shared/constants/consants';
-import { FeatureService } from '../../../../modules/features/services/feature.service';
+import { FeatureService } from '../../services/feature.service';
 import { MatPaginator } from '@angular/material/paginator';
 import {
   Subject,
@@ -16,12 +16,9 @@ import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-bo
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GlobalService } from 'src/app/core/services/global.service';
-import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
-import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
+
 
 @Component({
-  standalone: true,
-  imports: [SharedModule, AngularMaterialModule],
   selector: 'app-features-listing',
   templateUrl: './features-listing.component.html',
   styleUrls: ['./features-listing.component.scss'],

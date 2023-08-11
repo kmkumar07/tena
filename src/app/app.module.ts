@@ -18,8 +18,6 @@ import { SignInComponent } from './modules/sign-in/components/sign-in.component'
 import { FeaturesPopupComponent } from './shared/components/dialog-box/features-popup/features-popup/features-popup.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CustomTranslateLoader } from './core/utils/functions/custom/custom-translate-loader';
-import { ProductListingComponent } from './core/components/listings/product-listing/product-listing.component';
-import { FeaturesListingComponent } from './core/components/listings/features-listing/features-listing.component';
 import { DialogAnimaComponent } from './shared/components/dialog-box/dialog-anima/dialog-anima.component';
 
 @NgModule({
@@ -44,8 +42,6 @@ import { DialogAnimaComponent } from './shared/components/dialog-box/dialog-anim
     BrowserAnimationsModule,
     FormsModule,
     SharedModule,
-    ProductListingComponent,
-    FeaturesListingComponent,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

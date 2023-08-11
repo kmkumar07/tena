@@ -20,7 +20,7 @@
       <span class="text-text text-dark fw-500 mat-subtitle-2">
         Product Logo
       </span>
-      <mat-icon class="material-symbols-outlined mat-primary"> close </mat-icon>
+      <mat-icon class="material-symbols-outlined mat-primary"mat-dialog-close (click)="onCancelClick()"> close </mat-icon>
     </div>
     <p class="fw-500 mb-6">imageHint</p>
     <div class="flex mb-6">
@@ -58,8 +58,8 @@
     </div>
     <div class="w-full flex justify-end">
       <div class="flex align-center">
-        <button mat-stroked-button class="mr-1">Cancel</button>
-        <button mat-flat-button color="primary">Save As Product Logo</button>
+        <button mat-stroked-button mat-dialog-close (click)="onCancelClick()"class="mr-1">Cancel</button>
+        <button mat-flat-button color="primary" [mat-dialog-close]="true" (click)="onSaveClick()">Save As Product Logo</button>
       </div>
     </div>
   </div>

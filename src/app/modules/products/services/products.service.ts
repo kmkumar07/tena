@@ -16,7 +16,13 @@ export class ProductsService {
   error$ = new Subject<string>();
 
   constructor(private http: HttpClient) {}
+  private croppedImageSource = new BehaviorSubject<string>('');
 
+  croppedImage$ = this.croppedImageSource.asObservable();
+
+  sendCroppedImage(croppedImage: string): void {
+    this.croppedImageSource.next(croppedImage);
+  }
   createProduct(product: any): Observable<any> {
     return this.http
       .post(`${environment.apiUrl}/products`, product, {

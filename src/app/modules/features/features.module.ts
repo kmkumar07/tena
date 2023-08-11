@@ -7,9 +7,11 @@ import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
 import { CreateFeatureComponent } from './components/create-feature/create-feature.component';
 import { ViewFeatureComponent } from './components/view-feature/view-feature.component';
 import { EditFeatureComponent } from './components/edit-feature/edit-feature.component';
+import { FeaturesListingComponent } from './components/features-listing/features-listing.component';
 
 @NgModule({
   declarations: [
+    FeaturesListingComponent,
     CreateFeatureComponent,
     ViewFeatureComponent,
     EditFeatureComponent
