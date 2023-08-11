@@ -15,9 +15,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
 import { MatFormFieldModule } from '@angular/material/form-field'; // Add this line
 import { ProductsService } from './services/products.service';
+import { ProductListingComponent } from './components/product-listing/product-listing.component';
 
 @NgModule({
   declarations: [
+    ProductListingComponent,
     CreateProductComponent,
     ViewProductComponent,
     EditProductComponent,
