@@ -59,8 +59,15 @@ export class CreateProductComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.productService.croppedImage$.subscribe((croppedImage) => {
+      // Handle cropped image data
       this.receivedCroppedImage = croppedImage;
     });
+
+    this.productService.imageName$.subscribe((imageName) => {
+      // Handle image name
+      this.imageName = imageName;
+    });
+
     this.productForm = this.formBuilder.group({
       productId: ['', Validators.required],
       name: [
@@ -81,7 +88,7 @@ export class CreateProductComponent implements OnInit {
       this.productForm.controls['productId'].setValue(idValue);
     });
   }
- 
+
   isChecked(): boolean {
     const status = this.productForm.get('status')?.value;
     return status === 'active';
@@ -91,13 +98,13 @@ export class CreateProductComponent implements OnInit {
     const newStatus = checked ? 'active' : 'draft';
     this.productForm.get('status')?.setValue(newStatus);
   }
-  navigateToViewFeature(res:any) {
+  navigateToViewFeature(res: any) {
     // this.router.navigate(['']);
     this.router.navigate([`/products/view-product/${res.productId}`]);
   }
-  
+
   onSubmit() {
-    this.productForm.get('imageUrl')?.setValue(this.receivedCroppedImage);
+    this.productForm.get('imageUrl')?.setValue(this.imageUrl);
     const status = this.productForm.value.status ? 'active' : 'draft';
     const product = {
       ...this.productForm.value,
@@ -109,7 +116,7 @@ export class CreateProductComponent implements OnInit {
         this.navigateToViewFeature(res);
       },
       error: (error: any) => {
-        this.error = error?.error?.message ||'Database error';
+        this.error = error?.error?.message || 'Database error';
         this.snackBar.open(this.error, '', {
           duration: 5000,
           verticalPosition: 'top',
@@ -131,64 +138,42 @@ export class CreateProductComponent implements OnInit {
   }
 
   openDialog() {
-  this.dialogRef = this.dialog.open(DialogAnimaComponent, {
-    width: '700px',
-  });
-  this.dialogRef.afterClosed().subscribe((res: any) => {
-    if (res) {
-      this.uploadlogoSave();
-        console.log("this.receivedCroppedImage",this.receivedCroppedImage);
-}
-  });
+    this.dialogRef = this.dialog.open(DialogAnimaComponent, {
+      width: '700px',
+    });
+    this.dialogRef.afterClosed().subscribe((res: any) => {
+      if (res) {
+        this.imagePath = environment.blobStorage;
+
+        this.uploadlogoSave();
+      }
+    });
   }
-  uploadlogoSave() {
-    console.log("handleSave");
-      this.subscription = this.productService.uploadImage(this.receivedCroppedImage).subscribe({
+  async uploadlogoSave() {
+    const payload = {
+      image: this.receivedCroppedImage,
+      imageName: this.imageName,
+    };
+    this.subscription = await this.productService
+      .uploadImage(payload)
+      .subscribe({
         next: (res) => {
-          console.log("this.imageUrl",res);
-          
+          this.imageUrl = res.data.blobURL;
         },
       });
-    }
-  
-
-  // openDialog(
-  //   enterAnimationDuration: string,
-  //   exitAnimationDuration: string
-  // ): void {
-  //   const dialogRef = this.dialog.open(DialogAnimationsDialog, {
-  //     width: '700px',
-  //     enterAnimationDuration,
-  //     exitAnimationDuration,
-  //   });
-  //   dialogRef.componentInstance.saveSuccess.subscribe(
-  //     (data: { imageUrl: string; imageName: string }) => {
-  //       this.imageUrl = data.imageUrl;
-  //       this.imageName = data.imageName;
-  //       this.imagePath = environment.blobStorage;
-  //       this.uploadSuccess = true;
-  //       this.uploadMessage = 'Image upload successful';
-  //       this.startMessageTimer();
-  //     }
-  //   );
-  //   dialogRef.componentInstance.saveError.subscribe((res: any) => {
-  //     this.uploadSuccess = false;
-  //     this.uploadMessage = 'Image upload failed. Please try again.';
-  //     this.startMessageTimer();
-  //   });
-  // }
+  }
 
   deleteImage() {
     const removeImagePayload = {
-      image: this.imageName
-    }
+      image: this.imageUrl,
+    };
     this.productService.removeImage(removeImagePayload).subscribe((res) => {
       this.imageUrl = res.data.blobURL;
       this.imageName = res.data.blobName;
-      this.imagePath = ''
+      this.imagePath = '';
       this.uploadMessage = 'Image removed successfully.';
       this.startMessageTimer();
-    })
+    });
   }
 
   openSuccess() {
@@ -200,123 +185,15 @@ export class CreateProductComponent implements OnInit {
       },
     });
   }
-  activeChecked(event: any){
-    console.log(event, 'cjeck')
-  }
+
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
-//}
-
-// @Component({
-//   selector: 'dialog-animations-dialog',
-//   templateUrl:
-//     '../../../../shared/components/dialog-box/dialog-animations-dialog.html',
-//   styleUrls: [
-//     '../../../../shared/components/dialog-box/dialog-animations.scss',
-//   ],
-//   animations: [
-//     trigger('slideInOut', [
-//       transition(':enter', [
-//         style({ transform: 'translateX(-100%)' }),
-//         animate('300ms ease-in', style({ transform: 'translateX(0%)' })),
-//       ]),
-//       transition(':leave', [
-//         animate('300ms ease-in', style({ transform: 'translateX(-100%)' })),
-//       ]),
-//     ]),
-//   ],
-//})
-// export class DialogAnimationsDialog {
-//   subscription: Subscription;
-//   constructor(
-//     public dialogRef: MatDialogRef<DialogAnimationsDialog>,
-//     private productService: ProductsService
-//   ) {}
-  activeColor: string = 'green';
-  baseColor: string = '#ccc';
-  overlayColor: string = 'rgba(255,255,255,0.5)';
-  iconColor: string;
-  dragging: boolean = false;
-  loaded: boolean = false;
-  imageLoaded: boolean = false;
-  imageSrc: string = '';
-  base64imageData: string = '';
-  //imageName: string = '';
-  //imageUrl: string = '';
-
-  handleDragEnter() {
-    this.dragging = true;
+  activeChecked(event){
+    console.log(event);
   }
-
-  handleDragLeave() {
-    this.dragging = false;
-  }
-
-  handleDrop(e: any) {
-    e.preventDefault();
-    this.dragging = false;
-    this.handleFileInput(e);
-  }
-
-  handleImageLoad() {
-    this.imageLoaded = true;
-    this.iconColor = this.overlayColor;
-  }
-
-  handleFileInput(e: any) {
-    var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
-    var pattern = /image-*/;
-    var reader = new FileReader();
-    if (!file.type.match(pattern)) {
-      alert('invalid format');
-      return;
-    }
-    this.loaded = false;
-    this.imageName = file.name;
-    reader.onload = this._handleReaderLoaded.bind(this);
-    reader.readAsDataURL(file);
-  }
-
-  _handleReaderLoaded(e: any) {
-    var reader = e.target;
-    this.imageSrc = reader.result;
-    const dataURLParts = this.imageSrc?.split(';base64,');
-    this.base64imageData = dataURLParts[1];
-    this.loaded = true;
-  }
-  @Output() saveSuccess: EventEmitter<{ imageUrl: string; imageName: string }> =
-    new EventEmitter<{ imageUrl: string; imageName: string }>();
-  @Output() saveError: EventEmitter<any> = new EventEmitter<any>();
-  handleSave() {
-    console.log("handleSave");
-    
-    if (this.base64imageData) {
-      const payload = {
-        image: this.base64imageData,
-        imageName: this.imageName,
-      };
-      this.subscription = this.productService.uploadImage(payload).subscribe({
-        next: (res) => {
-          this.imageUrl = res.data.blobURL;
-          console.log("this.imageUrl",this.imageUrl);
-          
-        },
-        error: (error: any) => {
-          this.saveError.emit(error);
-        },
-        complete: () => {
-          this.saveSuccess.emit({
-            imageUrl: this.imageUrl,
-            imageName: this.imageName,
-          });
-        },
-      });
-    }
-  }
-
   cancel() {
     this.dialogRef.close();
   }
