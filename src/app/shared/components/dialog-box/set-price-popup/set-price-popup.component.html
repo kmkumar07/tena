@@ -1,0 +1,203 @@
+<div class="h-full">
+    <div class="setPrice-popup  relative">
+            <div class="heading pb-3 absolute top-35">
+                <h5 class="mat-subtitle-1 text-blue-darken mb-2">Pricing Plan</h5>
+                <p class="text-grey-darken mt-1">Fill in the details to create pricing</p>
+            </div>
+        
+            <form [formGroup]="setPriceForm" class="form-wrapper">
+                <div class="mt-8">
+                    <div class="py-2 form-section">
+                        <!-- Frequency Model -->
+                        <div class="input-wrapper">
+                            <div class="flex align-center mb-2">
+                                <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
+                                    Frequency
+                                </p>
+                            </div>
+                            <mat-form-field appearance="outline" class="border-2">
+                                <mat-select required placeholder="select" formControlName="Frequency">
+                                    <mat-option *ngFor="let option of FrequencyTypes" value="{{ option.value }}"
+                                        (click)="onDropdownKey(option.value)">
+                                        {{ option.title }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+        
+                        <!-- Pricing Model -->
+                        <div class="input-wrapper">
+                            <div class="flex align-center mb-2">
+                                <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
+                                    Pricing Model
+                                </p>
+                            </div>
+                            <mat-form-field appearance="outline" class="border-2">
+                                <mat-select required placeholder="select" formControlName="pricingModel">
+                                    <mat-option *ngFor="let option of pricingModelTypes" value="{{ option.value }}"
+                                        (click)="onDropdownKey(option.value)">
+                                        {{ option.title }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+        
+                        <!-- Dynamic Fields -->
+                        <div class="w-full form-array-section mb-8"
+                            *ngIf="monthlyBilling.includes(setPriceForm.value.pricingModel)">
+                            <div class="header-bottom-border mb-8">
+                                <h4 class="fw-500 text-purple-lighten-1 my-2 mat-subtitle-2">
+                                    Monthly billing
+                                </h4>
+                            </div>
+                            <div class="mb-32">
+                                <div class="w-full">
+                                    <div class="flex align-center">
+                                        <div class="mr-2 input-wrapper small">
+                                            <p class="mat-subtitle-2 font-weight-500 text-blue-darken mb-2">
+                                                From (Units)
+                                            </p>
+                                        </div>
+                                        <div class="mr-2 input-wrapper small">
+                                            <p class="mat-subtitle-2 font-weight-500 text-blue-darken mb-2">
+                                                To
+                                            </p>
+                                        </div>
+                                        <div class="input-wrapper small">
+                                            <p class="mat-subtitle-2 font-weight-500 text-blue-darken mb-2">
+                                                Price Per unit
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <ng-container formArrayName="multiPricing">
+                                            <ng-container
+                                                *ngFor="let multiPricingGroup of multiPricing.controls; let i = index">
+                                                <div formGroupName="{{i}}" class="flex align-center relative">
+                                                    <div class="input-wrapper small mr-2 relative ">
+                                                        <mat-form-field appearance="outline" class="border-2">
+                                                            <input required matInput placeholder="Enter here"
+                                                                formControlName="startingUnit" type="number" />
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="input-wrapper small mr-2">
+                                                        <mat-form-field appearance="outline" class="border-2">
+                                                            <input required matInput placeholder="Enter here"
+                                                                formControlName="endingUnit"
+                                                                (change)="setStartingValue($event, i)" />
+                                                        </mat-form-field>
+                                                        <!-- <ng-container *ngIf="check">
+                                        {{ check }}
+                                      </ng-container> -->
+                                                    </div>
+                                                    <div class="input-wrapper small relative">
+                                                        <mat-form-field appearance="outline" class="border-2">
+                                                            <input required matInput ng-readonly="readOnly"
+                                                                placeholder="Enter here" formControlName="price"
+                                                                type="number" />
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <button mat-icon-button color="warn"
+                                                        class="light-bg small rounded-1 absolute delete-tier-btn right-40"
+                                                        *ngIf="i == multiPricing.length - 1 && i > 0" (click)="deleteTier(i)">
+                                                        <mat-icon class="material-symbols-outlined mr-0"
+                                                            color="warn">close</mat-icon>
+                                                    </button>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                    <!-- <div class="mr-2 input-wrapper small"> -->
+                                    <!-- </div> -->
+                                </div>
+                                <button disableRipple mat-button type="button" class="primary-text text-main"
+                                    (click)="addMultiPricing()">
+                                    + Add More
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Price Field -->
+                        <div class="input-wrapper" *ngIf="!monthlyBilling.includes(setPriceForm.value.pricingModel)">
+                            <div class="flex align-center mb-2">
+                                <p class="mat-subtitle-2 font-weight-500 text-blue-darken">Price</p>
+                                <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                                    [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right' }">help</mat-icon>
+                                <ng-template #helpinfotooltip let-name>
+                                    <div class="help-info-tooltip">
+                                        <div class="heading-with-background">Feature id</div>
+                                        <div class="details">
+                                            Microsoft Teams is the ultimate messaging app for your
+                                            organization—a workspace for real-time collaboration and
+                                            communication, meetings, file and app sharing, and even the
+                                            occasional emoji! All in one place, all in the open, all
+                                            accessible to everyone.
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                            <mat-form-field appearance="outline" class="border-2">
+                                <input required matInput placeholder="Enter here " formControlName="price" type="number"
+                                    min="0" />
+                                <mat-error
+                                    *ngIf="setPriceForm.controls['price'].invalid && setPriceForm.controls['price'].touched">
+                                    <ng-container *ngIf="setPriceForm.controls['price'].errors['required']">
+                                        Price is required and cannot be left empty.
+                                    </ng-container>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+        
+                        <!-- Billing Cycle -->
+                        <div class="input-wrapper">
+                            <div class="flex align-center mb-2">
+                                <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
+                                    Billing Cycle
+                                </p>
+                                <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                                    [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right' }">help</mat-icon>
+                                <ng-template #helpinfotooltip let-name>
+                                    <div class="help-info-tooltip">
+                                        <div class="heading-with-background">Feature id</div>
+                                        <div class="details">
+                                            Microsoft Teams is the ultimate messaging app for your
+                                            organization—a workspace for real-time collaboration and
+                                            communication, meetings, file and app sharing, and even the
+                                            occasional emoji! All in one place, all in the open, all
+                                            accessible to everyone.
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                            <mat-form-field appearance="outline" class="border-2">
+                                <mat-select required placeholder="select" (selectionChange)="cycleValue($event)">
+                                    <mat-option value="1">Fixed</mat-option>
+                                    <mat-option value="2">Forever</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div *ngIf="selectedOption == '1'">
+                                <mat-form-field appearance="outline" class="border-2">
+                                    <input matInput type="text" placeholder="Number Of Cycle" formControlName="noOfCycle"
+                                        name="noOfCycle">
+                                    <mat-error
+                                        *ngIf="setPriceForm.controls['noOfCycle'].invalid && setPriceForm.controls['noOfCycle'].touched">
+                                        <ng-container *ngIf="setPriceForm.controls['noOfCycle'].errors['required']">
+                                            noOfCycle is required and cannot be left empty.
+                                        </ng-container>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+            </form>
+            <div class="flex justify-end btn-wrapper absolute bottom-35">
+                <button mat-stroked-button color="primary" class="mr-2 large">
+                    Dismiss
+                </button>
+                <button mat-flat-button color="primary" class="large" type="button">
+                    Create
+                </button>
+            </div>
+    </div>
+</div>

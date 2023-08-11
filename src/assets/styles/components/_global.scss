@@ -118,7 +118,7 @@ label {
   border-radius: 1rem;
 }
 .basic-border {
-  border: 0.0625rem solid #ededed;
+  border: 0.0625rem solid color('grey', 'lighten-15');
 }
 // font-weight
 .fw-500 {
@@ -419,6 +419,9 @@ label {
   background-color: var(--surface-bg);
   transition: $sidebar-transition;
   transition-property: background-color;
+}
+.transparent-bg{
+  background-color: transparent;
 }
 .secondary-light-bg{
   background-color: var(--secondary-light) !important;
