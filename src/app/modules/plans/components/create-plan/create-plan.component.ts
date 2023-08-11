@@ -12,6 +12,8 @@ import {
 import { PlanService } from '../../services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SetPricePopupComponent } from 'src/app/shared/components/dialog-box/set-price-popup/set-price-popup.component';
+
 
 export interface PeriodicElement {
   PricingCycle: string;
@@ -39,7 +41,7 @@ export class CreatePlanComponent implements OnInit {
     'Price',
     'action',
   ];
-  status:boolean;
+  status: boolean;
   priceData: any[] = [];
   planAddEmptyData = plan_add_empty_data;
   stepsTitle = Stepper;
@@ -126,7 +128,6 @@ export class CreatePlanComponent implements OnInit {
         .subscribe((res) => {
           this.patchValue(res.data);
           this.editable = true;
-          
         });
     } else {
       this.stepOneCompleted = false;
@@ -187,7 +188,7 @@ export class CreatePlanComponent implements OnInit {
   onSubmit() {
     this.global.showLoader();
     const status = this.planForm.value.status ? 'active' : 'draft';
-   
+
     const type = 'base';
     const plan = {
       ...this.planForm.value,
@@ -262,5 +263,10 @@ export class CreatePlanComponent implements OnInit {
   }
   removeType(index: any) {
     this.planService.priceModelArr.splice(index, 1);
+  }
+  setPrice(){
+    this.dialog.open(SetPricePopupComponent, {
+      width: '622px',
+    });
   }
 }

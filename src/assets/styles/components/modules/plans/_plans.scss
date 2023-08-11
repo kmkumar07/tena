@@ -594,17 +594,16 @@
 .plan-outer-bolck{
   width: 58.125rem;
   margin: auto;
-  .plan-details{
-    border: .0625rem solid color('grey','lighten-14');
-    .heading {
-      border-bottom: 0.0625rem solid $border-color;
-      .icon-img{
-        width: 1.5rem;
-        img{
-          width: 100%;
-        }
+  .heading {
+    border-bottom: 0.0625rem solid $border-color;
+    .icon-img{
+      width: 1.5rem;
+      img{
+        width: 100%;
       }
     }
+  }
+  .plan-details{
     .info-details{
       .details{
         padding: 0 3.6875rem 0 3.0625rem;
@@ -619,7 +618,70 @@
       }
     }
   }
+  .pricing-plan{
+    .info-form{
+      .flag-wrapper{
+        background-color: var(--grey-bg);
+        .flag-img{
+          width: 2rem;
+          height: 1.5rem;
+          img{
+            width: 100%;
+          }
+        }
+      }
+      .table-wrapper{
+        padding: 0 2.375rem;
+        table{
+          border-spacing:0;
+          .billing-fixed {
+            background-color: var(--grey-bg);
+            font-size: 0.875rem;
+          }
+          .set-btn{
+            border: 0;
+          }
+          tr{
+            th{
+              height: 2.1875rem;
+              background-color: var(--grey-bg);
+            }
+            td{
+              height: 3.6875rem;
+            }
+          }
+        }
+      }
+    }
+  }
 }
+
+// setPrice-popup
+.setPrice-popup{
+  padding: 5.6875rem 2.5rem 4.6875rem;
+  .heading{
+    border-bottom: 0.0625rem solid $border-color;
+    width: 33.75rem;
+  }
+  .btn-wrapper{
+    width: 33.75rem;
+  }
+  .right-40{
+    right: 40px;
+  }
+  .top-35{
+    top: 35px;
+  }
+  .bottom-35{
+    bottom: 35px;
+  }
+  .form-wrapper{
+    height: calc(100% - 5.75rem);
+    overflow: auto;
+  }
+}
+
+
 .dark-mode, [data-app-theme="dark"] {
   .plan-outer-bolck{
   .text-blue-darken{

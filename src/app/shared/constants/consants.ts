@@ -464,6 +464,12 @@ export const feature_types = [
   { value: 3, title: 'quantity' },
   { value: 4, title: 'custom' },
 ];
+export const Frequency = [
+  { value: 1, title: 'Daily' },
+  { value: 2, title: 'Weekly' },
+  { value: 3, title: 'Monthly' },
+  { value: 4, title: 'Yearly' },
+];
 export const pricingModels = [
   { value: 1, title: 'Flat fee' },
   { value: 2, title: 'Per unit' },

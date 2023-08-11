@@ -168,136 +168,190 @@
         </div>
       </mat-toolbar>
       <div class="inner-h relative overflow-auto">
-        <div class="flex w-full h-full mt-11">
-          <div #contentSection class="create-plan-main-wrapper h-full overflow-auto relative">
-            <div class="flex align-center justify-between mb-6">
+        <div class="plan-outer-bolck mt-11">
+          <!-- pricing details -->
+          <div class="plan-details p-10 border-2 main-bg mb-4 basic-border">
+            <div class="heading flex align-center justify-between pb-3">
               <div class="flex align-center">
-                <mat-icon class="material-symbols-outlined pointer mr-2" color="primary">keyboard_backspace</mat-icon>
-                <p class="fs-2xl fw-500 text-purple-lighten-1">Create Plan</p>
-              </div>
-            </div>
-            <div #step1 id="step1" class="plan-section-block flex-center p-10 mb-4 border-2">
-              <div class="plan-info-block inner-wrapper">
-                <div class="heading">
-                  <abbr class="mat-headline-5 text-blue-darken">Plan Details</abbr>
-                  <p class="text-grey-darken mt-1">Add plan details here</p>
+                <div class="icon-img mr-4">
+                  <img src="/icons/carbon_document-multiple-02.svg"
+                    alt="carbon_document-multiple-icon" />
                 </div>
-                <form>
-                  <div class="info-form">
-                    <div class="input-wrapper mt-5">
-                      <div>
-                        <div class="flex align-center mb-2">
-                          <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                            Plan Id
-                          </p>
-                          <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                            [ngxTippy]="helpinfotooltip"
-                            [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
-                          <ng-template #helpinfotooltip let-name>
-                            <div class="help-info-tooltip">
-                              <div class="heading-with-background text-blue-darken font-weight-500">Plan id</div>
-                              <div class="details">
-                                <p class="text-grey-darken">
-                                  Enter a Customized Id. If user do not enter this field, the system will generate a ‘Customized
-                                  Human-Readable-id’ based on the Name fielde.g. Plan id Name: “Karisch plus Enterprise”Plan Id:
-                                  “karish-plus-enteprise-01”
-                                </p>
-                              </div>
-                              <button mat-button color="primary" class="px-0">
-                                Learn more
-                              </button>
-                            </div>
-                          </ng-template>
-                        </div>
-                        <mat-form-field appearance="outline">
-                          <input *ngIf="!editable" required matInput placeholder="Enter here..." />
-                          <input *ngIf="editable" readonly required matInput placeholder="Enter here..." />
-                        </mat-form-field>
-                      </div>
-                      <div>
-                        <div class="flex align-center mb-2">
-                          <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                            Plan Name (External)
-                          </p>
-                          <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                            [ngxTippy]="productnameinfo"
-                            [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
-                          <ng-template #productnameinfo let-name class="t-template">
-                            <div class="help-info-tooltip">
-                              <div class="heading-with-background text-blue-darken font-weight-500">
-                                Plan name (External)
-                              </div>
-                              <div class="details">
-                                <p class="text-grey-darken">
-                                  This name will be shown on the customer portal.
-                                </p>
-                              </div>
-                              <button mat-button color="primary" class="px-0">
-                                Learn more
-                              </button>
-                            </div>
-                          </ng-template>
-                        </div>
-                        <mat-form-field appearance="outline">
-                          <input required matInput placeholder="Enter here..."/>
-                        </mat-form-field>
-                      </div>
-                      <div>
-                        <div class="flex align-center mb-2">
-                          <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                            Plan Name (Internal)
-                          </p>
-                          <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                            [ngxTippy]="productnameinfo" [tippyProps]="{ placement: 'right', interactive: true }"
-                            tippyName="content">help</mat-icon>
-                          <ng-template #productnameinfo let-name class="t-template">
-                            <div class="help-info-tooltip">
-                              <div class="heading-with-background">
-                                Plan name (Internal)
-                              </div>
-                              <div class="details">
-                                <p class="text-grey-darken">
-                                  This is help you identify the Plan Internally
-                                </p>
-                              </div>
-                              <button mat-button color="primary" class="px-0">
-                                Learn more
-                              </button>
-                            </div>
-                          </ng-template>
-                        </div>
-                        <mat-form-field appearance="outline">
-                          <input required matInput placeholder="Enter here..." />
-                        </mat-form-field>
-                      </div>
-                      <div>
-                        <div class="flex align-center mb-2">
-                          <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                            Description
-                          </p>
-                        </div>
-                        <mat-form-field appearance="outline">
-                          <textarea matInput placeholder="Enter here..."></textarea>
-                        </mat-form-field>
-                      </div>
-                    </div>
-                  </div>
-                </form>
+                <abbr class="fs-xl font-weight-500 text-blue-darken">Plan Details</abbr>
+              </div>
+              <div class="flex">
+                <button mat-stroked-button color="primary" class="mr-3 small font-weight-500 px-4">
+                  Edit
+                </button>
+                <button mat-stroked-button color="primary" class="small font-weight-500 px-4">
+                  Delete
+                </button>
               </div>
             </div>
-            <div class="action-btns flex align-center justify-between pl-1">
-              <mat-checkbox color="primary" [disableRipple]="true"
-                class="font-weight-500 checkbox ml-n-3 disable-ripple-checkbox">Active</mat-checkbox>
-              <div>
-                <button mat-stroked-button color="primary" class="mr-2 large">
-                  Back
-                </button>
-                <button  mat-flat-button color="primary" class="large" type="button">
-                  Create
-                </button>
-                <button *ngIf="editable" mat-flat-button color="primary" class="large" type="button">
-                  Update
-                </button>
+        
+            <div class="info-details py-8 flex">
+              <div class="details">
+                <h5 class="text-grey-darken mat-subtitle-2 mb-2">Plan Name</h5>
+                <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">Premium</h6>
+              </div>
+              <div class="details">
+                <h5 class="text-grey-darken mat-subtitle-2 mb-2">Plan Id</h5>
+                <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">#AS- 012P</h6>
+              </div>
+              <div class="details">
+                <h5 class="text-grey-darken mat-subtitle-2 mb-2">Plan Status</h5>
+                <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">Active</h6>
+              </div>
+            </div>
+        
+            <div class="description-box">
+              <h5 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-2">Plan Description</h5>
+              <p class="text-grey-darken mat-subtitle-2">
+                Smart plan with the right mix of basic and slightly advanced tools to help you with all marketing and sales
+                requirements
+                right mix of basic and slightly advanced tools to help.
+              </p>
+            </div>
+          </div>
+        
+        
+          <!-- pricing plan -->
+          <div class="pricing-plan p-10 border-2 main-bg mb-4 basic-border">
+            <div class="plan-info-block inner-wrapper">
+              <div class="heading flex align-center pb-3">
+                <div class="icon-img mr-4">
+                  <img src="/icons/basil_invoice-outline.svg" alt="icon" />
+                </div>
+                <abbr class="fs-xl font-weight-500 text-blue-darken">Pricing Plan</abbr>
+              </div>
+              <div class="info-form">
+                <div class="flag-wrapper flex align-center px-4 py-2 border-1 my-4">
+                  <div class="flag-img mr-3">
+                    <img src="/flags.png" alt="flags" />
+                  </div>
+                  <span class="mat-subtitle-2 text-blue-darken">USD</span>
+                </div>
+                <div class="table-wrapper mt-3">
+                  <table class="w-full">
+                    <tr>
+                      <th class="mat-subtitle-2 text-blue-darken pl-2">
+                        Pricing Cycle
+                      </th>
+                      <th class="mat-subtitle-2 text-blue-darken">
+                        Pricing Model
+                      </th>
+                      <th class="mat-subtitle-2 text-blue-darken">
+                        Billing Cycle
+                      </th>
+                      <th class="mat-subtitle-2 text-blue-darken">
+                        Price
+                      </th>
+                      <th class="mat-subtitle-2 text-blue-darken action-header text-center">
+                        Action
+                      </th>
+                    </tr>
+        
+                    <tr>
+                      <td class="mat-subtitle-2 text-grey-darken pl-2">
+                        Daily
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+                        Tired
+                      </td>
+                      <td>
+                        <span class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1">
+                          Fixed
+                        </span>
+                      </td>
+                      <td class="mat-subtitle-2 text-purple-lighten-1">
+                        $100/Unit
+                      </td>
+        
+                      <td class="pr-7">
+                        <div class="flex justify-end">
+                          <button class="flex edit-btn mat-caption mr-1" mat-button color="primary">
+                            <mat-icon class="material-symbols-outlined mr-1" color="primary">edit</mat-icon>Edit
+                          </button>
+                          <button mat-icon-button color="warn" class="light-bg small rounded-1">
+                            <mat-icon class="material-symbols-outlined mr-0" color="warn">close</mat-icon>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="mat-subtitle-2 text-grey-darken pl-2">
+                        Weekly
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+        
+                      </td>
+                      <td>
+        
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+                          <button class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1" (click)="setPrice()">
+                            Set Price
+                            <mat-icon class="material-symbols-outlined ml-2" color="primary">
+                              arrow_right_alt
+                            </mat-icon>
+                          </button>
+        
+                      </td>
+        
+                      <td class="pr-7">
+        
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="mat-subtitle-2 text-grey-darken pl-2">
+                        Monthly
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+        
+                      </td>
+                      <td>
+        
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+                          <button class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1" (click)="setPrice()">
+                            Set Price
+                            <mat-icon class="material-symbols-outlined ml-2" color="primary">
+                              arrow_right_alt
+                            </mat-icon>
+                          </button>
+        
+                      </td>
+        
+                      <td class="pr-7">
+        
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="mat-subtitle-2 text-grey-darken pl-2">
+                        Yearly
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+        
+                      </td>
+                      <td>
+        
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+                          <button class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1">
+                            Set Price
+                            <mat-icon class="material-symbols-outlined ml-2" color="primary">
+                              arrow_right_alt
+                            </mat-icon>
+                          </button>
+        
+                      </td>
+        
+                      <td class="pr-7">
+        
+                      </td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
