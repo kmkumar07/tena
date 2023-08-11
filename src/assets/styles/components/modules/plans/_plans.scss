@@ -589,3 +589,41 @@
   inset: -0.625rem;
   z-index: 9;
 }
+
+//plan-details
+.plan-outer-bolck{
+  width: 58.125rem;
+  margin: auto;
+  .plan-details{
+    border: .0625rem solid color('grey','lighten-14');
+    .heading {
+      border-bottom: 0.0625rem solid $border-color;
+      .icon-img{
+        width: 1.5rem;
+        img{
+          width: 100%;
+        }
+      }
+    }
+    .info-details{
+      .details{
+        padding: 0 3.6875rem 0 3.0625rem;
+        border-right: .0625rem solid $border-color;
+        &:first-child{
+          padding-left: 0;
+        }
+        &:last-child{
+          border-right: none;
+          padding-right: 0;
+        }
+      }
+    }
+  }
+}
+.dark-mode, [data-app-theme="dark"] {
+  .plan-outer-bolck{
+  .text-blue-darken{
+    color: #e7046a !important;
+  }
+}
+}
