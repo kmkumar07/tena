@@ -355,6 +355,71 @@
               </div>
             </div>
           </div>
+
+            <!-- product details -->
+  <div class="product-details p-10 border-2 main-bg mb-4 basic-border">
+    <div class="plan-info-block inner-wrapper">
+      <div class="heading flex justify-between pb-3">
+        <div class="flex align-center">
+          <div class="icon-img mr-4">
+            <img src="/icons/basil_invoice-outline.svg" alt="icon" />
+          </div>
+          <abbr class="fs-xl font-weight-500 text-blue-darken">Product Details</abbr>
+        </div>
+        <button mat-stroked-button color="primary" class="mr-3 small font-weight-500 px-4" (click)="addProductDetails()">
+          Add product
+        </button>
+      </div>
+    </div>
+
+    <!-- Product Details inner -->
+    <div class="plan-section-block border-2 mt-4">
+      <div class="plan-info-block inner-wrapper">
+        <div class="details-wrapper py-3 px-5 border-2">
+          <div class="details-inner flex justify-between">
+            <div class="flex">
+              <div class="product-img p-2 mr-4">
+                <img src="/teams.png" alt="product-img" />
+              </div>
+              <div class="mt-2">
+                <div>
+                  <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-1">
+                    MS Team
+                  </h6>
+                  <span class="mat-body-1 font-weight-500 text-blue-darken">3 Features
+                    included</span>
+                </div>
+                <div class="flex mt-3">
+                  <div class="info-details">
+                    <h5 class="mat-subtitle-2 text-grey-darken mb-1">Whiteboard</h5>
+                    <a  class="mat-subtitle-2 text-blue-darken font-weight-500" (click)="editFeatureDetails()">ON</a>
+                  </div>
+                  <div class="info-details">
+                    <h5 class="mat-subtitle-2 text-grey-darken mb-1">Email support</h5>
+                    <a class="mat-subtitle-2 text-blue-darken font-weight-500">All Week</a>
+                  </div>
+                  <div class="info-details">
+                    <h5 class="mat-subtitle-2 text-grey-darken mb-1">User License</h5>
+                    <a class="mat-subtitle-2 text-blue-darken font-weight-500">10 License</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex">
+              <button class="flex icon-text mat-caption mr-4" mat-button color="primary"
+              >
+                <mat-icon class="material-symbols-outlined mr-1" color="primary">edit</mat-icon>Edit
+              </button>
+              <button mat-icon-button color="warn" class="light-bg small rounded-1"
+                >
+                <mat-icon class="material-symbols-outlined mr-0" color="warn">close</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
         </div>
         </div>
     </mat-sidenav-content>

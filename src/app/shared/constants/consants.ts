@@ -464,6 +464,10 @@ export const feature_types = [
   { value: 3, title: 'quantity' },
   { value: 4, title: 'custom' },
 ];
+export const Status = [
+  { value: 1, title: 'Active' },
+  { value: 2, title: '' },
+];
 export const Frequency = [
   { value: 1, title: 'Daily' },
   { value: 2, title: 'Weekly' },
