@@ -76,7 +76,7 @@
         &:hover {
           background-color: var(--surface-bg);
           border: 1px solid #d6d6d6;
-          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.14);
+          // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.14);
           position: relative;
         }
         td {
@@ -227,14 +227,14 @@
   }
 
   td.mdc-data-table__cell {
-    color: $headline-light;
+    // color: $headline-light;
 
     &.Active {
       color: color("green", "darken-3");
     }
   }
   .mat-mdc-table .mdc-data-table__row:nth-child(odd) {
-    background-color: $primay-light-bg-color;
+    background-color: var(--grey-bg);
   }
 
   .mat-mdc-select {

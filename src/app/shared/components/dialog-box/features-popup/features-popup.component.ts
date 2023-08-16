@@ -13,14 +13,13 @@ import {
   Validators,
 } from '@angular/forms';
 import getUniqueId from 'src/app/core/utils/functions/getUniqueId';
-// import { FeatureService } from '../../services/feature.service';
-import { FeatureService } from '../../../../../modules/features/services/feature.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FeatureService } from 'src/app/modules/features/services/feature.service';
 
 export interface menuOptions {
   value: number;

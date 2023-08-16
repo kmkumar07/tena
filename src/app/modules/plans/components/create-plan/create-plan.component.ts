@@ -13,6 +13,7 @@ import { PlanService } from '../../services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SetPricePopupComponent } from 'src/app/shared/components/dialog-box/set-price-popup/set-price-popup.component';
+import { ProductDetailsPopupComponent } from 'src/app/shared/components/dialog-box/product-details-popup/product-details-popup.component';
 
 
 export interface PeriodicElement {
@@ -267,6 +268,16 @@ export class CreatePlanComponent implements OnInit {
   setPrice(){
     this.dialog.open(SetPricePopupComponent, {
       width: '622px',
+    });
+  }
+  addProductDetails(){
+    this.dialog.open(ProductDetailsPopupComponent, {
+      width: '800px',
+    });
+  }
+  editFeatureDetails(){
+    this.dialog.open(FeatureDetailsPopupComponent, {
+      width: '800px',
     });
   }
 }
