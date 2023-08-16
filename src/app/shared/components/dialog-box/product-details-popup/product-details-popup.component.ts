@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Router } from '@angular/router';
 import { ProductDetailsService } from 'src/app/modules/plans/services/product-details.service';
+import { Status, selectOptions } from 'src/app/shared/constants/consants';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface PeriodicElement {
   featureId: string;
@@ -19,12 +21,29 @@ export interface PeriodicElement {
   symbol: string;
 }
 
+
+export interface PeriodicElement1 {
+  name: string;
+  position: number;
+  type: string;
+  status: string;
+  entitlements : string;
+}
+
+const ELEMENT_DATA: PeriodicElement1[] = [
+  {position: 1, name: 'Whiteboard', status: 'Active', type: 'Switch',entitlements:''},
+  {position: 2, name: 'Email support', status: 'Active', type: 'Custom',entitlements:''},
+  {position: 3, name: 'API Call', status: 'Active', type: 'Range',entitlements:''},
+  {position: 4, name: 'User License', status: 'Active',type: 'Quantity',entitlements:''},
+];
 @Component({
   selector: 'app-product-details-popup',
   templateUrl: './product-details-popup.component.html',
   styleUrls: ['./product-details-popup.component.scss']
 })
 export class ProductDetailsPopupComponent {
+  dropKey: number;
+  StatusTypes: selectOptions[] = Status;
   subscription: Subscription;
   PageNumber: any = '';
   limit: any = '';
@@ -44,6 +63,10 @@ export class ProductDetailsPopupComponent {
   clicked = false;
   rangeForm: FormGroup;
   loading = false;
+  displayedColumns1: string[] = ['select', 'name', 'type', 'status','entitlements'];
+  dataSource = new MatTableDataSource<PeriodicElement1>(ELEMENT_DATA);
+  selection1 = new SelectionModel<PeriodicElement1>(true, []);
+  
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -232,5 +255,8 @@ export class ProductDetailsPopupComponent {
           console.log('something wrong occured', err.error.message);
         },
       });
+  }
+  onDropdownKey(event: number): void {
+    this.dropKey = event;
   }
 }

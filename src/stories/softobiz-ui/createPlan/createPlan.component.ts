@@ -7,6 +7,20 @@ import { MENUITEMS, Config_Menu, Menu_Headings, User_Options, Notifications_Data
 // import { GlobalService } from 'src/app/core/services/global.service';
 import { GlobalService } from '../../../../src/app/core/services/global.service';
 
+
+export interface PeriodicElement {
+  PricingCycle: string;
+  Price: any;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { PricingCycle: 'Daily', Price: 'Set Price' },
+  { PricingCycle: 'Weekly', Price: 'Set Price' },
+  { PricingCycle: 'Monthly', Price: 'Set Price' },
+  { PricingCycle: 'Yearly', Price: 'Set Price' },
+];
+
+
 @Component({
   selector: 'sft-createPlan',
   templateUrl: './createPlan.component.html',
@@ -23,6 +37,9 @@ export class createPlanComponent {
   notificationsData = Notifications_Data;
   activeRoute: string[];
   currentRoute: string;
+  displayedColumns: string[] = ['PricingCycle', 'Price'];
+  dataSource = ELEMENT_DATA;
+  clickedRows = new Set<PeriodicElement>();
 
   constructor(
     public globalService: GlobalService,
