@@ -1,8 +1,8 @@
 trigger:
 - dev
 
-pool:
-  vmImage: 'ubuntu-latest'
+pool: saas
+#  vmImage: 'ubuntu-latest'
 
 variables:
 - group: DF-TP-PipelineVariables
