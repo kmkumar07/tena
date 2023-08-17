@@ -9,6 +9,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NgxTippyProps } from 'ngx-tippy-wrapper';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { SuccessDialogComponent } from '../../../../shared/components/dialog-box/success-dialog/success-dialog.component';
+import { DialogAnimaComponent } from '../../../../shared/components/dialog-box/dialog-anima/dialog-anima.component';
 import { OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -46,6 +47,9 @@ export class CreateProductComponent implements OnInit {
   uploadMessage: string = '';
   uploadSuccess: boolean = false;
   error: string;
+  receivedCroppedImage: string;
+  dialogRef: any;
+
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -54,6 +58,9 @@ export class CreateProductComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
   ngOnInit() {
+    this.productService.croppedImage$.subscribe((croppedImage) => {
+      this.receivedCroppedImage = croppedImage;
+    });
     this.productForm = this.formBuilder.group({
       productId: ['', Validators.required],
       name: [
@@ -74,6 +81,7 @@ export class CreateProductComponent implements OnInit {
       this.productForm.controls['productId'].setValue(idValue);
     });
   }
+ 
   isChecked(): boolean {
     const status = this.productForm.get('status')?.value;
     return status === 'active';
@@ -87,8 +95,9 @@ export class CreateProductComponent implements OnInit {
     // this.router.navigate(['']);
     this.router.navigate([`/products/view-product/${res.productId}`]);
   }
+  
   onSubmit() {
-    this.productForm.get('imageUrl')?.setValue(this.imageUrl);
+    this.productForm.get('imageUrl')?.setValue(this.receivedCroppedImage);
     const status = this.productForm.value.status ? 'active' : 'draft';
     const product = {
       ...this.productForm.value,
@@ -121,31 +130,53 @@ export class CreateProductComponent implements OnInit {
     }, duration);
   }
 
-  openDialog(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string
-  ): void {
-    const dialogRef = this.dialog.open(DialogAnimationsDialog, {
-      width: '',
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
-    dialogRef.componentInstance.saveSuccess.subscribe(
-      (data: { imageUrl: string; imageName: string }) => {
-        this.imageUrl = data.imageUrl;
-        this.imageName = data.imageName;
-        this.imagePath = environment.blobStorage;
-        this.uploadSuccess = true;
-        this.uploadMessage = 'Image upload successful';
-        this.startMessageTimer();
-      }
-    );
-    dialogRef.componentInstance.saveError.subscribe((res: any) => {
-      this.uploadSuccess = false;
-      this.uploadMessage = 'Image upload failed. Please try again.';
-      this.startMessageTimer();
-    });
+  openDialog() {
+  this.dialogRef = this.dialog.open(DialogAnimaComponent, {
+    width: '700px',
+  });
+  this.dialogRef.afterClosed().subscribe((res: any) => {
+    if (res) {
+      this.uploadlogoSave();
+        console.log("this.receivedCroppedImage",this.receivedCroppedImage);
+}
+  });
   }
+  uploadlogoSave() {
+    console.log("handleSave");
+      this.subscription = this.productService.uploadImage(this.receivedCroppedImage).subscribe({
+        next: (res) => {
+          console.log("this.imageUrl",res);
+          
+        },
+      });
+    }
+  
+
+  // openDialog(
+  //   enterAnimationDuration: string,
+  //   exitAnimationDuration: string
+  // ): void {
+  //   const dialogRef = this.dialog.open(DialogAnimationsDialog, {
+  //     width: '700px',
+  //     enterAnimationDuration,
+  //     exitAnimationDuration,
+  //   });
+  //   dialogRef.componentInstance.saveSuccess.subscribe(
+  //     (data: { imageUrl: string; imageName: string }) => {
+  //       this.imageUrl = data.imageUrl;
+  //       this.imageName = data.imageName;
+  //       this.imagePath = environment.blobStorage;
+  //       this.uploadSuccess = true;
+  //       this.uploadMessage = 'Image upload successful';
+  //       this.startMessageTimer();
+  //     }
+  //   );
+  //   dialogRef.componentInstance.saveError.subscribe((res: any) => {
+  //     this.uploadSuccess = false;
+  //     this.uploadMessage = 'Image upload failed. Please try again.';
+  //     this.startMessageTimer();
+  //   });
+  // }
 
   deleteImage() {
     const removeImagePayload = {
@@ -169,38 +200,41 @@ export class CreateProductComponent implements OnInit {
       },
     });
   }
+  activeChecked(event: any){
+    console.log(event, 'cjeck')
+  }
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
-}
+//}
 
-@Component({
-  selector: 'dialog-animations-dialog',
-  templateUrl:
-    '../../../../shared/components/dialog-box/dialog-animations-dialog.html',
-  styleUrls: [
-    '../../../../shared/components/dialog-box/dialog-animations.scss',
-  ],
-  animations: [
-    trigger('slideInOut', [
-      transition(':enter', [
-        style({ transform: 'translateX(-100%)' }),
-        animate('300ms ease-in', style({ transform: 'translateX(0%)' })),
-      ]),
-      transition(':leave', [
-        animate('300ms ease-in', style({ transform: 'translateX(-100%)' })),
-      ]),
-    ]),
-  ],
-})
-export class DialogAnimationsDialog {
-  subscription: Subscription;
-  constructor(
-    public dialogRef: MatDialogRef<DialogAnimationsDialog>,
-    private productService: ProductsService
-  ) {}
+// @Component({
+//   selector: 'dialog-animations-dialog',
+//   templateUrl:
+//     '../../../../shared/components/dialog-box/dialog-animations-dialog.html',
+//   styleUrls: [
+//     '../../../../shared/components/dialog-box/dialog-animations.scss',
+//   ],
+//   animations: [
+//     trigger('slideInOut', [
+//       transition(':enter', [
+//         style({ transform: 'translateX(-100%)' }),
+//         animate('300ms ease-in', style({ transform: 'translateX(0%)' })),
+//       ]),
+//       transition(':leave', [
+//         animate('300ms ease-in', style({ transform: 'translateX(-100%)' })),
+//       ]),
+//     ]),
+//   ],
+//})
+// export class DialogAnimationsDialog {
+//   subscription: Subscription;
+//   constructor(
+//     public dialogRef: MatDialogRef<DialogAnimationsDialog>,
+//     private productService: ProductsService
+//   ) {}
   activeColor: string = 'green';
   baseColor: string = '#ccc';
   overlayColor: string = 'rgba(255,255,255,0.5)';
@@ -210,8 +244,8 @@ export class DialogAnimationsDialog {
   imageLoaded: boolean = false;
   imageSrc: string = '';
   base64imageData: string = '';
-  imageName: string = '';
-  imageUrl: string = '';
+  //imageName: string = '';
+  //imageUrl: string = '';
 
   handleDragEnter() {
     this.dragging = true;
@@ -257,6 +291,8 @@ export class DialogAnimationsDialog {
     new EventEmitter<{ imageUrl: string; imageName: string }>();
   @Output() saveError: EventEmitter<any> = new EventEmitter<any>();
   handleSave() {
+    console.log("handleSave");
+    
     if (this.base64imageData) {
       const payload = {
         image: this.base64imageData,
@@ -265,6 +301,8 @@ export class DialogAnimationsDialog {
       this.subscription = this.productService.uploadImage(payload).subscribe({
         next: (res) => {
           this.imageUrl = res.data.blobURL;
+          console.log("this.imageUrl",this.imageUrl);
+          
         },
         error: (error: any) => {
           this.saveError.emit(error);

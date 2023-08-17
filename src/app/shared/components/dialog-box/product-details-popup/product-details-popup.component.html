@@ -1,0 +1,248 @@
+<div class="productDetails-popup relative">
+    <div class="heading pb-3">
+        <h5 class="mat-subtitle-1 text-blue-darken mb-2 font-weight-500">Add Product</h5>
+        <p class="text-grey-darken mt-1">  Fill in the details to add product</p>
+    </div>
+    <div class="inner-block pr-5 pb-4">
+      <div class="mt-6">
+        <div class="py-2">
+          <div class="input-wrapper">
+            <div class="flex align-center mb-2">
+              <p class="mat-subtitle-2 font-weight-500 text-blue-darken">Product</p>
+            </div>
+            <ng-container [formGroup]="formGroup">
+              <mat-form-field appearance="outline" class="border-2">
+                <mat-select required formControlName="productID" placeholder="select">
+                  <mat-option *ngFor="let product of productData" (click)="selectProduct(product)"
+                    [value]="product.productId">
+                    {{ product.productId }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
+    
+            <div>
+              <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 text-blue-darken disabled">
+                  Product Name
+                </p>
+              </div>
+              <mat-form-field appearance="outline">
+                <input matInput [disabled]="true" placeholder="Select" [value]="formGroup.controls.productName.value"
+                  formControlName="productName" />
+              </mat-form-field>
+            </div>
+    
+            <div>
+              <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 text-blue-darken disabled">
+                  Description
+                </p>
+              </div>
+              <mat-form-field appearance="outline" class="add-product-description">
+                <textarea matInput [disabled]="true" placeholder="Enter " [value]="formGroup.controls.description.value"
+                  formControlName="description"></textarea>
+              </mat-form-field>
+            </div>
+        <!-----loader ------>
+           <!-- <div class="loader" *ngIf="loading">
+              <mat-spinner></mat-spinner>
+            </div>
+    
+            <div *ngIf="isProductSelected" class="add-product-table">
+              <p class="mat-subtitle-2 font-weight-500 text-primary py-2 mb-3 table-heading">
+                Feature for this plan
+              </p>
+              <div class="relative main-bg border-2">
+                <div class="checked-stripe-table" let feature of feature>
+                  <table mat-table [dataSource]="filteredFeatures"> -->
+                    <!-- Checkbox Column -->
+                    <!-- <ng-container matColumnDef="select">
+                      <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                        </mat-checkbox>
+                      </th>
+                      <td mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? toggleCheckbox($event, row) : null"
+                          [checked]="selection.isSelected(row) && isCheckboxChecked" [aria-label]="checkboxLabel(row)">
+                        </mat-checkbox>
+                      </td>
+                    </ng-container> -->
+    
+                    <!-- Position Column -->
+                    <!-- <ng-container matColumnDef="position">
+                      <th mat-header-cell *matHeaderCellDef class="font-weight-500">
+                        Name
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.name }}
+                      </td>
+                    </ng-container> -->
+    
+                    <!-- Name Column -->
+                    <!-- <ng-container matColumnDef="name">
+                      <th mat-header-cell *matHeaderCellDef class="font-weight-500">
+                        Type
+                      </th>
+                      <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+                    </ng-container>
+     -->
+                    <!-- Weight Column -->
+                    <!-- <ng-container matColumnDef="status">
+                      <th mat-header-cell *matHeaderCellDef class="font-weight-500">
+                        Status
+                      </th>
+                      <td mat-cell *matCellDef="let element" [ngClass]="element.status">
+                        {{ element.status }}
+                      </td>
+                    </ng-container> -->
+    
+                    <!-- Symbol Column -->
+                    <!-- <ng-container matColumnDef="symbol">
+                      <th mat-header-cell *matHeaderCellDef class="font-weight-500">
+                        Entitlements
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="element.type === 'quantity' || element.type === 'custom' ">
+                          <ng-container *ngIf="element.levels && element.levels.length > 0">
+                            <mat-form-field appearance="fill" subscriptSizing="dynamic">
+                              <mat-select [value]="selectedLevelFromDropdown" placeholder="select">
+                                <mat-option *ngFor="let level of element.levels" [value]="level.value" (click)="
+                                    onSelectedLevelChange(
+                                      element.featureId,
+                                      level.value
+                                    )
+                                  ">
+                                  {{ level.name }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="element.type === 'switch'">
+                          <mat-form-field appearance="fill" subscriptSizing="dynamic">
+                            <mat-select [(ngModel)]="selectedOptions[element.featureId]" errorState="false"
+                              placeholder="select">
+                              <mat-option [value]="true">Available</mat-option>
+                              <mat-option [value]="false">Not available</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </ng-container>
+    
+                        <ng-container *ngIf="element.type === 'range'">
+                          <form [formGroup]="rangeForm">
+                            <mat-form-field appearance="outline" class="border-2" subscriptSizing="dynamic">
+                              <input matInput placeholder="Enter the value" [formControlName]="element.featureId" (input)="rangeForm.controls[element.featureId].markAsTouched()" pattern="[0-9]*" required />
+                               <mat-hint>
+                              Between {{ element.minValue }} and {{ element.maxValue }}
+                              </mat-hint>
+                              <mat-error *ngIf="
+                                  rangeForm.controls[element.featureId].invalid &&
+                                  rangeForm.controls[element.featureId].touched
+                                ">
+                                <ng-container *ngIf="rangeForm.controls[element.featureId].errors['required']">
+                                  Value is required and cannot be left empty.
+                                </ng-container>
+                                  <ng-container *ngIf="rangeForm.controls[element.featureId].errors['pattern']">
+                                 Only number are allowed.
+                                 </ng-container>
+                               <ng-container *ngIf="rangeForm.controls[element.featureId].errors['min']">
+                              Value should above {{ element.minValue }}.
+                              </ng-container>
+                           <ng-container *ngIf="rangeForm.controls[element.featureId].errors['max']">
+                            Between {{ element.minValue }} and {{ element.maxValue }}
+                         </ng-container>
+                              </mat-error>
+                            </mat-form-field>
+                          </form>
+                        </ng-container>
+                      </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
+                  </table>
+                </div>
+              </div>
+            </div> -->
+
+          </div>
+        </div>
+      </div>
+      <div class="">
+        <div class="heading pb-3">
+          <h5 class="mat-subtitle-1 text-blue-darken mb-0 font-weight-500">Feature for this plan</h5>
+        </div>
+        <div class="primary-table checked-stripe-table mt-3 table-wrapper">
+          <table mat-table [dataSource]="dataSource">
+    
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()"
+                  [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                  [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+             <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="text-blue-darken"> Name </th>
+              <td mat-cell *matCellDef="let element" class="text-grey-darken"> {{element.name}} </td>
+            </ng-container>
+    
+            <!-- Name Column -->
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef class="text-blue-darken"> Type </th>
+              <td mat-cell *matCellDef="let element" class="text-grey-darken"> {{element.type}} </td>
+            </ng-container>
+    
+            <!-- Weight Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef class="text-blue-darken"> Status</th>
+              <td mat-cell *matCellDef="let element" class="text-green-dark-3"> {{element.status}} </td>
+            </ng-container>
+    
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="entitlements">
+              <th mat-header-cell *matHeaderCellDef class="text-blue-darken"> Entitlements </th>
+              <td mat-cell *matCellDef="let element" class="entitlements-option flex-center py-4">
+                <div class="input-wrapper">
+                  <mat-form-field appearance="outline" class="border-2">
+                    <mat-select required placeholder="select" formControlName="Status">
+                      <mat-option *ngFor="let option of StatusTypes" value="{{ option.value }}"
+                        (click)="onDropdownKey(option.value)">
+                        {{ option.title }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+            </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1;" (click)="selection.toggle(row)">
+            </tr>
+          </table>
+    
+        </div>
+      </div>
+    </div>
+        <div class="flex justify-between align-center pl-1">
+            <mat-checkbox color="primary" formControlName="status" [disableRipple]="true"
+            class="font-weight-500 checkbox ml-n-3 disable-ripple-checkbox">Active</mat-checkbox>
+          <div class="flex align-center">
+            <button mat-stroked-button color="primary" class="mr-2">Dismiss</button>
+            <button mat-flat-button
+              color="primary">
+              Add
+            </button>
+          </div>
+        </div>
+</div>

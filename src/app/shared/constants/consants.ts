@@ -464,6 +464,16 @@ export const feature_types = [
   { value: 3, title: 'quantity' },
   { value: 4, title: 'custom' },
 ];
+export const Status = [
+  { value: 1, title: 'Active' },
+  { value: 2, title: '' },
+];
+export const Frequency = [
+  { value: 1, title: 'Daily' },
+  { value: 2, title: 'Weekly' },
+  { value: 3, title: 'Monthly' },
+  { value: 4, title: 'Yearly' },
+];
 export const pricingModels = [
   { value: 1, title: 'Flat fee' },
   { value: 2, title: 'Per unit' },
@@ -511,7 +521,7 @@ export const plan_add_empty_data = [
 export const noProducts = [
   {
     heading: 'Products',
-    imgPath: '../../../../assets/images/empty-illustrations.png',
+    imgPath: '../../../../../assets/images/empty-illustrations.png',
     alt: 'no proudcts available',
     subtext: 'Looking for Product',
     text: "Seems like you haven't added any Product. Start adding products by click on “Create Product” button",
@@ -523,7 +533,7 @@ export const noProducts = [
 export const noFeatures = [
   {
     heading: 'Features',
-    imgPath: '../../../../assets/images/empty-illustrations-2.png',
+    imgPath: '../../../../../assets/images/empty-illustrations-2.png',
     alt: 'no features available',
     subtext: 'Looking for Features',
     text: "Seems like you haven't added any feature. Start adding feature by click on “Create Feature” button ",

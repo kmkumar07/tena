@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DialogAnimationsDialog } from '../create-product/create-product.component';
+// import { DialogAnimationsDialog } from '../create-product/create-product.component';
 import { FormBuilder, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ProductsService } from '../../services/products.service';
@@ -9,6 +9,7 @@ import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/suc
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
+import { DialogAnimaComponent } from 'src/app/shared/components/dialog-box/dialog-anima/dialog-anima.component';
 
 @Component({
   selector: 'app-edit-product',
@@ -107,31 +108,37 @@ export class EditProductComponent implements OnInit {
     this.router.navigate(['/products']);
   }
 
-  openDialog(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string
-  ): void {
-    const dialogRef = this.dialog.open(DialogAnimationsDialog, {
-      width: '',
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
-    dialogRef.componentInstance.saveSuccess.subscribe(
-      (data: { imageUrl: string; imageName: string }) => {
-        this.getProductImageUrl = data.imageUrl;
-        this.imageName = data.imageName;
-        this.imagePath = environment.blobStorage;
-        this.uploadSuccess = true;
-        this.uploadMessage = 'Image upload successful';
-        this.startMessageTimer();
-      }
-    );
-    dialogRef.componentInstance.saveError.subscribe((res: any) => {
-      this.uploadSuccess = false;
-      this.uploadMessage = 'Image upload failed. Please try again.';
-      this.startMessageTimer();
+  openDialog() {
+    this.dialog.open(DialogAnimaComponent, {
+      width: '700px',
     });
   }
+
+  // openDialog(
+  //   enterAnimationDuration: string,
+  //   exitAnimationDuration: string
+  // ): void {
+  //   const dialogRef = this.dialog.open(DialogAnimationsDialog, {
+  //     width: '700px',
+  //     enterAnimationDuration,
+  //     exitAnimationDuration,
+  //   });
+  //   dialogRef.componentInstance.saveSuccess.subscribe(
+  //     (data: { imageUrl: string; imageName: string }) => {
+  //       this.getProductImageUrl = data.imageUrl;
+  //       this.imageName = data.imageName;
+  //       this.imagePath = environment.blobStorage;
+  //       this.uploadSuccess = true;
+  //       this.uploadMessage = 'Image upload successful';
+  //       this.startMessageTimer();
+  //     }
+  //   );
+  //   dialogRef.componentInstance.saveError.subscribe((res: any) => {
+  //     this.uploadSuccess = false;
+  //     this.uploadMessage = 'Image upload failed. Please try again.';
+  //     this.startMessageTimer();
+  //   });
+  // }
   deleteImage() {
     const imageUrlparts = this.getProductImageUrl?.split('/saasframework/');
     const extractedImagePart = decodeURIComponent(imageUrlparts[1]);

@@ -162,9 +162,8 @@ $my-theme: mat.define-light-theme(
     density: 0,
   )
 );
-[data-app-theme="light"] {
-  @include mat.all-component-themes($my-theme);
-}
+
+@include mat.all-component-themes($my-theme);
 @include mat.typography-hierarchy($my-typography);
 @include mat.all-component-themes($my-theme);
 @include mat.icon-theme($my-theme);

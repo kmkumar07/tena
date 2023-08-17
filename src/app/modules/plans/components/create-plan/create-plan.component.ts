@@ -12,6 +12,10 @@ import {
 import { PlanService } from '../../services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SetPricePopupComponent } from 'src/app/shared/components/dialog-box/set-price-popup/set-price-popup.component';
+import { ProductDetailsPopupComponent } from 'src/app/shared/components/dialog-box/product-details-popup/product-details-popup.component';
+import { AddonDetailsPopupComponent } from 'src/app/shared/components/dialog-box/addon-details-popup/addon-details-popup.component';
+
 
 export interface PeriodicElement {
   PricingCycle: string;
@@ -39,7 +43,7 @@ export class CreatePlanComponent implements OnInit {
     'Price',
     'action',
   ];
-  status:boolean;
+  status: boolean;
   priceData: any[] = [];
   planAddEmptyData = plan_add_empty_data;
   stepsTitle = Stepper;
@@ -126,7 +130,6 @@ export class CreatePlanComponent implements OnInit {
         .subscribe((res) => {
           this.patchValue(res.data);
           this.editable = true;
-          
         });
     } else {
       this.stepOneCompleted = false;
@@ -187,7 +190,7 @@ export class CreatePlanComponent implements OnInit {
   onSubmit() {
     this.global.showLoader();
     const status = this.planForm.value.status ? 'active' : 'draft';
-   
+
     const type = 'base';
     const plan = {
       ...this.planForm.value,
@@ -246,85 +249,6 @@ export class CreatePlanComponent implements OnInit {
   editProductVariant(id: string) {
     this.router.navigate([`/plans/create/edit-product-detail/${id}`]);
   }
-  switchStepper(step: any) {
-    const stepId = step.id;
-    if (stepId === 1) {
-      this.step1.nativeElement.scrollIntoView({ behavior: 'smooth' });
-    } else if (stepId === 2) {
-      this.step2.nativeElement.scrollIntoView({ behavior: 'smooth' });
-    } else if (stepId === 3) {
-      this.step3.nativeElement.scrollIntoView({ behavior: 'smooth' });
-    } else if (stepId === 4) {
-      this.step4.nativeElement.scrollIntoView({ behavior: 'smooth' });
-    } else if (stepId === 5) {
-      this.step5.nativeElement.scrollIntoView({ behavior: 'smooth' });
-    }
-    // const element = this.step3.nativeElement;
-    // window.scrollTo({
-    //   top: element.offsetTop,
-    //   behavior: 'smooth'
-    // })
-  }
-  arr = [
-    {
-      step: 'step1',
-      id: 'cdk-step-label-0-0',
-      attributeValue: 'false',
-    },
-    {
-      step: 'step2',
-      id: 'cdk-step-label-0-1',
-      attributeValue: 'false',
-    },
-    {
-      step: 'step3',
-      id: 'cdk-step-label-0-2',
-      attributeValue: 'false',
-    },
-    {
-      step: 'step4',
-      id: 'cdk-step-label-0-3',
-      attributeValue: 'false',
-    },
-    {
-      step: 'step5',
-      id: 'cdk-step-label-0-4',
-      attributeValue: 'false',
-    },
-  ];
-  ngAfterViewInit() {
-    // Initialize Intersection Observer
-    const observer = new IntersectionObserver((entries, observer) => {
-      let findCurrent = entries.find((ele) => ele.isIntersecting == true);
-      if (findCurrent) {
-        this.testId = String(findCurrent.target.id);
-        this.arr.forEach((ele) => {
-          if (ele.step == this.testId) {
-            document
-              .getElementById(ele.id)
-              ?.setAttribute('aria-selected', 'true');
-          } else {
-            document
-              .getElementById(ele.id)
-              ?.setAttribute('aria-selected', ele.attributeValue);
-          }
-        });
-      }
-    });
-
-    // Start observing the element
-    const testArr = [
-      this.step1,
-      this.step2,
-      this.step3,
-      this.step4,
-      this.step5,
-    ];
-    testArr.forEach((element: any) => {
-      observer.observe(element.nativeElement);
-    });
-  }
-
   openSuccess(id) {
     this.dialogRef = this.dialog.open(SuccessDialogComponent, {
       width: '420px',
@@ -341,5 +265,25 @@ export class CreatePlanComponent implements OnInit {
   }
   removeType(index: any) {
     this.planService.priceModelArr.splice(index, 1);
+  }
+  setPrice(){
+    this.dialog.open(SetPricePopupComponent, {
+      width: '622px',
+    });
+  }
+  addProductDetails(){
+    this.dialog.open(ProductDetailsPopupComponent, {
+      width: '800px',
+    });
+  }
+  editFeatureDetails(){
+    this.dialog.open(FeatureDetailsPopupComponent, {
+      width: '800px',
+    });
+  }
+  addOnDetails(){
+    this.dialog.open(AddonDetailsPopupComponent, {
+      width: '800px',
+    });
   }
 }

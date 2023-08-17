@@ -92,13 +92,14 @@
 
 // create plan section
 .create-plan-main-wrapper {
+  width: 52.3125rem;
+  margin: auto;
   .with-footer-btn {
     .add-new-btn-list {
       display: flex;
       justify-content: start;
     }
   }
-  width: calc(100% - 19.25rem);
 
   .plan-info-block {
     .heading {
@@ -116,8 +117,8 @@
   }
 
   .plan-section-block {
+    border: 0.0625rem solid color("grey", "lighten-14");
     background-color: var(--surface-bg);
-    border-radius: 0 0.5rem 0.5rem 0;
     .inner-wrapper {
       max-width: 44.75rem;
       width: 100%;
@@ -525,58 +526,189 @@
     }
   }
 }
-//Product Details inner
-.details-wrapper {
-  border: 0.0625rem solid color("grey", "lighten-11");
-  .details-inner {
-    .product-img {
-      border: 0.0625rem solid var(--primary-light);
-      @include square(3.75rem, 0.375rem);
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-  }
-  @media only screen and (max-width: 80rem) {
-    .mat-mdc-chip.mat-mdc-standard-chip.primary-light-chip {
-      padding: 0.375rem 0.625rem;
-    }
-  }
-}
 
 //feature-details-popup
 .feature-details-popup {
-  width: 34.5rem;
-  .title {
-    border-bottom: 0.0625rem solid color("grey", "lighten-7");
+  padding: 2.1875rem 1.25rem 2.1875rem 2.5rem;
+  .heading{
+    border-bottom: 0.0625rem solid $border-color;
   }
-}
-// add-on details
-.add-on-view-wrapper {
-  .content-wrapper {
-    padding-left: 4.4375rem;
+  }
 
-    .table-wrapper .mat-mdc-row .mat-mdc-cell.price-cell {
-      width: 9.375rem;
+// add-on details
+ .addon-detail {
+  .details-wrapper {
+    border: 0.0625rem solid color("grey", "lighten-11");
+    .details-inner {
+      .product-img {
+        border: 0.0625rem solid var(--primary-light);
+        @include square(3.75rem, 0.375rem);
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
     }
-  }
-}
-.add-on-details-wrapper {
-  background-color: $primay-light-bg-color;
-  @media only screen and (max-width: 80rem) {
-    .add-on-detail {
-      .chip-wrapper {
-        gap: 0.625rem;
+    .content-wrapper {
+      padding-left: 4.4375rem;
+  
+      .info-details{
+        padding: 0 2.3125rem 0 3.0625rem;
+        border-right: .0625rem solid $border-color;
+        &:first-child{
+          padding-left: 0;
+        }
+        &:last-child{
+          border-right: none;
+          padding-right: 0;
+        }
+      }
+  
+      .table-wrapper .mat-mdc-row .mat-mdc-cell.price-cell {
+        width: 9.375rem;
+      }
+    }
+    .add-on-details-wrapper {
+      background-color: var(--grey-bg);
+      max-width: 36.9375rem;
+      width: 100%;
+      @media only screen and (max-width: 80rem) {
+        .add-on-detail {
+          .chip-wrapper {
+            gap: 0.625rem;
+          }
+        }
+      }
+    
+      .heading-content {
+        border-left: 0.1875rem solid var( --primary-main);
+      }
+    }
+    .info-form{
+      max-width: 35.125rem;
+      .flag-wrapper{
+        border-bottom: 0.0625rem solid var(--primary-light);
+        .flag-img{
+          width: 1.6875rem;
+          height: 1.25rem;
+          img{
+            width: 100%;
+          }
+        }
       }
     }
   }
+}
 
-  .heading-content {
-    border-left: 0.1875rem solid $primary-color-light;
+// addon-details-popup
+.addon-details-popup{
+  padding: 2.1875rem 1.25rem 2.1875rem 2.5rem;
+  .inner-block{
+    max-height: 51vh;
+    overflow: auto;
+
+      .details-wrapper {
+        background-color: var(--grey-bg);
+        border: 1px solid var(--primary-light);
+        border-radius: 8px 8px 0px 0px;
+
+        .product-img{
+          max-width: 3.75rem;
+          height: 3.75rem;
+          width: 100%;
+          border-radius: .375rem;
+          border: .0625rem solid var(--primary-light);
+          img{
+            width: 100%;
+          }
+        }
+
+        .info-details{
+          padding: 0 2.3125rem 0 3.0625rem;
+          border-right: .0625rem solid $border-color;
+          &:first-child{
+            padding-left: 0;
+          }
+          &:last-child{
+            border-right: none;
+            padding-right: 0;
+          }
+        }
+      }
+      .add-product-table {
+        border-radius: 0px 0px 8px 8px;
+        border: 0.0625rem solid color("grey", "lighten-11");
+        border-top: 0;
+        .table-wrapper {
+          margin: 0 1.875rem;
+          .table-title {
+            border-bottom: 0.0625rem solid color("blue", "lighten-12");
+          }
+          .checked-stripe-table .mat-mdc-table {
+            border-radius: 0;
+          }
+          .primary-table.checked-stripe-table
+            .mat-mdc-table
+            .mdc-data-table__row {
+            height: 2.5rem;
+            // box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+            &.selected-row {
+              box-shadow: none;
+            }
+          }
+          .mat-mdc-table .mdc-data-table__header-row {
+            height: 2.6875rem;
+          }
+        }
+      }
+      .outer-checkbox {
+        &.mat-mdc-checkbox.mat-accent {
+          width: 1.25rem;
+          height: 1.25rem;
+        }
+        input#mat-mdc-checkbox-1-input {
+          width: 1.25rem;
+          height: 1.25rem;
+        }
+        .mdc-form-field .mdc-checkbox .mdc-checkbox__background {
+          top: 0;
+          left: 0;
+        }
+  
+        .mdc-form-field {
+          width: 1.25rem;
+          height: 1.25rem;
+          .mdc-checkbox {
+            padding: 0;
+            .mat-mdc-checkbox-touch-target {
+              width: 1.25rem;
+              height: 1.25rem;
+              .mdc-checkbox__native-control {
+                width: 1.25rem;
+                height: 1.25rem;
+              }
+              .mdc-checkbox__native-control {
+                width: 1.25rem;
+                height: 1.25rem;
+              }
+            }
+            .mdc-checkbox__native-control:enabled:not(:checked):not(
+                :indeterminate
+              ):not([data-indeterminate="true"])
+              ~ .mdc-checkbox__background {
+              border-color: color("grey", "lighten-9");
+            }
+            .mdc-checkbox__background {
+              border-radius: 0.25rem;
+            }
+          }
+        }
+    }
   }
 }
+
+
 .bottom-margin {
   margin-bottom: calc(100vh - 40rem) !important;
 }
@@ -587,4 +719,172 @@
   position: absolute;
   inset: -0.625rem;
   z-index: 9;
+}
+
+
+//plan-details
+.plan-outer-bolck{
+  width: 58.125rem;
+  margin: auto;
+  .heading {
+    border-bottom: 0.0625rem solid $border-color;
+    .icon-img{
+      width: 1.5rem;
+      height: 1.5rem;
+      img{
+        width: 100%;
+      }
+    }
+  }
+  .plan-details{
+    .info-details{
+      .details{
+        padding: 0 3.6875rem 0 3.0625rem;
+        border-right: .0625rem solid $border-color;
+        &:first-child{
+          padding-left: 0;
+        }
+        &:last-child{
+          border-right: none;
+          padding-right: 0;
+        }
+      }
+    }
+  }
+  .pricing-plan{
+    .info-form{
+      .flag-wrapper{
+        background-color: var(--grey-bg);
+        .flag-img{
+          width: 2rem;
+          height: 1.5rem;
+          img{
+            width: 100%;
+          }
+        }
+      }
+      .table-wrapper{
+        padding: 0 2.375rem;
+        table{
+          border-spacing:0;
+          .billing-fixed {
+            background-color: var(--grey-bg);
+            font-size: 0.875rem;
+          }
+          .set-btn{
+            border: 0;
+          }
+          tr{
+            th{
+              height: 2.1875rem;
+              background-color: var(--grey-bg);
+            }
+            td{
+              height: 3.6875rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// setPrice-popup
+.setPrice-popup{
+  padding: 5.6875rem 1.25rem 4.6875rem 2.5rem;
+  .heading{
+    border-bottom: 0.0625rem solid $border-color;
+    width: 33.75rem;
+  }
+  .btn-wrapper{
+    width: 33.75rem;
+  }
+  .right-40{
+    right: 40px;
+  }
+  .top-35{
+    top: 35px;
+  }
+  .bottom-35{
+    bottom: 35px;
+  }
+  .form-wrapper{
+    max-height: 46vh;
+    overflow: auto;
+  }
+}
+
+// product-details
+.product-details{
+  .plan-section-block{
+    .info-details{
+      padding: 0 2.3125rem 0 3.0625rem;
+      border-right: .0625rem solid $border-color;
+      &:first-child{
+        padding-left: 0;
+      }
+      &:last-child{
+        border-right: none;
+        padding-right: 0;
+      }
+    }
+  }
+  .details-wrapper {
+    border: 0.0625rem solid color("grey", "lighten-11");
+    .details-inner {
+      .product-img {
+        border: 0.0625rem solid var(--primary-light);
+        @include square(3.75rem, 0.375rem);
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}
+
+// ProductDetails-popup
+.productDetails-popup{
+ padding: 2.1875rem 1.25rem 2.1875rem 2.5rem;
+ .heading{
+  border-bottom: 0.0625rem solid $border-color;
+}
+.add-product-description{
+  .mat-mdc-text-field-wrapper , .mat-mdc-form-field-flex, .input-wrapper .mat-mdc-form-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-infix{
+    height: 7.4375rem;
+  }
+  .mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input, .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control{
+    height: 6.25rem;
+  }
+  textarea{
+    min-height: 6.25rem;
+  }
+}
+.inner-block{
+  max-height: 43vh;
+  overflow: auto;
+}
+.entitlements-option{
+  .mat-mdc-form-field-subscript-wrapper{
+    display: none;
+  }
+}
+  .primary-table.checked-stripe-table .entitlements-option .mat-mdc-text-field-wrapper.mdc-text-field--outlined.mdc-text-field--no-label {
+    border: none;
+    border-radius: 0.5rem;
+    background-color: var(--surface-bg);
+  }
+  .primary-table.checked-stripe-table .entitlements-option .mat-mdc-select, .checked-stripe-table .mat-mdc-select{
+    width: 100%;
+  }
+}
+
+.dark-mode, [data-app-theme="dark"] {
+  .plan-outer-bolck{
+  .text-blue-darken{
+    color: #e7046a !important;
+  }
+}
 }

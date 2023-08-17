@@ -1,0 +1,549 @@
+<div class="outer-layout">
+  <mat-sidenav-container [ngClass]="opened ? 'sidenav-open' : 'sidenav-closed'">
+    <mat-sidenav #sidenav mode="side" opened="true" class="sidenav-slider">
+      <div class="sidenav-wrapper">
+        <!-- <div class="sidebar-toggle">
+          <button
+            mat-mini-fab
+            color="accent"
+            class="toggle-sidenav"
+            (click)="toggleSidenav()"
+          >
+            <svg
+              width="8"
+              height="14"
+              viewBox="0 0 8 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0.269968 12.3681L1.42697 13.5186L7.85547 7.08355L1.42047 0.648554L0.269969 1.79905L5.55447 7.08355L0.269968 12.3681V12.3681Z"
+                fill="white"
+              />
+            </svg>
+          </button>
+        </div> -->
+        <div class="sidebar-wrapper">
+          <div class="">
+            <h3 class="mat-headline-5 font-weight-700 text-purple-lighten-1">Digital Framework</h3>
+          </div>
+          <div class="sidebar-scrollable mt-12">
+            <mat-nav-list class="sidebar p-0">
+              <div *ngFor="let element of Menu_Headings" class="transition-400 list-wrapper">
+                <div *ngIf="element.name != 'Dashboard'" class="category-heading">
+                  <h1 class="mat-caption font-weight-600">{{ element.name }}</h1>
+                </div>
+                <mat-list-item class="nav-list-item p-0 w-full" *ngFor="let item of getList(element.category)">
+                  <a class="icon-wrapper flex align-center">
+                    <div class="flex justify-center sidebar-icon-wraper">
+                      <mat-icon class="material-symbols-outlined m-0 sidebar-icon mat-primary">{{ item.icon
+                        }}</mat-icon>
+                    </div>
+                    <div class="content-wrapper">
+                      <span class="mat-subtitle-2 ml-2 text-grey-darken-9">{{ item.name }}</span>
+                    </div>
+                  </a>
+                </mat-list-item>
+              </div>
+            </mat-nav-list>
+          </div>
+          <mat-nav-list class="config-section sidebar">
+            <mat-list-item class="nav-list-item p-0" *ngFor="let item of configOptions">
+              <a class="icon-wrapper flex align-center" [routerLink]="['/', item.state]">
+                <mat-icon class="material-symbols-outlined m-0 sidebar-icon mat-primary">{{
+                  item.icon
+                  }}</mat-icon>
+                <div class="content-wrapper">
+                  <span class="mat-subtitle-2 ml-2 text-grey-darken-9">{{ item.name }}</span>
+                </div>
+              </a>
+            </mat-list-item>
+          </mat-nav-list>
+        </div>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <!-- Header for application starts here! -->
+      <mat-toolbar class="header-wrapper relative main-bg">
+        <div class="absolute left-header pointer">
+          <mat-icon class="material-symbols-outlined mat-primary" (click)="sidenav.toggle()">
+            menu_open
+          </mat-icon>
+        </div>
+        <div class="header-right">
+          <div class="language-section pointer mr-4">
+            <img src="en.png" alt="language flag" />
+          </div>
+          <div class="notifications-section pointer" [matMenuTriggerFor]="notificationsMenu" matBadge="3"
+            matBadgeSize="small" matBadgeColor="warn">
+            <img src="/icons/notifications.svg" alt="notifications-icon" />
+          </div>
+          <mat-menu #notificationsMenu="matMenu" class="notifications-menu border-2" backdropClass="right-menu">
+            <div class="notifications-header">
+              <div class="flex align-center justify-between">
+                <div class="label">Notifications</div>
+                <mat-chip class="basic-chip"> 4 New </mat-chip>
+              </div>
+              <div class="tab-panel" (click)="preventClose($event)">
+                <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+                  <mat-tab label="All (4)">
+                    <div class="relative h-55" *ngIf="notificationsData.length == 0">
+                      <div class="absolute position-center text-center w-full">
+                        <img src="/notifications-icon.png" alt="notification-icon">
+                        <span class="block mt-6">
+                          Hey! You have no notifications.
+                        </span>
+                      </div>
+                    </div>
+                    <div class="notification-list" (click)="preventClose($event)" *ngIf="notificationsData.length > 0">
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="Messages">
+                    <div class="relative h-55" *ngIf="notificationsData.length == 0">
+                      <div class="absolute position-center text-center w-full">
+                        <img src="/notifications-icon.png" alt="no data" />
+                        <span class="block mt-6">
+                          Hey! You have no notifications.
+                        </span>
+                      </div>
+                    </div>
+                    <div class="message-list" (click)="preventClose($event)" *ngIf="notificationsData.length > 0">
+                      My Messages
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="Alerts">
+                    <div class="relative h-55" *ngIf="notificationsData.length == 0">
+                      <div class="absolute position-center text-center w-full">
+                        <img src="/notifications-icon.png" alt="notifications-icon" />
+                        <span class="block mt-6">
+                          Hey! You have no notifications.
+                        </span>
+                      </div>
+                    </div>
+                    <div class="message-list" (click)="preventClose($event)" *ngIf="notificationsData.length > 0">
+                      Alerts
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+              </div>
+              <div class="text-center modal-footer pointer" (click)="preventClose($event)">
+                <span class="block py-4"> View All </span>
+              </div>
+            </div>
+          </mat-menu>
+          <div class="user-profile pointer" [matMenuTriggerFor]="menu">
+            <div class="user-image">
+              <img src="/profile-avatar-1.png" />
+            </div>
+            <div class="user-info">
+              <span class="name">John Smith</span>
+              <span class="role">Founder</span>
+            </div>
+          </div>
+          <mat-menu #menu="matMenu" class="profile-menu" backdropClass="alert-menu">
+            <div class="profile-menu-outer">
+              <div class="grad-bg">
+                <div class="user-initials">JS</div>
+              </div>
+              <div class="profile-inner">
+                <p class="mat-h1 fw-600 m-0">John Smith</p>
+                <p class="m-0 mt-1">Founder</p>
+              </div>
+              <div class="profile-paths">
+                <a class="flex align-center justify-between user-link" *ngFor="let element of userProfile">
+                  <div class="flex align-center">
+                    <mat-icon class="material-symbols-outlined mat-primary">{{
+                      element.icon
+                      }}</mat-icon>
+                    <span class="ml-3">{{ element.name }}</span>
+                  </div>
+                  <div *ngIf="element.toggle">
+                    <mat-slide-toggle color="primary" (click)="preventClose($event)"
+                      (change)="switchDark($event)"></mat-slide-toggle>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </mat-menu>
+        </div>
+      </mat-toolbar>
+      <div class="inner-h relative overflow-auto">
+        <div class="plan-outer-bolck mt-11">
+          <!-- pricing details -->
+          <div class="plan-details p-10 border-2 main-bg mb-4 basic-border">
+            <div class="heading flex align-center justify-between pb-3">
+              <div class="flex align-center">
+                <div class="icon-img mr-4">
+                  <img src="/icons/carbon_document-multiple-02.svg" alt="carbon_document-multiple-icon" />
+                </div>
+                <abbr class="fs-xl font-weight-500 text-blue-darken">Plan Details</abbr>
+              </div>
+              <div class="flex">
+                <button mat-stroked-button color="primary" class="mr-3 small font-weight-500 px-4">
+                  Edit
+                </button>
+                <button mat-stroked-button color="primary" class="small font-weight-500 px-4">
+                  Delete
+                </button>
+              </div>
+            </div>
+
+            <div class="info-details py-8 flex">
+              <div class="details">
+                <h5 class="text-grey-darken mat-subtitle-2 mb-2">Plan Name</h5>
+                <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">Premium</h6>
+              </div>
+              <div class="details">
+                <h5 class="text-grey-darken mat-subtitle-2 mb-2">Plan Id</h5>
+                <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">#AS- 012P</h6>
+              </div>
+              <div class="details">
+                <h5 class="text-grey-darken mat-subtitle-2 mb-2">Plan Status</h5>
+                <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">Active</h6>
+              </div>
+            </div>
+
+            <div class="description-box">
+              <h5 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-2">Plan Description</h5>
+              <p class="text-grey-darken mat-subtitle-2">
+                Smart plan with the right mix of basic and slightly advanced tools to help you with all marketing and
+                sales
+                requirements
+                right mix of basic and slightly advanced tools to help.
+              </p>
+            </div>
+          </div>
+
+
+          <!-- pricing plan -->
+          <div class="pricing-plan p-10 border-2 main-bg mb-4 basic-border">
+            <div class="plan-info-block inner-wrapper">
+              <div class="heading flex align-center pb-3">
+                <div class="icon-img mr-4">
+                  <img src="/icons/basil_invoice-outline.svg" alt="icon" />
+                </div>
+                <abbr class="fs-xl font-weight-500 text-blue-darken">Pricing Plan</abbr>
+              </div>
+              <div class="info-form">
+                <div class="flag-wrapper flex align-center px-4 py-2 border-1 my-4">
+                  <div class="flag-img mr-3">
+                    <img src="/flags.png" alt="flags" />
+                  </div>
+                  <span class="mat-subtitle-2 text-blue-darken">USD</span>
+                </div>
+                <div class="table-wrapper mt-3">
+                  <table class="w-full">
+                    <tr>
+                      <th class="mat-subtitle-2 text-blue-darken pl-2">
+                        Pricing Cycle
+                      </th>
+                      <th class="mat-subtitle-2 text-blue-darken">
+                        Pricing Model
+                      </th>
+                      <th class="mat-subtitle-2 text-blue-darken">
+                        Billing Cycle
+                      </th>
+                      <th class="mat-subtitle-2 text-blue-darken">
+                        Price
+                      </th>
+                      <th class="mat-subtitle-2 text-blue-darken action-header text-center">
+                        Action
+                      </th>
+                    </tr>
+
+                    <tr>
+                      <td class="mat-subtitle-2 text-grey-darken pl-2">
+                        Daily
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+                        Tired
+                      </td>
+                      <td>
+                        <span class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1">
+                          Fixed
+                        </span>
+                      </td>
+                      <td class="mat-subtitle-2 text-purple-lighten-1">
+                        $100/Unit
+                      </td>
+
+                      <td class="pr-7">
+                        <div class="flex justify-end">
+                          <button class="flex edit-btn mat-caption mr-1" mat-button color="primary">
+                            <mat-icon class="material-symbols-outlined mr-1" color="primary">edit</mat-icon>Edit
+                          </button>
+                          <button mat-icon-button color="warn" class="light-bg small rounded-1">
+                            <mat-icon class="material-symbols-outlined mr-0" color="warn">close</mat-icon>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="mat-subtitle-2 text-grey-darken pl-2">
+                        Weekly
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+
+                      </td>
+                      <td>
+
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+                        <button class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                          (click)="setPrice()">
+                          Set Price
+                          <mat-icon class="material-symbols-outlined ml-2" color="primary">
+                            arrow_right_alt
+                          </mat-icon>
+                        </button>
+
+                      </td>
+
+                      <td class="pr-7">
+
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="mat-subtitle-2 text-grey-darken pl-2">
+                        Monthly
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+
+                      </td>
+                      <td>
+
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+                        <button class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                          (click)="setPrice()">
+                          Set Price
+                          <mat-icon class="material-symbols-outlined ml-2" color="primary">
+                            arrow_right_alt
+                          </mat-icon>
+                        </button>
+
+                      </td>
+
+                      <td class="pr-7">
+
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="mat-subtitle-2 text-grey-darken pl-2">
+                        Yearly
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+
+                      </td>
+                      <td>
+
+                      </td>
+                      <td class="mat-subtitle-2 text-grey-darken">
+                        <button class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1">
+                          Set Price
+                          <mat-icon class="material-symbols-outlined ml-2" color="primary">
+                            arrow_right_alt
+                          </mat-icon>
+                        </button>
+
+                      </td>
+
+                      <td class="pr-7">
+
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- product details -->
+          <div class="product-details p-10 border-2 main-bg mb-4 basic-border">
+            <div class="plan-info-block inner-wrapper">
+              <div class="heading flex justify-between pb-3">
+                <div class="flex align-center">
+                  <div class="icon-img mr-4">
+                    <img src="/icons/product-icon.svg" alt="icon" />
+                  </div>
+                  <abbr class="fs-xl font-weight-500 text-blue-darken">Product Details</abbr>
+                </div>
+                <button mat-stroked-button color="primary" class="mr-3 small font-weight-500 px-4"
+                  (click)="addProductDetails()">
+                  Add product
+                </button>
+              </div>
+            </div>
+
+            <!-- Product Details inner -->
+            <div class="plan-section-block border-2 mt-4">
+              <div class="plan-info-block inner-wrapper">
+                <div class="details-wrapper py-3 px-5 border-2">
+                  <div class="details-inner flex justify-between">
+                    <div class="flex">
+                      <div class="product-img p-2 mr-4">
+                        <img src="/teams.png" alt="product-img" />
+                      </div>
+                      <div class="mt-2">
+                        <div>
+                          <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-1">
+                            MS Team
+                          </h6>
+                          <span class="mat-body-1 font-weight-500 text-blue-darken">3 Features
+                            included</span>
+                        </div>
+                        <div class="flex mt-3">
+                          <div class="info-details">
+                            <h5 class="mat-subtitle-2 text-grey-darken mb-1">Whiteboard</h5>
+                            <a class="mat-subtitle-2 text-blue-darken font-weight-500"
+                              (click)="editFeatureDetails()">ON</a>
+                          </div>
+                          <div class="info-details">
+                            <h5 class="mat-subtitle-2 text-grey-darken mb-1">Email support</h5>
+                            <a class="mat-subtitle-2 text-blue-darken font-weight-500">All Week</a>
+                          </div>
+                          <div class="info-details">
+                            <h5 class="mat-subtitle-2 text-grey-darken mb-1">User License</h5>
+                            <a class="mat-subtitle-2 text-blue-darken font-weight-500">10 License</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex">
+                      <button class="flex icon-text mat-caption mr-4" mat-button color="primary">
+                        <mat-icon class="material-symbols-outlined mr-1" color="primary">edit</mat-icon>Edit
+                      </button>
+                      <button mat-icon-button color="warn" class="light-bg small rounded-1">
+                        <mat-icon class="material-symbols-outlined mr-0" color="warn">close</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- addon  details -->
+          <div class="addon-detail p-10 border-2 main-bg mb-4 basic-border">
+            <div class="heading flex justify-between pb-3">
+              <div class="flex align-center">
+                <div class="icon-img mr-4">
+                  <img src="/icons/addon-icon.svg" alt="icon" />
+                </div>
+                <abbr class="fs-xl font-weight-500 text-blue-darken">Add-ons Details</abbr>
+              </div>
+              <button mat-stroked-button color="primary" class="mr-3 small font-weight-500 px-4"
+                (click)="addOnDetails()">
+                Add Add-on
+              </button>
+            </div>
+            <div class="details-wrapper add-on-view-wrapper mt-6 p-3 border-2">
+              <div class="details-inner flex align-center">
+                <div class="product-img p-2 mr-4">
+                  <img src="/teams.png" alt="product-img" />
+                </div>
+                <div>
+                  <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-1">
+                    MS Team
+                  </h6>
+                  <span class="mat-body-1 font-weight-500 text-blue-darken">3 Features
+                    included</span>
+                </div>
+              </div>
+
+              <div class="content-wrapper">
+                <div class="flex mt-3">
+                  <div class="info-details">
+                    <h5 class="mat-subtitle-2 text-grey-darken mb-1">Whiteboard</h5>
+                    <a class="mat-subtitle-2 text-blue-darken font-weight-500" (click)="editFeatureDetails()">ON</a>
+                  </div>
+                  <div class="info-details">
+                    <h5 class="mat-subtitle-2 text-grey-darken mb-1">Email support</h5>
+                    <a class="mat-subtitle-2 text-blue-darken font-weight-500">All Week</a>
+                  </div>
+                  <div class="info-details">
+                    <h5 class="mat-subtitle-2 text-grey-darken mb-1">User License</h5>
+                    <a class="mat-subtitle-2 text-blue-darken font-weight-500">10 License</a>
+                  </div>
+                </div>
+                <div class="flex mt-6">
+                  <div class="add-on-details-wrapper px-2 py-3">
+                    <div class="add-on-detail">
+                      <div class="heading-content pl-3">
+                        <span class="title font-weight-700 text-blue-darken mat-subtitle-1">Teamwork and
+                          communication</span>
+                        <p class="subtile mat-body-1 text-grey-darken mt-2">
+                          It is a long established fact that a reader will be
+                          distracted.
+                        </p>
+                      </div>
+                      <div class="flex mt-4 pl-4">
+                        <div class="info-details">
+                          <h5 class="mat-body-1 text-grey-darken mb-1">Host online calls</h5>
+                          <a class="mat-body-1 text-blue-darken font-weight-500" (click)="editFeatureDetails()">1-50</a>
+                        </div>
+                        <div class="info-details">
+                          <h5 class="mat-body-1 text-grey-darken mb-1">Host webinars</h5>
+                          <a class="mat-body-1 text-blue-darken font-weight-500">50-100</a>
+                        </div>
+                        <div class="info-details">
+                          <h5 class="mat-body-1 text-grey-darken mb-1">Create team sites</h5>
+                          <a class="mat-body-1 text-blue-darken font-weight-500">ON</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button mat-icon-button color="warn" class="light-bg small rounded-1 ml-2"
+                    [disabled]="!stepOneCompleted">
+                    <mat-icon class="material-symbols-outlined mr-0" color="warn">close</mat-icon>
+                  </button>
+                </div>
+
+                <div class="info-form">
+                  <div class="flag-wrapper flex align-center pt-8 pb-2">
+                    <div class="flag-img mr-2">
+                      <img src="/flags.png" alt="flags" />
+                    </div>
+                    <span class="mat-subtitle-2 text-headline-dark">USD</span>
+                  </div>
+                  <div class="table-wrapper mt-3 small-table">
+                    <table mat-table [dataSource]="dataSource" class="">
+                      <!-- PricingCycle Column -->
+                      <ng-container matColumnDef="PricingCycle">
+                        <th mat-header-cell *matHeaderCellDef class="mat-body-1 text-blue-darken">
+                          Pricing Cycle
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="mat-body-1 text-blue-darken">
+                          {{ element.PricingCycle }}
+                        </td>
+                      </ng-container>
+
+                      <!-- Price Column -->
+                      <ng-container matColumnDef="Price">
+                        <th mat-header-cell *matHeaderCellDef class="mat-body-1 text-blue-darken">
+                          Price
+                        </th>
+                        <td mat-cell *matCellDef="let element"
+                          class="mat-body-1 text-purple-lighten-1 font-weight-500 price-cell">
+                          <div class="flex align-center pointer" (click)="setPrice()">
+                            {{ element.Price
+                            }}<mat-icon class="material-symbols-outlined ml-2"
+                              color="primary">arrow_right_alt</mat-icon>
+                          </div>
+                        </td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row (click)="clickedRows.add(row)" [class.demo-row-is-clicked]="clickedRows.has(row)"
+                        *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

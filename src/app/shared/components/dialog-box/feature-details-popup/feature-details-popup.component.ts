@@ -6,6 +6,10 @@ import {
   MatDialog,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import { Status, selectOptions } from 'src/app/shared/constants/consants';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
 
 export interface DialogData {
   featureId: string;
@@ -20,14 +24,19 @@ export interface DialogData {
   styleUrls: ['./feature-details-popup.component.scss'],
 })
 export class FeatureDetailsPopupComponent implements OnInit {
+  dropKey: number;
+  StatusTypes: selectOptions[] = Status;
   featureDetails: any;
+  public setPriceForm: FormGroup;
   constructor(
+    private form: FormBuilder,
     private featureService: FeatureService,
     private router: Router,
     public dialog: MatDialog,
     private route: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
+
 
   ngOnInit() {
     this.featureService
@@ -57,4 +66,32 @@ export class FeatureDetailsPopupComponent implements OnInit {
     ]);
     this.dialog.closeAll();
   }
+  onDropdownKey(event: number): void {
+    this.dropKey = event;
+  }
+  formData() {
+    this.setPriceForm = this.form.group({
+      priceId: ['', Validators.required],
+      planId: ['', Validators.required],
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      invoiceNotes: ['', Validators.required],
+      currencyCode: ['USD', Validators.required],
+      pricingModel: ['', Validators.required],
+      price: ['', Validators.required],
+      periodUnit: ['daily', Validators.required],
+      period: ['1', Validators.required],
+      isExpirable: [true],
+      noOfCycle: ['', Validators.required],
+      status: 'active',
+      multiPricing: this.form.array([
+        this.form.group({
+          startingUnit: { value: '1', disabled: true },
+          endingUnit: { value: '&above', disabled: true },
+          price: [''],
+        }),
+      ]),
+    });
+  }
+
 }

@@ -15,11 +15,12 @@ import { PageNotFoundComponent } from './shared/components/page-not-found/page-n
 import { FeatureDetailsPopupComponent } from './shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 import { CouponsDeleteSuccessComponent } from './shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { SignInComponent } from './modules/sign-in/components/sign-in.component';
-import { FeaturesPopupComponent } from './shared/components/dialog-box/features-popup/features-popup/features-popup.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CustomTranslateLoader } from './core/utils/functions/custom/custom-translate-loader';
-import { ProductListingComponent } from './core/components/listings/product-listing/product-listing.component';
-import { FeaturesListingComponent } from './core/components/listings/features-listing/features-listing.component';
+import { DialogAnimaComponent } from './shared/components/dialog-box/dialog-anima/dialog-anima.component';
+import { SetPricePopupComponent } from './shared/components/dialog-box/set-price-popup/set-price-popup.component';
+import { ProductDetailsPopupComponent } from './shared/components/dialog-box/product-details-popup/product-details-popup.component';
+import { FeaturesPopupComponent } from './shared/components/dialog-box/features-popup/features-popup.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,9 @@ import { FeaturesListingComponent } from './core/components/listings/features-li
     CouponsDeleteSuccessComponent,
     SignInComponent,
     FeaturesPopupComponent,
+    DialogAnimaComponent,
+    SetPricePopupComponent,
+    ProductDetailsPopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,8 +46,6 @@ import { FeaturesListingComponent } from './core/components/listings/features-li
     BrowserAnimationsModule,
     FormsModule,
     SharedModule,
-    ProductListingComponent,
-    FeaturesListingComponent,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

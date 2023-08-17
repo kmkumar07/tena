@@ -6,6 +6,7 @@
 // 6. chip with success-bg
 // 7. coupons dialog
 // 8. mat-paginator
+// 9.input border color
 
 // 1. mat-chip
 .basic-chip.mat-mdc-chip {
@@ -34,7 +35,7 @@
   }
 }
 .table-chip.mat-mdc-chip {
-  background-color: var(--chip-grey-bg) !important;
+  background-color: var(--grey-bg) !important;
   border-radius: 0.5rem;
   height: 2rem;
   .mat-mdc-chip-action {
@@ -75,7 +76,7 @@
         &:hover {
           background-color: var(--surface-bg);
           border: 1px solid #d6d6d6;
-          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.14);
+          // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.14);
           position: relative;
         }
         td {
@@ -226,14 +227,14 @@
   }
 
   td.mdc-data-table__cell {
-    color: $headline-light;
+    // color: $headline-light;
 
     &.Active {
       color: color("green", "darken-3");
     }
   }
   .mat-mdc-table .mdc-data-table__row:nth-child(odd) {
-    background-color: $primay-light-bg-color;
+    background-color: var(--grey-bg);
   }
 
   .mat-mdc-select {
@@ -252,7 +253,27 @@
     border-bottom: none;
   }
 }
-
+// simple
+.small-table {
+  overflow: auto;
+  background-color: transparent;
+  .mat-mdc-table {
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+    background-color: transparent;
+    .mdc-data-table__header-row{
+      height: 2rem;
+      background-color: var(--grey-bg);
+    }
+    .mdc-data-table__row{
+      height: 2.5rem;
+    }
+    .mdc-data-table__cell, .mdc-data-table__header-cell{
+      border-bottom-width: 0;
+      border-bottom-style: none;
+    }
+  }
+}
 // Table Scrollbar
 .primary-table::-webkit-scrollbar {
   height: 0.4rem;
@@ -422,7 +443,9 @@ ul {
     background-color: color("shades", "white");
   }
 }
-
+.mat-app-background{
+  background-color: #F5F7FB;
+}
 // storybook chip
 .mat-mdc-standard-chip.mat-primary {
   .mdc-evolution-chip__text-label {
@@ -597,4 +620,9 @@ ul {
     width: auto;
     margin-right: 4px;
   }
+}
+
+// 9.input border color
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+  border-color: color('grey','lighten-11');
 }

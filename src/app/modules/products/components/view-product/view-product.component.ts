@@ -7,8 +7,8 @@ import { FeatureService } from 'src/app/modules/features/services/feature.servic
 import { MatDialog } from '@angular/material/dialog';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
-import { FeaturesPopupComponent } from 'src/app/shared/components/dialog-box/features-popup/features-popup/features-popup.component'
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FeaturesPopupComponent } from 'src/app/shared/components/dialog-box/features-popup/features-popup.component';
 @Component({
   selector: 'app-view-product',
   templateUrl: './view-product.component.html',

@@ -115,6 +115,10 @@ a {
   color: $text-grey-darken;  //#2B2B30
 }
 
+.text-icon{
+  color: $text-icon; //#647081
+}
+
 .text-black {
   color: $text-black;
 }
@@ -125,6 +129,12 @@ a {
 
 .fs-lg {
   font-size: 1rem;
+}
+.fs-xl{
+  font-size: 1.25rem;
+}
+.fs-2xl{
+  font-size: 1.5rem;
 }
 
 .text-uppercase {
@@ -168,7 +178,9 @@ a {
   .text-grey-darken-8,
   .grey-text.text-form-caption,
   .text-blue-darken,
-  .text-grey-darken-9 {
+  .text-grey-darken-9,
+  .text-grey-darken,
+  .text-icon {
     color: white !important;
   }
 }

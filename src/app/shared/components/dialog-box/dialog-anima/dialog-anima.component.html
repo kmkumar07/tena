@@ -1,0 +1,65 @@
+<!-- <div class="p-6 h-80 image-popup-dialog w-full">
+    <input type="file" class="crop-input" (change)="fileChangeEvent($event)" />
+
+<image-cropper
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="4 / 3"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+    (imageLoaded)="imageLoaded()"
+    (cropperReady)="cropperReady()"
+    (loadImageFailed)="loadImageFailed()"
+></image-cropper>
+
+<img [src]="croppedImage" />
+</div> -->
+
+<div class="p-6 image-popup-dialog w-full">
+    <div class="flex align-center justify-between mb-2">
+      <span class="text-text text-dark fw-500 mat-subtitle-2">
+        Product Logo
+      </span>
+      <mat-icon class="material-symbols-outlined mat-primary"mat-dialog-close (click)="onCancelClick()"> close </mat-icon>
+    </div>
+    <p class="fw-500 mb-6">imageHint</p>
+    <div class="flex mb-6">
+      <div class="w-half">
+        <div class="h-50 w-full grey darker-bg flex-center mb-5">
+            <image-cropper
+            class="img-crop p-0 h-full"
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="4 / 3"
+            format="png"
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+        ></image-cropper>
+        </div>
+        <div class="mb-5 flex-center">
+            <label for="file-input" class="relative">
+              <!-- <button mat-stroked-button color="primary">Browse</button> -->
+              <button class="upload-btn px-4 text-purple-lighten-1 mat-body-1 font-weight-500 main-bg border-1">Browse</button>
+              <input type="file" id="file-input" (change)="fileChangeEvent($event)" name="myfile"  class="absolute top-0 left-0 right-0 bottom-0 opacity-0"/>
+            </label>
+        </div>
+        <span class="text-center block">(Image Size)</span>
+      </div>
+      <div class="w-half flex">
+        <div class="h-50 text-center w-full">
+          <div class="flex h-full justify-center mb-5">
+            <img [src]="croppedImage" class="w-full"/>
+          </div>
+          <span class="fw-500 text-text text-dark block"> Preview </span>
+        </div>
+      </div>
+    </div>
+    <div class="w-full flex justify-end">
+      <div class="flex align-center">
+        <button mat-stroked-button mat-dialog-close (click)="onCancelClick()"class="mr-1">Cancel</button>
+        <button mat-flat-button color="primary" [mat-dialog-close]="true" (click)="onSaveClick()">Save As Product Logo</button>
+      </div>
+    </div>
+  </div>

@@ -8,11 +8,14 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { AddOnsDetailsComponent } from './components/add-ons-details/add-ons-details.component';
 import { FeatureDetailsPopupComponent } from 'src/app/shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 import { EditProductDetailsComponent } from './components/edit-product-details/edit-product-details.component';
+import { PlanDetailsComponent } from './components/plan-details/plan-details.component';
+
 
 const routes: Routes = [
   { path: '', component: PlansListingComponent },
   { path: 'view/:id', component: ViewPlansComponent },
   { path: 'create', component: CreatePlanComponent },
+  { path: 'create/plan-details', component: PlanDetailsComponent},
   { path: 'create/set-price', component: SetPriceComponent},
   { path: 'create/product-variant', component: ProductDetailsComponent},
   { path: 'create/edit-product-variant/:id', component: EditProductDetailsComponent},
