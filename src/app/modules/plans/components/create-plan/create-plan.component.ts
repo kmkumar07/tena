@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SetPricePopupComponent } from 'src/app/shared/components/dialog-box/set-price-popup/set-price-popup.component';
 import { ProductDetailsPopupComponent } from 'src/app/shared/components/dialog-box/product-details-popup/product-details-popup.component';
 import { AddonDetailsPopupComponent } from 'src/app/shared/components/dialog-box/addon-details-popup/addon-details-popup.component';
+import { NewChargePopupComponent } from 'src/app/shared/components/dialog-box/new-charge-popup/new-charge-popup.component';
 
 
 export interface PeriodicElement {
@@ -284,6 +285,11 @@ export class CreatePlanComponent implements OnInit {
   addOnDetails(){
     this.dialog.open(AddonDetailsPopupComponent, {
       width: '800px',
+    });
+  }
+  addNewCharge(){
+    this.dialog.open(NewChargePopupComponent, {
+      width: '620px',
     });
   }
 }

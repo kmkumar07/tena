@@ -881,6 +881,32 @@
   }
 }
 
+
+// charges-block 
+.charges-block {
+  .heading {
+    border-bottom: 0.0625rem solid $border-color;
+    .icon-img{
+      width: 1.5rem;
+      height: 1.5rem;
+      img{
+        width: 100%;
+      }
+    }
+  }
+  .charges-input{
+    max-width: 100%;
+  }
+}
+
+// new-charge-popup
+.new-charge-popup{
+  padding: 2.1875rem 1.25rem 2.1875rem 2.5rem;
+  .heading{
+    border-bottom: 0.0625rem solid $border-color;
+  }
+}
+
 .dark-mode, [data-app-theme="dark"] {
   .plan-outer-bolck{
   .text-blue-darken{
