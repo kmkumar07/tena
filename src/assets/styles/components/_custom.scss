@@ -68,6 +68,10 @@
 // form with sample for popup
 .form-with-sample-popup {
   padding: 2.1875rem 1.125rem 2.1875rem 2.5rem;
+  @media only screen and (max-width: 80rem) {
+  max-height: 85vh;
+  overflow: auto;
+  }
   // .close-icon{
   //   width: 2.5rem;
   //   height: 2.5rem;
@@ -76,9 +80,15 @@
   //   top: -0.25rem;
   //   right: -0.25rem;
   // }
-  .form-left {
+  .form-outer{
     width: calc(100% - 19rem);
-    height: fit-content;
+  }
+  .form-left {
+    max-height: 70vh;
+    overflow: auto;
+    @media only screen and (max-width: 80rem) {
+      padding-bottom: 12px;
+    }
     .header-section {
       border-bottom: 0.0625rem solid color("grey", "lighten-7");
       .title-left{
@@ -96,6 +106,10 @@
   }
   .sample-right {
     width: 18.8125rem;
+    @media only screen and (max-width: 80rem) {
+      max-height: 90vh;
+      overflow: auto;
+    }
     .inner-block{
       padding: .875rem 0 .875rem ;
       border-radius: .375rem;
