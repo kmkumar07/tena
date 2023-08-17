@@ -530,6 +530,10 @@
 //feature-details-popup
 .feature-details-popup {
   padding: 2.1875rem 1.25rem 2.1875rem 2.5rem;
+  @media only screen and (max-width: 80rem) {
+  max-height: 80vh;
+  overflow: auto;
+  }
   .heading{
     border-bottom: 0.0625rem solid $border-color;
   }

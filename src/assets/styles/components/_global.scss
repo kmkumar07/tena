@@ -749,8 +749,11 @@ label {
 }
 .inner-form-wrapper{
   max-width: 81.25rem;
-  width: 100%;
+  width: 95%;
   margin: auto;
+  @media only screen and (max-width: 80rem) {
+    max-width: 60rem;
+  }
 }
 .wrapper-border{
   border: 0.0625rem solid $basic-border;
