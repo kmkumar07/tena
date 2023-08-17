@@ -217,7 +217,6 @@ export class ProductListingComponent implements OnInit {
       next: (res) => {
         this.deleteSuccess(elementId);
         this.products = res;
-        console.log(this.products);
       },
       error: (error: any) => {
         this.snackBar.open(error.error.message, '', {

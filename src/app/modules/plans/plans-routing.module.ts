@@ -9,17 +9,20 @@ import { AddOnsDetailsComponent } from './components/add-ons-details/add-ons-det
 import { FeatureDetailsPopupComponent } from 'src/app/shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 import { EditProductDetailsComponent } from './components/edit-product-details/edit-product-details.component';
 import { PlanDetailsComponent } from './components/plan-details/plan-details.component';
+import { EditPlanComponent } from './components/edit-plan/edit-plan.component';
 
 
 const routes: Routes = [
   { path: '', component: PlansListingComponent },
   { path: 'view/:id', component: ViewPlansComponent },
-  { path: 'create', component: CreatePlanComponent },
-  { path: 'create/plan-details', component: PlanDetailsComponent},
+  { path: 'create', component: PlanDetailsComponent },
+ // { path: 'create/plan-details', component: PlanDetailsComponent},
   { path: 'create/set-price', component: SetPriceComponent},
   { path: 'create/product-variant', component: ProductDetailsComponent},
   { path: 'create/edit-product-variant/:id', component: EditProductDetailsComponent},
   { path: 'create/:id', component: CreatePlanComponent },
+  { path: 'update/:id', component: EditPlanComponent },
+
   { path: 'create/set-price/:id', component: SetPriceComponent},
   { path: 'create/set-price/:id/:id', component: SetPriceComponent},
   { path: 'create/product-variant/:id', component: ProductDetailsComponent},

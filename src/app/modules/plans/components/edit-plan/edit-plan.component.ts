@@ -12,11 +12,6 @@ import {
 import { PlanService } from '../../services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SetPricePopupComponent } from 'src/app/shared/components/dialog-box/set-price-popup/set-price-popup.component';
-import { ProductDetailsPopupComponent } from 'src/app/shared/components/dialog-box/product-details-popup/product-details-popup.component';
-import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
-import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
-
 
 export interface PeriodicElement {
   PricingCycle: string;
@@ -31,11 +26,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-  selector: 'app-create-plan',
-  templateUrl: './create-plan.component.html',
-  styleUrls: ['./create-plan.component.scss'],
+  selector: 'app-edit-plan',
+  templateUrl: './edit-plan.component.html',
+  styleUrls: ['./edit-plan.component.scss']
 })
-export class CreatePlanComponent implements OnInit {
+export class EditPlanComponent {
   values: any;
   priceColumn: string[] = [
     'PricingCycle',
@@ -44,7 +39,7 @@ export class CreatePlanComponent implements OnInit {
     'Price',
     'action',
   ];
-  status: boolean;
+  status:boolean;
   priceData: any[] = [];
   planAddEmptyData = plan_add_empty_data;
   stepsTitle = Stepper;
@@ -64,7 +59,6 @@ export class CreatePlanComponent implements OnInit {
   limit: any = '';
   planId: string;
   featureLength: string;
-  plandataById:any;
   dialogRef: any;
   public stepOneCompleted: boolean = false;
   editable: boolean = false;
@@ -130,9 +124,9 @@ export class CreatePlanComponent implements OnInit {
         .getPlanById(id)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
-          this.plandataById=res.data;
           this.patchValue(res.data);
           this.editable = true;
+          
         });
     } else {
       this.stepOneCompleted = false;
@@ -193,14 +187,13 @@ export class CreatePlanComponent implements OnInit {
   onSubmit() {
     this.global.showLoader();
     const status = this.planForm.value.status ? 'active' : 'draft';
-
+   
     const type = 'base';
     const plan = {
       ...this.planForm.value,
       type: type,
       status: status,
     };
-    
     this.stepOneCompleted = true;
     if (!this.editable) {
       this.planService
@@ -269,70 +262,5 @@ export class CreatePlanComponent implements OnInit {
   }
   removeType(index: any) {
     this.planService.priceModelArr.splice(index, 1);
-  }
-  setPrice(planId,internalName){  
-    const dialogRef = this.dialog.open(SetPricePopupComponent, {
-      width: '622px',
-      data: { planId: planId,internalName:internalName } // Pass the planId as part of the data object
-    });
-  }
-  addProductDetails(){
-    this.dialog.open(ProductDetailsPopupComponent, {
-      width: '800px',
-    });
-  }
-  editPlansDetails(id){    
-    this.router.navigate([`/plans/update/${id}`]);
-
-  }
-  navigateToGetAllPlans() {
-    this.router.navigate(['/plans']);
-  }
-  deleteSuccess(id: any) {
-    const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
-      width: '422px',
-      panelClass: 'dialog-curved',
-      data: {
-        module: 'Feature',
-        deleteId: id,
-      },
-    });
-    this.navigateToGetAllPlans();
-  }
-  sendElementId(planId: string) {
-    this.planService.deletePlan(planId).subscribe({
-      next: (res) => {
-        this.deleteSuccess(planId);
-      },
-      error: (error: any) => {
-        this.snackBar.open(error.error.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
-      },
-    });
-  }
-  openDeletePlan(id){    
-      this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-        width: '420px',
-        panelClass: 'dialog-curved',
-        data: {
-          module: 'Plan',
-          deleteId: id,
-        },
-      });
-
-      this.dialogRef.afterClosed().subscribe((res: any) => {
-        if (res) {
-          this.sendElementId(id);
-        }
-      });
-    
-  }
-  editFeatureDetails(){
-    this.dialog.open(FeatureDetailsPopupComponent, {
-      width: '800px',
-    });
   }
 }

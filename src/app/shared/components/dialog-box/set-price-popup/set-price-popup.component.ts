@@ -14,7 +14,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlanService } from '../../../../modules/plans/services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { MatDialogRef} from '@angular/material/dialog';
+import { Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class PlanValue {
   planId: string;
   internalName: string;
@@ -43,6 +45,7 @@ export class SetPricePopupComponent {
   check: string;
   dropKey: number;
   planId: string;
+  internalName:string;
   editPriceStatus: boolean;
   public setPriceForm: FormGroup;
 
@@ -53,15 +56,21 @@ export class SetPricePopupComponent {
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<SetPricePopupComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { planId: any,internalName: any }
+  ) {
+    this.planId=this.data.planId;
+    this.internalName=this.data.internalName;
+
+  }
 
   ngOnInit() {
-    this.planId = this.route.snapshot.params['id'];
+    //this.planId = this.route.snapshot.params['id'];
     this.formData();
     // this.getPriceVal();
-    this.getCurrPLan();
-  }
+    //this.getCurrPLan();
+    console.log(this.data.planId);  }
 
   // getPriceVal() {
   //   this.planService
@@ -79,29 +88,29 @@ export class SetPricePopupComponent {
   //     });
   // }
 
-  getCurrPLan() {
-    this.planService
-      .getPlanById(this.planId)
-      .pipe(takeUntil(this.global.componentDestroyed(this)))
-      .subscribe((res) => {
-        this.planValue = res.data;
-      });
-  }
+  // getCurrPLan() {
+  //   this.planService
+  //     .getPlanById(this.planId)
+  //     .pipe(takeUntil(this.global.componentDestroyed(this)))
+  //     .subscribe((res) => {
+  //       this.planValue = res.data;
+  //     });
+  // }
 
-  patchValue() {
-    this.setPriceForm.patchValue({
-      planId: this.planValue.planId,
-      name: this.planValue.internalName,
-    });
-  }
+  // patchValue() {
+  //   this.setPriceForm.patchValue({
+  //     planId: this.planValue.planId,
+  //     name: this.planValue.internalName,
+  //   });
+  // }
 
   formData() {
     this.setPriceForm = this.form.group({
       priceId: ['', Validators.required],
-      planId: ['', Validators.required],
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      invoiceNotes: ['', Validators.required],
+      planId: [this.planId, Validators.required],
+      name: [this.internalName, Validators.required],
+      description: ['i am demo', Validators.required],
+      invoiceNotes: ['completed', Validators.required],
       currencyCode: ['USD', Validators.required],
       pricingModel: ['', Validators.required],
       price: ['', Validators.required],
@@ -221,7 +230,7 @@ export class SetPricePopupComponent {
       price.priceId =
         price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
       price.name =
-        price.name + '-' + price.currencyCode + '-' + price.periodUnit;
+        price.internalName + '-' + price.currencyCode + '-' + price.periodUnit;
     }
     if (price.pricingModel == 1) {
       price.pricingModel = 'flat_fee';
@@ -246,14 +255,19 @@ export class SetPricePopupComponent {
   }
 
   submitValues() {
-    this.patchValue();
+   // this.patchValue();
     this.global.showLoader();
     this.price = this.setPriceForm.getRawValue();
+    console.log("this.prices",this.price);
+
+
     this.pricingModelValueToName(this.price);
     this.subscription = this.planService
       .createPrice(this.price)
       .subscribe({
         next: (res) => {
+          console.log("pres",res);
+
         this.openSuccess();
         this.planService.setData(this.price, 'priceInfo');
         this.router.navigate([`/plans/create/${this.planValue.planId}`]);
@@ -355,7 +369,9 @@ export class SetPricePopupComponent {
     this.stairTotal = stTotal;
     this.volumeTotal = voltotal;
   }
-
+  onCancelClick(): void {
+    this.dialogRef.close(false);
+  }
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

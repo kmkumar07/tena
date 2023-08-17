@@ -10,10 +10,10 @@
         <abbr class="fs-xl font-weight-500 text-blue-darken">Plan Details</abbr>
       </div>
       <div class="flex">
-        <button mat-stroked-button color="primary" class="mr-3 small font-weight-500 px-4">
+        <button mat-stroked-button color="primary" class="mr-3 small font-weight-500 px-4"(click)="editPlansDetails(plandataById.planId)">
           Edit
         </button>
-        <button mat-stroked-button color="primary" class="small font-weight-500 px-4">
+        <button mat-stroked-button color="primary" class="small font-weight-500 px-4"(click)="openDeletePlan(plandataById.planId)">
           Delete
         </button>
       </div>
@@ -22,24 +22,22 @@
     <div class="info-details py-8 flex">
       <div class="details">
         <h5 class="text-grey-darken mat-subtitle-2 mb-2">Plan Name</h5>
-        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">Premium</h6>
+        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">{{plandataById.externalName}}</h6>
       </div>
       <div class="details">
         <h5 class="text-grey-darken mat-subtitle-2 mb-2">Plan Id</h5>
-        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">#AS- 012P</h6>
+        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">{{plandataById.planId}}</h6>
       </div>
       <div class="details">
         <h5 class="text-grey-darken mat-subtitle-2 mb-2">Plan Status</h5>
-        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">Active</h6>
+        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">{{plandataById.status}}</h6>
       </div>
     </div>
 
     <div class="description-box">
       <h5 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-2">Plan Description</h5>
       <p class="text-grey-darken mat-subtitle-2">
-        Smart plan with the right mix of basic and slightly advanced tools to help you with all marketing and sales
-        requirements
-        right mix of basic and slightly advanced tools to help.
+        {{plandataById.description}}
       </p>
     </div>
   </div>
@@ -124,7 +122,7 @@
               </td>
               <td class="mat-subtitle-2 text-grey-darken">
                 <button class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
-                  (click)="setPrice()">
+                  (click)="setPrice(plandataById.planId,plandataById.internalName)" >
                   Set Price
                   <mat-icon class="material-symbols-outlined ml-2" color="primary">
                     arrow_right_alt
@@ -149,7 +147,7 @@
               </td>
               <td class="mat-subtitle-2 text-grey-darken">
                 <button class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
-                  (click)="setPrice()">
+                  (click)="setPrice(plandataById.planId,plandataById.internalName)">
                   Set Price
                   <mat-icon class="material-symbols-outlined ml-2" color="primary">
                     arrow_right_alt
@@ -174,7 +172,7 @@
               </td>
               <td class="mat-subtitle-2 text-grey-darken">
                 <button class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
-                  (click)="setPrice()">
+                  (click)="setPrice(plandataById.planId,plandataById.internalName)">
                   Set Price
                   <mat-icon class="material-symbols-outlined ml-2" color="primary">
                     arrow_right_alt

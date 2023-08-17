@@ -191,10 +191,10 @@
                 </div>
             </form>
             <div class="flex justify-end btn-wrapper absolute bottom-35">
-                <button mat-stroked-button color="primary" class="mr-2 large">
+                <button mat-stroked-button color="primary" class="mr-2 large"(click)="onCancelClick()">
                     Dismiss
                 </button>
-                <button mat-flat-button color="primary" class="large" type="button">
+                <button mat-flat-button color="primary" class="large" type="submit"(click)="submitValues()">
                     Create
                 </button>
             </div>
