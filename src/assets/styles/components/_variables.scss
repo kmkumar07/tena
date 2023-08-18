@@ -232,7 +232,7 @@ $toast-action-color: #eeff41;
 $text-light: color("text", "lighten-1");
 $text-dark: color("purple", "darken-1"); // #3A3742
 $text-dark-1: color("grey", "darken-6");
-$text-headline-dark: color("text", "dark"); // #2C2466
+$text-headline-dark: color("primary", "dark-1"); // #2C2466
 $text-headline-light: rgba(color("text", "dark"), 0.6); // #2C2466
 $headline-light: color("text", "primary"); // #405189
 $text-primary: color("primary", "main"); //#7868E6

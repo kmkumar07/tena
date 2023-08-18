@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgxTippyModule } from 'ngx-tippy-wrapper';
 import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
@@ -37,7 +38,8 @@ const meta: Meta<createProductComponent> = {
         MatFormFieldModule,
         MatInputModule,
         NgxTippyModule,
-        SharedModule
+        SharedModule,
+        RouterTestingModule
       ],
 
     }),
