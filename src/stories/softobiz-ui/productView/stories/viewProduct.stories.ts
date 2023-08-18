@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../../button/button.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
@@ -29,6 +30,7 @@ const meta: Meta<viewProductComponent> = {
         CommonModule,
         AngularMaterialModule,
         BrowserAnimationsModule,
+        RouterTestingModule,
       ],
       declarations: [
         ButtonComponent,

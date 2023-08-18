@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgxTippyModule } from 'ngx-tippy-wrapper';
 import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 
@@ -38,7 +39,8 @@ const meta: Meta<createFeatureComponent> = {
         MatFormFieldModule,
         MatInputModule,
         NgxTippyModule,
-        SharedModule
+        SharedModule,
+        RouterTestingModule,
       ],
 
 

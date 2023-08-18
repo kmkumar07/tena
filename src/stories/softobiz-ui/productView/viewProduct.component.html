@@ -1,120 +1,295 @@
-<div class="header-section pt-6 pb-6 pr-6 main-bg">
-  <div class="flex align-center justify-between">
-    <div class="flex align-center">
-      <mat-icon
-        class="material-symbols-outlined pointer"
-        color="primary"
-        >keyboard_backspace</mat-icon
-      >
-      <p class="fs-xl fw-500 text-text text-dark">View Product</p>
-    </div>
-  </div>
-</div>
-<div class="view-product-wrapper">
-  <div class="header-block border-2">
-    <div class="flex align-end justify-between inner-block">
-      <div class="brand-info flex align-center">
-        <div class="product-img mr-4 border-2"
-          *ngIf="productDetail?.imageUrl && productDetail.imageUrl.length > 1;else uploadImage">
-          <img src="{{ imagePath + imageUrl }}" alt="{{imageName}}" />
-        </div>
-        <ng-template #uploadImage>
-          <div class="productImg-wrapper">
-            <div class="product-img border-2">
-              <img src="no-image.logo.jpg" alt="product-img" />
+<div class="outer-layout">
+    <mat-sidenav-container [ngClass]="opened ? 'sidenav-open' : 'sidenav-closed'">
+      <mat-sidenav #sidenav mode="side" opened="true" class="sidenav-slider">
+        <div class="sidenav-wrapper">
+          <!-- <div class="sidebar-toggle">
+            <button
+              mat-mini-fab
+              color="accent"
+              class="toggle-sidenav"
+              (click)="toggleSidenav()"
+            >
+              <svg
+                width="8"
+                height="14"
+                viewBox="0 0 8 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.269968 12.3681L1.42697 13.5186L7.85547 7.08355L1.42047 0.648554L0.269969 1.79905L5.55447 7.08355L0.269968 12.3681V12.3681Z"
+                  fill="white"
+                />
+              </svg>
+            </button>
+          </div> -->
+          <div class="sidebar-wrapper">
+            <div class="">
+              <h3 class="mat-headline-5 font-weight-700 text-purple-lighten-1">Digital Framework</h3>
             </div>
-          </div>
-        </ng-template>
-        <div>
-          <div class="">
-            <h5 class="mat-headline-5  font-weight-600 text-white mb-2">
-              Microsoft Teams
-            </h5>
-            <p class="mat-subtitle-2 font-weight-500 sub-title">
-              O365ProPlusRetail
-            </p>
-          </div>
-          <span class="mat-subtitle-2 subtitle font-weight-500 block">{{productId}}</span>
-        </div>
-      </div>
-      <div class="date-block flex align-center mb-8">
-        <div class="flex align-center">
-          <mat-icon class="material-symbols-outlined mr-3 text-white">calendar_today</mat-icon>
-          <p class="mat-subtitle-2 text-white">Created 24 March, 2023</p>
-        </div>
-        <div class="vertical-divider mx-6"></div>
-        <div class="flex align-center">
-          <mat-icon class="material-symbols-outlined mr-3 text-white">calendar_today</mat-icon>
-          <p class="mat-subtitle-2 text-white"> Modified 24 Apr, 2023</p>
-        </div>
-      </div>
-    </div>
-    <div class="product-desc">
-      <h4 class="mat-subtitle-1 font-weight-500 mb-4 text-headline-dark">Description</h4>
-      <p class="mat-subtitle-2 text-grey-darken">
-        Microsoft Teams is a proprietary business communication platform developed by Microsoft, as part of the
-        Microsoft 365 family of products. Teams primarily competes with the similar service Slack, offering workspace
-        chat and videoconferencing, file storage, and application integration.
-      </p>
-    </div>
-  </div>
-  <div class="header-block border-2 mt-6">
-    <div class="product-features">
-        <h4 class="mat-subtitle-2 text-blue-darken font-weight-500 mb-4">Features</h4>
-      <!-- with feature added -->
-      <div class="features-wrapper">
-        <div *ngIf="productDetail?.feature && productDetail.feature.length > 0; else noFeaturesBlock">
-          <div class="feature-item flex border-2 secondary-light-bg"
-            *ngFor="let feature of productDetail.feature; let i = index">
-            <div class="feature-logo border-2 flex-center font-weight-500 primary-text text-main">
-              <span>{{ feature.featureId}}</span>
+            <div class="sidebar-scrollable mt-12">
+              <mat-nav-list class="sidebar p-0">
+                <div *ngFor="let element of Menu_Headings" class="transition-400 list-wrapper">
+                  <div *ngIf="element.name != 'Dashboard'" class="category-heading">
+                    <h1 class="mat-caption font-weight-600">{{ element.name }}</h1>
+                  </div>
+                  <mat-list-item class="nav-list-item p-0 w-full" *ngFor="let item of getList(element.category)">
+                    <a class="icon-wrapper flex align-center">
+                      <div class="flex justify-center sidebar-icon-wraper">
+                        <mat-icon class="material-symbols-outlined m-0 sidebar-icon mat-primary">{{ item.icon
+                          }}</mat-icon>
+                      </div>
+                      <div class="content-wrapper">
+                        <span class="mat-subtitle-2 ml-2 text-grey-darken-9">{{ item.name }}</span>
+                      </div>
+                    </a>
+                  </mat-list-item>
+                </div>
+              </mat-nav-list>
             </div>
-            <div class="details ml-8">
-              <div class="flex align-center mb-2">
-                <span class="mat-subtitle-2 font-weight-500 text-text text-primary">{{ feature.name }}</span>
-                <div class="active-text flex align-center green-text text-darken-3 ml-6">
-                  <mat-icon class="material-symbols-outlined mr-1 green-text text-darken-3"
-                    color="primary">check_circle</mat-icon><span>{{feature.status}}</span>
+            <mat-nav-list class="config-section sidebar">
+              <mat-list-item class="nav-list-item p-0" *ngFor="let item of configOptions">
+                <a class="icon-wrapper flex align-center" [routerLink]="['/', item.state]">
+                  <mat-icon class="material-symbols-outlined m-0 sidebar-icon mat-primary">{{
+                    item.icon
+                    }}</mat-icon>
+                  <div class="content-wrapper">
+                    <span class="mat-subtitle-2 ml-2 text-grey-darken-9">{{ item.name }}</span>
+                  </div>
+                </a>
+              </mat-list-item>
+            </mat-nav-list>
+          </div>
+        </div>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <!-- Header for application starts here! -->
+        <mat-toolbar class="header-wrapper relative main-bg">
+          <div class="absolute left-header pointer">
+            <mat-icon class="material-symbols-outlined mat-primary" (click)="sidenav.toggle()">
+              menu_open
+            </mat-icon>
+          </div>
+          <div class="header-right">
+            <div class="language-section pointer mr-4">
+              <img src="en.png" alt="language flag" />
+            </div>
+            <div class="notifications-section pointer" [matMenuTriggerFor]="notificationsMenu" matBadge="3"
+              matBadgeSize="small" matBadgeColor="warn">
+              <img src="/icons/notifications.svg" alt="notifications-icon" />
+            </div>
+            <mat-menu #notificationsMenu="matMenu" class="notifications-menu border-2" backdropClass="right-menu">
+              <div class="notifications-header">
+                <div class="flex align-center justify-between">
+                  <div class="label">Notifications</div>
+                  <mat-chip class="basic-chip"> 4 New </mat-chip>
+                </div>
+                <div class="tab-panel" (click)="preventClose($event)">
+                  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+                    <mat-tab label="All (4)">
+                      <div class="relative h-55" *ngIf="notificationsData.length == 0">
+                        <div class="absolute position-center text-center w-full">
+                          <img src="/notifications-icon.png" alt="notification-icon">
+                          <span class="block mt-6">
+                            Hey! You have no notifications.
+                          </span>
+                        </div>
+                      </div>
+                      <div class="notification-list" (click)="preventClose($event)" *ngIf="notificationsData.length > 0">
+                      </div>
+                    </mat-tab>
+                    <mat-tab label="Messages">
+                      <div class="relative h-55" *ngIf="notificationsData.length == 0">
+                        <div class="absolute position-center text-center w-full">
+                          <img src="/notifications-icon.png" alt="no data" />
+                          <span class="block mt-6">
+                            Hey! You have no notifications.
+                          </span>
+                        </div>
+                      </div>
+                      <div class="message-list" (click)="preventClose($event)" *ngIf="notificationsData.length > 0">
+                        My Messages
+                      </div>
+                    </mat-tab>
+                    <mat-tab label="Alerts">
+                      <div class="relative h-55" *ngIf="notificationsData.length == 0">
+                        <div class="absolute position-center text-center w-full">
+                          <img src="/notifications-icon.png" alt="notifications-icon" />
+                          <span class="block mt-6">
+                            Hey! You have no notifications.
+                          </span>
+                        </div>
+                      </div>
+                      <div class="message-list" (click)="preventClose($event)" *ngIf="notificationsData.length > 0">
+                        Alerts
+                      </div>
+                    </mat-tab>
+                  </mat-tab-group>
+                </div>
+                <div class="text-center modal-footer pointer" (click)="preventClose($event)">
+                  <span class="block py-4"> View All </span>
                 </div>
               </div>
-              <p class="mat-body-1 text-dark mb-2">
-                {{ feature.description }}
-              </p>
-              <span class="text-dark">Feature type : </span>
-              <span class="text-text text-primary ml-3">{{feature.type}}</span>
+            </mat-menu>
+            <div class="user-profile pointer" [matMenuTriggerFor]="menu">
+              <div class="user-image">
+                <img src="/profile-avatar-1.png" />
+              </div>
+              <div class="user-info">
+                <span class="name">John Smith</span>
+                <span class="role">Founder</span>
+              </div>
             </div>
-            <div class="action-btns flex align-center">
-              <button mat-button color="primary" [routerLink]="['/features/edit-feature/'+feature.featureId]">
-                <mat-icon class="material-symbols-outlined mb-1 small edit-icon" color="primary">
-                  edit </mat-icon>Edit
-              </button>
-              <button mat-icon-button class="mb-1 ml-4" color="warn"
-                aria-label="Example icon button with a vertical three dot icon" (click)="openDelete(feature.featureId)">
-                <mat-icon class="material-symbols-outlined" color="warn">close</mat-icon>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- No features block -->
-        <ng-template #noFeaturesBlock>
-          <div class="feature-add-block flex align-center justify-center p-6">
-            <div class="text-center flex align-center flex vertical">
-              <div class="icon-with-bg">
-                <div class="bg-box"></div>
-                <div class="icon inherit">
-                  <mat-icon class="material-symbols-outlined mb-1">featured_play_list</mat-icon>
+            <mat-menu #menu="matMenu" class="profile-menu" backdropClass="alert-menu">
+              <div class="profile-menu-outer">
+                <div class="grad-bg">
+                  <div class="user-initials">JS</div>
+                </div>
+                <div class="profile-inner">
+                  <p class="mat-h1 fw-600 m-0">John Smith</p>
+                  <p class="m-0 mt-1">Founder</p>
+                </div>
+                <div class="profile-paths">
+                  <a class="flex align-center justify-between user-link" *ngFor="let element of userProfile">
+                    <div class="flex align-center">
+                      <mat-icon class="material-symbols-outlined mat-primary">{{
+                        element.icon
+                        }}</mat-icon>
+                      <span class="ml-3">{{ element.name }}</span>
+                    </div>
+                    <div *ngIf="element.toggle">
+                      <mat-slide-toggle color="primary" (click)="preventClose($event)"
+                        (change)="switchDark($event)"></mat-slide-toggle>
+                    </div>
+                  </a>
                 </div>
               </div>
-              <p class="mat-subtitle-2 text-dark-1 mb-3 font-weight-500">
-                You have not added features
-              </p>
-              <button mat-button color="primary" class="small" (click)="navigateToFeatures()">
-                Create Features
-              </button>
+            </mat-menu>
+          </div>
+        </mat-toolbar>
+        <div class="inner-h relative overflow-auto">
+          <div class="view-product-wrapper pt-8">
+            <div class="header-section pb-6">
+              <div class="flex align-center justify-between">
+                <div class="flex align-center">
+                  <mat-icon class="material-symbols-outlined pointer mr-1" color="primary"
+                    [routerLink]="'/products'">keyboard_backspace</mat-icon>
+                  <p class="mat-headline-5 font-weight-500 text-purple-lighten-1">View Product</p>
+                </div>
+                <button mat-stroked-button color="primary" class="medium">
+                  Edit
+                </button>
+              </div>
+            </div>
+            <div class="header-block border-2">
+              <div class="flex align-end justify-between inner-block">
+                <div class="brand-info flex align-center">
+                  <div class="product-img mr-4 border-2"
+                    *ngIf="productDetail?.imageUrl && productDetail.imageUrl.length > 1;else uploadImage">
+                    <img src="{{ imagePath + imageUrl }}" alt="{{imageName}}" />
+                  </div>
+                  <ng-template #uploadImage>
+                    <div class="productImg-wrapper">
+                      <div class="product-img border-2">
+                        <img src="no-image.logo.jpg" alt="product-img" />
+                      </div>
+                    </div>
+                  </ng-template>
+                  <div>
+                    <div class="">
+                      <h5 class="mat-headline-5  font-weight-600 text-white mb-2">
+                        Microsoft Teams
+                      </h5>
+                      <p class="mat-subtitle-2 font-weight-500 sub-title">
+                        O365ProPlusRetail
+                      </p>
+                    </div>
+                    <span class="mat-subtitle-2 subtitle font-weight-500 block">{{productId}}</span>
+                  </div>
+                </div>
+                <div class="date-block flex align-center mb-8">
+                  <div class="flex align-center">
+                    <mat-icon class="material-symbols-outlined mr-3 text-white">calendar_today</mat-icon>
+                    <p class="mat-subtitle-2 text-white">Created 24 March, 2023</p>
+                  </div>
+                  <div class="vertical-divider mx-6"></div>
+                  <div class="flex align-center">
+                    <mat-icon class="material-symbols-outlined mr-3 text-white">calendar_today</mat-icon>
+                    <p class="mat-subtitle-2 text-white"> Modified 24 Apr, 2023</p>
+                  </div>
+                </div>
+              </div>
+              <div class="product-desc">
+                <h4 class="mat-subtitle-1 font-weight-500 mb-4 text-headline-dark">Description</h4>
+                <p class="mat-subtitle-2 text-grey-darken">
+                  Microsoft Teams is a proprietary business communication platform developed by Microsoft, as part of the
+                  Microsoft 365 family of products. Teams primarily competes with the similar service Slack, offering workspace
+                  chat and videoconferencing, file storage, and application integration.
+                </p>
+              </div>
+            </div>
+            <div class="header-block border-2 mt-6">
+              <div class="product-features">
+                  <h4 class="mat-subtitle-2 text-blue-darken font-weight-500 mb-4">Features</h4>
+                <!-- with feature added -->
+                <div class="features-wrapper">
+                  <div *ngIf="productDetail?.feature && productDetail.feature.length > 0; else noFeaturesBlock">
+                    <div class="feature-item flex border-2 secondary-light-bg"
+                      *ngFor="let feature of productDetail.feature; let i = index">
+                      <div class="feature-logo border-2 flex-center font-weight-500 primary-text text-main">
+                        <span>{{ feature.featureId}}</span>
+                      </div>
+                      <div class="details ml-8">
+                        <div class="flex align-center mb-2">
+                          <span class="mat-subtitle-2 font-weight-500 text-text text-primary">{{ feature.name }}</span>
+                          <div class="active-text flex align-center green-text text-darken-3 ml-6">
+                            <mat-icon class="material-symbols-outlined mr-1 green-text text-darken-3"
+                              color="primary">check_circle</mat-icon><span>{{feature.status}}</span>
+                          </div>
+                        </div>
+                        <p class="mat-body-1 text-dark mb-2">
+                          {{ feature.description }}
+                        </p>
+                        <span class="text-dark">Feature type : </span>
+                        <span class="text-text text-primary ml-3">{{feature.type}}</span>
+                      </div>
+                      <div class="action-btns flex align-center">
+                        <button mat-button color="primary" [routerLink]="['/features/edit-feature/'+feature.featureId]">
+                          <mat-icon class="material-symbols-outlined mb-1 small edit-icon" color="primary">
+                            edit </mat-icon>Edit
+                        </button>
+                        <button mat-icon-button class="mb-1 ml-4" color="warn"
+                          aria-label="Example icon button with a vertical three dot icon" (click)="openDelete(feature.featureId)">
+                          <mat-icon class="material-symbols-outlined" color="warn">close</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <!-- No features block -->
+                  <ng-template #noFeaturesBlock>
+                    <div class="feature-add-block flex align-center justify-center p-6">
+                      <div class="text-center flex align-center flex vertical">
+                        <div class="icon-with-bg">
+                          <div class="bg-box"></div>
+                          <div class="icon inherit">
+                            <mat-icon class="material-symbols-outlined mb-1">featured_play_list</mat-icon>
+                          </div>
+                        </div>
+                        <p class="mat-subtitle-2 text-dark-1 mb-3 font-weight-500">
+                          You have not added features
+                        </p>
+                        <button mat-button color="primary" class="small" (click)="navigateToFeatures()">
+                          Create Features
+                        </button>
+                      </div>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
             </div>
           </div>
-        </ng-template>
-      </div>
-    </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   </div>
