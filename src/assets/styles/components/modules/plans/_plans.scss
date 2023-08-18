@@ -898,14 +898,15 @@
       }
     }
   }
-  .charges-input{
-    max-width: 100%;
+  .fee-input-wrapper{
+    max-width: 44.75rem;
+    margin-left: 2.5rem;
   }
 }
 
 // new-charge-popup
 .new-charge-popup{
-  padding: 2.1875rem 1.25rem 2.1875rem 2.5rem;
+  padding: 2.1875rem  2.5rem;
   .heading{
     border-bottom: 0.0625rem solid $border-color;
   }
