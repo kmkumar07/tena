@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   pricingModels,
@@ -17,6 +17,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef} from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EventEmitter, Output } from '@angular/core';
+
 export class PlanValue {
   planId: string;
   internalName: string;
@@ -28,6 +30,7 @@ export class PlanValue {
   styleUrls: ['./set-price-popup.component.scss']
 })
 export class SetPricePopupComponent {
+  @Output() priceIdSelected = new EventEmitter<string>();
   subscription: Subscription;
   pricingModelTypes: selectOptions[] = pricingModels;
   FrequencyTypes: selectOptions[] = Frequency;
@@ -42,10 +45,11 @@ export class SetPricePopupComponent {
   monthlyBilling = ['3', '4', '5'];
   readOnly: boolean = false;
   start = 0;
+  period:string;
   check: string;
   dropKey: number;
+  periodKey:number;
   planId: string;
-  internalName:string;
   editPriceStatus: boolean;
   public setPriceForm: FormGroup;
 
@@ -58,11 +62,9 @@ export class SetPricePopupComponent {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<SetPricePopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { planId: any,internalName: any }
+    @Inject(MAT_DIALOG_DATA) public data: { planId: any}
   ) {
     this.planId=this.data.planId;
-    this.internalName=this.data.internalName;
-
   }
 
   ngOnInit() {
@@ -108,13 +110,13 @@ export class SetPricePopupComponent {
     this.setPriceForm = this.form.group({
       priceId: ['', Validators.required],
       planId: [this.planId, Validators.required],
-      name: [this.internalName, Validators.required],
+      name: [this.planId, Validators.required],
       description: ['i am demo', Validators.required],
       invoiceNotes: ['completed', Validators.required],
       currencyCode: ['USD', Validators.required],
       pricingModel: ['', Validators.required],
       price: ['', Validators.required],
-      periodUnit: ['daily', Validators.required],
+      periodUnit: ['', Validators.required],
       period: ['1', Validators.required],
       isExpirable: [true],
       noOfCycle: ['', Validators.required],
@@ -128,14 +130,20 @@ export class SetPricePopupComponent {
       ]),
     });
   }
-
+  selectPriceId() {
+    const priceId=this.price.priceId;
+    // Emit the selected priceId back to the parent
+    this.priceIdSelected.emit(priceId);
+  }
   getLevelList(index: number) {
     const tierList = this.multiPricing.at(index) as FormGroup;
     return tierList;
   }
 
   setPeriod(periodSelected: string) {
-    this.setPriceForm.patchValue({
+    console.log(periodSelected);
+    this.period=periodSelected;
+        this.setPriceForm.patchValue({
       periodUnit: periodSelected,
     });
   }
@@ -175,24 +183,34 @@ export class SetPricePopupComponent {
     prevIdx.get('endingUnit')?.enable();
   }
 
-  onTabChange(event: MatTabChangeEvent): void {
-    this.formData();
-    this.selectedTab = event.index;
-    if (this.selectedTab == 0) {
+  onTabChange(event:number): void {
+    //this.formData();
+    
+    this.selectedTab = event;
+    console.log( this.selectedTab);
+
+    if (this.selectedTab == 1) {
       this.setPeriod('daily');
-    } else if (this.selectedTab == 1) {
-      this.setPeriod('weekly');
     } else if (this.selectedTab == 2) {
-      this.setPeriod('monthly');
+      this.setPeriod('weekly');
     } else if (this.selectedTab == 3) {
+      this.setPeriod('monthly');
+    } else if (this.selectedTab == 4) {
       this.setPeriod('yearly');
     }
+    this.formData();
+
   }
 
   onDropdownKey(event: number): void {
-    this.dropKey = event;
+    this.periodKey=event;
+    this.onTabChange(this.periodKey);
+    
   }
-
+  onDropdownKeyWithpricingModel(event: number): void {
+    this.dropKey = event;
+    
+  }
   deleteTier(tierIndex: number) {
     this.multiPricing.removeAt(tierIndex);
     const lastIdx = this.lastObj();
@@ -226,12 +244,14 @@ export class SetPricePopupComponent {
   }
 
   pricingModelValueToName(price: any) {
+    price.periodUnit= this.period;
     if (price) {
       price.priceId =
         price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
       price.name =
-        price.internalName + '-' + price.currencyCode + '-' + price.periodUnit;
+        price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
     }
+
     if (price.pricingModel == 1) {
       price.pricingModel = 'flat_fee';
       price.multiPricing = [];
@@ -269,8 +289,8 @@ export class SetPricePopupComponent {
           console.log("pres",res);
 
         this.openSuccess();
-        this.planService.setData(this.price, 'priceInfo');
-        this.router.navigate([`/plans/create/${this.planValue.planId}`]);
+        this.planService.setData(this.price);
+        this.router.navigate([`/plans/create/${this.planId}`]);
         this.global.hideLoader();
       },
 

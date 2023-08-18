@@ -38,49 +38,32 @@ export class PlanService {
   public plan$ = this.planSubject.asObservable();
   private priceSubject = new BehaviorSubject<any>(null);
   public price$ = this.priceSubject.asObservable();
+  private getPriceDataById = new Subject<any>()
+  priceDataById$ = this.getPriceDataById.asObservable();
   public planData: dataTypes | any = {
     planInfo: new BehaviorSubject<any>({}),
     priceInfo: new BehaviorSubject<any[]>([]),
     productDetails: new BehaviorSubject<any>({}),
   };
-
+  pricedata: any;
   plans: PlanList[] = [];
   error$ = new Subject<string>();
   baseUrl = environment.apiUrl;
   priceModelArr = this.planData.priceInfo.getValue();
 
-  constructor(
-    private http: HttpClient,
-    private apiService: ApiService  
-  ) {}
+  constructor(private http: HttpClient, private apiService: ApiService) {}
 
-  setEditPrice(state){
+  setEditPrice(state) {
     this.editPrice.next(state);
   }
-  getEditPrice(){
+  getEditPrice() {
     return this.editPrice.asObservable();
   }
 
   // Passing data from step to other steps
-  setData(data: any, formType: string) {
-    if (formType === 'planInfo') {
-      this.planData.planInfo.next(data);
-    } else if (formType === 'priceInfo') {
-      this.priceModelArr.push(data)
-      this.planData.priceInfo.next(this.priceModelArr);
-    } else if (formType === 'productDetails') {
-      this.planData.productDetails.next(data);
-    }
-  }
-
-  getData(formType: string) {
-    if (formType === 'planInfo') {
-      return this.planData.planInfo.asObservable();
-    } else if (formType === 'priceInfo') {
-      return this.planData.priceInfo.asObservable();
-    } else if (formType === 'productDetails') {
-      return this.planData.productDetails.asObservable();
-    }
+  setData(pricedata: any) {
+    this.getPriceDataById.next(pricedata)
+    console.log('priceId', pricedata);
   }
 
   addPlan(plan: Plan): Observable<Plan> {
@@ -88,28 +71,28 @@ export class PlanService {
     return this.apiService.post(path, plan);
   }
 
-  updatePlan(plan: Plan, planId: string){
+  updatePlan(plan: Plan, planId: string) {
     let path = `${this.baseUrl}/plans/${planId}?planId=${planId}`;
-    return this.apiService.put(path, plan)
+    return this.apiService.put(path, plan);
   }
 
   getPlans(PageNumber: number, limit: number, search: string): Observable<any> {
-    const path = `${this.baseUrl}/plans/?page=${PageNumber}&limit=${limit}&search=${search}`
+    const path = `${this.baseUrl}/plans/?page=${PageNumber}&limit=${limit}&search=${search}`;
     return this.apiService.get(path);
   }
 
-  getPlanById(id: string){
-    const path = `${this.baseUrl}/plans/${id}?planId=${id}`
+  getPlanById(id: string) {
+    const path = `${this.baseUrl}/plans/${id}?planId=${id}`;
     return this.apiService.get(path);
   }
 
   getPrice(PageNumber: number, limit: number, search: string): Observable<any> {
-    const path = `${this.baseUrl}/pricing/?page=${PageNumber}&limit=${limit}&search=${search}`
+    const path = `${this.baseUrl}/pricing/?page=${PageNumber}&limit=${limit}&search=${search}`;
     return this.apiService.get(path);
-  } 
+  }
 
-  getPriceById(id: string){
-    const path = `${this.baseUrl}/pricing/${id}?priceId=${id}`
+  getPriceById(id: string) {
+    const path = `${this.baseUrl}/pricing/${id}?priceId=${id}`;
     return this.apiService.get(path);
   }
 

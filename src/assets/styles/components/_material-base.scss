@@ -253,7 +253,27 @@
     border-bottom: none;
   }
 }
-
+// simple
+.small-table {
+  overflow: auto;
+  background-color: transparent;
+  .mat-mdc-table {
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+    background-color: transparent;
+    .mdc-data-table__header-row{
+      height: 2rem;
+      background-color: var(--grey-bg);
+    }
+    .mdc-data-table__row{
+      height: 2.5rem;
+    }
+    .mdc-data-table__cell, .mdc-data-table__header-cell{
+      border-bottom-width: 0;
+      border-bottom-style: none;
+    }
+  }
+}
 // Table Scrollbar
 .primary-table::-webkit-scrollbar {
   height: 0.4rem;

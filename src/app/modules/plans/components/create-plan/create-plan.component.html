@@ -4,16 +4,28 @@
     <div class="heading flex align-center justify-between pb-3">
       <div class="flex align-center">
         <div class="icon-img mr-4">
-          <img src="../../../../../../assets/images/icons/carbon_document-multiple-02.svg"
-            alt="carbon_document-multiple-icon" />
+          <img
+            src="../../../../../../assets/images/icons/carbon_document-multiple-02.svg"
+            alt="carbon_document-multiple-icon"
+          />
         </div>
         <abbr class="fs-xl font-weight-500 text-blue-darken">Plan Details</abbr>
       </div>
       <div class="flex">
-        <button mat-stroked-button color="primary" class="mr-3 small font-weight-500 px-4"(click)="editPlansDetails(plandataById.planId)">
+        <button
+          mat-stroked-button
+          color="primary"
+          class="mr-3 small font-weight-500 px-4"
+          (click)="editPlansDetails(plandataById.planId)"
+        >
           Edit
         </button>
-        <button mat-stroked-button color="primary" class="small font-weight-500 px-4"(click)="openDeletePlan(plandataById.planId)">
+        <button
+          mat-stroked-button
+          color="primary"
+          class="small font-weight-500 px-4"
+          (click)="openDeletePlan(plandataById.planId)"
+        >
           Delete
         </button>
       </div>
@@ -22,22 +34,30 @@
     <div class="info-details py-8 flex">
       <div class="details">
         <h5 class="text-grey-darken mat-subtitle-2 mb-2">Plan Name</h5>
-        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">{{plandataById.externalName}}</h6>
+        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">
+          {{ plandataById.externalName }}
+        </h6>
       </div>
       <div class="details">
         <h5 class="text-grey-darken mat-subtitle-2 mb-2">Plan Id</h5>
-        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">{{plandataById.planId}}</h6>
+        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">
+          {{ plandataById.planId }}
+        </h6>
       </div>
       <div class="details">
         <h5 class="text-grey-darken mat-subtitle-2 mb-2">Plan Status</h5>
-        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">{{plandataById.status}}</h6>
+        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">
+          {{ plandataById.status }}
+        </h6>
       </div>
     </div>
 
     <div class="description-box">
-      <h5 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-2">Plan Description</h5>
+      <h5 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-2">
+        Plan Description
+      </h5>
       <p class="text-grey-darken mat-subtitle-2">
-        {{plandataById.description}}
+        {{ plandataById.description }}
       </p>
     </div>
   </div>
@@ -46,12 +66,18 @@
   <div class="pricing-plan p-10 border-2 main-bg mb-4 basic-border">
     <div class="plan-info-block inner-wrapper">
       <div class="heading flex justify-between align-center pb-3">
-        <div class="flex  align-center">
+        <div class="flex align-center">
           <div class="icon-img mr-4">
-            <img src="../../../../../../assets/images/icons/basil_invoice-outline.svg" alt="icon" />
+            <img
+              src="../../../../../../assets/images/icons/basil_invoice-outline.svg"
+              alt="icon"
+            />
           </div>
-          <abbr class="fs-xl font-weight-500 text-blue-darken">Pricing Plan</abbr>
+          <abbr class="fs-xl font-weight-500 text-blue-darken"
+            >Pricing Plan</abbr
+          >
         </div>
+
         <!-- <button mat-stroked-button color="primary" class="mr-3 small font-weight-500 px-4">
           Add Pricing
         </button> -->
@@ -69,121 +95,211 @@
               <th class="mat-subtitle-2 text-blue-darken pl-2">
                 Pricing Cycle
               </th>
-              <th class="mat-subtitle-2 text-blue-darken">
-                Pricing Model
-              </th>
-              <th class="mat-subtitle-2 text-blue-darken">
-                Billing Cycle
-              </th>
-              <th class="mat-subtitle-2 text-blue-darken">
-                Price
-              </th>
-              <th class="mat-subtitle-2 text-blue-darken action-header text-center">
+              <th class="mat-subtitle-2 text-blue-darken">Pricing Model</th>
+              <th class="mat-subtitle-2 text-blue-darken">Billing Cycle</th>
+              <th class="mat-subtitle-2 text-blue-darken">Price</th>
+              <th
+                class="mat-subtitle-2 text-blue-darken action-header text-center"
+              >
                 Action
               </th>
             </tr>
 
             <tr>
-              <td class="mat-subtitle-2 text-grey-darken pl-2">
-                Daily
-              </td>
+              <td class="mat-subtitle-2 text-grey-darken pl-2">Daily</td>
               <td class="mat-subtitle-2 text-grey-darken">
-                Tired
+                {{ pricedataById ? pricedataById.pricingModel : "tired" }}
               </td>
               <td>
-                <span class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1">
-                  Fixed
+                <span
+                  class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1"
+                >
+                  <ng-container *ngIf="pricedataById">
+                    {{
+                      pricedataById.isExpirable == true ? "Fixed" : "Forever"
+                    }}
+                  </ng-container>
+                  <ng-container *ngIf="!pricedataById">
+                    {{ "Fixed" }}
+                  </ng-container>
                 </span>
               </td>
               <td class="mat-subtitle-2 text-purple-lighten-1">
-                $100/Unit
+                <ng-container *ngIf="pricedataById">
+                  ${{ pricedataById ? pricedataById.price : "100" }}/Unit
+                </ng-container>
+                <ng-container *ngIf="!pricedataById">
+                  <button
+                    class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                    (click)="setPrice(plandataById.planId)"
+                  >
+                    Set Price
+                    <mat-icon
+                      class="material-symbols-outlined ml-2"
+                      color="primary"
+                    >
+                      arrow_right_alt
+                    </mat-icon>
+                  </button>
+                </ng-container>
               </td>
 
               <td class="pr-7">
                 <div class="flex justify-end">
-                  <button class="flex edit-btn mat-caption mr-1" mat-button color="primary">
-                    <mat-icon class="material-symbols-outlined mr-1" color="primary">edit</mat-icon>Edit
+                  <button
+                    class="flex edit-btn mat-caption mr-1"
+                    mat-button
+                    color="primary"
+                  >
+                    <mat-icon
+                      class="material-symbols-outlined mr-1"
+                      color="primary"
+                      (click)="setPrice(plandataById.planId)"
+                      >edit</mat-icon
+                    >Edit
                   </button>
-                  <button mat-icon-button color="warn" class="light-bg small rounded-1">
-                    <mat-icon class="material-symbols-outlined mr-0" color="warn">close</mat-icon>
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    class="light-bg small rounded-1"
+                  >
+                    <mat-icon
+                      class="material-symbols-outlined mr-0"
+                      color="warn"
+                      >close</mat-icon
+                    >
                   </button>
                 </div>
               </td>
             </tr>
-            <tr>
-              <td class="mat-subtitle-2 text-grey-darken pl-2">
-                Weekly
-              </td>
-              <td class="mat-subtitle-2 text-grey-darken">
 
+            <tr>
+              <td class="mat-subtitle-2 text-grey-darken pl-2">Weekly</td>
+              <td class="mat-subtitle-2 text-grey-darken">
+                <ng-container *ngIf="pricedataById">       
+                    {{ pricedataById.periodUnit=='weekly' ? pricedataById.pricingModel : "" }}
+                </ng-container>
+                <ng-container *ngIf="!pricedataById">
+                  {{ "" }}
+                </ng-container>
               </td>
               <td>
-
+                <span
+                  class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1"
+                >
+                  <ng-container *ngIf="pricedataById">
+                    {{
+                      pricedataById.isExpirable == true && pricedataById.periodUnit=='weekly' ? "Fixed" : "Forever"
+                    }}
+                  </ng-container>
+                  <ng-container *ngIf="!pricedataById">
+                    {{ "" }}
+                  </ng-container>
+                </span>
               </td>
-              <td class="mat-subtitle-2 text-grey-darken">
-                <button class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
-                  (click)="setPrice(plandataById.planId,plandataById.internalName)" >
-                  Set Price
-                  <mat-icon class="material-symbols-outlined ml-2" color="primary">
-                    arrow_right_alt
-                  </mat-icon>
-                </button>
-
+              <td class="mat-subtitle-2 text-purple-lighten-1">
+                <div *ngIf="pricedataById ">
+                  ${{  pricedataById.periodUnit=='weekly' ? pricedataById.price : "" }}/Unit
+                </div>
+                  <button
+                    class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                    (click)="setPrice(plandataById.planId)"
+                  >
+                    Set Price
+                    <mat-icon
+                      class="material-symbols-outlined ml-2"
+                      color="primary"
+                    >
+                      arrow_right_alt
+                    </mat-icon>
+                  </button>
               </td>
 
-              <td class="pr-7">
-
-              </td>
+              <td class="pr-7"></td>
             </tr>
-            <tr>
-              <td class="mat-subtitle-2 text-grey-darken pl-2">
-                Monthly
-              </td>
-              <td class="mat-subtitle-2 text-grey-darken">
 
+            <tr>
+              <td class="mat-subtitle-2 text-grey-darken pl-2">Monthly</td>
+              <td class="mat-subtitle-2 text-grey-darken">
+                {{ pricedataById ? pricedataById.pricingModel : "" }}
               </td>
               <td>
-
+                <span
+                  class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1"
+                >
+                  <ng-container *ngIf="pricedataById">
+                    {{
+                      pricedataById.isExpirable == true ? "Fixed" : "Forever"
+                    }}
+                  </ng-container>
+                  <ng-container *ngIf="!pricedataById">
+                    {{ "" }}
+                  </ng-container>
+                </span>
               </td>
-              <td class="mat-subtitle-2 text-grey-darken">
-                <button class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
-                  (click)="setPrice(plandataById.planId,plandataById.internalName)">
-                  Set Price
-                  <mat-icon class="material-symbols-outlined ml-2" color="primary">
-                    arrow_right_alt
-                  </mat-icon>
-                </button>
-
+              <td class="mat-subtitle-2 text-purple-lighten-1">
+                <ng-container *ngIf="pricedataById">
+                  ${{ pricedataById ? pricedataById.price : "100" }}/Unit
+                </ng-container>
+                <ng-container *ngIf="!pricedataById">
+                  <button
+                    class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                    (click)="setPrice(plandataById.planId)"
+                  >
+                    Set Price
+                    <mat-icon
+                      class="material-symbols-outlined ml-2"
+                      color="primary"
+                    >
+                      arrow_right_alt
+                    </mat-icon>
+                  </button>
+                </ng-container>
               </td>
 
-              <td class="pr-7">
-
-              </td>
+              <td class="pr-7"></td>
             </tr>
-            <tr>
-              <td class="mat-subtitle-2 text-grey-darken pl-2">
-                Yearly
-              </td>
-              <td class="mat-subtitle-2 text-grey-darken">
 
+            <tr>
+              <td class="mat-subtitle-2 text-grey-darken pl-2">Yearly</td>
+              <td class="mat-subtitle-2 text-grey-darken">
+                {{ pricedataById ? pricedataById.pricingModel : "" }}
               </td>
               <td>
-
+                <span
+                  class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1"
+                >
+                  <ng-container *ngIf="pricedataById">
+                    {{
+                      pricedataById.isExpirable == true ? "Fixed" : "Forever"
+                    }}
+                  </ng-container>
+                  <ng-container *ngIf="!pricedataById">
+                    {{ "" }}
+                  </ng-container>
+                </span>
               </td>
-              <td class="mat-subtitle-2 text-grey-darken">
-                <button class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
-                  (click)="setPrice(plandataById.planId,plandataById.internalName)">
-                  Set Price
-                  <mat-icon class="material-symbols-outlined ml-2" color="primary">
-                    arrow_right_alt
-                  </mat-icon>
-                </button>
-
+              <td class="mat-subtitle-2 text-purple-lighten-1">
+                <ng-container *ngIf="pricedataById">
+                  ${{ pricedataById ? pricedataById.price : "100" }}/Unit
+                </ng-container>
+                <ng-container *ngIf="!pricedataById">
+                  <button
+                    class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                    (click)="setPrice(plandataById.planId)"
+                  >
+                    Set Price
+                    <mat-icon
+                      class="material-symbols-outlined ml-2"
+                      color="primary"
+                    >
+                      arrow_right_alt
+                    </mat-icon>
+                  </button>
+                </ng-container>
               </td>
 
-              <td class="pr-7">
-
-              </td>
+              <td class="pr-7"></td>
             </tr>
           </table>
         </div>
@@ -197,11 +313,21 @@
       <div class="heading flex justify-between pb-3">
         <div class="flex align-center">
           <div class="icon-img mr-4">
-            <img src="../../../../../../assets/images/icons/basil_invoice-outline.svg" alt="icon" />
+            <img
+              src="../../../../../../assets/images/icons/product-icon.svg"
+              alt="icon"
+            />
           </div>
-          <abbr class="fs-xl font-weight-500 text-blue-darken">Product Details</abbr>
+          <abbr class="fs-xl font-weight-500 text-blue-darken"
+            >Product Details</abbr
+          >
         </div>
-        <button mat-stroked-button color="primary" class="mr-3 small font-weight-500 px-4" (click)="addProductDetails()">
+        <button
+          mat-stroked-button
+          color="primary"
+          class="mr-3 small font-weight-500 px-4"
+          (click)="addProductDetails()"
+        >
           Add product
         </button>
       </div>
@@ -214,40 +340,70 @@
           <div class="details-inner flex justify-between">
             <div class="flex">
               <div class="product-img p-2 mr-4">
-                <img src="../.././../../assets/images/teams.png" alt="product-img" />
+                <img
+                  src="../.././../../assets/images/teams.png"
+                  alt="product-img"
+                />
               </div>
               <div class="mt-2">
                 <div>
-                  <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-1">
+                  <h6
+                    class="mat-subtitle-2 font-weight-500 text-blue-darken mb-1"
+                  >
                     MS Team
                   </h6>
-                  <span class="mat-body-1 font-weight-500 text-blue-darken">3 Features
-                    included</span>
+                  <span class="mat-body-1 font-weight-500 text-blue-darken"
+                    >3 Features included</span
+                  >
                 </div>
                 <div class="flex mt-3">
                   <div class="info-details">
-                    <h5 class="mat-subtitle-2 text-grey-darken mb-1">Whiteboard</h5>
-                    <a  class="mat-subtitle-2 text-blue-darken font-weight-500" (click)="editFeatureDetails()">ON</a>
+                    <h5 class="mat-subtitle-2 text-grey-darken mb-1">
+                      Whiteboard
+                    </h5>
+                    <a
+                      class="mat-subtitle-2 text-blue-darken font-weight-500"
+                      (click)="editFeatureDetails()"
+                      >ON</a
+                    >
                   </div>
                   <div class="info-details">
-                    <h5 class="mat-subtitle-2 text-grey-darken mb-1">Email support</h5>
-                    <a class="mat-subtitle-2 text-blue-darken font-weight-500">All Week</a>
+                    <h5 class="mat-subtitle-2 text-grey-darken mb-1">
+                      Email support
+                    </h5>
+                    <a class="mat-subtitle-2 text-blue-darken font-weight-500"
+                      >All Week</a
+                    >
                   </div>
                   <div class="info-details">
-                    <h5 class="mat-subtitle-2 text-grey-darken mb-1">User License</h5>
-                    <a class="mat-subtitle-2 text-blue-darken font-weight-500">10 License</a>
+                    <h5 class="mat-subtitle-2 text-grey-darken mb-1">
+                      User License
+                    </h5>
+                    <a class="mat-subtitle-2 text-blue-darken font-weight-500"
+                      >10 License</a
+                    >
                   </div>
                 </div>
               </div>
             </div>
             <div class="flex">
-              <button class="flex icon-text mat-caption mr-4" mat-button color="primary"
+              <button
+                class="flex icon-text mat-caption mr-4"
+                mat-button
+                color="primary"
               >
-                <mat-icon class="material-symbols-outlined mr-1" color="primary">edit</mat-icon>Edit
+                <mat-icon class="material-symbols-outlined mr-1" color="primary"
+                  >edit</mat-icon
+                >Edit
               </button>
-              <button mat-icon-button color="warn" class="light-bg small rounded-1"
+              <button
+                mat-icon-button
+                color="warn"
+                class="light-bg small rounded-1"
+              >
+                <mat-icon class="material-symbols-outlined mr-0" color="warn"
+                  >close</mat-icon
                 >
-                <mat-icon class="material-symbols-outlined mr-0" color="warn">close</mat-icon>
               </button>
             </div>
           </div>
@@ -256,4 +412,185 @@
     </div>
   </div>
 
+  <!-- addon  details -->
+  <div class="addon-detail p-10 border-2 main-bg mb-4 basic-border">
+    <div class="heading flex justify-between pb-3">
+      <div class="flex align-center">
+        <div class="icon-img mr-4">
+          <img
+            src="../../../../../../assets/images/icons/addon-icon.svg"
+            alt="icon"
+          />
+        </div>
+        <abbr class="fs-xl font-weight-500 text-blue-darken"
+          >Add-ons Details</abbr
+        >
+      </div>
+      <!-- <button mat-stroked-button color="primary" class="mr-3 small font-weight-500 px-4"
+          (click)="addOnDetails()">
+          Add Add-on
+        </button> -->
+    </div>
+    <div class="details-wrapper add-on-view-wrapper mt-6 p-3 border-2">
+      <div class="details-inner flex align-center">
+        <div class="product-img p-2 mr-4">
+          <img src="../.././../../assets/images/teams.png" alt="product-img" />
+        </div>
+        <div>
+          <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-1">
+            MS Team
+          </h6>
+          <span class="mat-body-1 font-weight-500 text-blue-darken"
+            >3 Features included</span
+          >
+        </div>
+      </div>
+
+      <div class="content-wrapper">
+        <div class="flex mt-3">
+          <div class="info-details">
+            <h5 class="mat-subtitle-2 text-grey-darken mb-1">Whiteboard</h5>
+            <a
+              class="mat-subtitle-2 text-blue-darken font-weight-500"
+              (click)="editFeatureDetails()"
+              >ON</a
+            >
+          </div>
+          <div class="info-details">
+            <h5 class="mat-subtitle-2 text-grey-darken mb-1">Email support</h5>
+            <a class="mat-subtitle-2 text-blue-darken font-weight-500"
+              >All Week</a
+            >
+          </div>
+          <div class="info-details">
+            <h5 class="mat-subtitle-2 text-grey-darken mb-1">User License</h5>
+            <a class="mat-subtitle-2 text-blue-darken font-weight-500"
+              >10 License</a
+            >
+          </div>
+        </div>
+        <div class="flex mt-6">
+          <div class="add-on-details-wrapper px-2 py-3">
+            <div class="add-on-detail">
+              <div class="heading-content pl-3">
+                <span
+                  class="title font-weight-700 text-blue-darken mat-subtitle-1"
+                  >Teamwork and communication</span
+                >
+                <p class="subtile mat-body-1 text-grey-darken mt-2">
+                  It is a long established fact that a reader will be
+                  distracted.
+                </p>
+              </div>
+              <div class="flex mt-4 pl-4">
+                <div class="info-details">
+                  <h5 class="mat-body-1 text-grey-darken mb-1">
+                    Host online calls
+                  </h5>
+                  <a
+                    class="mat-body-1 text-blue-darken font-weight-500"
+                    (click)="editFeatureDetails()"
+                    >1-50</a
+                  >
+                </div>
+                <div class="info-details">
+                  <h5 class="mat-body-1 text-grey-darken mb-1">
+                    Host webinars
+                  </h5>
+                  <a class="mat-body-1 text-blue-darken font-weight-500"
+                    >50-100</a
+                  >
+                </div>
+                <div class="info-details">
+                  <h5 class="mat-body-1 text-grey-darken mb-1">
+                    Create team sites
+                  </h5>
+                  <a class="mat-body-1 text-blue-darken font-weight-500">ON</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            mat-icon-button
+            color="warn"
+            class="light-bg small rounded-1 ml-2"
+            [disabled]="!stepOneCompleted"
+          >
+            <mat-icon class="material-symbols-outlined mr-0" color="warn"
+              >close</mat-icon
+            >
+          </button>
+        </div>
+
+        <div class="info-form">
+          <div class="flag-wrapper flex align-center pt-8 pb-2">
+            <div class="flag-img mr-2">
+              <img
+                src="../../../../../../assets/images/flags.png"
+                alt="flags"
+              />
+            </div>
+            <span class="mat-subtitle-2 text-headline-dark">USD</span>
+          </div>
+          <div class="table-wrapper mt-3 small-table">
+            <table mat-table [dataSource]="dataSource" class="">
+              <!-- PricingCycle Column -->
+              <ng-container matColumnDef="PricingCycle">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="mat-body-1 text-blue-darken"
+                >
+                  Pricing Cycle
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  class="mat-body-1 text-blue-darken"
+                >
+                  {{ element.PricingCycle }}
+                </td>
+              </ng-container>
+
+              <!-- Price Column -->
+              <ng-container matColumnDef="Price">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="mat-body-1 text-blue-darken"
+                >
+                  Price
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  class="mat-body-1 text-purple-lighten-1 font-weight-500 price-cell"
+                >
+                  <div
+                    class="flex align-center pointer"
+                    (click)="setPrice(plandataById.planId)"
+                  >
+                    {{ element.Price
+                    }}<mat-icon
+                      class="material-symbols-outlined ml-2"
+                      color="primary"
+                      >arrow_right_alt</mat-icon
+                    >
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr
+                mat-row
+                (click)="clickedRows.add(row)"
+                [class.demo-row-is-clicked]="clickedRows.has(row)"
+                *matRowDef="let row; columns: displayedColumns"
+              ></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -164,13 +164,16 @@ export class CreateProductComponent implements OnInit {
   }
 
   deleteImage() {
+    const imageUrlparts = this.imageName?.split('/saasframework/');
+
+    const extractedImagePart = decodeURIComponent(imageUrlparts[0]);
     const removeImagePayload = {
-      image: this.imageUrl,
+      image: extractedImagePart,
     };
+
     this.productService.removeImage(removeImagePayload).subscribe((res) => {
-      this.imageUrl = res.data.blobURL;
-      this.imageName = res.data.blobName;
-      this.imagePath = '';
+      this.imageName = res.data.blobURL;
+      this.imageUrl = '';
       this.uploadMessage = 'Image removed successfully.';
       this.startMessageTimer();
     });
@@ -191,7 +194,7 @@ export class CreateProductComponent implements OnInit {
       this.subscription.unsubscribe();
     }
   }
-  activeChecked(event){
+  activeChecked(event) {
     console.log(event);
   }
   cancel() {
