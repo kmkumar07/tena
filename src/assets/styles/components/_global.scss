@@ -851,6 +851,16 @@ table {
       background-color: $primay-light-bg-color;
     }
   }
+  &.th-bg-color{
+    th,
+    td {
+      padding: 0.75rem 1rem;
+    }
+    border-spacing: 0;
+    th {
+      background-color: var(--grey-bg);
+    }
+  }
 }
 .transition-400 {
   transition: 10s;

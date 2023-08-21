@@ -1,11 +1,9 @@
 //view product section
 .view-feature-wrapper {
-  border-radius: 0.5rem;
   max-width: 80.1875rem;
-  width: 100%;
+  width: 95%;
   margin: auto;
-  height: 43.125rem;
-  overflow: auto;
+
   .active-text {
     .mat-icon {
       height: 1rem;
@@ -13,10 +11,12 @@
       font-size: 1rem;
     }
   }
+
   .header-block {
     padding: 1.125rem 1.5rem 1.5rem;
     background-color: var(--primary-bg);
     padding: 1.3125rem 2.9375rem 1.125rem 1.9375rem;
+
     .heading {
       margin-bottom: 3.9375rem;
     }
@@ -28,6 +28,7 @@
       }
     }
   }
+
   .content-block {
     .product-img {
       border: 2px solid color("grey", "lighten-10");
@@ -42,23 +43,29 @@
         object-fit: cover;
       }
     }
+
     .title {
       font-weight: 600;
       line-height: 1.1875rem;
     }
+
     .subtitle {
       line-height: 1rem;
       color: $text-headline-light;
     }
+
     .feature-type {
+
       // max-width: 45.6875rem;
       img {
         margin-right: 0.9375rem;
       }
+
       mat-icon {
         margin-right: 0.875rem;
       }
     }
+
     .detail-info {
       border: 1px solid var(--primary-light);
 
@@ -66,13 +73,15 @@
         width: 10.875rem;
       }
     }
+
     .range-detail-wrapper {
       max-width: 45.6875rem;
     }
   }
 }
-.feature-dot{
-  margin-left:1rem;
+
+.feature-dot {
+  margin-left: 1rem;
   margin-right: 0.5rem;
   width: 0.5rem;
   height: 0.5rem;
@@ -80,14 +89,16 @@
   overflow: hidden;
   background-color: #C5C1E7;
 }
-.status-chip{
+
+.status-chip {
   height: 1.5rem;
   padding: 0 0.5rem;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.15);
 }
-.active-icon{
-  margin-left:0.625rem;
+
+.active-icon {
+  margin-left: 0.625rem;
   margin-right: 0.5rem;
   width: 0.5rem;
   height: 0.5rem;
@@ -96,6 +107,29 @@
   background-color: #A5DE9B;
 }
 
-.end-line{
+.end-line {
   border-bottom: 1px solid #D9DDE766;
+}
+
+// cerate-feature-wrapper
+.cerate-feature-wrapper {
+  .inner-form-wrapper {
+    max-width: 80.1875rem;
+    width: 95%;
+    margin: auto;
+    .form-wrapper{
+      max-height: 61.2vh;
+      overflow: auto;
+      @media only screen and (max-width: 80rem) {
+      max-height: 108.2vh;
+      }
+    }
+    .footer-section {
+      max-width: 52.8125rem;
+      width: 100%;
+      @media only screen and (max-width: 80rem) {
+        max-width: 100%;
+      }
+    }
+  }
 }
