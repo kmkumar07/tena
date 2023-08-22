@@ -1,9 +1,8 @@
-import { periodUnit } from './../../../../shared/constants/consants';
-import { Component, ViewChild, ElementRef, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subscription, takeUntil } from 'rxjs';
+import { Subscription, takeUntil } from 'rxjs';
 import { FeatureDetailsPopupComponent } from 'src/app/shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import {
@@ -19,7 +18,6 @@ import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-bo
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { AddonDetailsPopupComponent } from 'src/app/shared/components/dialog-box/addon-details-popup/addon-details-popup.component';
 import { NewChargePopupComponent } from 'src/app/shared/components/dialog-box/new-charge-popup/new-charge-popup.component';
-
 
 export interface PeriodicElement {
   PricingCycle: string;
@@ -67,20 +65,20 @@ export class CreatePlanComponent implements OnInit {
   limit: any = '';
   planId: string;
   featureLength: string;
-  plandataById:any;
-  pricedataById:any;
+  plandataById: any;
+  pricedataById: any;
   selectedPriceId: string;
   priceModelArr: any[] = [];
   dialogRef: any;
   public stepOneCompleted: boolean = false;
   editable: boolean = false;
   features: { featureId: string; entitlement: string }[] = [];
-  priceId: string
-  pricingData:any[]=[];
-  dailyPrice:string;
-  monthlyPrice:string;
-  yearlyPrice:string;
-  weeklyPrice:string;
+  priceId: string;
+  pricingData: any[] = [];
+  dailyPrice: string;
+  monthlyPrice: string;
+  yearlyPrice: string;
+  weeklyPrice: string;
   priceIdxArr: any[] = [];
 
   @ViewChild('step1') step1: ElementRef;
@@ -96,25 +94,16 @@ export class CreatePlanComponent implements OnInit {
     private route: ActivatedRoute,
     private planService: PlanService,
     private global: GlobalService,
-    private snackBar: MatSnackBar,
-  ) {
-
-  }
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
-    
-  
-   this.planService.priceDataById$.subscribe((price)=>{
-    //this.pricedataById = price
-    this.priceIdxArr.push(price.priceId)
-    this.priceId=price.priceId,
-    console.log("a", this.priceId)
-    this.getPriceById(this.priceId);
-     })
-     console.log("b", this.priceIdxArr)
-   //  this.getPriceById(this.priceId);
+    this.planService.priceDataById$.subscribe((price) => {
+      this.priceIdxArr.push(price.priceId);
+      (this.priceId = price.priceId), this.getPriceById(this.priceId);
+    });
 
-   // Access pricedata from the service
+    // Access pricedata from the service
     this.planDetails();
     this.planId = this.route.snapshot.params['id'];
     this.getPlanById(this.planId);
@@ -137,55 +126,30 @@ export class CreatePlanComponent implements OnInit {
         }
       }
     });
-    if (this.stepOneCompleted) {
-      const pageNumber = 1;
-      const limit = 100;
-      const search = '';
-      this.planService.getPrice(pageNumber, limit, search).subscribe(
-        (res) =>
-          (this.priceData = res.data.filter((item) => {
-            if (item.planId === this.planId) {
-              return item;
-            }
-          }))
-      );
+  }
+  setPricing(pricingData) {
+    this.priceData.push(pricingData);
+
+    if (pricingData.periodUnit == 'daily') {
+      this.priceData[0] = pricingData;
+      this.dailyPrice = pricingData.price;
+    }
+    if (pricingData.periodUnit == 'weekly') {
+      this.priceData[1] = pricingData;
+      this.weeklyPrice = pricingData.price;
+    }
+    if (pricingData.periodUnit == 'monthly') {
+      this.priceData[2] = pricingData;
+
+      this.monthlyPrice = pricingData.price;
+    }
+    if (pricingData.periodUnit == 'yearly') {
+      this.priceData[3] = pricingData;
+
+      this.yearlyPrice = pricingData.price;
     }
   }
-  setPricing(pricingData){
-    console.log("xyz",pricingData);
-    this.priceData.push(pricingData)
-    console.log("this.priceData",pricingData.periodUnit);
-    
-    if(pricingData.periodUnit=="daily"){
-      this.priceData[0]=pricingData
-      this.dailyPrice=pricingData.price;
-      console.log("daily",this.priceData[0]);
 
-    }
-    if(pricingData.periodUnit=="weekly"){
-      this.priceData[1]=pricingData
-      this.weeklyPrice=pricingData.price;
-      console.log("weekly",this.priceData[1]);
-
-    }
-    if(pricingData.periodUnit=="monthly"){
-      this.priceData[2]=pricingData
-
-      this.monthlyPrice=pricingData.price;
-      console.log("weekly",this.priceData[2]);
-
-    } 
-    if(pricingData.periodUnit=="yearly"){
-      this.priceData[3]=pricingData
-
-      this.yearlyPrice=pricingData.price;
-      console.log("weekly",this.priceData[3]);
-
-    }
-  
-  }
-
-  
   getPlanById(id: string) {
     if (id) {
       this.stepOneCompleted = true;
@@ -194,12 +158,13 @@ export class CreatePlanComponent implements OnInit {
         .getPlanById(id)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
-          this.plandataById=res.data;
-          this.pricingData=res.data.pricing
-          console.log("this.plandataById",this.pricingData,this.pricingData.length,);
-          this.setPricing(this.pricingData)
-          this.patchValue(res.data);
-          this.editable = true;
+          if (res) {
+            this.plandataById = res.data;
+            this.pricingData = res.data.pricing;
+            this.setPricing(this.pricingData);
+            this.patchValue(res.data);
+            this.editable = true;
+          }
         });
     } else {
       this.stepOneCompleted = false;
@@ -214,11 +179,10 @@ export class CreatePlanComponent implements OnInit {
         .getPriceById(id)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
-          this.pricedataById=res.data;
-          this.setPricing(this.pricedataById)
-          console.log("this.pricedataById",this.pricedataById);
-          
-         // this.patchValue(res.data);
+          this.pricedataById = res.data;
+          this.setPricing(this.pricedataById);
+
+          // this.patchValue(res.data);
           this.editable = true;
         });
     } else {
@@ -286,8 +250,7 @@ export class CreatePlanComponent implements OnInit {
       type: type,
       status: status,
     };
-    console.log("plan",plan);
-    
+
     this.stepOneCompleted = true;
     if (!this.editable) {
       this.planService
@@ -318,15 +281,11 @@ export class CreatePlanComponent implements OnInit {
         });
     }
   }
-  deletePrice(pricingId:string){
-    console.log("pricing",pricingId);
+  deletePrice(pricingId: string) {
     this.planService.deletePrice(pricingId).subscribe((res) => {
-     // this.data$.subscribe((res) => {
-        this.router.navigate([`/plans/create/${this.planId}`]);
-        return res;
-     // });
+      this.router.navigate([`/plans/create/${this.planId}`]);
+      return res;
     });
-
   }
   onDelete(id: string) {
     this.planService.deleteProductVariant(id).subscribe(() => {
@@ -343,10 +302,6 @@ export class CreatePlanComponent implements OnInit {
       },
     });
   }
-  // editPrice(id){
-  //   this.planService.setEditPrice(true);
-  //   this.router.navigate([`/plans/create/set-price/${id}`])
-  // }
   editProductVariant(id: string) {
     this.router.navigate([`/plans/create/edit-product-detail/${id}`]);
   }
@@ -367,33 +322,25 @@ export class CreatePlanComponent implements OnInit {
   removeType(index: any) {
     this.planService.priceModelArr.splice(index, 1);
   }
-  setPrice(planId:any,cycleValue:number){  
+  setPrice(planId: any, cycleValue: number) {
     const dialogRef = this.dialog.open(SetPricePopupComponent, {
       width: '622px',
-      data: { planId: planId ,cycleValue:cycleValue} // Pass the planId as part of the data object
+      data: { planId: planId, cycleValue: cycleValue },
     });
   }
-  editPrice(planId:any,priceId:string){  
+  editPrice(planId: any, priceId: string) {
     const dialogRef = this.dialog.open(SetPricePopupComponent, {
       width: '622px',
-      data: { planId: planId ,priceId:priceId} // Pass the planId as part of the data object
+      data: { planId: planId, priceId: priceId },
     });
   }
-  editNewPrice(pricing: any){
-    console.log(pricing, 'check')
-    const dialogRef = this.dialog.open(SetPricePopupComponent, {
-      width: '622px',
-      data: { editPricing: pricing} // Pass the planId as part of the data object
-    });
-  }
-  addProductDetails(){
+  addProductDetails() {
     this.dialog.open(ProductDetailsPopupComponent, {
       width: '800px',
     });
   }
-  editPlansDetails(id){    
+  editPlansDetails(id) {
     this.router.navigate([`/plans/update/${id}`]);
-
   }
   navigateToGetAllPlans() {
     this.router.navigate(['/plans']);
@@ -423,34 +370,33 @@ export class CreatePlanComponent implements OnInit {
       },
     });
   }
-  openDeletePlan(id){    
-      this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-        width: '420px',
-        panelClass: 'dialog-curved',
-        data: {
-          module: 'Plan',
-          deleteId: id,
-        },
-      });
+  openDeletePlan(id) {
+    this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      width: '420px',
+      panelClass: 'dialog-curved',
+      data: {
+        module: 'Plan',
+        deleteId: id,
+      },
+    });
 
-      this.dialogRef.afterClosed().subscribe((res: any) => {
-        if (res) {
-          this.sendElementId(id);
-        }
-      });
-    
+    this.dialogRef.afterClosed().subscribe((res: any) => {
+      if (res) {
+        this.sendElementId(id);
+      }
+    });
   }
-  editFeatureDetails(){
+  editFeatureDetails() {
     this.dialog.open(FeatureDetailsPopupComponent, {
       width: '800px',
     });
   }
-  addOnDetails(){
+  addOnDetails() {
     this.dialog.open(AddonDetailsPopupComponent, {
       width: '800px',
     });
   }
-  addNewCharge(){
+  addNewCharge() {
     this.dialog.open(NewChargePopupComponent, {
       width: '620px',
     });

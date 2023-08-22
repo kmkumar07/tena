@@ -1,5 +1,4 @@
-
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   pricingModels,
@@ -7,7 +6,6 @@ import {
   selectOptions,
   periodUnit,
 } from 'src/app/shared/constants/consants';
-import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subscription, takeUntil } from 'rxjs';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlanService } from '../../../../modules/plans/services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialogRef} from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EventEmitter, Output } from '@angular/core';
@@ -28,7 +26,7 @@ export class PlanValue {
 @Component({
   selector: 'app-set-price-popup',
   templateUrl: './set-price-popup.component.html',
-  styleUrls: ['./set-price-popup.component.scss']
+  styleUrls: ['./set-price-popup.component.scss'],
 })
 export class SetPricePopupComponent {
   @Output() priceIdSelected = new EventEmitter<string>();
@@ -46,18 +44,18 @@ export class SetPricePopupComponent {
   monthlyBilling = ['3', '4', '5'];
   readOnly: boolean = false;
   start = 0;
-  period:string;
+  period: string;
   check: string;
   dropKey: number;
-  periodKey:number;
+  periodKey: number;
   planId: string;
-  pricedataById:any;
+  pricedataById: any;
   editPriceStatus: boolean;
   public setPriceForm: FormGroup;
-  priceId:string;
-  pricingId:string;
+  priceId: string;
+  pricingId: string;
   editable: boolean = false;
-  cycleVal:number
+  cycleVal: number;
   selectedOption: string;
   inputValue: string;
   constructor(
@@ -69,50 +67,48 @@ export class SetPricePopupComponent {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<SetPricePopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { planId: any,priceId:string}
+    @Inject(MAT_DIALOG_DATA) public data: { planId: any; priceId: string }
   ) {
-    this.planId=this.data.planId;
-    this.pricingId=this.data.priceId;
+    this.planId = this.data.planId;
+    this.pricingId = this.data.priceId;
   }
 
   ngOnInit() {
     this.formData();
-     this.getPriceById(this.pricingId)
-   }
-    getPriceById(id: string) {
-      if (id) {
-       // this.stepOneCompleted = true;
+    this.getPriceById(this.pricingId);
+  }
+  getPriceById(id: string) {
+    if (id) {
+      // this.stepOneCompleted = true;
       //  this.global.showLoader();
-        this.planService
-          .getPriceById(id)
-          .subscribe((res) => {
-            this.pricedataById=res.data;
-            
-            this.patchValue(this.pricedataById);
-          });
-      } else {
-         this.editable = false;
-      }
-    }
-    patchValue(data) {
-      console.log(data, 'my data');
-      this.editable = true;
+      this.planService.getPriceById(id).subscribe((res) => {
+        if (res) {
+          this.pricedataById = res.data;
 
-      this.setPriceForm.patchValue({
-        planId: data.planId,
-        priceId: data.priceId,
-        price: data.price,
-        periodUnit: Frequency.find((a)=> a.title === data.periodUnit).value,
-        pricingModel:pricingModels.find((a)=> a.title === data.pricingModel).value,
-        noOfCycle:data.noOfCycle
+          this.patchValue(this.pricedataById);
+        }
       });
-      this.selectedOption=data.isExpirable?'2':'1'
-     console.log(this.setPriceForm.value);
-     
-      this.pricingModelValueToName(this.price)
-     // this.global.hideLoader();
+    } else {
+      this.editable = false;
     }
-  
+  }
+  patchValue(data) {
+    this.editable = true;
+
+    this.setPriceForm.patchValue({
+      planId: data.planId,
+      priceId: data.priceId,
+      price: data.price,
+      periodUnit: Frequency.find((a) => a.title === data.periodUnit).value,
+      pricingModel: pricingModels.find((a) => a.title === data.pricingModel)
+        .value,
+      noOfCycle: data.noOfCycle,
+    });
+    this.selectedOption = data.isExpirable ? '2' : '1';
+
+    this.pricingModelValueToName(this.price);
+    // this.global.hideLoader();
+  }
 
   formData() {
     this.setPriceForm = this.form.group({
@@ -139,7 +135,7 @@ export class SetPricePopupComponent {
     });
   }
   selectPriceId() {
-    const priceId=this.price.priceId;
+    const priceId = this.price.priceId;
     // Emit the selected priceId back to the parent
     this.priceIdSelected.emit(priceId);
   }
@@ -149,9 +145,8 @@ export class SetPricePopupComponent {
   }
 
   setPeriod(periodSelected: string) {
-    console.log(periodSelected);
-    this.period=periodSelected;
-        this.setPriceForm.patchValue({
+    this.period = periodSelected;
+    this.setPriceForm.patchValue({
       periodUnit: periodSelected,
     });
   }
@@ -191,11 +186,10 @@ export class SetPricePopupComponent {
     prevIdx.get('endingUnit')?.enable();
   }
 
-  onTabChange(event:number): void {
+  onTabChange(event: number): void {
     //this.formData();
-    
+
     this.selectedTab = event;
-    console.log( this.selectedTab);
 
     if (this.selectedTab == 1) {
       this.setPeriod('daily');
@@ -207,20 +201,14 @@ export class SetPricePopupComponent {
       this.setPeriod('yearly');
     }
     this.formData();
-
   }
 
   onDropdownKey(event: number): void {
-    this.periodKey=event;
-    //this.periodKey=this.cycleVal
-    console.log("this.periodKey",this.periodKey);
-    
+    this.periodKey = event;
     this.onTabChange(this.periodKey);
-    
   }
   onDropdownKeyWithpricingModel(event: number): void {
     this.dropKey = event;
-    
   }
   deleteTier(tierIndex: number) {
     this.multiPricing.removeAt(tierIndex);
@@ -229,7 +217,6 @@ export class SetPricePopupComponent {
     lastIdx.get('endingUnit')?.disable();
   }
 
- 
   cycleValue(event: any) {
     this.selectedOption = event.value;
     if (this.selectedOption === '1') {
@@ -254,9 +241,6 @@ export class SetPricePopupComponent {
   }
 
   pricingModelValueToName(price: any) {
-   // price.periodUnit= this.period;
-   console.log(price);
-   
     if (price) {
       price.priceId =
         price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
@@ -264,78 +248,86 @@ export class SetPricePopupComponent {
         price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
     }
 
-    if (price.pricingModel == 1) {
+    if (price ? price.pricingModel == 1 : '') {
       price.pricingModel = 'flat_fee';
       price.multiPricing = [];
     }
-    if (price.pricingModel == 2) {
+    if (price ? price.pricingModel == 2 : '') {
       price.pricingModel = 'per_unit';
       price.multiPricing = [];
     }
-    if (price.pricingModel == 3) {
+    if (price ? price.pricingModel == 3 : '') {
       price.pricingModel = 'tiered';
       this.pricingModelSetEndingUnitEmpty(price);
     }
-    if (price.pricingModel == 4) {
+    if (price ? price.pricingModel == 4 : '') {
       price.pricingModel = 'volume';
       this.pricingModelSetEndingUnitEmpty(price);
     }
-    if (price.pricingModel == 5) {
+    if (price ? price.pricingModel == 5 : '') {
       price.pricingModel = 'stairStep';
       this.pricingModelSetEndingUnitEmpty(price);
     }
   }
 
   submitValues() {
-  
     this.global.showLoader();
     this.price = this.setPriceForm.getRawValue();
-    const x= this. pricingModelValueToName(this.price)
-    console.log("x",x);
 
-    this.price={...this.price,periodUnit: Frequency.find((a)=> a.value == this.price.periodUnit).title},
-   // this.price={...this.price,pricingModel: pricingModels.find((a)=> a.value == this.price.pricingModel).title };
-console.log("this.editable",this.editable);
-console.log("this.prices",this.price);
+    this.price = {
+      ...this.price,
+      periodUnit: Frequency.find((a) => a.value == this.price.periodUnit).title,
+    };
+    //  this.price={...this.price,pricingModel: pricingModels.find((a)=> a.value == this.price.pricingModel).title };
 
-    if (this.editable==false) {
+    if (this.editable == false) {
+      this.global.showLoader();
 
-    this.pricingModelValueToName(this.price);
-    this.subscription = this.planService
-      .createPrice(this.price)
-      .subscribe({
+      this.pricingModelValueToName(this.price);
+      this.subscription = this.planService.createPrice(this.price).subscribe({
         next: (res) => {
-          console.log("pres",res);
+          this.openCreateSuccess();
+          this.planService.setData(this.price);
+          this.priceId = this.price.priceId;
+          this.router.navigate([`/plans/create/${this.price.planId}`]);
+          this.global.hideLoader();
+        },
 
-        this.openSuccess();
-        this.planService.setData(this.price);
-        this.priceId=this.price.priceId;
-        this.router.navigate([`/plans/create/${this.planId}`]);
-        this.global.hideLoader();
-      },
-
-      error: (err: any)=> {
-        this.snackBar.open(err.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right'
-        })
-      },
-    });
-  }
-    else{
+        error: (err: any) => {
+          this.snackBar.open(err.message, '', {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
+          this.global.hideLoader();
+        },
+      });
+    } else {
+      this.global.showLoader();
+      this.pricingModelValueToName(this.price);
       this.planService
         .updatePrice(this.price, this.pricingId)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
-          this.openSuccess();
+          this.openUpdateSuccess(this.price.planId);
+          this.router.navigate([`/plans/create/${this.price.planId}`]);
+
           this.global.hideLoader();
         });
-      }
+    }
     this.global.hideLoader();
   }
-
-  openSuccess() {
+  openUpdateSuccess(planId) {
+    this.dialog.open(SuccessDialogComponent, {
+      width: '420px',
+      data: {
+        module: 'Pricing',
+        operation: 'is updated',
+      },
+    });
+    this.router.navigate([`/plans/create/${planId}`]);
+  }
+  openCreateSuccess() {
     this.dialog.open(SuccessDialogComponent, {
       width: '420px',
       data: {

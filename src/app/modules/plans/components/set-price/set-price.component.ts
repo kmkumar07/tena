@@ -56,25 +56,8 @@ export class SetPriceComponent {
   ngOnInit() {
     this.planId = this.route.snapshot.params['id'];
     this.formData();
-    // this.getPriceVal();
     this.getCurrPLan();
   }
-
-  // getPriceVal() {
-  //   this.planService
-  //     .getEditPrice()
-  //     .pipe(takeUntil(this.global.componentDestroyed(this)))
-  //     .subscribe((res) => {
-  //       this.editPriceStatus = res;
-  //       if (this.editPriceStatus) {
-  //         this.planService
-  //           .getPriceById(this.planId)
-  //           .subscribe((res) => console.log('price', res));
-  //       } else {
-  //         this.getCurrPLan();
-  //       }
-  //     });
-  // }
 
   getCurrPLan() {
     this.planService
@@ -176,7 +159,6 @@ export class SetPriceComponent {
       this.setPeriod('yearly');
     }
     this.formData();
-
   }
 
   onDropdownKey(event: number): void {
@@ -220,7 +202,7 @@ export class SetPriceComponent {
       price.priceId =
         price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
       price.name =
-      price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
+        price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
     }
     if (price.pricingModel == 1) {
       price.pricingModel = 'flat_fee';
@@ -249,22 +231,20 @@ export class SetPriceComponent {
     this.global.showLoader();
     this.price = this.setPriceForm.getRawValue();
     this.pricingModelValueToName(this.price);
-    this.subscription = this.planService
-      .createPrice(this.price)
-      .subscribe({
-        next: (res) => {
+    this.subscription = this.planService.createPrice(this.price).subscribe({
+      next: (res) => {
         this.openSuccess();
         this.planService.setData(this.price);
         this.router.navigate([`/plans/create/${this.planValue.planId}`]);
         this.global.hideLoader();
       },
 
-      error: (err: any)=> {
+      error: (err: any) => {
         this.snackBar.open(err.message, '', {
           duration: 5000,
           verticalPosition: 'top',
-          horizontalPosition: 'right'
-        })
+          horizontalPosition: 'right',
+        });
       },
     });
     this.global.hideLoader();

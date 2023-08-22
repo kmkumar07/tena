@@ -63,7 +63,6 @@ export class PlanService {
   // Passing data from step to other steps
   setData(pricedata: any) {
     this.getPriceDataById.next(pricedata)
-    console.log('priceId', pricedata);
   }
 
   addPlan(plan: Plan): Observable<Plan> {
