@@ -104,203 +104,638 @@
                 Action
               </th>
             </tr>
+            <ng-container *ngIf="pricingData.length > 0; else emptyData">
+              <ng-container *ngFor="let pricing of pricingData">
+                <ng-container [ngSwitch]="pricing.periodUnit">
+                  <tr *ngSwitchCase="'daily'">
+                    <td class="mat-subtitle-2 text-grey-darken pl-2">Daily</td>
 
-            <tr>
-              <td class="mat-subtitle-2 text-grey-darken pl-2">Daily</td>
-              <td class="mat-subtitle-2 text-grey-darken">
-                {{ pricedataById ? pricedataById.pricingModel : "tired" }}
-              </td>
-              <td>
-                <span
-                  class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1"
-                >
+                    <td class="mat-subtitle-2 text-grey-darken">
+                      {{
+                        pricing.periodUnit == "daily"
+                          ? pricing.pricingModel
+                          : ""
+                      }}
+                    </td>
+                    <td>
+                      <span
+                        class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1"
+                      >
+                        <ng-container *ngIf="pricing.periodUnit == 'daily'">
+                          {{
+                            pricing.isExpirable == true ? "Fixed" : "Forever"
+                          }}
+                        </ng-container>
+                        <ng-container *ngIf="pricing.periodUnit !== 'daily'">
+                          {{ "" }}
+                        </ng-container>
+                      </span>
+                    </td>
+                    <td class="mat-subtitle-2 text-purple-lighten-1">
+                      <ng-container *ngIf="pricing.periodUnit == 'daily'">
+                        ${{ pricingData ? pricing.price : "" }}/Unit
+                      </ng-container>
+                      <ng-container *ngIf="pricing.periodUnit !== 'daily'">
+                        <button
+                          class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                          (click)="setPrice(plandataById.planId, 1)"
+                        >
+                          Set Price
+                          <mat-icon
+                            class="material-symbols-outlined ml-2"
+                            color="primary"
+                          >
+                            arrow_right_alt
+                          </mat-icon>
+                        </button>
+                      </ng-container>
+                    </td>
+
+                    <td class="pr-7">
+                      <div class="flex justify-end">
+                        <button
+                          class="flex edit-btn mat-caption mr-1"
+                          mat-button
+                          color="primary"
+                          (click)="
+                            editPrice(plandataById.planId, pricing.priceId)
+                          "
+                        >
+                          <mat-icon
+                            class="material-symbols-outlined mr-1"
+                            color="primary"
+                            >edit</mat-icon
+                          >Edit
+                        </button>
+                        <button
+                          mat-icon-button
+                          color="warn"
+                          class="light-bg small rounded-1"
+                          (click)="deletePrice(pricing.priceId)"
+                        >
+                          <mat-icon
+                            class="material-symbols-outlined mr-0"
+                            color="warn"
+                            >close</mat-icon
+                          >
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr *ngSwitchCase="'weekly'">
+                    <td class="mat-subtitle-2 text-grey-darken pl-2">Weekly</td>
+                    <td class="mat-subtitle-2 text-grey-darken">
+                      <ng-container *ngIf="pricingData">
+                        {{ pricing ? pricing.pricingModel : "" }}
+                      </ng-container>
+                    </td>
+                    <td>
+                      <span
+                        class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1"
+                      >
+                        <ng-container *ngIf="pricingData">
+                          {{
+                            pricing.isExpirable == true ? "Fixed" : "Forever"
+                          }}
+                        </ng-container>
+                        <ng-container *ngIf="!pricingData">
+                          {{ "" }}
+                        </ng-container>
+                      </span>
+                    </td>
+                    <td class="mat-subtitle-2 text-purple-lighten-1">
+                      <div *ngIf="pricingData">
+                        {{
+                          pricing.periodUnit == "weekly" ? pricing.price : ""
+                        }}
+                      </div>
+                      <ng-container *ngIf="pricing.periodUnit !== 'weekly'">
+                        <button
+                          class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                          (click)="setPrice(plandataById.planId, 2)"
+                        >
+                          Set Price
+                          <mat-icon
+                            class="material-symbols-outlined ml-2"
+                            color="primary"
+                          >
+                            arrow_right_alt
+                          </mat-icon>
+                        </button>
+                      </ng-container>
+                    </td>
+                    <td class="pr-7">
+                      <div class="flex justify-end">
+                        <button
+                          class="flex edit-btn mat-caption mr-1"
+                          mat-button
+                          color="primary"
+                          (click)="
+                            editPrice(plandataById.planId, pricing.priceId)
+                          "
+                        >
+                          <mat-icon
+                            class="material-symbols-outlined mr-1"
+                            color="primary"
+                            >edit</mat-icon
+                          >Edit
+                        </button>
+                        <button
+                          mat-icon-button
+                          color="warn"
+                          class="light-bg small rounded-1"
+                          (click)="deletePrice(pricing.priceId)"
+                        >
+                          <mat-icon
+                            class="material-symbols-outlined mr-0"
+                            color="warn"
+                            >close</mat-icon
+                          >
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr *ngSwitchCase="'monthly'">
+                    <td class="mat-subtitle-2 text-grey-darken pl-2">
+                      Monthly
+                    </td>
+                    <td class="mat-subtitle-2 text-grey-darken">
+                      <ng-container *ngIf="pricingData">
+                        {{ pricing ? pricing.pricingModel : "" }}
+                      </ng-container>
+                    </td>
+                    <td>
+                      <span
+                        class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1"
+                      >
+                        <ng-container *ngIf="pricingData">
+                          {{
+                            pricing.isExpirable == true ? "Fixed" : "Forever"
+                          }}
+                        </ng-container>
+                        <ng-container *ngIf="!pricingData">
+                          {{ "" }}
+                        </ng-container>
+                      </span>
+                    </td>
+                    <td class="mat-subtitle-2 text-purple-lighten-1">
+                      <ng-container *ngIf="pricingData">
+                        ${{ pricingData ? pricing.price : "100" }}/Unit
+                      </ng-container>
+                      <ng-container *ngIf="!pricingData">
+                        <button
+                          class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                          (click)="setPrice(plandataById.planId, 3)"
+                        >
+                          Set Price
+                          <mat-icon
+                            class="material-symbols-outlined ml-2"
+                            color="primary"
+                          >
+                            arrow_right_alt
+                          </mat-icon>
+                        </button>
+                      </ng-container>
+                    </td>
+
+                    <td class="pr-7">
+                      <div class="flex justify-end">
+                        <button
+                          class="flex edit-btn mat-caption mr-1"
+                          mat-button
+                          color="primary"
+                          (click)="
+                            editPrice(plandataById.planId, pricing.priceId)
+                          "
+                        >
+                          <mat-icon
+                            class="material-symbols-outlined mr-1"
+                            color="primary"
+                            >edit</mat-icon
+                          >Edit
+                        </button>
+                        <button
+                          mat-icon-button
+                          color="warn"
+                          class="light-bg small rounded-1"
+                          (click)="deletePrice(pricing.priceId)"
+                        >
+                          <mat-icon
+                            class="material-symbols-outlined mr-0"
+                            color="warn"
+                            >close</mat-icon
+                          >
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr *ngSwitchCase="'yearly'">
+                    <td class="mat-subtitle-2 text-grey-darken pl-2">Yearly</td>
+                    <td class="mat-subtitle-2 text-grey-darken">
+                      {{ pricingData ? pricing.pricingModel : "" }}
+                    </td>
+                    <td>
+                      <span
+                        class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1"
+                      >
+                        <ng-container *ngIf="pricingData">
+                          {{
+                            pricing.isExpirable == true ? "Fixed" : "Forever"
+                          }}
+                        </ng-container>
+                        <ng-container *ngIf="!pricingData">
+                          {{ "" }}
+                        </ng-container>
+                      </span>
+                    </td>
+                    <td class="mat-subtitle-2 text-purple-lighten-1">
+                      <ng-container *ngIf="pricingData">
+                        ${{ pricingData ? pricing.price : "100" }}/Unit
+                      </ng-container>
+                      <ng-container *ngIf="!pricingData">
+                        <button
+                          class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                          (click)="setPrice(plandataById.planId, 4)"
+                        >
+                          Set Price
+                          <mat-icon
+                            class="material-symbols-outlined ml-2"
+                            color="primary"
+                          >
+                            arrow_right_alt
+                          </mat-icon>
+                        </button>
+                      </ng-container>
+                    </td>
+
+                    <td class="pr-7">
+                      <div class="flex justify-end">
+                        <button
+                          class="flex edit-btn mat-caption mr-1"
+                          mat-button
+                          color="primary"
+                          (click)="
+                            editPrice(plandataById.planId, pricing.priceId)
+                          "
+                        >
+                          <mat-icon
+                            class="material-symbols-outlined mr-1"
+                            color="primary"
+                            >edit</mat-icon
+                          >Edit
+                        </button>
+                        <button
+                          mat-icon-button
+                          color="warn"
+                          class="light-bg small rounded-1"
+                          (click)="deletePrice(pricing.priceId)"
+                        >
+                          <mat-icon
+                            class="material-symbols-outlined mr-0"
+                            color="warn"
+                            >close</mat-icon
+                          >
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr *ngSwitchDefault>
+                    <td></td>
+                    <td></td>
+                    <td class="pr-7">
+                      <div class="flex justify-end">
+                        <button
+                          class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                          (click)="setPrice(plandataById.planId, 4)"
+                        >
+                          Set Price
+                          <mat-icon
+                            class="material-symbols-outlined ml-2"
+                            color="primary"
+                          >
+                            arrow_right_alt
+                          </mat-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <ng-template #emptyData>
+              <tr>
+                <td class="mat-subtitle-2 text-grey-darken pl-2">Daily</td>
+                <td class="mat-subtitle-2 text-grey-darken">
                   <ng-container *ngIf="pricedataById">
                     {{
-                      pricedataById.isExpirable == true ? "Fixed" : "Forever"
+                      pricedataById.periodUnit == "daily"
+                        ? pricedataById.pricingModel
+                        : ""
                     }}
                   </ng-container>
-                  <ng-container *ngIf="!pricedataById">
-                    {{ "Fixed" }}
-                  </ng-container>
-                </span>
-              </td>
-              <td class="mat-subtitle-2 text-purple-lighten-1">
-                <ng-container *ngIf="pricedataById">
-                  ${{ pricedataById ? pricedataById.price : "100" }}/Unit
-                </ng-container>
-                <ng-container *ngIf="!pricedataById">
-                  <button
-                    class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
-                    (click)="setPrice(plandataById.planId)"
+                </td>
+                <td>
+                  <span
+                    class="mat-subtitle-2 text-grey-darken px-2 py-1 border-1"
                   >
-                    Set Price
-                    <mat-icon
-                      class="material-symbols-outlined ml-2"
-                      color="primary"
+                    <ng-container *ngIf="pricedataById && dailyPrice">
+                      {{
+                        pricedataById.isExpirable == true ? "Fixed" : "Forever"
+                      }}
+                    </ng-container>
+                    <ng-container *ngIf="!dailyPrice">
+                      {{ "" }}
+                    </ng-container>
+                  </span>
+                </td>
+                <td class="mat-subtitle-2 text-purple-lighten-1">
+                  <div *ngIf="pricedataById && dailyPrice; else noPrice">
+                    $ {{ pricedataById.price }}/Unit
+                  </div>
+                  <ng-template #noPrice>
+                    <button
+                      class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                      (click)="setPrice(plandataById.planId, 1)"
                     >
-                      arrow_right_alt
-                    </mat-icon>
-                  </button>
-                </ng-container>
-              </td>
-
-              <td class="pr-7">
-                <div class="flex justify-end">
-                  <button
-                    class="flex edit-btn mat-caption mr-1"
-                    mat-button
-                    color="primary"
-                  >
-                    <mat-icon
-                      class="material-symbols-outlined mr-1"
-                      color="primary"
-                      (click)="setPrice(plandataById.planId)"
-                      >edit</mat-icon
-                    >Edit
-                  </button>
-                  <button
-                    mat-icon-button
-                    color="warn"
-                    class="light-bg small rounded-1"
-                  >
-                    <mat-icon
-                      class="material-symbols-outlined mr-0"
-                      color="warn"
-                      >close</mat-icon
-                    >
-                  </button>
+                      Set Price
+                      <mat-icon
+                        class="material-symbols-outlined ml-2"
+                        color="primary"
+                      >
+                        arrow_right_alt
+                      </mat-icon>
+                    </button>
+                  </ng-template>
+                </td>
+                <div *ngIf="pricedataById && dailyPrice">
+                  <td class="pr-7">
+                    <div class="flex justify-end">
+                      <button
+                        class="flex edit-btn mat-caption mr-1"
+                        mat-button
+                        color="primary"
+                        (click)="editPrice(plandataById.planId, priceId)"
+                      >
+                        <mat-icon
+                          class="material-symbols-outlined mr-1"
+                          color="primary"
+                          >edit</mat-icon
+                        >Edit
+                      </button>
+                      <button
+                        mat-icon-button
+                        color="warn"
+                        class="light-bg small rounded-1"
+                        (click)="deletePrice(priceId)"
+                      >
+                        <mat-icon
+                          class="material-symbols-outlined mr-0"
+                          color="warn"
+                          >close</mat-icon
+                        >
+                      </button>
+                    </div>
+                  </td>
                 </div>
-              </td>
-            </tr>
+              </tr>
 
-            <tr>
-              <td class="mat-subtitle-2 text-grey-darken pl-2">Weekly</td>
-              <td class="mat-subtitle-2 text-grey-darken">
-                <ng-container *ngIf="pricedataById">       
-                    {{ pricedataById.periodUnit=='weekly' ? pricedataById.pricingModel : "" }}
-                </ng-container>
-                <ng-container *ngIf="!pricedataById">
-                  {{ "" }}
-                </ng-container>
-              </td>
-              <td>
-                <span
-                  class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1"
-                >
+              <tr>
+                <td class="mat-subtitle-2 text-grey-darken pl-2">Weekly</td>
+                <td class="mat-subtitle-2 text-grey-darken">
                   <ng-container *ngIf="pricedataById">
                     {{
-                      pricedataById.isExpirable == true && pricedataById.periodUnit=='weekly' ? "Fixed" : "Forever"
+                      pricedataById.periodUnit == "weekly"
+                        ? pricedataById.pricingModel
+                        : ""
                     }}
                   </ng-container>
-                  <ng-container *ngIf="!pricedataById">
+                  <ng-container *ngIf="!weeklyPrice">
                     {{ "" }}
                   </ng-container>
-                </span>
-              </td>
-              <td class="mat-subtitle-2 text-purple-lighten-1">
-                <div *ngIf="pricedataById ">
-                  ${{  pricedataById.periodUnit=='weekly' ? pricedataById.price : "" }}/Unit
+                </td>
+                <td>
+                  <span
+                    class="mat-subtitle-2 text-grey-darken px-2 py-1 border-1"
+                  >
+                    <ng-container *ngIf="pricedataById && weeklyPrice">
+                      {{
+                        pricedataById.isExpirable == true &&
+                        pricedataById.periodUnit == "weekly"
+                          ? "Fixed"
+                          : "Forever"
+                      }}
+                    </ng-container>
+                    <ng-container *ngIf="!weeklyPrice">
+                      {{ "" }}
+                    </ng-container>
+                  </span>
+                </td>
+                <td class="mat-subtitle-2 text-purple-lighten-1">
+                  <div *ngIf="pricedataById && weeklyPrice; else noPrice">
+                    $ {{ pricedataById.price }}/Unit
+                  </div>
+                  <ng-template #noPrice>
+                    <button
+                      class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                      (click)="setPrice(plandataById.planId, 2)"
+                    >
+                      Set Price
+                      <mat-icon
+                        class="material-symbols-outlined ml-2"
+                        color="primary"
+                      >
+                        arrow_right_alt
+                      </mat-icon>
+                    </button>
+                  </ng-template>
+                </td>
+                <div *ngIf="pricedataById && weeklyPrice">
+                  <td class="pr-7">
+                    <div class="flex justify-end">
+                      <button
+                        class="flex edit-btn mat-caption mr-1"
+                        mat-button
+                        color="primary"
+                        (click)="editPrice(plandataById.planId, priceId)"
+                      >
+                        <mat-icon
+                          class="material-symbols-outlined mr-1"
+                          color="primary"
+                          >edit</mat-icon
+                        >Edit
+                      </button>
+                      <button
+                        mat-icon-button
+                        color="warn"
+                        class="light-bg small rounded-1"
+                        (click)="deletePrice(priceId)"
+                      >
+                        <mat-icon
+                          class="material-symbols-outlined mr-0"
+                          color="warn"
+                          >close</mat-icon
+                        >
+                      </button>
+                    </div>
+                  </td>
                 </div>
-                  <button
-                    class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
-                    (click)="setPrice(plandataById.planId)"
-                  >
-                    Set Price
-                    <mat-icon
-                      class="material-symbols-outlined ml-2"
-                      color="primary"
-                    >
-                      arrow_right_alt
-                    </mat-icon>
-                  </button>
-              </td>
+              </tr>
 
-              <td class="pr-7"></td>
-            </tr>
-
-            <tr>
-              <td class="mat-subtitle-2 text-grey-darken pl-2">Monthly</td>
-              <td class="mat-subtitle-2 text-grey-darken">
-                {{ pricedataById ? pricedataById.pricingModel : "" }}
-              </td>
-              <td>
-                <span
-                  class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1"
-                >
+              <tr>
+                <td class="mat-subtitle-2 text-grey-darken pl-2">Monthly</td>
+                <td class="mat-subtitle-2 text-grey-darken">
                   <ng-container *ngIf="pricedataById">
                     {{
-                      pricedataById.isExpirable == true ? "Fixed" : "Forever"
+                      pricedataById.periodUnit == "monthly"
+                        ? pricedataById.pricingModel
+                        : ""
                     }}
                   </ng-container>
-                  <ng-container *ngIf="!pricedataById">
-                    {{ "" }}
-                  </ng-container>
-                </span>
-              </td>
-              <td class="mat-subtitle-2 text-purple-lighten-1">
-                <ng-container *ngIf="pricedataById">
-                  ${{ pricedataById ? pricedataById.price : "100" }}/Unit
-                </ng-container>
-                <ng-container *ngIf="!pricedataById">
-                  <button
-                    class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
-                    (click)="setPrice(plandataById.planId)"
+                </td>
+                <td>
+                  <span
+                    class="mat-subtitle-2 text-grey-darken px-2 py-1 border-1"
                   >
-                    Set Price
-                    <mat-icon
-                      class="material-symbols-outlined ml-2"
-                      color="primary"
+                    <ng-container *ngIf="pricedataById && monthlyPrice">
+                      {{
+                        pricedataById.isExpirable == true ? "Fixed" : "Forever"
+                      }}
+                    </ng-container>
+                    <ng-container *ngIf="!monthlyPrice">
+                      {{ "" }}
+                    </ng-container>
+                  </span>
+                </td>
+                <td class="mat-subtitle-2 text-purple-lighten-1">
+                  <div *ngIf="pricedataById && monthlyPrice; else noPrice">
+                    $ {{ pricedataById.price }}/Unit
+                  </div>
+                  <ng-template #noPrice>
+                    <button
+                      class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                      (click)="setPrice(plandataById.planId, 3)"
                     >
-                      arrow_right_alt
-                    </mat-icon>
-                  </button>
-                </ng-container>
-              </td>
+                      Set Price
+                      <mat-icon
+                        class="material-symbols-outlined ml-2"
+                        color="primary"
+                      >
+                        arrow_right_alt
+                      </mat-icon>
+                    </button>
+                  </ng-template>
+                </td>
+                <div *ngIf="pricedataById && monthlyPrice">
+                  <td class="pr-7">
+                    <div class="flex justify-end">
+                      <button
+                        class="flex edit-btn mat-caption mr-1"
+                        mat-button
+                        color="primary"
+                        (click)="editPrice(plandataById.planId, priceId)"
+                      >
+                        <mat-icon
+                          class="material-symbols-outlined mr-1"
+                          color="primary"
+                          >edit</mat-icon
+                        >Edit
+                      </button>
+                      <button
+                        mat-icon-button
+                        color="warn"
+                        class="light-bg small rounded-1"
+                        (click)="deletePrice(priceId)"
+                      >
+                        <mat-icon
+                          class="material-symbols-outlined mr-0"
+                          color="warn"
+                          >close</mat-icon
+                        >
+                      </button>
+                    </div>
+                  </td>
+                </div>
+              </tr>
 
-              <td class="pr-7"></td>
-            </tr>
-
-            <tr>
-              <td class="mat-subtitle-2 text-grey-darken pl-2">Yearly</td>
-              <td class="mat-subtitle-2 text-grey-darken">
-                {{ pricedataById ? pricedataById.pricingModel : "" }}
-              </td>
-              <td>
-                <span
-                  class="mat-subtitle-2 text-grey-darken billing-fixed px-2 py-1 border-1"
-                >
+              <tr>
+                <td class="mat-subtitle-2 text-grey-darken pl-2">Yearly</td>
+                <td class="mat-subtitle-2 text-grey-darken">
                   <ng-container *ngIf="pricedataById">
                     {{
-                      pricedataById.isExpirable == true ? "Fixed" : "Forever"
+                      pricedataById.periodUnit == "yearly"
+                        ? pricedataById.pricingModel
+                        : ""
                     }}
                   </ng-container>
-                  <ng-container *ngIf="!pricedataById">
-                    {{ "" }}
-                  </ng-container>
-                </span>
-              </td>
-              <td class="mat-subtitle-2 text-purple-lighten-1">
-                <ng-container *ngIf="pricedataById">
-                  ${{ pricedataById ? pricedataById.price : "100" }}/Unit
-                </ng-container>
-                <ng-container *ngIf="!pricedataById">
-                  <button
-                    class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
-                    (click)="setPrice(plandataById.planId)"
+                </td>
+                <td>
+                  <span
+                    class="mat-subtitle-2 text-grey-darken px-2 py-1 border-1"
                   >
-                    Set Price
-                    <mat-icon
-                      class="material-symbols-outlined ml-2"
-                      color="primary"
+                    <ng-container *ngIf="pricedataById && yearlyPrice">
+                      {{
+                        pricedataById.isExpirable == true ? "Fixed" : "Forever"
+                      }}
+                    </ng-container>
+                    <ng-container *ngIf="!yearlyPrice">
+                      {{ "" }}
+                    </ng-container>
+                  </span>
+                </td>
+                <td class="mat-subtitle-2 text-purple-lighten-1">
+                  <div *ngIf="pricedataById && yearlyPrice; else noPrice">
+                    $ {{ pricedataById.price }}/Unit
+                  </div>
+                  <ng-template #noPrice>
+                    <button
+                      class="set-btn flex align-center text-purple-lighten-1 transparent-bg mat-body-1"
+                      (click)="setPrice(plandataById.planId, 4)"
                     >
-                      arrow_right_alt
-                    </mat-icon>
-                  </button>
-                </ng-container>
-              </td>
-
-              <td class="pr-7"></td>
-            </tr>
+                      Set Price
+                      <mat-icon
+                        class="material-symbols-outlined ml-2"
+                        color="primary"
+                      >
+                        arrow_right_alt
+                      </mat-icon>
+                    </button>
+                  </ng-template>
+                </td>
+                <div *ngIf="pricedataById && yearlyPrice">
+                  <td class="pr-7">
+                    <div class="flex justify-end">
+                      <button
+                        class="flex edit-btn mat-caption mr-1"
+                        mat-button
+                        color="primary"
+                        (click)="editPrice(plandataById.planId, priceId)"
+                      >
+                        <mat-icon
+                          class="material-symbols-outlined mr-1"
+                          color="primary"
+                          >edit</mat-icon
+                        >Edit
+                      </button>
+                      <button
+                        mat-icon-button
+                        color="warn"
+                        class="light-bg small rounded-1"
+                        (click)="deletePrice(priceId)"
+                      >
+                        <mat-icon
+                          class="material-symbols-outlined mr-0"
+                          color="warn"
+                          >close</mat-icon
+                        >
+                      </button>
+                    </div>
+                  </td>
+                </div>
+              </tr>
+            </ng-template>
           </table>
         </div>
       </div>
@@ -426,10 +861,14 @@
           >Add-ons Details</abbr
         >
       </div>
-      <!-- <button mat-stroked-button color="primary" class="mr-3 small font-weight-500 px-4"
-          (click)="addOnDetails()">
-          Add Add-on
-        </button> -->
+      <button
+        mat-stroked-button
+        color="primary"
+        class="mr-3 small font-weight-500 px-4"
+        (click)="addOnDetails()"
+      >
+        Add Add-on
+      </button>
     </div>
     <div class="details-wrapper add-on-view-wrapper mt-6 p-3 border-2">
       <div class="details-inner flex align-center">
@@ -568,7 +1007,7 @@
                 >
                   <div
                     class="flex align-center pointer"
-                    (click)="setPrice(plandataById.planId)"
+                    (click)="setPrice(plandataById.planId, 6)"
                   >
                     {{ element.Price
                     }}<mat-icon

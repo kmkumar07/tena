@@ -112,6 +112,11 @@ export class PlanService {
     let path = `${this.baseUrl}/pricing`;
     return this.apiService.post(path, price);
   }
+  deletePrice(priceId: string) {
+    
+    const url = `${this.baseUrl}/pricing/${priceId}?priceId=${priceId}`;
+    return this.apiService.delete(url);
+  }
   updatePrice(price, priceId): Observable<any> {
     let path = `${this.baseUrl}/pricing/${priceId}?priceId=${priceId}`;
     return this.apiService.put(path, price);

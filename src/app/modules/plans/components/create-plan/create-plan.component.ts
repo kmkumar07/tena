@@ -1,3 +1,4 @@
+import { periodUnit } from './../../../../shared/constants/consants';
 import { Component, ViewChild, ElementRef, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,7 +17,8 @@ import { SetPricePopupComponent } from 'src/app/shared/components/dialog-box/set
 import { ProductDetailsPopupComponent } from 'src/app/shared/components/dialog-box/product-details-popup/product-details-popup.component';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
-//import { AddonDetailsPopupComponent } from 'src/app/shared/components/dialog-box/addon-details-popup/addon-details-popup.component';
+import { AddonDetailsPopupComponent } from 'src/app/shared/components/dialog-box/addon-details-popup/addon-details-popup.component';
+import { LogViewComponent } from 'src/app/modules/payment-history/logs/components/log-view/log-view.component';
 
 
 export interface PeriodicElement {
@@ -74,6 +76,11 @@ export class CreatePlanComponent implements OnInit {
   editable: boolean = false;
   features: { featureId: string; entitlement: string }[] = [];
   priceId: string
+  pricingData:any[]=[];
+  dailyPrice:string;
+  monthlyPrice:string;
+  yearlyPrice:string;
+  weeklyPrice:string;
   priceIdxArr: any[] = [];
 
   @ViewChild('step1') step1: ElementRef;
@@ -105,7 +112,7 @@ export class CreatePlanComponent implements OnInit {
     this.getPriceById(this.priceId);
      })
      console.log("b", this.priceIdxArr)
-     this.getPriceById(this.priceId);
+   //  this.getPriceById(this.priceId);
 
    // Access pricedata from the service
     this.planDetails();
@@ -144,7 +151,40 @@ export class CreatePlanComponent implements OnInit {
       );
     }
   }
- 
+  setPricing(pricingData){
+    console.log("xyz",pricingData);
+    this.priceData.push(pricingData)
+    console.log("this.priceData",pricingData.periodUnit);
+    
+    if(pricingData.periodUnit=="daily"){
+      this.priceData[0]=pricingData
+      this.dailyPrice=pricingData.price;
+      console.log("daily",this.priceData[0]);
+
+    }
+    if(pricingData.periodUnit=="weekly"){
+      this.priceData[1]=pricingData
+      this.weeklyPrice=pricingData.price;
+      console.log("weekly",this.priceData[1]);
+
+    }
+    if(pricingData.periodUnit=="monthly"){
+      this.priceData[2]=pricingData
+
+      this.monthlyPrice=pricingData.price;
+      console.log("weekly",this.priceData[2]);
+
+    } 
+    if(pricingData.periodUnit=="yearly"){
+      this.priceData[3]=pricingData
+
+      this.yearlyPrice=pricingData.price;
+      console.log("weekly",this.priceData[3]);
+
+    }
+  
+  }
+
   
   getPlanById(id: string) {
     if (id) {
@@ -155,6 +195,9 @@ export class CreatePlanComponent implements OnInit {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
           this.plandataById=res.data;
+          this.pricingData=res.data.pricing
+          console.log("this.plandataById",this.pricingData,this.pricingData.length,);
+          this.setPricing(this.pricingData)
           this.patchValue(res.data);
           this.editable = true;
         });
@@ -172,6 +215,7 @@ export class CreatePlanComponent implements OnInit {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
           this.pricedataById=res.data;
+          this.setPricing(this.pricedataById)
           console.log("this.pricedataById",this.pricedataById);
           
          // this.patchValue(res.data);
@@ -242,6 +286,7 @@ export class CreatePlanComponent implements OnInit {
       type: type,
       status: status,
     };
+    console.log("plan",plan);
     
     this.stepOneCompleted = true;
     if (!this.editable) {
@@ -272,6 +317,16 @@ export class CreatePlanComponent implements OnInit {
           this.global.hideLoader();
         });
     }
+  }
+  deletePrice(pricingId:string){
+    console.log("pricing",pricingId);
+    this.planService.deletePrice(pricingId).subscribe((res) => {
+     // this.data$.subscribe((res) => {
+        this.router.navigate([`/plans/create/${this.planId}`]);
+        return res;
+     // });
+    });
+
   }
   onDelete(id: string) {
     this.planService.deleteProductVariant(id).subscribe(() => {
@@ -312,10 +367,23 @@ export class CreatePlanComponent implements OnInit {
   removeType(index: any) {
     this.planService.priceModelArr.splice(index, 1);
   }
-  setPrice(planId){  
+  setPrice(planId:any,cycleValue:number){  
     const dialogRef = this.dialog.open(SetPricePopupComponent, {
       width: '622px',
-      data: { planId: planId } // Pass the planId as part of the data object
+      data: { planId: planId ,cycleValue:cycleValue} // Pass the planId as part of the data object
+    });
+  }
+  editPrice(planId:any,priceId:string){  
+    const dialogRef = this.dialog.open(SetPricePopupComponent, {
+      width: '622px',
+      data: { planId: planId ,priceId:priceId} // Pass the planId as part of the data object
+    });
+  }
+  editNewPrice(pricing: any){
+    console.log(pricing, 'check')
+    const dialogRef = this.dialog.open(SetPricePopupComponent, {
+      width: '622px',
+      data: { editPricing: pricing} // Pass the planId as part of the data object
     });
   }
   addProductDetails(){
@@ -377,9 +445,9 @@ export class CreatePlanComponent implements OnInit {
       width: '800px',
     });
   }
-  // addOnDetails(){
-  //   this.dialog.open(AddonDetailsPopupComponent, {
-  //     width: '800px',
-  //   });
-  // }
+  addOnDetails(){
+    this.dialog.open(AddonDetailsPopupComponent, {
+      width: '800px',
+    });
+  }
 }

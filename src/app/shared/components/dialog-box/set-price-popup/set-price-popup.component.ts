@@ -1,3 +1,4 @@
+
 import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
@@ -50,9 +51,15 @@ export class SetPricePopupComponent {
   dropKey: number;
   periodKey:number;
   planId: string;
+  pricedataById:any;
   editPriceStatus: boolean;
   public setPriceForm: FormGroup;
-
+  priceId:string;
+  pricingId:string;
+  editable: boolean = false;
+  cycleVal:number
+  selectedOption: string;
+  inputValue: string;
   constructor(
     private form: FormBuilder,
     private global: GlobalService,
@@ -62,49 +69,50 @@ export class SetPricePopupComponent {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<SetPricePopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { planId: any}
+    @Inject(MAT_DIALOG_DATA) public data: { planId: any,priceId:string}
   ) {
     this.planId=this.data.planId;
+    this.pricingId=this.data.priceId;
   }
 
   ngOnInit() {
-    //this.planId = this.route.snapshot.params['id'];
     this.formData();
-    // this.getPriceVal();
-    //this.getCurrPLan();
-    console.log(this.data.planId);  }
+     this.getPriceById(this.pricingId)
+   }
+    getPriceById(id: string) {
+      if (id) {
+       // this.stepOneCompleted = true;
+      //  this.global.showLoader();
+        this.planService
+          .getPriceById(id)
+          .subscribe((res) => {
+            this.pricedataById=res.data;
+            
+            this.patchValue(this.pricedataById);
+          });
+      } else {
+         this.editable = false;
+      }
+    }
+    patchValue(data) {
+      console.log(data, 'my data');
+      this.editable = true;
 
-  // getPriceVal() {
-  //   this.planService
-  //     .getEditPrice()
-  //     .pipe(takeUntil(this.global.componentDestroyed(this)))
-  //     .subscribe((res) => {
-  //       this.editPriceStatus = res;
-  //       if (this.editPriceStatus) {
-  //         this.planService
-  //           .getPriceById(this.planId)
-  //           .subscribe((res) => console.log('price', res));
-  //       } else {
-  //         this.getCurrPLan();
-  //       }
-  //     });
-  // }
-
-  // getCurrPLan() {
-  //   this.planService
-  //     .getPlanById(this.planId)
-  //     .pipe(takeUntil(this.global.componentDestroyed(this)))
-  //     .subscribe((res) => {
-  //       this.planValue = res.data;
-  //     });
-  // }
-
-  // patchValue() {
-  //   this.setPriceForm.patchValue({
-  //     planId: this.planValue.planId,
-  //     name: this.planValue.internalName,
-  //   });
-  // }
+      this.setPriceForm.patchValue({
+        planId: data.planId,
+        priceId: data.priceId,
+        price: data.price,
+        periodUnit: Frequency.find((a)=> a.title === data.periodUnit).value,
+        pricingModel:pricingModels.find((a)=> a.title === data.pricingModel).value,
+        noOfCycle:data.noOfCycle
+      });
+      this.selectedOption=data.isExpirable?'2':'1'
+     console.log(this.setPriceForm.value);
+     
+      this.pricingModelValueToName(this.price)
+     // this.global.hideLoader();
+    }
+  
 
   formData() {
     this.setPriceForm = this.form.group({
@@ -204,6 +212,9 @@ export class SetPricePopupComponent {
 
   onDropdownKey(event: number): void {
     this.periodKey=event;
+    //this.periodKey=this.cycleVal
+    console.log("this.periodKey",this.periodKey);
+    
     this.onTabChange(this.periodKey);
     
   }
@@ -218,8 +229,7 @@ export class SetPricePopupComponent {
     lastIdx.get('endingUnit')?.disable();
   }
 
-  selectedOption: string;
-  inputValue: string;
+ 
   cycleValue(event: any) {
     this.selectedOption = event.value;
     if (this.selectedOption === '1') {
@@ -244,7 +254,9 @@ export class SetPricePopupComponent {
   }
 
   pricingModelValueToName(price: any) {
-    price.periodUnit= this.period;
+   // price.periodUnit= this.period;
+   console.log(price);
+   
     if (price) {
       price.priceId =
         price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
@@ -275,11 +287,18 @@ export class SetPricePopupComponent {
   }
 
   submitValues() {
-   // this.patchValue();
+  
     this.global.showLoader();
     this.price = this.setPriceForm.getRawValue();
-    console.log("this.prices",this.price);
+    const x= this. pricingModelValueToName(this.price)
+    console.log("x",x);
 
+    this.price={...this.price,periodUnit: Frequency.find((a)=> a.value == this.price.periodUnit).title},
+   // this.price={...this.price,pricingModel: pricingModels.find((a)=> a.value == this.price.pricingModel).title };
+console.log("this.editable",this.editable);
+console.log("this.prices",this.price);
+
+    if (this.editable==false) {
 
     this.pricingModelValueToName(this.price);
     this.subscription = this.planService
@@ -290,6 +309,7 @@ export class SetPricePopupComponent {
 
         this.openSuccess();
         this.planService.setData(this.price);
+        this.priceId=this.price.priceId;
         this.router.navigate([`/plans/create/${this.planId}`]);
         this.global.hideLoader();
       },
@@ -302,6 +322,16 @@ export class SetPricePopupComponent {
         })
       },
     });
+  }
+    else{
+      this.planService
+        .updatePrice(this.price, this.pricingId)
+        .pipe(takeUntil(this.global.componentDestroyed(this)))
+        .subscribe((res) => {
+          this.openSuccess();
+          this.global.hideLoader();
+        });
+      }
     this.global.hideLoader();
   }
 

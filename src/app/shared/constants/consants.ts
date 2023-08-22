@@ -469,19 +469,19 @@ export const Status = [
   { value: 2, title: '' },
 ];
 export const Frequency = [
-  { value: 1, title: 'Daily' },
-  { value: 2, title: 'Weekly' },
-  { value: 3, title: 'Monthly' },
-  { value: 4, title: 'Yearly' },
+  { value: 1, title: 'daily' },
+  { value: 2, title: 'weekly' },
+  { value: 3, title: 'monthly' },
+  { value: 4, title: 'yearly' },
 ];
 export const pricingModels = [
-  { value: 1, title: 'Flat fee' },
-  { value: 2, title: 'Per unit' },
-  { value: 3, title: 'Tiered' },
-  { value: 4, title: 'Volume' },
-  { value: 5, title: 'Stairstep' },
+  { value: 1, title: 'flat_fee' },
+  { value: 2, title: 'per_unit' },
+  { value: 3, title: 'tiered' },
+  { value: 4, title: 'volume' },
+  { value: 5, title: 'stair_step' },
 ];
-export const periodUnit = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
+export const periodUnit = ['daily', 'weekly', 'monthly', 'yearly'];
 export const StaticRoutes = {
   features: ['features'],
   products: ['products'],
