@@ -199,6 +199,15 @@
         font-size: 1.0625rem;
       }
     }
+    &.medium {
+      height: 2.5rem;
+      padding: .5rem;
+    }
+    &.medium-w {
+      height: 2.5rem;
+      width: 2.5rem;
+      padding: .5rem;
+    }
   }
   &.x-small {
     height: 2rem;

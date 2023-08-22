@@ -18,7 +18,7 @@ import { ProductDetailsPopupComponent } from 'src/app/shared/components/dialog-b
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
 import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { AddonDetailsPopupComponent } from 'src/app/shared/components/dialog-box/addon-details-popup/addon-details-popup.component';
-import { LogViewComponent } from 'src/app/modules/payment-history/logs/components/log-view/log-view.component';
+import { NewChargePopupComponent } from 'src/app/shared/components/dialog-box/new-charge-popup/new-charge-popup.component';
 
 
 export interface PeriodicElement {
@@ -448,6 +448,11 @@ export class CreatePlanComponent implements OnInit {
   addOnDetails(){
     this.dialog.open(AddonDetailsPopupComponent, {
       width: '800px',
+    });
+  }
+  addNewCharge(){
+    this.dialog.open(NewChargePopupComponent, {
+      width: '620px',
     });
   }
 }

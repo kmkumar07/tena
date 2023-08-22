@@ -1,196 +1,198 @@
-<div class="header-section pt-3 pb-3 pr-6 main-bg mb-11">
-  <div class="flex align-center justify-between">
-    <div class="flex align-center">
-      <mat-icon
-        class="material-symbols-outlined pointer"
-        color="primary"
-        [routerLink]="'/features'"
-        >keyboard_backspace</mat-icon
-      >
-      <p class="fs-xl fw-500 text-text text-dark">View Feature</p>
-    </div>
-    <div class="btn-section flex align-center">
-      <button
-        mat-stroked-button
-        color="primary"
-        class="mr-2 large"
-        (click)="editFeature()"
-      >
-        Edit
-      </button>
-      <button
-        mat-flat-button
-        color="primary"
-        class="large"
-        [routerLink]="'/features'"
-      >
-        Back to list
-      </button>
-    </div>
-  </div>
-</div>
-<div class="view-feature-wrapper">
-  <div class="header-block">
+<div class="view-feature-wrapper pt-8">
+  <div class="header-section pb-3">
     <div class="flex align-center justify-between">
-      <div class="brand-info flex align-end">
-        <div class="p-2">
-          <div class="flex align-center">
-            <p class="mat-headline-5 text-white title mb-1">
-              {{ featureName }}
-              <span class="mat-subtitle-1 text-white">({{ productName }})</span>
-            </p>
-            <!-- <div
-              class="active-text flex align-center green-text text-darken-3 ml-4"
-            >
-              <mat-icon
-                class="material-symbols-outlined mr-1 green-text text-darken-3"
-                color="primary"
-                >check_circle</mat-icon
-              ><span>{{ status }}</span>
-            </div> -->
-          </div>
-          <div class="flex align-center">
-            <span class="mat-subtitle-2 subtitle text-white fw-500 block">{{
-              featureId
-            }}</span>
-            <span class="block feature-dot"></span>
-            <span class="block text-white mat-subtitle-2">{{
-              featureType
-            }}</span>
-            <span class="block feature-dot"></span>
-            <span class="block text-white mat-subtitle-2"
-              >Created {{ createdOn | date : "d MMMM y" }}</span
-            >
-          </div>
-        </div>
+      <div class="flex align-center">
+        <!-- <mat-icon
+          class="material-symbols-outlined pointer"
+          color="primary"
+          [routerLink]="'/features'"
+          >keyboard_backspace</mat-icon
+        > -->
+        <p class="mat-headline-5 text-purple-lighten-1 font-weight-500">View Feature</p>
       </div>
-      <div class="status-chip mat-body-1 text-white flex-center">
-        Feature Status: <span class="active-icon block"></span>{{ status }}
+      <div class="btn-section flex align-center">
+        <button
+          mat-stroked-button
+          color="primary"
+          class="mr-2 large"
+          (click)="editFeature()"
+        >
+          Edit
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          class="large"
+          [routerLink]="'/features'"
+        >
+          Back to list
+        </button>
       </div>
     </div>
   </div>
-  <div class="content-block py-6 px-10 main-bg">
-    <div class="product-desc pb-6 end-line">
-      <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
-        Description
-      </h4>
-      <p class="mat-body-1 mb-0">
-        {{ description }}
-      </p>
-    </div>
-    <div class="feature-type mt-6 end-line">
-      <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
-        Feature Type
-      </h4>
-
-      <!-- -----------------------switch type-------------------- -->
-
-      <!-- ----------------range type--------------------------- -->
-      <div class="switch-type pt-4 border-2 flex align-center px-0 pb-2">
-        <mat-icon
-          *ngIf="featureType === 'range'"
-          class="material-symbols-outlined text-darken-3"
-          >arrow_range</mat-icon
-        >
-
-        <img
-          *ngIf="featureType === 'switch'"
-          src="../../../../assets/images/icons/toggle-left.svg"
-          alt="toggle-left"
-        />
-
-        <mat-icon
-          *ngIf="featureType === 'quantity' || featureType === 'custom'"
-          class="material-symbols-outlined text-darken-3 text-lighten-2"
-          >production_quantity_limits</mat-icon
-        >
-
-        <div>
-          <span class="mat-body-1 text-headline-light font-weight-500">{{
-            (featureType === "switch" && "Switch") ||
-              (featureType === "range" && "Range") ||
-              (featureType === "quantity" && "Quantity") ||
-              (featureType === "custom" && "Custom")
-          }}</span>
+  <div class="inner-block border-2 overflow-hidden">
+    <div class="header-block">
+      <div class="flex align-center justify-between">
+        <div class="brand-info flex align-end">
+          <div class="p-2">
+            <div class="flex align-center">
+              <p class="mat-headline-5 text-white title mb-1">
+                {{ featureName }}
+                <span class="mat-subtitle-1 text-white">({{ productName }})</span>
+              </p>
+              <!-- <div
+                class="active-text flex align-center green-text text-darken-3 ml-4"
+              >
+                <mat-icon
+                  class="material-symbols-outlined mr-1 green-text text-darken-3"
+                  color="primary"
+                  >check_circle</mat-icon
+                ><span>{{ status }}</span>
+              </div> -->
+            </div>
+            <div class="flex align-center">
+              <span class="mat-subtitle-2 subtitle text-white fw-500 block">{{
+                featureId
+              }}</span>
+              <span class="block feature-dot"></span>
+              <span class="block text-white mat-subtitle-2">{{
+                featureType
+              }}</span>
+              <span class="block feature-dot"></span>
+              <span class="block text-white mat-subtitle-2"
+                >Created {{ createdOn | date : "d MMMM y" }}</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="status-chip mat-body-1 text-white flex-center">
+          Feature Status: <span class="active-icon block"></span>{{ status }}
         </div>
       </div>
-      <p class="mat-body-1 text-dark">
-        {{
-          (featureType === "switch" &&
-            "This feature type has 2 entitlement levels- “available” and “notavailable”.") ||
-            (featureType === "range" &&
-              "This feature supports range based entitlements. For eg : Customer’s access can be between 100 and 300 API / minute.") ||
-            (featureType === "quantity" &&
-              "This feature type has numbered entitlement levels-For eg : 2,3,4 or 10 user license's.") ||
-            (featureType === "custom" &&
-              "This feature supports range based entitlements. For eg : Customer’s access can be between 100 and 300 API / minute.")
-        }}
-      </p>
+    </div>
+    <div class="content-block py-6 px-10 main-bg">
+      <div class="product-desc pb-6 end-line">
+        <h4 class="mat-subtitle-1 font-weight-500 mb-4 text-blue-darken">
+          Description
+        </h4>
+        <p class="mat-body-1 mb-0">
+          {{ description }}
+        </p>
+      </div>
+      <div class="feature-type mt-6 end-line pb-6">
+        <h4 class="mat-subtitle-1 font-weight-500 mb-5 text-blue-darken">
+          Feature Type
+        </h4>
+  
+        <!-- -----------------------switch type-------------------- -->
+  
+        <!-- ----------------range type--------------------------- -->
+        <div class="switch-type border-2 flex align-center px-0 pb-2">
+          <mat-icon
+            *ngIf="featureType === 'range'"
+            class="material-symbols-outlined text-darken-3"
+            >arrow_range</mat-icon
+          >
+  
+          <img
+            *ngIf="featureType === 'switch'"
+            src="../../../../assets/images/icons/toggle-left.svg"
+            alt="toggle-left"
+          />
+  
+          <mat-icon
+            *ngIf="featureType === 'quantity' || featureType === 'custom'"
+            class="material-symbols-outlined text-darken-3 text-lighten-2"
+            >production_quantity_limits</mat-icon
+          >
+  
+          <div>
+            <span class="mat-subtitle-2 text-blue-darken">{{
+              (featureType === "switch" && "Switch") ||
+                (featureType === "range" && "Range") ||
+                (featureType === "quantity" && "Quantity") ||
+                (featureType === "custom" && "Custom")
+            }}</span>
+          </div>
+        </div>
+        <p class="mat-body-1 text-grey-darken">
+          {{
+            (featureType === "switch" &&
+              "This feature type has 2 entitlement levels- “available” and “notavailable”.") ||
+              (featureType === "range" &&
+                "This feature supports range based entitlements. For eg : Customer’s access can be between 100 and 300 API / minute.") ||
+              (featureType === "quantity" &&
+                "This feature type has numbered entitlement levels-For eg : 2,3,4 or 10 user license's.") ||
+              (featureType === "custom" &&
+                "This feature supports range based entitlements. For eg : Customer’s access can be between 100 and 300 API / minute.")
+          }}
+        </p>
+        <!-- ----------------range type--------------------------- -->
+      </div>
+  
+      <!-- ----------------range detail--------------------------- -->
+      <div *ngIf="featureType === 'range'" class="mt-6 range-detail-wrapper">
+        <h4 class="mat-subtitle-1 font-weight-500 mb-5 text-blue-darken">
+          Range Details
+        </h4>
+        <div class="range-detail border-2 mb-2 flex">
+          <p class="mat-body-1 text-blue-darken pr-5">Entitlements Units:</p>
+          <span class="mat-body-1 text-purple-lighten-1">{{ unit }}</span>
+        </div>
+        <div class="detail-info border-2">
+          <table class="w-full th-bg-color">
+            <th class="text-blue-darken font-weight-400">Entitlement Range</th>
+            <th class="text-blue-darken font-weight-400">Display Name</th>
+            <tr class="text-grey-darken">
+              <td>{{ valueOne }} to {{ valueTwo }}</td>
+              <td class="range-td">Range</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!-- ----------------range detail--------------------------- -->
+  
+      <!-- ----------------quantity and custom details--------------------------- -->
+      <div *ngIf="featureType === 'quantity'" class="mt-6 range-detail-wrapper">
+        <h4 class="mat-subtitle-1 font-weight-500 mb-5 text-blue-darken">
+          Quantity Details
+        </h4>
+        <div class="range-detail border-2 mb-2 flex">
+          <p class="mat-body-1 text-blue-darken pr-5">Entitlements Units:</p>
+          <span class="mat-body-1 font-weight-500 text-purple-lighten-1">{{ unit }}</span>
+        </div>
+        <div class="detail-info border-2">
+          <table class="w-full th-bg-color">
+            <th class="text-blue-darken font-weight-400">Entitlement Levels</th>
+            <tr
+              class="text-grey-darken"
+              *ngFor="let displayName of displayNameArray"
+            >
+              <td>{{ displayName }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+  
+      <div *ngIf="featureType === 'custom'" class="mt-8 range-detail-wrapper">
+        <h4 class="mat-subtitle-1 font-weight-500 mb-4 text-blue-darken">
+          Quantity Details
+        </h4>
+        <div class="detail-info border-2">
+          <table class="w-full th-bg-color">
+            <th class="text-blue-darken font-weight-400">Entitlement Levels</th>
+            <tr
+              class="text-grey-darke"
+              *ngFor="let displayName of displayNameArray"
+            >
+              <td>{{ displayName }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!-- ----------------quantity details--------------------------- -->
+  
       <!-- ----------------range type--------------------------- -->
     </div>
-
-    <!-- ----------------range detail--------------------------- -->
-    <div *ngIf="featureType === 'range'" class="mt-8 range-detail-wrapper">
-      <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
-        Range Details
-      </h4>
-      <div class="range-detail py-2 px-3 border-2 mb-4 secondary-light-bg">
-        <p class="mat-body-1 text-headline-dark">Entitlements Units</p>
-        <span class="mat-body-1 font-weight-500 text-primary">{{ unit }}</span>
-      </div>
-      <div class="detail-info border-2">
-        <table class="w-full odd-bg-color">
-          <th class="font-weight-500 text-darken-1">Entitlement Range</th>
-          <th class="font-weight-500 text-darken-1">Display Name</th>
-          <tr class="text-headline-light">
-            <td>{{ valueOne }} to {{ valueTwo }}</td>
-            <td class="range-td">Range</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <!-- ----------------range detail--------------------------- -->
-
-    <!-- ----------------quantity and custom details--------------------------- -->
-    <div *ngIf="featureType === 'quantity'" class="mt-8 range-detail-wrapper">
-      <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
-        Quantity Details
-      </h4>
-      <div class="range-detail py-2 px-3 border-2 mb-4">
-        <p class="mat-body-1 text-headline-dark">Entitlements Units</p>
-        <span class="mat-body-1 font-weight-500 text-primary">{{ unit }}</span>
-      </div>
-      <div class="detail-info border-2">
-        <table class="w-full odd-bg-color">
-          <th class="font-weight-500 text-darken-1">Entitlement Levels</th>
-          <tr
-            class="text-headline-light"
-            *ngFor="let displayName of displayNameArray"
-          >
-            <td>{{ displayName }}</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-
-    <div *ngIf="featureType === 'custom'" class="mt-8 range-detail-wrapper">
-      <h4 class="mat-subtitle-2 font-weight-500 mb-4 text-headline-dark">
-        Quantity Details
-      </h4>
-      <div class="detail-info border-2">
-        <table class="w-full odd-bg-color">
-          <th class="font-weight-500 text-darken-1">Entitlement Levels</th>
-          <tr
-            class="text-headline-light"
-            *ngFor="let displayName of displayNameArray"
-          >
-            <td>{{ displayName }}</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <!-- ----------------quantity details--------------------------- -->
-
-    <!-- ----------------range type--------------------------- -->
   </div>
 </div>
