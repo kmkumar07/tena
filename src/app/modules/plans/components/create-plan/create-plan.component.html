@@ -432,7 +432,7 @@
                   <ng-container *ngIf="pricedataById">
                     {{
                       pricedataById.periodUnit == "daily"
-                        ? pricedataById.pricingModel
+                        ? priceData[0].pricingModel
                         : ""
                     }}
                   </ng-container>
@@ -443,7 +443,7 @@
                   >
                     <ng-container *ngIf="pricedataById && dailyPrice">
                       {{
-                        pricedataById.isExpirable == true ? "Fixed" : "Forever"
+                        priceData[0].isExpirable == true ? "Fixed" : "Forever"
                       }}
                     </ng-container>
                     <ng-container *ngIf="!dailyPrice">
@@ -453,7 +453,7 @@
                 </td>
                 <td class="mat-subtitle-2 text-purple-lighten-1">
                   <div *ngIf="pricedataById && dailyPrice; else noPrice">
-                    $ {{ pricedataById.price }}/Unit
+                    $ {{ priceData[0].price }}/Unit
                   </div>
                   <ng-template #noPrice>
                     <button
@@ -508,7 +508,7 @@
                   <ng-container *ngIf="pricedataById">
                     {{
                       pricedataById.periodUnit == "weekly"
-                        ? pricedataById.pricingModel
+                        ? priceData[1].pricingModel
                         : ""
                     }}
                   </ng-container>
@@ -522,8 +522,7 @@
                   >
                     <ng-container *ngIf="pricedataById && weeklyPrice">
                       {{
-                        pricedataById.isExpirable == true &&
-                        pricedataById.periodUnit == "weekly"
+                        priceData[1].isExpirable == true 
                           ? "Fixed"
                           : "Forever"
                       }}
@@ -535,7 +534,7 @@
                 </td>
                 <td class="mat-subtitle-2 text-purple-lighten-1">
                   <div *ngIf="pricedataById && weeklyPrice; else noPrice">
-                    $ {{ pricedataById.price }}/Unit
+                    $ {{ priceData[1].price }}/Unit
                   </div>
                   <ng-template #noPrice>
                     <button
@@ -590,7 +589,7 @@
                   <ng-container *ngIf="pricedataById">
                     {{
                       pricedataById.periodUnit == "monthly"
-                        ? pricedataById.pricingModel
+                        ? priceData[2].pricingModel
                         : ""
                     }}
                   </ng-container>
@@ -601,7 +600,7 @@
                   >
                     <ng-container *ngIf="pricedataById && monthlyPrice">
                       {{
-                        pricedataById.isExpirable == true ? "Fixed" : "Forever"
+                        priceData[2].isExpirable == true ? "Fixed" : "Forever"
                       }}
                     </ng-container>
                     <ng-container *ngIf="!monthlyPrice">
@@ -611,7 +610,7 @@
                 </td>
                 <td class="mat-subtitle-2 text-purple-lighten-1">
                   <div *ngIf="pricedataById && monthlyPrice; else noPrice">
-                    $ {{ pricedataById.price }}/Unit
+                    $ {{ priceData[2].price }}/Unit
                   </div>
                   <ng-template #noPrice>
                     <button
@@ -666,7 +665,7 @@
                   <ng-container *ngIf="pricedataById">
                     {{
                       pricedataById.periodUnit == "yearly"
-                        ? pricedataById.pricingModel
+                        ? priceData[3].pricingModel
                         : ""
                     }}
                   </ng-container>
@@ -677,7 +676,7 @@
                   >
                     <ng-container *ngIf="pricedataById && yearlyPrice">
                       {{
-                        pricedataById.isExpirable == true ? "Fixed" : "Forever"
+                        priceData[3].isExpirable == true ? "Fixed" : "Forever"
                       }}
                     </ng-container>
                     <ng-container *ngIf="!yearlyPrice">
@@ -687,7 +686,7 @@
                 </td>
                 <td class="mat-subtitle-2 text-purple-lighten-1">
                   <div *ngIf="pricedataById && yearlyPrice; else noPrice">
-                    $ {{ pricedataById.price }}/Unit
+                    $ {{ priceData[3].price }}/Unit
                   </div>
                   <ng-template #noPrice>
                     <button
