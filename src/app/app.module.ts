@@ -22,6 +22,7 @@ import { SetPricePopupComponent } from './shared/components/dialog-box/set-price
 import { ProductDetailsPopupComponent } from './shared/components/dialog-box/product-details-popup/product-details-popup.component';
 import { FeaturesPopupComponent } from './shared/components/dialog-box/features-popup/features-popup.component';
 import { AddonDetailsPopupComponent } from './shared/components/dialog-box/addon-details-popup/addon-details-popup.component';
+import { NewChargePopupComponent } from './shared/components/dialog-box/new-charge-popup/new-charge-popup.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { AddonDetailsPopupComponent } from './shared/components/dialog-box/addon
     SetPricePopupComponent,
     ProductDetailsPopupComponent,
     AddonDetailsPopupComponent,
-
+    NewChargePopupComponent,
   ],
   imports: [
     BrowserModule,
