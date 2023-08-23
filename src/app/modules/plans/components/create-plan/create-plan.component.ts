@@ -281,10 +281,46 @@ export class CreatePlanComponent implements OnInit {
         });
     }
   }
+
+  deletePriceSuccess(id: any) {
+    const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
+      width: '422px',
+      panelClass: 'dialog-curved',
+      data: {
+        module: 'price',
+        deleteId: id,
+      },
+    });
+    this.navigateToGetAllPlans();
+  }
+  sendPriceId(priceId: string) {
+    this.planService.deletePrice(priceId).subscribe({
+      next: (res) => {
+        this.deletePriceSuccess(priceId);
+      },
+      error: (error: any) => {
+        this.snackBar.open(error.error.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+      },
+    });
+  }
   deletePrice(pricingId: string) {
-    this.planService.deletePrice(pricingId).subscribe((res) => {
-      this.router.navigate([`/plans/create/${this.planId}`]);
-      return res;
+    this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      width: '420px',
+      panelClass: 'dialog-curved',
+      data: {
+        module: 'Price',
+        deleteId: pricingId,
+      },
+    });
+
+    this.dialogRef.afterClosed().subscribe((res: any) => {
+      if (res) {
+        this.sendPriceId(pricingId);
+      }
     });
   }
   onDelete(id: string) {
@@ -350,7 +386,7 @@ export class CreatePlanComponent implements OnInit {
       width: '422px',
       panelClass: 'dialog-curved',
       data: {
-        module: 'Feature',
+        module: 'Plan',
         deleteId: id,
       },
     });
@@ -387,6 +423,11 @@ export class CreatePlanComponent implements OnInit {
     });
   }
   editFeatureDetails() {
+    this.dialog.open(FeatureDetailsPopupComponent, {
+      width: '800px',
+    });
+  }
+  deleteFeatureDetails() {
     this.dialog.open(FeatureDetailsPopupComponent, {
       width: '800px',
     });
