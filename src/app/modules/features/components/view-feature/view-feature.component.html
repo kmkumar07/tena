@@ -101,11 +101,16 @@
           />
   
           <mat-icon
-            *ngIf="featureType === 'quantity' || featureType === 'custom'"
+            *ngIf="featureType === 'quantity'"
             class="material-symbols-outlined text-darken-3 text-lighten-2"
             >production_quantity_limits</mat-icon
           >
-  
+          <mat-icon
+          *ngIf="featureType === 'custom'"
+          class="material-symbols-outlined text-darken-3 text-lighten-2"
+          >tune </mat-icon
+        >
+          
           <div>
             <span class="mat-subtitle-2 text-blue-darken">{{
               (featureType === "switch" && "Switch") ||
@@ -176,7 +181,7 @@
   
       <div *ngIf="featureType === 'custom'" class="mt-8 range-detail-wrapper">
         <h4 class="mat-subtitle-1 font-weight-500 mb-4 text-blue-darken">
-          Quantity Details
+          Custom Details
         </h4>
         <div class="detail-info border-2">
           <table class="w-full th-bg-color">
