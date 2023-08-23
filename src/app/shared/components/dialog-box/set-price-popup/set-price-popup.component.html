@@ -7,22 +7,36 @@
             <form [formGroup]="setPriceForm" class="form-wrapper pr-5">
                 <div class="mt-8">
                     <div class="form-section">
-                        <!-- Frequency Model -->
                         <div class="input-wrapper">
+                            <div class="flex align-center mb-2">
+                            <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
+                                  Frequency
+                            </p>
+                            </div>
+                            <mat-form-field appearance="outline" class="border-2">
+                            <mat-select required placeholder="select" formControlName="periodUnit">
+                            <mat-option *ngFor="let option of FrequencyTypes" [value]="option.value">
+                                    {{ option.title }}
+                            </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+                            </div>
+                        <!-- Frequency Model -->
+                        <!-- <div class="input-wrapper">
                             <div class="flex align-center mb-2">
                                 <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
                                     Frequency
                                 </p>
                             </div>
                             <mat-form-field appearance="outline" class="border-2">
-                                <mat-select required placeholder="select" formControlName="Frequency">
-                                    <mat-option *ngFor="let option of FrequencyTypes" value="{{ option.value }}"
+                                <mat-select required placeholder="select" formControlName="periodUnit">
+                                    <mat-option *ngFor="let option of FrequencyTypes" value={{option.value}}
                                         (click)="onDropdownKey(option.value)">
                                         {{ option.title }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                        </div>
+                        </div> -->
         
                         <!-- Pricing Model -->
                         <div class="input-wrapper">
@@ -33,9 +47,9 @@
                             </div>
                             <mat-form-field appearance="outline" class="border-2">
                                 <mat-select required placeholder="select" formControlName="pricingModel">
-                                    <mat-option *ngFor="let option of pricingModelTypes" value="{{ option.value }}"
-                                        (click)="onDropdownKey(option.value)">
-                                        {{ option.title }}
+                                    <mat-option *ngFor="let option of pricingModelTypes" [value]="option.value"
+                                        (click)="onDropdownKeyWithpricingModel(option.value)">
+                                        {{ option.title}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -168,7 +182,7 @@
                                 </ng-template>
                             </div>
                             <mat-form-field appearance="outline" class="border-2">
-                                <mat-select required placeholder="select" (selectionChange)="cycleValue($event)">
+                                <mat-select required placeholder="select" (selectionChange)="cycleValue($event)" [value]="selectedOption">
                                     <mat-option value="1">Fixed</mat-option>
                                     <mat-option value="2">Forever</mat-option>
                                 </mat-select>
@@ -191,11 +205,11 @@
                 </div>
             </form>
             <div class="flex justify-end btn-wrapper absolute bottom-35">
-                <button mat-stroked-button color="primary" class="mr-2 large">
+                <button mat-stroked-button color="primary" class="mr-2 large"(click)="onCancelClick()">
                     Dismiss
                 </button>
-                <button mat-flat-button color="primary" class="large" type="button">
-                    Create
+                <button mat-flat-button color="primary" class="large" type="submit"(click)="submitValues()">
+                   {{editable?'update':'Create'}} 
                 </button>
             </div>
     </div>

@@ -175,8 +175,8 @@
         <div class="heading pb-3">
           <h5 class="mat-subtitle-1 text-blue-darken mb-0 font-weight-500">Feature for this plan</h5>
         </div>
-        <div class="primary-table checked-stripe-table mt-3 table-wrapper">
-          <table mat-table [dataSource]="dataSource">
+        <div class="primary-table checked-stripe-table mt-3 table-wrapper"let feature of feature>
+          <table mat-table [dataSource]="filteredFeatures">
     
             <!-- Checkbox Column -->
             <ng-container matColumnDef="select">
@@ -186,8 +186,8 @@
                 </mat-checkbox>
               </th>
               <td mat-cell *matCellDef="let row">
-                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                  [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)" class="mat-primary" color="primary">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? toggleCheckbox($event, row) : null"
+                  [checked]="selection.isSelected(row) && isCheckboxChecked" [aria-label]="checkboxLabel(row)" class="mat-primary" color="primary">
                 </mat-checkbox>
               </td>
             </ng-container>
@@ -206,7 +206,7 @@
             <!-- Weight Column -->
             <ng-container matColumnDef="status">
               <th mat-header-cell *matHeaderCellDef class="text-blue-darken"> Status</th>
-              <td mat-cell *matCellDef="let element" class="text-green-dark-3"> {{element.status}} </td>
+              <td mat-cell *matCellDef="let element"[ngClass]="element.status" class="text-green-dark-3"> {{element.status}} </td>
             </ng-container>
     
             <!-- Symbol Column -->
@@ -218,7 +218,7 @@
                     <mat-select required placeholder="select" formControlName="Status">
                       <mat-option *ngFor="let option of StatusTypes" value="{{ option.value }}"
                         (click)="onDropdownKey(option.value)">
-                        {{ option.title }}
+                        {{ option.value }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -238,9 +238,9 @@
             <mat-checkbox color="primary" formControlName="status" [disableRipple]="true"
             class="font-weight-500 checkbox ml-n-3 disable-ripple-checkbox">Active</mat-checkbox>
           <div class="flex align-center">
-            <button mat-stroked-button color="primary" class="mr-2">Dismiss</button>
-            <button mat-flat-button
-              color="primary">
+            <button mat-stroked-button color="primary" class="mr-2"(click)="onCancelClick()">Dismiss</button>
+            <button mat-flat-button  (click)="onSubmit(); clicked = true"
+            color="primary">
               Add
             </button>
           </div>

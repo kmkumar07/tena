@@ -4,7 +4,7 @@ import { ProductsService } from 'src/app/modules/products/services/products.serv
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Router } from '@angular/router';
 import { ProductDetailsService } from 'src/app/modules/plans/services/product-details.service';
@@ -70,6 +70,8 @@ export class ProductDetailsPopupComponent {
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<ProductDetailsPopupComponent>,
+
     private productService: ProductsService,
     private productDetailsService: ProductDetailsService,
     private routes: Router
@@ -93,8 +95,10 @@ export class ProductDetailsPopupComponent {
   ngOnInit() {
     this.getProduct(this.PageNumber, this.limit, this.search);
     this.productService.product$.subscribe((data) => {
+      console.log(" this.produc",data);
+
       if (data) {
-        this.productData = data;
+        this.productData = data.products;        
       }
     });
   }
@@ -124,10 +128,14 @@ export class ProductDetailsPopupComponent {
   selectedOptions: { [key: string]: boolean } = {};
 
   toggleCheckbox(event: MatCheckboxChange, row: PeriodicElement) {
+    console.log("ppp",event,row);
+
     if (event.checked) {
       this.isButtonDisabled = false;
       this.selection.select(row);
       this.selectedFeatures.push(row);
+      console.log("www",row,this.selectedFeatures);
+
     } else {
       this.selection.deselect(row);
       const index = this.selectedFeatures.findIndex(
@@ -201,6 +209,7 @@ export class ProductDetailsPopupComponent {
       .toLowerCase();
 
     const features = this.selectedFeatures.map((productVariantFeature) => {
+
       switch (productVariantFeature.type) {
         case 'quantity':
         case 'custom':
@@ -211,6 +220,7 @@ export class ProductDetailsPopupComponent {
             value: values,
           };
         case 'switch':
+
           return {
             featureID: productVariantFeature.featureId,
             value: this.selectedOptions[productVariantFeature.featureId],
@@ -224,6 +234,7 @@ export class ProductDetailsPopupComponent {
           return null;
       }
     });
+
     const payload = {
       productVariantId: productVariantId,
       name: productVariantName,
@@ -232,6 +243,8 @@ export class ProductDetailsPopupComponent {
       features: features,
       status: 'active',
     };
+    console.log(payload);
+    
     this.clicked = false;
     this.subscription = this.productDetailsService
       .createProductVariant(payload)
@@ -255,6 +268,9 @@ export class ProductDetailsPopupComponent {
           console.log('something wrong occured', err.error.message);
         },
       });
+  }
+  onCancelClick(){
+    this.dialogRef.close(false);
   }
   onDropdownKey(event: number): void {
     this.dropKey = event;
