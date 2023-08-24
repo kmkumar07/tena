@@ -104,7 +104,7 @@
                 Action
               </th>
             </tr>
-            <ng-container *ngIf="pricingData.length > 0; else emptyData">
+            <ng-container *ngIf="pricingData?.length > 0; else emptyData">
               <ng-container *ngFor="let pricing of pricingData">
                 <ng-container [ngSwitch]="pricing.periodUnit">
                   <tr *ngSwitchCase="'daily'">
