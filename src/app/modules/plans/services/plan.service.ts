@@ -1,15 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  catchError,
-  map,
-  Observable,
-  Subject,
-  takeUntil,
-} from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, Subject } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
-import { GlobalService } from 'src/app/core/services/global.service';
 import {
   Plan,
   PlanList,
@@ -38,7 +30,7 @@ export class PlanService {
   public plan$ = this.planSubject.asObservable();
   private priceSubject = new BehaviorSubject<any>(null);
   public price$ = this.priceSubject.asObservable();
-  private getPriceDataById = new Subject<any>()
+  private getPriceDataById = new Subject<any>();
   priceDataById$ = this.getPriceDataById.asObservable();
   public planData: dataTypes | any = {
     planInfo: new BehaviorSubject<any>({}),
@@ -62,7 +54,7 @@ export class PlanService {
 
   // Passing data from step to other steps
   setData(pricedata: any) {
-    this.getPriceDataById.next(pricedata)
+    this.getPriceDataById.next(pricedata);
   }
 
   addPlan(plan: Plan): Observable<Plan> {
@@ -112,7 +104,6 @@ export class PlanService {
     return this.apiService.post(path, price);
   }
   deletePrice(priceId: string) {
-    
     const url = `${this.baseUrl}/pricing/${priceId}?priceId=${priceId}`;
     return this.apiService.delete(url);
   }
