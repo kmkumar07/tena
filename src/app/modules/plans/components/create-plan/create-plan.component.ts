@@ -127,26 +127,30 @@ export class CreatePlanComponent implements OnInit {
       }
     });
   }
-  setPricing(pricingData) {
-    this.priceData.push(pricingData);
+  setPricing(pricingData: any) {
+    if (pricingData && pricingData.periodUnit) {
+      this.priceData.push(pricingData);
 
-    if (pricingData.periodUnit == 'daily') {
-      this.priceData[0] = pricingData;
-      this.dailyPrice = pricingData.price;
-    }
-    if (pricingData.periodUnit == 'weekly') {
-      this.priceData[1] = pricingData;
-      this.weeklyPrice = pricingData.price;
-    }
-    if (pricingData.periodUnit == 'monthly') {
-      this.priceData[2] = pricingData;
-
-      this.monthlyPrice = pricingData.price;
-    }
-    if (pricingData.periodUnit == 'yearly') {
-      this.priceData[3] = pricingData;
-
-      this.yearlyPrice = pricingData.price;
+      switch (pricingData.periodUnit) {
+        case 'daily':
+          this.priceData[0] = pricingData;
+          this.dailyPrice = pricingData.price;
+          break;
+        case 'weekly':
+          this.priceData[1] = pricingData;
+          this.weeklyPrice = pricingData.price;
+          break;
+        case 'monthly':
+          this.priceData[2] = pricingData;
+          this.monthlyPrice = pricingData.price;
+          break;
+        case 'yearly':
+          this.priceData[3] = pricingData;
+          this.yearlyPrice = pricingData.price;
+          break;
+        default:
+          break;
+      }
     }
   }
 
@@ -181,8 +185,6 @@ export class CreatePlanComponent implements OnInit {
         .subscribe((res) => {
           this.pricedataById = res.data;
           this.setPricing(this.pricedataById);
-
-          // this.patchValue(res.data);
           this.editable = true;
         });
     } else {
@@ -398,7 +400,7 @@ export class CreatePlanComponent implements OnInit {
         this.deleteSuccess(planId);
       },
       error: (error: any) => {
-        this.snackBar.open(error.error.message, '', {
+        this.snackBar.open(error?.message, '', {
           duration: 5000,
           verticalPosition: 'top',
           horizontalPosition: 'right',
