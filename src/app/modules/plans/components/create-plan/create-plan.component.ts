@@ -127,27 +127,56 @@ export class CreatePlanComponent implements OnInit {
       }
     });
   }
-  setPricing(pricingData) {
-    this.priceData.push(pricingData);
+  setPricing(pricingData: any) {
 
-    if (pricingData.periodUnit == 'daily') {
-      this.priceData[0] = pricingData;
-      this.dailyPrice = pricingData.price;
-    }
-    if (pricingData.periodUnit == 'weekly') {
-      this.priceData[1] = pricingData;
-      this.weeklyPrice = pricingData.price;
-    }
-    if (pricingData.periodUnit == 'monthly') {
-      this.priceData[2] = pricingData;
+    if (pricingData && pricingData.periodUnit) {
 
-      this.monthlyPrice = pricingData.price;
-    }
-    if (pricingData.periodUnit == 'yearly') {
-      this.priceData[3] = pricingData;
+      this.priceData.push(pricingData);
 
-      this.yearlyPrice = pricingData.price;
+ 
+
+      switch (pricingData.periodUnit) {
+
+        case 'daily':
+
+          this.priceData[0] = pricingData;
+
+          this.dailyPrice = pricingData.price;
+
+          break;
+
+        case 'weekly':
+
+          this.priceData[1] = pricingData;
+
+          this.weeklyPrice = pricingData.price;
+
+          break;
+
+        case 'monthly':
+
+          this.priceData[2] = pricingData;
+
+          this.monthlyPrice = pricingData.price;
+
+          break;
+
+        case 'yearly':
+
+          this.priceData[3] = pricingData;
+
+          this.yearlyPrice = pricingData.price;
+
+          break;
+
+        default:
+
+          break;
+
+      }
+
     }
+
   }
 
   getPlanById(id: string) {
@@ -258,8 +287,8 @@ export class CreatePlanComponent implements OnInit {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe({
           next: (res: any) => {
-            this.openSuccess(plan.planId);
             this.global.hideLoader();
+            this.openSuccess(plan.planId);
             return res;
           },
           error: (err: any) => {
