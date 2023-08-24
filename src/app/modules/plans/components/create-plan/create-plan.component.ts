@@ -185,8 +185,6 @@ export class CreatePlanComponent implements OnInit {
         .subscribe((res) => {
           this.pricedataById = res.data;
           this.setPricing(this.pricedataById);
-
-          // this.patchValue(res.data);
           this.editable = true;
         });
     } else {
@@ -402,7 +400,7 @@ export class CreatePlanComponent implements OnInit {
         this.deleteSuccess(planId);
       },
       error: (error: any) => {
-        this.snackBar.open(error.error.message, '', {
+        this.snackBar.open(error?.message, '', {
           duration: 5000,
           verticalPosition: 'top',
           horizontalPosition: 'right',

@@ -28,7 +28,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-edit-plan',
   templateUrl: './edit-plan.component.html',
-  styleUrls: ['./edit-plan.component.scss']
+  styleUrls: ['./edit-plan.component.scss'],
 })
 export class EditPlanComponent {
   values: any;
@@ -39,7 +39,7 @@ export class EditPlanComponent {
     'Price',
     'action',
   ];
-  status:boolean;
+  status: boolean;
   priceData: any[] = [];
   planAddEmptyData = plan_add_empty_data;
   stepsTitle = Stepper;
@@ -126,7 +126,6 @@ export class EditPlanComponent {
         .subscribe((res) => {
           this.patchValue(res.data);
           this.editable = true;
-          
         });
     } else {
       this.stepOneCompleted = false;
@@ -187,7 +186,7 @@ export class EditPlanComponent {
   onSubmit() {
     this.global.showLoader();
     const status = this.planForm.value.status ? 'active' : 'draft';
-   
+
     const type = 'base';
     const plan = {
       ...this.planForm.value,
@@ -239,10 +238,7 @@ export class EditPlanComponent {
       },
     });
   }
-  // editPrice(id){
-  //   this.planService.setEditPrice(true);
-  //   this.router.navigate([`/plans/create/set-price/${id}`])
-  // }
+
   editProductVariant(id: string) {
     this.router.navigate([`/plans/create/edit-product-detail/${id}`]);
   }
@@ -251,7 +247,7 @@ export class EditPlanComponent {
       width: '420px',
       data: {
         module: 'Plan',
-        operation: 'is created',
+        operation: 'is updated',
       },
     });
     this.dialogRef.afterClosed().subscribe((res: any) => {
