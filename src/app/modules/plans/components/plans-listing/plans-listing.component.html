@@ -92,7 +92,7 @@
           <ng-container matColumnDef="created_at">
             <th mat-header-cell *matHeaderCellDef>Created On</th>
             <td mat-cell *matCellDef="let element" [routerLink]="'/plans/view'"(click)="viewPlanById(element.planId)">
-              {{ element.createdOn }}
+              {{ element.createdOn | date : "d MMMM y" }}
             </td>
           </ng-container>
 
