@@ -17,12 +17,16 @@ export class ProductsService {
 
   constructor(private http: HttpClient) {}
   private croppedImageSource = new BehaviorSubject<string>('');
+  private imageNameSource = new BehaviorSubject<string>('');
 
   croppedImage$ = this.croppedImageSource.asObservable();
+  imageName$ = this.imageNameSource.asObservable();
 
-  sendCroppedImage(croppedImage: string): void {
+  sendCroppedImage(croppedImage: string, imageName: string): void {
     this.croppedImageSource.next(croppedImage);
+    this.imageNameSource.next(imageName);
   }
+
   createProduct(product: any): Observable<any> {
     return this.http
       .post(`${environment.apiUrl}/products`, product, {

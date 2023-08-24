@@ -1,57 +1,17 @@
-import {
-  Meta,
-  StoryObj,
-  componentWrapperDecorator,
-  moduleMetadata,
-} from '@storybook/angular';
-import { planDetailsComponent } from '../planDetails.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
-import { CommonModule } from '@angular/common';
-import { RouterTestingModule } from '@angular/router/testing';
-
-
-// More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
-const meta: Meta<planDetailsComponent> = {
-  component: planDetailsComponent,
-  title: 'softobiz-ui/Pages/planDetails',
-  tags: ['autodocs'],
-  render: (args: planDetailsComponent) => ({
-    props: {
-      backgroundColor: null,
-      ...args,
-    },
-  }),
-  argTypes: { },
-  decorators: [
-    moduleMetadata({
-      imports: [
-        CommonModule,
-        AngularMaterialModule,
-        BrowserAnimationsModule,
-        RouterTestingModule
-      ],
-    }),
-  ],
-
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <div class="flex w-full mt-11">
+<div class="flex w-full mt-11">
   <div #contentSection class="create-plan-main-wrapper h-full relative">
     <div class="flex align-center justify-between mb-6">
       <div class="flex align-center">
         <mat-icon class="material-symbols-outlined pointer mr-2" color="primary"
           [routerLink]="'/plan'">keyboard_backspace</mat-icon>
-        <p class="fs-2xl fw-500 text-purple-lighten-1">Create Plan</p>
+        <p class="fs-2xl fw-500 text-purple-lighten-1">Update Plan</p>
       </div>
     </div>
     <div #step1 id="step1" class="plan-section-block flex-center p-10 mb-4 border-2">
       <div class="plan-info-block inner-wrapper">
         <div class="heading">
           <abbr class="mat-headline-5 text-blue-darken">Plan Details</abbr>
-          <p class="text-grey-darken mt-1">Add plan details here</p>
+          <p class="text-grey-darken mt-1">Update plan details here</p>
         </div>
         <form [formGroup]="planForm">
           <div class="info-form">
@@ -189,7 +149,7 @@ const meta: Meta<planDetailsComponent> = {
                     Description
                   </p>
                 </div>
-                <mat-form-field appearance="outline" class="dark-description-input">
+                <mat-form-field appearance="outline">
                   <textarea matInput placeholder="Enter here..." formControlName="description"></textarea>
                   <mat-error *ngIf="
                       planForm.controls['description'].invalid &&
@@ -226,20 +186,3 @@ const meta: Meta<planDetailsComponent> = {
     </div>
   </div>
 </div>
-
-        `,
-      },
-    },
-  },  
-};
-
-export default meta;
-type Story = StoryObj<planDetailsComponent>;
-
-// More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
-
-export const planDetails: Story = {
-    args: {
-    },
-};
-

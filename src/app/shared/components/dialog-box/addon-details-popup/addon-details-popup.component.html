@@ -1,244 +1,211 @@
 <div class="addon-details-popup">
-    <div class="heading pb-3">
-        <h5 class="mat-subtitle-1 text-blue-darken mb-2 font-weight-500">Add Add-ons</h5>
-        <p class="text-grey-darken mt-1">  Fill in the details to add product</p>
-    </div>
+  <div class="heading pb-3">
+    <h5 class="mat-subtitle-1 text-blue-darken mb-2 font-weight-500">Add Add-ons</h5>
+    <p class="text-grey-darken mt-1"> Fill in the details to add product</p>
+  </div>
 
-    <div class="inner-block border-2 pr-5 pb-4">
-            <div class="details-wrapper p-3">
-              <div class="details-inner ">
-                <div class="flex align-start">
-                  <div class="product-img p-2 mr-4 main-bg">
-                    <img src="../.././../../assets/images/teams.png" alt="product-img" />
-                </div>
-                <div class="mt-2">
-                    <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-1">
-                        MS Team
-                      </h6>
-                      <span class="mat-body-1 font-weight-500 text-blue-darken">3 Features
-                        included</span>
-                  <div class="flex mt-3">
-                    <div class="info-details">
-                      <h5 class="mat-subtitle-2 text-grey-darken mb-1">Whiteboard</h5>
-                      <a class="mat-subtitle-2 text-blue-darken font-weight-500">ON</a>
-                    </div>
-                    <div class="info-details">
-                      <h5 class="mat-subtitle-2 text-grey-darken mb-1">Email support</h5>
-                      <a class="mat-subtitle-2 text-blue-darken font-weight-500">All Week</a>
-                    </div>
-                    <div class="info-details">
-                      <h5 class="mat-subtitle-2 text-grey-darken mb-1">User License</h5>
-                      <a class="mat-subtitle-2 text-blue-darken font-weight-500">10 License</a>
-                    </div>
-                  </div>
-                </div>
-                </div>
+  <div class="inner-block border-2 pr-5 pb-4">
+    <div class="details-wrapper p-3">
+      <div class="details-inner ">
+        <div class="flex align-start">
+          <div class="product-img p-2 mr-4 main-bg">
+            <img src="../.././../../assets/images/teams.png" alt="product-img" />
+          </div>
+          <div class="mt-2">
+            <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-1">
+              MS Team
+            </h6>
+            <span class="mat-body-1 font-weight-500 text-blue-darken">3 Features
+              included</span>
+            <div class="flex mt-3">
+              <div class="info-details">
+                <h5 class="mat-subtitle-2 text-grey-darken mb-1">Whiteboard</h5>
+                <a class="mat-subtitle-2 text-blue-darken font-weight-500">ON</a>
+              </div>
+              <div class="info-details">
+                <h5 class="mat-subtitle-2 text-grey-darken mb-1">Email support</h5>
+                <a class="mat-subtitle-2 text-blue-darken font-weight-500">All Week</a>
+              </div>
+              <div class="info-details">
+                <h5 class="mat-subtitle-2 text-grey-darken mb-1">User License</h5>
+                <a class="mat-subtitle-2 text-blue-darken font-weight-500">10 License</a>
               </div>
             </div>
-            <div class="add-product-table pt-3 pb-3 px-3">
-              <p class="mat-subtitle-2 font-weight-500 text-purple-lighten-1 py-2 mb-4 table-heading text-uppercase">
-                Assign Addons to product
-              </p>
-              <div class="mb-10">
-                <div class="flex mb-4">
-                  <mat-checkbox class="outer-checkbox" [disableRipple]="true">
-                </mat-checkbox>
-                <div class="ml-2">
-                  <h5 class="mb-2 text-blue-darken mat-subtitle-2 font-weight-500">Teamwork and communication</h5>
-                  <p class="text-grey-darken">It is a long established fact that a reader will be distracted by the readable content of a page.</p>
-                </div>
-                </div>
-                <div class="relative main-bg table-wrapper">
-                  <div class="table-title mb-3">
-                    <h6 class="mb-2 text-blue-darken mat-subtitle-2 font-weight-500">Included Feature</h6>
-                  </div>
-                  <div class="primary-table checked-stripe-table">
-                    <table mat-table [dataSource]="dataSource">
-                      <!-- Checkbox Column -->
-                      <ng-container matColumnDef="select">
-                        <th mat-header-cell *matHeaderCellDef>
-                          <mat-checkbox
-                            (click)="selectAll(dataSource)"
-                            (change)="$event ? toggleAllRows() : null"
-                            [checked]="selection.hasValue() && isAllSelected()"
-                            [indeterminate]="selection.hasValue() && !isAllSelected()"
-                            [aria-label]="checkboxLabel()"
-                            [disableRipple]="true"
-                          >
-                          </mat-checkbox>
-                        </th>
-                        <td mat-cell *matCellDef="let row">
-                          <mat-checkbox
-                            (click)="$event.stopPropagation()"
-                            (change)="$event ? selection.toggle(row) : null"
-                            [checked]="selection.isSelected(row)"
-                            [aria-label]="checkboxLabel(row)"
-                            (click)="selectedRow(row.id, $event)"
-                            [disableRipple]="true"
-                          >
-                          </mat-checkbox>
-                        </td>
-                      </ng-container>
-      
-                      <!-- Name Column -->
-                      <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
-                          Name
-                        </th>
-                        <td mat-cell *matCellDef="let element" class="text-grey-darken">{{ element.name }}</td>
-                      </ng-container>
-      
-                      <!-- Weight Column -->
-                      <ng-container matColumnDef="status">
-                        <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
-                          Status
-                        </th>
-                        <td
-                          mat-cell
-                          *matCellDef="let element"
-                          [ngClass]="element.status"
-                        >
-                          {{ element.status }}
-                        </td>
-                      </ng-container>
-    
-                      <!-- Product Column -->
-                      <ng-container matColumnDef="Product">
-                        <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
-                          Product
-                        </th>
-                        <td mat-cell *matCellDef="let element" class="text-grey-darken">
-                          {{ element.Product }}
-                        </td>
-                      </ng-container>
-      
-                      <!-- Symbol Column -->
-                      <ng-container matColumnDef="type">
-                        <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
-                          Type
-                        </th>
-                        <td mat-cell *matCellDef="let element" class="text-grey-darken">
-                          {{ element.type }}
-                        </td>
-                      </ng-container>
-      
-                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                      <tr
-                        mat-row
-                        *matRowDef="let row; columns: displayedColumns"
-                        [id]="row.id"
-                      ></tr>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-10">
-                <div class="flex mb-4">
-                  <mat-checkbox class="outer-checkbox" [disableRipple]="true">
-                </mat-checkbox>
-                <div class="ml-2">
-                  <h5 class="mb-2 text-blue-darken mat-subtitle-2 font-weight-500">Security and compliance</h5>
-                  <p class="text-grey-darken">It is a long established fact that a reader will be distracted by the readable content of a page.</p>
-                </div>
-                </div>
-                <div class="relative main-bg table-wrapper">
-                  <div class="table-title mb-3">
-                    <h6 class="mb-2  text-blue-darken mat-subtitle-2 font-weight-500">Included Feature</h6>
-                  </div>
-                  <div class="primary-table checked-stripe-table">
-                    <table mat-table [dataSource]="dataSource">
-                      <!-- Checkbox Column -->
-                      <ng-container matColumnDef="select">
-                        <th mat-header-cell *matHeaderCellDef>
-                          <mat-checkbox
-                            (click)="selectAll(dataSource)"
-                            (change)="$event ? toggleAllRows() : null"
-                            [checked]="selection.hasValue() && isAllSelected()"
-                            [indeterminate]="selection.hasValue() && !isAllSelected()"
-                            [aria-label]="checkboxLabel()"
-                            [disableRipple]="true"
-                          >
-                          </mat-checkbox>
-                        </th>
-                        <td mat-cell *matCellDef="let row">
-                          <mat-checkbox
-                            (click)="$event.stopPropagation()"
-                            (change)="$event ? selection.toggle(row) : null"
-                            [checked]="selection.isSelected(row)"
-                            [aria-label]="checkboxLabel(row)"
-                            (click)="selectedRow(row.id, $event)"
-                            [disableRipple]="true"
-                          >
-                          </mat-checkbox>
-                        </td>
-                      </ng-container>
-      
-                      <!-- Name Column -->
-                      <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
-                          Name
-                        </th>
-                        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-                      </ng-container>
-      
-                      <!-- Weight Column -->
-                      <ng-container matColumnDef="status">
-                        <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
-                          Status
-                        </th>
-                        <td
-                          mat-cell
-                          *matCellDef="let element"
-                          [ngClass]="element.status"
-                        >
-                          {{ element.status }}
-                        </td>
-                      </ng-container>
-    
-                      <!-- Product Column -->
-                      <ng-container matColumnDef="Product">
-                        <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
-                          Product
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                          {{ element.Product }}
-                        </td>
-                      </ng-container>
-      
-                      <!-- Symbol Column -->
-                      <ng-container matColumnDef="type">
-                        <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
-                          Type
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                          {{ element.type }}
-                        </td>
-                      </ng-container>
-      
-                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                      <tr
-                        mat-row
-                        *matRowDef="let row; columns: displayedColumns"
-                        (click)="selection.toggle(row)"
-                        [id]="row.id"
-                      ></tr>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          
-    </div>
-
-    <div class="flex justify-between align-center pl-1 pr-5">
-        <mat-checkbox color="primary" formControlName="status" [disableRipple]="true"
-        class="font-weight-500 checkbox ml-n-3 disable-ripple-checkbox">Active</mat-checkbox>
-      <div class="flex align-center">
-        <button mat-stroked-button color="primary" class="mr-2">Dismiss</button>
-        <button mat-flat-button
-          color="primary">
-          Add
-        </button>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="add-product-table pt-3 pb-3 px-3">
+      <p class="mat-subtitle-2 font-weight-500 text-purple-lighten-1 py-2 mb-4 table-heading text-uppercase">
+        Assign Addons to product
+      </p>
+      <div class="mb-10">
+        <div class="flex mb-4">
+          <mat-checkbox class="outer-checkbox" [disableRipple]="true" class="mat-primary" color="primary">
+          </mat-checkbox>
+          <div class="ml-2">
+            <h5 class="mb-2 text-blue-darken mat-subtitle-2 font-weight-500">Teamwork and communication</h5>
+            <p class="text-grey-darken">It is a long established fact that a reader will be distracted by the readable
+              content of a page.</p>
+          </div>
+        </div>
+        <div class="relative main-bg table-wrapper">
+          <div class="table-title mb-3">
+            <h6 class="mb-2 text-blue-darken mat-subtitle-2 font-weight-500">Included Feature</h6>
+          </div>
+          <div class="primary-table checked-stripe-table">
+            <table mat-table [dataSource]="dataSource">
+              <!-- Checkbox Column -->
+              <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox (click)="selectAll(dataSource)" (change)="$event ? toggleAllRows() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()"
+                    [disableRipple]="true" class="mat-primary" color="primary">
+                  </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)"
+                    (click)="selectedRow(row.id, $event)" [disableRipple]="true" class="mat-primary" color="primary">
+                  </mat-checkbox>
+                </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
+                  Name
+                </th>
+                <td mat-cell *matCellDef="let element" class="text-grey-darken">{{ element.name }}</td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
+                  Status
+                </th>
+                <td mat-cell *matCellDef="let element" [ngClass]="element.status">
+                  {{ element.status }}
+                </td>
+              </ng-container>
+
+              <!-- Product Column -->
+              <ng-container matColumnDef="Product">
+                <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
+                  Product
+                </th>
+                <td mat-cell *matCellDef="let element" class="text-grey-darken">
+                  {{ element.Product }}
+                </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
+                  Type
+                </th>
+                <td mat-cell *matCellDef="let element" class="text-grey-darken">
+                  {{ element.type }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns" [id]="row.id"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="mb-10">
+        <div class="flex mb-4">
+          <mat-checkbox class="outer-checkbox" [disableRipple]="true" class="mat-primary" color="primary">
+          </mat-checkbox>
+          <div class="ml-2">
+            <h5 class="mb-2 text-blue-darken mat-subtitle-2 font-weight-500">Security and compliance</h5>
+            <p class="text-grey-darken">It is a long established fact that a reader will be distracted by the readable
+              content of a page.</p>
+          </div>
+        </div>
+        <div class="relative main-bg table-wrapper">
+          <div class="table-title mb-3">
+            <h6 class="mb-2  text-blue-darken mat-subtitle-2 font-weight-500">Included Feature</h6>
+          </div>
+          <div class="primary-table checked-stripe-table">
+            <table mat-table [dataSource]="dataSource">
+              <!-- Checkbox Column -->
+              <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox (click)="selectAll(dataSource)" (change)="$event ? toggleAllRows() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()"
+                    [disableRipple]="true" class="mat-primary" color="primary">
+                  </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)"
+                    (click)="selectedRow(row.id, $event)" [disableRipple]="true" class="mat-primary" color="primary">
+                  </mat-checkbox>
+                </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
+                  Name
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
+                  Status
+                </th>
+                <td mat-cell *matCellDef="let element" [ngClass]="element.status">
+                  {{ element.status }}
+                </td>
+              </ng-container>
+
+              <!-- Product Column -->
+              <ng-container matColumnDef="Product">
+                <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
+                  Product
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.Product }}
+                </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef class="font-weight-500 text-blue-darken">
+                  Type
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.type }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)" [id]="row.id">
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
+
+  <div class="flex justify-between align-center pl-1 pr-5">
+    <mat-checkbox color="primary" formControlName="status" [disableRipple]="true"
+      class="font-weight-500 checkbox ml-n-3 disable-ripple-checkbox">Active</mat-checkbox>
+    <div class="flex align-center">
+      <button mat-stroked-button color="primary" class="mr-2">Dismiss</button>
+      <button mat-flat-button color="primary">
+        Add
+      </button>
+    </div>
+  </div>
+</div>

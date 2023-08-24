@@ -6,7 +6,6 @@ import {
   selectOptions,
   periodUnit,
 } from 'src/app/shared/constants/consants';
-import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subscription, takeUntil } from 'rxjs';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,6 +13,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlanService } from '../../../../modules/plans/services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EventEmitter, Output } from '@angular/core';
 
 export class PlanValue {
   planId: string;
@@ -23,9 +26,10 @@ export class PlanValue {
 @Component({
   selector: 'app-set-price-popup',
   templateUrl: './set-price-popup.component.html',
-  styleUrls: ['./set-price-popup.component.scss']
+  styleUrls: ['./set-price-popup.component.scss'],
 })
 export class SetPricePopupComponent {
+  @Output() priceIdSelected = new EventEmitter<string>();
   subscription: Subscription;
   pricingModelTypes: selectOptions[] = pricingModels;
   FrequencyTypes: selectOptions[] = Frequency;
@@ -40,12 +44,20 @@ export class SetPricePopupComponent {
   monthlyBilling = ['3', '4', '5'];
   readOnly: boolean = false;
   start = 0;
+  period: string;
   check: string;
   dropKey: number;
+  periodKey: number;
   planId: string;
+  pricedataById: any;
   editPriceStatus: boolean;
   public setPriceForm: FormGroup;
-
+  priceId: string;
+  pricingId: string;
+  editable: boolean = false;
+  cycleVal: number;
+  selectedOption: string;
+  inputValue: string;
   constructor(
     private form: FormBuilder,
     private global: GlobalService,
@@ -53,59 +65,62 @@ export class SetPricePopupComponent {
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<SetPricePopupComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { planId: any; priceId: string }
+  ) {
+    this.planId = this.data.planId;
+    this.pricingId = this.data.priceId;
+  }
 
   ngOnInit() {
-    this.planId = this.route.snapshot.params['id'];
     this.formData();
-    // this.getPriceVal();
-    this.getCurrPLan();
+    this.getPriceById(this.pricingId);
   }
+  getPriceById(id: string) {
+    if (id) {
+      // this.stepOneCompleted = true;
+      //  this.global.showLoader();
+      this.planService.getPriceById(id).subscribe((res) => {
+        if (res) {
+          this.pricedataById = res.data;
 
-  // getPriceVal() {
-  //   this.planService
-  //     .getEditPrice()
-  //     .pipe(takeUntil(this.global.componentDestroyed(this)))
-  //     .subscribe((res) => {
-  //       this.editPriceStatus = res;
-  //       if (this.editPriceStatus) {
-  //         this.planService
-  //           .getPriceById(this.planId)
-  //           .subscribe((res) => console.log('price', res));
-  //       } else {
-  //         this.getCurrPLan();
-  //       }
-  //     });
-  // }
-
-  getCurrPLan() {
-    this.planService
-      .getPlanById(this.planId)
-      .pipe(takeUntil(this.global.componentDestroyed(this)))
-      .subscribe((res) => {
-        this.planValue = res.data;
+          this.patchValue(this.pricedataById);
+        }
       });
+    } else {
+      this.editable = false;
+    }
   }
+  patchValue(data) {
+    this.editable = true;
 
-  patchValue() {
     this.setPriceForm.patchValue({
-      planId: this.planValue.planId,
-      name: this.planValue.internalName,
+      planId: data.planId,
+      priceId: data.priceId,
+      price: data.price,
+      periodUnit: Frequency.find((a) => a.title === data.periodUnit).value,
+      pricingModel: pricingModels.find((a) => a.title === data.pricingModel)
+        .value,
+      noOfCycle: data.noOfCycle,
     });
+    this.selectedOption = data.isExpirable ? '2' : '1';
+
+    this.pricingModelValueToName(this.price);
+    // this.global.hideLoader();
   }
 
   formData() {
     this.setPriceForm = this.form.group({
       priceId: ['', Validators.required],
-      planId: ['', Validators.required],
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      invoiceNotes: ['', Validators.required],
+      planId: [this.planId, Validators.required],
+      name: [this.planId, Validators.required],
+      description: ['i am demo', Validators.required],
+      invoiceNotes: ['completed', Validators.required],
       currencyCode: ['USD', Validators.required],
       pricingModel: ['', Validators.required],
       price: ['', Validators.required],
-      periodUnit: ['daily', Validators.required],
+      periodUnit: ['', Validators.required],
       period: ['1', Validators.required],
       isExpirable: [true],
       noOfCycle: ['', Validators.required],
@@ -119,13 +134,18 @@ export class SetPricePopupComponent {
       ]),
     });
   }
-
+  selectPriceId() {
+    const priceId = this.price.priceId;
+    // Emit the selected priceId back to the parent
+    this.priceIdSelected.emit(priceId);
+  }
   getLevelList(index: number) {
     const tierList = this.multiPricing.at(index) as FormGroup;
     return tierList;
   }
 
   setPeriod(periodSelected: string) {
+    this.period = periodSelected;
     this.setPriceForm.patchValue({
       periodUnit: periodSelected,
     });
@@ -166,24 +186,30 @@ export class SetPricePopupComponent {
     prevIdx.get('endingUnit')?.enable();
   }
 
-  onTabChange(event: MatTabChangeEvent): void {
-    this.formData();
-    this.selectedTab = event.index;
-    if (this.selectedTab == 0) {
+  onTabChange(event: number): void {
+    //this.formData();
+
+    this.selectedTab = event;
+
+    if (this.selectedTab == 1) {
       this.setPeriod('daily');
-    } else if (this.selectedTab == 1) {
-      this.setPeriod('weekly');
     } else if (this.selectedTab == 2) {
-      this.setPeriod('monthly');
+      this.setPeriod('weekly');
     } else if (this.selectedTab == 3) {
+      this.setPeriod('monthly');
+    } else if (this.selectedTab == 4) {
       this.setPeriod('yearly');
     }
+    this.formData();
   }
 
   onDropdownKey(event: number): void {
+    this.periodKey = event;
+    this.onTabChange(this.periodKey);
+  }
+  onDropdownKeyWithpricingModel(event: number): void {
     this.dropKey = event;
   }
-
   deleteTier(tierIndex: number) {
     this.multiPricing.removeAt(tierIndex);
     const lastIdx = this.lastObj();
@@ -191,8 +217,6 @@ export class SetPricePopupComponent {
     lastIdx.get('endingUnit')?.disable();
   }
 
-  selectedOption: string;
-  inputValue: string;
   cycleValue(event: any) {
     this.selectedOption = event.value;
     if (this.selectedOption === '1') {
@@ -221,57 +245,89 @@ export class SetPricePopupComponent {
       price.priceId =
         price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
       price.name =
-        price.name + '-' + price.currencyCode + '-' + price.periodUnit;
+        price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
     }
-    if (price.pricingModel == 1) {
+
+    if (price ? price.pricingModel == 1 : '') {
       price.pricingModel = 'flat_fee';
       price.multiPricing = [];
     }
-    if (price.pricingModel == 2) {
+    if (price ? price.pricingModel == 2 : '') {
       price.pricingModel = 'per_unit';
       price.multiPricing = [];
     }
-    if (price.pricingModel == 3) {
+    if (price ? price.pricingModel == 3 : '') {
       price.pricingModel = 'tiered';
       this.pricingModelSetEndingUnitEmpty(price);
     }
-    if (price.pricingModel == 4) {
+    if (price ? price.pricingModel == 4 : '') {
       price.pricingModel = 'volume';
       this.pricingModelSetEndingUnitEmpty(price);
     }
-    if (price.pricingModel == 5) {
+    if (price ? price.pricingModel == 5 : '') {
       price.pricingModel = 'stairStep';
       this.pricingModelSetEndingUnitEmpty(price);
     }
   }
 
   submitValues() {
-    this.patchValue();
     this.global.showLoader();
     this.price = this.setPriceForm.getRawValue();
-    this.pricingModelValueToName(this.price);
-    this.subscription = this.planService
-      .createPrice(this.price)
-      .subscribe({
-        next: (res) => {
-        this.openSuccess();
-        this.planService.setData(this.price, 'priceInfo');
-        this.router.navigate([`/plans/create/${this.planValue.planId}`]);
-        this.global.hideLoader();
-      },
 
-      error: (err: any)=> {
-        this.snackBar.open(err.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right'
-        })
-      },
-    });
+    this.price = {
+      ...this.price,
+      periodUnit: Frequency.find((a) => a.value == this.price.periodUnit).title,
+    };
+    //  this.price={...this.price,pricingModel: pricingModels.find((a)=> a.value == this.price.pricingModel).title };
+
+    if (this.editable == false) {
+      this.global.showLoader();
+
+      this.pricingModelValueToName(this.price);
+      this.subscription = this.planService.createPrice(this.price).subscribe({
+        next: (res) => {
+          this.openCreateSuccess();
+          this.planService.setData(this.price);
+          this.priceId = this.price.priceId;
+          this.router.navigate([`/plans/create/${this.price.planId}`]);
+          this.global.hideLoader();
+        },
+
+        error: (err: any) => {
+          this.snackBar.open(err.message, '', {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
+          this.global.hideLoader();
+        },
+      });
+    } else {
+      this.global.showLoader();
+      this.pricingModelValueToName(this.price);
+      this.planService
+        .updatePrice(this.price, this.pricingId)
+        .pipe(takeUntil(this.global.componentDestroyed(this)))
+        .subscribe((res) => {
+          this.openUpdateSuccess(this.price.planId);
+          this.router.navigate([`/plans/create/${this.price.planId}`]);
+
+          this.global.hideLoader();
+        });
+    }
     this.global.hideLoader();
   }
-
-  openSuccess() {
+  openUpdateSuccess(planId) {
+    this.dialog.open(SuccessDialogComponent, {
+      width: '420px',
+      data: {
+        module: 'Pricing',
+        operation: 'is updated',
+      },
+    });
+    this.router.navigate([`/plans/create/${planId}`]);
+  }
+  openCreateSuccess() {
     this.dialog.open(SuccessDialogComponent, {
       width: '420px',
       data: {
@@ -355,7 +411,9 @@ export class SetPricePopupComponent {
     this.stairTotal = stTotal;
     this.volumeTotal = voltotal;
   }
-
+  onCancelClick(): void {
+    this.dialogRef.close(false);
+  }
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

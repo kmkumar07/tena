@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-plans-listing',
   templateUrl: './plans-listing.component.html',
@@ -16,9 +17,9 @@ import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-bo
 export class PlansListingComponent {
   emptyList = noPlans;
   plansData: Array<any>;
-  planAllData:any;
-  plan:Array<any>
-  planLength:number
+  planAllData: any;
+  plan: Array<any>;
+  planLength: number;
   pageNumber: number = 1;
   limit: number = 5;
   search: string = '';
@@ -38,7 +39,8 @@ export class PlansListingComponent {
     private _liveAnnouncer: LiveAnnouncer,
     private plans: PlanService,
     private global: GlobalService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public router: Router
   ) {}
 
   ngOnInit() {
@@ -53,10 +55,10 @@ export class PlansListingComponent {
       .pipe(takeUntil(this.global.componentDestroyed(this)))
       .subscribe((res) => {
         if (res) {
-          this.plansData = res.data; 
-          this.planAllData=this.plansData
-          this.plan=this.planAllData.plans
-          this.planLength=this.planAllData.totalCount;
+          this.plansData = res.data;
+          this.planAllData = this.plansData;
+          this.plan = this.planAllData.plans;
+          this.planLength = this.planAllData.totalCount;
           this.global.hideLoader();
         } else {
           this.global.hideLoader();
@@ -77,6 +79,9 @@ export class PlansListingComponent {
     }
   }
 
+  viewPlanById(id) {
+    this.router.navigate([`/plans/create/${id}`]);
+  }
   onDelete(id) {
     this.plans.deletePlan(id).subscribe((res) => res);
     this.getPlans(this.pageNumber, this.limit, this.search);

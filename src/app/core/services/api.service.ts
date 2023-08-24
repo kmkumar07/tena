@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -29,14 +28,14 @@ export class ApiService {
     params: HttpParams = new HttpParams()
   ): Observable<any> {
     return this.http
-      .get(`${path}`, { headers: this.setHeaders(), params: params })
+      .get(`${path}`, { headers: this.setHeaders(), params: params, withCredentials: true })
       .pipe(catchError(this.formatErrors))
       .pipe(map((res: Response) => res));
   }
 
   // Post Method
   public post(path: string, body: any): Observable<any> {
-    return this.http.post(`${path}`, body, { headers: this.setHeaders() }).pipe(
+    return this.http.post(`${path}`, body, { headers: this.setHeaders() , withCredentials: true }).pipe(
       catchError(this.formatErrors),
       map((res: Response) => res)
     );
@@ -45,7 +44,7 @@ export class ApiService {
   // Put Method
   public put(path: string, body: any): Observable<any> {
     return this.http
-      .put(`${path}`, body, { headers: this.setHeaders() })
+      .put(`${path}`, body, { headers: this.setHeaders(), withCredentials: true })
       .pipe(catchError(this.formatErrors))
       .pipe(map((res: Response) => res));
   }
@@ -53,7 +52,7 @@ export class ApiService {
   // Delete Method
   public delete(path: string): Observable<any> {
     return this.http
-      .delete(`${path}`, { headers: this.setHeaders() })
+      .delete(`${path}`, { headers: this.setHeaders(), withCredentials: true })
       .pipe(catchError(this.formatErrors))
       .pipe(map((res: Response) => res));
   }

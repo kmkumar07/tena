@@ -3,15 +3,15 @@
         <mat-icon class="material-symbols-outlined mr-0" color="warn">close</mat-icon>
     </div> -->
     <div class="form-outer pr-5">
-            <div class="header-section mb-3 pr-5">
-                <div class="title-left">
-                    <h5 class="mat-subtitle-1 text-blue-darken font-weight-500 mb-1">Create Feature</h5>
-                    <span class="text-grey-darken">
-                        Fill in the details to create a new item
-                    </span>
-                </div>
+        <div class="header-section mb-3 pr-5">
+            <div class="title-left">
+                <h5 class="mat-subtitle-1 text-blue-darken font-weight-500 mb-1">Create Feature</h5>
+                <span class="text-grey-darken">
+                    Fill in the details to create a new item
+                </span>
             </div>
-            <div class="form-left pr-5">
+        </div>
+        <div class="form-left pr-5">
             <form [formGroup]="featureForm">
                 <div class="form-container">
                     <div class="input-wrapper">
@@ -87,7 +87,8 @@
                         </div>
                         <mat-form-field appearance="outline" class="border-2 mb-0">
                             <input required matInput placeholder="Enter here" formControlName="name" />
-                            <mat-error *ngIf="featureForm.controls['name'].invalid && featureForm.controls['name'].touched">
+                            <mat-error
+                                *ngIf="featureForm.controls['name'].invalid && featureForm.controls['name'].touched">
                                 <ng-container *ngIf="featureForm.controls['name'].errors['required']">
                                     Name is required and cannot be left empty.
                                 </ng-container>
@@ -135,7 +136,7 @@
                                 Description
                             </p>
                         </div>
-                        <mat-form-field appearance="outline" class="description-box mb-0">
+                        <mat-form-field appearance="outline" class="description-box dark-description-input mb-0">
                             <textarea rows="4" matInput placeholder="Enter here..."
                                 formControlName="description"></textarea>
                             <mat-error *ngIf="
@@ -212,7 +213,8 @@
                         levels.controls.length > 1 &&
                         i < levels.controls.length - 1 &&
                         i != 0
-                      " mat-stroked-button disableRipple class="upper-case primary light medium px-1 ml-2 text-grey-darken"
+                      " mat-stroked-button disableRipple
+                                        class="upper-case primary light medium px-1 ml-2 text-grey-darken"
                                         (click)="deleteLevels(i)">
                                         Remove
                                     </button>
@@ -229,27 +231,28 @@
                                 {{ unlimitedButtonLabel }}
                             </button>
                         </div>
-                        <button mat-button color="primary" class="small-font-16 mt-4" (click)="addLevels()" *ngIf="!isRangeSelected">
+                        <button mat-button color="primary" class="small-font-16 mt-4" (click)="addLevels()"
+                            *ngIf="!isRangeSelected">
                             <mat-icon class="add-course-btn mat-primary">add</mat-icon>Add Entitlement
                         </button>
                     </div>
-                    <div class="action-btns flex align-center justify-between">
-                        <mat-checkbox color="primary" formControlName="status"
-                            class="font-weight-500 checkbox ml-n-3">Active</mat-checkbox>
-                        <div>
-                            <button mat-stroked-button color="primary" class="mr-2 large" (click)="onDelete()">
-                                Dismiss
-                            </button>
-                            <button mat-flat-button color="primary" class="large" type="button" (click)="onSubmit()"
-                                [disabled]="
-                    featureForm.invalid && this.featureForm.value.type !== 'switch'
-                  ">
-                                Create
-                            </button>
-                        </div>
-                    </div>
+
                 </div>
             </form>
+        </div>
+        <div class="action-btns flex align-center justify-between pr-5">
+            <mat-checkbox color="primary" formControlName="status"
+                class="font-weight-500 checkbox ml-n-3">Active</mat-checkbox>
+            <div>
+                <button mat-stroked-button color="primary" class="mr-2 large" (click)="onDelete()">
+                    Dismiss
+                </button>
+                <button mat-flat-button color="primary" class="large" type="button" (click)="onSubmit()" [disabled]="
+        featureForm.invalid && this.featureForm.value.type !== 'switch'
+      ">
+                    Create
+                </button>
+            </div>
         </div>
     </div>
     <div class="sample-right h-auto">
@@ -258,46 +261,46 @@
                 <h5 class="mb-0 mat-subtitle-2 font-weight-500 text-black">Sample Feature</h5>
             </div>
             <div class="info-wrapper">
-            <div class="text-text text-primary my-2">
-                <h3 class="text-blue-darken mat-subtitle-2 font-weight-500 mb-2">Switch Feature</h3>
-                <p class="text-grey-darken mb-1">
-                    This feature type has 2 entitlement levels- "available" and "not
-                    available".
-                </p>
-                <button mat-button color="primary" class="medium px-1" (click)="switchSample()">
-                    Try a Sample
-                </button>
-            </div>
-            <div class="text-text text-primary my-2">
-                <h3 class="text-blue-darken mat-subtitle-2 font-weight-500 mb-2">Range Feature</h3>
-                <p class="text-grey-darken mb-1">
-                    This feature supports range based entitlements. For eg : Customer’s
-                    access can be between 100 and 300 API / minute.
-                </p>
-                <button mat-button color="primary" class="medium px-1" (click)="rangeSample()">
-                    Try a Sample
-                </button>
-            </div>
-            <div class="text-text text-primary my-2">
-                <h3 class="text-blue-darken mat-subtitle-2 font-weight-500 mb-2">Quantity Feature</h3>
-                <p class="text-grey-darken mb-1">
-                    This feature type has numbered entitlement levels- For eg : 2,3,4 or
-                    10 user licenses.
-                </p>
-                <button mat-button color="primary" class="medium px-1" (click)="quantitySample()">
-                    Try a Sample
-                </button>
-            </div>
-            <div class="text-text text-primary">
-                <h3 class="text-blue-darken mat-subtitle-2 font-weight-500 mb-2">Custom Feature</h3>
-                <p class="text-grey-darken mb-1">
-                    This feature supports range based entitlements. For eg : Customer’s
-                    access can be between 100 and 300 API / minute.
-                </p>
-                <button mat-button color="primary" class="medium px-1" (click)="customSample()">
-                    Try a Sample
-                </button>
-            </div>
+                <div class="text-text text-primary my-2">
+                    <h3 class="text-blue-darken mat-subtitle-2 font-weight-500 mb-2">Switch Feature</h3>
+                    <p class="text-grey-darken mb-1">
+                        This feature type has 2 entitlement levels- "available" and "not
+                        available".
+                    </p>
+                    <button mat-button color="primary" class="medium px-1" (click)="switchSample()">
+                        Try a Sample
+                    </button>
+                </div>
+                <div class="text-text text-primary my-2">
+                    <h3 class="text-blue-darken mat-subtitle-2 font-weight-500 mb-2">Range Feature</h3>
+                    <p class="text-grey-darken mb-1">
+                        This feature supports range based entitlements. For eg : Customer’s
+                        access can be between 100 and 300 API / minute.
+                    </p>
+                    <button mat-button color="primary" class="medium px-1" (click)="rangeSample()">
+                        Try a Sample
+                    </button>
+                </div>
+                <div class="text-text text-primary my-2">
+                    <h3 class="text-blue-darken mat-subtitle-2 font-weight-500 mb-2">Quantity Feature</h3>
+                    <p class="text-grey-darken mb-1">
+                        This feature type has numbered entitlement levels- For eg : 2,3,4 or
+                        10 user licenses.
+                    </p>
+                    <button mat-button color="primary" class="medium px-1" (click)="quantitySample()">
+                        Try a Sample
+                    </button>
+                </div>
+                <div class="text-text text-primary">
+                    <h3 class="text-blue-darken mat-subtitle-2 font-weight-500 mb-2">Custom Feature</h3>
+                    <p class="text-grey-darken mb-1">
+                        This feature supports range based entitlements. For eg : Customer’s
+                        access can be between 100 and 300 API / minute.
+                    </p>
+                    <button mat-button color="primary" class="medium px-1" (click)="customSample()">
+                        Try a Sample
+                    </button>
+                </div>
             </div>
         </div>
     </div>

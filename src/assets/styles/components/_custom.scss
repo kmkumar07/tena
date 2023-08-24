@@ -29,19 +29,18 @@
 
 // form with sample
 .form-with-sample {
-  max-width: 80.1875rem;
-  width: 100%;
-  margin: auto;
-  height: calc(100vh - 16.25rem);
-  overflow: auto;
+  // height: calc(100vh - 16.25rem);
+  // overflow: auto;
   .header-section {
     border-bottom: 0.0625rem solid color("grey", "lighten-7");
     padding: 0;
   }
   .form-left {
     width: calc(100% - 26.375rem);
-    height: fit-content;
     border: .0625rem solid color('grey','lighten-14');
+    @media only screen and (max-width: 80rem) {
+      width: calc(100% - 21.5rem);
+    }
     .description-box{
       .mat-mdc-text-field-wrapper , .mat-mdc-form-field-flex, .input-wrapper .mat-mdc-form-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-infix{
         height: 4.5rem;
@@ -56,6 +55,9 @@
   }
   .sample-right {
     width: 26.375rem;
+    @media only screen and (max-width: 80rem) {
+      width: 21.5rem;
+    }
     .inner-block{
       padding: 2.5rem 2.625rem 2rem 2.5rem ;
       border: .0625rem solid color('grey','lighten-14');
@@ -84,7 +86,7 @@
     width: calc(100% - 19rem);
   }
   .form-left {
-    max-height: 70vh;
+    max-height: 57vh;
     overflow: auto;
     @media only screen and (max-width: 80rem) {
       padding-bottom: 12px;
@@ -137,6 +139,7 @@ table {
     tr:nth-child(even) {
       background-color: $primay-light-bg-color;
     }
+    
   }
 
   &.simple-table {

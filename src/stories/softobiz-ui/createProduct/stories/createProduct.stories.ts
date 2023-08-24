@@ -49,318 +49,183 @@ const meta: Meta<createProductComponent> = {
     docs: {
       source: {
         code: `
-        <div class="form-with-sample flex border-2 w-full h-full overflow-auto pt-2 pb- 5 px-6">
-        <div class="form-left p-10 mr-6 border-2">
-          <div class="header-section">
-            <h5 class="text-blue-darken mat-subtitle-1 font-weight-500">Features Details</h5>
+        <div class="create-product-wrapper pt-8">
+        <div class="inner-form-wrapper ">
+          <div class="header-section pb-6">
+            <div class="flex align-center justify-between">
+              <div class="flex align-center">
+                <mat-icon class="material-symbols-outlined pointer mr-1" color="primary"
+                  [routerLink]="'/products'">keyboard_backspace</mat-icon>
+                <p class="mat-headline-5 text-purple-lighten-1">Create Product</p>
+              </div>
+            </div>
           </div>
-          <form [formGroup]="featureForm">
-            <div class="form-container mt-6">
-              <div class="input-wrapper">
-                <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                    Feature Name
-                  </p>
-                  <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                    [ngxTippy]="featureName" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
-                  <ng-template #featureName let-name class="t-template">
-                    <div class="help-info-tooltip">
-                      <div class="heading-with-background">Feature name</div>
-                      <div class="details">
-                        Enter a name that helps you identify this Feature.
-                      </div>
-                      <button mat-button color="primary" class="px-0">
-                        Learn more
-                      </button>
-                    </div>
-                  </ng-template>
-                </div>
-                <mat-form-field appearance="outline" class="border-2">
-                  <input required matInput placeholder="Enter here" formControlName="name" />
-                  <mat-error *ngIf="
-                      featureForm.controls['name'].invalid &&
-                      featureForm.controls['name'].touched
-                    ">
-                    <ng-container *ngIf="featureForm.controls['name'].errors['required']">
-                      Name is required and cannot be left empty.
-                    </ng-container>
-                    <ng-container *ngIf="featureForm.controls['name'].errors['maxlength']">
-                      Name cannot exceed 20 characters.
-                    </ng-container>
-                    <ng-container *ngIf="featureForm.controls['name'].errors['pattern']">
-                      Name cannot contain special characters.
-                    </ng-container>
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div class="input-wrapper">
-                <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                    Select Product
-                  </p>
-                  <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                    [ngxTippy]="selectProduct" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
-                  <ng-template #selectProduct let-name class="t-template">
-                    <div class="help-info-tooltip">
-                      <div class="heading-with-background">Product</div>
-                      <div class="details">
-                        Please select a product to create a feature to it.
-                      </div>
-                      <button mat-button color="primary" class="px-0">
-                        Learn more
-                      </button>
-                    </div>
-                  </ng-template>
-                </div>
-                <mat-form-field appearance="outline" class="border-2">
-                  <!-- <mat-label> Select </mat-label> -->
-                  <mat-select required formControlName="productID" placeholder="select">
-                    <mat-option *ngFor="let product of productArray" [value]="product">
-                      {{ product }}
-                    </mat-option>
       
-                  </mat-select>
-                </mat-form-field>
+          <div class="flex align-start">
+            <div class="form-block border-2 mr-8 p-10 main-bg wrapper-border details-block">
+              <div class="pb-4 divider-bt-black">
+                <h3 class="mat-subtitle-1 fw-500 text-text text-dark mb-0">Basic Product Details</h3>
               </div>
-              <div class="input-wrapper">
-                <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 text-blue-darken">Feature ID</p>
-                  <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                    [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
-                  <ng-template #helpinfotooltip let-name>
-                    <div class="help-info-tooltip">
-                      <div class="heading-with-background">Feature id</div>
-                      <div class="details">
-                        Please enter a Customized Id.If user do not enter this field,
-                        the system will generate a 'Customized Human-Readable-id'
-                        based on the Name field.
-                        <div>
-                          e.g. Feature Name: "Analytics Reporting" FeatureId:
-                          "analytics-reporting-01".
-                        </div>
-                      </div>
-                    </div>
-                  </ng-template>
-                </div>
-                <mat-form-field appearance="outline" class="border-2">
-                  <input required matInput placeholder="Enter here" formControlName="featureId" />
-                </mat-form-field>
-              </div>
-              <div class="input-wrapper">
-                <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                    Feature Type
-                  </p>
-                  <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary" [ngxTippy]="type"
-                    [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
-                  <ng-template #type let-name class="t-template">
-                    <div class="help-info-tooltip">
-                      <div class="heading-with-background">Feature Type</div>
-                      <div class="details">
-                        Select how entitlements to this feature can be set in plans,
-                        addons, and charges.
-                      </div>
-                      <button mat-button color="primary" class="px-0">
-                        Learn more
-                      </button>
-                    </div>
-                  </ng-template>
-                </div>
-                <mat-form-field appearance="outline" class="border-2">
-                  <mat-select required formControlName="type" placeholder="select">
-                    <mat-option *ngFor="let type of featureType" value="{{ type.title }}"
-                      (click)="onTypeSelection(type.title)">
-                      {{ type.title }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <div class="input-wrapper">
-                <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                    Description
-                  </p>
-                </div>
-                <mat-form-field appearance="outline" class="description-box">
-                  <textarea rows="4" matInput placeholder="Enter here..." formControlName="description"></textarea>
-                  <mat-error *ngIf="
-                      featureForm.controls['description'].invalid &&
-                      featureForm.controls['description'].touched
-                    ">
-                    <ng-container *ngIf="featureForm.controls['description'].errors['maxlength']">
-                      Description cannot exceed 500 characters.
-                    </ng-container>
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div class="input-wrapper" *ngIf="
-                  this.featureForm.value.type &&
-                  this.featureForm.value.type != 1 &&
-                  this.featureForm.value.type !== 'switch' &&
-                  this.featureForm.value.type !== 'custom' 
-      
-                  || this.isRangeSelected
-      
-                ">
-                <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                    Entitlement Units
-                  </p>
-                  <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                    [ngxTippy]="selectProduct" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
-                  <ng-template #selectProduct let-name class="t-template">
-                    <div class="help-info-tooltip">
-                      <div class="heading-with-background">Entitlement Units</div>
-                      <div class="details">
-                        Please select a product to create a feature to it.
-                      </div>
-                      <button mat-button color="primary" class="px-0">
-                        Learn more
-                      </button>
-                    </div>
-                  </ng-template>
-                </div>
-                <mat-form-field appearance="outline" class="border-2">
-                  <input required matInput placeholder="Enter here" formControlName="unit" />
-                </mat-form-field>
-              </div>
-              <div *ngIf="this.featureForm.value.unit || this.featureForm.value.type == 'custom'">
-                <ng-container formArrayName="levels">
-                  <ng-container *ngFor="let element of levels.controls; let i = index">
-                    <div class="flex align-center wrap mb-3" [formGroupName]="i">
-                      <div class="flex align-center wrap w-88">
-                        <div class="input-wrapper pr-2">
-                          <div class="flex align-center mb-2">
-                            <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                              Entitlement
-                            </p>
+              <div class="input-wrapper mt-8">
+                <form [formGroup]="productForm">
+                  <div>
+                    <div class="flex align-center mb-2">
+                      <p class="mat-subtitle-2 font-weight-500 input-label">
+                        Product Name
+                      </p>
+                      <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                        [ngxTippy]="productnameinfo" [tippyProps]="{ placement: 'right', interactive: true }"
+                        tippyName="content">help</mat-icon>
+                      <ng-template #productnameinfo let-name class="t-template">
+                        <div class="help-info-tooltip">
+                          <div class="heading-with-background">Product name</div>
+                          <div class="details">
+                            Enter a name that helps you identify this Product
                           </div>
-                          <mat-form-field appearance="outline" class="border-2">
-                            <input (input)="setName(i)" required matInput placeholder="Enter here" formControlName="value" />
-                          </mat-form-field>
+                          <button mat-button color="primary" class="px-0">
+                            Learn more
+                          </button>
                         </div>
-                        <div class="input-wrapper">
-                          <div class="flex align-center mb-2">
-                            <p class="mat-subtitle-2 font-weight-500 input-label">
-                              Display Name
-                            </p>
+                      </ng-template>
+                    </div>
+                    <mat-form-field appearance="outline">
+                      <input matInput placeholder="Enter here..." formControlName="name" />
+                      <mat-error *ngIf="
+                          productForm.controls['name'].invalid &&
+                          productForm.controls['name'].touched
+                        ">
+                        <ng-container *ngIf="productForm.controls['name'].errors['required']">
+                          Name is required and cannot be left empty.
+                        </ng-container>
+                        <ng-container *ngIf="productForm.controls['name'].errors['maxlength']">
+                          Name cannot exceed 20 characters.
+                        </ng-container>
+                        <ng-container *ngIf="productForm.controls['name'].errors['pattern']">
+                          Name cannot contain special characters.
+                        </ng-container>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div>
+                    <div class="flex align-center mb-2">
+                      <p class="mat-subtitle-2 font-weight-500 input-label">
+                        Product ID
+                      </p>
+                      <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                        [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
+                      <ng-template #helpinfotooltip let-name>
+                        <div class="help-info-tooltip">
+                          <div class="heading-with-background">Description</div>
+                          <div class="details">
+                            Enter a id that helps you identify this Product
                           </div>
-                          <mat-form-field appearance="outline" class="border-2">
-                            <input matInput placeholder="Enter here" formControlName="name" />
-                          </mat-form-field>
                         </div>
-                      </div>
-                      <button *ngIf="i == 0" mat-stroked-button disableRipple
-                        class="upper-case primary light medium px-1 ml-2">
-                        Default
-                      </button>
-                      <button *ngIf="
-                          levels.controls.length > 1 &&
-                          i < levels.controls.length - 1 &&
-                          i != 0
-                        " mat-stroked-button disableRipple class="upper-case primary light medium px-1 ml-2"
-                        (click)="deleteLevels(i)">
+                      </ng-template>
+                    </div>
+                    <mat-form-field appearance="outline">
+                      <input matInput placeholder="Enter here..." formControlName="productId" />
+                    </mat-form-field>
+                  </div>
+                  <div>
+                    <div class="flex align-center mb-2">
+                      <p class="mat-subtitle-2 font-weight-500 input-label">
+                        Description
+                      </p>
+                    </div>
+                    <mat-form-field appearance="outline" class="dark-description-input">
+                      <textarea matInput placeholder="Enter here..." formControlName="description"></textarea>
+                      <mat-error *ngIf="
+                          productForm.controls['description'].invalid &&
+                          productForm.controls['description'].touched
+                        ">
+                        <ng-container *ngIf="
+                            productForm.controls['description'].errors['maxlength']
+                          ">
+                          Description cannot exceed 500 characters.
+                        </ng-container>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="form-block image-upload-dialog main-bg border-2 p-10 wrapper-border imgUpload-block">
+              <!-- <h4 class="text-dark mat-subtitle-2 mb-2 font-weight-500">
+                Product Logo
+              </h4>
+              <p class="mat-caption grey-text text-darken-6">
+                Allowed JPG, GIF or PNG. Max size of 800K
+              </p>
+              <div>
+                <label for="logo" class="upload-field border-2 pointer" id="file-label" (click)="openDialog('0ms', '0ms')">
+                  <img src="" class="w-full" />
+                  <div class="file-thumbnail">
+                    <mat-icon class="material-symbols-outlined m-0"
+                      >imagesmode</mat-icon
+                    >
+                    <h3
+                      id="filename"
+                      class="mat-body-1 font-weight-500 text-text text-primary"
+                    >
+                      <a href="" class="mr-1 primary-text text-main text-underline"
+                        >Click here to upload</a
+                      >or drag & drop
+                    </h3>
+                  </div>
+                </label>
+              </div> -->
+              <div *ngIf="uploadMessage" class="upload-message" [ngClass]="{ success: uploadSuccess, error: !uploadSuccess }">
+                {{ uploadMessage }}
+              </div>
+              <div class="title">
+                <h2 class="text-blue-darken fs-xl mb-0 font-weight-500">
+                  Product Logo
+                </h2>
+              </div>
+              <div class="user-img-wrapper flex align-center mt-5">
+                <div class="user-avatar flex align-center justify-center">
+                  <ng-container *ngIf="receivedCroppedImage">
+                    <img src="{{ receivedCroppedImage }}" alt="{{ receivedCroppedImage }}" />
+                  </ng-container>
+                  <ng-container *ngIf="!imageUrl">
+                    <p class="mat-body-1 mb-0">LOGO</p>
+                  </ng-container>
+                </div>
+                <div class="ml-6">
+                  <div class="upload-actions">
+                    <div class="flex align-center">
+                      <button mat-stroked-button color="primary" class="mr-3" (click)="deleteImage()">
                         Remove
                       </button>
-                      <button *ngIf="i == levels.controls.length - 1" mat-stroked-button disableRipple
-                        class="upper-case primary light medium px-1 ml-2">
-                        Maximum
+                      <button mat-flat-button color="primary" (click)="openDialog()">
+                        Upload
                       </button>
                     </div>
-                  </ng-container>
-                </ng-container>
-                <div>
-                  <button mat-stroked-button (click)="toggleUnlimited()">
-                    <mat-icon class="add-course-btn"></mat-icon>{{ unlimitedButtonLabel }}
-                  </button>
-                </div>
-                <button mat-stroked-button (click)="addLevels()" *ngIf="!isRangeSelected">
-                  <mat-icon class="add-course-btn"></mat-icon>Add Entitlement
-                </button>
-              </div>
-              <div class="action-btns flex align-center justify-between">
-                <mat-checkbox color="primary" formControlName="status"
-                  class="font-weight-500 checkbox ml-n-3">Active</mat-checkbox>
-                <div>
-                  <button mat-stroked-button color="primary" class="mr-2 large" (click)="onDelete()">
-                    Dismiss
-                  </button>
-                  <button mat-flat-button color="primary" class="large" type="button" (click)="onSubmit()" [disabled]="
-                      featureForm.invalid && this.featureForm.value.type !== 'switch' && this.featureForm.value.type !== 'custom'
-                    ">
-                    Create
-                  </button>
+                  </div>
+                  <p class="mat-caption text-light font-weight-500 mt-3">
+                    Allowed JPG, GIF or PNG. Max size of 800K
+                  </p>
                 </div>
               </div>
-            </div>
-          </form>
-        </div>
-        <div class="sample-right h-auto border-2">
-          <div class="inner-block">
-            <div class="header-section">
-              <h5 class="text-blue-darken mat-subtitle-1 font-weight-500">Sample Feature</h5>
-            </div>
-            <div class="mt-4 mb-2">
-              <div class="flex align-center">
-                <mat-icon class="material-symbols-outlined  mr-2">
-                  toggle_off
-                </mat-icon>
-                <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">Switch Feature</h3>
-              </div>
-              <p class="mat-h4 text-grey-darken">
-                This feature type has 2 entitlement levels- "available" and "not
-                available".
-              </p>
-              <button mat-button color="primary" class="medium px-1 mb-4 font-weight-500" (click)="switchSample()">
-                Try a Sample
-              </button>
-            </div>
-            <div class="mb-2">
-              <div class="flex align-center">
-                <mat-icon class="material-symbols-outlined  mr-2">
-                  arrow_range
-                </mat-icon>
-                <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">Range Feature</h3>
-              </div>
-              <p class="mat-h4 text-grey-darken">
-                This feature supports range based entitlements. For eg : Customer’s
-                access can be between 100 and 300 API / minute.
-              </p>
-              <button mat-button color="primary" class="medium px-1 mb-4 font-weight-500" (click)="rangeSample()">
-                Try a Sample
-              </button>
-            </div>
-            <div class="mb-2">
-              <div class="flex align-center">
-                <mat-icon class="material-symbols-outlined  mr-2">
-                  production_quantity_limits
-                </mat-icon>
-                <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">Quantity Feature</h3>
-              </div>
-              <p class="mat-h4 text-grey-darken">
-                This feature type has numbered entitlement levels- For eg : 2,3,4 or
-                10 user licenses.
-              </p>
-              <button mat-button color="primary" class="medium px-1 mb-4 font-weight-500" (click)="quantitySample()">
-                Try a Sample
-              </button>
-            </div>
-            <div class="">
-              <div class="flex align-center">
-                <mat-icon class="material-symbols-outlined  mr-2">
-                  tune
-                </mat-icon>
-                <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">Custom Feature</h3>
-              </div>
-              <p class="mat-h4 text-grey-darken">
-                This feature supports range based entitlements. For eg : Customer’s
-                access can be between 100 and 300 API / minute.
-              </p>
-              <button mat-button color="primary" class="medium px-1 font-weight-500" (click)="customSample()">
-                Try a Sample
-              </button>
             </div>
           </div>
+      
+          <div class="footer-section py-6">
+            <div class="action-btns flex align-center justify-between">
+              <mat-checkbox color="primary" class="font-weight-500 checkbox ml-n-3" checked
+                (click)="activeChecked($event)">Active</mat-checkbox>
+              <div>
+                <button mat-stroked-button color="primary" class="mr-2 large" [mat-dialog-close]="true" (click)="onDelete()">
+                  Back
+                </button>
+                <button mat-flat-button color="primary" class="large" type="submit" [disabled]="productForm.invalid"
+                  (click)="onSubmit()">
+                  Create
+                </button>
+              </div>
+            </div>
+          </div>
+      
         </div>
       </div>
         `,
