@@ -9,6 +9,8 @@ import { GlobalService } from 'src/app/core/services/global.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 @Component({
   selector: 'app-plans-listing',
   templateUrl: './plans-listing.component.html',
@@ -40,7 +42,8 @@ export class PlansListingComponent {
     private plans: PlanService,
     private global: GlobalService,
     public dialog: MatDialog,
-    public router: Router
+    public router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -68,10 +71,6 @@ export class PlansListingComponent {
 
   /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
@@ -82,13 +81,52 @@ export class PlansListingComponent {
   viewPlanById(id) {
     this.router.navigate([`/plans/create/${id}`]);
   }
-  onDelete(id) {
-    this.plans.deletePlan(id).subscribe((res) => res);
+
+  onDelete(id: any) {
+    this.plans.deletePlan(id).subscribe({
+      next: (res) => {
+        this.deleteSuccess(id);
+      },
+      error: (error: any) => {
+        this.snackBar.open(error?.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+      },
+    });
     this.getPlans(this.pageNumber, this.limit, this.search);
   }
-  openDelete(id) {
+
+  deleteSuccess(id: any) {
+    const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
+      width: '422px',
+      panelClass: 'dialog-curved',
+      data: {
+        module: 'Plan',
+        deleteId: id,
+      },
+    });
+    this.plans
+      .getPlans(this.pageNumber, this.limit, this.search)
+      .subscribe((data) => {
+        this.planLength = data['plans'].length;
+      });
+    dialogRef.afterClosed().subscribe(() => {
+      if (this.planLength === 0 && this.pageNumber > 1) {
+        this.onPrevious();
+      }
+      this.getPlans(this.pageNumber, this.limit, this.search);
+    });
+  }
+
+  openDelete(id: any) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       panelClass: 'dialog-curved',
+      data: {
+        module: 'Plan',
+        deleteId: id,
+      },
     });
 
     this.dialogRef.afterClosed().subscribe((res: any) => {
@@ -97,20 +135,24 @@ export class PlansListingComponent {
       }
     });
   }
+
   onPrevious() {
     if (this.pageNumber > 1) {
       this.pageNumber--;
       this.getPlans(this.pageNumber, this.limit, this.search);
     }
   }
+
   onNext() {
     this.pageNumber++;
     this.getPlans(this.pageNumber, this.limit, this.search);
   }
+
   setLimit(event: any) {
     this.limit = event.value;
     this.getPlans(this.pageNumber, this.limit, this.search);
   }
+
   searchItem(event: any) {
     const search = event.target.value;
     this.getPlans(this.pageNumber, this.limit, search);
