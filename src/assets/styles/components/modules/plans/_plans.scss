@@ -92,7 +92,8 @@
 
 // create plan section
 .create-plan-main-wrapper {
-  width: 52.3125rem;
+  max-width: 52.3125rem;
+  width: 95%;
   margin: auto;
   .with-footer-btn {
     .add-new-btn-list {
