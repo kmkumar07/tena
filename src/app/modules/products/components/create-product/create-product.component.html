@@ -20,6 +20,26 @@
             <div>
               <div class="flex align-center mb-2">
                 <p class="mat-subtitle-2 font-weight-500 input-label">
+                  Product ID
+                </p>
+                <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                  [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
+                <ng-template #helpinfotooltip let-name>
+                  <div class="help-info-tooltip">
+                    <div class="heading-with-background">Product ID</div>
+                    <div class="details">
+                      Enter a id that helps you identify this Product
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+              <mat-form-field appearance="outline">
+                <input matInput placeholder="Enter here..." formControlName="productId" />
+              </mat-form-field>
+            </div>
+            <div>
+              <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 input-label">
                   Product Name
                 </p>
                 <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
@@ -55,26 +75,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div>
-              <div class="flex align-center mb-2">
-                <p class="mat-subtitle-2 font-weight-500 input-label">
-                  Product ID
-                </p>
-                <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                  [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
-                <ng-template #helpinfotooltip let-name>
-                  <div class="help-info-tooltip">
-                    <div class="heading-with-background">Description</div>
-                    <div class="details">
-                      Enter a id that helps you identify this Product
-                    </div>
-                  </div>
-                </ng-template>
-              </div>
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="Enter here..." formControlName="productId" />
-              </mat-form-field>
-            </div>
+
             <div>
               <div class="flex align-center mb-2">
                 <p class="mat-subtitle-2 font-weight-500 input-label">

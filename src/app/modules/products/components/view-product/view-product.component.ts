@@ -62,8 +62,6 @@ export class ViewProductComponent {
 
   navigateToFeatures() {
     const dialogRef = this.dialog.open(FeaturesPopupComponent, {
-      width: '1113px',
-      // height: 'calc(100vh - 140px)',
       panelClass: 'dialog-curved',
     })
     // this.router.navigate(['/features/create/products/', this.id]);
@@ -100,7 +98,6 @@ export class ViewProductComponent {
 
   openDelete(id: any) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      width: '420px',
       panelClass: 'dialog-curved',
       data: {
         module: 'Feature',

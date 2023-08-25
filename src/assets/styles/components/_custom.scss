@@ -34,13 +34,19 @@
   .header-section {
     border-bottom: 0.0625rem solid color("grey", "lighten-7");
     padding: 0;
+    @media only screen and (max-width: 80rem) {
+      padding-right: .5rem !important;
+      }
   }
   .form-left {
     width: calc(100% - 26.375rem);
     border: .0625rem solid color('grey','lighten-14');
     @media only screen and (max-width: 80rem) {
       width: calc(100% - 21.5rem);
+      padding: 1.5625rem .4375rem 1.5625rem 1.5625rem !important;
+
     }
+
     .description-box{
       .mat-mdc-text-field-wrapper , .mat-mdc-form-field-flex, .input-wrapper .mat-mdc-form-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-infix{
         height: 4.5rem;
@@ -61,6 +67,9 @@
     .inner-block{
       padding: 2.5rem 2.625rem 2rem 2.5rem ;
       border: .0625rem solid color('grey','lighten-14');
+      @media only screen and (max-width: 80rem) {
+        padding: 1.5625rem;
+      }
       .material-symbols-outlined{
         font-size: 1.25rem;
       }
@@ -69,10 +78,14 @@
 }
 // form with sample for popup
 .form-with-sample-popup {
-  padding: 2.1875rem 1.125rem 2.1875rem 2.5rem;
+  padding: 2.1875rem  2.5rem;
+  max-width: 69.5625rem;
+  width: 100%;
   @media only screen and (max-width: 80rem) {
   max-height: 85vh;
   overflow: auto;
+  max-width: 55rem;
+  padding: 1.5625rem;
   }
   // .close-icon{
   //   width: 2.5rem;
@@ -83,13 +96,24 @@
   //   right: -0.25rem;
   // }
   .form-outer{
-    width: calc(100% - 19rem);
+    min-width: calc(100% - 19rem);
+    width: 100%;
+    @media only screen and (max-width: 80rem) {
+      padding-right: .4375rem !important;
+      .header-section{
+        padding-right: .4375rem !important;
+      }
+    }
   }
   .form-left {
     max-height: 57vh;
     overflow: auto;
     @media only screen and (max-width: 80rem) {
-      padding-bottom: 12px;
+      max-height: 60vh;
+      padding-right: 8px !important;
+      .action-btns{
+        padding-right: 8px !important;
+      }
     }
     .header-section {
       border-bottom: 0.0625rem solid color("grey", "lighten-7");
@@ -107,11 +131,7 @@
     }
   }
   .sample-right {
-    width: 18.8125rem;
-    @media only screen and (max-width: 80rem) {
-      max-height: 90vh;
-      overflow: auto;
-    }
+    min-width: 18.8125rem;
     .inner-block{
       padding: .875rem 0 .875rem ;
       border-radius: .375rem;
@@ -122,6 +142,10 @@
       }
       .info-wrapper{
         padding: 0 .875rem 0 1.5rem;
+        @media only screen and (max-width: 80rem) {
+          max-height: 63vh;
+          overflow: auto;
+        }
       }
     }
   }

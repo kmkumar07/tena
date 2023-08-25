@@ -269,7 +269,6 @@ export class FeaturesListingComponent implements OnInit {
 
   openDelete(id: any) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      width: '420px',
       panelClass: 'dialog-curved',
       data: {
         module: 'Feature',
