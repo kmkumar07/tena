@@ -152,6 +152,7 @@ export class CreatePlanComponent implements OnInit {
           break;
       }
     }
+
   }
 
   getPlanById(id: string) {
@@ -243,7 +244,7 @@ export class CreatePlanComponent implements OnInit {
     }
   }
   onSubmit() {
-    // this.global.showLoader();
+    this.global.showLoader();
     const status = this.planForm.value.status ? 'active' : 'draft';
 
     const type = 'base';
@@ -260,8 +261,8 @@ export class CreatePlanComponent implements OnInit {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe({
           next: (res: any) => {
+            this.global.hideLoader();
             this.openSuccess(plan.planId);
-            // this.global.hideLoader();
             return res;
           },
           error: (err: any) => {
@@ -270,7 +271,7 @@ export class CreatePlanComponent implements OnInit {
               verticalPosition: 'top',
               horizontalPosition: 'right',
             });
-            // this.global.hideLoader();
+            this.global.hideLoader();
           },
         });
     } else if (this.editable) {
@@ -311,7 +312,7 @@ export class CreatePlanComponent implements OnInit {
   }
   deletePrice(pricingId: string) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      // width: '420px',
+      width: '420px',
       panelClass: 'dialog-curved',
       data: {
         module: 'Price',
@@ -374,7 +375,7 @@ export class CreatePlanComponent implements OnInit {
   }
   addProductDetails() {
     this.dialog.open(ProductDetailsPopupComponent, {
-      width: '622px',
+      width: '800px',
     });
   }
   editPlansDetails(id) {
@@ -410,7 +411,7 @@ export class CreatePlanComponent implements OnInit {
   }
   openDeletePlan(id) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      // width: '420px',
+      width: '420px',
       panelClass: 'dialog-curved',
       data: {
         module: 'Plan',
@@ -426,12 +427,12 @@ export class CreatePlanComponent implements OnInit {
   }
   editFeatureDetails() {
     this.dialog.open(FeatureDetailsPopupComponent, {
-      width: '620px',
+      width: '800px',
     });
   }
   deleteFeatureDetails() {
     this.dialog.open(FeatureDetailsPopupComponent, {
-      width: '620px',
+      width: '800px',
     });
   }
   addOnDetails() {

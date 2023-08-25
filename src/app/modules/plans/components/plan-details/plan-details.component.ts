@@ -119,7 +119,7 @@ export class PlanDetailsComponent {
   getPlanById(id: string) {
     if (id) {
       this.stepOneCompleted = true;
-      this.global.showLoader();
+     // this.global.showLoader();
       this.planService
         .getPlanById(id)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
@@ -185,7 +185,7 @@ export class PlanDetailsComponent {
   }
 
   onSubmit() {
-    this.global.showLoader();
+   // this.global.showLoader();
     const status = this.planForm.value.status ? 'active' : 'draft';
    
     const type = 'base';
@@ -256,6 +256,7 @@ export class PlanDetailsComponent {
     });
     this.dialogRef.afterClosed().subscribe((res: any) => {
       if (res) {
+        this.global.hideLoader();
         this.router.navigate([`/plans/create/${id}`]);
       }
     });
