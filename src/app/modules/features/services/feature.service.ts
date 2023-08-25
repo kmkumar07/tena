@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, Subject } from 'rxjs';
+import { ApiService } from 'src/app/core/services/api.service';
 import {
   Feature,
   FeatureList,
@@ -16,23 +17,25 @@ export class FeatureService {
   public feature$ = this.featureSubject.asObservable();
   features: FeatureList[] = [];
   error$ = new Subject<string>();
-  constructor(private http: HttpClient) {}
+  baseUrl = environment.apiUrl;
+  constructor(private http: HttpClient, private apiService: ApiService) {}
 
-  addFeature(feature: any): Observable<Feature> {
-    return this.http
-      .post(`${environment.apiUrl}/feature`, feature, { withCredentials: true })
-      .pipe(
-        map((res: any) => {
-          this.featureSubject.next(res.data);
-          return res.data;
-        }),
-        catchError((err) => {
-          this.error$.next(err.message);
-          throw err;
-        })
-      );
+  addFeature(feature: Feature): Observable<Feature> {
+    let path = `${this.baseUrl}/feature`;
+    return this.apiService.post(path, feature);
   }
-
+  deleteFeature(featureId: number) {
+    const url = `${this.baseUrl}/feature/${featureId}?featureId=${featureId}`;
+    return this.apiService.delete(url);
+  }
+  getFeatureById(id: string) {
+    const path = `${this.baseUrl}/feature/${id}`;
+    return this.apiService.get(path);
+  }
+  updateFeature(featureId: string, updatedFeature: any) {
+    let path = `${this.baseUrl}/feature?featureId=${featureId}`;
+    return this.apiService.put(path, updatedFeature);
+  }
   getFeatures(
     PageNumber: number,
     limit: number,
@@ -55,47 +58,5 @@ export class FeatureService {
           throw err;
         })
       );
-  }
-
-  deleteFeature(id: number) {
-    const url = `${environment.apiUrl}/feature/{featureId}?featureId=${id}`;
-    return this.http.delete(url, { withCredentials: true }).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((err) => {
-        throw err;
-      })
-    );
-  }
-  getFeatureById(id: string): Observable<GetFeature> {
-    return this.http
-      .get<any>(`${environment.apiUrl}/feature/{featureId}?featureId=${id}`, {
-        withCredentials: true,
-      })
-      .pipe(
-        map((res) => {
-          this.featureSubject.next(res);
-          return res.data;
-        }),
-        catchError((err) => {
-          this.error$.next(err.message);
-          throw err;
-        })
-      );
-  }
-
-  updateFeature(featureId: string, updatedFeature: any): Observable<Feature> {
-    const url = `${environment.apiUrl}/feature?featureId=${featureId}`;
-    return this.http.put(url, updatedFeature, { withCredentials: true }).pipe(
-      map((res: any) => {
-        this.featureSubject.next(res.data);
-        return res.data;
-      }),
-      catchError((err) => {
-        this.error$.next(err.message);
-        throw err;
-      })
-    );
   }
 }
