@@ -52,11 +52,11 @@
       </div>
     </div>
 
-    <div class="description-box">
+    <div class="description-box" *ngIf="plandataById?.description">
       <h5 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-2">
         Plan Description
       </h5>
-      <p class="text-grey-darken mat-subtitle-2">
+      <p class="text-grey-darken mat-subtitle-2" >
         {{ plandataById?plandataById.description:"" }}
       </p>
     </div>
@@ -78,9 +78,6 @@
           >
         </div>
 
-        <!-- <button mat-stroked-button color="primary" class="mr-3 small font-weight-500 px-4">
-          Add Pricing
-        </button> -->
       </div>
       <div class="info-form">
         <div class="flag-wrapper flex align-center px-4 py-2 border-1 my-4">
@@ -999,7 +996,6 @@
           </ng-template>
         </div>
         <mat-form-field appearance="outline" class="border-2 with-footer-btn">
-          <!-- <mat-label> Select </mat-label> -->
           <mat-select required placeholder="select" multiple>
             <mat-option value="Setup Fee"> Setup Fee </mat-option>
             <mat-option value="Activation Fee"> Activation Fee </mat-option>
@@ -1043,18 +1039,6 @@
         </div>
       </div>
     </div>
-
-    <!-- setup fee inputs -->
-    <!-- <div class="action-btns flex align-center justify-end">
-      <div>
-        <button mat-stroked-button color="primary" class="mr-2 large" [disabled]="!stepOneCompleted">
-          Dismiss
-        </button>
-        <button mat-flat-button color="primary" class="large" type="submit" [disabled]="!stepOneCompleted">
-          Save
-        </button>
-      </div>
-    </div> -->
   </div>
 
   <div class="text-right">

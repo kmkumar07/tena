@@ -147,17 +147,27 @@ export class SetPriceComponent {
   }
 
   onTabChange(event: MatTabChangeEvent): void {
-    // this.formData();
     this.selectedTab = event.index;
-    if (this.selectedTab == 0) {
-      this.setPeriod('daily');
-    } else if (this.selectedTab == 1) {
-      this.setPeriod('weekly');
-    } else if (this.selectedTab == 2) {
-      this.setPeriod('monthly');
-    } else if (this.selectedTab == 3) {
-      this.setPeriod('yearly');
+
+    let period: string;
+    switch (this.selectedTab) {
+      case 0:
+        period = 'daily';
+        break;
+      case 1:
+        period = 'weekly';
+        break;
+      case 2:
+        period = 'monthly';
+        break;
+      case 3:
+        period = 'yearly';
+        break;
+      default:
+        period = 'daily';
     }
+
+    this.setPeriod(period);
     this.formData();
   }
 
