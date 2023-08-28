@@ -247,9 +247,8 @@
                 <button mat-stroked-button color="primary" class="mr-2 large" (click)="onDelete()">
                     Dismiss
                 </button>
-                <button mat-flat-button color="primary" class="large" type="button" (click)="onSubmit()" [disabled]="
-        featureForm.invalid && this.featureForm.value.type !== 'switch'
-      ">
+                <button mat-flat-button color="primary" class="large" type="button" (click)="onSubmit()"
+                    [disabled]="featureForm.invalid && this.featureForm.value.type !== 'switch'">
                     Create
                 </button>
             </div>
