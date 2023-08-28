@@ -234,13 +234,12 @@ export class EditFeatureComponent {
       }
     }
   }
+  toggleStatus() {
+    const currentStatus = this.featureForm.get('status').value;
+    this.featureForm.get('status').setValue(!currentStatus);
+  }
   updateForm(res: any) {
     const resData=res.data
-    if (resData.status === 'active') {
-      this.status = true;
-    } else if (resData.status === 'draft') {
-      this.status = false;
-    }
     if (resData.type === 'range') {
       this.isRangeSelected = true;
     }
@@ -250,7 +249,7 @@ export class EditFeatureComponent {
       name: resData.name,
       description: resData.description,
       type: resData.type,
-      status: this.status,
+      status: resData.status,
       unit: resData.unit,
       levels: resData.levels,
     });

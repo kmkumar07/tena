@@ -123,7 +123,7 @@ export class CreateFeatureComponent {
           Validators.maxLength(50),
         ],
       ],
-      status: [true],
+      status: [false],
       levels: this.formBuilder.array([
         this.formBuilder.group({
           isUnlimited: [false],
@@ -271,6 +271,10 @@ export class CreateFeatureComponent {
     } else {
       this.isRangeSelected = false;
     }
+  }
+  toggleStatus() {
+    const currentStatus = this.featureForm.get('status').value;
+    this.featureForm.get('status').setValue(!currentStatus);
   }
 
   onSubmit() {
