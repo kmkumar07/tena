@@ -103,7 +103,10 @@ export class PlansListingComponent implements OnDestroy {
     }
   }
 
-  // Fetch plans data
+  /**
+   * The function `getPlans` retrieves plans based on the provided parameters and updates the plan
+   * details accordingly.
+   */
   getPlans(
     pageNumber: number,
     limit: number,
@@ -119,30 +122,76 @@ export class PlansListingComponent implements OnDestroy {
         if (res) {
           this.planAllData = res.data;
           this.plan = this.planAllData.plans;
-
-          console.log(this.plan);
-          this.planLength = this.planAllData.totalCount;
-          this.plansSearchData = this.planAllData.plans;
           this.global.hideLoader();
 
-          // Calculate pagination details
-          this.totalNumberOfPlan = this.planAllData.totalCount;
-          this.totalPages = Math.ceil(this.totalNumberOfPlan / limit);
-          this.hasNextPage = pageNumber < this.totalPages;
-          if (search.length > 0) {
-            this.totalNumberOfPlanBySearch = this.planAllData.totalCount;
-            this.plansearchDataNextPage =
-              this.totalNumberOfPlanBySearch <= limit;
-          } else {
-            this.plansearchDataNextPage = false;
-          }
+          this.updatePlanDetails(this.planAllData, limit, search, pageNumber);
         } else {
           this.global.hideLoader();
         }
       });
   }
 
-  // Handle sort change
+  /**
+   * The function updates plan details based on the provided parameters.
+   */
+  updatePlanDetails(
+    planAllData: any,
+    limit: number,
+    search: string,
+    pageNumber: number
+  ) {
+    this.planLength = planAllData.totalCount;
+    this.plansSearchData = planAllData.plans;
+
+    this.totalNumberOfPlan = planAllData.totalCount;
+    this.totalPages = Math.ceil(this.totalNumberOfPlan / limit);
+    this.hasNextPage = pageNumber < this.totalPages;
+
+    if (search.length > 0) {
+      this.totalNumberOfPlanBySearch = planAllData.totalCount;
+      this.plansearchDataNextPage = this.totalNumberOfPlanBySearch <= limit;
+    } else {
+      this.plansearchDataNextPage = false;
+    }
+  }
+
+  // Fetch search plan
+  getSearchPlan(
+    pageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'externalName' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.global.showLoader();
+    this.plans
+      .getPlans(pageNumber, limit, search, sortBy, sortOrder)
+      .pipe(takeUntil(this.global.componentDestroyed(this)))
+      .subscribe((data) => {
+        if (data) {
+          const { plans, totalCount } = data.data;
+          this.planAllData = data;
+          this.plan = plans;
+          this.plansSearchData = plans;
+
+          const totalPages = Math.ceil(totalCount / this.limit);
+          this.totalNumberOfPlan = totalCount;
+          this.totalPages = totalPages;
+          this.hasNextPage = this.pageNumber < totalPages;
+          this.plansearchDataNextPage = totalCount <= this.limit;
+          this.global.hideLoader();
+
+          if (totalCount > this.allPlansData || totalCount === 0) {
+            this.allPlansData = totalCount;
+          }
+        }
+      });
+  }
+
+  /**
+   * The function `announceSortChange` updates the sorting parameters and retrieves plans based on the
+   * new sorting criteria.
+   */
   announceSortChange(sortState: Sort) {
     this.sortBy = sortState.active as 'externalName' | 'createdOn';
     this.sortOrder = sortState.direction as 'asc' | 'desc';
@@ -200,7 +249,6 @@ export class PlansListingComponent implements OnDestroy {
     });
   }
 
-  // Handle delete confirmation dialog
   openDelete(id: string) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       panelClass: 'dialog-curved',
@@ -253,37 +301,5 @@ export class PlansListingComponent implements OnDestroy {
       this.sortBy,
       this.sortOrder
     );
-  }
-
-  // Fetch search plan
-  getSearchPlan(
-    pageNumber: number,
-    limit: number,
-    search: string,
-    sortBy: 'externalName' | 'createdOn',
-    sortOrder: 'asc' | 'desc'
-  ) {
-    this.global.showLoader();
-    this.plans
-      .getPlans(pageNumber, limit, search, sortBy, sortOrder)
-      .pipe(takeUntil(this.global.componentDestroyed(this)))
-      .subscribe((data) => {
-        if (data) {
-          this.planAllData = data;
-          this.plan = data.data.plans;
-          this.plansSearchData = data.data.plans;
-          this.totalNumberOfPlan = data.data.totalCount;
-          this.totalPages = Math.ceil(this.totalNumberOfPlan / this.limit);
-          this.hasNextPage = this.pageNumber < this.totalPages;
-          this.plansearchDataNextPage = this.totalNumberOfPlan <= this.limit;
-          this.global.hideLoader();
-          if (
-            this.totalNumberOfPlan > this.allPlansData ||
-            this.totalNumberOfPlan == 0
-          ) {
-            this.allPlansData = this.totalNumberOfPlan;
-          }
-        }
-      });
   }
 }
