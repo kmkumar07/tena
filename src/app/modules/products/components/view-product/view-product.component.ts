@@ -31,7 +31,7 @@ export class ViewProductComponent {
   imageName: string;
   feature: any;
   id: string;
-  
+  descriptionlength:number
   constructor(
     private productService: ProductsService,
     private featureService: FeatureService,
@@ -60,11 +60,22 @@ export class ViewProductComponent {
     });
   }
 
-  navigateToFeatures() {
+  navigateToFeatures(productId) {
     const dialogRef = this.dialog.open(FeaturesPopupComponent, {
+      width: '1113px',
+      data: {productId: productId},
       panelClass: 'dialog-curved',
     })
     // this.router.navigate(['/features/create/products/', this.id]);
+  }
+  navigateToEditFeatures(feature,productId){
+    console.log(feature);
+    
+    const dialogRef = this.dialog.open(FeaturesPopupComponent, {
+      width: '1113px',
+      data: {feature: feature,productId:productId},
+      panelClass: 'dialog-curved',
+    })
   }
   navigateToGetAllFeatures() {
     this.router.navigate(['/features']);
@@ -98,6 +109,7 @@ export class ViewProductComponent {
 
   openDelete(id: any) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      width: '420px',
       panelClass: 'dialog-curved',
       data: {
         module: 'Feature',

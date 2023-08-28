@@ -51,7 +51,7 @@ export class PlansListingComponent {
       this.getPlans(this.pageNumber, this.limit, this.search);
     });
   }
-  getPlans(pageNumber, limit, search) {
+  getPlans(pageNumber:number, limit:number, search:string) {
     this.global.showLoader();
     this.plans
       .getPlans(pageNumber, limit, search)
@@ -78,11 +78,11 @@ export class PlansListingComponent {
     }
   }
 
-  viewPlanById(id) {
+  viewPlanById(id:string) {
     this.router.navigate([`/plans/create/${id}`]);
   }
 
-  onDelete(id: any) {
+  onDelete(id: string) {
     this.plans.deletePlan(id).subscribe({
       next: (res) => {
         this.deleteSuccess(id);
@@ -98,7 +98,7 @@ export class PlansListingComponent {
     this.getPlans(this.pageNumber, this.limit, this.search);
   }
 
-  deleteSuccess(id: any) {
+  deleteSuccess(id: string) {
     const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
       width: '422px',
       panelClass: 'dialog-curved',
@@ -120,7 +120,7 @@ export class PlansListingComponent {
     });
   }
 
-  openDelete(id: any) {
+  openDelete(id: string) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       panelClass: 'dialog-curved',
       data: {

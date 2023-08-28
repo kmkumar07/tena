@@ -322,7 +322,7 @@ export class CreateFeatureComponent {
     this.subscription = this.featureService.addFeature(feature).subscribe({
       next: (res: any) => {
         this.openSuccess();
-        this.routes.navigate([`/features/view/${res.featureId}`]);
+        this.routes.navigate([`/features/view/${res.data.featureId}`]);
         return res;
       },
       error: (error: any) => {

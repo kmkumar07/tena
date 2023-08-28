@@ -40,7 +40,7 @@ export class CreateProductComponent implements OnInit {
   tippyTemplate: ElementRef;
   tippyContent: NgxTippyProps = {};
   productForm: FormGroup;
-  imageUrl: string = '';
+  imageUrl: string = " ";
   imageName: string = '';
   data: string = '';
   imagePath: string = '';
@@ -78,7 +78,7 @@ export class CreateProductComponent implements OnInit {
           Validators.pattern(/^[a-zA-Z0-9\s]*$/),
         ],
       ],
-      description: ['', Validators.maxLength(500)],
+      description: [" ", Validators.maxLength(500)],
       status: [true],
       imageUrl: [],
     });
@@ -173,7 +173,7 @@ export class CreateProductComponent implements OnInit {
 
     this.productService.removeImage(removeImagePayload).subscribe((res) => {
       this.imageName = res.data.blobURL;
-      this.imageUrl = '';
+      this.imageUrl = " ";
       this.uploadMessage = 'Image removed successfully.';
       this.startMessageTimer();
     });
