@@ -6,7 +6,8 @@
           [routerLink]="'/products'">keyboard_backspace</mat-icon>
         <p class="mat-headline-5 font-weight-500 text-purple-lighten-1">View Product</p>
       </div>
-      <button mat-stroked-button color="primary" class="medium">
+      <button mat-stroked-button color="primary" class="medium"
+      [routerLink]="['/products/edit-product/' + productId]">
         Edit
       </button>
     </div>
@@ -28,11 +29,8 @@
         <div>
           <div class="">
             <h5 class="mat-headline-5  font-weight-600 text-white mb-2">
-              Microsoft Teams
+              {{name}}
             </h5>
-            <p class="mat-subtitle-2 font-weight-500 sub-title">
-              O365ProPlusRetail
-            </p>
           </div>
           <span class="mat-subtitle-2 subtitle font-weight-500 block">{{productId}}</span>
         </div>
@@ -50,7 +48,7 @@
       </div>
     </div>
     <div class="product-desc main-bg">
-      <h4 class="mat-subtitle-1 font-weight-500 mb-4 text-headline-dark">Description</h4>
+      <h4 class="mat-subtitle-1 font-weight-500 mb-4 text-headline-dark">{{description.length>1?'Description':""}}</h4>
       <p class="mat-subtitle-2 text-grey-darken">
         {{description }}
       </p>
@@ -60,7 +58,7 @@
     <div class="product-features">
       <div class="flex justify-between align-center py-2">
         <h4 class="mat-subtitle-2 text-headline-dark font-weight-500 mb-0">Features</h4>
-        <button mat-button color="primary" class="small-font-14" (click)="navigateToFeatures()">
+        <button mat-button color="primary" class="small-font-14" (click)="navigateToFeatures(productId)">
           Create Features
         </button>
       </div>
@@ -87,7 +85,7 @@
               <span class="text-purple-lighten-1 ml-3">{{feature.type}}</span>
             </div>
             <div class="action-btns flex align-center">
-              <button mat-button color="primary" class="small" (click)="navigateToFeatures()">
+              <button mat-button color="primary" class="small" (click)="navigateToEditFeatures(feature,productId)">
                 <mat-icon class="material-symbols-outlined mb-1 small edit-icon" color="primary">
                   edit </mat-icon>Edit
               </button>
@@ -112,7 +110,7 @@
               <p class="mat-subtitle-2 text-dark-1 mb-3 font-weight-500">
                 You have not added features
               </p>
-              <button mat-button color="primary" class="small" (click)="navigateToFeatures()">
+              <button mat-button color="primary" class="small" (click)="navigateToFeatures(productId)">
                 Create Features
               </button>
             </div>

@@ -152,6 +152,7 @@ export class CreatePlanComponent implements OnInit {
           break;
       }
     }
+
   }
 
   getPlanById(id: string) {
@@ -260,8 +261,8 @@ export class CreatePlanComponent implements OnInit {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe({
           next: (res: any) => {
-            this.openSuccess(plan.planId);
             this.global.hideLoader();
+            this.openSuccess(plan.planId);
             return res;
           },
           error: (err: any) => {

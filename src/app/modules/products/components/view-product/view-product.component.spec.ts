@@ -113,7 +113,6 @@ describe('ViewProductComponent', () => {
     component.openDelete(featureId);
 
     expect(dialog.open).toHaveBeenCalledWith(DeleteConfirmationComponent, {
-      width: '420px',
       panelClass: 'dialog-curved',
       data: {
         module: 'Feature',

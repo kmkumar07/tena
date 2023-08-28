@@ -220,6 +220,11 @@
 }
 
 .mat-mdc-icon-button.mat-mdc-button-base{
+  &.medium {
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: .5rem;
+  }
   &.small {
     height: 2rem;
     min-width: 2rem;

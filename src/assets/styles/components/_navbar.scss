@@ -15,6 +15,9 @@
   transition-property: background-color;
   overflow: visible;
   width: 14.75rem;
+   @media only screen and (max-width: 80rem) {
+   width: 14.0625rem;
+  }
   .mat-drawer-inner-container {
     overflow: visible;
     .sidenav-wrapper {
@@ -137,6 +140,9 @@
   padding: 1.375rem 0.875rem;
   overflow: auto;
   height: 100%;
+  @media only screen and (max-width: 80rem) {
+    padding: 1.375rem .625rem;
+   }
   .logo {
     overflow: hidden;
     display: grid;
@@ -364,4 +370,8 @@
   width: 1.3125rem !important;
   height: 1.15rem !important;
   font-size: 1.2rem !important;
+}
+
+.mat-drawer.mat-sidenav {
+  position: fixed;
 }

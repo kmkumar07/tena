@@ -122,7 +122,6 @@ export class PlansListingComponent {
 
   openDelete(id: any) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      width: '420px',
       panelClass: 'dialog-curved',
       data: {
         module: 'Plan',

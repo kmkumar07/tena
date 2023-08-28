@@ -121,13 +121,14 @@
       max-height: 61.2vh;
       overflow: auto;
       @media only screen and (max-width: 80rem) {
-      max-height: 108.2vh;
+      max-height: 36.25rem;
+      padding-right: .5rem !important;
       }
     }
     .footer-section {
-      max-width: 52.8125rem;
+      max-width: calc(100% - 27.5rem);
       width: 100%;
-      @media only screen and (max-width: 80rem) {
+      @media only screen and (max-width: 90rem) {
         max-width: 100%;
       }
     }

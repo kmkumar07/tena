@@ -17,9 +17,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FeatureService } from 'src/app/modules/features/services/feature.service';
+import { Inject } from '@angular/core';
 
 export interface menuOptions {
   value: number;
@@ -42,13 +43,17 @@ export class FeaturesPopupComponent {
   unlimitedButtonLabel: string = 'Set Unlimited';
   PageNumber: any = '';
   limit: any = '';
+  status: boolean;
   search: string = '';
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
   productArray = [];
   id: string;
   isRangeSelected: boolean = false;
-
+  selectedproductName:string
+  featureUpdatedata:any
+  unlimitedValue: any;
+  editable: boolean = false;
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -60,8 +65,15 @@ export class FeaturesPopupComponent {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<FeaturesPopupComponent>
-  ) {}
+    public dialogRef: MatDialogRef<FeaturesPopupComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { productId: string ,feature:any}
+
+  ) {
+    this.selectedproductName = data.productId;
+    this.featureUpdatedata=data.feature
+    console.log(this.featureUpdatedata);
+
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -81,6 +93,9 @@ export class FeaturesPopupComponent {
     this.featureForm.controls['name'].valueChanges.subscribe((value) => {
       const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
       this.featureForm.controls['featureId'].setValue(idValue);
+    });
+    this.featureService.getFeatureById(this.featureUpdatedata.featureId).subscribe((data) => {
+      this.updateForm(data);
     });
   }
 
@@ -196,8 +211,50 @@ export class FeaturesPopupComponent {
       this.isRangeSelected = false;
     }
   }
+  updateForm(res: any) {
+    this.editable = true;
+    if (res.status === 'active') {
+      this.status = true;
+    } else if (res.status === 'draft') {
+      this.status = false;
+    }
+    if (res.type === 'range') {
+      this.isRangeSelected = true;
+    }
+    this.featureForm.patchValue({
+      featureId: res.featureId,
+      name: res.name,
+      description: res.description,
+      type: res.type,
+      status: this.status,
+      unit: res.unit,
+      levels: res.levels,
+    });
+    if (Array.isArray(res.levels) && res.levels.length >= 0) {
+      const levelsControl = this.featureForm.get('levels') as FormArray;
+      levelsControl.clear();
+
+      res.levels.forEach((level: any, index: number) => {
+        const levelGroup = this.formBuilder.group({
+          isUnlimited: [level.isUnlimited],
+          level: [level.level],
+          name: [level.name],
+          value: [level.value],
+        });
+
+        levelsControl.push(levelGroup);
+        if (index === res.levels.length - 1) {
+          this.unlimitedValue = level.value;
+        }
+      });
+    }
+    if (this.unlimitedValue === 'unlimited') {
+      this.unlimitedButtonLabel = 'Set Custom Maximum';
+    } else {
+      this.unlimitedButtonLabel = 'Set Unlimited';
+    }
+  }
   onSubmit() {
-    console.log('haya', this.levels.valid);
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
         (<FormGroup>ele).addControl('level', new FormControl(index));
@@ -243,21 +300,40 @@ export class FeaturesPopupComponent {
         levels: this.featureForm.value.levels,
       };
     }
-    this.subscription = this.featureService.addFeature(feature).subscribe({
-      next: (res: any) => {
-        // this.openSuccess();
-        this.onDelete();
-        this.routes.navigate([`/features/view/${res.featureId}`]);
-        return res;
-      },
-      error: (error: any) => {
-        this.snackBar.open(error.error.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
-      },
-    });
+    if (!this.editable){
+      this.subscription = this.featureService.addFeature(feature).subscribe({
+        next: (res: any) => {
+          // this.openSuccess();
+          this.onDelete();
+          this.routes.navigate([`/features/view/${res.featureId}`]);
+          return res;
+        },
+        error: (error: any) => {
+          this.snackBar.open(error.error.message, '', {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
+        },
+      });
+    }else{
+      this.subscription = this.featureService.updateFeature(feature.featureId,feature).subscribe({
+        next: (res: any) => {
+          // this.openSuccess();
+          this.onDelete();
+          this.routes.navigate([`/features/view/${res.featureId}`]);
+          return res;
+        },
+        error: (error: any) => {
+          this.snackBar.open(error.error.message, '', {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
+        },
+      });
+    }
+  
   }
 
   onDelete() {
