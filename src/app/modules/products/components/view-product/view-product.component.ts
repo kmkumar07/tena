@@ -62,7 +62,7 @@ export class ViewProductComponent {
 
   navigateToFeatures(productId) {
     const dialogRef = this.dialog.open(FeaturesPopupComponent, {
-      width: '1113px',
+      // width: '1113px',
       data: {productId: productId},
       panelClass: 'dialog-curved',
     })
@@ -72,7 +72,7 @@ export class ViewProductComponent {
     console.log(feature);
     
     const dialogRef = this.dialog.open(FeaturesPopupComponent, {
-      width: '1113px',
+      // width: '1113px',
       data: {feature: feature,productId:productId},
       panelClass: 'dialog-curved',
     })
