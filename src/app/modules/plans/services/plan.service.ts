@@ -4,18 +4,17 @@ import { BehaviorSubject, catchError, map, Observable, Subject } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
 import {
   Plan,
-  PlanList,
   ProductVariants,
 } from 'src/app/shared/constants/consants';
 import { environment } from 'src/environments/environment';
-export class PlanValue {
-  planId: string;
-  internalName: string;
-  externalName: string;
-  description: string;
-  type: string;
-  status: string;
-}
+// export class PlanValue {
+//   planId: string;
+//   internalName: string;
+//   externalName: string;
+//   description: string;
+//   type: string;
+//   status: string;
+// }
 export class dataTypes {
   planInfo: {};
   priceInfo: [];
@@ -38,7 +37,7 @@ export class PlanService {
     productDetails: new BehaviorSubject<any>({}),
   };
   pricedata: any;
-  plans: PlanList[] = [];
+  plans: Plan[] = [];
   error$ = new Subject<string>();
   baseUrl = environment.apiUrl;
   priceModelArr = this.planData.priceInfo.getValue();
