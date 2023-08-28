@@ -235,23 +235,24 @@ export class EditFeatureComponent {
     }
   }
   updateForm(res: any) {
-    if (res.status === 'active') {
+    const resData=res.data
+    if (resData.status === 'active') {
       this.status = true;
-    } else if (res.status === 'draft') {
+    } else if (resData.status === 'draft') {
       this.status = false;
     }
-    if (res.type === 'range') {
+    if (resData.type === 'range') {
       this.isRangeSelected = true;
     }
     this.featureForm.patchValue({
-      featureId: res.featureId,
-      productID: res.product.productId,
-      name: res.name,
-      description: res.description,
-      type: res.type,
+      featureId: resData.featureId,
+      productID: resData.product.productId,
+      name: resData.name,
+      description: resData.description,
+      type: resData.type,
       status: this.status,
-      unit: res.unit,
-      levels: res.levels,
+      unit: resData.unit,
+      levels: resData.levels,
     });
     if (Array.isArray(res.levels) && res.levels.length >= 0) {
       const levelsControl = this.featureForm.get('levels') as FormArray;
@@ -329,7 +330,7 @@ export class EditFeatureComponent {
       .subscribe({
         next: (res: any) => {
           this.openSuccess();
-          this.routes.navigate([`/features/view/${res.featureId}`]);
+          this.routes.navigate([`/features/view/${res.data.featureId}`]);
           return res;
         },
         error: (error: any) => {
