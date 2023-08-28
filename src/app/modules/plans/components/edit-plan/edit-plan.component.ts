@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -223,6 +223,12 @@ export class EditPlanComponent {
         });
     }
   }
+
+  toggleStatus() {
+    const currentStatus = this.planForm.get('status').value;
+    this.planForm.get('status').setValue(!currentStatus);
+  }
+
   onDelete(id: string) {
     this.planService.deleteProductVariant(id).subscribe(() => {
       this.data$.subscribe((res) => {
@@ -242,7 +248,7 @@ export class EditPlanComponent {
   editProductVariant(id: string) {
     this.router.navigate([`/plans/create/edit-product-detail/${id}`]);
   }
-  openSuccess(id) {
+  openSuccess(id: string) {
     this.dialogRef = this.dialog.open(SuccessDialogComponent, {
       width: '420px',
       data: {

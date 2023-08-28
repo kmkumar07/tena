@@ -155,7 +155,8 @@
     </div>
     <div class="action-btns flex align-center justify-between pl-1">
       <mat-checkbox color="primary" formControlName="status" [disableRipple]="true"
-        class="font-weight-500 checkbox ml-n-3 disable-ripple-checkbox">Active</mat-checkbox>
+        class="font-weight-500 checkbox ml-n-3 disable-ripple-checkbox" [checked]="planForm.get('status').value"
+        (change)="toggleStatus()">Active</mat-checkbox>
       <div>
         <button mat-stroked-button color="primary" class="mr-2 large" [routerLink]="'/plans'">
           Back

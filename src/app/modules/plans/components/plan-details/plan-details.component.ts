@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,7 +28,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-plan-details',
   templateUrl: './plan-details.component.html',
-  styleUrls: ['./plan-details.component.scss']
+  styleUrls: ['./plan-details.component.scss'],
 })
 export class PlanDetailsComponent {
   values: any;
@@ -39,7 +39,7 @@ export class PlanDetailsComponent {
     'Price',
     'action',
   ];
-  status:boolean;
+  status: boolean;
   priceData: any[] = [];
   planAddEmptyData = plan_add_empty_data;
   stepsTitle = Stepper;
@@ -119,14 +119,12 @@ export class PlanDetailsComponent {
   getPlanById(id: string) {
     if (id) {
       this.stepOneCompleted = true;
-     // this.global.showLoader();
       this.planService
         .getPlanById(id)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
           this.patchValue(res.data);
           this.editable = true;
-          
         });
     } else {
       this.stepOneCompleted = false;
@@ -185,9 +183,8 @@ export class PlanDetailsComponent {
   }
 
   onSubmit() {
-   // this.global.showLoader();
     const status = this.planForm.value.status ? 'active' : 'draft';
-   
+
     const type = 'base';
     const plan = {
       ...this.planForm.value,
@@ -224,6 +221,12 @@ export class PlanDetailsComponent {
         });
     }
   }
+
+  toggleStatus() {
+    const currentStatus = this.planForm.get('status').value;
+    this.planForm.get('status').setValue(!currentStatus);
+  }
+
   onDelete(id: string) {
     this.planService.deleteProductVariant(id).subscribe(() => {
       this.data$.subscribe((res) => {
@@ -239,14 +242,11 @@ export class PlanDetailsComponent {
       },
     });
   }
-  // editPrice(id){
-  //   this.planService.setEditPrice(true);
-  //   this.router.navigate([`/plans/create/set-price/${id}`])
-  // }
+
   editProductVariant(id: string) {
     this.router.navigate([`/plans/create/edit-product-detail/${id}`]);
   }
-  openSuccess(id) {
+  openSuccess(id: string) {
     this.dialogRef = this.dialog.open(SuccessDialogComponent, {
       width: '420px',
       data: {
