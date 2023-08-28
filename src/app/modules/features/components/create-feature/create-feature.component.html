@@ -489,7 +489,8 @@
         <mat-checkbox
           color="primary"
           class="font-weight-500 checkbox ml-n-3"
-          checked
+          [checked]="featureForm.get('status').value"
+          (change)="toggleStatus()"          
           >Active</mat-checkbox
         >
         <div>
