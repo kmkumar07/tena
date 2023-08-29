@@ -156,44 +156,37 @@ export class FeaturesListingComponent implements OnInit {
     sortOrder: 'asc' | 'desc'
   ) {
     this.global.showLoader();
+
     this.featureService
-      .getFeatures(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
-      )
+      .getFeatures(PageNumber, limit, search, sortBy, sortOrder)
       .subscribe((data) => {
         if (data) {
           this.featuresData = data;
           this.featuresSearchData = this.featuresData.features;
-          if (this.search.length > 0) {
+
+          if (search.length > 0) {
             this.totalNumberOfFeatureBySearch = this.featuresData.totalCount;
-            
             this.fsearchDataNextPage =
-              this.totalNumberOfFeatureBySearch <= this.limit;
+              this.totalNumberOfFeatureBySearch <= limit;
           } else {
             this.totalNumberOfFeature = this.featuresData.totalCount;
             this.fsearchDataNextPage = false;
-            this.totalPages = Math.ceil(this.totalNumberOfFeature /this.limit);
-            this.hasNextPage = this.PageNumber < this.totalPages;
+            this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
+            this.hasNextPage = PageNumber < this.totalPages;
           }
+
           this.global.hideLoader();
+
           if (
             this.totalNumberOfFeature > this.allFeaturesData ||
-            this.totalNumberOfFeature == 0
+            this.totalNumberOfFeature === 0
           ) {
             this.allFeaturesData = this.totalNumberOfFeature;
           }
         }
       });
   }
-  ngOnDestroy(): void {
-    if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
-    }
-  }
+
   onPrevious() {
     if (this.PageNumber > 1) {
       this.PageNumber--;
@@ -216,6 +209,11 @@ export class FeaturesListingComponent implements OnInit {
       this.sortBy,
       this.sortOrder
     );
+  }
+  ngOnDestroy(): void {
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
   }
 
   deleteElementById(elementId: number) {
