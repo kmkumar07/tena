@@ -152,7 +152,6 @@ export class CreatePlanComponent implements OnInit {
           break;
       }
     }
-
   }
 
   getPlanById(id: string) {
@@ -193,19 +192,14 @@ export class CreatePlanComponent implements OnInit {
       this.editable = false;
     }
   }
-  patchValue(data) {
-    if (data.status === 'active') {
-      this.status = true;
-    } else if (data.status === 'draft') {
-      this.status = false;
-    }
+  patchValue(data: any) {
     this.planForm.patchValue({
       planId: data.planId,
       internalName: data.internalName,
       externalName: data.externalName,
       type: data.type,
       description: data.description,
-      status: this.status,
+      status: data.status,
     });
     this.global.hideLoader();
   }
@@ -285,7 +279,7 @@ export class CreatePlanComponent implements OnInit {
     }
   }
 
-  deletePriceSuccess(id: any) {
+  deletePriceSuccess(id: string) {
     const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
       width: '422px',
       panelClass: 'dialog-curved',
@@ -344,7 +338,7 @@ export class CreatePlanComponent implements OnInit {
   editProductVariant(id: string) {
     this.router.navigate([`/plans/create/edit-product-detail/${id}`]);
   }
-  openSuccess(id) {
+  openSuccess(id: string) {
     this.dialogRef = this.dialog.open(SuccessDialogComponent, {
       width: '420px',
       data: {
@@ -361,13 +355,13 @@ export class CreatePlanComponent implements OnInit {
   removeType(index: any) {
     this.planService.priceModelArr.splice(index, 1);
   }
-  setPrice(planId: any, cycleValue: number) {
+  setPrice(planId: string, cycleValue: number) {
     const dialogRef = this.dialog.open(SetPricePopupComponent, {
       width: '622px',
       data: { planId: planId, cycleValue: cycleValue },
     });
   }
-  editPrice(planId: any, priceId: string) {
+  editPrice(planId: string, priceId: string) {
     const dialogRef = this.dialog.open(SetPricePopupComponent, {
       width: '622px',
       data: { planId: planId, priceId: priceId },
@@ -378,13 +372,13 @@ export class CreatePlanComponent implements OnInit {
       width: '800px',
     });
   }
-  editPlansDetails(id) {
+  editPlansDetails(id: string) {
     this.router.navigate([`/plans/update/${id}`]);
   }
   navigateToGetAllPlans() {
     this.router.navigate(['/plans']);
   }
-  deleteSuccess(id: any) {
+  deleteSuccess(id: string) {
     const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
       width: '422px',
       panelClass: 'dialog-curved',
@@ -409,7 +403,7 @@ export class CreatePlanComponent implements OnInit {
       },
     });
   }
-  openDeletePlan(id) {
+  openDeletePlan(id: string) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       width: '420px',
       panelClass: 'dialog-curved',
