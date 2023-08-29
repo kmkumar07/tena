@@ -109,6 +109,9 @@ export class EditFeatureComponent {
 
     this.featureService.getFeatureById(id).subscribe((data) => {
       this.updateForm(data);
+      if (data.data.status === 'draft') {
+        this.featureForm.get('status').setValue(false);
+      }
     });
   }
 
