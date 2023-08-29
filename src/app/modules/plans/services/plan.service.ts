@@ -2,19 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, Subject } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
-import {
-  Plan,
-  ProductVariants,
-} from 'src/app/shared/constants/consants';
+import { Plan, ProductVariants } from 'src/app/shared/constants/consants';
 import { environment } from 'src/environments/environment';
-// export class PlanValue {
-//   planId: string;
-//   internalName: string;
-//   externalName: string;
-//   description: string;
-//   type: string;
-//   status: string;
-// }
 export class dataTypes {
   planInfo: {};
   priceInfo: [];
@@ -44,7 +33,7 @@ export class PlanService {
 
   constructor(private http: HttpClient, private apiService: ApiService) {}
 
-  setEditPrice(state) {
+  setEditPrice(state: any) {
     this.editPrice.next(state);
   }
   getEditPrice() {
@@ -66,8 +55,14 @@ export class PlanService {
     return this.apiService.put(path, plan);
   }
 
-  getPlans(PageNumber: number, limit: number, search: string): Observable<any> {
-    const path = `${this.baseUrl}/plans/?page=${PageNumber}&limit=${limit}&search=${search}`;
+  getPlans(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'externalName' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ): Observable<any> {
+    const path = `${this.baseUrl}/plans/?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
     return this.apiService.get(path);
   }
 
