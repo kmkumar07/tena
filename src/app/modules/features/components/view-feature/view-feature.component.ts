@@ -67,7 +67,7 @@ export class ViewFeatureComponent implements OnInit {
       this.featureId = featureData.featureId;
       this.featureType = featureData.type;
       this.status = featureData.status;
-      this.description = featureData.description;
+      this.description = featureData.description || '';
       this.unit = featureData.unit;
       this.productId = featureData.product.productId;
       this.productName = featureData.product.name;

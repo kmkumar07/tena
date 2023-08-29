@@ -207,10 +207,10 @@ export class CreateFeatureComponent {
   setName(index: number) {
     this.postName = this.featureForm.value.unit;
     this.preName = this.featureForm.value.levels[index].value;
-    if ( this.preName.length > 0) {
-      if(this.postName=== null){
-        this.displayName = this.preName;;
-      }else{
+    if (this.preName.length > 0) {
+      if (this.postName === null) {
+        this.displayName = this.preName;
+      } else {
         this.displayName = this.preName + ' ' + this.postName + 's';
       }
     }
@@ -296,31 +296,28 @@ export class CreateFeatureComponent {
       status: status,
       levels: [],
     };
-    if (this.featureForm.value.type === 'quantity') {
-      feature = {
-        ...feature,
-        unit: this.featureForm.value.unit,
-        levels: this.featureForm.value.levels,
-      };
-    } else if (this.featureForm.value.type === 'custom') {
-      const levels = this.featureForm.value.levels.map((level: any) => {
-        return {
-          ...level,
-          isUnlimited: ' ',
+    switch (this.featureForm.value.type) {
+      case 'quantity':
+      case 'range':
+        feature = {
+          ...feature,
+          unit: this.featureForm.value.unit,
+          levels: this.featureForm.value.levels,
         };
-      });
-      feature = {
-        ...feature,
-        levels: levels,
-      };
-    }
+        break;
 
-    if (this.featureForm.value.type === 'range') {
-      feature = {
-        ...feature,
-        unit: this.featureForm.value.unit,
-        levels: this.featureForm.value.levels,
-      };
+      case 'custom':
+        const levels = this.featureForm.value.levels.map((level: any) => ({
+          ...level,
+          isUnlimited: '',
+        }));
+
+        feature = {
+          ...feature,
+          unit: this.featureForm.value.unit,
+          levels: levels,
+        };
+        break;
     }
 
     this.subscription = this.featureService.addFeature(feature).subscribe({
@@ -352,6 +349,7 @@ export class CreateFeatureComponent {
       },
     });
   }
+// sample data code
   switchSample() {
     this.featureForm.removeControl('unit');
     this.isRangeSelected = false;
@@ -363,7 +361,6 @@ export class CreateFeatureComponent {
       status: [true],
     });
   }
-
   rangeSample() {
     this.featureForm.addControl(
       'unit',
