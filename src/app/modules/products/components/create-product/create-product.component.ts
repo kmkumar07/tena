@@ -14,9 +14,15 @@ import { OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
-import { Subject, Subscription } from 'rxjs';
+import {
+  Subject,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
   selector: 'app-create-product',
@@ -40,7 +46,7 @@ export class CreateProductComponent implements OnInit {
   tippyTemplate: ElementRef;
   tippyContent: NgxTippyProps = {};
   productForm: FormGroup;
-  imageUrl: string = " ";
+  imageUrl: string = ' ';
   imageName: string = '';
   data: string = '';
   imagePath: string = '';
@@ -49,15 +55,44 @@ export class CreateProductComponent implements OnInit {
   error: string;
   receivedCroppedImage: string;
   dialogRef: any;
-
+  PageNumber = 1;
+  limit = 10;
+  search: string = '';
+  sortBy: 'name' | 'createdOn';
+  sortOrder: 'asc' | 'desc';
+  products: any;
+  productsSearchDataLength: boolean = false;
+  productsSearchData: any;
+  searchQuery: string;
+  private searchQueryChanged: Subject<string> = new Subject<string>();
+  private searchSubscription: Subscription;
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     public router: Router,
     private productService: ProductsService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private global: GlobalService
   ) {}
+  onSearchInput() {
+    this.searchQueryChanged.next(this.searchQuery);
+  }
   ngOnInit() {
+    this.sortBy = 'createdOn';
+    this.sortOrder = 'desc';
+    this.searchSubscription = this.searchQueryChanged
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((value) => {
+        this.search = value;
+        this.getSearchProduct(
+          this.PageNumber,
+          this.limit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
+      });
+
     this.productService.croppedImage$.subscribe((croppedImage) => {
       // Handle cropped image data
       this.receivedCroppedImage = croppedImage;
@@ -78,7 +113,7 @@ export class CreateProductComponent implements OnInit {
           Validators.pattern(/^[a-zA-Z0-9\s]*$/),
         ],
       ],
-      description: [" ", Validators.maxLength(500)],
+      description: [' ', Validators.maxLength(500)],
       status: [true],
       imageUrl: [],
     });
@@ -87,6 +122,40 @@ export class CreateProductComponent implements OnInit {
       const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
       this.productForm.controls['productId'].setValue(idValue);
     });
+  }
+  getSearchProduct(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.global.showLoader();
+    this.productService
+      .getProducts(
+        this.PageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
+      .subscribe((data) => {
+        if (data) {
+          this.products = data;
+          this.productsSearchData = this.products.products;
+          this.productsSearchDataLength = false;
+
+          if (this.search.length > 0) {
+            this.productsSearchData.forEach((product) => {
+              if (this.search === product.name) {
+                this.productsSearchDataLength = true;
+                    return;
+              } 
+            });
+            this.global.hideLoader();
+          }
+        }
+      });
   }
 
   isChecked(): boolean {
@@ -173,7 +242,7 @@ export class CreateProductComponent implements OnInit {
 
     this.productService.removeImage(removeImagePayload).subscribe((res) => {
       this.imageName = res.data.blobURL;
-      this.imageUrl = " ";
+      this.imageUrl = ' ';
       this.uploadMessage = 'Image removed successfully.';
       this.startMessageTimer();
     });
