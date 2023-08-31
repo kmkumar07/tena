@@ -26,7 +26,7 @@ import { noPlans, plansFields } from 'src/app/shared/constants/consants';
 export class PlansListingComponent implements OnDestroy {
   plansSearchData: any;
   emptyList = noPlans;
-  plansData: Array<any> = [];
+  plansData: any;
   planAllData: any;
   totalNumberOfPlan: number;
   plan: Array<any> = [];
@@ -38,7 +38,7 @@ export class PlansListingComponent implements OnDestroy {
   pageNumber: number = 1;
   NumberOfPage: any = '';
   NumberOfLimit: any = '';
-  limit: number = 5;
+  limit: number = 10;
   search: string = '';
   searchQuery: string = '';
   sortBy: 'externalName' | 'createdOn';
@@ -68,6 +68,10 @@ export class PlansListingComponent implements OnDestroy {
     private snackBar: MatSnackBar
   ) {}
 
+  onSearchInput() {
+    this.searchQueryChanged.next(this.searchQuery);
+  }
+
   ngOnInit(): void {
     this.sortBy = 'createdOn';
     this.sortOrder = 'desc';
@@ -78,7 +82,6 @@ export class PlansListingComponent implements OnDestroy {
       this.sortBy,
       this.sortOrder
     );
-
     this.searchSubscription = this.searchQueryChanged
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
@@ -91,16 +94,6 @@ export class PlansListingComponent implements OnDestroy {
           this.sortOrder
         );
       });
-  }
-
-  onSearchInput() {
-    this.searchQueryChanged.next(this.searchQuery);
-  }
-
-  ngOnDestroy(): void {
-    if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
-    }
   }
 
   /**
@@ -116,46 +109,43 @@ export class PlansListingComponent implements OnDestroy {
   ) {
     this.global.showLoader();
     this.plans
-      .getPlans(pageNumber, limit, search, sortBy, sortOrder)
+      .getPlans(
+        this.pageNumber,
+        this.limit,
+        this.search,
+        this.sortBy,
+        this.sortOrder
+      )
       .pipe(takeUntil(this.global.componentDestroyed(this)))
       .subscribe((res) => {
         if (res) {
-          this.planAllData = res.data;
-          this.plan = this.planAllData.plans;
+          this.plansData = res.data;
+          this.totalNumberOfPlan = this.plansData.totalCount;
+          this.plansSearchData = this.plansData.plans;
           this.global.hideLoader();
 
-          this.updatePlanDetails(this.planAllData, limit, search, pageNumber);
-        } else {
-          this.global.hideLoader();
+          if (
+            this.totalNumberOfPlan > this.allPlansData ||
+            this.totalNumberOfPlan === 0
+          ) {
+            this.allPlansData = this.totalNumberOfPlan;
+          }
+
+          this.totalPages = Math.ceil(this.totalNumberOfPlan / limit);
+          this.hasNextPage = pageNumber < this.totalPages;
+
+          if (this.search.length > 0) {
+            this.totalNumberOfPlanBySearch = this.plansData.totalCount;
+            this.plansearchDataNextPage =
+              this.totalNumberOfPlanBySearch <= this.limit;
+          } else {
+            this.totalNumberOfPlan = this.plansData.totalCount;
+            this.plansearchDataNextPage = false;
+          }
         }
       });
   }
 
-  /**
-   * The function updates plan details based on the provided parameters.
-   */
-  updatePlanDetails(
-    planAllData: any,
-    limit: number,
-    search: string,
-    pageNumber: number
-  ) {
-    this.planLength = planAllData.totalCount;
-    this.plansSearchData = planAllData.plans;
-
-    this.totalNumberOfPlan = planAllData.totalCount;
-    this.totalPages = Math.ceil(this.totalNumberOfPlan / limit);
-    this.hasNextPage = pageNumber < this.totalPages;
-
-    if (search.length > 0) {
-      this.totalNumberOfPlanBySearch = planAllData.totalCount;
-      this.plansearchDataNextPage = this.totalNumberOfPlanBySearch <= limit;
-    } else {
-      this.plansearchDataNextPage = false;
-    }
-  }
-
-  // Fetch search plan
   getSearchPlan(
     pageNumber: number,
     limit: number,
@@ -169,20 +159,27 @@ export class PlansListingComponent implements OnDestroy {
       .pipe(takeUntil(this.global.componentDestroyed(this)))
       .subscribe((data) => {
         if (data) {
-          const { plans, totalCount } = data.data;
-          this.planAllData = data;
-          this.plan = plans;
-          this.plansSearchData = plans;
+          this.plansData = data.data;
+          this.plansSearchData = this.plansData.plans;
 
-          const totalPages = Math.ceil(totalCount / this.limit);
-          this.totalNumberOfPlan = totalCount;
-          this.totalPages = totalPages;
-          this.hasNextPage = this.pageNumber < totalPages;
-          this.plansearchDataNextPage = totalCount <= this.limit;
+          if (this.search.length > 0) {
+            this.totalNumberOfPlanBySearch = this.plansData.totalCount;
+            this.plansearchDataNextPage =
+              this.totalNumberOfPlanBySearch <= this.limit;
+          } else {
+            this.totalNumberOfPlan = this.plansData.totalCount;
+            this.plansearchDataNextPage = false;
+            this.totalPages = Math.ceil(this.totalNumberOfPlan / this.limit);
+            this.hasNextPage = pageNumber < this.totalPages;
+          }
+
           this.global.hideLoader();
 
-          if (totalCount > this.allPlansData || totalCount === 0) {
-            this.allPlansData = totalCount;
+          if (
+            this.totalNumberOfPlan > this.allPlansData ||
+            this.totalNumberOfPlan === 0
+          ) {
+            this.allPlansData = this.totalNumberOfPlan;
           }
         }
       });
@@ -202,6 +199,12 @@ export class PlansListingComponent implements OnDestroy {
       this.sortBy,
       this.sortOrder
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
   }
 
   // Handle view plan action

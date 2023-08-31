@@ -1,17 +1,18 @@
-<div *ngIf="plansData ||search.length > 0; else noDataList" class="relative border-2 w-full h-full p-7 overflow-auto">
+<div *ngIf="allPlansData>0||search.length > 0; else noDataList"
+  class="relative border-2 w-full h-full p-7 overflow-auto">
   <div>
     <div class="flex justify-between align-center px-1">
       <div class="flex align-center" *ngIf="search.length > 0; else allPlansFound">
         <h1 class="text-text text-dark">Plans</h1>
         <mat-chip class="chip-dark ml-3">
-          {{ totalNumberOfPlan }}
+          {{ totalNumberOfPlanBySearch }}
         </mat-chip>
       </div>
       <ng-template #allPlansFound>
         <div class="flex align-center">
           <h1 class="text-text text-dark">Plans</h1>
           <mat-chip class="chip-dark ml-3">
-            {{ planLength }}
+            {{ totalNumberOfPlan }}
           </mat-chip>
         </div>
       </ng-template>
@@ -28,9 +29,9 @@
         </button>
       </div>
     </div>
-    <ng-container *ngIf="plan.length > 0; else noRecordFound">
-      <div class="primary-table mt-8 px-1 pb-2">
-        <table mat-table [dataSource]="plan" matSort (matSortChange)="announceSortChange($event)">
+    <ng-container>
+      <div *ngIf="plansSearchData.length > 0; else noDataFound" class="primary-table mt-8 px-1 pb-2">
+        <table mat-table [dataSource]="plansSearchData" matSort (matSortChange)="announceSortChange($event)">
           <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
           <!-- Product ID Column -->
@@ -53,7 +54,7 @@
 
           <!-- Product Name Column -->
           <ng-container matColumnDef="internal_name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by title">
+            <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by title">
               Internal Name
             </th>
             featuresData
@@ -104,8 +105,8 @@
           <div class="flex align-center">
             <span>Show</span>
             <div class="w-10 mx-2 basic-border">
-              <mat-select (selectionChange)="setLimit($event)" value="5">
-                <mat-option value="5">5</mat-option>
+              <mat-select (selectionChange)="setLimit($event)" value="10">
+
                 <mat-option value="10">10</mat-option>
                 <mat-option value="20">20</mat-option>
                 <mat-option value="50">50</mat-option>
@@ -126,8 +127,7 @@
                     pageNumber
                     }}</a>
                   <a class="btn btn-primary btn-sm notActive" (click)="onNext()"
-                  [ngClass]="{ disabled: !hasNextPage||plansearchDataNextPage }"
-                  >Next
+                    [ngClass]="{ disabled: !hasNextPage||plansearchDataNextPage }">Next
                   </a>
                 </div>
               </div>
@@ -136,8 +136,10 @@
         </div>
       </div>
     </ng-container>
-    <ng-template #noRecordFound>
-      <app-no-item-found></app-no-item-found>
+    <ng-template #noDataFound>
+      <div class="relative border-2 w-full h-full p-7 overflow-auto">
+        <app-no-item-found></app-no-item-found>
+      </div>
     </ng-template>
   </div>
 </div>
