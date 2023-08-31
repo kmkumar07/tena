@@ -6,6 +6,7 @@ import { Subscription, takeUntil } from 'rxjs';
 import { FeatureDetailsPopupComponent } from 'src/app/shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import {
+  Frequency,
   Stepper,
   plan_add_empty_data,
 } from 'src/app/shared/constants/consants';
@@ -74,7 +75,7 @@ export class CreatePlanComponent implements OnInit {
   editable: boolean = false;
   features: { featureId: string; entitlement: string }[] = [];
   priceId: string;
-  pricingData: any[] = [];
+  pricingData: any = [];
   dailyPrice: string;
   monthlyPrice: string;
   yearlyPrice: string;
@@ -107,6 +108,7 @@ export class CreatePlanComponent implements OnInit {
     this.planDetails();
     this.planId = this.route.snapshot.params['id'];
     this.getPlanById(this.planId);
+
     this.planService.plan$.subscribe((data) => {
       if (data) {
         this.productDetails = data;
@@ -127,32 +129,47 @@ export class CreatePlanComponent implements OnInit {
       }
     });
   }
-  setPricing(pricingData: any) {
-    if (pricingData && pricingData.periodUnit) {
-      this.priceData.push(pricingData);
+  setPricing(pricing: any) {
+    if (pricing && pricing.periodUnit) {
+      this.priceData.push(pricing);
 
-      switch (pricingData.periodUnit) {
+      switch (pricing.periodUnit) {
         case 'daily':
-          this.priceData[0] = pricingData;
-          this.dailyPrice = pricingData.price;
+          this.priceData[0] = pricing;
+          this.dailyPrice = pricing.price;
           break;
         case 'weekly':
-          this.priceData[1] = pricingData;
-          this.weeklyPrice = pricingData.price;
+          this.priceData[1] = pricing;
+          this.weeklyPrice = pricing.price;
           break;
         case 'monthly':
-          this.priceData[2] = pricingData;
-          this.monthlyPrice = pricingData.price;
+          this.priceData[2] = pricing;
+          this.monthlyPrice = pricing.price;
           break;
         case 'yearly':
-          this.priceData[3] = pricingData;
-          this.yearlyPrice = pricingData.price;
+          this.priceData[3] = pricing;
+          this.yearlyPrice = pricing.price;
           break;
         default:
           break;
       }
     }
+  }
 
+  updatePricingData(pricing: any) {
+    Frequency.forEach((x) => {
+      this.pricingData.push({ periodUnit: x.title });
+    });
+
+    pricing.forEach((data: any) => {
+      let unitIndex = this.pricingData.findIndex(
+        (x: any) => x.periodUnit === data.periodUnit
+      );
+
+      if (unitIndex !== -1) {
+        this.pricingData[unitIndex] = data;
+      }
+    });
   }
 
   getPlanById(id: string) {
@@ -165,7 +182,7 @@ export class CreatePlanComponent implements OnInit {
         .subscribe((res) => {
           if (res) {
             this.plandataById = res.data;
-            this.pricingData = res.data.pricing;
+            this.updatePricingData(res.data.pricing);
             this.setPricing(this.pricingData);
             this.patchValue(res.data);
             this.editable = true;
@@ -193,7 +210,7 @@ export class CreatePlanComponent implements OnInit {
       this.editable = false;
     }
   }
-  patchValue(data) {
+  patchValue(data: any) {
     if (data.status === 'active') {
       this.status = true;
     } else if (data.status === 'draft') {
@@ -285,7 +302,7 @@ export class CreatePlanComponent implements OnInit {
     }
   }
 
-  deletePriceSuccess(id: any) {
+  deletePriceSuccess(id: string) {
     const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
       width: '422px',
       panelClass: 'dialog-curved',
@@ -294,12 +311,17 @@ export class CreatePlanComponent implements OnInit {
         deleteId: id,
       },
     });
-    this.navigateToGetAllPlans();
   }
   sendPriceId(priceId: string) {
     this.planService.deletePrice(priceId).subscribe({
       next: (res) => {
         this.deletePriceSuccess(priceId);
+        const index = this.priceData.findIndex(
+          (item) => item.priceId === priceId
+        );
+        if (index !== -1) {
+          this.priceData.splice(index, 1);
+        }
       },
       error: (error: any) => {
         this.snackBar.open(error.error.message, '', {
@@ -344,7 +366,7 @@ export class CreatePlanComponent implements OnInit {
   editProductVariant(id: string) {
     this.router.navigate([`/plans/create/edit-product-detail/${id}`]);
   }
-  openSuccess(id) {
+  openSuccess(id: string) {
     this.dialogRef = this.dialog.open(SuccessDialogComponent, {
       width: '420px',
       data: {
@@ -361,10 +383,14 @@ export class CreatePlanComponent implements OnInit {
   removeType(index: any) {
     this.planService.priceModelArr.splice(index, 1);
   }
-  setPrice(planId: any, cycleValue: number) {
+  setPrice(planId: any, cycleValue: number, periodUnit: string) {
     const dialogRef = this.dialog.open(SetPricePopupComponent, {
       width: '622px',
-      data: { planId: planId, cycleValue: cycleValue },
+      data: {
+        planId: planId,
+        cycleValue: cycleValue,
+        periodUnit: periodUnit,
+      },
     });
   }
   editPrice(planId: any, priceId: string) {
@@ -378,13 +404,18 @@ export class CreatePlanComponent implements OnInit {
       width: '800px',
     });
   }
-  editPlansDetails(id) {
+  editPlansDetails(id: string) {
     this.router.navigate([`/plans/update/${id}`]);
   }
   navigateToGetAllPlans() {
-    this.router.navigate(['/plans']);
+    this.router.navigate(['/plans/']);
   }
-  deleteSuccess(id: any) {
+
+  navigateToPlanDetail(id: string) {
+    this.router.navigate([`/plans/create/${id}`]);
+  }
+
+  deleteSuccess(id: string) {
     const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
       width: '422px',
       panelClass: 'dialog-curved',
@@ -409,7 +440,7 @@ export class CreatePlanComponent implements OnInit {
       },
     });
   }
-  openDeletePlan(id) {
+  openDeletePlan(id: string) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       width: '420px',
       panelClass: 'dialog-curved',

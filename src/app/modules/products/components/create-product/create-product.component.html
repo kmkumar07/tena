@@ -58,10 +58,12 @@
                 </ng-template>
               </div>
               <mat-form-field appearance="outline">
-                <input matInput placeholder="Enter here..." formControlName="name" />
+                <input matInput placeholder="Enter here..." formControlName="name"
+                [(ngModel)]="searchQuery"
+                (input)="onSearchInput()" />
                 <mat-error *ngIf="
                     productForm.controls['name'].invalid &&
-                    productForm.controls['name'].touched
+                    productForm.controls['name'].touched 
                   ">
                   <ng-container *ngIf="productForm.controls['name'].errors['required']">
                     Name is required and cannot be left empty.
@@ -72,8 +74,12 @@
                   <ng-container *ngIf="productForm.controls['name'].errors['pattern']">
                     Name cannot contain special characters.
                   </ng-container>
+                
                 </mat-error>
               </mat-form-field>
+              <div  class="text-fix" *ngIf="productsSearchDataLength ==true">
+                This name is not available. Please choose another name.
+              </div>
             </div>
 
             <div>

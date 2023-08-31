@@ -109,6 +109,9 @@ export class EditFeatureComponent {
 
     this.featureService.getFeatureById(id).subscribe((data) => {
       this.updateForm(data);
+      if (data.data.status === 'draft') {
+        this.featureForm.get('status').setValue(false);
+      }
     });
   }
 
@@ -297,33 +300,30 @@ export class EditFeatureComponent {
       status: status,
       levels: [],
     };
-    if (this.featureForm.value.type === 'quantity') {
-      feature = {
-        ...feature,
-        unit: this.featureForm.value.unit,
-        levels: this.featureForm.value.levels,
-      };
-    } else if (this.featureForm.value.type === 'custom') {
-      const levels = this.featureForm.value.levels.map((level: any) => {
-        return {
+    switch (this.featureForm.value.type) {
+      case 'quantity':
+      case 'range':
+        feature = {
+          ...feature,
+          unit: this.featureForm.value.unit,
+          levels: this.featureForm.value.levels,
+        };
+        break;
+
+      case 'custom':
+        const levels = this.featureForm.value.levels.map((level: any) => ({
           ...level,
           isUnlimited: '',
+        }));
+
+        feature = {
+          ...feature,
+          unit: this.featureForm.value.unit,
+          levels: levels,
         };
-      });
-      feature = {
-        ...feature,
-        unit: this.featureForm.value.unit,
-        levels: levels,
-      };
+        break;
     }
 
-    if (this.featureForm.value.type === 'range') {
-      feature = {
-        ...feature,
-        unit: this.featureForm.value.unit,
-        levels: this.featureForm.value.levels,
-      };
-    }
     this.subscription = this.featureService
       .updateFeature(this.featureForm.value.featureId, feature)
       .subscribe({
@@ -355,6 +355,8 @@ export class EditFeatureComponent {
       },
     });
   }
+
+  // sample data code
   switchSample() {
     console.log('switch feature is clicked');
     this.featureForm.removeControl('unit');
@@ -367,7 +369,6 @@ export class EditFeatureComponent {
       status: [true],
     });
   }
-
   rangeSample() {
     this.featureForm.addControl(
       'unit',

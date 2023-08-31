@@ -16,41 +16,61 @@
     <div class="form-left pr-5">
       <form [formGroup]="featureForm">
         <div class="form-container">
-          <div class="input-wrapper">
-            <div class="flex align-center mb-2">
-              <p class="mat-subtitle-2 font-weight-500 input-label">
-                Feature ID
-              </p>
-              <mat-icon
-                class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                [ngxTippy]="helpinfotooltip"
-                [tippyProps]="{ placement: 'right' }"
-                >help</mat-icon
-              >
-              <ng-template #helpinfotooltip let-name>
-                <div class="help-info-tooltip">
-                  <div class="heading-with-background">Feature id</div>
-                  <div class="details">
-                    Please enter a Customized Id.If user do not enter this
-                    field, the system will generate a 'Customized
-                    Human-Readable-id' based on the Name field.
-                    <div>
-                      e.g. Feature Name: "Analytics Reporting" FeatureId:
-                      "analytics-reporting-01".
+            <div class="input-wrapper">
+                <div class="flex align-center mb-2">
+                  <p class="mat-subtitle-2 font-weight-500 input-label">
+                    Feature Name
+                  </p>
+                  <mat-icon
+                    class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                    [ngxTippy]="featureName"
+                    [tippyProps]="{ placement: 'right' }"
+                    >help</mat-icon
+                  >
+                  <ng-template #featureName let-name class="t-template">
+                    <div class="help-info-tooltip">
+                      <div class="heading-with-background">Feature name</div>
+                      <div class="details">
+                        Enter a name that helps you identify this Feature.
+                      </div>
+                      <button mat-button color="primary" class="px-0">
+                        Learn more
+                      </button>
                     </div>
-                  </div>
+                  </ng-template>
                 </div>
-              </ng-template>
-            </div>
-            <mat-form-field appearance="outline" class="border-2 mb-0">
-              <input
-                required
-                matInput
-                placeholder="Enter here"
-                formControlName="featureId"
-              />
-            </mat-form-field>
-          </div>
+                <mat-form-field appearance="outline" class="border-2 mb-0">
+                  <input
+                    required
+                    matInput
+                    placeholder="Enter here"
+                    formControlName="name"
+                  />
+                  <mat-error
+                    *ngIf="
+                      featureForm.controls['name'].invalid &&
+                      featureForm.controls['name'].touched
+                    "
+                  >
+                    <ng-container
+                      *ngIf="featureForm.controls['name'].errors['required']"
+                    >
+                      Name is required and cannot be left empty.
+                    </ng-container>
+                    <ng-container
+                      *ngIf="featureForm.controls['name'].errors['maxlength']"
+                    >
+                      Name cannot exceed 20 characters.
+                    </ng-container>
+                    <ng-container
+                      *ngIf="featureForm.controls['name'].errors['pattern']"
+                    >
+                      Name cannot contain special characters.
+                    </ng-container>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
           <div class="input-wrapper">
             <div class="flex align-center mb-2">
               <p class="mat-subtitle-2 font-weight-500 input-label">
@@ -90,23 +110,26 @@
           <div class="input-wrapper">
             <div class="flex align-center mb-2">
               <p class="mat-subtitle-2 font-weight-500 input-label">
-                Feature Name
+                Feature ID
               </p>
               <mat-icon
                 class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                [ngxTippy]="featureName"
+                [ngxTippy]="helpinfotooltip"
                 [tippyProps]="{ placement: 'right' }"
                 >help</mat-icon
               >
-              <ng-template #featureName let-name class="t-template">
+              <ng-template #helpinfotooltip let-name>
                 <div class="help-info-tooltip">
-                  <div class="heading-with-background">Feature name</div>
+                  <div class="heading-with-background">Feature id</div>
                   <div class="details">
-                    Enter a name that helps you identify this Feature.
+                    Please enter a Customized Id.If user do not enter this
+                    field, the system will generate a 'Customized
+                    Human-Readable-id' based on the Name field.
+                    <div>
+                      e.g. Feature Name: "Analytics Reporting" FeatureId:
+                      "analytics-reporting-01".
+                    </div>
                   </div>
-                  <button mat-button color="primary" class="px-0">
-                    Learn more
-                  </button>
                 </div>
               </ng-template>
             </div>
@@ -115,30 +138,8 @@
                 required
                 matInput
                 placeholder="Enter here"
-                formControlName="name"
+                formControlName="featureId"
               />
-              <mat-error
-                *ngIf="
-                  featureForm.controls['name'].invalid &&
-                  featureForm.controls['name'].touched
-                "
-              >
-                <ng-container
-                  *ngIf="featureForm.controls['name'].errors['required']"
-                >
-                  Name is required and cannot be left empty.
-                </ng-container>
-                <ng-container
-                  *ngIf="featureForm.controls['name'].errors['maxlength']"
-                >
-                  Name cannot exceed 20 characters.
-                </ng-container>
-                <ng-container
-                  *ngIf="featureForm.controls['name'].errors['pattern']"
-                >
-                  Name cannot contain special characters.
-                </ng-container>
-              </mat-error>
             </mat-form-field>
           </div>
           <div class="input-wrapper">
