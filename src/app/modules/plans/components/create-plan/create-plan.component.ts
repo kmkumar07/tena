@@ -75,7 +75,7 @@ export class CreatePlanComponent implements OnInit {
   editable: boolean = false;
   features: { featureId: string; entitlement: string }[] = [];
   priceId: string;
-  pricingData: any = [];
+  pricingData: any[] = [];
   dailyPrice: string;
   monthlyPrice: string;
   yearlyPrice: string;
@@ -103,7 +103,6 @@ export class CreatePlanComponent implements OnInit {
       this.priceIdxArr.push(price.priceId);
       (this.priceId = price.priceId), this.getPriceById(this.priceId);
     });
-
     // Access pricedata from the service
     this.planDetails();
     this.planId = this.route.snapshot.params['id'];
@@ -129,6 +128,7 @@ export class CreatePlanComponent implements OnInit {
       }
     });
   }
+
   setPricing(pricing: any) {
     if (pricing && pricing.periodUnit) {
       this.priceData.push(pricing);
@@ -156,7 +156,12 @@ export class CreatePlanComponent implements OnInit {
     }
   }
 
+  /**
+   * The function updates the pricing data by iterating through the given pricing array and updating
+   * the corresponding period unit in the pricingData array.
+   */
   updatePricingData(pricing: any) {
+    this.pricingData = [];
     Frequency.forEach((x) => {
       this.pricingData.push({ periodUnit: x.title });
     });
@@ -172,6 +177,9 @@ export class CreatePlanComponent implements OnInit {
     });
   }
 
+  /**
+   * The function retrieves a plan by its ID and updates the pricing data, form values, and editable
+   */
   getPlanById(id: string) {
     if (id) {
       this.stepOneCompleted = true;
@@ -193,6 +201,7 @@ export class CreatePlanComponent implements OnInit {
       this.editable = false;
     }
   }
+
   getPriceById(id: string) {
     if (id) {
       this.stepOneCompleted = true;
@@ -210,6 +219,10 @@ export class CreatePlanComponent implements OnInit {
       this.editable = false;
     }
   }
+
+  /**
+   * The patchValue function updates the form fields with the provided data and hides the loader.
+   */
   patchValue(data: any) {
     if (data.status === 'active') {
       this.status = true;
@@ -302,26 +315,16 @@ export class CreatePlanComponent implements OnInit {
     }
   }
 
-  deletePriceSuccess(id: string) {
-    const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
-      width: '422px',
-      panelClass: 'dialog-curved',
-      data: {
-        module: 'price',
-        deleteId: id,
-      },
-    });
-  }
   sendPriceId(priceId: string) {
     this.planService.deletePrice(priceId).subscribe({
       next: (res) => {
-        this.deletePriceSuccess(priceId);
         const index = this.priceData.findIndex(
           (item) => item.priceId === priceId
         );
         if (index !== -1) {
           this.priceData.splice(index, 1);
         }
+        this.getPlanById(this.planId);
       },
       error: (error: any) => {
         this.snackBar.open(error.error.message, '', {
@@ -341,7 +344,6 @@ export class CreatePlanComponent implements OnInit {
         deleteId: pricingId,
       },
     });
-
     this.dialogRef.afterClosed().subscribe((res: any) => {
       if (res) {
         this.sendPriceId(pricingId);
@@ -392,11 +394,21 @@ export class CreatePlanComponent implements OnInit {
         periodUnit: periodUnit,
       },
     });
+    dialogRef.afterClosed().subscribe((res: any) => {
+      if (res) {
+        this.getPlanById(planId);
+      }
+    });
   }
   editPrice(planId: any, priceId: string) {
     const dialogRef = this.dialog.open(SetPricePopupComponent, {
       width: '622px',
       data: { planId: planId, priceId: priceId },
+    });
+    dialogRef.afterClosed().subscribe((res: any) => {
+      if (res) {
+        this.getPlanById(planId);
+      }
     });
   }
   addProductDetails() {

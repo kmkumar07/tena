@@ -1,4 +1,4 @@
-<div class="flex w-full mt-11">
+<div class="flex w-full pt-11 plan-details-wrapper">
   <div #contentSection class="create-plan-main-wrapper h-full relative">
     <div class="flex align-center justify-between mb-6">
       <div class="flex align-center">
@@ -62,32 +62,6 @@
               <div>
                 <div class="flex align-center mb-2">
                   <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                    Plan Id
-                  </p>
-                  <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                    [ngxTippy]="helpinfotooltip"
-                    [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
-                  <ng-template #helpinfotooltip let-name>
-                    <div class="help-info-tooltip">
-                      <div class="details">
-                        <p class="text-grey-darken">
-                          Enter a Customized Id. If user do not enter this field, the system will generate a ‘Customized
-                          Human-Readable-id’ based on the Name fielde.g. Plan id Name: “Karisch plus Enterprise”Plan Id:
-                          “karish-plus-enteprise-01”
-                        </p>
-                      </div>
-                    </div>
-                  </ng-template>
-                </div>
-                <mat-form-field appearance="outline">
-                  <input *ngIf="!editable" required matInput placeholder="Enter here..." formControlName="planId" />
-                  <input *ngIf="editable" readonly required matInput placeholder="Enter here..."
-                    formControlName="planId" />
-                </mat-form-field>
-              </div>
-              <div>
-                <div class="flex align-center mb-2">
-                  <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
                     Plan Name (Internal)
                   </p>
                   <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
@@ -118,7 +92,7 @@
                     <ng-container *ngIf="
                         planForm.controls['internalName'].errors['maxlength']
                       ">
-                      InternalName cannot exceed 20 characters.
+                      Internal Name cannot exceed 20 characters.
                     </ng-container>
                     <ng-container *ngIf="
                         planForm.controls['internalName'].errors['pattern']
@@ -126,6 +100,32 @@
                       Internal Name cannot contain special characters.
                     </ng-container>
                   </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <div class="flex align-center mb-2">
+                  <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
+                    Plan Id
+                  </p>
+                  <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                    [ngxTippy]="helpinfotooltip"
+                    [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
+                  <ng-template #helpinfotooltip let-name>
+                    <div class="help-info-tooltip">
+                      <div class="details">
+                        <p class="text-grey-darken">
+                          Enter a Customized Id. If user do not enter this field, the system will generate a ‘Customized
+                          Human-Readable-id’ based on the Name fielde.g. Plan id Name: “Karisch plus Enterprise”Plan Id:
+                          “karish-plus-enteprise-01”
+                        </p>
+                      </div>
+                    </div>
+                  </ng-template>
+                </div>
+                <mat-form-field appearance="outline">
+                  <input *ngIf="!editable" required matInput placeholder="Enter here..." formControlName="planId" />
+                  <input *ngIf="editable" readonly required matInput placeholder="Enter here..."
+                    formControlName="planId" />
                 </mat-form-field>
               </div>
               <div>

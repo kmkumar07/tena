@@ -46,27 +46,39 @@
   width: 100%;
   @media only screen and (max-width: 80rem) {
     max-width: 100%;
+    padding: 10px 0 0 0 !important;
   }
 }
 
 // create product section
 .create-product-wrapper {
   border-radius: 0.5rem;
-  overflow: auto;
-
+  @media only screen and (max-width: 80rem) {
+    padding-top: 20px !important;
+    .header-section{
+      padding-bottom: 1rem !important;
+    }
+    .inner-block{
+        margin-top: 16px !important;
+        max-height: calc(100vh - 300px);
+        overflow: auto;
+        padding-right: .5rem;
+    }
+  }
   .details-block {
     max-width: calc(100% - 30rem);
     width: 100%;
     @media only screen and (max-width: 80rem) {
       max-width: calc(100% - 25rem);
-      padding: 1.5625rem !important;
+      padding: .9375rem .4375rem  .9375rem .9375rem !important;
+      margin-right: 1rem !important;
     }
   }
   .imgUpload-block{
     width: 30rem;
     @media only screen and (max-width: 80rem) {
       width: 25rem;
-      padding: 1.5625rem !important;
+      padding: 1rem !important;
     }
     .title{
       border-bottom: 0.0625rem solid $border-color;

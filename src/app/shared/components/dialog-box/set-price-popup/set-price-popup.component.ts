@@ -94,7 +94,7 @@ export class SetPricePopupComponent {
       this.editable = false;
     }
   }
-  patchValue(data) {
+  patchValue(data:any) {
     this.editable = true;
 
     this.setPriceForm.patchValue({
@@ -135,10 +135,12 @@ export class SetPricePopupComponent {
     });
     this.setPriceForm.get('periodUnit')?.disable();
   }
+
   selectPriceId() {
     const priceId = this.price.priceId;
     this.priceIdSelected.emit(priceId);
   }
+  
   getLevelList(index: number) {
     const tierList = this.multiPricing.at(index) as FormGroup;
     return tierList;
@@ -281,25 +283,26 @@ export class SetPricePopupComponent {
       this.global.showLoader();
 
       this.pricingModelValueToName(this.price);
-      this.subscription = this.planService.createPrice(this.price).subscribe({
-        next: (res) => {
-          this.openCreateSuccess();
-          this.dialogRef.close();
-          this.planService.setData(this.price);
-          this.priceId = this.price.priceId;
-          this.router.navigate([`/plans/create/${this.price.planId}`]);
-          this.global.hideLoader();
-        },
+      this.subscription = this.planService
+        .createPrice(this.price)
+        .pipe(takeUntil(this.global.componentDestroyed(this)))
+        .subscribe({
+          next: (res) => {
+            this.dialogRef.close(true);
+            this.planService.setData(this.price);
+            this.priceId = this.price.priceId;
+            this.global.hideLoader();
+          },
 
-        error: (err: any) => {
-          this.snackBar.open(err.message, '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
-          this.global.hideLoader();
-        },
-      });
+          error: (err: any) => {
+            this.snackBar.open(err.message, '', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            });
+            this.global.hideLoader();
+          },
+        });
     } else {
       this.global.showLoader();
       this.pricingModelValueToName(this.price);
@@ -307,10 +310,7 @@ export class SetPricePopupComponent {
         .updatePrice(this.price, this.pricingId)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
-          this.openUpdateSuccess(this.price.planId);
-          this.dialogRef.close();
-          this.router.navigate([`/plans/create/${this.price.planId}`]);
-
+          this.dialogRef.close(true);
           this.global.hideLoader();
         });
     }
