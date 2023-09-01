@@ -13,30 +13,10 @@
     <div class="flex align-start">
       <div class="form-block border-2 mr-8 p-10 main-bg wrapper-border details-block">
         <div class="pb-4 divider-bt-black">
-          <h3 class="mat-subtitle-1 fw-500 text-text text-dark mb-0">Basic Product Details</h3>
+          <h2 class="fs-xl fw-500 text-text text-dark mb-0">Basic Product Details</h2>
         </div>
-        <div class="input-wrapper mt-8">
+        <div class="input-wrapper mt-8 inner-block">
           <form [formGroup]="productForm">
-            <div>
-              <div class="flex align-center mb-2">
-                <p class="mat-subtitle-2 font-weight-500 input-label">
-                  Product ID
-                </p>
-                <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                  [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
-                <ng-template #helpinfotooltip let-name>
-                  <div class="help-info-tooltip">
-                    <div class="heading-with-background">Product ID</div>
-                    <div class="details">
-                      Enter a id that helps you identify this Product
-                    </div>
-                  </div>
-                </ng-template>
-              </div>
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="Enter here..." formControlName="productId" />
-              </mat-form-field>
-            </div>
             <div>
               <div class="flex align-center mb-2">
                 <p class="mat-subtitle-2 font-weight-500 input-label">
@@ -81,6 +61,27 @@
                 This name is not available. Please choose another name.
               </div>
             </div>
+            <div>
+              <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 input-label">
+                  Product ID
+                </p>
+                <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                  [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
+                <ng-template #helpinfotooltip let-name>
+                  <div class="help-info-tooltip">
+                    <div class="heading-with-background">Product ID</div>
+                    <div class="details">
+                      Enter a id that helps you identify this Product
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+              <mat-form-field appearance="outline">
+                <input matInput placeholder="Enter here..." formControlName="productId" />
+              </mat-form-field>
+            </div>
+
 
             <div>
               <div class="flex align-center mb-2">
