@@ -183,6 +183,7 @@ export class CreateFeatureComponent {
         value: '',
         name: '',
       });
+      lastLevel.get('value').enable();
       this.unlimitedButtonLabel = 'Set Unlimited';
     } else {
       if (!this.postName) {
@@ -198,6 +199,7 @@ export class CreateFeatureComponent {
           value: 'unlimited',
           name: 'unlimited' + ' ' + this.postName + 's',
         });
+        lastLevel.get('value').disable();
         this.unlimitedButtonLabel = 'Set Custom Maximum';
       }
     }
@@ -302,7 +304,7 @@ export class CreateFeatureComponent {
         feature = {
           ...feature,
           unit: this.featureForm.value.unit,
-          levels: this.featureForm.value.levels,
+          levels: this.featureForm.getRawValue().levels,
         };
         break;
 
@@ -311,7 +313,6 @@ export class CreateFeatureComponent {
           ...level,
           isUnlimited: '',
         }));
-
         feature = {
           ...feature,
           unit: this.featureForm.value.unit,
