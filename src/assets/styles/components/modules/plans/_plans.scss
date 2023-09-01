@@ -91,6 +91,11 @@
 }
 
 // create plan section
+.cerate-feature-wrapper{
+  @media only screen and (max-width: 80rem) {
+    padding-top: 20px !important;
+  }
+}
 .create-plan-main-wrapper {
   max-width: 52.3125rem;
   width: 95%;
@@ -731,6 +736,9 @@
 .plan-outer-bolck{
   width: 58.125rem;
   margin: auto;
+  @media only screen and (max-width: 80rem) {
+    padding-top: 20px !important;
+  }
   .heading {
     border-bottom: 0.0625rem solid $border-color;
     .icon-img{
