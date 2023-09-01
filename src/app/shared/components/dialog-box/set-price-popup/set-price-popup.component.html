@@ -166,7 +166,7 @@
                     </div>
                     <mat-form-field appearance="outline" class="border-2">
                         <mat-select required placeholder="select" (selectionChange)="cycleValue($event)"
-                            [value]="selectedOption">
+                            [value]="selectedOption" [disabled]="editable">
                             <mat-option value="1">Fixed</mat-option>
                             <mat-option value="2">Forever</mat-option>
                         </mat-select>
