@@ -279,6 +279,14 @@
                               placeholder="Enter here"
                               formControlName="value"
                             />
+                             <mat-error *ngIf="
+                                element.invalid &&
+                                element.touched
+                              ">
+                              <ng-container *ngIf="element['controls'].value.errors.pattern.requiredPattern">
+                                Entitlement cannot contain special characters.
+                              </ng-container>
+                            </mat-error>
                           </mat-form-field>
                         </div>
                         <div class="input-wrapper">
@@ -295,6 +303,14 @@
                               placeholder="Enter here"
                               formControlName="name"
                             />
+                            <mat-error *ngIf="
+                                element.invalid &&
+                                element.touched
+                              ">
+                              <ng-container *ngIf="element['controls'].value.errors.pattern.requiredPattern">
+                                Display Name cannot contain special characters.
+                              </ng-container>
+                            </mat-error>
                           </mat-form-field>
                         </div>
                       </div>
