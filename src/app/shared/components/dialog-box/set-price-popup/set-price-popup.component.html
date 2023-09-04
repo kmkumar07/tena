@@ -33,7 +33,7 @@
                     </div>
                     <mat-form-field appearance="outline" class="border-2">
                         <mat-select required placeholder="select" formControlName="pricingModel">
-                            <mat-option *ngFor="let option of pricingModelTypes" [value]="option.value"
+                            <mat-option *ngFor="let option of pricingModelTypes" value="{{option.value}}"
                                 (click)="onDropdownKeyWithpricingModel(option.value)">
                                 {{ option.title}}
                             </mat-option>
