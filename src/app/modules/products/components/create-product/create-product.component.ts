@@ -84,13 +84,15 @@ export class CreateProductComponent implements OnInit {
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
         this.search = value;
-        this.getSearchProduct(
-          this.PageNumber,
-          this.limit,
-          this.search,
-          this.sortBy,
-          this.sortOrder
-        );
+        if (this.search) {
+          this.getSearchProduct(
+            this.PageNumber,
+            this.limit,
+            this.search,
+            this.sortBy,
+            this.sortOrder
+          );
+        }
       });
 
     this.productService.croppedImage$.subscribe((croppedImage) => {
@@ -149,8 +151,8 @@ export class CreateProductComponent implements OnInit {
             this.productsSearchData.forEach((product) => {
               if (this.search === product.name) {
                 this.productsSearchDataLength = true;
-                    return;
-              } 
+                return;
+              }
             });
             this.global.hideLoader();
           }
@@ -167,12 +169,12 @@ export class CreateProductComponent implements OnInit {
     const newStatus = checked ? 'active' : 'draft';
     this.productForm.get('status')?.setValue(newStatus);
   }
-  navigateToViewFeature(res: any) {
-    // this.router.navigate(['']);
+  navigateToViewProduct(res: any) {
     this.router.navigate([`/products/view-product/${res.productId}`]);
   }
 
   onSubmit() {
+    this.global.showLoader();
     this.productForm.get('imageUrl')?.setValue(this.imageUrl);
     const status = this.productForm.value.status ? 'active' : 'draft';
     const product = {
@@ -181,8 +183,9 @@ export class CreateProductComponent implements OnInit {
     };
     this.subscription = this.productService.createProduct(product).subscribe({
       next: (res) => {
+        this.global.hideLoader();
         this.openSuccess();
-        this.navigateToViewFeature(res);
+        this.navigateToViewProduct(res);
       },
       error: (error: any) => {
         this.error = error?.error?.message || 'Database error';

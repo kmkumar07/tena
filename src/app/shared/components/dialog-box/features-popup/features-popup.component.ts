@@ -21,6 +21,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FeatureService } from 'src/app/modules/features/services/feature.service';
 import { Inject } from '@angular/core';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 export interface menuOptions {
   value: number;
@@ -49,8 +50,11 @@ export class FeaturesPopupComponent {
   sortOrder: 'asc' | 'desc';
   productArray = [];
   id: string;
+  showLoader = false;
   isRangeSelected: boolean = false;
   selectedproductName:string
+  feature:any
+  displayName: string;
   featureUpdatedata:any
   unlimitedValue: any;
   editable: boolean = false;
@@ -71,7 +75,6 @@ export class FeaturesPopupComponent {
   ) {
     this.selectedproductName = data.productId;
     this.featureUpdatedata=data.feature
-    console.log(this.featureUpdatedata);
 
   }
 
@@ -89,17 +92,18 @@ export class FeaturesPopupComponent {
         this.productArray = data.map((res) => res.productId);
         this.featureForm.patchValue({ productID: this.id });
       });
-    this.feature();
+    this.featureFormData();
     this.featureForm.controls['name'].valueChanges.subscribe((value) => {
       const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
       this.featureForm.controls['featureId'].setValue(idValue);
     });
     this.featureService.getFeatureById(this.featureUpdatedata.featureId).subscribe((data) => {
+      console.log(data);
       this.updateForm(data);
     });
   }
 
-  feature() {
+  featureFormData() {
     this.featureForm = this.formBuilder.group({
       featureId: ['', Validators.required],
       productID: ['', Validators.required],
@@ -113,19 +117,25 @@ export class FeaturesPopupComponent {
       ],
       description: ['', Validators.maxLength(500)],
       type: ['', Validators.required],
-      unit: ['', Validators.required],
-      status: [true],
+      unit: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+          Validators.maxLength(50),
+        ],
+      ],      status: [true],
       levels: this.formBuilder.array([
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', Validators.required],
-          name: ['', Validators.required],
-        }),
+          value: ['', [Validators.required, Validators.maxLength(50)]],
+          name: ['', [Validators.required, Validators.maxLength(50)]],
+            }),
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', Validators.required],
-          name: ['', Validators.required],
-        }),
+          value: ['', [Validators.required, Validators.maxLength(50)]],
+          name: ['', [Validators.required, Validators.maxLength(50)]],
+         }),
       ]),
     });
   }
@@ -143,9 +153,9 @@ export class FeaturesPopupComponent {
       this.position,
       this.formBuilder.group({
         isUnlimited: [false],
-        value: ['', Validators.required],
-        name: ['', Validators.required],
-      })
+        value: ['', [Validators.required, Validators.maxLength(50)]],
+        name: ['', [Validators.required, Validators.maxLength(50)]],
+       })
     );
   }
 
@@ -176,10 +186,36 @@ export class FeaturesPopupComponent {
   setName(index: number) {
     this.postName = this.featureForm.value.unit;
     this.preName = this.featureForm.value.levels[index].value;
-    const displayName = this.preName + ' ' + this.postName + 's';
+    if (this.preName.length > 0) {
+      if (this.postName === null) {
+        this.displayName = this.preName;
+      } else {
+        this.displayName = this.preName + ' ' + this.postName + 's';
+      }
+    }
     const currentIndex = this.getLevelList(index);
     currentIndex.patchValue({
-      name: displayName,
+      name: this.displayName,
+    });
+    this.featureForm.get('levels.' + index + '.value').markAsTouched();
+  }
+  updateDisplayName(preName: string, postName: string): string {
+    if (preName.length > 0 && postName.length > 0) {
+      return preName + ' ' + postName + 's';
+    }
+    return '';
+  }
+
+  setNameUnit() {
+    const unitValue = this.featureForm.value.unit;
+    const levels = this.featureForm.get('levels');
+
+    levels.value.forEach((level: any, index: number) => {
+      const displayName = this.updateDisplayName(level.value, unitValue);
+      const currentIndex = this.getLevelList(index);
+      currentIndex.patchValue({
+        name: displayName,
+      });
     });
   }
   onTypeSelection(value: string) {
@@ -212,6 +248,8 @@ export class FeaturesPopupComponent {
     }
   }
   updateForm(res: any) {
+    console.log("editable",res);
+    
     this.editable = true;
     if (res.status === 'active') {
       this.status = true;
@@ -222,13 +260,13 @@ export class FeaturesPopupComponent {
       this.isRangeSelected = true;
     }
     this.featureForm.patchValue({
-      featureId: res.featureId,
-      name: res.name,
-      description: res.description,
-      type: res.type,
+      featureId: res.data.featureId,
+      name: res.data.name,
+      description: res.data.description,
+      type: res.data.type,
       status: this.status,
-      unit: res.unit,
-      levels: res.levels,
+      unit: res.data.unit,
+      levels: res.data.levels,
     });
     if (Array.isArray(res.levels) && res.levels.length >= 0) {
       const levelsControl = this.featureForm.get('levels') as FormArray;
@@ -254,7 +292,7 @@ export class FeaturesPopupComponent {
       this.unlimitedButtonLabel = 'Set Unlimited';
     }
   }
-  onSubmit() {
+  checkTypeBeforeSubbmission(){
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
         (<FormGroup>ele).addControl('level', new FormControl(index));
@@ -264,7 +302,7 @@ export class FeaturesPopupComponent {
     });
 
     const status = this.featureForm.value.status ? 'active' : 'draft';
-    let feature: any = {
+    this.feature = {
       featureId: this.featureForm.value.featureId,
       productID: this.featureForm.value.productID,
       name: this.featureForm.value.name,
@@ -274,8 +312,8 @@ export class FeaturesPopupComponent {
       levels: [],
     };
     if (this.featureForm.value.type === 'quantity') {
-      feature = {
-        ...feature,
+      this.feature = {
+        ...this.feature,
         unit: this.featureForm.value.unit,
         levels: this.featureForm.value.levels,
       };
@@ -286,28 +324,32 @@ export class FeaturesPopupComponent {
           isUnlimited: ' ',
         };
       });
-      feature = {
-        ...feature,
+      this.feature = {
+        ...this.feature,
         unit: this.featureForm.value.unit,
         levels: levels,
       };
     }
 
     if (this.featureForm.value.type === 'range') {
-      feature = {
-        ...feature,
+      this.feature = {
+        ...this.feature,
         unit: this.featureForm.value.unit,
         levels: this.featureForm.value.levels,
       };
     }
+  }
+  onSubmit() {
+   this.showLoader = true;
+    this.checkTypeBeforeSubbmission();
     if (!this.editable){
-      this.subscription = this.featureService.addFeature(feature).subscribe({
+      this.subscription = this.featureService.addFeature(this.feature).subscribe({
         next: (res: any) => {
-          // this.openSuccess();
-          this.onDelete();
-          this.routes.navigate([`/features/view/${res.featureId}`]);
-          return res;
-        },
+          this.showLoader = false;
+         this.onDelete();
+         this.routes.navigate([`/features/view/${res.data.featureId}`]);
+         return res;
+       },
         error: (error: any) => {
           this.snackBar.open(error.error.message, '', {
             duration: 5000,
@@ -317,11 +359,11 @@ export class FeaturesPopupComponent {
         },
       });
     }else{
-      this.subscription = this.featureService.updateFeature(feature.featureId,feature).subscribe({
+      this.subscription = this.featureService.updateFeature(this.feature.featureId,this.feature).subscribe({
         next: (res: any) => {
-          // this.openSuccess();
+          this.showLoader = false;
           this.onDelete();
-          this.routes.navigate([`/features/view/${res.featureId}`]);
+          this.routes.navigate([`/features/view/${res.data.featureId}`]);
           return res;
         },
         error: (error: any) => {
@@ -332,7 +374,7 @@ export class FeaturesPopupComponent {
           });
         },
       });
-    }
+     }
   
   }
 

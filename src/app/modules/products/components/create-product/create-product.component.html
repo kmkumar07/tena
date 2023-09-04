@@ -17,26 +17,7 @@
         </div>
         <div class="input-wrapper mt-8">
           <form [formGroup]="productForm">
-            <div>
-              <div class="flex align-center mb-2">
-                <p class="mat-subtitle-2 font-weight-500 input-label">
-                  Product ID
-                </p>
-                <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                  [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
-                <ng-template #helpinfotooltip let-name>
-                  <div class="help-info-tooltip">
-                    <div class="heading-with-background">Product ID</div>
-                    <div class="details">
-                      Enter a id that helps you identify this Product
-                    </div>
-                  </div>
-                </ng-template>
-              </div>
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="Enter here..." formControlName="productId" />
-              </mat-form-field>
-            </div>
+           
             <div>
               <div class="flex align-center mb-2">
                 <p class="mat-subtitle-2 font-weight-500 input-label">
@@ -81,7 +62,26 @@
                 This name is not available. Please choose another name.
               </div>
             </div>
-
+            <div>
+              <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 input-label">
+                  Product ID
+                </p>
+                <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                  [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
+                <ng-template #helpinfotooltip let-name>
+                  <div class="help-info-tooltip">
+                    <div class="heading-with-background">Product ID</div>
+                    <div class="details">
+                      Enter a id that helps you identify this Product
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+              <mat-form-field appearance="outline">
+                <input matInput placeholder="Enter here..." formControlName="productId" />
+              </mat-form-field>
+            </div>
             <div>
               <div class="flex align-center mb-2">
                 <p class="mat-subtitle-2 font-weight-500 input-label">
@@ -141,11 +141,11 @@
         <div class="user-img-wrapper flex align-center mt-5">
           <div class="user-avatar flex align-center justify-center">
             <ng-container *ngIf="imageUrl">
-              <img src="{{ imagePath + imageUrl }}" alt="{{ imageUrl }}" />
+              <img src="{{ imagePath + imageUrl }}" alt="" />
             </ng-container>
-            <ng-container *ngIf="!imageUrl">
+            <template *ngIf="!imageUrl">
               <p class="mat-body-1 mb-0">LOGO</p>
-            </ng-container>
+            </template>
           </div>
           <div class="ml-6">
             <div class="upload-actions">

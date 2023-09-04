@@ -15,11 +15,12 @@ import {
 import getUniqueId from 'src/app/core/utils/functions/getUniqueId';
 import { FeatureService } from '../../services/feature.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, Observable, startWith, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, Observable, startWith, Subject, Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 export interface menuOptions {
   value: number;
@@ -51,7 +52,14 @@ export class CreateFeatureComponent {
   isRangeSelected: boolean = false;
   displayName: string;
   filteredProducts: Observable<any[]>;
-
+  private searchQueryChanged: Subject<string> = new Subject<string>();
+  private searchSubscription: Subscription;
+  searchQuery: string;
+  features:any;
+  featuresSearchData:any;
+  NumberOfPage: any = '';
+  NumberOfLimit: any = '';
+  featuresSearchDataLength:boolean;
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -59,12 +67,15 @@ export class CreateFeatureComponent {
     private formBuilder: FormBuilder,
     private featureService: FeatureService,
     private routes: Router,
+    private global: GlobalService,
     private productService: ProductsService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {}
-
+  onSearchInput() {
+    this.searchQueryChanged.next(this.searchQuery);
+  }
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
     this.productService
@@ -86,6 +97,23 @@ export class CreateFeatureComponent {
             map((value) => this.filterProducts(value || ''))
           );
       });
+      this.sortBy = 'createdOn';
+      this.sortOrder = 'desc';
+      this.searchSubscription = this.searchQueryChanged
+        .pipe(debounceTime(500), distinctUntilChanged())
+        .subscribe((value) => {
+          this.search = value;
+          if(this.search){
+            this.getSearchFeature(
+              this.NumberOfPage,
+              this.NumberOfLimit,
+              this.search,
+              this.sortBy,
+              this.sortOrder
+            );
+          }
+       
+        });
     this.feature();
     this.featureForm.controls['name'].valueChanges.subscribe((value) => {
       const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
@@ -100,7 +128,34 @@ export class CreateFeatureComponent {
     );
     return filteredProducts;
   }
+  getSearchFeature(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.global.showLoader();
 
+    this.featureService
+      .getFeatures(PageNumber, limit, search, sortBy, sortOrder)
+      .subscribe((data) => {
+        if (data) {
+          this.features = data;
+          this.featuresSearchData = this.features.features;
+          this.featuresSearchDataLength = false;
+          if (this.search.length > 0) {
+            this.featuresSearchData.forEach((feature) => {
+              if (this.search === feature.name) {
+                this.featuresSearchDataLength = true;
+                    return;
+              } 
+            });
+            this.global.hideLoader();
+          }
+        }
+      });
+  }
   feature() {
     this.featureForm = this.formBuilder.group({
       featureId: ['', Validators.required],
