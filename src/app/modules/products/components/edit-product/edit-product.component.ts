@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { DialogAnimaComponent } from 'src/app/shared/components/dialog-box/dialog-anima/dialog-anima.component';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -62,6 +63,7 @@ export class EditProductComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
+    private global: GlobalService,
     private snackBar: MatSnackBar
   ) { }
 
@@ -82,6 +84,7 @@ export class EditProductComponent implements OnInit {
   }
 
   onSubmit() {
+    this.global.showLoader();
     this.postForm.get('imageUrl')?.setValue(this.getProductImageUrl);
     const status = this.postForm.value.status ? 'active' : 'draft';
     const product = {
@@ -92,6 +95,7 @@ export class EditProductComponent implements OnInit {
       .editProduct(this.postForm.value.productId, product)
       .subscribe({
         next: (data) => {
+          this.global.hideLoader();
           this.openSuccess();
           this.router.navigate([`/products/view-product/${data.productId}`]);
         },

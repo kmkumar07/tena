@@ -1,3 +1,11 @@
+
+<div class="popup-container">
+  <div class="popup">
+    <div class="loader" *ngIf="showLoader">
+      <mat-spinner></mat-spinner>
+    </div>  </div>
+</div>
+
 <div class="form-with-sample-popup flex relative">
   <!-- <div class="close-icon absolute flex justify-center align-center">
         <mat-icon class="material-symbols-outlined mr-0" color="warn">close</mat-icon>
@@ -243,11 +251,28 @@
             </div>
             <mat-form-field appearance="outline" class="border-2 mb-0">
               <input
+              (input)="setNameUnit()"
                 required
                 matInput
                 placeholder="Enter here"
                 formControlName="unit"
+                (input)="featureForm.controls['unit'].markAsTouched()"
               />
+              <mat-error
+                *ngIf="
+                  featureForm.controls['unit'].invalid &&
+                  featureForm.controls['unit'].touched
+                "
+              >
+                <ng-container
+                  *ngIf="featureForm.controls['unit'].errors['pattern']"
+                >
+                  Unit cannot contain special characters.
+                </ng-container>
+                <ng-container *ngIf="featureForm.controls['unit'].errors['maxlength']">
+                  Unit cannot exceed 50 characters.
+                </ng-container>
+              </mat-error>
             </mat-form-field>
           </div>
           <div *ngIf="this.featureForm.value.unit">
@@ -265,12 +290,38 @@
                       </div>
                       <mat-form-field appearance="outline" class="border-2">
                         <input
-                          (input)="setName(i)"
-                          required
-                          matInput
-                          placeholder="Enter here"
-                          formControlName="value"
-                        />
+                            (input)="setName(i)"
+                            required
+                            matInput
+                            placeholder="Enter here"
+                            formControlName="value"
+                            pattern="[a-zA-Z0-9\s]*"
+                          />
+                          <mat-error
+                            *ngIf="
+                              featureForm.get('levels.' + i + '.value').invalid &&
+                              featureForm.get('levels.' + i + '.value').touched
+                            "
+                          >
+                            <ng-container
+                              *ngIf="
+                                featureForm.get('levels.' + i + '.value').errors[
+                                  'pattern'
+                                ]
+                              "
+                            >
+                              Entitlement cannot contain special characters.
+                            </ng-container>
+                            <ng-container
+                            *ngIf="
+                              featureForm.get('levels.' + i + '.value').errors[
+                                'maxlength'
+                              ]
+                            "
+                          >
+                            Entitlement cannot exceed 50 characters.
+                          </ng-container>
+                          </mat-error>
                       </mat-form-field>
                     </div>
                     <div class="input-wrapper">
@@ -281,10 +332,41 @@
                       </div>
                       <mat-form-field appearance="outline" class="border-2">
                         <input
-                          matInput
-                          placeholder="Enter here"
-                          formControlName="name"
-                        />
+                        matInput
+                        placeholder="Enter here"
+                        formControlName="name"
+                        (input)="
+                          featureForm
+                            .get('levels.' + i + '.name')
+                            .markAsTouched()
+                        "
+                        pattern="[a-zA-Z0-9\s]*"
+                      />
+                      <mat-error
+                        *ngIf="
+                          featureForm.get('levels.' + i + '.name').invalid &&
+                          featureForm.get('levels.' + i + '.name').touched
+                        "
+                      >
+                        <ng-container
+                          *ngIf="
+                            featureForm.get('levels.' + i + '.name').errors[
+                              'pattern'
+                            ]
+                          "
+                        >
+                          Display Name cannot contain special characters.
+                        </ng-container>
+                        <ng-container
+                        *ngIf="
+                          featureForm.get('levels.' + i + '.value').errors[
+                            'maxlength'
+                          ]
+                        "
+                      >
+                      Display Name cannot exceed 50 characters.
+                      </ng-container>
+                      </mat-error>
                       </mat-form-field>
                     </div>
                   </div>
