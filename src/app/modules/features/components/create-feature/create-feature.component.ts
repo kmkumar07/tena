@@ -311,7 +311,7 @@ export class CreateFeatureComponent {
       case 'custom':
         const levels = this.featureForm.value.levels.map((level: any) => ({
           ...level,
-          isUnlimited: '',
+          isUnlimited: false,
         }));
         feature = {
           ...feature,
