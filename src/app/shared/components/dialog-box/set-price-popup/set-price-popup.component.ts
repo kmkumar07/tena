@@ -94,7 +94,8 @@ export class SetPricePopupComponent {
       this.editable = false;
     }
   }
-  patchValue(data:any) {
+
+  patchValue(data: any) {
     this.editable = true;
 
     this.setPriceForm.patchValue({
@@ -106,7 +107,8 @@ export class SetPricePopupComponent {
         .value,
       noOfCycle: data.noOfCycle,
     });
-    this.selectedOption = data.isExpirable ? '2' : '1';
+
+    this.selectedOption = data.isExpirable ? '1' : '2';
     this.pricingModelValueToName(this.price);
   }
 
@@ -122,7 +124,7 @@ export class SetPricePopupComponent {
       price: ['', Validators.required],
       periodUnit: ['', Validators.required],
       period: ['1', Validators.required],
-      isExpirable: [true],
+      isExpirable: [''],
       noOfCycle: ['', Validators.required],
       status: 'active',
       multiPricing: this.form.array([
@@ -140,7 +142,6 @@ export class SetPricePopupComponent {
     const priceId = this.price.priceId;
     this.priceIdSelected.emit(priceId);
   }
-  
   getLevelList(index: number) {
     const tierList = this.multiPricing.at(index) as FormGroup;
     return tierList;
