@@ -412,7 +412,7 @@ export class CreatePlanComponent implements OnInit {
     });
   }
   addProductDetails() {
-    this.dialog.open(ProductDetailsPopupComponent, {
+    const dialogRef = this.dialog.open(ProductDetailsPopupComponent, {
       width: '800px',
     });
   }
