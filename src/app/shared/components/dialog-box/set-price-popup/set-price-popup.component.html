@@ -14,7 +14,6 @@
                         </p>
                     </div>
                     <mat-form-field appearance="outline" class="border-2">
-                        <mat-label>Select Period Unit</mat-label>
                         <mat-select required formControlName="periodUnit" [(ngModel)]="selectedPeriodUnit">
                             <mat-option *ngFor="let option of FrequencyTypes" [value]="option.value">
                                 {{ option.title }}
