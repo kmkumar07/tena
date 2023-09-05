@@ -182,13 +182,13 @@ export class CreateFeatureComponent {
       levels: this.formBuilder.array([
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', [Validators.required, Validators.maxLength(50)]],
-          name: ['', [Validators.required, Validators.maxLength(50)]],
+          value: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
+          name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
         }),
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', [Validators.required, Validators.maxLength(50)]],
-          name: ['', [Validators.required, Validators.maxLength(50)]],
+          value: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
+          name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
         }),
       ]),
     });
@@ -208,8 +208,8 @@ export class CreateFeatureComponent {
         this.position,
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', [Validators.required, Validators.maxLength(50)]],
-          name: ['', [Validators.required, Validators.maxLength(50)]],
+          value: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
+          name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
         })
       );
     } else {
@@ -218,8 +218,8 @@ export class CreateFeatureComponent {
         this.position,
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', [Validators.required, Validators.maxLength(50)]],
-          name: ['', [Validators.required, Validators.maxLength(50)]],
+          value: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
+          name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
         })
       );
     }
@@ -228,6 +228,7 @@ export class CreateFeatureComponent {
   deleteLevels(levelIndex: number) {
     this.levels.removeAt(levelIndex);
   }
+
   toggleUnlimited() {
     this.position = this.levels.controls.length - 1;
     const lastLevel = this.getLevelList(this.position);
@@ -238,6 +239,7 @@ export class CreateFeatureComponent {
         value: '',
         name: '',
       });
+      lastLevel.get('value').enable();
       this.unlimitedButtonLabel = 'Set Unlimited';
     } else {
       if (!this.postName) {
@@ -253,6 +255,7 @@ export class CreateFeatureComponent {
           value: 'unlimited',
           name: 'unlimited' + ' ' + this.postName + 's',
         });
+        lastLevel.get('value').disable();
         this.unlimitedButtonLabel = 'Set Custom Maximum';
       }
     }
@@ -357,16 +360,15 @@ export class CreateFeatureComponent {
         feature = {
           ...feature,
           unit: this.featureForm.value.unit,
-          levels: this.featureForm.value.levels,
+          levels: this.featureForm.getRawValue().levels,
         };
         break;
 
       case 'custom':
         const levels = this.featureForm.value.levels.map((level: any) => ({
           ...level,
-          isUnlimited: '',
+          isUnlimited: false,
         }));
-
         feature = {
           ...feature,
           unit: this.featureForm.value.unit,
