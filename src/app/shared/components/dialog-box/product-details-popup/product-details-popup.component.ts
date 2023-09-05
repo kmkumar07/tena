@@ -1,15 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { Router } from '@angular/router';
 import { ProductDetailsService } from 'src/app/modules/plans/services/product-details.service';
 import { Status, selectOptions } from 'src/app/shared/constants/consants';
 import { MatTableDataSource } from '@angular/material/table';
+import { GlobalService } from 'src/app/core/services/global.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface PeriodicElement {
   featureId: string;
@@ -21,29 +21,53 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-
 export interface PeriodicElement1 {
   name: string;
   position: number;
   type: string;
   status: string;
-  entitlements : string;
+  entitlements: string;
 }
 
 const ELEMENT_DATA: PeriodicElement1[] = [
-  {position: 1, name: 'Whiteboard', status: 'Active', type: 'Switch',entitlements:''},
-  {position: 2, name: 'Email support', status: 'Active', type: 'Custom',entitlements:''},
-  {position: 3, name: 'API Call', status: 'Active', type: 'Range',entitlements:''},
-  {position: 4, name: 'User License', status: 'Active',type: 'Quantity',entitlements:''},
+  {
+    position: 1,
+    name: 'Whiteboard',
+    status: 'Active',
+    type: 'Switch',
+    entitlements: '',
+  },
+  {
+    position: 2,
+    name: 'Email support',
+    status: 'Active',
+    type: 'Custom',
+    entitlements: '',
+  },
+  {
+    position: 3,
+    name: 'API Call',
+    status: 'Active',
+    type: 'Range',
+    entitlements: '',
+  },
+  {
+    position: 4,
+    name: 'User License',
+    status: 'Active',
+    type: 'Quantity',
+    entitlements: '',
+  },
 ];
 @Component({
   selector: 'app-product-details-popup',
   templateUrl: './product-details-popup.component.html',
-  styleUrls: ['./product-details-popup.component.scss']
+  styleUrls: ['./product-details-popup.component.scss'],
 })
 export class ProductDetailsPopupComponent {
   dropKey: number;
   StatusTypes: selectOptions[] = Status;
+
   subscription: Subscription;
   PageNumber: any = '';
   limit: any = '';
@@ -63,10 +87,16 @@ export class ProductDetailsPopupComponent {
   clicked = false;
   rangeForm: FormGroup;
   loading = false;
-  displayedColumns1: string[] = ['select', 'name', 'type', 'status','entitlements'];
+  displayedColumns1: string[] = [
+    'select',
+    'name',
+    'type',
+    'status',
+    'entitlements',
+  ];
   dataSource = new MatTableDataSource<PeriodicElement1>(ELEMENT_DATA);
   selection1 = new SelectionModel<PeriodicElement1>(true, []);
-  
+
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -74,7 +104,8 @@ export class ProductDetailsPopupComponent {
 
     private productService: ProductsService,
     private productDetailsService: ProductDetailsService,
-    private routes: Router
+    private global: GlobalService,
+    private snackBar: MatSnackBar
   ) {}
 
   displayedColumns: string[] = [
@@ -95,10 +126,8 @@ export class ProductDetailsPopupComponent {
   ngOnInit() {
     this.getProduct(this.PageNumber, this.limit, this.search);
     this.productService.product$.subscribe((data) => {
-      console.log(" this.produc",data);
-
       if (data) {
-        this.productData = data.products;        
+        this.productData = data.products;
       }
     });
   }
@@ -128,14 +157,10 @@ export class ProductDetailsPopupComponent {
   selectedOptions: { [key: string]: boolean } = {};
 
   toggleCheckbox(event: MatCheckboxChange, row: PeriodicElement) {
-    console.log("ppp",event,row);
-
     if (event.checked) {
       this.isButtonDisabled = false;
       this.selection.select(row);
       this.selectedFeatures.push(row);
-      console.log("www",row,this.selectedFeatures);
-
     } else {
       this.selection.deselect(row);
       const index = this.selectedFeatures.findIndex(
@@ -163,7 +188,7 @@ export class ProductDetailsPopupComponent {
       .subscribe(() => {});
   }
 
-  selectProduct(product) {
+  selectProduct(product: any) {
     this.productId = product.productId;
     this.isProductSelected = true;
     this.formGroup.controls.productName.patchValue(product.name);
@@ -190,15 +215,6 @@ export class ProductDetailsPopupComponent {
 
     this.rangeForm = this.formBuilder.group(rangeFormControls);
   }
-  openSuccess() {
-    this.dialog.open(SuccessDialogComponent, {
-      width: '420px',
-      data: {
-        module: 'Product-variant',
-        operation: 'Created',
-      },
-    });
-  }
 
   onSubmit() {
     this.loading = true;
@@ -209,7 +225,6 @@ export class ProductDetailsPopupComponent {
       .toLowerCase();
 
     const features = this.selectedFeatures.map((productVariantFeature) => {
-
       switch (productVariantFeature.type) {
         case 'quantity':
         case 'custom':
@@ -220,7 +235,6 @@ export class ProductDetailsPopupComponent {
             value: values,
           };
         case 'switch':
-
           return {
             featureID: productVariantFeature.featureId,
             value: this.selectedOptions[productVariantFeature.featureId],
@@ -243,8 +257,7 @@ export class ProductDetailsPopupComponent {
       features: features,
       status: 'active',
     };
-    console.log(payload);
-    
+
     this.clicked = false;
     this.subscription = this.productDetailsService
       .createProductVariant(payload)
@@ -252,24 +265,26 @@ export class ProductDetailsPopupComponent {
         next: (res) => {
           this.loading = false;
           this.isButtonDisabled = true;
-          this.openSuccess();
-          this.routes.navigate([`/plans/create`]);
-          this.formGroup.reset();
-          this.rangeForm.reset();
           this.selectedFeatures = [];
+          this.dialogRef.close(true);
+          this.snackBar.open('Product-Varaint created successfully', '', {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
           return res;
         },
         error: (err: any) => {
-          this.loading = false;
-          this.formGroup.reset();
-          this.rangeForm.reset();
-          this.routes.navigate([`/plans/create`]);
-          this.selectedFeatures = [];
-          console.log('something wrong occured', err.error.message);
+          this.snackBar.open(err.error.message, '', {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
+          this.global.hideLoader();
         },
       });
   }
-  onCancelClick(){
+  onCancelClick() {
     this.dialogRef.close(false);
   }
   onDropdownKey(event: number): void {
