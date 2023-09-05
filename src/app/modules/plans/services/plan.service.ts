@@ -56,13 +56,13 @@ export class PlanService {
   }
 
   getPlans(
-    PageNumber: number,
+    pageNumber: number,
     limit: number,
     search: string,
     sortBy: 'externalName' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ): Observable<any> {
-    const path = `${this.baseUrl}/plans/?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+    const path = `${this.baseUrl}/plans/?page=${pageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
     return this.apiService.get(path);
   }
 

@@ -45,9 +45,9 @@ export class PlansListingComponent implements OnDestroy {
   allPlansData: number = 0;
   displayedColumns: string[] = [
     'plan_ID',
-    'external_name',
-    'internal_name',
-    'created_at',
+    'externalName',
+    'internalName',
+    'createdOn',
     'status',
     'action',
   ];
@@ -161,14 +161,14 @@ export class PlansListingComponent implements OnDestroy {
           this.plansData = data.data;
           this.plansSearchData = this.plansData.plans;
 
-          if (this.search.length > 0) {
+          if (search.length > 0) {
             this.totalNumberOfPlanBySearch = this.plansData.totalCount;
             this.plansearchDataNextPage =
-              this.totalNumberOfPlanBySearch <= this.limit;
+              this.totalNumberOfPlanBySearch <= limit;
           } else {
             this.totalNumberOfPlan = this.plansData.totalCount;
             this.plansearchDataNextPage = false;
-            this.totalPages = Math.ceil(this.totalNumberOfPlan / this.limit);
+            this.totalPages = Math.ceil(this.totalNumberOfPlan / limit);
             this.hasNextPage = pageNumber < this.totalPages;
           }
 

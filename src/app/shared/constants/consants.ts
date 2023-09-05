@@ -58,10 +58,10 @@ export interface GetProduct {
 }
 export interface plansFields {
   plan_ID: string;
-  external_name: string;
-  internal_name: string;
+  externalName: string;
+  internalName: string;
   description: string;
-  created_at: string;
+  createdOn: string;
   status: string;
 }
 export interface Feature {
@@ -352,8 +352,8 @@ export const Plans_Data = [
   {
     id: 'ychvjbknk1',
     plan_ID: 'As-012P',
-    external_name: 'Premium',
-    internal_name: 'Premium v.3',
+    externalName: 'Premium',
+    internalName: 'Premium v.3',
     description:
       'lorem ipsumDividers can be added to lists as a means of separating content into distinct sections. Inset dividers can also be added to provide the appearance of distinct elements in a list without cluttering content like avatar images or icons. Make sure to avoid adding an inset divider to the last element in a list, because it will overlap with the section divider.',
     created_at: 'June 10th, 2020',
@@ -362,8 +362,8 @@ export const Plans_Data = [
   {
     id: '1i23op1j2eo',
     plan_ID: 'As-099G',
-    external_name: 'Premium',
-    internal_name: 'Premium v.2',
+    externalName: 'Premium',
+    internalName: 'Premium v.2',
     description:
       'lorem ipsumDividers can be added to lists as a means of separating content into distinct sections. Inset dividers can also be added to provide the appearance of distinct elements in a list without cluttering content like avatar images or icons. Make sure to avoid adding an inset divider to the last element in a list, because it will overlap with the section divider.',
     created_at: 'June 10th, 2020',
