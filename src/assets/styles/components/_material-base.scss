@@ -642,11 +642,11 @@ ul {
   }
 }
 
-.mdc-text-field--invalid:not(.mdc-text-field--disabled){
-  .mdc-notched-outline__leading, .mdc-notched-outline__trailing{
-    border-color: color('red' , 'base');
-  }
-} 
+// .mdc-text-field--invalid:not(.mdc-text-field--disabled){
+//   .mdc-notched-outline__leading, .mdc-notched-outline__trailing{
+//     border-color: color('red' , 'base');
+//   }
+// } 
 
 // readonly-input
 .readonly-input{
