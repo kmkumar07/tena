@@ -231,6 +231,7 @@ export class CreateProductComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.imageUrl = res.data.blobURL;
+          this.deleteBlob=false;
         },
       });
   }
