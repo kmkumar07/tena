@@ -29,6 +29,15 @@
                         <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
                             Pricing Model
                         </p>
+                        <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                            [ngxTippy]="pricingModelTooltip" [tippyProps]="{ placement: 'right' }">help</mat-icon>
+                        <ng-template #pricingModelTooltip let-name>
+                            <div class="help-info-tooltip">
+                                <div class="details">
+                                    Explain how the recurring charges are calculated for the subscription.
+                                </div>
+                            </div>
+                        </ng-template>
                     </div>
                     <mat-form-field appearance="outline" class="border-2">
                         <mat-select required placeholder="select" formControlName="pricingModel">
@@ -115,20 +124,7 @@
                 <div class="input-wrapper" *ngIf="!monthlyBilling.includes(setPriceForm.value.pricingModel)">
                     <div class="flex align-center mb-2">
                         <p class="mat-subtitle-2 font-weight-500 text-blue-darken">Price</p>
-                        <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                            [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right' }">help</mat-icon>
-                        <ng-template #helpinfotooltip let-name>
-                            <div class="help-info-tooltip">
-                                <div class="heading-with-background">Feature id</div>
-                                <div class="details">
-                                    Microsoft Teams is the ultimate messaging app for your
-                                    organization—a workspace for real-time collaboration and
-                                    communication, meetings, file and app sharing, and even the
-                                    occasional emoji! All in one place, all in the open, all
-                                    accessible to everyone.
-                                </div>
-                            </div>
-                        </ng-template>
+
                     </div>
                     <mat-form-field appearance="outline" class="border-2">
                         <input required matInput placeholder="Enter here " formControlName="price" type="number"
@@ -149,16 +145,11 @@
                             Billing Cycle
                         </p>
                         <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
-                            [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right' }">help</mat-icon>
-                        <ng-template #helpinfotooltip let-name>
+                            [ngxTippy]="billingCycleTooltip" [tippyProps]="{ placement: 'right' }">help</mat-icon>
+                        <ng-template #billingCycleTooltip let-name>
                             <div class="help-info-tooltip">
-                                <div class="heading-with-background">Feature id</div>
                                 <div class="details">
-                                    Microsoft Teams is the ultimate messaging app for your
-                                    organization—a workspace for real-time collaboration and
-                                    communication, meetings, file and app sharing, and even the
-                                    occasional emoji! All in one place, all in the open, all
-                                    accessible to everyone.
+                                    Select if you would like this plan to be billed forever or for a fixed period.
                                 </div>
                             </div>
                         </ng-template>
