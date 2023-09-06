@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, takeUntil } from 'rxjs';
 import { FeatureDetailsPopupComponent } from 'src/app/shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
-import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import {
   Stepper,
   plan_add_empty_data,
@@ -116,6 +115,7 @@ export class PlanDetailsComponent {
       );
     }
   }
+
   getPlanById(id: string) {
     if (id) {
       this.stepOneCompleted = true;
@@ -198,7 +198,12 @@ export class PlanDetailsComponent {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe({
           next: (res: any) => {
-            this.openSuccess(plan.planId);
+            this.router.navigate([`/plans/create/${plan.planId}`]);
+            this.snackBar.open('Plan created successfully', '', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            });
             this.global.hideLoader();
             return res;
           },
@@ -216,7 +221,12 @@ export class PlanDetailsComponent {
         .updatePlan(plan, this.planId)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
-          this.openSuccess(plan.planId);
+          this.router.navigate([`/plans/create/${plan.planId}`]);
+          this.snackBar.open('Plan created successfully', '', {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
           this.global.hideLoader();
         });
     }
@@ -246,21 +256,7 @@ export class PlanDetailsComponent {
   editProductVariant(id: string) {
     this.router.navigate([`/plans/create/edit-product-detail/${id}`]);
   }
-  openSuccess(id: string) {
-    this.dialogRef = this.dialog.open(SuccessDialogComponent, {
-      width: '420px',
-      data: {
-        module: 'Plan',
-        operation: 'is created',
-      },
-    });
-    this.dialogRef.afterClosed().subscribe((res: any) => {
-      if (res) {
-        this.global.hideLoader();
-        this.router.navigate([`/plans/create/${id}`]);
-      }
-    });
-  }
+
   removeType(index: any) {
     this.planService.priceModelArr.splice(index, 1);
   }

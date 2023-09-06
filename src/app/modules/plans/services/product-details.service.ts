@@ -12,20 +12,25 @@ export class ProductDetailsService {
   public productVariant$ = this.productVariantSubject.asObservable();
   error$ = new Subject<string>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  createProductVariant(productVariant: ProductVariant): Observable<ProductVariant> {
-    return this.http.post(`${environment.apiUrl}/productVariant`, productVariant).pipe(
-      map((res: any) => {
-        this.productVariantSubject.next(res.data);
-        return res.data;
-      }),
-
-      catchError((err) => {
-        console.log(err);
-        this.error$.next(err.message);
-        throw err;
+  createProductVariant(
+    productVariant: ProductVariant
+  ): Observable<ProductVariant> {
+    return this.http
+      .post(`${environment.apiUrl}/productVariant`, productVariant, {
+        withCredentials: true,
       })
-    );
+      .pipe(
+        map((res: any) => {
+          this.productVariantSubject.next(res.data);
+          return res.data;
+        }),
+
+        catchError((err) => {
+          this.error$.next(err.message);
+          throw err;
+        })
+      );
   }
 }
