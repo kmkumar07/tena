@@ -157,6 +157,7 @@ export class EditProductComponent implements OnInit {
           this.imageUrl = res.data.blobURL;
           console.log(this.imagePath,this.imageUrl );
           this.uploadLogo=true;
+          this.deleteBlob=false;
         },
       });
   }
