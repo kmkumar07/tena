@@ -69,9 +69,9 @@
                     </ng-container>
                   </mat-error>
                 </mat-form-field>
-                <div  class="text-fix" *ngIf="featuresSearchDataLength ==true">
+                <mat-error *ngIf="featuresSearchDataLength ==true&&search.length>0"class="custom-error">
                   This name is not available. Please choose another name.
-                </div>
+             </mat-error>
               </div>
               <div class="input-wrapper">
                 <div class="flex align-center mb-2">
@@ -568,8 +568,8 @@
               !featureForm.valid &&
               !featureForm.get('productID')?.value &&
               this.featureForm.value.type !== 'switch' &&
-              this.featureForm.value.type !== 'custom'
-            "
+              this.featureForm.value.type !== 'custom'||featuresSearchDataLength ==true
+              ||validateUnit==true||validateUnitValue==true"
           >
             Create
           </button>

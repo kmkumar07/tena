@@ -5,7 +5,7 @@
         <div class="flex align-center">
           <mat-icon class="material-symbols-outlined pointer mr-1" color="primary"
             [routerLink]="'/products'">keyboard_backspace</mat-icon>
-          <p class="mat-headline-5 text-purple-lighten-1">Create Product</p>
+          <p class="mat-headline-5 text-purple-lighten-1">Update Product</p>
         </div>
       </div>
     </div>
@@ -132,11 +132,14 @@
         </div>
         <div class="user-img-wrapper flex align-center mt-5">
           <div class="user-avatar flex align-center justify-center">
-            <ng-container *ngIf="imageUrl">
-              <img src="{{ imagePath + imageUrl }}" alt="{{ imageName }}" />
-            </ng-container>
-            <ng-container *ngIf="!imageUrl">
-              <p class="mat-body-1 mb-0">LOGO</p>
+            <ng-container *ngIf="getProductImageUrl.length>1&&deleteBlob==false&&uploadLogo==false">
+              <img src="{{ imagePath + getProductImageUrl }}" alt="" />      
+                  </ng-container>
+                  <ng-container *ngIf="imageUrl&&deleteBlob==false&&uploadLogo==true">
+                    <img src="{{ imagePath + imageUrl }}" alt="" />      
+                        </ng-container>
+            <ng-container *ngIf="!imageName||deleteBlob==true">
+              <p class="mat-body-1 mb-0 mr-4">LOGO</p>
             </ng-container>
           </div>
           <div class="ml-6">

@@ -31,6 +31,8 @@ import { GlobalService } from 'src/app/core/services/global.service';
 export class EditProductComponent implements OnInit {
   imageName: string = '';
   imageUrl: string = '';
+  deleteBlob:boolean=false;
+  uploadLogo:boolean=false;
   isImageUploaded: boolean = false;
   getProductImageUrl: string;
   environment = environment;
@@ -40,6 +42,8 @@ export class EditProductComponent implements OnInit {
   productsData = [];
   status: boolean;
   imageUrlName: string;
+  receivedCroppedImage: string;
+  dialogRef: any;
   uploadMessage: string = '';
   uploadSuccess: boolean = false;
   postForm = this.formBuilder.group({
@@ -71,8 +75,20 @@ export class EditProductComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     this.productService.getProductById(id).subscribe((data) => {
       this.populateForm(data);
+      console.log(data);
+      
       this.getProductImageUrl = data.imageUrl;
       this.imagePath = this.environment.blobStorage;
+      console.log(this.imagePath,this.getProductImageUrl);
+      this.productService.croppedImage$.subscribe((croppedImage) => {
+        // Handle cropped image data
+        this.receivedCroppedImage = croppedImage;
+      });
+  
+      this.productService.imageName$.subscribe((imageName) => {
+        // Handle image name
+        this.imageName = imageName;
+      });
     });
   }
   startMessageTimer(): void {
@@ -85,12 +101,14 @@ export class EditProductComponent implements OnInit {
 
   onSubmit() {
     this.global.showLoader();
-    this.postForm.get('imageUrl')?.setValue(this.getProductImageUrl);
+    this.postForm.get('imageUrl')?.setValue(this.imageUrl);
     const status = this.postForm.value.status ? 'active' : 'draft';
     const product = {
       ...this.postForm.value,
       status: status,
     };
+    console.log(product);
+    
     this.subscription = this.productService
       .editProduct(this.postForm.value.productId, product)
       .subscribe({
@@ -112,47 +130,54 @@ export class EditProductComponent implements OnInit {
     this.router.navigate(['/products']);
   }
 
+
   openDialog() {
-    this.dialog.open(DialogAnimaComponent, {
+    this.dialogRef = this.dialog.open(DialogAnimaComponent, {
       width: '700px',
     });
-  }
+    this.dialogRef.afterClosed().subscribe((res: any) => {
+      if (res) {
+        this.imagePath = environment.blobStorage;
 
-  // openDialog(
-  //   enterAnimationDuration: string,
-  //   exitAnimationDuration: string
-  // ): void {
-  //   const dialogRef = this.dialog.open(DialogAnimationsDialog, {
-  //     width: '700px',
-  //     enterAnimationDuration,
-  //     exitAnimationDuration,
-  //   });
-  //   dialogRef.componentInstance.saveSuccess.subscribe(
-  //     (data: { imageUrl: string; imageName: string }) => {
-  //       this.getProductImageUrl = data.imageUrl;
-  //       this.imageName = data.imageName;
-  //       this.imagePath = environment.blobStorage;
-  //       this.uploadSuccess = true;
-  //       this.uploadMessage = 'Image upload successful';
-  //       this.startMessageTimer();
-  //     }
-  //   );
-  //   dialogRef.componentInstance.saveError.subscribe((res: any) => {
-  //     this.uploadSuccess = false;
-  //     this.uploadMessage = 'Image upload failed. Please try again.';
-  //     this.startMessageTimer();
-  //   });
-  // }
+        this.uploadlogoSave();
+      }
+    });
+  }
+  async uploadlogoSave() {
+    const payload = {
+      image: this.receivedCroppedImage,
+      imageName: this.imageName,
+    };
+    console.log(payload);
+    
+    this.subscription = await this.productService
+      .uploadImage(payload)
+      .subscribe({
+        next: (res) => {
+          this.imageUrl = res.data.blobURL;
+          console.log(this.imagePath,this.imageUrl );
+          this.uploadLogo=true;
+          this.deleteBlob=false;
+        },
+      });
+  }
+ 
   deleteImage() {
     const imageUrlparts = this.getProductImageUrl?.split('/saasframework/');
+    console.log("imageUrlparts",imageUrlparts);
+
     const extractedImagePart = decodeURIComponent(imageUrlparts[1]);
     const removeImagePayload = {
       image: extractedImagePart,
     };
+    console.log(removeImagePayload);
+
     this.productService.removeImage(removeImagePayload).subscribe((res) => {
-      this.getProductImageUrl = res.data.blobURL;
-      this.imageName = res.data.blobName;
-      this.imagePath = '';
+      this.imageName = res.data.blobURL;
+      this.deleteBlob=res.data.deleteBlob
+      console.log(this.imageName, this.deleteBlob);
+      
+      this.imageUrl = ' ';      
       this.uploadMessage = 'Image removed successfully.';
       this.startMessageTimer();
     });
@@ -181,6 +206,8 @@ export class EditProductComponent implements OnInit {
       status: this.status,
       imageUrl: res.imageUrl,
     });
+    console.log(res.imageUrl,this.postForm.value);
+    
   }
   ngOnDestroy(): void {
     if (this.subscription) {

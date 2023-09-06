@@ -46,6 +46,7 @@
                     productForm.controls['name'].invalid &&
                     productForm.controls['name'].touched 
                   ">
+                  
                   <ng-container *ngIf="productForm.controls['name'].errors['required']">
                     Name is required and cannot be left empty.
                   </ng-container>
@@ -55,12 +56,11 @@
                   <ng-container *ngIf="productForm.controls['name'].errors['pattern']">
                     Name cannot contain special characters.
                   </ng-container>
-                
-                </mat-error>
+                </mat-error>        
               </mat-form-field>
-              <div  class="text-fix" *ngIf="productsSearchDataLength ==true">
-                This name is not available. Please choose another name.
-              </div>
+              <mat-error *ngIf="productsSearchDataLength ==true&&search.length>0"class="custom-error">
+                    This name is not available. Please choose another name.
+              </mat-error>
             </div>
             <div>
               <div class="flex align-center mb-2">
@@ -140,12 +140,12 @@
         </div>
         <div class="user-img-wrapper flex align-center mt-5">
           <div class="user-avatar flex align-center justify-center">
-            <ng-container *ngIf="imageUrl">
+            <ng-container *ngIf="imageUrl &&deleteBlob==false">
               <img src="{{ imagePath + imageUrl }}" alt="" />
             </ng-container>
-            <template *ngIf="!imageUrl">
-              <p class="mat-body-1 mb-0">LOGO</p>
-            </template>
+            <ng-container *ngIf="!imageName||deleteBlob==true">
+              <p class="mat-body-1 mb-0 mr-4">LOGO</p>
+            </ng-container>
           </div>
           <div class="ml-6">
             <div class="upload-actions">
@@ -174,7 +174,7 @@
           <button mat-stroked-button color="primary" class="mr-2 large" [mat-dialog-close]="true" (click)="onDelete()">
             Back
           </button>
-          <button mat-flat-button color="primary" class="large" type="submit" [disabled]="productForm.invalid"
+          <button mat-flat-button color="primary" class="large" type="submit" [disabled]="productForm.invalid ||productsSearchDataLength ==true"
             (click)="onSubmit()">
             Create
           </button>
