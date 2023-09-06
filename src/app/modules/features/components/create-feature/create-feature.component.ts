@@ -15,7 +15,15 @@ import {
 import getUniqueId from 'src/app/core/utils/functions/getUniqueId';
 import { FeatureService } from '../../services/feature.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, distinctUntilChanged, map, Observable, startWith, Subject, Subscription } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  startWith,
+  Subject,
+  Subscription,
+} from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -40,6 +48,8 @@ export class CreateFeatureComponent {
   preName: string = '';
   postName: string = '';
   position: any;
+  validateUnit: boolean = false;
+  validateUnitValue: boolean = false;
   unlimitedButtonLabel: string = 'Set Unlimited';
   PageNumber: any = '';
   limit: any = '';
@@ -55,11 +65,11 @@ export class CreateFeatureComponent {
   private searchQueryChanged: Subject<string> = new Subject<string>();
   private searchSubscription: Subscription;
   searchQuery: string;
-  features:any;
-  featuresSearchData:any;
+  features: any;
+  featuresSearchData: any;
   NumberOfPage: any = '';
   NumberOfLimit: any = '';
-  featuresSearchDataLength:boolean;
+  featuresSearchDataLength: boolean;
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -97,23 +107,22 @@ export class CreateFeatureComponent {
             map((value) => this.filterProducts(value || ''))
           );
       });
-      this.sortBy = 'createdOn';
-      this.sortOrder = 'desc';
-      this.searchSubscription = this.searchQueryChanged
-        .pipe(debounceTime(500), distinctUntilChanged())
-        .subscribe((value) => {
-          this.search = value;
-          if(this.search){
-            this.getSearchFeature(
-              this.NumberOfPage,
-              this.NumberOfLimit,
-              this.search,
-              this.sortBy,
-              this.sortOrder
-            );
-          }
-       
-        });
+    this.sortBy = 'createdOn';
+    this.sortOrder = 'desc';
+    this.searchSubscription = this.searchQueryChanged
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((value) => {
+        this.search = value;
+        if (this.search) {
+          this.getSearchFeature(
+            this.NumberOfPage,
+            this.NumberOfLimit,
+            this.search,
+            this.sortBy,
+            this.sortOrder
+          );
+        }
+      });
     this.feature();
     this.featureForm.controls['name'].valueChanges.subscribe((value) => {
       const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
@@ -148,8 +157,8 @@ export class CreateFeatureComponent {
             this.featuresSearchData.forEach((feature) => {
               if (this.search === feature.name) {
                 this.featuresSearchDataLength = true;
-                    return;
-              } 
+                return;
+              }
             });
             this.global.hideLoader();
           }
@@ -182,13 +191,41 @@ export class CreateFeatureComponent {
       levels: this.formBuilder.array([
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
-          name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
+          value: [
+            '',
+            [
+              Validators.required,
+              Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+              Validators.maxLength(50),
+            ],
+          ],
+          name: [
+            '',
+            [
+              Validators.required,
+              Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+              Validators.maxLength(50),
+            ],
+          ],
         }),
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
-          name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
+          value: [
+            '',
+            [
+              Validators.required,
+              Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+              Validators.maxLength(50),
+            ],
+          ],
+          name: [
+            '',
+            [
+              Validators.required,
+              Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+              Validators.maxLength(50),
+            ],
+          ],
         }),
       ]),
     });
@@ -208,8 +245,22 @@ export class CreateFeatureComponent {
         this.position,
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
-          name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
+          value: [
+            '',
+            [
+              Validators.required,
+              Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+              Validators.maxLength(50),
+            ],
+          ],
+          name: [
+            '',
+            [
+              Validators.required,
+              Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+              Validators.maxLength(50),
+            ],
+          ],
         })
       );
     } else {
@@ -218,8 +269,22 @@ export class CreateFeatureComponent {
         this.position,
         this.formBuilder.group({
           isUnlimited: [false],
-          value: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
-          name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/), Validators.maxLength(50)]],
+          value: [
+            '',
+            [
+              Validators.required,
+              Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+              Validators.maxLength(50),
+            ],
+          ],
+          name: [
+            '',
+            [
+              Validators.required,
+              Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+              Validators.maxLength(50),
+            ],
+          ],
         })
       );
     }
@@ -265,6 +330,10 @@ export class CreateFeatureComponent {
   setName(index: number) {
     this.postName = this.featureForm.value.unit;
     this.preName = this.featureForm.value.levels[index].value;
+    this.validateUnitValue = false;
+    if (this.preName.length > 50) {
+      this.validateUnitValue = true;
+    }
     if (this.preName.length > 0) {
       if (this.postName === null) {
         this.displayName = this.preName;
@@ -287,6 +356,10 @@ export class CreateFeatureComponent {
 
   setNameUnit() {
     const unitValue = this.featureForm.value.unit;
+    this.validateUnit = false;
+    if (unitValue.length > 50) {
+      this.validateUnit = true;
+    }
     const levels = this.featureForm.get('levels');
 
     levels.value.forEach((level: any, index: number) => {
@@ -406,7 +479,7 @@ export class CreateFeatureComponent {
       },
     });
   }
-// sample data code
+  // sample data code
   switchSample() {
     this.featureForm.removeControl('unit');
     this.isRangeSelected = false;

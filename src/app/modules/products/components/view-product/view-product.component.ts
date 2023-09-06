@@ -44,7 +44,9 @@ export class ViewProductComponent {
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
     this.productService.getProductById(this.id).subscribe((res) => {
+      if(res){
       this.productDetail = res;
+      
       this.productId = this.productDetail?.productId;
       this.name = this.productDetail?.name;
       this.description = this.productDetail?.description;
@@ -57,7 +59,10 @@ export class ViewProductComponent {
         ));
       this.imagePath = this.environment.blobStorage;
       this.feature = this.productDetail?.feature || [];
-    });
+      console.log( this.imageUrl);
+
+   } });
+  
   }
 
   navigateToFeatures(productId) {

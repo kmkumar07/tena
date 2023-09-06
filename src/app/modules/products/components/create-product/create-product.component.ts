@@ -50,6 +50,7 @@ export class CreateProductComponent implements OnInit {
   imageName: string = '';
   data: string = '';
   imagePath: string = '';
+  deleteBlob: boolean = false;
   uploadMessage: string = '';
   uploadSuccess: boolean = false;
   error: string;
@@ -84,7 +85,7 @@ export class CreateProductComponent implements OnInit {
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
         this.search = value;
-        if (this.search) {
+        if (this.search.length > 0) {
           this.getSearchProduct(
             this.PageNumber,
             this.limit,
@@ -96,12 +97,10 @@ export class CreateProductComponent implements OnInit {
       });
 
     this.productService.croppedImage$.subscribe((croppedImage) => {
-      // Handle cropped image data
       this.receivedCroppedImage = croppedImage;
     });
 
     this.productService.imageName$.subscribe((imageName) => {
-      // Handle image name
       this.imageName = imageName;
     });
 
@@ -188,6 +187,7 @@ export class CreateProductComponent implements OnInit {
         this.navigateToViewProduct(res);
       },
       error: (error: any) => {
+        this.global.hideLoader();
         this.error = error?.error?.message || 'Database error';
         this.snackBar.open(this.error, '', {
           duration: 5000,
@@ -245,6 +245,7 @@ export class CreateProductComponent implements OnInit {
 
     this.productService.removeImage(removeImagePayload).subscribe((res) => {
       this.imageName = res.data.blobURL;
+      this.deleteBlob = res.data.deleteBlob;
       this.imageUrl = ' ';
       this.uploadMessage = 'Image removed successfully.';
       this.startMessageTimer();

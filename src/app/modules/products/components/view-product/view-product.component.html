@@ -16,8 +16,8 @@
     <div class="flex align-end justify-between inner-block">
       <div class="brand-info flex align-center">
         <div class="product-img mr-4 border-2"
-          *ngIf="productDetail?.imageUrl && productDetail.imageUrl.length > 1;else uploadImage">
-          <img src="{{ imagePath + imageUrl }}" alt="{{imageName}}" />
+          *ngIf="productDetail.imageUrl.length>1;else uploadImage">
+          <img src="{{ imagePath + imageUrl }}" alt="" />
         </div>
         <ng-template #uploadImage>
           <div class="productImg-wrapper">
@@ -58,7 +58,7 @@
     <div class="product-features">
       <div class="flex justify-between align-center py-2">
         <h4 class="mat-subtitle-2 text-headline-dark font-weight-500 mb-0">Features</h4>
-        <button mat-button color="primary" class="small-font-14" (click)="navigateToFeatures(productId)">
+        <button mat-button color="primary" class=",small-font-14" (click)="navigateToFeatures(productId)">
           Create Features
         </button>
       </div>
