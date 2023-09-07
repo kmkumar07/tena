@@ -16,7 +16,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SetPricePopupComponent } from 'src/app/shared/components/dialog-box/set-price-popup/set-price-popup.component';
 import { ProductDetailsPopupComponent } from 'src/app/shared/components/dialog-box/product-details-popup/product-details-popup.component';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
-import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { AddonDetailsPopupComponent } from 'src/app/shared/components/dialog-box/addon-details-popup/addon-details-popup.component';
 import { NewChargePopupComponent } from 'src/app/shared/components/dialog-box/new-charge-popup/new-charge-popup.component';
 
@@ -107,7 +106,6 @@ export class CreatePlanComponent implements OnInit {
     this.planDetails();
     this.planId = this.route.snapshot.params['id'];
     this.getPlanById(this.planId);
-
     this.planService.plan$.subscribe((data) => {
       if (data) {
         this.productDetails = data;
@@ -411,9 +409,18 @@ export class CreatePlanComponent implements OnInit {
       }
     });
   }
-  addProductDetails() {
-    this.dialog.open(ProductDetailsPopupComponent, {
+  addProductDetails(planId: string) {
+    const dialogRef = this.dialog.open(ProductDetailsPopupComponent, {
       width: '800px',
+      data: {
+        module: 'Plan',
+        planId: planId,
+      },
+    });
+    dialogRef.afterClosed().subscribe((res: any) => {
+      if (res) {
+        this.getPlanById(planId);
+      }
     });
   }
   editPlansDetails(id: string) {
@@ -427,21 +434,15 @@ export class CreatePlanComponent implements OnInit {
     this.router.navigate([`/plans/create/${id}`]);
   }
 
-  deleteSuccess(id: string) {
-    const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
-      width: '422px',
-      panelClass: 'dialog-curved',
-      data: {
-        module: 'Plan',
-        deleteId: id,
-      },
-    });
-    this.navigateToGetAllPlans();
-  }
   sendElementId(planId: string) {
     this.planService.deletePlan(planId).subscribe({
       next: (res) => {
-        this.deleteSuccess(planId);
+        this.navigateToGetAllPlans();
+        this.snackBar.open('Plan deleted successfully', '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
       },
       error: (error: any) => {
         this.snackBar.open(error?.message, '', {

@@ -104,15 +104,12 @@
             </div>
             <mat-form-field appearance="outline" class="border-2 mb-0">
               <!-- <mat-label> Select </mat-label> -->
-              <mat-select
-                required
-                formControlName="productID"
-                placeholder="select"
-              >
-                <mat-option [value]="selectedproductName">
-                  {{ selectedproductName }}
-                </mat-option>
-              </mat-select>
+              <input
+              type="text"
+              formControlName="productID"
+              matInput
+              placeholder="Enter Product Name"
+            />
             </mat-form-field>
           </div>
           <div class="input-wrapper">

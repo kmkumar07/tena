@@ -1,15 +1,9 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeatureService } from 'src/app/modules/features/services/feature.service';
-import {
-  MatDialogRef,
-  MatDialog,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Status, selectOptions } from 'src/app/shared/constants/consants';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export interface DialogData {
   featureId: string;
@@ -34,9 +28,9 @@ export class FeatureDetailsPopupComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private route: ActivatedRoute,
+
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
-
 
   ngOnInit() {
     this.featureService
@@ -93,5 +87,7 @@ export class FeatureDetailsPopupComponent implements OnInit {
       ]),
     });
   }
-
+  onCancelClick(): void {
+    this.dialog.closeAll();
+  }
 }

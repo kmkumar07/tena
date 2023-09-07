@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {
   Data_Type,
@@ -12,7 +12,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import getUniqueId from 'src/app/core/utils/functions/getUniqueId';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
@@ -21,7 +20,6 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FeatureService } from 'src/app/modules/features/services/feature.service';
 import { Inject } from '@angular/core';
-import { GlobalService } from 'src/app/core/services/global.service';
 
 export interface menuOptions {
   value: number;
@@ -75,6 +73,7 @@ export class FeaturesPopupComponent {
   ) {
     this.selectedproductName = data.productId;
     this.featureUpdatedata=data.feature
+console.log(this.selectedproductName);
 
   }
 
@@ -106,7 +105,7 @@ export class FeaturesPopupComponent {
   featureFormData() {
     this.featureForm = this.formBuilder.group({
       featureId: ['', Validators.required],
-      productID: ['', Validators.required],
+      productID: [this.selectedproductName, Validators.required],
       name: [
         '',
         [

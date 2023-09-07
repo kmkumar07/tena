@@ -15,7 +15,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { PlanService } from '../../services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
-import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { noPlans, plansFields } from 'src/app/shared/constants/consants';
 
 @Component({
@@ -46,9 +45,9 @@ export class PlansListingComponent implements OnDestroy {
   allPlansData: number = 0;
   displayedColumns: string[] = [
     'plan_ID',
-    'external_name',
-    'internal_name',
-    'created_at',
+    'externalName',
+    'internalName',
+    'createdOn',
     'status',
     'action',
   ];
@@ -162,14 +161,14 @@ export class PlansListingComponent implements OnDestroy {
           this.plansData = data.data;
           this.plansSearchData = this.plansData.plans;
 
-          if (this.search.length > 0) {
+          if (search.length > 0) {
             this.totalNumberOfPlanBySearch = this.plansData.totalCount;
             this.plansearchDataNextPage =
-              this.totalNumberOfPlanBySearch <= this.limit;
+              this.totalNumberOfPlanBySearch <= limit;
           } else {
             this.totalNumberOfPlan = this.plansData.totalCount;
             this.plansearchDataNextPage = false;
-            this.totalPages = Math.ceil(this.totalNumberOfPlan / this.limit);
+            this.totalPages = Math.ceil(this.totalNumberOfPlan / limit);
             this.hasNextPage = pageNumber < this.totalPages;
           }
 
@@ -216,7 +215,18 @@ export class PlansListingComponent implements OnDestroy {
   onDelete(id: string) {
     this.plans.deletePlan(id).subscribe({
       next: (res) => {
-        this.deleteSuccess(id);
+        this.getPlans(
+          this.pageNumber,
+          this.limit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
+        this.snackBar.open('Plan deleted successfully', '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
       },
       error: (error: any) => {
         this.snackBar.open(error?.message, '', {
@@ -225,30 +235,6 @@ export class PlansListingComponent implements OnDestroy {
           horizontalPosition: 'right',
         });
       },
-    });
-  }
-
-  // Handle delete success
-  deleteSuccess(id: string) {
-    const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
-      width: '422px',
-      panelClass: 'dialog-curved',
-      data: {
-        module: 'Plan',
-        deleteId: id,
-      },
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      if (this.planLength === 0 && this.pageNumber > 1) {
-        this.onPrevious();
-      }
-      this.getPlans(
-        this.pageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
-      );
     });
   }
 
