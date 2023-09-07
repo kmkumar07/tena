@@ -88,14 +88,17 @@
   .form-block {
     .user-avatar {
       min-height: 7.5rem;
+      height: 7.5rem;
       min-width: 7.5rem;
-      object-fit: contain;
+      width: 7.5rem;
       background-color: color("grey", "lighten-8");
       border-radius: 50%;
       overflow: hidden;
       @media only screen and (max-width: 80rem) {
         min-height: 5rem;
+        height: 5rem;
         min-width: 5rem;
+        width: 5rem;
       }
       img {
         width: 100%;
