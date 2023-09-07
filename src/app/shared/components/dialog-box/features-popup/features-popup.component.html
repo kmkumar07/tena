@@ -103,9 +103,9 @@
               </ng-template>
             </div>
             <mat-form-field appearance="outline" class="border-2 mb-0">
-              <!-- <mat-label> Select </mat-label> -->
               <input
               type="text"
+              readonly="productID"
               formControlName="productID"
               matInput
               placeholder="Enter Product Name"
@@ -368,14 +368,6 @@
                     </div>
                   </div>
                   <button
-                    *ngIf="i == 0"
-                    mat-stroked-button
-                    disableRipple
-                    class="upper-case primary light medium px-1 ml-2 text-grey-darken"
-                  >
-                    Default
-                  </button>
-                  <button
                     *ngIf="
                       levels.controls.length > 1 &&
                       i < levels.controls.length - 1 &&
@@ -387,14 +379,6 @@
                     (click)="deleteLevels(i)"
                   >
                     Remove
-                  </button>
-                  <button
-                    *ngIf="i == levels.controls.length - 1"
-                    mat-stroked-button
-                    disableRipple
-                    class="upper-case primary light medium px-1 ml-2 text-grey-darken"
-                  >
-                    Maximum
                   </button>
                 </div>
               </ng-container>
