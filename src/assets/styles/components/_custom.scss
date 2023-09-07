@@ -81,7 +81,7 @@
   padding: 2.1875rem  2.5rem;
   max-width: 69.5625rem;
   width: 100%;
-  @media only screen and (max-width: 80rem) {
+  @media only screen and (max-width: 85rem) {
   max-height: 85vh;
   overflow: auto;
   max-width: 55rem;
@@ -98,7 +98,7 @@
   .form-outer{
     min-width: calc(100% - 19rem);
     width: 100%;
-    @media only screen and (max-width: 80rem) {
+    @media only screen and (max-width: 85rem) {
       padding-right: .4375rem !important;
       .header-section{
         padding-right: .4375rem !important;
@@ -106,9 +106,9 @@
     }
   }
   .form-left {
-    max-height: 57vh;
+    max-height: 572px;
     overflow: auto;
-    @media only screen and (max-width: 80rem) {
+    @media only screen and (max-width: 85rem) {
       max-height: 60vh;
       padding-right: 8px !important;
       .action-btns{
@@ -142,7 +142,7 @@
       }
       .info-wrapper{
         padding: 0 .875rem 0 1.5rem;
-        @media only screen and (max-width: 80rem) {
+        @media only screen and (max-width: 85rem) {
           max-height: 63vh;
           overflow: auto;
         }
