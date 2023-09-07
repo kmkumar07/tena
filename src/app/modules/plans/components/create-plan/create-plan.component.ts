@@ -106,7 +106,6 @@ export class CreatePlanComponent implements OnInit {
     this.planDetails();
     this.planId = this.route.snapshot.params['id'];
     this.getPlanById(this.planId);
-
     this.planService.plan$.subscribe((data) => {
       if (data) {
         this.productDetails = data;
@@ -410,9 +409,18 @@ export class CreatePlanComponent implements OnInit {
       }
     });
   }
-  addProductDetails() {
+  addProductDetails(planId: string) {
     const dialogRef = this.dialog.open(ProductDetailsPopupComponent, {
       width: '800px',
+      data: {
+        module: 'Plan',
+        planId: planId,
+      },
+    });
+    dialogRef.afterClosed().subscribe((res: any) => {
+      if (res) {
+        this.getPlanById(planId);
+      }
     });
   }
   editPlansDetails(id: string) {
