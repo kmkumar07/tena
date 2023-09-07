@@ -185,7 +185,7 @@
                             Whiteboard
                           </h5>
                           <a class="mat-subtitle-2 text-blue-darken font-weight-500" (click)="editFeatureDetails()"> {{
-                            feature?.value}}</a>
+                            feature?.value === 'true' ? 'Available' : 'Not Available' }}</a>
                         </div>
                         <div class="info-details">
                           <h5 class="mat-subtitle-2 text-grey-darken mb-1">
