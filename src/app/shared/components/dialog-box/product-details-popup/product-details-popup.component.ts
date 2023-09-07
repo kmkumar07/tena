@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { ProductDetailsService } from 'src/app/modules/plans/services/product-details.service';
 import { Status, selectOptions } from 'src/app/shared/constants/consants';
@@ -78,6 +78,7 @@ export class ProductDetailsPopupComponent {
   filteredFeatures = [];
   selectedFeatures: PeriodicElement[] = [];
   productId: string = '';
+  planId: string= '';
   isProductSelected: boolean = false;
   isButtonDisabled: boolean = true;
   selectedOption: boolean;
@@ -105,7 +106,9 @@ export class ProductDetailsPopupComponent {
     private productService: ProductsService,
     private productDetailsService: ProductDetailsService,
     private global: GlobalService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA)
+    public data: { planId: any }
   ) {}
 
   displayedColumns: string[] = [
@@ -119,11 +122,14 @@ export class ProductDetailsPopupComponent {
 
   formGroup = this.formBuilder.group({
     productID: [''],
+    planID:[''],
     productName: [''],
     description: [''],
+    status: [''],
   });
 
   ngOnInit() {
+    this.planId = this.data.planId;
     this.getProduct(this.PageNumber, this.limit, this.search);
     this.productService.product$.subscribe((data) => {
       if (data) {
@@ -252,6 +258,7 @@ export class ProductDetailsPopupComponent {
     const payload = {
       productVariantId: productVariantId,
       name: productVariantName,
+      planId: this.planId,
       productID: this.productId,
       type: 'base',
       features: features,
