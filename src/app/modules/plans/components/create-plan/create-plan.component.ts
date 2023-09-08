@@ -187,6 +187,7 @@ export class CreatePlanComponent implements OnInit {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
           if (res) {
+            this.global.hideLoader();
             this.plandataById = res.data;
             this.updatePricingData(res.data.pricing);
             this.setPricing(this.pricingData);
@@ -197,6 +198,7 @@ export class CreatePlanComponent implements OnInit {
     } else {
       this.stepOneCompleted = false;
       this.editable = false;
+      this.global.hideLoader();
     }
   }
 
@@ -208,6 +210,7 @@ export class CreatePlanComponent implements OnInit {
         .getPriceById(id)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
+          this.global.hideLoader();
           this.pricedataById = res.data;
           this.setPricing(this.pricedataById);
           this.editable = true;
@@ -215,6 +218,7 @@ export class CreatePlanComponent implements OnInit {
     } else {
       this.stepOneCompleted = false;
       this.editable = false;
+      this.global.hideLoader();
     }
   }
 
@@ -334,6 +338,7 @@ export class CreatePlanComponent implements OnInit {
     });
   }
   deletePrice(pricingId: string) {
+    
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       width: '420px',
       panelClass: 'dialog-curved',
@@ -474,9 +479,39 @@ export class CreatePlanComponent implements OnInit {
       width: '800px',
     });
   }
-  deleteFeatureDetails() {
-    this.dialog.open(FeatureDetailsPopupComponent, {
-      width: '800px',
+  sendproductVariantId(productVariantId: string) {
+    this.planService.deleteProductVariant(productVariantId).subscribe({
+      next: (res) => {
+        this.navigateToGetAllPlans();
+        this.snackBar.open('productVariant deleted successfully', '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+      },
+      error: (error: any) => {
+        this.snackBar.open(error?.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+      },
+    });
+  }
+  deleteProductVariantDetails(productVariantId) {
+    this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      width: '420px',
+      panelClass: 'dialog-curved',
+      data: {
+        module: 'productVariantId',
+        deleteId: productVariantId,
+      },
+    });
+
+    this.dialogRef.afterClosed().subscribe((res: any) => {
+      if (res) {
+        this.sendproductVariantId(productVariantId);
+      }
     });
   }
   addOnDetails() {
