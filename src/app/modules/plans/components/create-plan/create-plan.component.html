@@ -265,10 +265,8 @@
                     </div>
                     <div class="mt-2">
                       <div>
-                        <h6
-                          class="mat-subtitle-2 font-weight-500 text-blue-darken mb-1"
-                        >
-                          {{ variant.name }}
+                        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-1">
+                          {{variant.productVariantId}}
                         </h6>
                         <span
                           class="mat-body-1 font-weight-500 text-blue-darken"
@@ -276,42 +274,14 @@
                           included</span
                         >
                       </div>
-                      <div
-                        class="flex mt-3"
-                        *ngFor="let feature of variant.productVariantFeature"
-                      >
-                        <div class="info-details">
+                      <div class="flex mt-3">
+                        <div class="info-details"  *ngFor="let feature of variant.productVariantFeature">
                           <h5 class="mat-subtitle-2 text-grey-darken mb-1">
-                            Whiteboard
+                            {{feature.featureName}}
                           </h5>
-                          <a
-                            class="mat-subtitle-2 text-blue-darken font-weight-500"
-                            (click)="editFeatureDetails()"
-                          >
-                            {{
-                              feature?.value === "true"
-                                ? "Available"
-                                : "Not Available"
-                            }}</a
-                          >
-                        </div>
-                        <div class="info-details">
-                          <h5 class="mat-subtitle-2 text-grey-darken mb-1">
-                            Email support
-                          </h5>
-                          <a
-                            class="mat-subtitle-2 text-blue-darken font-weight-500"
-                            >All Week</a
-                          >
-                        </div>
-                        <div class="info-details">
-                          <h5 class="mat-subtitle-2 text-grey-darken mb-1">
-                            User License
-                          </h5>
-                          <a
-                            class="mat-subtitle-2 text-blue-darken font-weight-500"
-                            >10 License</a
-                          >
+                          <a class="mat-subtitle-2 text-blue-darken font-weight-500" (click)="editFeatureDetails()">{{
+                            feature?.value === 'true' ? 'Available' : feature?.value === 'false' ? 'Not Available' : feature.value
+                            }}</a>
                         </div>
                       </div>
                     </div>
@@ -358,7 +328,7 @@
     <div class="mt-4"></div>
 
     <!-- addon  details -->
-    <div class="addon-detail p-10 border-2 main-bg mb-4 basic-border">
+    <!-- <div class="addon-detail p-10 border-2 main-bg mb-4 basic-border">
       <div class="heading flex justify-between pb-3">
         <div class="flex align-center">
           <div class="icon-img mr-4">
@@ -495,14 +465,10 @@
               <span class="mat-subtitle-2 text-headline-dark">USD</span>
             </div>
             <div class="table-wrapper mt-3 small-table">
-              <table mat-table [dataSource]="dataSource" class="">
-                <!-- PricingCycle Column -->
-                <ng-container matColumnDef="PricingCycle">
-                  <th
-                    mat-header-cell
-                    *matHeaderCellDef
-                    class="mat-body-1 text-blue-darken"
-                  >
+              <table mat-table [dataSource]="dataSource" class=""> -->
+    <!-- PricingCycle Column -->
+    <!-- <ng-container matColumnDef="PricingCycle">
+                  <th mat-header-cell *matHeaderCellDef class="mat-body-1 text-blue-darken">
                     Pricing Cycle
                   </th>
                   <td
@@ -512,15 +478,11 @@
                   >
                     {{ element.PricingCycle }}
                   </td>
-                </ng-container>
+                </ng-container> -->
 
-                <!-- Price Column -->
-                <ng-container matColumnDef="Price">
-                  <th
-                    mat-header-cell
-                    *matHeaderCellDef
-                    class="mat-body-1 text-blue-darken"
-                  >
+    <!-- Price Column -->
+    <!-- <ng-container matColumnDef="Price">
+                  <th mat-header-cell *matHeaderCellDef class="mat-body-1 text-blue-darken">
                     Price
                   </th>
                   <td
@@ -554,10 +516,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Charges -->
-    <div class="charges-block p-10 border-2 main-bg mb-4 basic-border">
+    <!-- <div class="charges-block p-10 border-2 main-bg mb-4 basic-border">
       <div class="heading flex justify-between align-center pb-3">
         <div class="flex align-center">
           <div class="icon-img mr-4">
@@ -613,9 +575,9 @@
             </mat-select>
           </mat-form-field>
         </div>
-      </div>
-      <!-- setup fee inputs -->
-      <div class="fee-input-wrapper">
+      </div> -->
+    <!-- setup fee inputs -->
+    <!-- <div class="fee-input-wrapper">
         <div class="fee-input flex align-center justify-between">
           <span class="mat-subtitle-2 text-blue-darken">Setup fee</span>
           <div class="flex">
@@ -669,5 +631,4 @@
         Back to list
       </button>
     </div>
-  </div>
-</div>
+  </div> -->
