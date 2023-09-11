@@ -913,3 +913,12 @@ ul.breadcrumb {
 .inner-h{
   height: calc(100% - 5.025rem);
 }
+// snack-bar
+
+mat-snack-bar-container {
+  &.custom-class{
+    .mdc-snackbar__surface{
+      background-color: green;
+    }
+  }
+}

@@ -73,7 +73,6 @@ export class FeaturesPopupComponent {
   ) {
     this.selectedproductName = data.productId;
     this.featureUpdatedata=data.feature
-console.log(this.selectedproductName);
 
   }
 
@@ -97,7 +96,6 @@ console.log(this.selectedproductName);
       this.featureForm.controls['featureId'].setValue(idValue);
     });
     this.featureService.getFeatureById(this.featureUpdatedata.featureId).subscribe((data) => {
-      console.log(data);
       this.updateForm(data);
     });
   }
@@ -222,10 +220,10 @@ console.log(this.selectedproductName);
       this.isRangeSelected = true;
       this.featureForm.controls['unit'].reset();
       while (this.levels.length > 2) {
-        this.levels.removeAt(2); // Remove form groups starting from index 2
+        this.levels.removeAt(2); 
       }
       for (let i = 0; i < this.levels.length; i++) {
-        const formGroup = this.levels.at(i); // Get the specific form group
+        const formGroup = this.levels.at(i); 
         formGroup.patchValue({
           value: '',
           name: '',
@@ -236,7 +234,7 @@ console.log(this.selectedproductName);
       this.featureForm.controls['unit'].reset();
 
       for (let i = 0; i < this.levels.length; i++) {
-        const formGroup = this.levels.at(i); // Get the specific form group
+        const formGroup = this.levels.at(i); 
         formGroup.patchValue({
           value: '',
           name: '',
@@ -247,7 +245,6 @@ console.log(this.selectedproductName);
     }
   }
   updateForm(res: any) {
-    console.log("editable",res);
     
     this.editable = true;
     if (res.status === 'active') {
