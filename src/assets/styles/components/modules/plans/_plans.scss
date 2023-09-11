@@ -861,6 +861,7 @@
 // ProductDetails-popup
 .productDetails-popup{
  padding: 2.1875rem 1.25rem 2.1875rem 2.5rem;
+ width: 1000px;
  .heading{
   border-bottom: 0.0625rem solid $border-color;
 }
@@ -876,7 +877,7 @@
   }
 }
 .inner-block{
-  max-height: 43vh;
+  max-height: 65vh;
   overflow: auto;
 }
 .entitlements-option{

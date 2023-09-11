@@ -411,7 +411,6 @@ export class CreatePlanComponent implements OnInit {
   }
   addProductDetails(planId: string) {
     const dialogRef = this.dialog.open(ProductDetailsPopupComponent, {
-      width: '800px',
       data: {
         module: 'Plan',
         planId: planId,
