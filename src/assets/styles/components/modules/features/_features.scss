@@ -121,20 +121,20 @@
     width: 95%;
     margin: auto;
     .form-wrapper{
-      max-height: 61.2vh;
-      overflow: auto;
+      // max-height: 61.2vh;
+      // overflow: auto;
       @media only screen and (max-width: 80rem) {
-      max-height: calc(100vh - 300px);
+      // max-height: 94vh;
       padding-right: .5rem !important;
       }
     }
     .sample-right{
-      .info-form{
-        @media only screen and (max-width: 80rem) {
-          max-height: calc(100vh - 300px);
-          overflow: auto;
-        }
-      }
+      // .info-form{
+      //   @media only screen and (max-width: 80rem) {
+      //     max-height: calc(100vh - 300px);
+      //     overflow: auto;
+      //   }
+      // }
 
     }
     .footer-section {

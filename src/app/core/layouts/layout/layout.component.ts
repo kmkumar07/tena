@@ -41,6 +41,7 @@ export class LayoutComponent {
   }
 
   @ViewChild('sidenav') sidenav: MatSidenav;
+  @Output() newItemEvent = new EventEmitter<boolean>();
 
   ngOnInit() {
     this.global
@@ -54,8 +55,8 @@ export class LayoutComponent {
 
   opened: boolean = true;
   toggleSidenav(event: any) {
-    this.sidenav.toggle();
-    this.opened = event;
+    this.opened = !this.opened;
+    this.newItemEvent.emit(this.opened);
   }
   getInitials(userName: string): string {
     const names = userName.split(' ');

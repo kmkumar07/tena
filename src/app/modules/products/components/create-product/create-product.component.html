@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="flex align-start">
+    <div class="flex align-start outer-wrapper">
       <div class="form-block border-2 mr-8 p-10 main-bg wrapper-border details-block">
         <div class="pb-4 divider-bt-black">
           <h2 class="fs-xl fw-500 text-text text-dark mb-0">Basic Product Details</h2>
@@ -28,20 +28,22 @@
                   tippyName="content">help</mat-icon>
                 <ng-template #productnameinfo let-name class="t-template">
                   <div class="help-info-tooltip">
-                    <div class="heading-with-background">Product name</div>
                     <div class="details">
                       Enter a name that helps you identify this Product
                     </div>
-                    <button mat-button color="primary" class="px-0">
-                      Learn more
-                    </button>
                   </div>
                 </ng-template>
               </div>
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" class="manageSpace">
+                <div class="input-container">
                 <input matInput placeholder="Enter here..." formControlName="name"
                 [(ngModel)]="searchQuery"
                 (input)="onSearchInput()" />
+                <div class="loader" *ngIf="showLoader">
+                  <mat-spinner mode="indeterminate" style="margin:0 auto;" [diameter]="30"></mat-spinner>
+                </div>
+              </div>
+
                 <mat-error *ngIf="
                     productForm.controls['name'].invalid &&
                     productForm.controls['name'].touched 
@@ -59,8 +61,14 @@
                 </mat-error>        
               </mat-form-field>
               <mat-error *ngIf="productsSearchDataLength ==true&&search.length>0"class="custom-error">
-                    This name is not available. Please choose another name.
-              </mat-error>
+                This name is already existing. Please choose a unique name             
+               </mat-error>
+               <div *ngIf="productsSearchDataLength ==false&&search.length>0"class="custom-tick">
+                <i class="material-icons tickmark md-48">check_circle</i>
+              </div>
+              <div  *ngIf="productsSearchDataLength ==false&&search.length>0"class="space">
+
+              </div>
             </div>
             <div>
               <div class="flex align-center mb-2">
@@ -71,9 +79,8 @@
                   [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
                 <ng-template #helpinfotooltip let-name>
                   <div class="help-info-tooltip">
-                    <div class="heading-with-background">Product ID</div>
                     <div class="details">
-                      Enter a id that helps you identify this Product
+                      Enter a productId that helps you identify this Product
                     </div>
                   </div>
                 </ng-template>
@@ -141,7 +148,7 @@
         <div class="user-img-wrapper flex align-center mt-5">
           <div class="user-avatar flex align-center justify-center">
             <ng-container *ngIf="imageUrl &&deleteBlob==false">
-              <img src="{{ imagePath + imageUrl }}" alt="" />
+              <img src="{{ imagePath + imageUrl }}" alt="product-img" />
             </ng-container>
             <ng-container *ngIf="!imageName||deleteBlob==true">
               <p class="mat-body-1 mb-0 mr-4">LOGO</p>

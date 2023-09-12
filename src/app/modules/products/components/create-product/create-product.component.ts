@@ -1,11 +1,9 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
-  Output,
   ViewChild,
 } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { NgxTippyProps } from 'ngx-tippy-wrapper';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { SuccessDialogComponent } from '../../../../shared/components/dialog-box/success-dialog/success-dialog.component';
@@ -21,7 +19,7 @@ import {
   distinctUntilChanged,
 } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar} from '@angular/material/snack-bar';
 import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
@@ -49,6 +47,7 @@ export class CreateProductComponent implements OnInit {
   imageUrl: string = ' ';
   imageName: string = '';
   data: string = '';
+  showLoader = false;
   imagePath: string = '';
   deleteBlob: boolean = false;
   uploadMessage: string = '';
@@ -86,6 +85,7 @@ export class CreateProductComponent implements OnInit {
       .subscribe((value) => {
         this.search = value;
         if (this.search.length > 0) {
+          this.showLoader = true;
           this.getSearchProduct(
             this.PageNumber,
             this.limit,
@@ -131,7 +131,6 @@ export class CreateProductComponent implements OnInit {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-    this.global.showLoader();
     this.productService
       .getProducts(
         this.PageNumber,
@@ -153,7 +152,7 @@ export class CreateProductComponent implements OnInit {
                 return;
               }
             });
-            this.global.hideLoader();
+            this.showLoader = false;
           }
         }
       });
@@ -182,8 +181,15 @@ export class CreateProductComponent implements OnInit {
     };
     this.subscription = this.productService.createProduct(product).subscribe({
       next: (res) => {
+        let success = 'Product created successfully';
+        this.snackBar.open(success, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: ['custom-class'],
+        });
         this.global.hideLoader();
-        this.openSuccess();
+        //this.openSuccess();
         this.navigateToViewProduct(res);
       },
       error: (error: any) => {
@@ -231,7 +237,7 @@ export class CreateProductComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.imageUrl = res.data.blobURL;
-          this.deleteBlob=false;
+          this.deleteBlob = false;
         },
       });
   }
