@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="flex align-start">
+    <div class="flex align-start outer-wrapper">
       <div class="form-block border-2 mr-8 p-10 main-bg wrapper-border details-block">
         <div class="pb-4 divider-bt-black">
           <h2 class="fs-xl fw-500 text-text text-dark mb-0">Basic Product Details</h2>
@@ -141,7 +141,7 @@
         <div class="user-img-wrapper flex align-center mt-5">
           <div class="user-avatar flex align-center justify-center">
             <ng-container *ngIf="imageUrl &&deleteBlob==false">
-              <img src="{{ imagePath + imageUrl }}" alt="" />
+              <img src="{{ imagePath + imageUrl }}" alt="product-img" />
             </ng-container>
             <ng-container *ngIf="!imageName||deleteBlob==true">
               <p class="mat-body-1 mb-0 mr-4">LOGO</p>

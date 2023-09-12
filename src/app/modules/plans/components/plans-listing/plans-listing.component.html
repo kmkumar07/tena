@@ -101,33 +101,58 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns" [id]="row.id"></tr>
         </table>
-        <div class="flex align-center justify-between mt-4">
-          <div class="flex align-center">
-            <span>Show</span>
-            <div class="w-18 mx-2 basic-border">
-              <mat-select (selectionChange)="setLimit($event)" value="10">
-
-                <mat-option value="10">10</mat-option>
-                <mat-option value="20">20</mat-option>
-                <mat-option value="50">50</mat-option>
-                <mat-option value="100">100</mat-option>
-              </mat-select>
+        <div class="flex justify-between">
+          <div class="">
+            <div class="dataTables_length">
+              <label
+                >Show
+    
+                <select
+                  [(ngModel)]="limit"
+                  (change)="
+                    this.getPlans(
+                      this.pageNumber,
+                      this.limit,
+                      this.search,
+                      this.sortBy,
+                      this.sortOrder
+                    )
+                  "
+                >
+                  <option value="10">10</option>
+    
+                  <option value="20">20</option>
+    
+                  <option value="50">50</option>
+    
+                  <option value="100">100</option>
+                </select>
+    
+                entries</label
+              >
             </div>
-            <span>Entries</span>
           </div>
-
-          <div class="col-md-10">
+          <div class="">
             <div class="paginations">
               <div>
                 <div class="btn-group" id="radioBtn">
-                  <a class="btn btn-primary btn-sm notActive" (click)="onPrevious()">
+                  <a
+                    class="btn btn-primary btn-sm notActive"
+                    (click)="onPrevious()"
+                    [ngClass]="{ disabled: pageNumber == 1 }"
+                  >
                     Previous
                   </a>
-                  <a class="btn btn-primary btn-sm active mx-5">{{
+    
+                  <a class="btn btn-primary btn-sm active" style="margin: 0 20px">{{
                     pageNumber
-                    }}</a>
-                  <a class="btn btn-primary btn-sm notActive" (click)="onNext()"
-                    [ngClass]="{ disabled: !hasNextPage||plansearchDataNextPage }">Next
+                  }}</a>
+    
+                  <a
+                    class="btn btn-primary btn-sm notActive"
+                    (click)="onNext()"
+                    [ngClass]="{ disabled: !hasNextPage||plansearchDataNextPage }"
+                    >Next
                   </a>
                 </div>
               </div>

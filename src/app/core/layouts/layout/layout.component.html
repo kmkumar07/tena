@@ -1,7 +1,7 @@
 <div class="outer-layout">
-  <mat-sidenav-container>
+  <mat-sidenav-container [ngClass]="opened ? 'sidenav-open' : 'sidenav-closed'">
     <mat-sidenav #sidenav mode="side" opened="true" class="sidenav-slider">
-      <app-sidebar></app-sidebar>
+      <app-sidebar (newItemEvent)="toggleSidenav($event)"></app-sidebar>
     </mat-sidenav>
     <mat-sidenav-content>
       <!-- Header for application starts here! -->
@@ -9,7 +9,7 @@
         <div class="absolute left-header pointer">
           <mat-icon
             class="material-symbols-outlined mat-primary"
-            (click)="sidenav.toggle()"
+            (click)="toggleSidenav($event)"
           >
             menu_open
           </mat-icon>
