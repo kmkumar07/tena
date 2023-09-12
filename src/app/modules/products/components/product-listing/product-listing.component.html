@@ -159,7 +159,7 @@
           [ngClass]="element.status"
           [routerLink]="['/products/view-product/' + element.productId]"
         >
-          {{ element.status }}
+          {{ element.status| titlecase }}
         </td>
       </ng-container>
 
