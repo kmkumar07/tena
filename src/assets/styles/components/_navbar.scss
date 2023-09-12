@@ -14,9 +14,12 @@
   transition: $sidebar-transition;
   transition-property: background-color;
   overflow: visible;
-  width: 14.75rem;
-   @media only screen and (max-width: 80rem) {
-   width: 14.0625rem;
+  width: 5.3125rem;
+  @media only screen and (max-width: 64rem) {
+    width: 15rem;
+  }
+  @media only screen and (max-width: 48rem) {
+    width: 100%;
   }
   .mat-drawer-inner-container {
     overflow: visible;
@@ -27,6 +30,22 @@
       box-shadow: 0.0625rem 0rem 0.3125rem 0rem #00000014;
       @include justify-content(center);
       @include flex-wrap(wrap);
+      .header{
+        transition: $sidebar-transition;
+      }
+      .header-small{
+        display: none;
+        transition: $sidebar-transition;
+      }
+      .close-icon{
+        display: none;
+        @media only screen and (max-width: 64rem) {
+        display: block;
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        }
+      }
       .sidebar-toggle {
         position: absolute;
         right: -0.9rem;
@@ -103,6 +122,9 @@
   height: 2.625rem;
   position: relative;
   padding: 0 1.5rem 0 2.6875rem;
+  @media only screen and (max-width: 75rem) {
+    width: 100%;
+  }
   &.basic {
     background-color: color("grey", "primary");
   }
@@ -142,6 +164,9 @@
   height: 100%;
   @media only screen and (max-width: 80rem) {
     padding: 1.375rem .625rem;
+    @media only screen and (max-width: 64rem) {
+      position: relative;
+    }
    }
   .logo {
     overflow: hidden;
@@ -374,4 +399,141 @@
 
 .mat-drawer.mat-sidenav {
   position: fixed;
+  @media only screen and (max-width: 64rem) {
+   left: -300px;
+   transition: 400ms;
+  }
+}
+
+// sidenav-closed
+.sidenav-closed.mat-drawer-container {
+  .mat-drawer.mat-sidenav {
+    @media only screen and (max-width: 64rem) {
+     left: 0px;
+    }
+  }
+  .sidenav-slider.mat-drawer {
+    .sidenav-wrapper {
+      .sidebar-wrapper {
+        .header{
+          display: none;
+          transition: 40ms;
+          @media only screen and (max-width: 64rem) {
+            display: block;
+            font-size: 20px;
+          }
+        }
+        .header-small{
+          display: block;
+          text-align: center;
+          transition: 400ms;
+          @media only screen and (max-width: 64rem) {
+            display: none;
+          }
+        }
+        .sidebar {
+          .category-heading {
+            margin: 1.5rem 0rem 0.9375rem 0rem;
+            height: 0.0625rem;
+            background-color: #78869c33;
+            transition: 400ms;
+            @media only screen and (max-width: 64rem) {
+              margin: unset;
+              height: unset;
+              background-color: transparent;
+            }
+            h1 {
+              transform: translate(-9.25rem, 0);
+              // opacity: 0;
+              // position: absolute;
+              // left: -6.125rem;
+              transition: 40ms;
+              @media only screen and (max-width: 64rem) {
+                transform: none;
+              }
+            }
+          }
+          .nav-list-item {
+            .icon-wrapper {
+              justify-content: space-between;
+              overflow: hidden;
+              @media only screen and (max-width: 64rem) {
+                justify-content: flex-start;
+              }
+              .sidebar-icon-wraper {
+                width: 1.75rem;
+              }
+              .content-wrapper {
+                // overflow: hidden;
+                // position: absolute;
+                // left: 2.75rem;
+                display: none;
+                @media only screen and (max-width: 64rem) {
+                  display: block;
+                }
+                .content {
+                  display: block;
+                  transform: translate(-100px, 0);
+                  // opacity: 0;
+                  // position: absolute;
+                  // left: -6.125rem;
+                  transition: 400ms;
+                }
+              }
+            }
+          }
+        }
+        .image-wrapper {
+          position: absolute;
+          left: -18.75rem;
+          transition: 400ms;
+        }
+        .logo {
+          grid-template-columns: 3.4rem auto;
+          transition: 400ms;
+          .logo-img {
+            transition: 400ms;
+            justify-self: flex-start;
+            width: 100%;
+          }
+          .text-wrapper {
+            transform: translate(-25rem);
+            transition: 400ms;
+          }
+        }
+      }
+    }
+  }
+}
+
+.mat-sidenav {
+  border: 0rem;
+  width: 5.3125rem;
+  transition: 400ms;
+}
+.mat-drawer-content {
+  transition: 400ms;
+}
+.sidenav-open {
+  .mat-sidenav {
+    width: 16.375rem !important;
+    transition: 400ms;
+    .sidenav-wrapper {
+      .sidebar-toggle {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  .mat-sidenav-content {
+    margin-left: 16.375rem !important;
+    @media only screen and (max-width: 64rem) {
+      margin-left: 0 !important;
+    }
+  }
+}
+.mat-sidenav-content {
+  margin-left: 5.3125rem !important;
+  @media only screen and (max-width: 64rem) {
+    margin-left: 0 !important;
+  }
 }
