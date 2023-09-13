@@ -113,30 +113,6 @@
         </div>
       </div>
       <div class="form-block image-upload-dialog main-bg border-2 p-10 wrapper-border imgUpload-block">
-        <!-- <h4 class="text-dark mat-subtitle-2 mb-2 font-weight-500">
-          Product Logo
-        </h4>
-        <p class="mat-caption grey-text text-darken-6">
-          Allowed JPG, GIF or PNG. Max size of 800K
-        </p>
-        <div>
-          <label for="logo" class="upload-field border-2 pointer" id="file-label" (click)="openDialog('0ms', '0ms')">
-            <img src="" class="w-full" />
-            <div class="file-thumbnail">
-              <mat-icon class="material-symbols-outlined m-0"
-                >imagesmode</mat-icon
-              >
-              <h3
-                id="filename"
-                class="mat-body-1 font-weight-500 text-text text-primary"
-              >
-                <a href="" class="mr-1 primary-text text-main text-underline"
-                  >Click here to upload</a
-                >or drag & drop
-              </h3>
-            </div>
-          </label>
-        </div> -->
         <div *ngIf="uploadMessage" class="upload-message" [ngClass]="{ success: uploadSuccess, error: !uploadSuccess }">
           {{ uploadMessage }}
         </div>
@@ -145,7 +121,7 @@
             Product Logo
           </h2>
         </div>
-        <div class="user-img-wrapper flex align-center mt-5">
+        <div class="user-img-wrapper mt-5">
           <div class="user-avatar flex align-center justify-center">
             <ng-container *ngIf="imageUrl &&deleteBlob==false">
               <img src="{{ imagePath + imageUrl }}" alt="product-img" />
@@ -154,9 +130,12 @@
               <p class="mat-body-1 mb-0 mr-4">LOGO</p>
             </ng-container>
           </div>
-          <div class="ml-6">
+          <div class="mt-3">
             <div class="upload-actions">
-              <div class="flex align-center">
+              <p class="mat-caption text-light font-weight-500 mb-4 text-center">
+                Allowed JPG, GIF or PNG. Max size of 800K
+              </p>
+              <div class="flex align-center justify-center">
                 <button mat-stroked-button color="primary" class="mr-3" (click)="deleteImage()">
                   Remove
                 </button>
@@ -165,9 +144,6 @@
                 </button>
               </div>
             </div>
-            <p class="mat-caption text-light font-weight-500 mt-3">
-              Allowed JPG, GIF or PNG. Max size of 800K
-            </p>
           </div>
         </div>
       </div>
@@ -175,8 +151,9 @@
 
     <div class="footer-section py-6">
       <div class="action-btns flex align-center justify-between">
-        <mat-checkbox color="primary" class="font-weight-500 checkbox ml-n-3" checked
-          (click)="activeChecked($event)">Active</mat-checkbox>
+          <mat-checkbox color="primary" formControlName="status" [disableRipple]="true"
+          class="font-weight-500 checkbox ml-n-3 disable-ripple-checkbox" [checked]="productForm.get('status').value"
+          (change)="toggleStatus()">Active</mat-checkbox>
         <div>
           <button mat-stroked-button color="primary" class="mr-2 large" [mat-dialog-close]="true" (click)="onDelete()">
             Back

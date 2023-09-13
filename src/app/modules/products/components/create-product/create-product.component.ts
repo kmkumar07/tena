@@ -81,7 +81,7 @@ export class CreateProductComponent implements OnInit {
     this.sortBy = 'createdOn';
     this.sortOrder = 'desc';
     this.searchSubscription = this.searchQueryChanged
-      .pipe(debounceTime(500), distinctUntilChanged())
+      .pipe(debounceTime(2000), distinctUntilChanged())
       .subscribe((value) => {
         this.search = value;
         if (this.search.length > 0) {
@@ -162,11 +162,11 @@ export class CreateProductComponent implements OnInit {
     const status = this.productForm.get('status')?.value;
     return status === 'active';
   }
-
-  toggleStatus(checked: boolean): void {
-    const newStatus = checked ? 'active' : 'draft';
-    this.productForm.get('status')?.setValue(newStatus);
+  toggleStatus() {
+    const currentStatus = this.productForm.get('status').value;
+    this.productForm.get('status').setValue(!currentStatus);
   }
+
   navigateToViewProduct(res: any) {
     this.router.navigate([`/products/view-product/${res.productId}`]);
   }
@@ -175,10 +175,12 @@ export class CreateProductComponent implements OnInit {
     this.global.showLoader();
     this.productForm.get('imageUrl')?.setValue(this.imageUrl);
     const status = this.productForm.value.status ? 'active' : 'draft';
+
     const product = {
       ...this.productForm.value,
       status: status,
     };
+    
     this.subscription = this.productService.createProduct(product).subscribe({
       next: (res) => {
         let success = 'Product created successfully';
@@ -274,9 +276,7 @@ export class CreateProductComponent implements OnInit {
       this.subscription.unsubscribe();
     }
   }
-  activeChecked(event) {
-    console.log(event);
-  }
+ 
   cancel() {
     this.dialogRef.close();
   }

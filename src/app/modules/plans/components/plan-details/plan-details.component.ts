@@ -203,6 +203,7 @@ export class PlanDetailsComponent {
               duration: 5000,
               verticalPosition: 'top',
               horizontalPosition: 'right',
+              panelClass: ['custom-class'],
             });
             this.global.hideLoader();
             return res;
@@ -222,7 +223,7 @@ export class PlanDetailsComponent {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
           this.router.navigate([`/plans/create/${plan.planId}`]);
-          this.snackBar.open('Plan created successfully', '', {
+          this.snackBar.open('Plan updated successfully', '', {
             duration: 5000,
             verticalPosition: 'top',
             horizontalPosition: 'right',
