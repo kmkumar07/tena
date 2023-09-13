@@ -765,11 +765,17 @@ label {
   min-width: 10rem !important;
   height: 2.625rem !important;
   border-radius: 0.25rem !important;
+  @media only screen and (max-width: 48rem) {
+    min-width: 4rem !important;
+  }
   .letter-spacing-0 {
     letter-spacing: 0 !important;
   }
   .mdc-button__label {
     display: flex;
+    @media only screen and (max-width: 48rem) {
+      display: none;
+    }
   }
 }
 .mdc-button__label {
@@ -912,4 +918,10 @@ ul.breadcrumb {
 //inner-h
 .inner-h{
   height: calc(100% - 5.025rem);
+}
+
+// page loader
+.page-loader{
+  width: 2.5rem !important;
+  height: 2.5rem !important;
 }

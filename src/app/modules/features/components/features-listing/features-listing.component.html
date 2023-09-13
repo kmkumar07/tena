@@ -220,61 +220,60 @@
         [id]="row.id"
       ></tr>
     </table>
+  </div>
+  <div class="flex justify-between mt-2">
+    <div class="">
+      <div class="dataTables_length">
+        <label
+          >Show
 
-    <div class="flex justify-between">
-      <div class="">
-        <div class="dataTables_length">
-          <label
-            >Show
-
-            <select
-              [(ngModel)]="limit"
-              (change)="
-                this.getFeature(
-                  this.PageNumber,
-                  this.limit,
-                  this.search,
-                  this.sortBy,
-                  this.sortOrder
-                )
-              "
-            >
-              <option value="10">10</option>
-
-              <option value="20">20</option>
-
-              <option value="50">50</option>
-
-              <option value="100">100</option>
-            </select>
-
-            entries</label
+          <select
+            [(ngModel)]="limit"
+            (change)="
+              this.getFeature(
+                this.PageNumber,
+                this.limit,
+                this.search,
+                this.sortBy,
+                this.sortOrder
+              )
+            "
           >
-        </div>
+            <option value="10">10</option>
+
+            <option value="20">20</option>
+
+            <option value="50">50</option>
+
+            <option value="100">100</option>
+          </select>
+
+          entries</label
+        >
       </div>
-      <div class="">
-        <div class="paginations">
-          <div>
-            <div class="btn-group" id="radioBtn">
-              <a
-                class="btn btn-primary btn-sm notActive"
-                (click)="onPrevious()"
-                [ngClass]="{ disabled: PageNumber == 1 }"
-              >
-                Previous
-              </a>
+    </div>
+    <div class="">
+      <div class="paginations">
+        <div>
+          <div class="btn-group" id="radioBtn">
+            <a
+              class="btn btn-primary btn-sm notActive"
+              (click)="onPrevious()"
+              [ngClass]="{ disabled: PageNumber == 1 }"
+            >
+              Previous
+            </a>
 
-              <a class="btn btn-primary btn-sm active" style="margin: 0 20px">{{
-                PageNumber
-              }}</a>
+            <a class="btn btn-primary btn-sm active" style="margin: 0 20px">{{
+              PageNumber
+            }}</a>
 
-              <a
-                class="btn btn-primary btn-sm notActive"
-                (click)="onNext()"
-                [ngClass]="{ disabled: !hasNextPage||fsearchDataNextPage }"
-                >Next
-              </a>
-            </div>
+            <a
+              class="btn btn-primary btn-sm notActive"
+              (click)="onNext()"
+              [ngClass]="{ disabled: !hasNextPage||fsearchDataNextPage }"
+              >Next
+            </a>
           </div>
         </div>
       </div>

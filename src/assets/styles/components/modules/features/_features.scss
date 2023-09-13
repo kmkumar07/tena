@@ -127,6 +127,11 @@
       // max-height: 94vh;
       padding-right: .5rem !important;
       }
+      @media only screen and (max-width: 61.9375rem) {
+        .input-wrapper{
+          max-width: 100%;
+        }
+      }
     }
     .sample-right{
       // .info-form{
