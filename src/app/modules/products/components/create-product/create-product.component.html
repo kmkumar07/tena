@@ -28,20 +28,22 @@
                   tippyName="content">help</mat-icon>
                 <ng-template #productnameinfo let-name class="t-template">
                   <div class="help-info-tooltip">
-                    <div class="heading-with-background">Product name</div>
                     <div class="details">
                       Enter a name that helps you identify this Product
                     </div>
-                    <button mat-button color="primary" class="px-0">
-                      Learn more
-                    </button>
                   </div>
                 </ng-template>
               </div>
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" class="manageSpace">
+                <div class="input-container">
                 <input matInput placeholder="Enter here..." formControlName="name"
                 [(ngModel)]="searchQuery"
                 (input)="onSearchInput()" />
+                <div class="loader" *ngIf="showLoader">
+                  <mat-spinner mode="indeterminate" style="margin:0 auto;" [diameter]="30"></mat-spinner>
+                </div>
+              </div>
+
                 <mat-error *ngIf="
                     productForm.controls['name'].invalid &&
                     productForm.controls['name'].touched 
@@ -59,8 +61,14 @@
                 </mat-error>        
               </mat-form-field>
               <mat-error *ngIf="productsSearchDataLength ==true&&search.length>0"class="custom-error">
-                    This name is not available. Please choose another name.
-              </mat-error>
+                This name is already existing. Please choose a unique name             
+               </mat-error>
+               <div *ngIf="productsSearchDataLength ==false&&search.length>0"class="custom-tick">
+                <i class="material-icons tickmark md-48">check_circle</i>
+              </div>
+              <div  *ngIf="productsSearchDataLength ==false&&search.length>0"class="space">
+
+              </div>
             </div>
             <div>
               <div class="flex align-center mb-2">
@@ -71,9 +79,8 @@
                   [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
                 <ng-template #helpinfotooltip let-name>
                   <div class="help-info-tooltip">
-                    <div class="heading-with-background">Product ID</div>
                     <div class="details">
-                      Enter a id that helps you identify this Product
+                      Enter a productId that helps you identify this Product
                     </div>
                   </div>
                 </ng-template>
@@ -106,30 +113,6 @@
         </div>
       </div>
       <div class="form-block image-upload-dialog main-bg border-2 p-10 wrapper-border imgUpload-block">
-        <!-- <h4 class="text-dark mat-subtitle-2 mb-2 font-weight-500">
-          Product Logo
-        </h4>
-        <p class="mat-caption grey-text text-darken-6">
-          Allowed JPG, GIF or PNG. Max size of 800K
-        </p>
-        <div>
-          <label for="logo" class="upload-field border-2 pointer" id="file-label" (click)="openDialog('0ms', '0ms')">
-            <img src="" class="w-full" />
-            <div class="file-thumbnail">
-              <mat-icon class="material-symbols-outlined m-0"
-                >imagesmode</mat-icon
-              >
-              <h3
-                id="filename"
-                class="mat-body-1 font-weight-500 text-text text-primary"
-              >
-                <a href="" class="mr-1 primary-text text-main text-underline"
-                  >Click here to upload</a
-                >or drag & drop
-              </h3>
-            </div>
-          </label>
-        </div> -->
         <div *ngIf="uploadMessage" class="upload-message" [ngClass]="{ success: uploadSuccess, error: !uploadSuccess }">
           {{ uploadMessage }}
         </div>
@@ -168,8 +151,9 @@
 
     <div class="footer-section py-6">
       <div class="action-btns flex align-center justify-between">
-        <mat-checkbox color="primary" class="font-weight-500 checkbox ml-n-3" checked
-          (click)="activeChecked($event)">Active</mat-checkbox>
+          <mat-checkbox color="primary" formControlName="status" [disableRipple]="true"
+          class="font-weight-500 checkbox ml-n-3 disable-ripple-checkbox" [checked]="productForm.get('status').value"
+          (change)="toggleStatus()">Active</mat-checkbox>
         <div>
           <button mat-stroked-button color="primary" class="mr-2 large" [mat-dialog-close]="true" (click)="onDelete()">
             Back

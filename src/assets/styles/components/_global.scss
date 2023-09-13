@@ -925,3 +925,14 @@ ul.breadcrumb {
   width: 2.5rem !important;
   height: 2.5rem !important;
 }
+
+
+// snack-bar
+
+mat-snack-bar-container {
+  &.custom-class{
+    .mdc-snackbar__surface{
+      background-color: green;
+    }
+  }
+}

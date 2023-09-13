@@ -171,7 +171,7 @@
           [ngClass]="element.status"
           [routerLink]="'/features/view/' + element.featureId"
         >
-          {{ element.status }}
+          {{ element.status| titlecase }}
         </td>
       </ng-container>
 

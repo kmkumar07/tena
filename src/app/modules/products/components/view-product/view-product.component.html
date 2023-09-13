@@ -68,7 +68,7 @@
           <div class="feature-item flex align-start border-2"
             *ngFor="let feature of productDetail.feature; let i = index">
             <div class="feature-logo border-2 flex-center mat-subtitle-2 font-weight-500 text-purple-lighten-1 main-bg">
-              <span>{{ feature.featureId}}</span>
+              <span>{{ (feature.featureId).charAt(0)| titlecase }}</span>
             </div>
             <div class="details ml-7">
               <div class="flex align-center mb-2">

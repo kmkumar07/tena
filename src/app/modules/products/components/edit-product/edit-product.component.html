@@ -26,13 +26,10 @@
                   tippyName="content">help</mat-icon>
                 <ng-template #productnameinfo let-name class="t-template">
                   <div class="help-info-tooltip">
-                    <div class="heading-with-background">Product name</div>
                     <div class="details">
                       Enter a name that helps you identify this Product
                     </div>
-                    <button mat-button color="primary" class="px-0">
-                      Learn more
-                    </button>
+                   
                   </div>
                 </ng-template>
               </div>
@@ -63,7 +60,6 @@
                   [ngxTippy]="helpinfotooltip" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
                 <ng-template #helpinfotooltip let-name>
                   <div class="help-info-tooltip">
-                    <div class="heading-with-background">Description</div>
                     <div class="details">
                       Enter a id that helps you identify this Product
                     </div>

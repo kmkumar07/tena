@@ -76,7 +76,7 @@
             <th mat-header-cell *matHeaderCellDef>Status</th>
             <td mat-cell *matCellDef="let element" [ngClass]="element.status" [routerLink]="'/plans/view'"
               (click)="viewPlanById(element.planId)">
-              {{ element.status }}
+              {{ element.status | titlecase}}
             </td>
           </ng-container>
 

@@ -59,7 +59,6 @@ export class ViewProductComponent {
         ));
       this.imagePath = this.environment.blobStorage;
       this.feature = this.productDetail?.feature || [];
-      console.log( this.imageUrl);
 
    } });
   
@@ -67,17 +66,13 @@ export class ViewProductComponent {
 
   navigateToFeatures(productId) {
     const dialogRef = this.dialog.open(FeaturesPopupComponent, {
-      // width: '1113px',
       data: {productId: productId},
       panelClass: 'dialog-curved',
     })
-    // this.router.navigate(['/features/create/products/', this.id]);
   }
   navigateToEditFeatures(feature,productId){
-    console.log(feature);
     
     const dialogRef = this.dialog.open(FeaturesPopupComponent, {
-      // width: '1113px',
       data: {feature: feature,productId:productId},
       panelClass: 'dialog-curved',
     })
