@@ -350,43 +350,56 @@
                       </mat-form-field>
                     </div>
                   </div>
+                  <!-- <button
+                    *ngIf="i == 0"
+                    mat-stroked-button
+                    disableRipple
+                    class="upper-case primary light medium px-1 ml-2 text-grey-darken"
+                  >
+                    Default
+                  </button> -->
                   <button
                     *ngIf="
                       levels.controls.length > 1 &&
                       i < levels.controls.length - 1 &&
                       i != 0
                     "
-                    mat-stroked-button
+                    mat-icon-button
+                    color="warn"
                     disableRipple
-                    class="upper-case primary light medium px-1 ml-2 text-grey-darken"
+                    class="light-bg medium rounded-1 mb-2"
                     (click)="deleteLevels(i)"
                   >
-                    Remove
+                  <mat-icon
+                  class="material-symbols-outlined mr-0"
+                  color="warn"
+                  >close</mat-icon
+                >
                   </button>
                 </div>
               </ng-container>
             </ng-container>
-            <div>
+            <div class="flex">
               <button
                 mat-button
                 color="primary"
-                class="small-font-14"
+                class="small-font-14 mr-2"
                 (click)="toggleUnlimited()"
               >
                 <!-- <mat-icon class="add-course-btn"></mat-icon> -->
                 {{ unlimitedButtonLabel }}
               </button>
+              <button
+                mat-button
+                color="primary"
+                class="small-font-16"
+                (click)="addLevels()"
+                *ngIf="!isRangeSelected"
+              >
+                <mat-icon class="add-course-btn mat-primary">add</mat-icon>Add
+                Entitlement
+              </button>
             </div>
-            <button
-              mat-button
-              color="primary"
-              class="small-font-16 mt-4"
-              (click)="addLevels()"
-              *ngIf="!isRangeSelected"
-            >
-              <mat-icon class="add-course-btn mat-primary">add</mat-icon>Add
-              Entitlement
-            </button>
           </div>
         </div>
       </form>

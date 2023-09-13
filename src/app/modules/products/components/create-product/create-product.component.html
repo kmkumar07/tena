@@ -121,7 +121,7 @@
             Product Logo
           </h2>
         </div>
-        <div class="user-img-wrapper flex align-center mt-5">
+        <div class="user-img-wrapper mt-5">
           <div class="user-avatar flex align-center justify-center">
             <ng-container *ngIf="imageUrl &&deleteBlob==false">
               <img src="{{ imagePath + imageUrl }}" alt="product-img" />
@@ -130,9 +130,12 @@
               <p class="mat-body-1 mb-0 mr-4">LOGO</p>
             </ng-container>
           </div>
-          <div class="ml-6">
+          <div class="mt-3">
             <div class="upload-actions">
-              <div class="flex align-center">
+              <p class="mat-caption text-light font-weight-500 mb-4 text-center">
+                Allowed JPG, GIF or PNG. Max size of 800K
+              </p>
+              <div class="flex align-center justify-center">
                 <button mat-stroked-button color="primary" class="mr-3" (click)="deleteImage()">
                   Remove
                 </button>
@@ -141,9 +144,6 @@
                 </button>
               </div>
             </div>
-            <p class="mat-caption text-light font-weight-500 mt-3">
-              Allowed JPG, GIF or PNG. Max size of 800K
-            </p>
           </div>
         </div>
       </div>

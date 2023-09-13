@@ -31,6 +31,10 @@
 .form-with-sample {
   // height: calc(100vh - 16.25rem);
   // overflow: auto;
+  @media only screen and (max-width: 61.9375rem) {
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+  }
   .header-section {
     border-bottom: 0.0625rem solid color("grey", "lighten-7");
     padding: 0;
@@ -44,7 +48,10 @@
     @media only screen and (max-width: 80rem) {
       width: calc(100% - 21.5rem);
       padding: 1.5625rem .4375rem 1.5625rem 1.5625rem !important;
-
+    }
+    @media only screen and (max-width: 61.9375rem) {
+      margin-right: 0 !important;
+      width: 100%;
     }
 
     .description-box{
@@ -63,6 +70,10 @@
     width: 26.375rem;
     @media only screen and (max-width: 80rem) {
       width: 21.5rem;
+    }
+    @media only screen and (max-width: 61.9375rem) {
+      width: 100%;
+      margin-bottom: 10px;
     }
     .inner-block{
       padding: 2.5rem 2.625rem 2rem 2.5rem ;

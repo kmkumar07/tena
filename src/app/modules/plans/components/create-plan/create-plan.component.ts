@@ -390,7 +390,6 @@ export class CreatePlanComponent implements OnInit {
   }
   setPrice(planId: any, cycleValue: number, periodUnit: string) {
     const dialogRef = this.dialog.open(SetPricePopupComponent, {
-      width: '622px',
       data: {
         planId: planId,
         cycleValue: cycleValue,
@@ -405,7 +404,6 @@ export class CreatePlanComponent implements OnInit {
   }
   editPrice(planId: any, priceId: string) {
     const dialogRef = this.dialog.open(SetPricePopupComponent, {
-      width: '622px',
       data: { planId: planId, priceId: priceId },
     });
     dialogRef.afterClosed().subscribe((res: any) => {
