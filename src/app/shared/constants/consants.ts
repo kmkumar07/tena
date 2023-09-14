@@ -16,6 +16,10 @@ export interface selectOptions {
   value: number;
   title: string;
 }
+export interface selectPrice {
+  value: string;
+  title: string;
+}
 export interface features {
   feature_id: string;
   product_name: string;
@@ -39,11 +43,20 @@ export interface loginCredientials {
   password_identifier: string;
   password: string;
 }
+
 export interface Product {
   productId: string;
   imageUrl: string;
+  feature:[];
   createdOn: string;
   modifiedOn: string;
+  name: string;
+  description: string;
+  status: string;
+}
+export interface CreateProduct {
+  productId: string;
+  imageUrl: string;
   name: string;
   description: string;
   status: string;
@@ -475,11 +488,11 @@ export const Frequency = [
   { value: 4, title: 'yearly' },
 ];
 export const pricingModels = [
-  { value: 1, title: 'Flat_Fee' },
-  { value: 2, title: 'Per_Unit' },
-  { value: 3, title: 'Tiered' },
-  { value: 4, title: 'Volume' },
-  { value: 5, title: 'Stair_Step' },
+  { value: 'flat_fee', title: 'Flat_Fee' },
+  { value: 'per_unit', title: 'Per_Unit' },
+  { value: 'tiered', title: 'Tiered' },
+  { value: 'volume', title: 'Volume' },
+  { value: 'stair_step', title: 'Stair_Step' },
 ];
 export const periodUnit = ['daily', 'weekly', 'monthly', 'yearly'];
 export const StaticRoutes = {

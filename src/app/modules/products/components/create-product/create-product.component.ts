@@ -1,3 +1,4 @@
+import { Product } from 'src/app/shared/constants/consants';
 import {
   Component,
   ElementRef,
@@ -60,9 +61,9 @@ export class CreateProductComponent implements OnInit {
   search: string = '';
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
-  products: any;
   productsSearchDataLength: boolean = false;
-  productsSearchData: any;
+  productsSearchData:Product[];
+  productsWithTotal:any;
   searchQuery: string;
   private searchQueryChanged: Subject<string> = new Subject<string>();
   private searchSubscription: Subscription;
@@ -74,36 +75,25 @@ export class CreateProductComponent implements OnInit {
     private snackBar: MatSnackBar,
     private global: GlobalService
   ) {}
-  onSearchInput() {
-    this.searchQueryChanged.next(this.searchQuery);
-  }
+ 
   ngOnInit() {
-    this.sortBy = 'createdOn';
-    this.sortOrder = 'desc';
-    this.searchSubscription = this.searchQueryChanged
-      .pipe(debounceTime(2000), distinctUntilChanged())
-      .subscribe((value) => {
-        this.search = value;
-        if (this.search.length > 0) {
-          this.showLoader = true;
-          this.getSearchProduct(
-            this.PageNumber,
-            this.limit,
-            this.search,
-            this.sortBy,
-            this.sortOrder
-          );
-        }
-      });
-
+    this.initializeForm();
+    this.setupSearchSubscription();
+   
     this.productService.croppedImage$.subscribe((croppedImage) => {
       this.receivedCroppedImage = croppedImage;
     });
 
     this.productService.imageName$.subscribe((imageName) => {
       this.imageName = imageName;
-    });
+    });   
+  }
+  
+  onSearchInput() {
+    this.searchQueryChanged.next(this.searchQuery);
+  }
 
+  private initializeForm() {
     this.productForm = this.formBuilder.group({
       productId: ['', Validators.required],
       name: [
@@ -124,6 +114,26 @@ export class CreateProductComponent implements OnInit {
       this.productForm.controls['productId'].setValue(idValue);
     });
   }
+
+  private setupSearchSubscription() {
+    this.searchSubscription = this.searchQueryChanged
+      .pipe(debounceTime(2000), distinctUntilChanged())
+      .subscribe((value) => {
+        this.search = value;
+        if (this.search.length > 0) {
+          this.showLoader = true;
+          this.getSearchProduct(
+            this.PageNumber,
+            this.limit,
+            this.search,
+            this.sortBy,
+            this.sortOrder
+          );
+        }
+      });
+  }
+
+
   getSearchProduct(
     PageNumber: number,
     limit: number,
@@ -133,16 +143,16 @@ export class CreateProductComponent implements OnInit {
   ) {
     this.productService
       .getProducts(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
+        PageNumber,
+        limit,
+        search,
+        sortBy,
+        sortOrder
       )
       .subscribe((data) => {
         if (data) {
-          this.products = data;
-          this.productsSearchData = this.products.products;
+          this.productsWithTotal = data;
+          this.productsSearchData = this.productsWithTotal.products;
           this.productsSearchDataLength = false;
 
           if (this.search.length > 0) {
@@ -157,22 +167,23 @@ export class CreateProductComponent implements OnInit {
         }
       });
   }
-
-  isChecked(): boolean {
-    const status = this.productForm.get('status')?.value;
-    return status === 'active';
-  }
+  
   toggleStatus() {
-    const currentStatus = this.productForm.get('status').value;
-    this.productForm.get('status').setValue(!currentStatus);
-  }
 
+    let currentStatus = this.productForm.get('status').value;
+    this.productForm.get('status').setValue(!currentStatus);
+
+  }
+  
   navigateToViewProduct(res: any) {
     this.router.navigate([`/products/view-product/${res.productId}`]);
   }
 
   onSubmit() {
     this.global.showLoader();
+    if(this.imageUrl){
+      this.productForm.get('imageUrl')?.setValue(this.imageUrl);
+    }
     this.productForm.get('imageUrl')?.setValue(this.imageUrl);
     const status = this.productForm.value.status ? 'active' : 'draft';
 
@@ -180,7 +191,7 @@ export class CreateProductComponent implements OnInit {
       ...this.productForm.value,
       status: status,
     };
-    
+
     this.subscription = this.productService.createProduct(product).subscribe({
       next: (res) => {
         let success = 'Product created successfully';
@@ -191,7 +202,6 @@ export class CreateProductComponent implements OnInit {
           panelClass: ['custom-class'],
         });
         this.global.hideLoader();
-        //this.openSuccess();
         this.navigateToViewProduct(res);
       },
       error: (error: any) => {
@@ -224,7 +234,6 @@ export class CreateProductComponent implements OnInit {
     this.dialogRef.afterClosed().subscribe((res: any) => {
       if (res) {
         this.imagePath = environment.blobStorage;
-
         this.uploadlogoSave();
       }
     });
@@ -271,13 +280,15 @@ export class CreateProductComponent implements OnInit {
     });
   }
 
+  cancel() {
+    this.dialogRef.close();
+  }
+
   ngOnDestroy(): void {
     if (this.subscription) {
+      this.searchSubscription.unsubscribe();
       this.subscription.unsubscribe();
     }
   }
  
-  cancel() {
-    this.dialogRef.close();
-  }
 }

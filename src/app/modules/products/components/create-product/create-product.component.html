@@ -60,10 +60,10 @@
                   </ng-container>
                 </mat-error>        
               </mat-form-field>
-              <mat-error *ngIf="productsSearchDataLength ==true&&search.length>0"class="custom-error">
+              <div *ngIf="productsSearchDataLength ==true&&search.length>0"class="custom-error">
                 This name is already existing. Please choose a unique name             
-               </mat-error>
-               <div *ngIf="productsSearchDataLength ==false&&search.length>0"class="custom-tick">
+               </div>
+               <div *ngIf="productsSearchDataLength ==false&&search.length>0&&showLoader==false"class="custom-tick">
                 <i class="material-icons tickmark md-48">check_circle</i>
               </div>
               <div  *ngIf="productsSearchDataLength ==false&&search.length>0"class="space">
@@ -151,9 +151,13 @@
 
     <div class="footer-section py-6">
       <div class="action-btns flex align-center justify-between">
-          <mat-checkbox color="primary" formControlName="status" [disableRipple]="true"
-          class="font-weight-500 checkbox ml-n-3 disable-ripple-checkbox" [checked]="productForm.get('status').value"
-          (change)="toggleStatus()">Active</mat-checkbox>
+        <mat-checkbox
+        color="primary"
+        class="font-weight-500 checkbox ml-n-3"
+        [checked]="productForm.get('status').value"
+        (change)="toggleStatus()"          
+        >Active</mat-checkbox
+      >
         <div>
           <button mat-stroked-button color="primary" class="mr-2 large" [mat-dialog-close]="true" (click)="onDelete()">
             Back

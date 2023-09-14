@@ -394,8 +394,9 @@
     <div class="action-btns flex align-center justify-between pr-5">
       <mat-checkbox
         color="primary"
-        formControlName="status"
         class="font-weight-500 checkbox ml-n-3"
+        [checked]="featureForm.get('status').value"
+        (change)="toggleStatus()" 
         >Active</mat-checkbox
       >
       <div>

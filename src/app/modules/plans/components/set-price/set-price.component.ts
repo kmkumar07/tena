@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   pricingModels,
-  selectOptions,
   periodUnit,
+  selectPrice,
 } from 'src/app/shared/constants/consants';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subscription, takeUntil } from 'rxjs';
@@ -25,7 +25,7 @@ export class PlanValue {
 })
 export class SetPriceComponent {
   subscription: Subscription;
-  pricingModelTypes: selectOptions[] = pricingModels;
+  pricingModelTypes: selectPrice[] = pricingModels;
   periodUnit: string[] = periodUnit;
   selectedTab: number = 0;
   previePrice: number;
@@ -38,7 +38,7 @@ export class SetPriceComponent {
   readOnly: boolean = false;
   start = 0;
   check: string;
-  dropKey: number;
+  dropKey: string;
   planId: string;
   editPriceStatus: boolean;
   public setPriceForm: FormGroup;
@@ -171,7 +171,7 @@ export class SetPriceComponent {
     this.formData();
   }
 
-  onDropdownKey(event: number): void {
+  onDropdownKey(event: string): void {
     this.dropKey = event;
   }
 
@@ -208,6 +208,8 @@ export class SetPriceComponent {
   }
 
   pricingModelValueToName(price: any) {
+    console.log(price);
+    
     if (price) {
       price.priceId =
         price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
@@ -231,7 +233,7 @@ export class SetPriceComponent {
       this.pricingModelSetEndingUnitEmpty(price);
     }
     if (price.pricingModel == 5) {
-      price.pricingModel = 'stairStep';
+      price.pricingModel = 'stair_step';
       this.pricingModelSetEndingUnitEmpty(price);
     }
   }
@@ -241,22 +243,22 @@ export class SetPriceComponent {
     this.global.showLoader();
     this.price = this.setPriceForm.getRawValue();
     this.pricingModelValueToName(this.price);
-    this.subscription = this.planService.createPrice(this.price).subscribe({
-      next: (res) => {
-        this.openSuccess();
-        this.planService.setData(this.price);
-        this.router.navigate([`/plans/create/${this.planValue.planId}`]);
-        this.global.hideLoader();
-      },
+    // this.subscription = this.planService.createPrice(this.price).subscribe({
+    //   next: (res) => {
+    //     this.openSuccess();
+    //     this.planService.setData(this.price);
+    //     this.router.navigate([`/plans/create/${this.planValue.planId}`]);
+    //     this.global.hideLoader();
+    //   },
 
-      error: (err: any) => {
-        this.snackBar.open(err.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
-      },
-    });
+    //   error: (err: any) => {
+    //     this.snackBar.open(err.message, '', {
+    //       duration: 5000,
+    //       verticalPosition: 'top',
+    //       horizontalPosition: 'right',
+    //     });
+    //   },
+    // });
     this.global.hideLoader();
   }
 
