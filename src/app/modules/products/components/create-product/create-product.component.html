@@ -18,7 +18,7 @@
         <div class="input-wrapper mt-8 inner-block">
           <form [formGroup]="productForm">
            
-            <div>
+            <div class="relative">
               <div class="flex align-center mb-2">
                 <p class="mat-subtitle-2 font-weight-500 input-label">
                   Product Name
@@ -39,8 +39,8 @@
                 <input matInput placeholder="Enter here..." formControlName="name"
                 [(ngModel)]="searchQuery"
                 (input)="onSearchInput()" />
-                <div class="loader" *ngIf="showLoader">
-                  <mat-spinner mode="indeterminate" style="margin:0 auto;" [diameter]="30"></mat-spinner>
+                <div class="small-loader absolute right-0" *ngIf="showLoader">
+                  <mat-spinner mode="indeterminate"  [diameter]="30"></mat-spinner>
                 </div>
               </div>
 
@@ -60,14 +60,11 @@
                   </ng-container>
                 </mat-error>        
               </mat-form-field>
-              <mat-error *ngIf="productsSearchDataLength ==true&&search.length>0"class="custom-error">
+              <div *ngIf="productsSearchDataLength ==true&&search.length>0" class="absolute text-error mat-caption font-weight-500 custom-error">
                 This name is already existing. Please choose a unique name             
-               </mat-error>
-               <div *ngIf="productsSearchDataLength ==false&&search.length>0"class="custom-tick">
-                <i class="material-icons tickmark md-48">check_circle</i>
-              </div>
-              <div  *ngIf="productsSearchDataLength ==false&&search.length>0"class="space">
-
+               </div>
+               <div *ngIf="productsSearchDataLength ==false&&search.length>0"class="custom-tick absolute custom-tick">
+                <mat-icon class="material-icons text-success">check_circle</mat-icon>
               </div>
             </div>
             <div>
@@ -113,7 +110,7 @@
         </div>
       </div>
       <div class="form-block image-upload-dialog main-bg border-2 p-10 wrapper-border imgUpload-block">
-        <div *ngIf="uploadMessage" class="upload-message" [ngClass]="{ success: uploadSuccess, error: !uploadSuccess }">
+        <div *ngIf="uploadMessage" class="font-weight-500" [ngClass]="{ success: uploadSuccess, error: !uploadSuccess }">
           {{ uploadMessage }}
         </div>
         <div class="title">

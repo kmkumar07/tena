@@ -23,7 +23,7 @@
         <div class="form-wrapper pr-5">
           <form [formGroup]="featureForm">
             <div class="form-container mt-6">
-              <div class="input-wrapper">
+              <div class="input-wrapper relative">
                 <div class="flex align-center mb-2">
                   <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
                     Feature Name
@@ -69,8 +69,8 @@
                     </ng-container>
                   </mat-error>
                 </mat-form-field>
-                <mat-error *ngIf="featuresSearchDataLength ==true&&search.length>0"class="custom-error">
-                  This name is already existing. Please choose a unique name             </mat-error>
+                <div *ngIf="featuresSearchDataLength ==true&&search.length>0" class="absolute custom-error text-error mat-caption font-weight-500">
+                  This name is already existing. Please choose a unique name             </div>
               </div>
               <div class="input-wrapper">
                 <div class="flex align-center mb-2">

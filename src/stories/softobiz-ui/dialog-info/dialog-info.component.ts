@@ -20,7 +20,6 @@ export class DialogInfoComponent {
   dialogRefYes: any;
   onYesClick() {
     this.dialogRefYes = this.dialog.open(DialogInfoDeleteSuccess, {
-      width: '422px',
       panelClass: 'dialog-curved',
     });
     console.log('open');

@@ -105,7 +105,6 @@ export class InvoiceListComponent {
   }
   openDelete(id: any) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      width: '422px',
       panelClass: 'dialog-curved',
     });
 
