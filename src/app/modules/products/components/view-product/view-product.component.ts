@@ -97,7 +97,6 @@ export class ViewProductComponent {
 
   deleteSuccess(id: any) {
     const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
-      width: '422px',
       panelClass: 'dialog-curved',
       data: {
         module: 'Feature',
@@ -109,7 +108,6 @@ export class ViewProductComponent {
 
   openDelete(id: any) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      width: '420px',
       panelClass: 'dialog-curved',
       data: {
         module: 'Feature',

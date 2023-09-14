@@ -340,7 +340,6 @@ export class CreatePlanComponent implements OnInit {
   deletePrice(pricingId: string) {
     
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      width: '420px',
       panelClass: 'dialog-curved',
       data: {
         module: 'Price',
@@ -457,7 +456,6 @@ export class CreatePlanComponent implements OnInit {
   }
   openDeletePlan(id: string) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      width: '420px',
       panelClass: 'dialog-curved',
       data: {
         module: 'Plan',
@@ -497,7 +495,6 @@ export class CreatePlanComponent implements OnInit {
   }
   deleteProductVariantDetails(productVariantId) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      width: '420px',
       panelClass: 'dialog-curved',
       data: {
         module: 'productVariantId',

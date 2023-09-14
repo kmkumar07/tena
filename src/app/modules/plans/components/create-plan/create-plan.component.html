@@ -129,32 +129,36 @@
                     <ng-container
                       *ngIf="pricing.priceId && pricing.price == null"
                     >
+                    <div class="flex align-center table-tooltip">
                       ${{ pricing.multiPricing[0].price }}/Unit
                       <mat-icon
-                        class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                        class="material-symbols-outlined pointer  ml-3 help-icon text-primary"
                         [ngxTippy]="productnameinfo"
                         [tippyProps]="{ placement: 'right', interactive: true }"
                         tippyName="content"
                         >help</mat-icon
                       >
-                      <ng-template #productnameinfo let-name class="t-template">
+                    </div>
+                      <ng-template #productnameinfo let-name>
                         <div class="help-info-tooltip">
-                          <div class="heading-with-background">Price</div>
-                          <table class="heading-with-background w-full">
-                            <tr class="heading-with-background">
-                              <th>starting</th>
-                              <th>ending</th>
-                              <th>price</th>
-                            </tr>
-                            <tr
-                              class="details"
-                              *ngFor="let price of pricing.multiPricing"
-                            >
-                              <td>{{ price.startingUnit }}</td>
-                              <td>{{ price.endingUnit }}</td>
-                              <td>${{ price.price }}/Unit</td>
-                            </tr>
-                          </table>
+                          <h3 class="text-grey-darken mb-2 font-weight-500 mat-subtitle-2">Price</h3>
+                          <div class="table-tooltip-wrapper">
+                            <table class="">
+                              <tr class="">
+                                <th class="text-grey-darken pl-2">Starting</th>
+                                <th class="text-grey-darken">Ending</th>
+                                <th class="text-grey-darken">Price</th>
+                              </tr>
+                              <tr
+                                class="details"
+                                *ngFor="let price of pricing.multiPricing"
+                              >
+                                <td>{{ price.startingUnit }}</td>
+                                <td>{{ price.endingUnit }}</td>
+                                <td>${{ price.price }}/Unit</td>
+                              </tr>
+                            </table>
+                          </div>
                         </div>
                       </ng-template>
                     </ng-container>

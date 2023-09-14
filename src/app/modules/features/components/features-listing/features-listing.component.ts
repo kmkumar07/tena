@@ -233,7 +233,6 @@ export class FeaturesListingComponent implements OnInit {
 
   deleteSuccess(id: any) {
     const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
-      width: '422px',
       panelClass: 'dialog-curved',
       data: {
         module: 'Feature',

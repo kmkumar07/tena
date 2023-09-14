@@ -13,7 +13,6 @@ export class DialogComponent {
   constructor(public dialog: MatDialog) {}
   openDelete() {
     this.dialogRef = this.dialog.open(DialogInfoComponent, {
-      width: '422px',
       panelClass: 'dialog-curved',
     });
     console.log('open');
