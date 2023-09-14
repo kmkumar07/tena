@@ -3,7 +3,11 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { ProductDetailsService } from 'src/app/modules/plans/services/product-details.service';
 import { Status, selectOptions } from 'src/app/shared/constants/consants';
@@ -78,7 +82,7 @@ export class ProductDetailsPopupComponent {
   filteredFeatures = [];
   selectedFeatures: PeriodicElement[] = [];
   productId: string = '';
-  planId: string= '';
+  planId: string = '';
   isProductSelected: boolean = false;
   isButtonDisabled: boolean = true;
   selectedOption: boolean;
@@ -122,7 +126,7 @@ export class ProductDetailsPopupComponent {
 
   formGroup = this.formBuilder.group({
     productID: [''],
-    planID:[''],
+    planID: [''],
     productName: [''],
     description: [''],
     status: [''],
@@ -225,7 +229,7 @@ export class ProductDetailsPopupComponent {
   onSubmit() {
     this.loading = true;
     const formData = this.formGroup.value;
-    const productVariantName = formData.productName + ' product Variant';
+    const productVariantName = this.planId + 'variant' + formData.productName;
     const productVariantId = productVariantName
       .replace(/\s+/g, '-')
       .toLowerCase();

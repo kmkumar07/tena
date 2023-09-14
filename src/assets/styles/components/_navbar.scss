@@ -518,6 +518,9 @@
   .mat-sidenav {
     width: 16.375rem !important;
     transition: 400ms;
+    @media only screen and (max-width: 80rem) {
+      width: 14rem !important;
+    }
     .sidenav-wrapper {
       .sidebar-toggle {
         transform: rotate(180deg);
@@ -526,6 +529,9 @@
   }
   .mat-sidenav-content {
     margin-left: 16.375rem !important;
+    @media only screen and (max-width: 80rem) {
+      margin-left: 14rem !important;
+    }
     @media only screen and (max-width: 64rem) {
       margin-left: 0 !important;
     }

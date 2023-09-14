@@ -249,6 +249,9 @@ $text-purple-lighten-1: color("purple", "lighten-1"); //#5B3CC6
 $text-grey-darken-9: color("grey", "darken-9"); //#1D2335
 $text-secondary: color("text", "secondary"); //#1A3447
 $text-icon : color("text", "icon"); //#647081
+$text-error : color("red", "base"); //#ff0404
+$text-success :color("green", "success");  //#008F5D
+
 
 // Header Styles
 $h1-fontsize: 4.8rem !default;

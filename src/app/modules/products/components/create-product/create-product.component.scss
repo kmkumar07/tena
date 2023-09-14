@@ -1,8 +1,3 @@
-
-.upload-message {
-  font-weight: bold;
-}
-
 .upload-message.success {
   color: green;
 }
@@ -10,24 +5,4 @@
 .upload-message.error {
   color: var( --primary-main);
 
-}
-.text-fix{
-  color: red;
-}
-.custom-error {
-  margin-top: -25px;
-}
-.loader{
-  margin-left: 400px;
-  margin-top: 8px;
-}
-.tickmark{
-  margin-left: 480px;
-  color: green;
-}
-.custom-tick {
-  margin-top: -65px;
-}
-.space{
-  margin-top: 36px;
 }

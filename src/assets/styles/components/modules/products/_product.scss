@@ -58,29 +58,30 @@
     .header-section{
       padding-bottom: 1rem !important;
     }
-    .outer-wrapper{
-      @media only screen and (max-width: 61.9375rem) {
-      flex-wrap: wrap;
-      flex-direction: column-reverse;
-      }
-    }
-    .inner-block{
-        margin-top: 16px !important;
-        // max-height: calc(100vh - 300px);
-        // overflow: auto;
-        padding-right: .5rem;
-        @media only screen and (max-width: 61.9375rem) {
-        &.input-wrapper{
-          max-width: 100%;
-        }
-      }
+  }
+  .inner-block{
+    margin-top: 16px !important;
+    // max-height: calc(100vh - 300px);
+    // overflow: auto;
+    padding-right: .5rem;
+    @media only screen and (max-width: 61.9375rem) {
+    &.input-wrapper{
+      max-width: 100%;
     }
   }
+}
+  .outer-wrapper{
+    @media only screen and (max-width: 61.9375rem) {
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    }
+  }
+
   .details-block {
     max-width: calc(100% - 30rem);
     width: 100%;
     @media only screen and (max-width: 80rem) {
-      max-width: calc(100% - 25rem);
+      max-width: calc(100% - 20rem);
       padding: .9375rem .4375rem  .9375rem .9375rem !important;
       margin-right: 1rem !important;
     }
@@ -93,7 +94,7 @@
   .imgUpload-block{
     width: 30rem;
     @media only screen and (max-width: 80rem) {
-      width: 25rem;
+      width: 20rem;
       padding: 1rem !important;
     }
     @media only screen and (max-width: 61.9375rem) {
@@ -110,6 +111,7 @@
       height: 7.5rem;
       min-width: 7.5rem;
       width: 7.5rem;
+      margin: auto;
       background-color: color("grey", "lighten-8");
       border-radius: 50%;
       overflow: hidden;
@@ -239,6 +241,11 @@
   @media only screen and (max-width: 80rem) {
     max-width: 60rem;
   }
+  .date-block{
+    @media only screen and (max-width: 50rem) {
+      margin-top: 10px;
+    }
+  }
   .header-block {
     border: 0.0625rem solid color("grey", "lighten-14");
     overflow: hidden;
@@ -316,6 +323,9 @@
     border: 1px solid color("shades", "white");
     border-left: none;
     height: 1.125rem;
+    @media only screen and (max-width: 48rem) {
+    margin: 0 12px !important;
+    }
   }
 
   .product-features {

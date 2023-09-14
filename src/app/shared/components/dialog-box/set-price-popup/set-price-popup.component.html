@@ -6,7 +6,7 @@
 
     <form [formGroup]="setPriceForm" class="form-wrapper pr-5">
         <div class="mt-8">
-            <div class="form-section">
+            <div class="">
                 <div class="input-wrapper">
                     <div class="flex align-center mb-2">
                         <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
@@ -103,7 +103,7 @@
                                                 </mat-form-field>
                                             </div>
                                             <button mat-icon-button color="warn"
-                                                class="light-bg small rounded-1 absolute delete-tier-btn right-40"
+                                                class="light-bg small rounded-1 absolute delete-tier-btn right-25"
                                                 *ngIf="i == multiPricing.length - 1 && i > 0" (click)="deleteTier(i)">
                                                 <mat-icon class="material-symbols-outlined mr-0"
                                                     color="warn">close</mat-icon>
@@ -178,7 +178,7 @@
             </div>
         </div>
     </form>
-    <div class="flex justify-end btn-wrapper absolute bottom-35">
+    <div class="flex absolute bottom-35 right-20">
         <button mat-stroked-button color="primary" class="mr-2 large" (click)="onCancelClick()">
             Dismiss
         </button>

@@ -765,11 +765,17 @@ label {
   min-width: 10rem !important;
   height: 2.625rem !important;
   border-radius: 0.25rem !important;
+  @media only screen and (max-width: 48rem) {
+    min-width: 4rem !important;
+  }
   .letter-spacing-0 {
     letter-spacing: 0 !important;
   }
   .mdc-button__label {
     display: flex;
+    @media only screen and (max-width: 48rem) {
+      display: none;
+    }
   }
 }
 .mdc-button__label {
@@ -913,12 +919,36 @@ ul.breadcrumb {
 .inner-h{
   height: calc(100% - 5.025rem);
 }
-// snack-bar
 
+// page loader
+.page-loader{
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
+
+
+// snack-bar
 mat-snack-bar-container {
   &.custom-class{
     .mdc-snackbar__surface{
       background-color: green;
     }
   }
+}
+
+// small-loader
+.small-loader{
+  z-index: 9999;
+  top: 10px;
+}
+
+// custom-error
+.custom-error{
+  bottom: 8px;
+}
+
+// custom-tick 
+.custom-tick {
+  right: 8px;
+  top: 40px;
 }

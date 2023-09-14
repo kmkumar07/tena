@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="header-block border-2">
-    <div class="flex align-end justify-between inner-block">
+    <div class="flex align-center flex-wrap justify-between inner-block">
       <div class="brand-info flex align-center">
         <div class="product-img mr-4 border-2"
           *ngIf="productDetail?.imageUrl.length>1;else uploadImage">
@@ -35,7 +35,7 @@
           <span class="mat-subtitle-2 subtitle font-weight-500 block">{{productId}}</span>
         </div>
       </div>
-      <div class="date-block flex align-center mb-8">
+      <div class="date-block flex align-center">
         <div class="flex align-center">
           <mat-icon class="material-symbols-outlined mr-3 text-white">calendar_today</mat-icon>
           <p class="mat-subtitle-2 text-white">Created {{createdOn | date: 'd MMMM y'}}</p>
