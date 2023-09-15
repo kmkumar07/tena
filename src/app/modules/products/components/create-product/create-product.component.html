@@ -63,7 +63,7 @@
               <div *ngIf="productsSearchDataLength ==true&&search.length>0" class="absolute text-error mat-caption font-weight-500 custom-error">
                 This name is already existing. Please choose a unique name             
                </div>
-               <div *ngIf="productsSearchDataLength ==false&&search.length>0"class="custom-tick absolute custom-tick">
+               <div *ngIf="productsSearchDataLength ==false&&search.length>0&&showLoader==false"class="custom-tick absolute custom-tick">
                 <mat-icon class="material-icons text-success">check_circle</mat-icon>
               </div>
             </div>
@@ -148,9 +148,13 @@
 
     <div class="footer-section py-6">
       <div class="action-btns flex align-center justify-between">
-          <mat-checkbox color="primary" formControlName="status" [disableRipple]="true"
-          class="font-weight-500 checkbox ml-n-3 disable-ripple-checkbox" [checked]="productForm.get('status').value"
-          (change)="toggleStatus()">Active</mat-checkbox>
+        <mat-checkbox
+        color="primary"
+        class="font-weight-500 checkbox ml-n-3"
+        [checked]="productForm.get('status').value"
+        (change)="toggleStatus()"          
+        >Active</mat-checkbox
+      >
         <div>
           <button mat-stroked-button color="primary" class="mr-2 large" [mat-dialog-close]="true" (click)="onDelete()">
             Back

@@ -16,7 +16,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FeatureService } from 'src/app/modules/features/services/feature.service';
 import { Inject } from '@angular/core';
@@ -50,10 +54,11 @@ export class FeaturesPopupComponent {
   id: string;
   showLoader = false;
   isRangeSelected: boolean = false;
-  selectedproductName:string
-  feature:any
+  selectedproductName: string;
+  feature: any;
+  allProductsdata:any
   displayName: string;
-  featureUpdatedata:any
+  featureUpdatedata: any;
   unlimitedValue: any;
   editable: boolean = false;
   public featureForm: FormGroup | null;
@@ -63,41 +68,34 @@ export class FeaturesPopupComponent {
     private formBuilder: FormBuilder,
     private featureService: FeatureService,
     private routes: Router,
-    private productService: ProductsService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<FeaturesPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { productId: string ,feature:any}
-
+    @Inject(MAT_DIALOG_DATA) public data: { productId: string; feature: any }
   ) {
     this.selectedproductName = data.productId;
-    this.featureUpdatedata=data.feature
-
+    this.featureUpdatedata = data.feature;
   }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.productService
-      .getProducts(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
-      )
-      .subscribe((data) => {
-        this.productArray = data.map((res) => res.productId);
-        this.featureForm.patchValue({ productID: this.id });
-      });
+    const isEdit = !!this.featureUpdatedata;
+
     this.featureFormData();
     this.featureForm.controls['name'].valueChanges.subscribe((value) => {
       const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
-      this.featureForm.controls['featureId'].setValue(idValue);
+      if (!isEdit) {
+        this.featureForm.controls['featureId'].setValue(idValue);
+      }
     });
-    this.featureService.getFeatureById(this.featureUpdatedata.featureId).subscribe((data) => {
-      this.updateForm(data);
-    });
+    if (isEdit) {
+      this.featureService
+        .getFeatureById(this.featureUpdatedata.featureId)
+        .subscribe((data) => {
+          this.updateForm(data);
+        });
+    }
   }
 
   featureFormData() {
@@ -121,18 +119,19 @@ export class FeaturesPopupComponent {
           Validators.pattern(/^[a-zA-Z0-9\s]*$/),
           Validators.maxLength(50),
         ],
-      ],      status: [true],
+      ],
+      status: [true],
       levels: this.formBuilder.array([
         this.formBuilder.group({
           isUnlimited: [false],
           value: ['', [Validators.required, Validators.maxLength(50)]],
           name: ['', [Validators.required, Validators.maxLength(50)]],
-            }),
+        }),
         this.formBuilder.group({
           isUnlimited: [false],
           value: ['', [Validators.required, Validators.maxLength(50)]],
           name: ['', [Validators.required, Validators.maxLength(50)]],
-         }),
+        }),
       ]),
     });
   }
@@ -152,7 +151,7 @@ export class FeaturesPopupComponent {
         isUnlimited: [false],
         value: ['', [Validators.required, Validators.maxLength(50)]],
         name: ['', [Validators.required, Validators.maxLength(50)]],
-       })
+      })
     );
   }
 
@@ -220,10 +219,10 @@ export class FeaturesPopupComponent {
       this.isRangeSelected = true;
       this.featureForm.controls['unit'].reset();
       while (this.levels.length > 2) {
-        this.levels.removeAt(2); 
+        this.levels.removeAt(2);
       }
       for (let i = 0; i < this.levels.length; i++) {
-        const formGroup = this.levels.at(i); 
+        const formGroup = this.levels.at(i);
         formGroup.patchValue({
           value: '',
           name: '',
@@ -234,7 +233,7 @@ export class FeaturesPopupComponent {
       this.featureForm.controls['unit'].reset();
 
       for (let i = 0; i < this.levels.length; i++) {
-        const formGroup = this.levels.at(i); 
+        const formGroup = this.levels.at(i);
         formGroup.patchValue({
           value: '',
           name: '',
@@ -244,12 +243,12 @@ export class FeaturesPopupComponent {
       this.isRangeSelected = false;
     }
   }
-  updateForm(res: any) {
-    
+  updateForm(res: any) {    
     this.editable = true;
-    if (res.status === 'active') {
+
+    if (res.data.status === 'active') {
       this.status = true;
-    } else if (res.status === 'draft') {
+    } else {
       this.status = false;
     }
     if (res.type === 'range') {
@@ -258,6 +257,7 @@ export class FeaturesPopupComponent {
     this.featureForm.patchValue({
       featureId: res.data.featureId,
       name: res.data.name,
+      productID: res.data.product.productId,
       description: res.data.description,
       type: res.data.type,
       status: this.status,
@@ -288,7 +288,7 @@ export class FeaturesPopupComponent {
       this.unlimitedButtonLabel = 'Set Unlimited';
     }
   }
-  checkTypeBeforeSubbmission(){
+  checkTypeBeforeSubbmission() {
     this.levels.controls.forEach((ele, index) => {
       if (!ele.get('level')) {
         (<FormGroup>ele).addControl('level', new FormControl(index));
@@ -335,43 +335,51 @@ export class FeaturesPopupComponent {
       };
     }
   }
+  toggleStatus() {
+    const currentStatus = this.featureForm.get('status').value;
+    this.featureForm.get('status').setValue(!currentStatus);
+  }
   onSubmit() {
-   this.showLoader = true;
+    this.showLoader = true;
+    const status = this.featureForm.value.status ? 'active' : 'draft';
     this.checkTypeBeforeSubbmission();
-    if (!this.editable){
-      this.subscription = this.featureService.addFeature(this.feature).subscribe({
-        next: (res: any) => {
-          this.showLoader = false;
-         this.onDelete();
-         this.routes.navigate([`/features/view/${res.data.featureId}`]);
-         return res;
-       },
-        error: (error: any) => {
-          this.snackBar.open(error.error.message, '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
-        },
-      });
-    }else{
-      this.subscription = this.featureService.updateFeature(this.feature.featureId,this.feature).subscribe({
-        next: (res: any) => {
-          this.showLoader = false;
-          this.onDelete();
-          this.routes.navigate([`/features/view/${res.data.featureId}`]);
-          return res;
-        },
-        error: (error: any) => {
-          this.snackBar.open(error.error.message, '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
-        },
-      });
-     }
-  
+    if (!this.editable) {
+      this.subscription = this.featureService
+        .addFeature(this.feature)
+        .subscribe({
+          next: (res: any) => {
+            this.showLoader = false;
+            this.onDelete();
+            this.routes.navigate([`/features/view/${res.data.featureId}`]);
+            return res;
+          },
+          error: (error: any) => {
+            this.snackBar.open(error.error.message, '', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            });
+          },
+        });
+    } else {
+      this.subscription = this.featureService
+        .updateFeature(this.feature.featureId, this.feature)
+        .subscribe({
+          next: (res: any) => {
+            this.showLoader = false;
+            this.onDelete();
+            this.routes.navigate([`/features/view/${res.data.featureId}`]);
+            return res;
+          },
+          error: (error: any) => {
+            this.snackBar.open(error.error.message, '', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            });
+          },
+        });
+    }
   }
 
   onDelete() {

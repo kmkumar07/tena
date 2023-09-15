@@ -16,7 +16,7 @@
     <div class="flex align-center flex-wrap justify-between inner-block">
       <div class="brand-info flex align-center">
         <div class="product-img mr-4 border-2"
-          *ngIf="productDetail.imageUrl.length>1;else uploadImage">
+          *ngIf="productDetail?.imageUrl.length>1;else uploadImage">
           <img src="{{ imagePath + imageUrl }}" alt="" />
         </div>
         <ng-template #uploadImage>
@@ -48,7 +48,7 @@
       </div>
     </div>
     <div class="product-desc main-bg">
-      <h4 class="mat-subtitle-1 font-weight-500 mb-4 text-headline-dark">{{description.length>1?'Description':""}}</h4>
+      <h4 class="mat-subtitle-1 font-weight-500 mb-4 text-headline-dark">{{description?.length>1?'Description':""}}</h4>
       <p class="mat-subtitle-2 text-grey-darken">
         {{description }}
       </p>

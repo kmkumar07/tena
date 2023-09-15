@@ -122,12 +122,12 @@
                   </td>
                   <td class="mat-subtitle-2 text-purple-lighten-1">
                     <ng-container
-                      *ngIf="pricing.priceId && pricing.price !== null"
+                      *ngIf='pricing.priceId && (pricing.price !== null)'
                     >
                       ${{ pricing.price }}/Unit
                     </ng-container>
                     <ng-container
-                      *ngIf="pricing.priceId && pricing.price == null"
+                      *ngIf='pricing.priceId && (pricing.price == null)'
                     >
                     <div class="flex align-center table-tooltip">
                       ${{ pricing.multiPricing[0].price }}/Unit

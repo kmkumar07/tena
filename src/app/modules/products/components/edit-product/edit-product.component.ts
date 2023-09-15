@@ -187,8 +187,14 @@ export class EditProductComponent implements OnInit {
       },
     });
   }
+  toggleStatus() {
 
+    let currentStatus = this.postForm.get('status').value;
+    this.postForm.get('status').setValue(!currentStatus);
+
+  }
   populateForm(res: any) {
+    
     if (res.status === 'active') {
       this.status = true;
     } else if (res.status === 'draft') {

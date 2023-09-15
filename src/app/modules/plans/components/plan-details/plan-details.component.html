@@ -78,8 +78,17 @@
                   </ng-template>
                 </div>
                 <mat-form-field appearance="outline">
-                  <input required matInput placeholder="Enter here..." formControlName="internalName"
+                  <!-- <input required matInput placeholder="Enter here..." formControlName="internalName"
+                    (input)="setPlanId($event)" /> -->
+                    <div class="input-container">
+                    <input  required matInput placeholder="Enter here..." formControlName="internalName"
+                    [(ngModel)]="searchQuery"
+                    (input)="onSearchInput()"
                     (input)="setPlanId($event)" />
+                    <div class="loader" *ngIf="showLoader">
+                      <mat-spinner mode="indeterminate" style="margin:0 auto;" [diameter]="30"></mat-spinner>
+                    </div>
+                  </div>
                   <mat-error *ngIf="
                       planForm.controls['internalName'].invalid &&
                       planForm.controls['internalName'].touched
@@ -101,6 +110,13 @@
                     </ng-container>
                   </mat-error>
                 </mat-form-field>
+                 <div *ngIf="planSearchDataLength ==true&&search.length>0"class="custom-error">
+                  This name is already existing. Please choose a unique name             
+                 </div>
+                 <!-- <div *ngIf="planSearchDataLength ==false&&search.length>0&&showLoader==false"class="custom-tick">
+                  <i class="material-icons tickmark md-48">check_circle</i>
+                </div> -->
+               
               </div>
               <div>
                 <div class="flex align-center mb-2">
