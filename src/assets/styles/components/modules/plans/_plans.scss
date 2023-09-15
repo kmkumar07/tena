@@ -881,7 +881,34 @@
           }
         }
       }
+      .help-icon {
+        font-size: 1.25rem;
+        height: 1.25rem;
+        width: 1.25rem;
+      }
 
+      .table-tooltip{
+        .tippy-box {
+          max-width: 25rem !important;
+          .tippy-content {
+            width: 100%;
+          }
+        }
+      }
+      .table-tooltip-wrapper{
+        table{
+          tr{
+            th{
+              min-width: 6.25rem !important;
+            }
+            td{
+              &:first-child{
+                padding-left: .5rem;
+              }
+            }
+          }
+        }
+      }
       .table-wrapper {
         padding: 0 2.375rem;
 
@@ -932,8 +959,8 @@
     }
   }
 
-  .right-40 {
-    right: 40px;
+  .right-25 {
+    right: 25px;
   }
 
   .top-35 {

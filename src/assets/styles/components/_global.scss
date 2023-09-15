@@ -928,11 +928,27 @@ ul.breadcrumb {
 
 
 // snack-bar
-
 mat-snack-bar-container {
   &.custom-class{
     .mdc-snackbar__surface{
       background-color: green;
     }
   }
+}
+
+// small-loader
+.small-loader{
+  z-index: 9999;
+  top: 10px;
+}
+
+// custom-error
+.custom-error{
+  bottom: 8px;
+}
+
+// custom-tick 
+.custom-tick {
+  right: 8px;
+  top: 40px;
 }
