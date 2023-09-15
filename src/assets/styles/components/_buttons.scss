@@ -217,6 +217,13 @@
       color: color("shades", "black");
     }
   }
+  &.medium{
+    height: 1.5rem;
+    width: 1.5rem;
+    .mat-icon {
+      color: color("shades", "black");
+    }
+  }
 }
 
 .mat-mdc-icon-button.mat-mdc-button-base{

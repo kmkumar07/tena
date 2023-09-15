@@ -23,7 +23,7 @@
     </ng-template>
 
     <div class="flex align-center">
-      <div class="global-search main-bg mr-6 border-2">
+      <div class="global-search main-bg  border-2">
         <span class="search-icon pointer">
           <img
             src="../../../../assets/images/icons/search.svg"
@@ -37,6 +37,15 @@
           (input)="onSearchInput()"
         />
       </div>
+      <button
+      mat-flat-button
+      class="create-btn m-width mx-2"
+    >
+      <mat-icon class="material-symbols-outlined m-0" color="primary">filter_list</mat-icon>
+      <span class="text-nowrap block ml-2 letter-spacing-0"
+        >Filter</span
+      >
+    </button>
       <button
         mat-flat-button
         color="primary"
