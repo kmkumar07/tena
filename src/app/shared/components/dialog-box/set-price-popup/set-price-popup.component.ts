@@ -5,6 +5,7 @@ import {
   Frequency,
   selectOptions,
   periodUnit,
+  selectPrice,
 } from 'src/app/shared/constants/consants';
 import { Subscription, takeUntil } from 'rxjs';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
@@ -31,7 +32,7 @@ export class PlanValue {
 export class SetPricePopupComponent {
   @Output() priceIdSelected = new EventEmitter<string>();
   subscription: Subscription;
-  pricingModelTypes: selectOptions[] = pricingModels;
+  pricingModelTypes: selectPrice[] = pricingModels;
   FrequencyTypes: selectOptions[] = Frequency;
   periodUnit: string[] = periodUnit;
   selectedTab: number = 0;
@@ -41,12 +42,12 @@ export class SetPricePopupComponent {
   stairTotal: number;
   price: any;
   planValue: any = {};
-  monthlyBilling = ['3', '4', '5'];
+  monthlyBilling = ['tiered', 'volume', 'stair_step'];
   readOnly: boolean = false;
   start = 0;
   period: string;
   check: string;
-  dropKey: number;
+  dropKey: string;
   periodKey: number;
   planId: string;
   pricedataById: any;
@@ -96,22 +97,36 @@ export class SetPricePopupComponent {
   }
 
   patchValue(data: any) {
+    data.multiPricing.sort((indexOne, indexTwo) => indexOne.startingUnit - indexTwo.startingUnit)
     this.editable = true;
-
     this.setPriceForm.patchValue({
-      planId: data.planId,
-      priceId: data.priceId,
       price: data.price,
       periodUnit: Frequency.find((a) => a.title === data.periodUnit).value,
-      pricingModel: pricingModels.find((a) => a.title === data.pricingModel)
-        .value,
+      pricingModel: pricingModels.find((a) => a.value === data.pricingModel).value,
       noOfCycle: data.noOfCycle,
     });
-
+  
     this.selectedOption = data.isExpirable ? '1' : '2';
+  
+    // Clear the existing multiPricing FormArray
+    const multiPricingArray = this.setPriceForm.get('multiPricing') as FormArray;
+    while (multiPricingArray.length) {
+      multiPricingArray.removeAt(0);
+    }
+  
+    // Populate the multiPricing FormArray with the data
+    data.multiPricing.forEach((item: any) => {
+      const newFormGroup = this.form.group({
+        startingUnit: { value: item.startingUnit.toString(), disabled: true },
+        endingUnit: { value: item.endingUnit === null ? '&above' : item.endingUnit.toString(), disabled: true },
+        price: [item.price],
+      });
+      multiPricingArray.push(newFormGroup);
+    });
+  
     this.pricingModelValueToName(this.price);
   }
-
+  
   formData() {
     this.setPriceForm = this.form.group({
       priceId: ['', Validators.required],
@@ -208,7 +223,7 @@ export class SetPricePopupComponent {
     this.periodKey = event;
     this.onTabChange(this.periodKey);
   }
-  onDropdownKeyWithpricingModel(event: number): void {
+  onDropdownKeyWithpricingModel(event: string): void {
     this.dropKey = event;
   }
   deleteTier(tierIndex: number) {
@@ -249,24 +264,19 @@ export class SetPricePopupComponent {
         price.planId + '-' + price.currencyCode + '-' + price.periodUnit;
     }
 
-    if (price ? price.pricingModel == 1 : '') {
-      price.pricingModel = 'flat_fee';
+    if (price ? price.pricingModel == 'flat_fee' : '') {
       price.multiPricing = [];
     }
-    if (price ? price.pricingModel == 2 : '') {
-      price.pricingModel = 'per_unit';
+    if (price ? price.pricingModel == 'per_unit' : '') {
       price.multiPricing = [];
     }
-    if (price ? price.pricingModel == 3 : '') {
-      price.pricingModel = 'tiered';
+    if (price ? price.pricingModel == 'tiered' : '') {
       this.pricingModelSetEndingUnitEmpty(price);
     }
-    if (price ? price.pricingModel == 4 : '') {
-      price.pricingModel = 'volume';
+    if (price ? price.pricingModel == 'volume' : '') {
       this.pricingModelSetEndingUnitEmpty(price);
     }
-    if (price ? price.pricingModel == 5 : '') {
-      price.pricingModel = 'stairStep';
+    if (price ? price.pricingModel == 'stair_step' : '') {
       this.pricingModelSetEndingUnitEmpty(price);
     }
   }

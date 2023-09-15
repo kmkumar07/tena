@@ -405,6 +405,8 @@ export class CreateFeatureComponent {
   }
   toggleStatus() {
     const currentStatus = this.featureForm.get('status').value;
+    console.log(currentStatus);
+    
     this.featureForm.get('status').setValue(!currentStatus);
   }
 

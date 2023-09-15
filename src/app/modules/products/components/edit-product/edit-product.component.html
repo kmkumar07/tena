@@ -94,30 +94,7 @@
         </div>
       </div>
       <div class="form-block image-upload-dialog main-bg border-2 p-10 wrapper-border imgUpload-block">
-        <!-- <h4 class="text-dark mat-subtitle-2 mb-2 font-weight-500">
-        Product Logo
-      </h4>
-      <p class="mat-caption grey-text text-darken-6">
-        Allowed JPG, GIF or PNG. Max size of 800K
-      </p>
-      <div>
-        <label for="logo" class="upload-field border-2 pointer" id="file-label" (click)="openDialog('0ms', '0ms')">
-          <img src="" class="w-full" />
-          <div class="file-thumbnail">
-            <mat-icon class="material-symbols-outlined m-0"
-              >imagesmode</mat-icon
-            >
-            <h3
-              id="filename"
-              class="mat-body-1 font-weight-500 text-text text-primary"
-            >
-              <a href="" class="mr-1 primary-text text-main text-underline"
-                >Click here to upload</a
-              >or drag & drop
-            </h3>
-          </div>
-        </label>
-      </div> -->
+       
         <div *ngIf="uploadMessage" class="upload-message" [ngClass]="{ success: uploadSuccess, error: !uploadSuccess }">
           {{ uploadMessage }}
         </div>
@@ -128,7 +105,7 @@
         </div>
         <div class="user-img-wrapper mt-5">
           <div class="user-avatar flex align-center justify-center">
-            <ng-container *ngIf="getProductImageUrl.length>1&&deleteBlob==false&&uploadLogo==false">
+            <ng-container *ngIf="getProductImageUrl?.length>1&&deleteBlob==false&&uploadLogo==false">
               <img src="{{ imagePath + getProductImageUrl }}" alt="" />      
                   </ng-container>
                   <ng-container *ngIf="imageUrl&&deleteBlob==false&&uploadLogo==true">
@@ -159,8 +136,13 @@
     </div>
     <div class="footer-section py-6">
       <div class="action-btns flex align-center justify-between">
-        <mat-checkbox color="primary" class="font-weight-500 checkbox ml-n-3" checked>Active</mat-checkbox>
-        <div>
+        <mat-checkbox
+        color="primary"
+        class="font-weight-500 checkbox ml-n-3"
+        [checked]="postForm.get('status').value"
+        (change)="toggleStatus()"          
+        >Active</mat-checkbox
+      >        <div>
           <button mat-stroked-button color="primary" class="mr-2 large" [mat-dialog-close]="true" (click)="onDelete()">
             Back
           </button>

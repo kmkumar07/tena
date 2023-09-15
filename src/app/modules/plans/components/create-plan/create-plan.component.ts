@@ -128,6 +128,7 @@ export class CreatePlanComponent implements OnInit {
   }
 
   setPricing(pricing: any) {
+    
     if (pricing && pricing.periodUnit) {
       this.priceData.push(pricing);
 
@@ -188,7 +189,7 @@ export class CreatePlanComponent implements OnInit {
         .subscribe((res) => {
           if (res) {
             this.global.hideLoader();
-            this.plandataById = res.data;
+            this.plandataById = res.data;            
             this.updatePricingData(res.data.pricing);
             this.setPricing(this.pricingData);
             this.patchValue(res.data);
@@ -406,7 +407,7 @@ export class CreatePlanComponent implements OnInit {
       data: { planId: planId, priceId: priceId },
     });
     dialogRef.afterClosed().subscribe((res: any) => {
-      if (res) {
+      if (res) {        
         this.getPlanById(planId);
       }
     });

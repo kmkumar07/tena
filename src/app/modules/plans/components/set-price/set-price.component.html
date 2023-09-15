@@ -229,22 +229,22 @@
                   min="1"
                   max="1000"
                   (input)="getPreviewPrice($event)"
-                />
+                />        
               </mat-form-field>
             </div>
-            <p class="mat-subtitle-2 font-weight-500 input-label mb-2" *ngIf="dropKey ==1">
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2" *ngIf="dropKey =='flat_fee'">
               Units. The total amount payable will be USD {{ previePrice }}
             </p>
-            <p class="mat-subtitle-2 font-weight-500 input-label mb-2" *ngIf="dropKey ==2">
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2" *ngIf="dropKey =='per_unit'">
               Units. The total amount payable will be USD {{ previePrice }}
             </p>
-            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 3" >
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 'tiered'" >
               Units. The total amount payable will be USD {{ tiredTotal }}
             </p>
-            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 4" >
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 'volume'" >
               Units. The total amount payable will be USD {{volumeTotal}}
             </p>
-            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 5" >
+            <p class="mat-subtitle-2 font-weight-500 input-label mb-2"*ngIf="dropKey == 'stair_step'" >
               Units. The total amount payable will be USD {{stairTotal}}
             </p>
             
