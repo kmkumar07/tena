@@ -6,7 +6,7 @@
     <mat-sidenav-content>
       <!-- Header for application starts here! -->
       <mat-toolbar class="header-wrapper main-bg relative">
-        <div class="absolute left-header pointer">
+        <div class="absolute left-header pointer mob-menu">
           <mat-icon
             class="material-symbols-outlined mat-primary"
             (click)="toggleSidenav($event)"
@@ -169,7 +169,7 @@
       <div class="inner-h relative overflow-auto">
         <div class="loader" *ngIf="loading">
           <div class="position-center">
-            <mat-spinner ></mat-spinner>
+            <mat-spinner class="page-loader"></mat-spinner>
           </div>
         </div>
         <router-outlet></router-outlet>

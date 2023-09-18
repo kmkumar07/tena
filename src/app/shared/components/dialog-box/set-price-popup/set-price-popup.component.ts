@@ -56,6 +56,7 @@ export class SetPricePopupComponent {
   priceId: string;
   pricingId: string;
   selectedPeriodUnit: number;
+  selectedPeriodUnitTitle:string;
   editable: boolean = false;
   cycleVal: number;
   selectedOption: string;
@@ -77,6 +78,9 @@ export class SetPricePopupComponent {
     this.selectedPeriodUnit = this.FrequencyTypes.find(
       (x) => x.title == this.data.periodUnit
     )?.value;
+    this.selectedPeriodUnitTitle = this.FrequencyTypes.find(
+      (x) => x.title == this.data.periodUnit
+    )?.title;
   }
 
   ngOnInit() {
