@@ -102,7 +102,7 @@ export class ProductListingComponent implements OnInit {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-   // this.global.showLoader();
+    this.global.showLoader();
     this.productService
       .getProducts(
         PageNumber,
@@ -111,12 +111,13 @@ export class ProductListingComponent implements OnInit {
         sortBy,
         sortOrder
       )
-      .subscribe((data) => {
+      .subscribe({
+        next:(data)=>{
         if (data) {
           this.products = data;
           this.totalNumberOfProduct = this.products.totalCount;
           this.productsSearchData = this.products.products;
-         // this.global.hideLoader();
+          this.global.hideLoader();
           if (
             this.totalNumberOfProduct > this.allProductsData ||
             this.totalNumberOfProduct == 0
@@ -136,6 +137,15 @@ export class ProductListingComponent implements OnInit {
             this.searchDataNextPage = false;
           }
         }
+      },
+      error: (error: any) => {
+        this.snackBar.open(error?.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+        this.global.hideLoader();
+      },
       });
   }
 

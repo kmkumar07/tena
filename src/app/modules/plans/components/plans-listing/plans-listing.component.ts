@@ -116,7 +116,8 @@ export class PlansListingComponent implements OnDestroy {
         sortOrder
       )
       .pipe(takeUntil(this.global.componentDestroyed(this)))
-      .subscribe((res) => {
+      .subscribe({
+        next: (res) => {
         if (res) {
           this.plansData = res.data;
           this.totalNumberOfPlan = this.plansData.totalCount;
@@ -142,6 +143,15 @@ export class PlansListingComponent implements OnDestroy {
             this.plansearchDataNextPage = false;
           }
         }
+      },
+      error: (error: any) => {
+        this.snackBar.open(error?.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+        this.global.hideLoader();
+      },
       });
   }
 
