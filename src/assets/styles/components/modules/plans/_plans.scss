@@ -882,9 +882,10 @@
         }
       }
       .help-icon {
-        font-size: 1.25rem;
-        height: 1.25rem;
-        width: 1.25rem;
+        font-size: 1rem;
+        height: 1rem;
+        width: 1rem;
+        margin-left: .375rem;
       }
 
       .table-tooltip{
@@ -1051,6 +1052,9 @@
     border-bottom: 0.0625rem solid $border-color;
   }
 
+  .select-wrapper{
+    min-width: 10.9375rem;
+  }
   .add-product-description {
 
     .mat-mdc-text-field-wrapper,
@@ -1084,6 +1088,7 @@
     border: none;
     border-radius: 0.5rem;
     background-color: var(--surface-bg);
+    width: 100%;
   }
 
   .primary-table.checked-stripe-table .entitlements-option .mat-mdc-select,
