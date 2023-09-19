@@ -59,6 +59,7 @@ export class CreateFeatureComponent {
   productArray = [];
   id: string;
   product: any;
+  showLoader = false;
   isRangeSelected: boolean = false;
   displayName: string;
   filteredProducts: Observable<any[]>;
@@ -110,10 +111,11 @@ export class CreateFeatureComponent {
     this.sortBy = 'createdOn';
     this.sortOrder = 'desc';
     this.searchSubscription = this.searchQueryChanged
-      .pipe(debounceTime(500), distinctUntilChanged())
+      .pipe(debounceTime(2000), distinctUntilChanged())
       .subscribe((value) => {
         this.search = value;
-        if (this.search) {
+        if (this.search.length > 0) {
+          this.showLoader = true;
           this.getSearchFeature(
             this.NumberOfPage,
             this.NumberOfLimit,
@@ -144,7 +146,6 @@ export class CreateFeatureComponent {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-    this.global.showLoader();
 
     this.featureService
       .getFeatures(PageNumber, limit, search, sortBy, sortOrder)
@@ -160,7 +161,7 @@ export class CreateFeatureComponent {
                 return;
               }
             });
-            this.global.hideLoader();
+            this.showLoader = false;
           }
         }
       });

@@ -69,7 +69,6 @@ export class ProductListingComponent implements OnInit {
     this.searchQueryChanged.next(this.searchQuery);
   }
 
-  data$ = this.productService.product$;
   ngOnInit() {
     this.sortBy = 'createdOn';
     this.sortOrder = 'desc';
@@ -103,21 +102,21 @@ export class ProductListingComponent implements OnInit {
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
-    this.global.showLoader();
+   // this.global.showLoader();
     this.productService
       .getProducts(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
+        PageNumber,
+        limit,
+        search,
+        sortBy,
+        sortOrder
       )
       .subscribe((data) => {
         if (data) {
           this.products = data;
           this.totalNumberOfProduct = this.products.totalCount;
           this.productsSearchData = this.products.products;
-          this.global.hideLoader();
+         // this.global.hideLoader();
           if (
             this.totalNumberOfProduct > this.allProductsData ||
             this.totalNumberOfProduct == 0
@@ -128,7 +127,7 @@ export class ProductListingComponent implements OnInit {
           this.totalPages = Math.ceil(this.totalNumberOfProduct / limit);
           this.hasNextPage = PageNumber < this.totalPages;
 
-          if (this.search.length > 0) {
+          if (search.length > 0) {
             this.totalNumberOfProductBySearch = this.products.totalCount;
             this.searchDataNextPage =
               this.totalNumberOfProductBySearch <= limit;
@@ -150,18 +149,18 @@ export class ProductListingComponent implements OnInit {
     this.global.showLoader();
     this.productService
       .getProducts(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
+        PageNumber,
+        limit,
+        search,
+        sortBy,
+        sortOrder
       )
       .subscribe((data) => {
         if (data) {
           this.products = data;
           this.productsSearchData = this.products.products;
 
-          if (this.search.length > 0) {
+          if (search.length > 0) {
             this.totalNumberOfProductBySearch = this.products.totalCount;
             this.searchDataNextPage =
               this.totalNumberOfProductBySearch <= limit;

@@ -34,7 +34,14 @@
                 </ng-template>
               </div>
               <mat-form-field appearance="outline">
-                <input matInput placeholder="Enter here..." formControlName="name" />
+                <div class="input-container">
+                <input matInput placeholder="Enter here..." formControlName="name" 
+                [(ngModel)]="searchQuery"
+                (input)="onSearchInput()" />
+                <div class="small-loader absolute right-0" *ngIf="showLoader">
+                  <mat-spinner mode="indeterminate"  [diameter]="30"></mat-spinner>
+                </div>
+              </div>
                 <mat-error *ngIf="
                     postForm.controls['name'].invalid &&
                     postForm.controls['name'].touched
@@ -50,6 +57,12 @@
                   </ng-container>
                 </mat-error>
               </mat-form-field>
+              <div *ngIf="productsSearchDataLength ==true&&search.length>0" class="absolute text-error mat-caption font-weight-500 custom-error">
+                This name is already existing. Please choose a unique name             
+               </div>
+               <div *ngIf="productsSearchDataLength ==false&&search.length>0&&showLoader==false"class="custom-tick  custom-tick">
+                <mat-icon class="material-icons text-success">check_circle</mat-icon>
+              </div>
             </div>
             <div>
               <div class="flex align-center mb-2">
@@ -146,7 +159,7 @@
           <button mat-stroked-button color="primary" class="mr-2 large" [mat-dialog-close]="true" (click)="onDelete()">
             Back
           </button>
-          <button mat-flat-button color="primary" class="large" type="submit" (click)="onSubmit()">
+          <button mat-flat-button color="primary" class="large" type="submit" [disabled]="postForm.invalid ||productsSearchDataLength ==true" (click)="onSubmit()">
             Update
           </button>
         </div>

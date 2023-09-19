@@ -109,11 +109,11 @@ export class PlansListingComponent implements OnDestroy {
     this.global.showLoader();
     this.plans
       .getPlans(
-        this.pageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
+        pageNumber,
+        limit,
+        search,
+        sortBy,
+        sortOrder
       )
       .pipe(takeUntil(this.global.componentDestroyed(this)))
       .subscribe((res) => {
@@ -133,7 +133,7 @@ export class PlansListingComponent implements OnDestroy {
           this.totalPages = Math.ceil(this.totalNumberOfPlan / limit);
           this.hasNextPage = pageNumber < this.totalPages;
 
-          if (this.search.length > 0) {
+          if (search.length > 0) {
             this.totalNumberOfPlanBySearch = this.plansData.totalCount;
             this.plansearchDataNextPage =
               this.totalNumberOfPlanBySearch <= this.limit;

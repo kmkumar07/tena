@@ -78,15 +78,13 @@
                   </ng-template>
                 </div>
                 <mat-form-field appearance="outline">
-                  <!-- <input required matInput placeholder="Enter here..." formControlName="internalName"
-                    (input)="setPlanId($event)" /> -->
                     <div class="input-container">
                     <input  required matInput placeholder="Enter here..." formControlName="internalName"
                     [(ngModel)]="searchQuery"
                     (input)="onSearchInput()"
-                    (input)="setPlanId($event)" />
-                    <div class="loader" *ngIf="showLoader">
-                      <mat-spinner mode="indeterminate" style="margin:0 auto;" [diameter]="30"></mat-spinner>
+                   />
+                    <div class="small-loader absolute right-0" *ngIf="showLoader">
+                      <mat-spinner mode="indeterminate" [diameter]="30"></mat-spinner>
                     </div>
                   </div>
                   <mat-error *ngIf="
@@ -110,12 +108,12 @@
                     </ng-container>
                   </mat-error>
                 </mat-form-field>
-                 <div *ngIf="planSearchDataLength ==true&&search.length>0"class="custom-error">
+                 <div *ngIf="planSearchDataLength ==true && search.length>0" class=" text-error  font-weight-500 custom-error">
                   This name is already existing. Please choose a unique name             
                  </div>
-                 <!-- <div *ngIf="planSearchDataLength ==false&&search.length>0&&showLoader==false"class="custom-tick">
-                  <i class="material-icons tickmark md-48">check_circle</i>
-                </div> -->
+                 <div *ngIf="planSearchDataLength ==false && search?.length>0 && showLoader==false"class="custom-tick  custom-tick">
+                  <mat-icon class="material-icons text-success">check_circle</mat-icon>
+                </div>
                
               </div>
               <div>

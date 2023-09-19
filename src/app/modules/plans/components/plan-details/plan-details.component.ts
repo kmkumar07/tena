@@ -132,12 +132,12 @@ export class PlanDetailsComponent {
   }
   private setupSearchSubscription() {
     this.searchSubscription = this.searchQueryChanged
-      .pipe(debounceTime(2000), distinctUntilChanged())
+      .pipe(debounceTime(1000), distinctUntilChanged())
       .subscribe((value) => {
         this.search = value;
         if (this.search.length > 0) {
           this.showLoader = true;
-          this.getSearchProduct(
+          this.getSearchPlans(
             this.PageNumber,
             this.limit,
             this.search,
@@ -149,7 +149,7 @@ export class PlanDetailsComponent {
   }
 
 
-  getSearchProduct(
+  getSearchPlans(
     PageNumber: number,
     limit: number,
     search: string,
@@ -169,11 +169,10 @@ export class PlanDetailsComponent {
           this.planWithTotal = data;
           this.planSearchData = this.planWithTotal.data.plans;
           this.planSearchDataLength = false;
-
           if (this.search.length > 0) {
             this.planSearchData.forEach((plan) => {
               if (this.search === plan.internalName) {
-                this.planSearchDataLength = true;
+                this.planSearchDataLength = true;                
                 return;
               }
             });
@@ -238,15 +237,10 @@ export class PlanDetailsComponent {
       description: ['', Validators.maxLength(500)],
       status: [true],
     });
-  }
-
-  setPlanId(event: any) {
-    if (!this.editable) {
-      const idValue = event.target.value
-        ?.replace(/[^\w\s]/gi, '')
-        .replace(/\s+/g, '-');
-      this.planForm.get('planId').setValue(idValue);
-    }
+    this.planForm.controls['internalName'].valueChanges.subscribe((value) => {
+      const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
+      this.planForm.controls['planId'].setValue(idValue);
+    });
   }
 
   onSubmit() {
