@@ -2,9 +2,10 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, takeUntil } from 'rxjs';
+import { Subject, Subscription, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 import { FeatureDetailsPopupComponent } from 'src/app/shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 import {
+  Plan,
   Stepper,
   plan_add_empty_data,
 } from 'src/app/shared/constants/consants';
@@ -57,7 +58,17 @@ export class EditPlanComponent {
   PageNumber: any = '';
   limit: any = '';
   planId: string;
+  planWithTotal:any;
   featureLength: string;
+  searchQuery: string;
+  private searchQueryChanged: Subject<string> = new Subject<string>();
+  private searchSubscription: Subscription;
+  showLoader = false;
+  search:string;
+  sortBy: 'externalName' | 'createdOn';
+  sortOrder: 'asc' | 'desc';
+  planSearchDataLength: boolean = false;
+  planSearchData:Plan[];
   dialogRef: any;
   public stepOneCompleted: boolean = false;
   editable: boolean = false;
@@ -80,8 +91,10 @@ export class EditPlanComponent {
 
   ngOnInit() {
     this.planDetails();
+    this.setupSearchSubscription();
     this.planId = this.route.snapshot.params['id'];
     this.getPlanById(this.planId);
+   
     this.planService.plan$.subscribe((data) => {
       if (data) {
         this.productDetails = data;
@@ -115,6 +128,61 @@ export class EditPlanComponent {
       );
     }
   }
+  onSearchInput() {
+    this.searchQueryChanged.next(this.searchQuery);
+  }
+  private setupSearchSubscription() {
+    this.searchSubscription = this.searchQueryChanged
+      .pipe(debounceTime(1000), distinctUntilChanged())
+      .subscribe((value) => {
+        this.search = value;
+        if (this.search.length > 0) {
+          this.showLoader = true;
+          this.getSearchPlans(
+            this.PageNumber,
+            this.limit,
+            this.search,
+            this.sortBy,
+            this.sortOrder
+          );
+        }
+      });
+  }
+
+
+  getSearchPlans(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'externalName' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.planService
+      .getPlans(
+        PageNumber,
+        limit,
+        search,
+        sortBy,
+        sortOrder
+      )
+      .subscribe((data) => {
+        if (data) {
+          this.planWithTotal = data;
+          this.planSearchData = this.planWithTotal.data.plans;
+          this.planSearchDataLength = false;
+          if (this.search.length > 0) {
+            this.planSearchData.forEach((plan) => {
+              if (this.search === plan.internalName) {
+                this.planSearchDataLength = true;                
+                return;
+              }
+            });
+            this.showLoader = false;
+          }
+        }
+      });
+  }
+  
   getPlanById(id: string) {
     if (id) {
       this.stepOneCompleted = true;
@@ -171,15 +239,6 @@ export class EditPlanComponent {
       description: ['', Validators.maxLength(500)],
       status: [true],
     });
-  }
-
-  setPlanId(event: any) {
-    if (!this.editable) {
-      const idValue = event.target.value
-        ?.replace(/[^\w\s]/gi, '')
-        .replace(/\s+/g, '-');
-      this.planForm.get('planId').setValue(idValue);
-    }
   }
 
   onSubmit() {

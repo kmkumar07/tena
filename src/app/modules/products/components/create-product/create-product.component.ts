@@ -56,8 +56,8 @@ export class CreateProductComponent implements OnInit {
   error: string;
   receivedCroppedImage: string;
   dialogRef: any;
-  PageNumber = 1;
-  limit = 10;
+  PageNumber: any = '';
+  limit: any = '';
   search: string = '';
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
