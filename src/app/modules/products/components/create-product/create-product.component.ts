@@ -149,10 +149,10 @@ export class CreateProductComponent implements OnInit {
         sortBy,
         sortOrder
       )
-      .subscribe((data) => {
-        if (data) {
-          this.productsWithTotal = data;
-          this.productsSearchData = this.productsWithTotal.products;
+      .subscribe((res) => {
+        if (res) {
+          this.productsWithTotal = res.data;
+          this.productsSearchData = this.productsWithTotal.products;          
           this.productsSearchDataLength = false;
 
           if (this.search.length > 0) {
@@ -176,7 +176,7 @@ export class CreateProductComponent implements OnInit {
   }
   
   navigateToViewProduct(res: any) {
-    this.router.navigate([`/products/view-product/${res.productId}`]);
+    this.router.navigate([`/products/view-product/${res.data.productId}`]);
   }
 
   onSubmit() {

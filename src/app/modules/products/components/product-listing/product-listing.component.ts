@@ -112,9 +112,9 @@ export class ProductListingComponent implements OnInit {
         sortOrder
       )
       .subscribe({
-        next:(data)=>{
-        if (data) {
-          this.products = data;
+        next:(res)=>{
+        if (res) {
+          this.products = res.data;          
           this.totalNumberOfProduct = this.products.totalCount;
           this.productsSearchData = this.products.products;
           this.global.hideLoader();
@@ -165,9 +165,9 @@ export class ProductListingComponent implements OnInit {
         sortBy,
         sortOrder
       )
-      .subscribe((data) => {
-        if (data) {
-          this.products = data;
+      .subscribe((res) => {
+        if (res) {
+          this.products = res.data;
           this.productsSearchData = this.products.products;
 
           if (search.length > 0) {

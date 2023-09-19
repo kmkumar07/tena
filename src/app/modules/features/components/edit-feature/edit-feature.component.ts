@@ -109,8 +109,8 @@ export class EditFeatureComponent {
         this.sortBy,
         this.sortOrder
       )
-      .subscribe((data) => {
-        this.product = data;
+      .subscribe((res) => {
+        this.product = res.data;
         let feature = [];
         this.productId = this.product.products.map((res) => res.productId);
         feature = this.product.products.map((res) => res.feature);

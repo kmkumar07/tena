@@ -31,6 +31,7 @@ export class ViewProductComponent {
   imageName: string;
   feature: any;
   id: string;
+  allproductDetail:any;
   descriptionlength:number
   constructor(
     private productService: ProductsService,
@@ -45,8 +46,8 @@ export class ViewProductComponent {
     this.id = this.route.snapshot.params['id'];
     this.productService.getProductById(this.id).subscribe((res) => {
       if(res){
-      this.productDetail = res;
-      
+      this.allproductDetail = res;
+      this.productDetail = this.allproductDetail.data;            
       this.productId = this.productDetail?.productId;
       this.name = this.productDetail?.name;
       this.description = this.productDetail?.description;

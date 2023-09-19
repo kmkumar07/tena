@@ -95,9 +95,9 @@ export class CreateFeatureComponent {
         this.sortBy,
         this.sortOrder
       )
-      .subscribe((data) => {
+      .subscribe((res) => {
         let feature = [];
-        this.product = data;
+        this.product =res.data;
         this.productArray = this.product.products.map((res) => res.productId);
         feature = this.product.products.map((res) => res.feature);
         const flattenedArray = [].concat(...feature);

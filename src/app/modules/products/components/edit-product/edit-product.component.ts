@@ -45,6 +45,8 @@ export class EditProductComponent implements OnInit {
   imageUrlName: string;
   receivedCroppedImage: string;
   dialogRef: any;
+  getProductData:any;
+  getProduct:any;
   uploadMessage: string = '';
   uploadSuccess: boolean = false;
   PageNumber = 1;
@@ -86,9 +88,11 @@ export class EditProductComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
-    this.productService.getProductById(id).subscribe((data) => {
-      this.populateForm(data);
-      this.getProductImageUrl = data.imageUrl;
+    this.productService.getProductById(id).subscribe((res) => {
+      let getProductData=res
+      this.getProductData = getProductData;
+      this.populateForm( this.getProductData.data);
+      this.getProductImageUrl = this.getProductData.data.imageUrl;      
       this.imagePath = this.environment.blobStorage;
       this.productService.croppedImage$.subscribe((croppedImage) => {
         this.receivedCroppedImage = croppedImage;
@@ -136,9 +140,9 @@ export class EditProductComponent implements OnInit {
         sortBy,
         sortOrder
       )
-      .subscribe((data) => {
-        if (data) {
-          this.productsWithTotal = data;
+      .subscribe((res) => {
+        if (res) {
+          this.productsWithTotal = res.data;
           this.productsSearchData = this.productsWithTotal.products;
           this.productsSearchDataLength = false;
 
@@ -174,10 +178,12 @@ export class EditProductComponent implements OnInit {
     this.subscription = this.productService
       .editProduct(this.postForm.value.productId, product)
       .subscribe({
-        next: (data) => {
+        next: (res) => {
+          let getProductData=res
+          this.getProduct = getProductData;
           this.global.hideLoader();
           this.openSuccess();
-          this.router.navigate([`/products/view-product/${data.productId}`]);
+          this.router.navigate([`/products/view-product/${this.getProduct.data.productId}`]);
         },
         error: (error: any) => {
           this.snackBar.open(error.error.message, '', {
