@@ -478,7 +478,7 @@ export class CreatePlanComponent implements OnInit {
   sendproductVariantId(productVariantId: string) {
     this.planService.deleteProductVariant(productVariantId).subscribe({
       next: (res) => {
-        this.navigateToGetAllPlans();
+        this.getPlanById(this.planId);
         this.snackBar.open('productVariant deleted successfully', '', {
           duration: 5000,
           verticalPosition: 'top',

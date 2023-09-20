@@ -768,6 +768,9 @@ label {
   @media only screen and (max-width: 48rem) {
     min-width: 4rem !important;
   }
+  &.m-width{
+    min-width: unset !important;
+  }
   .letter-spacing-0 {
     letter-spacing: 0 !important;
   }
@@ -951,4 +954,33 @@ mat-snack-bar-container {
 .custom-tick {
   right: 8px;
   top: 40px;
+}
+
+// filter box
+.filter-box{
+  max-width: 380px;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  height: 100%;
+  overflow: auto;
+  // .mat-mdc-dialog-container .mdc-dialog__surface{
+  //   border-radius: 0;
+  // }
+  .header{
+    border-bottom: 0.0625rem solid color("grey", "lighten-11");
+  }
+
+  .date-range{
+    .mat-date-range-input-separator{
+      display: none;
+    }
+    .mat-mdc-icon-button svg{
+      color: var(--primary-main);
+    }
+  }
+}
+.filter-box-close{
+  right: -25rem;
+  transition: $sidebar-transition;
 }

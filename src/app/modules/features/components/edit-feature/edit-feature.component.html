@@ -5,7 +5,7 @@
         <div class="flex align-center">
           <mat-icon class="material-symbols-outlined pointer mr-1" color="primary"
             [routerLink]="'/features'">keyboard_backspace</mat-icon>
-          <p class="mat-headline-5 text-purple-lighten-1">Create Feature</p>
+          <p class="mat-headline-5 text-purple-lighten-1">Update Feature</p>
         </div>
       </div>
     </div>
@@ -19,7 +19,7 @@
         <div class="form-wrapper pr-5">
           <form [formGroup]="featureForm">
             <div class="form-container mt-6">
-              <div class="input-wrapper">
+              <div class="input-wrapper relative">
                 <div class="flex align-center mb-2">
                   <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
                     Feature Name
@@ -28,18 +28,22 @@
                     [ngxTippy]="featureName" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
                   <ng-template #featureName let-name class="t-template">
                     <div class="help-info-tooltip">
-                      <!-- <div class="heading-with-background">Feature name</div> -->
                       <div class="details">
                         Enter a name that helps you identify this Feature.
                       </div>
-                      <!-- <button mat-button color="primary" class="px-0">
-                        Learn more
-                      </button> -->
+                     
                     </div>
                   </ng-template>
                 </div>
                 <mat-form-field appearance="outline" class="border-2">
-                  <input required matInput placeholder="Enter here" formControlName="name" />
+                  <div class="input-container">
+                  <input required matInput placeholder="Enter here" formControlName="name" 
+                  [(ngModel)]="searchQuery"
+                  (input)="onSearchInput()" />
+                  <div class="small-loader absolute right-0" *ngIf="showLoader">
+                    <mat-spinner mode="indeterminate"  [diameter]="30"></mat-spinner>
+                  </div>
+                </div>
                   <mat-error *ngIf="
                 featureForm.controls['name'].invalid &&
                 featureForm.controls['name'].touched
@@ -55,6 +59,12 @@
                     </ng-container>
                   </mat-error>
                 </mat-form-field>
+                <div *ngIf="featuresSearchDataLength ==true&&search.length>0" class="absolute custom-error text-error mat-caption font-weight-500">
+                  This name is already existing. Please choose a unique name            
+                 </div>
+                  <div *ngIf="featuresSearchDataLength ==false&&search.length>0&&showLoader==false"class="custom-tick absolute custom-tick">
+                    <mat-icon class="material-icons text-success">check_circle</mat-icon>
+                  </div>
               </div>
               <div class="input-wrapper">
                 <div class="flex align-center mb-2">
@@ -343,7 +353,7 @@
           !featureForm.valid &&
           !featureForm.get('productID')?.value &&
           this.featureForm.value.type !== 'switch' &&
-          this.featureForm.value.type !== 'custom'
+          this.featureForm.value.type !== 'custom'||featuresSearchDataLength ==true
         ">
             Update
           </button>

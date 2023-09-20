@@ -12,7 +12,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import getUniqueId from 'src/app/core/utils/functions/getUniqueId';
 import { FeatureService } from '../../services/feature.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -59,14 +58,14 @@ export class CreateFeatureComponent {
   productArray = [];
   id: string;
   product: any;
+  showLoader = false;
   isRangeSelected: boolean = false;
   displayName: string;
   filteredProducts: Observable<any[]>;
   private searchQueryChanged: Subject<string> = new Subject<string>();
   private searchSubscription: Subscription;
   searchQuery: string;
-  features: any;
-  featuresSearchData: any;
+  featureName = [];
   NumberOfPage: any = '';
   NumberOfLimit: any = '';
   featuresSearchDataLength: boolean;
@@ -96,9 +95,13 @@ export class CreateFeatureComponent {
         this.sortBy,
         this.sortOrder
       )
-      .subscribe((data) => {
-        this.product = data;
+      .subscribe((res) => {
+        let feature = [];
+        this.product =res.data;
         this.productArray = this.product.products.map((res) => res.productId);
+        feature = this.product.products.map((res) => res.feature);
+        const flattenedArray = [].concat(...feature);
+        this.featureName = flattenedArray.map((res) => res.name);
         this.featureForm.patchValue({ productID: this.id });
         this.filteredProducts = this.featureForm
           .get('productID')!
@@ -107,20 +110,13 @@ export class CreateFeatureComponent {
             map((value) => this.filterProducts(value || ''))
           );
       });
-    this.sortBy = 'createdOn';
-    this.sortOrder = 'desc';
     this.searchSubscription = this.searchQueryChanged
-      .pipe(debounceTime(500), distinctUntilChanged())
+      .pipe(debounceTime(2000), distinctUntilChanged())
       .subscribe((value) => {
         this.search = value;
-        if (this.search) {
-          this.getSearchFeature(
-            this.NumberOfPage,
-            this.NumberOfLimit,
-            this.search,
-            this.sortBy,
-            this.sortOrder
-          );
+        if (this.search.length > 0) {
+          this.showLoader = true;
+          this.getSearchFeature(this.search);
         }
       });
     this.feature();
@@ -137,33 +133,17 @@ export class CreateFeatureComponent {
     );
     return filteredProducts;
   }
-  getSearchFeature(
-    PageNumber: number,
-    limit: number,
-    search: string,
-    sortBy: 'name' | 'createdOn',
-    sortOrder: 'asc' | 'desc'
-  ) {
-    this.global.showLoader();
-
-    this.featureService
-      .getFeatures(PageNumber, limit, search, sortBy, sortOrder)
-      .subscribe((data) => {
-        if (data) {
-          this.features = data;
-          this.featuresSearchData = this.features.features;
-          this.featuresSearchDataLength = false;
-          if (this.search.length > 0) {
-            this.featuresSearchData.forEach((feature) => {
-              if (this.search === feature.name) {
-                this.featuresSearchDataLength = true;
-                return;
-              }
-            });
-            this.global.hideLoader();
-          }
+  getSearchFeature(search: string) {
+    this.featuresSearchDataLength = false;
+    if (this.search.length > 0) {
+      this.featureName.forEach((name) => {
+        if (search === name) {
+          this.featuresSearchDataLength = true;
+          return;
         }
       });
+      this.showLoader = false;
+    }
   }
   feature() {
     this.featureForm = this.formBuilder.group({
@@ -406,7 +386,7 @@ export class CreateFeatureComponent {
   toggleStatus() {
     const currentStatus = this.featureForm.get('status').value;
     console.log(currentStatus);
-    
+
     this.featureForm.get('status').setValue(!currentStatus);
   }
 

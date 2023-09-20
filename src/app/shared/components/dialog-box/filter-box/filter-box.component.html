@@ -1,0 +1,48 @@
+<div class="h-full filter-box">
+    <div class="header p-4 flex justify-between align-center">
+        <h2 class="mb-0 font-weight-600 text-blue-darken">Filter</h2>
+        <button mat-icon-button class="medium" disableRipple>
+            <mat-icon class="material-symbols-outlined mr-0 text-grey-darken">close</mat-icon>
+        </button>
+    </div>
+    <div class="inner-block p-4">
+        <div class="input-wrapper">
+            <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 text-blue-darken input-label">
+                    Status
+                </p>
+            </div>
+            <mat-form-field appearance="outline" class="border-2 mb-0">
+                <mat-select placeholder="select">
+                    <mat-option *ngFor="let food of foods" [value]="food.value">
+                        {{food.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="input-wrapper">
+            <div class="flex align-center mb-2">
+                <p class="mat-subtitle-2 font-weight-500 input-label text-blue-darken">
+                    Date
+                </p>
+            </div>
+            <mat-form-field appearance="outline" class="border-2 mb-0 date-range">
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate placeholder="Select date">
+                    <input matEndDate >
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+        </div>
+
+        <div class="flex justify-end">
+            <button mat-stroked-button color="primary" class="mr-2 large">
+                Clear Filter
+            </button>
+            <button mat-flat-button color="primary" class="large" type="button">
+                Apply
+            </button>
+        </div>
+    </div>
+</div>
