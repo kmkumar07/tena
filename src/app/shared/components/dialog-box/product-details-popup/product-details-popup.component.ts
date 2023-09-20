@@ -134,12 +134,14 @@ export class ProductDetailsPopupComponent {
 
   ngOnInit() {
     this.planId = this.data.planId;
-    this.getProduct(this.PageNumber, this.limit, this.search);
-    this.productService.product$.subscribe((data) => {
-      if (data) {
-        this.productData = data.products;
-      }
-    });
+    this.getProduct(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
+   
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -186,16 +188,40 @@ export class ProductDetailsPopupComponent {
     this.selectedLevelFromDropdown[featureId] = level;
   }
 
-  getProduct(PageNumber: number, limit: number, search: string) {
+  getProduct(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.global.showLoader();
     this.productService
       .getProducts(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
+        PageNumber,
+        limit,
+        search,
+        sortBy,
+        sortOrder
       )
-      .subscribe(() => {});
+      .subscribe({
+        next:(res)=>{
+        if (res) {
+          const products = res.data;          
+          this.productData = products.products;
+          this.global.hideLoader();
+         
+        }
+      },
+      error: (error: any) => {
+        this.snackBar.open(error?.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+        this.global.hideLoader();
+      },
+      });
   }
 
   selectProduct(product: any) {
