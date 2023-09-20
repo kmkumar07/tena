@@ -43,9 +43,14 @@
                   </ng-template>
                 </div>
                 <mat-form-field appearance="outline" class="border-2">
+                  <div class="input-container">
                   <input required matInput placeholder="Enter here..." formControlName="name"
                   [(ngModel)]="searchQuery"
                   (input)="onSearchInput()" />
+                  <div class="small-loader absolute right-0" *ngIf="showLoader">
+                    <mat-spinner mode="indeterminate"  [diameter]="30"></mat-spinner>
+                  </div>
+                </div>
                   <mat-error
                     *ngIf="
                       featureForm.controls['name'].invalid &&
@@ -70,8 +75,12 @@
                   </mat-error>
                 </mat-form-field>
                 <div *ngIf="featuresSearchDataLength ==true&&search.length>0" class="absolute custom-error text-error mat-caption font-weight-500">
-                  This name is already existing. Please choose a unique name             </div>
-              </div>
+                  This name is already existing. Please choose a unique name            
+                 </div>
+                  <div *ngIf="featuresSearchDataLength ==false&&search.length>0&&showLoader==false"class="custom-tick absolute custom-tick">
+                    <mat-icon class="material-icons text-success">check_circle</mat-icon>
+                  </div>
+                </div>
               <div class="input-wrapper">
                 <div class="flex align-center mb-2">
                   <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
