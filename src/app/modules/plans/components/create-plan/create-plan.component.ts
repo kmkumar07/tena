@@ -187,7 +187,7 @@ export class CreatePlanComponent implements OnInit {
         .getPlanById(id)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
-          if (res) {
+          if (res) {            
             this.global.hideLoader();
             this.plandataById = res.data;            
             this.updatePricingData(res.data.pricing);
@@ -417,6 +417,19 @@ export class CreatePlanComponent implements OnInit {
       data: {
         module: 'Plan',
         planId: planId,
+      },
+    });
+    dialogRef.afterClosed().subscribe((res: any) => {
+      if (res) {
+        this.getPlanById(planId);
+      }
+    });
+  }
+  editProductDetails(planId:string,productVariantId: string) {
+    const dialogRef = this.dialog.open(ProductDetailsPopupComponent, {
+      data: {
+        module: 'Plan',
+        productVariantId: {planId,productVariantId}
       },
     });
     dialogRef.afterClosed().subscribe((res: any) => {

@@ -1,6 +1,6 @@
 <div class="productDetails-popup relative">
   <div class="heading pb-3">
-    <h5 class="mat-subtitle-1 text-blue-darken mb-2 font-weight-500">Add Product</h5>
+    <h5 class="mat-subtitle-1 text-blue-darken mb-2 font-weight-500"> {{ editable ? "Update Product" : "Add Product" }}</h5>
     <p class="text-grey-darken mt-1"> Fill in the details to add product</p>
   </div>
   <div class="inner-block pr-5 pb-4">
@@ -40,7 +40,7 @@
               </p>
             </div>
             <mat-form-field appearance="outline" class="add-product-description">
-              <textarea matInput [disabled]="true" placeholder="Enter " [value]="formGroup.controls.description.value"
+              <textarea matInput  placeholder="Enter " [value]="formGroup.controls.description.value"
                 formControlName="description"></textarea>
             </mat-form-field>
           </div>
@@ -169,7 +169,7 @@
     <div class="flex align-center">
       <button mat-stroked-button color="primary" class="mr-2" (click)="onCancelClick()">Dismiss</button>
       <button mat-flat-button (click)="onSubmit(); clicked = true" color="primary">
-        Add
+        {{ editable ? "Update" : "Create" }}
       </button>
     </div>
   </div>

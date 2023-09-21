@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, takeUntil } from 'rxjs';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -14,6 +14,8 @@ import { Status, selectOptions } from 'src/app/shared/constants/consants';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PlanService } from 'src/app/modules/plans/services/plan.service';
+import { FormArray } from '@angular/forms';
 
 export interface PeriodicElement {
   featureId: string;
@@ -82,16 +84,29 @@ export class ProductDetailsPopupComponent {
   filteredFeatures = [];
   selectedFeatures: PeriodicElement[] = [];
   productId: string = '';
+  productID:string;
+  plan: any;
   planId: string = '';
+  EditplanId:string;
+  productVariantId: string = '';
+  productVariantIdWithPlanId: any;
+  productVariant: any;
   isProductSelected: boolean = false;
   isButtonDisabled: boolean = true;
   selectedOption: boolean;
   disabled: boolean;
+  planArray = [];
   isCheckboxChecked: boolean = false;
   selectedLevelFromDropdown: { [key: string]: any } = {};
   clicked = false;
   rangeForm: FormGroup;
   loading = false;
+  updateproductData = [];
+  editable: boolean = false;
+  flag = false;
+  updateproduct = [];
+
+  selectedProductIds: string[] = [];
   displayedColumns1: string[] = [
     'select',
     'name',
@@ -106,13 +121,13 @@ export class ProductDetailsPopupComponent {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ProductDetailsPopupComponent>,
-
+    private planService: PlanService,
     private productService: ProductsService,
     private productDetailsService: ProductDetailsService,
     private global: GlobalService,
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA)
-    public data: { planId: any }
+    public data: { planId: any; productVariantIdWithPlanId: any }
   ) {}
 
   displayedColumns: string[] = [
@@ -134,12 +149,97 @@ export class ProductDetailsPopupComponent {
 
   ngOnInit() {
     this.planId = this.data.planId;
+
+    this.productVariantIdWithPlanId = this.data;
+
+    this.getPlanById(this.productVariantIdWithPlanId);
+    this.getProductVariantById(this.productVariantIdWithPlanId);
+  }
+
+  selectProduct(product: any) {
+    // Add the selected product's ID to the list
+    this.selectedProductIds.push(product.productId);
+
+    // Now, you can update the form control or perform any other necessary actions
+    this.formGroup.get('productID').setValue(product.productId);
+    this.productId = product.productId;
+    this.isProductSelected = true;
+    this.formGroup.controls.productName.patchValue(product.name);
+    this.formGroup.controls.description.patchValue(product.description);
+    this.filteredFeatures = product.feature;
+    const rangeFormControls = {};
+    this.filteredFeatures.forEach((feature) => {
+      const minValue = feature.levels[0]?.value;
+      const maxValue = feature.levels[1]?.value;
+      if (feature.type === 'range') {
+        const rangeValue = [
+          '',
+          [
+            Validators.required,
+            Validators.min(Math.min(minValue, maxValue)),
+            Validators.max(Math.max(minValue, maxValue)),
+          ],
+        ];
+        rangeFormControls[feature.featureId] = rangeValue;
+        feature.minValue = Math.min(minValue, maxValue);
+        feature.maxValue = Math.max(minValue, maxValue);
+      }
+    });
+
+    this.rangeForm = this.formBuilder.group(rangeFormControls);
+  }
+  getPlanById(id: any) {
+
+    if (this.EditplanId) {
+      this.planService
+        .getPlanById(this.EditplanId)
+        .pipe(takeUntil(this.global.componentDestroyed(this)))
+        .subscribe((res) => {
+          this.plan = res;
+          this.planArray = this.plan.data.productVariant;
+        });
+    }
     this.getProduct(this.PageNumber, this.limit, this.search);
     this.productService.product$.subscribe((data) => {
       if (data) {
         this.productData = data.products;
+        if (data && this.planArray.length < 1) {
+          this.updateproductData.push(this.productData);
+        }
       }
     });
+    this.updateproduct = this.updateproductData[0].filter(
+      (product) => !this.selectedProductIds.includes(product.productId)
+    );
+  }
+  getProductVariantById(id: any) {
+    this.productVariantId = id.productVariantId.productVariantId;
+    this.EditplanId = id.productVariantId.planId;
+    console.log( this.EditplanId);
+
+    if (this.productVariantId) {
+      this.planService
+        .getProductVariantById(this.productVariantId)
+        .pipe(takeUntil(this.global.componentDestroyed(this)))
+        .subscribe((res) => {
+          this.patchValue(res);
+        });
+    }
+  }
+  patchValue(data: any) {
+    console.log("data",data);
+    this.productID=data.productID
+    this.editable = true;
+   this.formGroup.patchValue({
+      productName: data.name,
+      productID: data.productID,
+      description: data.description,
+      status: data.status,
+      planID: data.planID,
+    });
+    this.filteredFeatures = data.features;
+    console.log("this.filteredFeatures",this.filteredFeatures);
+    
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -198,34 +298,6 @@ export class ProductDetailsPopupComponent {
       .subscribe(() => {});
   }
 
-  selectProduct(product: any) {
-    this.productId = product.productId;
-    this.isProductSelected = true;
-    this.formGroup.controls.productName.patchValue(product.name);
-    this.formGroup.controls.description.patchValue(product.description);
-    this.filteredFeatures = product.feature;
-    const rangeFormControls = {};
-    this.filteredFeatures.forEach((feature) => {
-      const minValue = feature.levels[0]?.value;
-      const maxValue = feature.levels[1]?.value;
-      if (feature.type === 'range') {
-        const rangeValue = [
-          '',
-          [
-            Validators.required,
-            Validators.min(Math.min(minValue, maxValue)),
-            Validators.max(Math.max(minValue, maxValue)),
-          ],
-        ];
-        rangeFormControls[feature.featureId] = rangeValue;
-        feature.minValue = Math.min(minValue, maxValue);
-        feature.maxValue = Math.max(minValue, maxValue);
-      }
-    });
-
-    this.rangeForm = this.formBuilder.group(rangeFormControls);
-  }
-
   onSubmit() {
     this.loading = true;
     const formData = this.formGroup.value;
@@ -233,7 +305,10 @@ export class ProductDetailsPopupComponent {
     const productVariantId = productVariantName
       .replace(/\s+/g, '-')
       .toLowerCase();
-
+      const editProductVariantName = formData.productName;
+      const editProductVariantId = editProductVariantName
+        .replace(/\s+/g, '-')
+        .toLowerCase();
     const features = this.selectedFeatures.map((productVariantFeature) => {
       switch (productVariantFeature.type) {
         case 'quantity':
@@ -259,7 +334,7 @@ export class ProductDetailsPopupComponent {
       }
     });
 
-    const payload = {
+    const productVariant = {
       productVariantId: productVariantId,
       name: productVariantName,
       planId: this.planId,
@@ -270,30 +345,67 @@ export class ProductDetailsPopupComponent {
     };
 
     this.clicked = false;
-    this.subscription = this.productDetailsService
-      .createProductVariant(payload)
-      .subscribe({
-        next: (res) => {
-          this.loading = false;
-          this.isButtonDisabled = true;
-          this.selectedFeatures = [];
-          this.dialogRef.close(true);
-          this.snackBar.open('Product-Varaint created successfully', '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
-          return res;
-        },
-        error: (err: any) => {
-          this.snackBar.open(err.error.message, '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
-          this.global.hideLoader();
-        },
-      });
+    if (this.editable == false) {
+      this.subscription = this.productDetailsService
+        .createProductVariant(productVariant)
+        .subscribe({
+          next: (res) => {
+            this.loading = false;
+            this.isButtonDisabled = true;
+            this.selectedFeatures = [];
+            this.dialogRef.close(true);
+            this.snackBar.open('Product-Varaint created successfully', '', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            });
+            return res;
+          },
+          error: (err: any) => {
+            this.snackBar.open(err.error.message, '', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            });
+            this.global.hideLoader();
+          },
+        });
+    } else {
+      const UpdateproductVariant = {
+        productVariantId: editProductVariantId,
+        name: editProductVariantName,
+        planId: this.EditplanId,
+        productID:this.productID,
+        type: 'base',
+        features: features,
+        status: 'active',
+      };
+      this.global.showLoader();
+      console.log("this.productVariant",UpdateproductVariant);
+      
+      this.planService
+        .updateProductVariant(this.productVariantId, UpdateproductVariant)
+        .pipe(takeUntil(this.global.componentDestroyed(this)))
+        .subscribe({
+          next: (res) => {
+            this.snackBar.open('Product-Varaint updated successfully', '', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            });
+            this.dialogRef.close(true);
+            this.global.hideLoader();
+          },
+          error: (err: any) => {
+            this.snackBar.open(err.error.message, '', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            });
+            this.global.hideLoader();
+          },
+        });
+    }
   }
   onCancelClick() {
     this.dialogRef.close(false);
