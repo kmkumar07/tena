@@ -543,3 +543,21 @@
     margin-left: 0 !important;
   }
 }
+
+// mob-menu
+.mob-menu{
+  display: none;
+  @media only screen and (max-width: 64rem) {
+    display: block;
+  }
+}
+
+// lap-menu
+.sidenav-slider.mat-drawer .mat-drawer-inner-container .sidenav-wrapper .sidebar-toggle{
+
+  &.lap-menu{
+    @media only screen and (max-width: 64rem) {
+      display: none;
+    }
+  }
+}
