@@ -961,7 +961,6 @@ mat-snack-bar-container {
   max-width: 380px;
   width: 100%;
   position: absolute;
-  right: 0;
   height: 100%;
   overflow: auto;
   // .mat-mdc-dialog-container .mdc-dialog__surface{
@@ -980,6 +979,11 @@ mat-snack-bar-container {
     }
   }
 }
+
+.filter-box-open {
+  right: 0;
+}
+
 .filter-box-close{
   right: -25rem;
   transition: $sidebar-transition;
