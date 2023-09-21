@@ -123,9 +123,10 @@ export class FeaturesListingComponent implements OnInit {
         this.sortOrder
       )
       .subscribe({
-        next:(data) => {
-        if (data) {
-          this.featuresData = data;
+        next:(res) => {
+          console.log("first",res)
+        if (res) {
+          this.featuresData = res.data;
           this.totalNumberOfFeature = this.featuresData.totalCount;
           this.featuresSearchData = this.featuresData.features;
           this.global.hideLoader();

@@ -28,6 +28,7 @@ import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/suc
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GlobalService } from 'src/app/core/services/global.service';
+import { featureSamples } from 'src/app/shared/constants/static-info';
 
 export interface menuOptions {
   value: number;
@@ -40,6 +41,7 @@ export interface menuOptions {
   styleUrls: ['./create-feature.component.scss'],
 })
 export class CreateFeatureComponent {
+  featureSamples = featureSamples;
   productName: Data_Type[] = User_Data;
   featureType: menuOptions[] = feature_types;
   subscription: Subscription;
@@ -66,8 +68,6 @@ export class CreateFeatureComponent {
   private searchSubscription: Subscription;
   searchQuery: string;
   featureName = [];
-  NumberOfPage: any = '';
-  NumberOfLimit: any = '';
   featuresSearchDataLength: boolean;
   public featureForm: FormGroup | null;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -434,17 +434,21 @@ export class CreateFeatureComponent {
 
     this.subscription = this.featureService.addFeature(feature).subscribe({
       next: (res: any) => {
-        this.openSuccess();
+        this.openCustomSnackbar('Feature created successfully')
         this.routes.navigate([`/features/view/${res.data.featureId}`]);
         return res;
       },
       error: (error: any) => {
-        this.snackBar.open(error.error.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
+        this.openCustomSnackbar(error.error.message)
       },
+    });
+  }
+  openCustomSnackbar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 5000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: ['custom-class'],
     });
   }
 
@@ -462,91 +466,28 @@ export class CreateFeatureComponent {
     });
   }
   // sample data code
-  switchSample() {
-    this.featureForm.removeControl('unit');
-    this.isRangeSelected = false;
-    this.featureForm.patchValue({
-      productID: this.productArray[0],
-      name: 'Whiteboard',
-      description: ` This feature type has 2 entitlement levels- "available" and "notavailable"`,
-      type: 'switch',
-      status: [true],
-    });
-  }
-  rangeSample() {
+  setFeature(featureData) {
     this.featureForm.addControl(
       'unit',
       this.formBuilder.control('', Validators.required)
     );
-    this.isRangeSelected = true;
+
+    this.isRangeSelected = featureData.type === 'range';
+
     this.featureForm.patchValue({
       productID: this.productArray[0],
-      name: 'API Call',
-      description: `This feature supports range based entitlements. For eg : Customer’s
-          access can be between 100 and 300 API / minute`,
-      type: 'range',
+      name: featureData.name,
+      description: featureData.description,
+      type: featureData.type,
       status: [true],
-      unit: 'License',
+      unit: featureData.unit || '',
     });
-    const values = [
-      { value: '10', name: 'License' },
-      { value: '20', name: 'License' },
-    ];
 
-    for (let i = 0; i < 2; i++) {
-      const formGroup = this.levels.at(i);
-      formGroup?.patchValue(values[i]);
-    }
-  }
-  quantitySample() {
-    this.featureForm.addControl(
-      'unit',
-      this.formBuilder.control('', Validators.required)
-    );
-    this.isRangeSelected = false;
-    this.featureForm.patchValue({
-      productID: this.productArray[0],
-      name: 'API Call',
-      description: ` This feature type has numbered entitlement levels- For eg : 2,3,4 or
-          10 user licenses.`,
-      type: 'quantity',
-      status: [true],
-      unit: 'License',
-    });
-    const values = [
-      { value: '3', name: 'License' },
-      { value: '10', name: 'License' },
-      { value: '20', name: 'License' },
-    ];
-
-    for (let i = 0; i < 3; i++) {
-      const formGroup = this.levels.at(i);
-      formGroup?.patchValue(values[i]);
-    }
-  }
-  customSample() {
-    this.featureForm.addControl(
-      'unit',
-      this.formBuilder.control('', Validators.required)
-    );
-    this.isRangeSelected = false;
-    this.featureForm.patchValue({
-      productID: this.productArray[0],
-      name: 'Email Support',
-      description: ` This feature supports range based entitlements. For eg : Customer’s
-          access can be between 100 and 300 API / minute`,
-      type: 'custom',
-      status: [true],
-    });
-    const values = [
-      { value: '12', name: 'Working hours' },
-      { value: '24', name: 'Weekdays' },
-      { value: '20', name: 'Month' },
-    ];
-
-    for (let i = 0; i < 3; i++) {
-      const formGroup = this.levels.at(i);
-      formGroup?.patchValue(values[i]);
+    if (featureData.levels) {
+      for (let i = 0; i < featureData.levels.length; i++) {
+        const formGroup = this.levels.at(i);
+        formGroup?.patchValue(featureData.levels[i]);
+      }
     }
   }
 }
