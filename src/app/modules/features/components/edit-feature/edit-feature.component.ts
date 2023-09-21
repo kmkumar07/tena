@@ -276,7 +276,7 @@ export class EditFeatureComponent {
     if (resData.type === 'range') {
       this.isRangeSelected = true;
     }
-    resData.levels.forEach((b) => {
+    resData.levels.forEach(() => {
       (this.featureForm.get("levels") as FormArray).push(this.formBuilder.group({
         isUnlimited: [false],
         value: ['', [Validators.required]],
