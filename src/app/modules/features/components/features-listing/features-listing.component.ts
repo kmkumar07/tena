@@ -115,15 +115,14 @@ export class FeaturesListingComponent implements OnInit {
     this.global.showLoader();
     this.featureService
       .getFeatures(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
+        PageNumber,
+        limit,
+        search,
+        sortBy,
+        sortOrder
       )
       .subscribe({
         next:(res) => {
-          console.log("first",res)
         if (res) {
           this.featuresData = res.data;
           this.totalNumberOfFeature = this.featuresData.totalCount;
