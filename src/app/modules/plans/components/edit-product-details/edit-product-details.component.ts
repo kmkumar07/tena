@@ -126,7 +126,7 @@ export class EditProductDetailsComponent implements OnInit {
       }),
     };
 
-    this.subscription = this.planService
+    this.subscription = this.productDetailService
       .updateProductVariant(this.id, productVariant)
       .subscribe({
         next: (res: any) => {

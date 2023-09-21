@@ -12,6 +12,7 @@ import {
 import { PlanService } from '../../services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ProductDetailsService } from '../../services/product-details.service';
 
 export interface PeriodicElement {
   PricingCycle: string;
@@ -85,6 +86,7 @@ export class EditPlanComponent {
     private router: Router,
     private route: ActivatedRoute,
     private planService: PlanService,
+    private productDetailService: ProductDetailsService,
     private global: GlobalService,
     private snackBar: MatSnackBar
   ) {}
@@ -298,7 +300,7 @@ export class EditPlanComponent {
   }
 
   onDelete(id: string) {
-    this.planService.deleteProductVariant(id).subscribe(() => {
+    this.productDetailService.deleteProductVariant(id).subscribe(() => {
       this.data$.subscribe((res) => {
         return res;
       });

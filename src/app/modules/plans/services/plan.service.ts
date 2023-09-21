@@ -31,7 +31,7 @@ export class PlanService {
   baseUrl = environment.apiUrl;
   priceModelArr = this.planData.priceInfo.getValue();
 
-  constructor(private http: HttpClient, private apiService: ApiService) {}
+  constructor(private apiService: ApiService) {}
 
   setEditPrice(state: any) {
     this.editPrice.next(state);
@@ -81,14 +81,6 @@ export class PlanService {
     return this.apiService.get(path);
   }
 
-  deleteProductVariant(id: string) {
-    const url = `${this.baseUrl}/productVariant/${id}?productVariantId=${id}`;
-    return this.apiService.delete(url).pipe(
-      map((res) => {
-        return res;
-      })
-    );
-  }
   deletePlan(planId: string) {
     const url = `${this.baseUrl}/plans/${planId}?planId=${planId}`;
     return this.apiService.delete(url);
@@ -105,22 +97,4 @@ export class PlanService {
     let path = `${this.baseUrl}/pricing/${priceId}?priceId=${priceId}`;
     return this.apiService.put(path, price);
   }
-  updateProductVariant(
-    id: string,
-    updatedProductVariant: any
-  ): Observable<ProductVariants> {
-    const url = `${this.baseUrl}/productVariant/?productVariantId=${id}`;
-    return this.http.put(url, updatedProductVariant).pipe(
-      map((res: any) => {
-        this.planSubject.next(res.data);
-        return res.data;
-      }),
-      catchError((err) => {
-        this.error$.next(err.message);
-        throw err;
-      })
-    );
-  }
-
-  
 }

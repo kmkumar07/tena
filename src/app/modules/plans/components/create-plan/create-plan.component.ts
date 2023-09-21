@@ -1,3 +1,4 @@
+import { ProductDetailsService } from 'src/app/modules/plans/services/product-details.service';
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -93,6 +94,7 @@ export class CreatePlanComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private planService: PlanService,
+    private productDetailService: ProductDetailsService,
     private global: GlobalService,
     private snackBar: MatSnackBar
   ) {}
@@ -354,7 +356,7 @@ export class CreatePlanComponent implements OnInit {
     });
   }
   onDelete(id: string) {
-    this.planService.deleteProductVariant(id).subscribe(() => {
+    this.productDetailService.deleteProductVariant(id).subscribe(() => {
       this.data$.subscribe((res) => {
         return res;
       });
@@ -476,7 +478,7 @@ export class CreatePlanComponent implements OnInit {
     });
   }
   sendproductVariantId(productVariantId: string) {
-    this.planService.deleteProductVariant(productVariantId).subscribe({
+    this.productDetailService.deleteProductVariant(productVariantId).subscribe({
       next: (res) => {
         this.getPlanById(this.planId);
         this.snackBar.open('productVariant deleted successfully', '', {
