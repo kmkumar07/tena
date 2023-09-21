@@ -42,21 +42,8 @@ export class FeatureService {
     search: string,
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
-  ): Observable<FeatureList[]> {
-    return this.http
-      .get<any>(
-        `${environment.apiUrl}/feature?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`,
-        { withCredentials: true }
-      )
-      .pipe(
-        map((res) => {
-          this.featureSubject.next(res.data);
-          this.features = res.data;
-          return res.data;
-        }),
-        catchError((err) => {
-          throw err;
-        })
-      );
+  ): Observable<any> {
+    let path = `${environment.apiUrl}/feature?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+    return this.apiService.get(path);
   }
 }
