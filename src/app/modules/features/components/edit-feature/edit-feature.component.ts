@@ -74,18 +74,7 @@ export class EditFeatureComponent {
     type: ['', Validators.required],
     unit: [null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
     status: [false],
-    levels: this.formBuilder.array([
-      this.formBuilder.group({
-        isUnlimited: [false],
-        value: ['', [Validators.required]],
-        name: ['', Validators.required],
-      }),
-      this.formBuilder.group({
-        isUnlimited: [false],
-        value: ['', [Validators.required]],
-        name: ['', Validators.required],
-      }),
-    ]),
+    levels: this.formBuilder.array([]),
   });
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -287,6 +276,13 @@ export class EditFeatureComponent {
     if (resData.type === 'range') {
       this.isRangeSelected = true;
     }
+    resData.levels.forEach(() => {
+      (this.featureForm.get("levels") as FormArray).push(this.formBuilder.group({
+        isUnlimited: [false],
+        value: ['', [Validators.required]],
+        name: ['', Validators.required],
+      }))
+    });
     this.featureForm.patchValue({
       featureId: resData.featureId,
       productID: resData.product.productId,
@@ -369,16 +365,12 @@ export class EditFeatureComponent {
       .updateFeature(this.featureForm.value.featureId, feature)
       .subscribe({
         next: (res: any) => {
-          this.openSuccess();
+          this.openCustomSnackbar('Feature updated successfully');
           this.routes.navigate([`/features/view/${res.data.featureId}`]);
           return res;
         },
         error: (error: any) => {
-          this.snackBar.open(error.error.message, '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
+          this.openCustomSnackbar(error.error.message);
         },
       });
   }
@@ -386,14 +378,12 @@ export class EditFeatureComponent {
   onDelete() {
     this.routes.navigate(['/features']);
   }
-
-  openSuccess() {
-    this.dialog.open(SuccessDialogComponent, {
-      width: '420px',
-      data: {
-        module: 'Feature',
-        operation: 'is updated',
-      },
+  openCustomSnackbar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 5000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: ['custom-class'],
     });
   }
 
