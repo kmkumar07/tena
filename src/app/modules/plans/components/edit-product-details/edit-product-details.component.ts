@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { PlanService } from '../../services/plan.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ProductDetailsService } from '../../services/product-details.service';
 
 export interface PeriodicElement {
   featureId: string;
@@ -63,11 +64,12 @@ export class EditProductDetailsComponent implements OnInit {
     private productService: ProductsService,
     private route: ActivatedRoute,
     private planService: PlanService,
+    private productDetailService: ProductDetailsService,
     public dialog: MatDialog
   ) {}
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
-    this.planService.getProductVariantById(this.id).subscribe((data) => {
+    this.productDetailService.getProductVariantById(this.id).subscribe((data) => {
       console.log('a', data);
       this.selectProductId = data.productID;
       this.featureDetails = data.features;
@@ -124,7 +126,7 @@ export class EditProductDetailsComponent implements OnInit {
       }),
     };
 
-    this.subscription = this.planService
+    this.subscription = this.productDetailService
       .updateProductVariant(this.id, productVariant)
       .subscribe({
         next: (res: any) => {

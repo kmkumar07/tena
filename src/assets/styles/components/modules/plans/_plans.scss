@@ -1069,6 +1069,11 @@
   .select-wrapper{
     min-width: 10.9375rem;
   }
+
+  .noFeatures-info {
+    border: 0.0625rem solid $border-color;
+  }
+
   .add-product-description {
 
     .mat-mdc-text-field-wrapper,
