@@ -17,12 +17,22 @@
         </div>
       </ng-template>
       <div class="flex align-center">
-        <div class="global-search main-bg mr-2 border-2">
+        <div class="global-search main-bg border-2">
           <span class="search-icon pointer">
             <img src="../../../../assets/images/icons/search.svg" alt="search-icon" />
           </span>
           <input type="text" placeholder="Search anything..." [(ngModel)]="searchQuery" (input)="onSearchInput()" />
         </div>
+        <button
+        mat-flat-button
+        class="create-btn m-width mx-2"
+      >
+        <mat-icon class="material-symbols-outlined m-0" color="primary">filter_list</mat-icon>
+        <span class="text-nowrap block ml-2 letter-spacing-0"
+          >Filter</span
+        >
+        
+      </button>
         <button mat-flat-button color="primary" class="create-btn" [routerLink]="['create']">
           <mat-icon class="material-symbols-outlined m-0 white-text">add_circle</mat-icon>
           <span class="text-nowrap block ml-2 letter-spacing-0">Create Plan</span>
