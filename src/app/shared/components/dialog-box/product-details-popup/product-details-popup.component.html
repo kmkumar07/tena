@@ -114,10 +114,10 @@
                 </ng-container>
               </ng-container>
               <ng-container *ngIf="element.type === 'switch'">
-                <div class="input-wrapper">
-                  <mat-form-field appearance="outline" class="border-2">
+                <div class="select-wrapper">
+                  <mat-form-field appearance="outline" class="border-2 w-full">
                     <mat-select [(ngModel)]="selectedOptions[element.featureId]" errorState="false"
-                      placeholder="select">
+                      placeholder="select" class="w-full">
                       <mat-option [value]="true">Available</mat-option>
                       <mat-option [value]="false">Not available</mat-option>
                     </mat-select>

@@ -29,75 +29,100 @@
 
 // form with sample
 .form-with-sample {
+
   // height: calc(100vh - 16.25rem);
   // overflow: auto;
   @media only screen and (max-width: 61.9375rem) {
     flex-wrap: wrap;
     flex-direction: column-reverse;
   }
+
   .header-section {
     border-bottom: 0.0625rem solid color("grey", "lighten-7");
     padding: 0;
+
     @media only screen and (max-width: 80rem) {
       padding-right: .5rem !important;
-      }
+    }
   }
+
   .form-left {
     width: calc(100% - 26.375rem);
-    border: .0625rem solid color('grey','lighten-14');
+    border: .0625rem solid color('grey', 'lighten-14');
+
     @media only screen and (max-width: 80rem) {
       width: calc(100% - 21.5rem);
       padding: 1.5625rem .4375rem 1.5625rem 1.5625rem !important;
     }
+
     @media only screen and (max-width: 61.9375rem) {
       margin-right: 0 !important;
       width: 100%;
     }
 
-    .description-box{
-      .mat-mdc-text-field-wrapper , .mat-mdc-form-field-flex, .input-wrapper .mat-mdc-form-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-infix{
+    .description-box {
+
+      .mat-mdc-text-field-wrapper,
+      .mat-mdc-form-field-flex,
+      .input-wrapper .mat-mdc-form-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-infix {
         height: 4.5rem;
       }
-      .mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input, .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control{
+
+      .mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input,
+      .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
         height: 3.4375rem;
       }
-      textarea{
+
+      textarea {
         min-height: 3.4375rem;
       }
     }
   }
+
   .sample-right {
     width: 26.375rem;
+
     @media only screen and (max-width: 80rem) {
       width: 21.5rem;
     }
+
     @media only screen and (max-width: 61.9375rem) {
       width: 100%;
       margin-bottom: 10px;
     }
-    .inner-block{
-      padding: 2.5rem 2.625rem 2rem 2.5rem ;
-      border: .0625rem solid color('grey','lighten-14');
+
+    .inner-block {
+      padding: 2.5rem 2.625rem 2rem 2.5rem;
+      border: .0625rem solid color('grey', 'lighten-14');
+
       @media only screen and (max-width: 80rem) {
         padding: 1.5625rem;
       }
-      .material-symbols-outlined{
+
+      .material-symbols-outlined {
         font-size: 1.25rem;
       }
     }
   }
 }
+
 // form with sample for popup
 .form-with-sample-popup {
-  padding: 2.1875rem  2.5rem;
+  padding: 2.1875rem 2.5rem;
   max-width: 69.5625rem;
   width: 100%;
+
   @media only screen and (max-width: 85rem) {
-  max-height: 85vh;
-  overflow: auto;
-  max-width: 55rem;
-  padding: 1.5625rem;
+    max-height: 85vh;
+    overflow: auto;
+    max-width: 55rem;
+    padding: 1.5625rem;
   }
+
+  @media only screen and (max-width: 64rem) {
+    flex-direction: column-reverse;
+  }
+
   // .close-icon{
   //   width: 2.5rem;
   //   height: 2.5rem;
@@ -106,56 +131,120 @@
   //   top: -0.25rem;
   //   right: -0.25rem;
   // }
-  .form-outer{
+  .form-outer {
     min-width: calc(100% - 19rem);
     width: 100%;
+
+    .header-section {
+      padding-bottom: 1.0625rem;
+      border-bottom: 0.0625rem solid color("grey", "lighten-7");
+    }
+
     @media only screen and (max-width: 85rem) {
       padding-right: .4375rem !important;
-      .header-section{
+
+      .header-section {
         padding-right: .4375rem !important;
       }
     }
+
+    @media only screen and (max-width: 64rem) {
+      padding-right: 0 !important;
+
+      .header-section {
+        padding-right: 0 !important;
+      }
+    }
   }
+
   .form-left {
     max-height: 572px;
     overflow: auto;
+
     @media only screen and (max-width: 85rem) {
       max-height: 60vh;
       padding-right: 8px !important;
-      .action-btns{
-        padding-right: 8px !important;
-      }
     }
+
+    @media only screen and (max-width: 64rem) {
+      max-height: none;
+      padding-right: 0px !important;
+    }
+
     .header-section {
       border-bottom: 0.0625rem solid color("grey", "lighten-7");
-      .title-left{
+
+      .title-left {
         padding-bottom: 1.125rem;
       }
     }
+
     .form-container {
       margin-top: 0.875rem;
     }
-    .description-box{
-      textarea{
+
+    .description-box {
+      textarea {
         min-height: 4.5rem;
       }
     }
   }
+
+  .action-btns {
+    @media only screen and (max-width: 85rem) {
+      padding-right: 8px !important;
+    }
+
+    @media only screen and (max-width: 64rem) {
+      padding-right: 0px !important;
+    }
+  }
+
   .sample-right {
     min-width: 18.8125rem;
-    .inner-block{
-      padding: .875rem 0 .875rem ;
+
+    @media only screen and (max-width: 64rem) {
+      margin-bottom: 1.25rem;
+    }
+
+    .inner-block {
+      padding: .875rem 0 .875rem;
       border-radius: .375rem;
       background-color: var(--grey-bg);
-      .title{
+
+      .title {
         border-bottom: 0.0625rem solid color("grey", "lighten-7");
         padding: 1rem .875rem .75rem 1.5rem;
+
+        @media only screen and (max-width: 64rem) {
+          padding: .75rem 1rem;
+        }
       }
-      .info-wrapper{
+
+      .info-wrapper {
         padding: 0 .875rem 0 1.5rem;
+
         @media only screen and (max-width: 85rem) {
           max-height: 63vh;
           overflow: auto;
+        }
+
+        @media only screen and (max-width: 64rem) {
+          max-height: none;
+          overflow: unset;
+          padding: 0 1rem;
+        }
+
+        .feature-info {
+          @media only screen and (max-width: 64rem) {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .feature-text {
+              width: calc(100% - 7.625rem);
+            }
+          }
         }
       }
     }
@@ -165,19 +254,24 @@
 // simple table with even background
 table {
   text-align: left;
+
   &.odd-bg-color {
+
     th,
     td {
       padding: 0.75rem 1rem;
     }
+
     border-spacing: 0;
+
     tr:nth-child(even) {
       background-color: $primay-light-bg-color;
     }
-    
+
   }
 
   &.simple-table {
+
     th,
     td {
       padding: 0.75rem 1rem .75rem .5rem;
@@ -189,34 +283,40 @@ table {
   &.mat-mdc-table {
     &.primary-lighten-bg {
       background-color: color("primary", "lighten-4");
-      .mdc-data-table__header-row{
+
+      .mdc-data-table__header-row {
         height: 2.25rem;
       }
-      .mdc-data-table__row{
+
+      .mdc-data-table__row {
         height: 2.4375rem;
       }
-      thead{
-        tr{
-          th{
+
+      thead {
+        tr {
+          th {
             padding: 0 1.5rem;
+
             &:nth-last-child(1) {
-            text-align: right;
+              text-align: right;
             }
           }
         }
       }
-        tbody{
-          tr{
-            td{
-              padding: 0 1.5rem;
-              font-size: 15px;
-              &:nth-last-child(1) {
+
+      tbody {
+        tr {
+          td {
+            padding: 0 1.5rem;
+            font-size: 15px;
+
+            &:nth-last-child(1) {
               text-align: right;
-              }
             }
           }
         }
-      
+      }
+
       .mdc-data-table__cell,
       .mdc-data-table__header-cell {
         border-bottom-width: 0;
