@@ -52,6 +52,7 @@
       <div class="heading pb-3">
         <h5 class="mat-subtitle-1 text-blue-darken mb-0 font-weight-500">Feature for this plan</h5>
       </div>
+      <ng-container *ngIf="filteredFeatures.length >0 else noFeatures">
       <div class="primary-table checked-stripe-table mt-3 table-wrapper" let feature of feature>
         <table mat-table [dataSource]="filteredFeatures">
 
@@ -161,6 +162,14 @@
         </table>
 
       </div>
+    </ng-container>
+    <ng-template #noFeatures>
+      <div class="border-2 noFeatures-info p-2 mt-2 ">
+      <p class="mat-body-1 font-weight-500 text-blue-darken ">
+        There is no feature associated with a product.
+      </p>
+    </div>
+    </ng-template>
     </div>
   </div>
   <div class="flex justify-between align-center pl-1">

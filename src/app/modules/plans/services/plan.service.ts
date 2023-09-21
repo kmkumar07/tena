@@ -122,20 +122,5 @@ export class PlanService {
     );
   }
 
-  getProductVariantById(id: string): Observable<ProductVariants> {
-    return this.http
-      .get<any>(
-        `${this.baseUrl}/productVariant/{productVariantId}?productVariantId=${id}`
-      )
-      .pipe(
-        map((res) => {
-          this.planSubject.next(res.data);
-          return res.data;
-        }),
-        catchError((err) => {
-          this.error$.next(err.message);
-          throw err;
-        })
-      );
-  }
+  
 }
