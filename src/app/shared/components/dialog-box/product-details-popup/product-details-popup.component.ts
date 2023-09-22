@@ -83,7 +83,7 @@ export class ProductDetailsPopupComponent {
   productData = [];
   filteredFeatures = [];
   selectedFeatures: PeriodicElement[] = [];
-  productId: string = '';
+  productId: string = '';  
   plan: any;
   planId: string = '';
   EditplanId: string;
@@ -113,9 +113,9 @@ export class ProductDetailsPopupComponent {
     'status',
     'entitlements',
   ];
-  //dataSource = new MatTableDataSource<PeriodicElement1>(ELEMENT_DATA);
+ // dataSource = new MatTableDataSource<PeriodicElement1>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
-  //selection1 = new SelectionModel<PeriodicElement>(true, []);
+  selection1 = new SelectionModel<PeriodicElement>(true, []);
 
   constructor(
     public dialog: MatDialog,
@@ -170,7 +170,7 @@ export class ProductDetailsPopupComponent {
 
     // Now, you can update the form control or perform any other necessary actions
     this.formGroup.get('productID').setValue(product.productId);
-    this.productId = product.productId;
+    this.productId = product.productId;    
     this.isProductSelected = true;
     this.formGroup.controls.productName.patchValue(product.name);
     this.formGroup.controls.description.patchValue(product.description);
@@ -204,17 +204,18 @@ export class ProductDetailsPopupComponent {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
           this.plan = res;
+          
           this.planArray = this.plan.data.productVariant.map(
-            (item) => item.productVariantId
+            (item) => item.name
           );
           const resultArray = this.planArray.map((item) => {
-            const splitResult = item.split(`${planid}variant`);
-            // Check if there are more than one element after split, and return the second element
-            return splitResult.length > 1 ? splitResult[1] : item;
+            return item;
           });
           this.updateproductData = this.productData.filter(
             (product) => !resultArray.includes(product.productId)
           );
+          console.log(this.updateproductData );
+          
         });
     }
   }
@@ -231,12 +232,13 @@ export class ProductDetailsPopupComponent {
     }
   }
   patchValue(res: any) {
-    console.log(res.data);
+    console.log(res);
+    
     this.editable = true;
+
     this.formGroup.patchValue({
       productName: res.data.name,
-      productID: res.data.productID,
-      description: res.data.description,
+      productID: res.data.productID, 
       status: res.data.status,
       planID: res.data.planID,
     });
@@ -254,10 +256,9 @@ export class ProductDetailsPopupComponent {
 
   toggleAllRows() {
     if (this.isAllSelected()) {
-      console.log(this.isAllSelected());
-
       this.selection.clear();
     } else {
+    // this.isCheckboxChecked=true
       this.selection.select(...this.filteredFeatures);
     }
   }
@@ -324,14 +325,15 @@ export class ProductDetailsPopupComponent {
   onSubmit() {
     this.loading = true;
     const formData = this.formGroup.value;
-    const productVariantName = this.planId + 'variant' + formData.productName;
+    
+    const productVariantName = formData.productName;
     const productVariantId = productVariantName
       .replace(/\s+/g, '-')
       .toLowerCase();
-    const editProductVariantName = formData.productName;
-    const editProductVariantId = editProductVariantName
-      .replace(/\s+/g, '-')
-      .toLowerCase();
+    const editProductVariantName =formData.productName;
+    const editProductVariantId = editProductVariantName.replace(/\s+/g, '-')
+    .toLowerCase();
+      
     const features = this.selectedFeatures.map((productVariantFeature) => {
       switch (productVariantFeature.type) {
         case 'quantity':
@@ -398,14 +400,12 @@ export class ProductDetailsPopupComponent {
         productVariantId: editProductVariantId,
         name: editProductVariantName,
         planId: this.EditplanId,
-        // productID: this.productID,
+       // productID: this.productId,
         type: 'base',
         features: features,
         status: 'active',
       };
       this.global.showLoader();
-      console.log('this.productVariant', UpdateproductVariant);
-
       this.productDetailsService
         .updateProductVariant(this.productVariantId, UpdateproductVariant)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
