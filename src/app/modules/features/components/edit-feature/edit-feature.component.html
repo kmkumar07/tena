@@ -227,22 +227,23 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <button *ngIf="i == 0" mat-stroked-button disableRipple
-                        class="upper-case primary light medium px-1 ml-2 text-grey-darken"
-                        style="cursor: default;">
-                        Default
-                      </button>
-                      <button *ngIf="
-                    levels.controls.length > 1 &&
-                    i < levels.controls.length - 1 &&
-                    i != 0
-                  " mat-stroked-button disableRipple class="upper-case primary light medium px-1 ml-2 text-grey-darken"
-                        (click)="deleteLevels(i)">
-                        Remove
-                      </button>
-                      <button *ngIf="i == levels.controls.length - 1" mat-stroked-button disableRipple
-                        class="upper-case primary light medium px-1 ml-2 text-grey-darken"style="cursor: default;">
-                        Maximum
+                      <button
+                        *ngIf="
+                          levels.controls.length > 1 &&
+                          i < levels.controls.length - 1 &&
+                          i != 0
+                        "
+                        mat-icon-button
+                        color="warn"
+                        disableRipple
+                        class="light-bg medium rounded-1 mb-2"
+                        (click)="deleteLevels(i)"
+                      >
+                      <mat-icon
+                      class="material-symbols-outlined mr-0"
+                      color="warn"
+                      >close</mat-icon
+                    >
                       </button>
                     </div>
                   </ng-container>

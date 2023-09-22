@@ -1,4 +1,3 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -116,16 +115,16 @@ export class FeaturesListingComponent implements OnInit {
     this.global.showLoader();
     this.featureService
       .getFeatures(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
+        PageNumber,
+        limit,
+        search,
+        sortBy,
+        sortOrder
       )
       .subscribe({
-        next:(data) => {
-        if (data) {
-          this.featuresData = data;
+        next:(res) => {
+        if (res) {
+          this.featuresData = res.data;
           this.totalNumberOfFeature = this.featuresData.totalCount;
           this.featuresSearchData = this.featuresData.features;
           this.global.hideLoader();
