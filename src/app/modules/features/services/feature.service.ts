@@ -1,11 +1,10 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
 import {
   Feature,
   FeatureList,
-  GetFeature,
 } from 'src/app/shared/constants/consants';
 import { environment } from 'src/environments/environment';
 

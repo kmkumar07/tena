@@ -389,7 +389,6 @@ export class EditFeatureComponent {
 
   // sample data code
   switchSample() {
-    console.log('switch feature is clicked');
     this.featureForm.removeControl('unit');
     this.isRangeSelected = false;
     this.featureForm.patchValue({
