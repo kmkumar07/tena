@@ -1,11 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   pricingModels,
   Frequency,
@@ -24,7 +18,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EventEmitter, Output } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
 
 export class PlanValue {
   planId: string;
@@ -62,7 +55,7 @@ export class SetPricePopupComponent {
   public setPriceForm: FormGroup;
   priceId: string;
   pricingId: string;
-  selectedPeriodUnit: number;
+  selectedFrequency: number;
   selectedPeriodUnitTitle: string;
   editable: boolean = false;
   cycleVal: number;
@@ -84,7 +77,7 @@ export class SetPricePopupComponent {
   ) {
     this.planId = this.data.planId;
     this.pricingId = this.data.priceId;
-    this.selectedPeriodUnit = this.FrequencyTypes.find(
+    this.selectedFrequency = this.FrequencyTypes.find(
       (x) => x.title == this.data.periodUnit
     )?.value;
     this.selectedPeriodUnitTitle = this.FrequencyTypes.find(
@@ -168,22 +161,25 @@ export class SetPricePopupComponent {
       multiPricing: this.form.array([
         this.form.group({
           startingUnit: { value: '1', disabled: true },
-          endingUnit: { value: '&above', disabled: true },
+          endingUnit: [''],
           price: [''],
         }),
       ]),
     });
-
     this.setPriceForm.get('periodUnit')?.disable();
   }
-  checkValidationWithModel(input: string){ 
-    if(input==='tiered'||input==='volume'||input==='stair_step'){
+  
+  checkValidationWithModel(input: string) {
+    if (input === 'tiered' || input === 'volume' || input === 'stair_step') {
       this.setPriceForm.get('price').patchValue(0);
     }
-    const validation = this.setPriceForm.get(input)?.value && (this.setPriceForm.get(input)?.dirty || this.setPriceForm.get(input)?.touched)
+    const validation =
+      this.setPriceForm.get(input)?.value &&
+      (this.setPriceForm.get(input)?.dirty ||
+        this.setPriceForm.get(input)?.touched);
     return validation;
   }
-  
+
   selectPriceId() {
     const priceId = this.price.priceId;
     this.priceIdSelected.emit(priceId);
@@ -218,7 +214,7 @@ export class SetPricePopupComponent {
     this.multiPricing.push(
       this.form.group({
         startingUnit: { value: '', disabled: true },
-        endingUnit: ['&above'],
+        endingUnit: [''],
         price: [''],
       })
     );
@@ -226,12 +222,9 @@ export class SetPricePopupComponent {
     const lastIdx = this.lastObj();
     const prevIdx = this.secondLastObj();
     lastIdx.patchValue({
-      endingUnit: '&above',
-    });
-    lastIdx.get('endingUnit')?.disable();
-    prevIdx.patchValue({
       endingUnit: '',
     });
+    lastIdx.get('endingUnit');
     prevIdx.get('endingUnit')?.enable();
   }
 
@@ -260,8 +253,7 @@ export class SetPricePopupComponent {
   deleteTier(tierIndex: number) {
     this.multiPricing.removeAt(tierIndex);
     const lastIdx = this.lastObj();
-    lastIdx.get('endingUnit')?.setValue('&above');
-    lastIdx.get('endingUnit')?.disable();
+    lastIdx.get('endingUnit')?.setValue('');
   }
 
   cycleValue(event: any) {
@@ -389,7 +381,14 @@ export class SetPricePopupComponent {
 
   setStartingValue(event: any, index: number) {
     const setStarting = Number(event.target.value);
+
     if (this.start < setStarting) {
+      if (
+        event.target.value !== undefined &&
+        event.target.value.trim() !== ''
+      ) {
+        this.addMultiPricing();
+      }
       this.start = Number(event.target.value) + 1;
       const getNext = index + 1;
       const NextObject = this.getLevelList(getNext);

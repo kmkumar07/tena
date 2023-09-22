@@ -71,7 +71,6 @@ const ELEMENT_DATA: PeriodicElement1[] = [
 export class ProductDetailsPopupComponent {
   dropKey: number;
   StatusTypes: selectOptions[] = Status;
-
   subscription: Subscription;
   PageNumber: any = '';
   limit: any = '';
@@ -84,6 +83,7 @@ export class ProductDetailsPopupComponent {
   productId: string = '';
   planId: string = '';
   isProductSelected: boolean = false;
+  selectedProductName: string = '';
   isButtonDisabled: boolean = true;
   selectedOption: boolean;
   disabled: boolean;
@@ -250,6 +250,7 @@ export class ProductDetailsPopupComponent {
     });
 
     this.rangeForm = this.formBuilder.group(rangeFormControls);
+    this.selectedProductName = product.name;
   }
 
   onSubmit() {
