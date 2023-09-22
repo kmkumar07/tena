@@ -122,7 +122,8 @@ export class FeaturesListingComponent implements OnInit {
         this.sortBy,
         this.sortOrder
       )
-      .subscribe((data) => {
+      .subscribe({
+        next:(data) => {
         if (data) {
           this.featuresData = data;
           this.totalNumberOfFeature = this.featuresData.totalCount;
@@ -146,6 +147,15 @@ export class FeaturesListingComponent implements OnInit {
             this.fsearchDataNextPage = false;
           }
         }
+      },
+      error: (error: any) => {
+        this.snackBar.open(error?.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+        this.global.hideLoader();
+      },
       });
   }
   getSearchFeature(

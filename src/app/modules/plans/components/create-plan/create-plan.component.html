@@ -122,17 +122,17 @@
                   </td>
                   <td class="mat-subtitle-2 text-purple-lighten-1">
                     <ng-container
-                      *ngIf='pricing.priceId && (pricing.price !== null)'
+                      *ngIf='pricing.priceId && (pricing.price !== "0")'
                     >
                       ${{ pricing.price }}/Unit
                     </ng-container>
                     <ng-container
-                      *ngIf='pricing.priceId && (pricing.price == null)'
+                      *ngIf='pricing.priceId && (pricing.price == "0")'
                     >
                     <div class="flex align-center table-tooltip">
                       ${{ pricing.multiPricing[0].price }}/Unit
                       <mat-icon
-                        class="material-symbols-outlined pointer  ml-3 help-icon text-primary"
+                        class="material-symbols-outlined pointer help-icon text-primary"
                         [ngxTippy]="productnameinfo"
                         [tippyProps]="{ placement: 'right', interactive: true }"
                         tippyName="content"
@@ -278,7 +278,7 @@
                           included</span
                         >
                       </div>
-                      <div class="flex mt-3">
+                      <div class="flex flex-wrap mt-3 info-wrap">
                         <div class="info-details"  *ngFor="let feature of variant.productVariantFeature">
                           <h5 class="mat-subtitle-2 text-grey-darken mb-1">
                             {{feature.featureName}}

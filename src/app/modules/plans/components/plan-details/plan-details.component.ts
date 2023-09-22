@@ -1,29 +1,18 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Subscription, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
-import { FeatureDetailsPopupComponent } from 'src/app/shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 import {
-  Plan,
-  Stepper,
-  plan_add_empty_data,
-} from 'src/app/shared/constants/consants';
+  Subject,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+  takeUntil,
+} from 'rxjs';
+import { Plan } from 'src/app/shared/constants/consants';
 import { PlanService } from '../../services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-export interface PeriodicElement {
-  PricingCycle: string;
-  Price: any;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { PricingCycle: 'Daily', Price: 'Set Price' },
-  { PricingCycle: 'Weekly', Price: 'Set Price' },
-  { PricingCycle: 'Monthly', Price: 'Set Price' },
-  { PricingCycle: 'Yearly', Price: 'Set Price' },
-];
 
 @Component({
   selector: 'app-plan-details',
@@ -31,53 +20,25 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./plan-details.component.scss'],
 })
 export class PlanDetailsComponent {
-  values: any;
-  priceColumn: string[] = [
-    'PricingCycle',
-    'PricingModel',
-    'BillingCycle',
-    'Price',
-    'action',
-  ];
   status: boolean;
   priceData: any[] = [];
-  planAddEmptyData = plan_add_empty_data;
-  stepsTitle = Stepper;
-  displayedColumns: string[] = ['PricingCycle', 'Price'];
-  dataSource = ELEMENT_DATA;
-  clickedRows = new Set<PeriodicElement>();
-  testId: string;
-  search:string;
-  planWithTotal:any;
+  search: string;
+  planWithTotal: any;
   planForm: FormGroup;
   subscription: Subscription;
   data$ = this.planService.plan$;
-  productDetails: any = [];
-  productID: string;
-  name: string;
-  featureId: string;
-  entitlement: string;
-  PageNumber: any = '';
+  pageNumber: any = '';
   limit: any = '';
   planId: string;
   searchQuery: string;
   private searchQueryChanged: Subject<string> = new Subject<string>();
   private searchSubscription: Subscription;
   showLoader = false;
-  featureLength: string;
   sortBy: 'externalName' | 'createdOn';
   sortOrder: 'asc' | 'desc';
   planSearchDataLength: boolean = false;
-  planSearchData:Plan[];
-  dialogRef: any;
-  public stepOneCompleted: boolean = false;
+  planSearchData: Plan[];
   editable: boolean = false;
-  features: { featureId: string; entitlement: string }[] = [];
-  @ViewChild('step1') step1: ElementRef;
-  @ViewChild('step2') step2: ElementRef;
-  @ViewChild('step3') step3: ElementRef;
-  @ViewChild('step4') step4: ElementRef;
-  @ViewChild('step5') step5: ElementRef;
 
   constructor(
     public dialog: MatDialog,
@@ -94,51 +55,19 @@ export class PlanDetailsComponent {
     this.setupSearchSubscription();
     this.planId = this.route.snapshot.params['id'];
     this.getPlanById(this.planId);
-    this.planService.plan$.subscribe((data) => {
-      if (data) {
-        this.productDetails = data;
-        for (const product of this.productDetails) {
-          this.productID = product.productID;
-          this.name = product.name;
-          this.featureLength = product.features.length;
-
-          for (const feature of product.features) {
-            this.featureId = feature.featureId;
-            this.entitlement = feature.value;
-            this.features.push({
-              featureId: this.featureId,
-              entitlement: this.entitlement,
-            });
-          }
-        }
-      }
-    });
-    if (this.stepOneCompleted) {
-      const pageNumber = 1;
-      const limit = 100;
-      const search = '';
-      this.planService.getPrice(pageNumber, limit, search).subscribe(
-        (res) =>
-          (this.priceData = res.data.filter((item) => {
-            if (item.planId === this.planId) {
-              return item;
-            }
-          }))
-      );
-    }
   }
   onSearchInput() {
     this.searchQueryChanged.next(this.searchQuery);
   }
   private setupSearchSubscription() {
     this.searchSubscription = this.searchQueryChanged
-      .pipe(debounceTime(2000), distinctUntilChanged())
+      .pipe(debounceTime(1000), distinctUntilChanged())
       .subscribe((value) => {
         this.search = value;
         if (this.search.length > 0) {
           this.showLoader = true;
-          this.getSearchProduct(
-            this.PageNumber,
+          this.getSearchPlans(
+            this.pageNumber,
             this.limit,
             this.search,
             this.sortBy,
@@ -148,28 +77,20 @@ export class PlanDetailsComponent {
       });
   }
 
-
-  getSearchProduct(
-    PageNumber: number,
+  getSearchPlans(
+    pageNumber: number,
     limit: number,
     search: string,
     sortBy: 'externalName' | 'createdOn',
     sortOrder: 'asc' | 'desc'
   ) {
     this.planService
-      .getPlans(
-        PageNumber,
-        limit,
-        search,
-        sortBy,
-        sortOrder
-      )
+      .getPlans(pageNumber, limit, search, sortBy, sortOrder)
       .subscribe((data) => {
         if (data) {
           this.planWithTotal = data;
           this.planSearchData = this.planWithTotal.data.plans;
           this.planSearchDataLength = false;
-
           if (this.search.length > 0) {
             this.planSearchData.forEach((plan) => {
               if (this.search === plan.internalName) {
@@ -182,10 +103,9 @@ export class PlanDetailsComponent {
         }
       });
   }
-  
+
   getPlanById(id: string) {
     if (id) {
-      this.stepOneCompleted = true;
       this.planService
         .getPlanById(id)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
@@ -194,7 +114,6 @@ export class PlanDetailsComponent {
           this.editable = true;
         });
     } else {
-      this.stepOneCompleted = false;
       this.editable = false;
     }
   }
@@ -238,15 +157,10 @@ export class PlanDetailsComponent {
       description: ['', Validators.maxLength(500)],
       status: [true],
     });
-  }
-
-  setPlanId(event: any) {
-    if (!this.editable) {
-      const idValue = event.target.value
-        ?.replace(/[^\w\s]/gi, '')
-        .replace(/\s+/g, '-');
-      this.planForm.get('planId').setValue(idValue);
-    }
+    this.planForm.controls['internalName'].valueChanges.subscribe((value) => {
+      const idValue = value?.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
+      this.planForm.controls['planId'].setValue(idValue);
+    });
   }
 
   onSubmit() {
@@ -258,7 +172,6 @@ export class PlanDetailsComponent {
       type: type,
       status: status,
     };
-    this.stepOneCompleted = true;
     if (!this.editable) {
       this.planService
         .addPlan(plan)
@@ -303,29 +216,5 @@ export class PlanDetailsComponent {
   toggleStatus() {
     const currentStatus = this.planForm.get('status').value;
     this.planForm.get('status').setValue(!currentStatus);
-  }
-
-  onDelete(id: string) {
-    this.planService.deleteProductVariant(id).subscribe(() => {
-      this.data$.subscribe((res) => {
-        return res;
-      });
-    });
-  }
-
-  openPopup(feature: any) {
-    this.dialog.open(FeatureDetailsPopupComponent, {
-      data: {
-        featureId: feature,
-      },
-    });
-  }
-
-  editProductVariant(id: string) {
-    this.router.navigate([`/plans/create/edit-product-detail/${id}`]);
-  }
-
-  removeType(index: any) {
-    this.planService.priceModelArr.splice(index, 1);
   }
 }

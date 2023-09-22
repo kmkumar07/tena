@@ -27,44 +27,44 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-export interface PeriodicElement1 {
-  name: string;
-  position: number;
-  type: string;
-  status: string;
-  entitlements: string;
-}
+// export interface PeriodicElement1 {
+//   name: string;
+//   position: number;
+//   type: string;
+//   status: string;
+//   entitlements: string;
+// }
 
-const ELEMENT_DATA: PeriodicElement1[] = [
-  {
-    position: 1,
-    name: 'Whiteboard',
-    status: 'Active',
-    type: 'Switch',
-    entitlements: '',
-  },
-  {
-    position: 2,
-    name: 'Email support',
-    status: 'Active',
-    type: 'Custom',
-    entitlements: '',
-  },
-  {
-    position: 3,
-    name: 'API Call',
-    status: 'Active',
-    type: 'Range',
-    entitlements: '',
-  },
-  {
-    position: 4,
-    name: 'User License',
-    status: 'Active',
-    type: 'Quantity',
-    entitlements: '',
-  },
-];
+// const ELEMENT_DATA: PeriodicElement1[] = [
+//   {
+//     position: 1,
+//     name: 'Whiteboard',
+//     status: 'Active',
+//     type: 'Switch',
+//     entitlements: '',
+//   },
+//   {
+//     position: 2,
+//     name: 'Email support',
+//     status: 'Active',
+//     type: 'Custom',
+//     entitlements: '',
+//   },
+//   {
+//     position: 3,
+//     name: 'API Call',
+//     status: 'Active',
+//     type: 'Range',
+//     entitlements: '',
+//   },
+//   {
+//     position: 4,
+//     name: 'User License',
+//     status: 'Active',
+//     type: 'Quantity',
+//     entitlements: '',
+//   },
+// ];
 @Component({
   selector: 'app-product-details-popup',
   templateUrl: './product-details-popup.component.html',
@@ -84,10 +84,9 @@ export class ProductDetailsPopupComponent {
   filteredFeatures = [];
   selectedFeatures: PeriodicElement[] = [];
   productId: string = '';
-  productID:string;
   plan: any;
   planId: string = '';
-  EditplanId:string;
+  EditplanId: string;
   productVariantId: string = '';
   productVariantIdWithPlanId: any;
   productVariant: any;
@@ -114,8 +113,9 @@ export class ProductDetailsPopupComponent {
     'status',
     'entitlements',
   ];
-  dataSource = new MatTableDataSource<PeriodicElement1>(ELEMENT_DATA);
-  selection1 = new SelectionModel<PeriodicElement1>(true, []);
+  //dataSource = new MatTableDataSource<PeriodicElement1>(ELEMENT_DATA);
+  selection = new SelectionModel<PeriodicElement>(true, []);
+  //selection1 = new SelectionModel<PeriodicElement>(true, []);
 
   constructor(
     public dialog: MatDialog,
@@ -137,7 +137,6 @@ export class ProductDetailsPopupComponent {
     'status',
     'symbol',
   ];
-  selection = new SelectionModel<PeriodicElement>(true, []);
 
   formGroup = this.formBuilder.group({
     productID: [''],
@@ -149,13 +148,22 @@ export class ProductDetailsPopupComponent {
 
   ngOnInit() {
     this.planId = this.data.planId;
-
     this.productVariantIdWithPlanId = this.data;
 
-    this.getPlanById(this.productVariantIdWithPlanId);
+    this.getProduct(
+      this.PageNumber,
+      this.limit,
+      this.search,
+      this.sortBy,
+      this.sortOrder
+    );
+
     this.getProductVariantById(this.productVariantIdWithPlanId);
   }
-
+  checkproductAvailabe(products) {
+    this.productData = products;
+    this.getPlanById(this.planId);
+  }
   selectProduct(product: any) {
     // Add the selected product's ID to the list
     this.selectedProductIds.push(product.productId);
@@ -189,36 +197,32 @@ export class ProductDetailsPopupComponent {
     this.rangeForm = this.formBuilder.group(rangeFormControls);
   }
   getPlanById(id: any) {
-
-    if (this.EditplanId) {
+    const planid = id;
+    if (planid) {
       this.planService
-        .getPlanById(this.EditplanId)
+        .getPlanById(planid)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
           this.plan = res;
-          this.planArray = this.plan.data.productVariant;
+          this.planArray = this.plan.data.productVariant.map(
+            (item) => item.productVariantId
+          );
+          const resultArray = this.planArray.map((item) => {
+            const splitResult = item.split(`${planid}variant`);
+            // Check if there are more than one element after split, and return the second element
+            return splitResult.length > 1 ? splitResult[1] : item;
+          });
+          this.updateproductData = this.productData.filter(
+            (product) => !resultArray.includes(product.productId)
+          );
         });
     }
-    this.getProduct(this.PageNumber, this.limit, this.search);
-    this.productService.product$.subscribe((data) => {
-      if (data) {
-        this.productData = data.products;
-        if (data && this.planArray.length < 1) {
-          this.updateproductData.push(this.productData);
-        }
-      }
-    });
-    this.updateproduct = this.updateproductData[0].filter(
-      (product) => !this.selectedProductIds.includes(product.productId)
-    );
   }
   getProductVariantById(id: any) {
     this.productVariantId = id.productVariantId.productVariantId;
-    this.EditplanId = id.productVariantId.planId;
-    console.log( this.EditplanId);
 
     if (this.productVariantId) {
-      this.planService
+      this.productDetailsService
         .getProductVariantById(this.productVariantId)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
@@ -226,36 +230,36 @@ export class ProductDetailsPopupComponent {
         });
     }
   }
-  patchValue(data: any) {
-    console.log("data",data);
-    this.productID=data.productID
+  patchValue(res: any) {
+    console.log(res.data);
     this.editable = true;
-   this.formGroup.patchValue({
-      productName: data.name,
-      productID: data.productID,
-      description: data.description,
-      status: data.status,
-      planID: data.planID,
+    this.formGroup.patchValue({
+      productName: res.data.name,
+      productID: res.data.productID,
+      description: res.data.description,
+      status: res.data.status,
+      planID: res.data.planID,
     });
-    this.filteredFeatures = data.features;
-    console.log("this.filteredFeatures",this.filteredFeatures);
-    
+    this.filteredFeatures = res.data.features;
+    this.EditplanId = this.productVariantIdWithPlanId.productVariantId.planId;
+    this.getPlanById(this.EditplanId);
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.productData.length;
+    const numRows = this.filteredFeatures.length;
     return numSelected === numRows;
   }
 
   toggleAllRows() {
     if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
+      console.log(this.isAllSelected());
 
-    this.selection.select(...this.productData);
+      this.selection.clear();
+    } else {
+      this.selection.select(...this.filteredFeatures);
+    }
   }
 
   checkboxLabel(row?: PeriodicElement): string {
@@ -286,16 +290,35 @@ export class ProductDetailsPopupComponent {
     this.selectedLevelFromDropdown[featureId] = level;
   }
 
-  getProduct(PageNumber: number, limit: number, search: string) {
+  getProduct(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.global.showLoader();
     this.productService
-      .getProducts(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
-      )
-      .subscribe(() => {});
+      .getProducts(PageNumber, limit, search, sortBy, sortOrder)
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            const products = res.data;
+            this.productData = products.products;
+            this.checkproductAvailabe(this.productData);
+
+            this.global.hideLoader();
+          }
+        },
+        error: (error: any) => {
+          this.snackBar.open(error?.message, '', {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
+          this.global.hideLoader();
+        },
+      });
   }
 
   onSubmit() {
@@ -305,10 +328,10 @@ export class ProductDetailsPopupComponent {
     const productVariantId = productVariantName
       .replace(/\s+/g, '-')
       .toLowerCase();
-      const editProductVariantName = formData.productName;
-      const editProductVariantId = editProductVariantName
-        .replace(/\s+/g, '-')
-        .toLowerCase();
+    const editProductVariantName = formData.productName;
+    const editProductVariantId = editProductVariantName
+      .replace(/\s+/g, '-')
+      .toLowerCase();
     const features = this.selectedFeatures.map((productVariantFeature) => {
       switch (productVariantFeature.type) {
         case 'quantity':
@@ -375,15 +398,15 @@ export class ProductDetailsPopupComponent {
         productVariantId: editProductVariantId,
         name: editProductVariantName,
         planId: this.EditplanId,
-        productID:this.productID,
+        // productID: this.productID,
         type: 'base',
         features: features,
         status: 'active',
       };
       this.global.showLoader();
-      console.log("this.productVariant",UpdateproductVariant);
-      
-      this.planService
+      console.log('this.productVariant', UpdateproductVariant);
+
+      this.productDetailsService
         .updateProductVariant(this.productVariantId, UpdateproductVariant)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe({

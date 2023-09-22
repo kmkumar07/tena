@@ -109,14 +109,15 @@ export class PlansListingComponent implements OnDestroy {
     this.global.showLoader();
     this.plans
       .getPlans(
-        this.pageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
+        pageNumber,
+        limit,
+        search,
+        sortBy,
+        sortOrder
       )
       .pipe(takeUntil(this.global.componentDestroyed(this)))
-      .subscribe((res) => {
+      .subscribe({
+        next: (res) => {
         if (res) {
           this.plansData = res.data;
           this.totalNumberOfPlan = this.plansData.totalCount;
@@ -133,7 +134,7 @@ export class PlansListingComponent implements OnDestroy {
           this.totalPages = Math.ceil(this.totalNumberOfPlan / limit);
           this.hasNextPage = pageNumber < this.totalPages;
 
-          if (this.search.length > 0) {
+          if (search.length > 0) {
             this.totalNumberOfPlanBySearch = this.plansData.totalCount;
             this.plansearchDataNextPage =
               this.totalNumberOfPlanBySearch <= this.limit;
@@ -142,6 +143,15 @@ export class PlansListingComponent implements OnDestroy {
             this.plansearchDataNextPage = false;
           }
         }
+      },
+      error: (error: any) => {
+        this.snackBar.open(error?.message, '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+        this.global.hideLoader();
+      },
       });
   }
 

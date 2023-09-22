@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import {
   pricingModels,
   Frequency,
@@ -18,6 +24,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EventEmitter, Output } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 
 export class PlanValue {
   planId: string;
@@ -56,10 +63,13 @@ export class SetPricePopupComponent {
   priceId: string;
   pricingId: string;
   selectedPeriodUnit: number;
+  selectedPeriodUnitTitle: string;
   editable: boolean = false;
   cycleVal: number;
   selectedOption: string;
   inputValue: string;
+  fieldRequired: string = 'This field is required';
+
   constructor(
     private form: FormBuilder,
     private global: GlobalService,
@@ -77,6 +87,9 @@ export class SetPricePopupComponent {
     this.selectedPeriodUnit = this.FrequencyTypes.find(
       (x) => x.title == this.data.periodUnit
     )?.value;
+    this.selectedPeriodUnitTitle = this.FrequencyTypes.find(
+      (x) => x.title == this.data.periodUnit
+    )?.title;
   }
 
   ngOnInit() {
@@ -97,51 +110,61 @@ export class SetPricePopupComponent {
   }
 
   patchValue(data: any) {
-    data.multiPricing.sort((indexOne, indexTwo) => indexOne.startingUnit - indexTwo.startingUnit)
+    data.multiPricing.sort(
+      (indexOne, indexTwo) => indexOne.startingUnit - indexTwo.startingUnit
+    );
     this.editable = true;
     this.setPriceForm.patchValue({
       price: data.price,
       periodUnit: Frequency.find((a) => a.title === data.periodUnit).value,
-      pricingModel: pricingModels.find((a) => a.value === data.pricingModel).value,
+      pricingModel: pricingModels.find((a) => a.value === data.pricingModel)
+        .value,
       noOfCycle: data.noOfCycle,
     });
-  
+
     this.selectedOption = data.isExpirable ? '1' : '2';
-  
+
     // Clear the existing multiPricing FormArray
-    const multiPricingArray = this.setPriceForm.get('multiPricing') as FormArray;
+    const multiPricingArray = this.setPriceForm.get(
+      'multiPricing'
+    ) as FormArray;
     while (multiPricingArray.length) {
       multiPricingArray.removeAt(0);
     }
-  
+
     // Populate the multiPricing FormArray with the data
     data.multiPricing.forEach((item: any) => {
       const newFormGroup = this.form.group({
         startingUnit: { value: item.startingUnit.toString(), disabled: true },
-        endingUnit: { value: item.endingUnit === null ? '&above' : item.endingUnit.toString(), disabled: true },
+        endingUnit: {
+          value:
+            item.endingUnit === null ? '&above' : item.endingUnit.toString(),
+          disabled: true,
+        },
         price: [item.price],
       });
       multiPricingArray.push(newFormGroup);
     });
-  
+
     this.pricingModelValueToName(this.price);
   }
-  
+
   formData() {
     this.setPriceForm = this.form.group({
-      priceId: ['', Validators.required],
+      priceId: [''],
       planId: [this.planId, Validators.required],
       name: [this.planId, Validators.required],
       description: ['i am demo', Validators.required],
       invoiceNotes: ['completed', Validators.required],
       currencyCode: ['USD', Validators.required],
       pricingModel: ['', Validators.required],
-      price: ['', Validators.required],
       periodUnit: ['', Validators.required],
       period: ['1', Validators.required],
       isExpirable: [''],
       noOfCycle: ['', Validators.required],
       status: 'active',
+      billingCycle: ['', Validators.required],
+      price: ['', Validators.required],
       multiPricing: this.form.array([
         this.form.group({
           startingUnit: { value: '1', disabled: true },
@@ -150,9 +173,17 @@ export class SetPricePopupComponent {
         }),
       ]),
     });
+
     this.setPriceForm.get('periodUnit')?.disable();
   }
-
+  checkValidationWithModel(input: string){ 
+    if(input==='tiered'||input==='volume'||input==='stair_step'){
+      this.setPriceForm.get('price').patchValue(0);
+    }
+    const validation = this.setPriceForm.get(input)?.value && (this.setPriceForm.get(input)?.dirty || this.setPriceForm.get(input)?.touched)
+    return validation;
+  }
+  
   selectPriceId() {
     const priceId = this.price.priceId;
     this.priceIdSelected.emit(priceId);
@@ -242,7 +273,7 @@ export class SetPricePopupComponent {
       });
     } else if (this.selectedOption === '2') {
       this.setPriceForm.patchValue({
-        noOfCycle: '',
+        noOfCycle: 0,
         isExpirable: false,
       });
     }

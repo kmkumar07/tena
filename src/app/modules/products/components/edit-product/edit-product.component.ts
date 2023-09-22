@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ProductsService } from '../../services/products.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { DialogAnimaComponent } from 'src/app/shared/components/dialog-box/dialog-anima/dialog-anima.component';
 import { GlobalService } from 'src/app/core/services/global.service';
+import { Product } from 'src/app/shared/constants/consants';
 
 @Component({
   selector: 'app-edit-product',
@@ -44,8 +45,22 @@ export class EditProductComponent implements OnInit {
   imageUrlName: string;
   receivedCroppedImage: string;
   dialogRef: any;
+  getProductData:any;
+  getProduct:any;
   uploadMessage: string = '';
   uploadSuccess: boolean = false;
+  PageNumber = 1;
+  limit = 10;
+  search: string = '';
+  sortBy: 'name' | 'createdOn';
+  sortOrder: 'asc' | 'desc';
+  productsSearchDataLength: boolean = false;
+  productsSearchData:Product[];
+  productsWithTotal:any;
+  showLoader =false;
+  searchQuery: string;
+  private searchQueryChanged: Subject<string> = new Subject<string>();
+  private searchSubscription: Subscription;
   postForm = this.formBuilder.group({
     productId: ['', Validators.required],
     name: [
@@ -73,9 +88,11 @@ export class EditProductComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
-    this.productService.getProductById(id).subscribe((data) => {
-      this.populateForm(data);
-      this.getProductImageUrl = data.imageUrl;
+    this.productService.getProductById(id).subscribe((res) => {
+      let getProductData=res
+      this.getProductData = getProductData;
+      this.populateForm( this.getProductData.data);
+      this.getProductImageUrl = this.getProductData.data.imageUrl;      
       this.imagePath = this.environment.blobStorage;
       this.productService.croppedImage$.subscribe((croppedImage) => {
         this.receivedCroppedImage = croppedImage;
@@ -85,6 +102,61 @@ export class EditProductComponent implements OnInit {
         this.imageName = imageName;
       });
     });
+    this.setupSearchSubscription();
+  }
+  onSearchInput() {
+    this.searchQueryChanged.next(this.searchQuery);
+  }
+  private setupSearchSubscription() {
+    this.searchSubscription = this.searchQueryChanged
+      .pipe(debounceTime(2000), distinctUntilChanged())
+      .subscribe((value) => {
+        this.search = value;
+        if (this.search.length > 0) {
+          this.showLoader = true;
+          this.getSearchProduct(
+            this.PageNumber,
+            this.limit,
+            this.search,
+            this.sortBy,
+            this.sortOrder
+          );
+        }
+      });
+  }
+  
+  getSearchProduct(
+    PageNumber: number,
+    limit: number,
+    search: string,
+    sortBy: 'name' | 'createdOn',
+    sortOrder: 'asc' | 'desc'
+  ) {
+    this.productService
+      .getProducts(
+        PageNumber,
+        limit,
+        search,
+        sortBy,
+        sortOrder
+      )
+      .subscribe((res) => {
+        if (res) {
+          this.productsWithTotal = res.data;
+          this.productsSearchData = this.productsWithTotal.products;
+          this.productsSearchDataLength = false;
+
+          if (this.search.length > 0) {
+            this.productsSearchData.forEach((product) => {
+              if (this.search === product.name) {
+                this.productsSearchDataLength = true;
+                return;
+              }
+            });
+            this.showLoader = false;
+          }
+        }
+      });
   }
   startMessageTimer(): void {
     const duration = 5000;
@@ -106,10 +178,12 @@ export class EditProductComponent implements OnInit {
     this.subscription = this.productService
       .editProduct(this.postForm.value.productId, product)
       .subscribe({
-        next: (data) => {
+        next: (res) => {
+          let getProductData=res
+          this.getProduct = getProductData;
           this.global.hideLoader();
           this.openSuccess();
-          this.router.navigate([`/products/view-product/${data.productId}`]);
+          this.router.navigate([`/products/view-product/${this.getProduct.data.productId}`]);
         },
         error: (error: any) => {
           this.snackBar.open(error.error.message, '', {

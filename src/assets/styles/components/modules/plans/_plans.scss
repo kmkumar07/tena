@@ -881,34 +881,40 @@
           }
         }
       }
+
       .help-icon {
-        font-size: 1.25rem;
-        height: 1.25rem;
-        width: 1.25rem;
+        font-size: 1rem;
+        height: 1rem;
+        width: 1rem;
+        margin-left: .375rem;
       }
 
-      .table-tooltip{
+      .table-tooltip {
         .tippy-box {
           max-width: 25rem !important;
+
           .tippy-content {
             width: 100%;
           }
         }
       }
-      .table-tooltip-wrapper{
-        table{
-          tr{
-            th{
+
+      .table-tooltip-wrapper {
+        table {
+          tr {
+            th {
               min-width: 6.25rem !important;
             }
-            td{
-              &:first-child{
+
+            td {
+              &:first-child {
                 padding-left: .5rem;
               }
             }
           }
         }
       }
+
       .table-wrapper {
         padding: 0 2.375rem;
 
@@ -990,17 +996,25 @@
 // product-details
 .product-details {
   .plan-section-block {
-    .info-details {
-      padding: 0 2.3125rem 0 3.0625rem;
-      border-right: .0625rem solid $border-color;
+    .info-wrap{
+      gap: 20px 20px;
+      .info-details {
+        padding-right: 2.3125rem;
+        border-right: .0625rem solid $border-color;
+        width: calc(100% / 3 - 2.3125rem);
 
-      &:first-child {
-        padding-left: 0;
-      }
-
-      &:last-child {
-        border-right: none;
-        padding-right: 0;
+        &:nth-child(3n) {
+          border-right: none;
+        }
+  
+        // &:first-child {
+        //   padding-left: 0;
+        // }
+  
+        &:last-child {
+          border-right: none;
+          padding-right: 0;
+        }
       }
     }
   }
@@ -1043,12 +1057,21 @@
   @media only screen and (max-width: 61.9375rem) {
     width: 35rem;
   }
+
   @media only screen and (max-width: 48rem) {
     width: 30.625rem;
   }
 
   .heading {
     border-bottom: 0.0625rem solid $border-color;
+  }
+
+  .select-wrapper{
+    min-width: 10.9375rem;
+  }
+
+  .noFeatures-info {
+    border: 0.0625rem solid $border-color;
   }
 
   .add-product-description {
@@ -1084,6 +1107,7 @@
     border: none;
     border-radius: 0.5rem;
     background-color: var(--surface-bg);
+    width: 100%;
   }
 
   .primary-table.checked-stripe-table .entitlements-option .mat-mdc-select,

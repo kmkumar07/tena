@@ -10,7 +10,15 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, Observable, startWith, Subscription } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  startWith,
+  Subject,
+  Subscription,
+} from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { feature_types } from 'src/app/shared/constants/consants';
@@ -39,9 +47,15 @@ export class EditFeatureComponent {
   PageNumber: any = '';
   limit: any = '';
   search: string = '';
+  showLoader = false;
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
   productId = [];
+  featureName = [];
+  featuresSearchDataLength: boolean;
+  private searchQueryChanged: Subject<string> = new Subject<string>();
+  private searchSubscription: Subscription;
+  searchQuery: string;
   status: boolean;
   filteredProducts: Observable<any[]>;
   unlimitedValue: any;
@@ -95,9 +109,13 @@ export class EditFeatureComponent {
         this.sortBy,
         this.sortOrder
       )
-      .subscribe((data) => {
-        this.product = data;
+      .subscribe((res) => {
+        this.product = res.data;
+        let feature = [];
         this.productId = this.product.products.map((res) => res.productId);
+        feature = this.product.products.map((res) => res.feature);
+        const flattenedArray = [].concat(...feature);
+        this.featureName = flattenedArray.map((res) => res.name);
         this.filteredProducts = this.featureForm
           .get('productID')!
           .valueChanges.pipe(
@@ -113,8 +131,31 @@ export class EditFeatureComponent {
         this.featureForm.get('status').setValue(false);
       }
     });
+    this.searchSubscription = this.searchQueryChanged
+      .pipe(debounceTime(2000), distinctUntilChanged())
+      .subscribe((value) => {
+        this.search = value;
+        if (this.search.length > 0) {
+          this.showLoader = true;
+          this.getSearchFeature(this.search);
+        }
+      });
   }
-
+  onSearchInput() {
+    this.searchQueryChanged.next(this.searchQuery);
+  }
+  getSearchFeature(search: string) {
+    this.featuresSearchDataLength = false;
+    if (this.search.length > 0) {
+      this.featureName.forEach((name) => {
+        if (search === name) {
+          this.featuresSearchDataLength = true;
+          return;
+        }
+      });
+      this.showLoader = false;
+    }
+  }
   filterProducts(value: string) {
     const filterValue = value.toLowerCase();
     const filteredProducts = this.productId.filter((product) =>
@@ -242,7 +283,7 @@ export class EditFeatureComponent {
     this.featureForm.get('status').setValue(!currentStatus);
   }
   updateForm(res: any) {
-    const resData=res.data
+    const resData = res.data;
     if (resData.type === 'range') {
       this.isRangeSelected = true;
     }
