@@ -98,9 +98,9 @@
               <ng-container *ngIf="element.type === 'quantity' || element.type === 'custom' ">
                 <ng-container *ngIf="element.levels && element.levels.length > 0">
 
-                  <div class="input-wrapper">
-                    <mat-form-field appearance="outline" class="border-2">
-                      <mat-select required placeholder="select" [value]="selectedLevelFromDropdown">
+                  <div class="select-wrapper">
+                    <mat-form-field appearance="outline" class="border-2 w-full">
+                      <mat-select required placeholder="select" class="w-full" [value]="selectedLevelFromDropdown">
                         <mat-option *ngFor="let level of element.levels" value="{{ level.value }}" (click)="
                       onSelectedLevelChange(
                         element.featureId,
