@@ -38,11 +38,11 @@ export class PlansListingComponent implements OnDestroy {
   limit: number = 10;
   search: string = '';
   searchQuery: string = '';
-  sortBy: 'externalName' | 'createdOn';
+  sortBy: 'externalName' | 'createdOn' | 'internalName' | 'planId';
   sortOrder: 'asc' | 'desc';
   allPlansData: number = 0;
   displayedColumns: string[] = [
-    'plan_ID',
+    'planId',
     'externalName',
     'internalName',
     'createdOn',
@@ -98,7 +98,7 @@ export class PlansListingComponent implements OnDestroy {
     pageNumber: number,
     limit: number,
     search: string,
-    sortBy: 'externalName' | 'createdOn',
+    sortBy: 'externalName' | 'createdOn' | 'internalName' | 'planId',
     sortOrder: 'asc' | 'desc'
   ) {
     this.global.showLoader();
@@ -149,7 +149,7 @@ export class PlansListingComponent implements OnDestroy {
    * new sorting criteria.
    */
   announceSortChange(sortState: Sort) {
-    this.sortBy = sortState.active as 'externalName' | 'createdOn';
+    this.sortBy = sortState.active as 'externalName' | 'createdOn' | 'internalName' | 'planId';
     this.sortOrder = sortState.direction as 'asc' | 'desc';
     this.getPlans(
       this.pageNumber,
@@ -202,8 +202,7 @@ export class PlansListingComponent implements OnDestroy {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       panelClass: 'dialog-curved',
       data: {
-        module: 'Plan',
-        deleteId: id,
+        module: 'plan',
       },
     });
 
