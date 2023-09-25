@@ -72,6 +72,7 @@ const routes: Routes = [
   },
   {
     path: 'sign-in',
+    canActivate: [AuthGuard],
     component: SignInComponent,
   },
   { path: '**', component: PageNotFoundComponent },
