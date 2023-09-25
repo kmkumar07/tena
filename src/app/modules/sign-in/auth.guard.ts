@@ -8,24 +8,24 @@ export class AuthGuard {
   constructor(private router: Router) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    // Check if the session is valid
-    const session = window.localStorage.getItem('session');
+    const isAuthenticated = this.isUserAuthenticated();
     const currentUrlState = state.url;
-    console.log("first",currentUrlState)
-    if (session !== null) {
-      if (currentUrlState.includes('sign-in')) {
-        this.router.navigate(['/']);
-        return false;
-      } else {
-        return true;
-      }    
-    } else {
-      // Redirect the user to the sign-in page 
-      if (currentUrlState.includes('sign-in')) {
-        return true;
-      }
+
+    if (isAuthenticated && currentUrlState.includes('sign-in')) {
+      this.router.navigate(['/']);
+      return false;
+    }
+
+    if (!isAuthenticated && !currentUrlState.includes('sign-in')) {
       this.router.navigate(['/sign-in']);
       return false;
     }
+
+    return true;
+  }
+
+  private isUserAuthenticated(): boolean {
+    const session = window.localStorage.getItem('session');
+    return session !== null;
   }
 }
