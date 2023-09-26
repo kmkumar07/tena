@@ -1,4 +1,3 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -38,23 +37,21 @@ export class FeaturesListingComponent implements OnInit {
   searchLength: number;
   totalNumberOfFeature: number;
   totalNumberOfFeatureBySearch: number;
-  NumberOfPage: any = '';
-  NumberOfLimit: any = '';
   selection = new SelectionModel<features>(true, []);
   emptyFeature = noFeatures;
   subscription: Subscription;
   data$ = this.featureService.feature$;
   elementId: number;
   data: any;
-  PageNumber = 1;
-  limit = 10;
+  PageNumber:number =1 ;
+  limit:number =10 ;
+  search: string = '';
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
   hasNextPage: boolean = false;
   fsearchDataNextPage: boolean = false;
   totalPages: number = 0;
   dialogRef: any;
-  search: string = '';
   featureLength: any;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -79,12 +76,12 @@ export class FeaturesListingComponent implements OnInit {
     private global: GlobalService
   ) {}
   onSearchInput() {
+    this.PageNumber=1;
     this.searchQueryChanged.next(this.searchQuery);
   }
   ngOnInit(): void {
     this.sortBy = 'createdOn';
     this.sortOrder = 'desc';
-
     this.getFeature(
       this.PageNumber,
       this.limit,
@@ -96,9 +93,9 @@ export class FeaturesListingComponent implements OnInit {
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
         this.search = value;
-        this.getSearchFeature(
-          this.NumberOfPage,
-          this.NumberOfLimit,
+        this.getFeature(
+          this.PageNumber,
+          this.limit,
           this.search,
           this.sortBy,
           this.sortOrder
@@ -115,88 +112,37 @@ export class FeaturesListingComponent implements OnInit {
   ) {
     this.global.showLoader();
     this.featureService
-      .getFeatures(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
-      )
-      .subscribe({
-        next:(data) => {
-        if (data) {
-          this.featuresData = data;
-          this.totalNumberOfFeature = this.featuresData.totalCount;
-          this.featuresSearchData = this.featuresData.features;
-          this.global.hideLoader();
-          if (
-            this.totalNumberOfFeature > this.allFeaturesData ||
-            this.totalNumberOfFeature == 0
-          ) {
-            this.allFeaturesData = this.totalNumberOfFeature;
-          }
-
-          this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
-          this.hasNextPage = PageNumber < this.totalPages;
-          if (this.search.length > 0) {
-            this.totalNumberOfFeatureBySearch = this.featuresData.totalCount;
-            this.fsearchDataNextPage =
-              this.totalNumberOfFeatureBySearch <= this.limit;
-          } else {
-            this.totalNumberOfFeature = this.featuresData.totalCount;
-            this.fsearchDataNextPage = false;
-          }
-        }
-      },
-      error: (error: any) => {
-        this.snackBar.open(error?.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
-        this.global.hideLoader();
-      },
-      });
-  }
-  getSearchFeature(
-    PageNumber: number,
-    limit: number,
-    search: string,
-    sortBy: 'name' | 'createdOn',
-    sortOrder: 'asc' | 'desc'
-  ) {
-    this.global.showLoader();
-
-    this.featureService
       .getFeatures(PageNumber, limit, search, sortBy, sortOrder)
-      .subscribe((data) => {
-        if (data) {
-          this.featuresData = data;
-          this.featuresSearchData = this.featuresData.features;
-
-          if (search.length > 0) {
-            this.totalNumberOfFeatureBySearch = this.featuresData.totalCount;
-            this.fsearchDataNextPage =
-              this.totalNumberOfFeatureBySearch <= limit;
-          } else {
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            this.featuresData = res.data;
             this.totalNumberOfFeature = this.featuresData.totalCount;
-            this.fsearchDataNextPage = false;
-            this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
-            this.hasNextPage = PageNumber < this.totalPages;
+            this.featuresSearchData = this.featuresData.features;
+            this.global.hideLoader();
+            if (search.length > 0) {
+              this.totalNumberOfFeatureBySearch = this.totalNumberOfFeature;
+              this.fsearchDataNextPage = this.totalNumberOfFeatureBySearch <= limit;
+            } else {
+              this.fsearchDataNextPage = false;
+              this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
+              this.hasNextPage = PageNumber < this.totalPages;
+            }
+            if (this.totalNumberOfFeature > this.allFeaturesData || this.totalNumberOfFeature === 0) {
+              this.allFeaturesData = this.totalNumberOfFeature;
+            }
           }
-
+        },
+        error: (error: any) => {
+          this.snackBar.open(error?.message, '', {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
           this.global.hideLoader();
-
-          if (
-            this.totalNumberOfFeature > this.allFeaturesData ||
-            this.totalNumberOfFeature === 0
-          ) {
-            this.allFeaturesData = this.totalNumberOfFeature;
-          }
-        }
+        },
       });
   }
-
   onPrevious() {
     if (this.PageNumber > 1) {
       this.PageNumber--;
@@ -245,8 +191,7 @@ export class FeaturesListingComponent implements OnInit {
     const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
       panelClass: 'dialog-curved',
       data: {
-        module: 'Feature',
-        deleteId: id,
+        module: 'feature',
       },
     });
     this.featureService
@@ -278,8 +223,7 @@ export class FeaturesListingComponent implements OnInit {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       panelClass: 'dialog-curved',
       data: {
-        module: 'Feature',
-        deleteId: id,
+        module: 'feature',
       },
     });
 

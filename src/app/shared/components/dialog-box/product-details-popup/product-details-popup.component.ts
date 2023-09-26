@@ -11,11 +11,9 @@ import {
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { ProductDetailsService } from 'src/app/modules/plans/services/product-details.service';
 import { Status, selectOptions } from 'src/app/shared/constants/consants';
-import { MatTableDataSource } from '@angular/material/table';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PlanService } from 'src/app/modules/plans/services/plan.service';
-import { FormArray } from '@angular/forms';
 
 export interface PeriodicElement {
   featureId: string;
@@ -27,7 +25,6 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-// export interface PeriodicElement1 {
 //   name: string;
 //   position: number;
 //   type: string;
@@ -73,7 +70,6 @@ export interface PeriodicElement {
 export class ProductDetailsPopupComponent {
   dropKey: number;
   StatusTypes: selectOptions[] = Status;
-
   subscription: Subscription;
   PageNumber: any = '';
   limit: any = '';
@@ -91,6 +87,7 @@ export class ProductDetailsPopupComponent {
   productVariantIdWithPlanId: any;
   productVariant: any;
   isProductSelected: boolean = false;
+  selectedProductName: string = '';
   isButtonDisabled: boolean = true;
   selectedOption: boolean;
   disabled: boolean;
@@ -339,6 +336,8 @@ export class ProductDetailsPopupComponent {
         },
       });
   }
+
+ 
 
   onSubmit() {
     this.loading = true;

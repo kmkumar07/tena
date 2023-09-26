@@ -292,8 +292,7 @@ export class ProductListingComponent implements OnInit {
       this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
         panelClass: 'dialog-curved',
         data: {
-          module: 'Product',
-          deleteId: id,
+          module: 'product',
         },
       });
 

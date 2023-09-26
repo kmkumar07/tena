@@ -23,6 +23,7 @@ import { ProductDetailsPopupComponent } from './shared/components/dialog-box/pro
 import { FeaturesPopupComponent } from './shared/components/dialog-box/features-popup/features-popup.component';
 import { AddonDetailsPopupComponent } from './shared/components/dialog-box/addon-details-popup/addon-details-popup.component';
 import { NewChargePopupComponent } from './shared/components/dialog-box/new-charge-popup/new-charge-popup.component';
+import { SnackBarCustomComponent } from './shared/components/dialog-box/snack-bar-custom/snack-bar-custom.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { NewChargePopupComponent } from './shared/components/dialog-box/new-char
     ProductDetailsPopupComponent,
     AddonDetailsPopupComponent,
     NewChargePopupComponent,
+    SnackBarCustomComponent,
   ],
   imports: [
     BrowserModule,

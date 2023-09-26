@@ -59,7 +59,7 @@ export class PlanService {
     pageNumber: number,
     limit: number,
     search: string,
-    sortBy: 'externalName' | 'createdOn',
+    sortBy: 'externalName' | 'createdOn'| 'internalName' | 'planId',
     sortOrder: 'asc' | 'desc'
   ): Observable<any> {
     const path = `${this.baseUrl}/plans/?page=${pageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`;

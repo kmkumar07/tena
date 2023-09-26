@@ -227,22 +227,23 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <button *ngIf="i == 0" mat-stroked-button disableRipple
-                        class="upper-case primary light medium px-1 ml-2 text-grey-darken"
-                        style="cursor: default;">
-                        Default
-                      </button>
-                      <button *ngIf="
-                    levels.controls.length > 1 &&
-                    i < levels.controls.length - 1 &&
-                    i != 0
-                  " mat-stroked-button disableRipple class="upper-case primary light medium px-1 ml-2 text-grey-darken"
-                        (click)="deleteLevels(i)">
-                        Remove
-                      </button>
-                      <button *ngIf="i == levels.controls.length - 1" mat-stroked-button disableRipple
-                        class="upper-case primary light medium px-1 ml-2 text-grey-darken"style="cursor: default;">
-                        Maximum
+                      <button
+                        *ngIf="
+                          levels.controls.length > 1 &&
+                          i < levels.controls.length - 1 &&
+                          i != 0
+                        "
+                        mat-icon-button
+                        color="warn"
+                        disableRipple
+                        class="light-bg medium rounded-1 mb-2"
+                        (click)="deleteLevels(i)"
+                      >
+                      <mat-icon
+                      class="material-symbols-outlined mr-0"
+                      color="warn"
+                      >close</mat-icon
+                    >
                       </button>
                     </div>
                   </ng-container>
@@ -268,74 +269,29 @@
             <h5 class="text-blue-darken mat-subtitle-1 font-weight-500">
               Sample Feature
             </h5>
-          </div>
+              <ng-container *ngFor="let sample of featureSamples; let i = index">
           <div class="mt-4 mb-2">
             <div class="flex">
               <mat-icon class="material-symbols-outlined text-icon mr-2">
-                toggle_off
+                {{ sample.type === 'switch' ? 'toggle_off' : sample.type === 'range' ? 'arrow_range' : sample.type === 'quantity' ? 'production_quantity_limits' : 'tune' }}
               </mat-icon>
               <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">
-                Switch Feature
+                {{ sample.type | titlecase }} Feature
               </h3>
             </div>
             <p class="mat-h4 text-grey-darken mb-3">
-              This feature type has 2 entitlement levels- "available" and "not
-              available".
+              {{ sample.description }}
             </p>
-            <button mat-button color="primary" class="medium px-1 mb-3 font-weight-500" (click)="switchSample()">
+            <button
+              mat-button
+              color="primary"
+              class="medium px-1 mb-3 font-weight-500"
+              (click)="setSampleFeature(sample)"
+            >
               Try a Sample
             </button>
           </div>
-          <div class="mb-2">
-            <div class="flex">
-              <mat-icon class="material-symbols-outlined text-icon mr-2">
-                arrow_range
-              </mat-icon>
-              <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">
-                Range Feature
-              </h3>
-            </div>
-            <p class="mat-h4 text-grey-darken mb-3">
-              This feature supports range based entitlements. For eg : Customer’s
-              access can be between 100 and 300 API / minute.
-            </p>
-            <button mat-button color="primary" class="medium px-1 mb-3 font-weight-500" (click)="rangeSample()">
-              Try a Sample
-            </button>
-          </div>
-          <div class="mb-2">
-            <div class="flex">
-              <mat-icon class="material-symbols-outlined text-icon mr-2">
-                production_quantity_limits
-              </mat-icon>
-              <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">
-                Quantity Feature
-              </h3>
-            </div>
-            <p class="mat-h4 text-grey-darken mb-3">
-              This feature type has numbered entitlement levels- For eg : 2,3,4 or
-              10 user licenses.
-            </p>
-            <button mat-button color="primary" class="medium px-1 mb-3 font-weight-500" (click)="quantitySample()">
-              Try a Sample
-            </button>
-          </div>
-          <div class="">
-            <div class="flex">
-              <mat-icon class="material-symbols-outlined text-icon mr-2">
-                tune
-              </mat-icon>
-              <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">
-                Custom Feature
-              </h3>
-            </div>
-            <p class="mat-h4 text-grey-darken mb-3">
-              This feature supports range based entitlements. For eg : Customer’s
-              access can be between 100 and 300 API / minute.
-            </p>
-            <button mat-button color="primary" class="medium px-1 font-weight-500" (click)="customSample()">
-              Try a Sample
-            </button>
+        </ng-container>
           </div>
         </div>
       </div>

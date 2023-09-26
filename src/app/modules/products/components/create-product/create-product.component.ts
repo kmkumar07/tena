@@ -22,6 +22,7 @@ import {
 import { environment } from 'src/environments/environment';
 import { MatSnackBar} from '@angular/material/snack-bar';
 import { GlobalService } from 'src/app/core/services/global.service';
+import { SnackBarCustomComponent } from 'src/app/shared/components/dialog-box/snack-bar-custom/snack-bar-custom.component';
 
 @Component({
   selector: 'app-create-product',
@@ -194,8 +195,7 @@ export class CreateProductComponent implements OnInit {
 
     this.subscription = this.productService.createProduct(product).subscribe({
       next: (res) => {
-        let success = 'Product created successfully';
-        this.snackBar.open(success, '', {
+        this.snackBar.openFromComponent(SnackBarCustomComponent, {
           duration: 5000,
           verticalPosition: 'top',
           horizontalPosition: 'right',
@@ -203,11 +203,10 @@ export class CreateProductComponent implements OnInit {
         });
         this.global.hideLoader();
         this.navigateToViewProduct(res);
-      },
+      },    
       error: (error: any) => {
         this.global.hideLoader();
-        this.error = error?.error?.message || 'Database error';
-        this.snackBar.open(this.error, '', {
+        this.snackBar.openFromComponent(SnackBarCustomComponent, {
           duration: 5000,
           verticalPosition: 'top',
           horizontalPosition: 'right',

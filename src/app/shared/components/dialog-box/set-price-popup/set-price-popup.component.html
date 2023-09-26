@@ -14,7 +14,7 @@
                         </p>
                     </div>
                     <mat-form-field appearance="outline" class="border-2 selected-option">
-                        <mat-select required formControlName="periodUnit" [(ngModel)]="selectedPeriodUnit">
+                        <mat-select required formControlName="periodUnit" [(ngModel)]="selectedFrequency">
                             <mat-option *ngFor="let option of FrequencyTypes" [value]="option.value">
                                 {{ option.title }}
                             </mat-option>
@@ -46,7 +46,7 @@
                                 {{ option.title}}
                             </mat-option>
                         </mat-select>
-                      
+
                     </mat-form-field>
                 </div>
 
@@ -91,8 +91,7 @@
                                             <div class="input-wrapper small mr-2">
                                                 <mat-form-field appearance="outline" class="border-2">
                                                     <input required matInput placeholder="Enter here"
-                                                        formControlName="endingUnit"
-                                                        (change)="setStartingValue($event, i)" />
+                                                        formControlName="endingUnit" (change)="setStartingValue(i)" />
                                                 </mat-form-field>
 
                                             </div>
@@ -115,10 +114,6 @@
                             </div>
 
                         </div>
-                        <button disableRipple mat-button type="button" class="primary-text text-main"
-                            (click)="addMultiPricing()">
-                            + Add More
-                        </button>
                     </div>
                 </div>
                 <!-- Price Field -->
@@ -128,9 +123,8 @@
 
                     </div>
                     <mat-form-field appearance="outline" class="border-2">
-                        <input matInput placeholder="Enter here " formControlName="price" type="number"
-                            min="0" />
-                          
+                        <input matInput placeholder="Enter here " formControlName="price" type="number" min="0" />
+
                     </mat-form-field>
                 </div>
 
@@ -151,12 +145,12 @@
                         </ng-template>
                     </div>
                     <mat-form-field appearance="outline" class="border-2">
-                        <mat-select  required placeholder="select"formControlName="billingCycle" (selectionChange)="cycleValue($event)"
-                            [value]="selectedOption">
+                        <mat-select required placeholder="select" formControlName="billingCycle"
+                            (selectionChange)="cycleValue($event)" [value]="selectedOption">
                             <mat-option value="1">Fixed</mat-option>
                             <mat-option value="2">Forever</mat-option>
                         </mat-select>
-                  
+
                     </mat-form-field>
                     <div *ngIf="selectedOption == '1'">
                         <mat-form-field appearance="outline" class="border-2">
@@ -179,7 +173,7 @@
             Dismiss
         </button>
         <button mat-flat-button color="primary" class="large" type="submit" (click)="submitValues()"
-        [disabled]="setPriceForm.invalid">
+            [disabled]="setPriceForm.invalid">
             {{editable?'update':'Create'}}
         </button>
     </div>

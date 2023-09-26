@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { kratosService } from '../services/kratos.service';
 import { Router } from '@angular/router';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -20,13 +21,18 @@ export class SignInComponent implements OnInit {
     private formBuilder: FormBuilder,
     private kratos: kratosService,
     private router: Router,
-
+    private globalService:GlobalService
   ) { }
   ngOnInit() {
+    const isAuthenticated = this.globalService.isUserAuthenticated();
+    if(isAuthenticated){
+      this.router.navigate(['/'])
+    }
     this.loginForm = this.formBuilder.group({
       password_identifier: ['', Validators.required],
       password: ['', Validators.required]
     });
+
   }
   onSubmit() {
     this.loading = true

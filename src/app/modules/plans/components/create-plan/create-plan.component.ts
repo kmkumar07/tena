@@ -345,8 +345,7 @@ export class CreatePlanComponent implements OnInit {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       panelClass: 'dialog-curved',
       data: {
-        module: 'Price',
-        deleteId: pricingId,
+        module: 'price',
       },
     });
     this.dialogRef.afterClosed().subscribe((res: any) => {
@@ -474,8 +473,7 @@ export class CreatePlanComponent implements OnInit {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       panelClass: 'dialog-curved',
       data: {
-        module: 'Plan',
-        deleteId: id,
+        module: 'plan',
       },
     });
 
@@ -509,12 +507,11 @@ export class CreatePlanComponent implements OnInit {
       },
     });
   }
-  deleteProductVariantDetails(productVariantId) {
+  deleteProductVariantDetails(productVariantId:string) {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       panelClass: 'dialog-curved',
       data: {
-        module: 'productVariantId',
-        deleteId: productVariantId,
+       module: 'product variant',
       },
     });
 

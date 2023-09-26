@@ -133,6 +133,9 @@ label {
 .text-right {
   text-align: right;
 }
+.text-left{
+  text-align: left;
+}
 
 // ATOMIC SCSS
 // In Atomic CSS or SCSS, we break each css property in one single class (similar to that of tailwind). This helps in reducing the css size significantly!
@@ -933,10 +936,28 @@ ul.breadcrumb {
 // snack-bar
 mat-snack-bar-container {
   &.custom-class{
+    .mdc-snackbar__label{
+      padding: 0;
+    }
     .mdc-snackbar__surface{
-      background-color: green;
+      background-color: var(--surface-bg);
+      overflow: hidden;
+      .icon-box{
+        height: 3rem;
+        width: 3rem;
+      }
     }
   }
+}
+
+// snack bar successfully bg
+.snackbar-success-bg{
+  background-color: $green-dark-3;
+}
+
+// snack bar error bg
+.snackbar-error-bg{
+  background-color: $red-lighten;
 }
 
 // small-loader

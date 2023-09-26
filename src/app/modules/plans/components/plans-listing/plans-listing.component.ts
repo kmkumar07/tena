@@ -35,16 +35,14 @@ export class PlansListingComponent implements OnDestroy {
   totalNumberOfPlanBySearch: number;
   plansearchDataNextPage: boolean = false;
   pageNumber: number = 1;
-  NumberOfPage: any = '';
-  NumberOfLimit: any = '';
   limit: number = 10;
   search: string = '';
   searchQuery: string = '';
-  sortBy: 'externalName' | 'createdOn';
+  sortBy: 'externalName' | 'createdOn' | 'internalName' | 'planId';
   sortOrder: 'asc' | 'desc';
   allPlansData: number = 0;
   displayedColumns: string[] = [
-    'plan_ID',
+    'planId',
     'externalName',
     'internalName',
     'createdOn',
@@ -68,6 +66,7 @@ export class PlansListingComponent implements OnDestroy {
   ) {}
 
   onSearchInput() {
+    this.pageNumber = 1;
     this.searchQueryChanged.next(this.searchQuery);
   }
 
@@ -85,9 +84,9 @@ export class PlansListingComponent implements OnDestroy {
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
         this.search = value;
-        this.getSearchPlan(
-          this.NumberOfPage,
-          this.NumberOfLimit,
+        this.getPlans(
+          this.pageNumber,
+          this.limit,
           this.search,
           this.sortBy,
           this.sortOrder
@@ -95,102 +94,53 @@ export class PlansListingComponent implements OnDestroy {
       });
   }
 
-  /**
-   * The function `getPlans` retrieves plans based on the provided parameters and updates the plan
-   * details accordingly.
-   */
   getPlans(
     pageNumber: number,
     limit: number,
     search: string,
-    sortBy: 'externalName' | 'createdOn',
+    sortBy: 'externalName' | 'createdOn' | 'internalName' | 'planId',
     sortOrder: 'asc' | 'desc'
   ) {
     this.global.showLoader();
-    this.plans
-      .getPlans(
-        pageNumber,
-        limit,
-        search,
-        sortBy,
-        sortOrder
-      )
-      .pipe(takeUntil(this.global.componentDestroyed(this)))
-      .subscribe({
-        next: (res) => {
-        if (res) {
-          this.plansData = res.data;
-          this.totalNumberOfPlan = this.plansData.totalCount;
-          this.plansSearchData = this.plansData.plans;
-          this.global.hideLoader();
 
-          if (
-            this.totalNumberOfPlan > this.allPlansData ||
-            this.totalNumberOfPlan === 0
-          ) {
-            this.allPlansData = this.totalNumberOfPlan;
-          }
-
-          this.totalPages = Math.ceil(this.totalNumberOfPlan / limit);
-          this.hasNextPage = pageNumber < this.totalPages;
-
-          if (search.length > 0) {
-            this.totalNumberOfPlanBySearch = this.plansData.totalCount;
-            this.plansearchDataNextPage =
-              this.totalNumberOfPlanBySearch <= this.limit;
-          } else {
-            this.totalNumberOfPlan = this.plansData.totalCount;
-            this.plansearchDataNextPage = false;
-          }
-        }
-      },
-      error: (error: any) => {
-        this.snackBar.open(error?.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
-        this.global.hideLoader();
-      },
-      });
-  }
-
-  getSearchPlan(
-    pageNumber: number,
-    limit: number,
-    search: string,
-    sortBy: 'externalName' | 'createdOn',
-    sortOrder: 'asc' | 'desc'
-  ) {
-    this.global.showLoader();
     this.plans
       .getPlans(pageNumber, limit, search, sortBy, sortOrder)
       .pipe(takeUntil(this.global.componentDestroyed(this)))
-      .subscribe((data) => {
-        if (data) {
-          this.plansData = data.data;
-          this.plansSearchData = this.plansData.plans;
+      .subscribe({
+        next: (data) => {
+          if (data) {
+            this.plansData = data.data;
+            this.plansSearchData = this.plansData.plans;
 
-          if (search.length > 0) {
-            this.totalNumberOfPlanBySearch = this.plansData.totalCount;
-            this.plansearchDataNextPage =
-              this.totalNumberOfPlanBySearch <= limit;
-          } else {
-            this.totalNumberOfPlan = this.plansData.totalCount;
-            this.plansearchDataNextPage = false;
-            this.totalPages = Math.ceil(this.totalNumberOfPlan / limit);
-            this.hasNextPage = pageNumber < this.totalPages;
+            if (search.length > 0) {
+              this.totalNumberOfPlanBySearch = this.plansData.totalCount;
+              this.plansearchDataNextPage =
+                this.totalNumberOfPlanBySearch <= limit;
+            } else {
+              this.totalNumberOfPlan = this.plansData.totalCount;
+              this.plansearchDataNextPage = false;
+              this.totalPages = Math.ceil(this.totalNumberOfPlan / limit);
+              this.hasNextPage = pageNumber < this.totalPages;
+            }
+
+            this.global.hideLoader();
+
+            if (
+              this.totalNumberOfPlan > this.allPlansData ||
+              this.totalNumberOfPlan === 0
+            ) {
+              this.allPlansData = this.totalNumberOfPlan;
+            }
           }
-
+        },
+        error: (error: any) => {
+          this.snackBar.open(error?.message, '', {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
           this.global.hideLoader();
-
-          if (
-            this.totalNumberOfPlan > this.allPlansData ||
-            this.totalNumberOfPlan === 0
-          ) {
-            this.allPlansData = this.totalNumberOfPlan;
-          }
-        }
+        },
       });
   }
 
@@ -199,7 +149,7 @@ export class PlansListingComponent implements OnDestroy {
    * new sorting criteria.
    */
   announceSortChange(sortState: Sort) {
-    this.sortBy = sortState.active as 'externalName' | 'createdOn';
+    this.sortBy = sortState.active as 'externalName' | 'createdOn' | 'internalName' | 'planId';
     this.sortOrder = sortState.direction as 'asc' | 'desc';
     this.getPlans(
       this.pageNumber,
@@ -252,8 +202,7 @@ export class PlansListingComponent implements OnDestroy {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       panelClass: 'dialog-curved',
       data: {
-        module: 'Plan',
-        deleteId: id,
+        module: 'plan',
       },
     });
 

@@ -50,6 +50,18 @@
           {{ plandataById ? plandataById.status : "" }}
         </h6>
       </div>
+      <div class="details">
+        <h5 class="text-grey-darken mat-subtitle-2 mb-2">Created</h5>
+        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">
+          {{ plandataById?.createdOn | date: 'd MMMM y' }}
+        </h6>
+      </div>
+      <div class="details">
+        <h5 class="text-grey-darken mat-subtitle-2 mb-2">Modified</h5>
+        <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">
+          {{ plandataById?.modifiedOn | date: 'd MMMM y' }}
+        </h6>
+      </div>
     </div>
 
     <div class="description-box" *ngIf="plandataById?.description">
@@ -318,7 +330,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <hr *ngIf="!last" class="mt-4 mb-4" /> -->
             </ng-container>
           </ng-container>
           <ng-template #noProducts>

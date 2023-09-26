@@ -1,11 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   pricingModels,
   Frequency,
@@ -24,7 +18,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EventEmitter, Output } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
 
 export class PlanValue {
   planId: string;
@@ -62,7 +55,7 @@ export class SetPricePopupComponent {
   public setPriceForm: FormGroup;
   priceId: string;
   pricingId: string;
-  selectedPeriodUnit: number;
+  selectedFrequency: number;
   selectedPeriodUnitTitle: string;
   editable: boolean = false;
   cycleVal: number;
@@ -84,7 +77,7 @@ export class SetPricePopupComponent {
   ) {
     this.planId = this.data.planId;
     this.pricingId = this.data.priceId;
-    this.selectedPeriodUnit = this.FrequencyTypes.find(
+    this.selectedFrequency = this.FrequencyTypes.find(
       (x) => x.title == this.data.periodUnit
     )?.value;
     this.selectedPeriodUnitTitle = this.FrequencyTypes.find(
@@ -111,7 +104,8 @@ export class SetPricePopupComponent {
 
   patchValue(data: any) {
     data.multiPricing.sort(
-      (indexOne, indexTwo) => indexOne.startingUnit - indexTwo.startingUnit
+      (indexOne:any, indexTwo:any) =>
+        indexOne.startingUnit - indexTwo.startingUnit
     );
     this.editable = true;
     this.setPriceForm.patchValue({
@@ -139,7 +133,7 @@ export class SetPricePopupComponent {
         endingUnit: {
           value:
             item.endingUnit === null ? '&above' : item.endingUnit.toString(),
-          disabled: true,
+          disabled: false,
         },
         price: [item.price],
       });
@@ -168,22 +162,25 @@ export class SetPricePopupComponent {
       multiPricing: this.form.array([
         this.form.group({
           startingUnit: { value: '1', disabled: true },
-          endingUnit: { value: '&above', disabled: true },
+          endingUnit: ['&above'],
           price: [''],
         }),
       ]),
     });
-
     this.setPriceForm.get('periodUnit')?.disable();
   }
-  checkValidationWithModel(input: string){ 
-    if(input==='tiered'||input==='volume'||input==='stair_step'){
+
+  checkValidationWithModel(input: string) {
+    if (input === 'tiered' || input === 'volume' || input === 'stair_step') {
       this.setPriceForm.get('price').patchValue(0);
     }
-    const validation = this.setPriceForm.get(input)?.value && (this.setPriceForm.get(input)?.dirty || this.setPriceForm.get(input)?.touched)
+    const validation =
+      this.setPriceForm.get(input)?.value &&
+      (this.setPriceForm.get(input)?.dirty ||
+        this.setPriceForm.get(input)?.touched);
     return validation;
   }
-  
+
   selectPriceId() {
     const priceId = this.price.priceId;
     this.priceIdSelected.emit(priceId);
@@ -228,10 +225,7 @@ export class SetPricePopupComponent {
     lastIdx.patchValue({
       endingUnit: '&above',
     });
-    lastIdx.get('endingUnit')?.disable();
-    prevIdx.patchValue({
-      endingUnit: '',
-    });
+    lastIdx.get('endingUnit');
     prevIdx.get('endingUnit')?.enable();
   }
 
@@ -259,9 +253,13 @@ export class SetPricePopupComponent {
   }
   deleteTier(tierIndex: number) {
     this.multiPricing.removeAt(tierIndex);
+    const lastList = this.multiPricing.value.at(-2);
+    const setStarting = lastList.endingUnit
+      ? Number(lastList.endingUnit) + 1
+      : 1;
+    this.start = setStarting;
     const lastIdx = this.lastObj();
     lastIdx.get('endingUnit')?.setValue('&above');
-    lastIdx.get('endingUnit')?.disable();
   }
 
   cycleValue(event: any) {
@@ -387,14 +385,18 @@ export class SetPricePopupComponent {
     }
   }
 
-  setStartingValue(event: any, index: number) {
-    const setStarting = Number(event.target.value);
+  setStartingValue(index: number) {
+    const lastList = this.multiPricing.value.at(-1);
+    const setStarting = lastList.endingUnit
+      ? Number(lastList.endingUnit) + 1
+      : 1;
     if (this.start < setStarting) {
-      this.start = Number(event.target.value) + 1;
+      this.addMultiPricing();
+      this.start = setStarting;
       const getNext = index + 1;
       const NextObject = this.getLevelList(getNext);
       NextObject.patchValue({
-        startingUnit: setStarting + 1,
+        startingUnit: setStarting,
       });
     } else {
       this.check = 'please put above value from startingunit';

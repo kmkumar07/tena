@@ -1,11 +1,10 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
 import {
   Feature,
   FeatureList,
-  GetFeature,
 } from 'src/app/shared/constants/consants';
 import { environment } from 'src/environments/environment';
 
@@ -42,21 +41,8 @@ export class FeatureService {
     search: string,
     sortBy: 'name' | 'createdOn',
     sortOrder: 'asc' | 'desc'
-  ): Observable<FeatureList[]> {
-    return this.http
-      .get<any>(
-        `${environment.apiUrl}/feature?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`,
-        { withCredentials: true }
-      )
-      .pipe(
-        map((res) => {
-          this.featureSubject.next(res.data);
-          this.features = res.data;
-          return res.data;
-        }),
-        catchError((err) => {
-          throw err;
-        })
-      );
+  ): Observable<any> {
+    let path = `${environment.apiUrl}/feature?page=${PageNumber}&limit=${limit}&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+    return this.apiService.get(path);
   }
 }
