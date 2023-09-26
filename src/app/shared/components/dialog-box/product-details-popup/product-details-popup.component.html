@@ -19,7 +19,7 @@
               <mat-select
                 required
                 formControlName="productID"
-                placeholder="select"
+                placeholder="select"    
               >
                 <ng-container>
                   <mat-option
@@ -95,16 +95,8 @@
             <!-- Checkbox Column -->
             <ng-container matColumnDef="select">
               <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox
-                  (change)="$event ? toggleAllRows() : null"
-                  [checked]="selection.hasValue() && isAllSelected()"
-                  [indeterminate]="selection.hasValue() && !isAllSelected()"
-                  [aria-label]="checkboxLabel()"
-                  class="mat-primary"
-                  color="primary"
-                >
-                </mat-checkbox>
-              </th>
+                
+              </th> 
               <td mat-cell *matCellDef="let row">
                 <mat-checkbox
                   (click)="$event.stopPropagation()"
@@ -160,15 +152,13 @@
               <td
                 mat-cell
                 *matCellDef="let element"
-                class="entitlements-option flex-center py-4"
-              >
+               >
                 <ng-container
                   *ngIf="
                     element.type === 'quantity' || element.type === 'custom'
                   "
                 >
                   <ng-container
-                    *ngIf="element.levels && element.levels.length > 0"
                   >
                     <div class="input-wrapper">
                       <mat-form-field appearance="outline" class="border-2">
@@ -214,68 +204,33 @@
                 </ng-container>
                 <ng-container *ngIf="element.type === 'range'">
                   <form [formGroup]="rangeForm">
-                    <mat-form-field
-                      appearance="outline"
-                      class="border-2"
-                      subscriptSizing="dynamic"
-                    >
-                      <input
-                        matInput
-                        placeholder="Enter the value"
-                        [formControlName]="element.featureId"
-                        (input)="
-                          rangeForm.controls[element.featureId].markAsTouched()
-                        "
-                        pattern="[0-9]*"
-                        required
-                      />
-                      <mat-hint>
-                        Between {{ element.minValue }} and
-                        {{ element.maxValue }}
+                    <mat-form-field appearance="outline" class="border-2" subscriptSizing="dynamic">
+                      <input matInput placeholder="Enter the value" [formControlName]="element.featureId" (input)="rangeForm.controls[element.featureId].markAsTouched()" pattern="[0-9]*" required />
+                       <mat-hint>
+                      Between {{ element.minValue }} and {{ element.maxValue }}
                       </mat-hint>
-                      <mat-error
-                        *ngIf="
+                      <mat-error *ngIf="
                           rangeForm.controls[element.featureId].invalid &&
                           rangeForm.controls[element.featureId].touched
-                        "
-                      >
-                        <ng-container
-                          *ngIf="
-                            rangeForm.controls[element.featureId].errors[
-                              'required'
-                            ]
-                          "
-                        >
+                        ">
+                        <ng-container *ngIf="rangeForm.controls[element.featureId].errors['required']">
                           Value is required and cannot be left empty.
                         </ng-container>
-                        <ng-container
-                          *ngIf="
-                            rangeForm.controls[element.featureId].errors[
-                              'pattern'
-                            ]
-                          "
-                        >
-                          Only number are allowed.
-                        </ng-container>
-                        <ng-container
-                          *ngIf="
-                            rangeForm.controls[element.featureId].errors['min']
-                          "
-                        >
-                          Value should above {{ element.minValue }}.
-                        </ng-container>
-                        <ng-container
-                          *ngIf="
-                            rangeForm.controls[element.featureId].errors['max']
-                          "
-                        >
-                          Between {{ element.minValue }} and
-                          {{ element.maxValue }}
-                        </ng-container>
+                          <ng-container *ngIf="rangeForm.controls[element.featureId].errors['pattern']">
+                         Only number are allowed.
+                         </ng-container>
+                       <ng-container *ngIf="rangeForm.controls[element.featureId].errors['min']">
+                      Value should above {{ element.minValue }}.
+                      </ng-container>
+                   <ng-container *ngIf="rangeForm.controls[element.featureId].errors['max']">
+                    Between {{ element.minValue }} and {{ element.maxValue }}
+                 </ng-container>
                       </mat-error>
                     </mat-form-field>
                   </form>
                 </ng-container>
+               
+                
               </td>
             </ng-container>
 
@@ -316,7 +271,7 @@
       </button>
       <button
         mat-flat-button
-        (click)="onSubmit(); clicked = true"
+        (click)="onSubmit()"
         color="primary"
       >
         {{ editable ? "Update" : "Create" }}

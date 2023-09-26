@@ -83,7 +83,7 @@ export class ProductDetailsPopupComponent {
   productData = [];
   filteredFeatures = [];
   selectedFeatures: PeriodicElement[] = [];
-  productId: string = '';  
+  productId: string = '';
   plan: any;
   planId: string = '';
   EditplanId: string;
@@ -95,6 +95,7 @@ export class ProductDetailsPopupComponent {
   selectedOption: boolean;
   disabled: boolean;
   planArray = [];
+  planid: string = '';
   isCheckboxChecked: boolean = false;
   selectedLevelFromDropdown: { [key: string]: any } = {};
   clicked = false;
@@ -113,7 +114,7 @@ export class ProductDetailsPopupComponent {
     'status',
     'entitlements',
   ];
- // dataSource = new MatTableDataSource<PeriodicElement1>(ELEMENT_DATA);
+  // dataSource = new MatTableDataSource<PeriodicElement1>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
   selection1 = new SelectionModel<PeriodicElement>(true, []);
 
@@ -170,11 +171,12 @@ export class ProductDetailsPopupComponent {
 
     // Now, you can update the form control or perform any other necessary actions
     this.formGroup.get('productID').setValue(product.productId);
-    this.productId = product.productId;    
+    this.productId = product.productId;
     this.isProductSelected = true;
     this.formGroup.controls.productName.patchValue(product.name);
     this.formGroup.controls.description.patchValue(product.description);
     this.filteredFeatures = product.feature;
+
     const rangeFormControls = {};
     this.filteredFeatures.forEach((feature) => {
       const minValue = feature.levels[0]?.value;
@@ -196,32 +198,38 @@ export class ProductDetailsPopupComponent {
 
     this.rangeForm = this.formBuilder.group(rangeFormControls);
   }
-  getPlanById(id: any) {
-    const planid = id;
-    if (planid) {
+  getPlanById(id: string) {
+    if (this.editable == true) {
+      this.planid = this.productVariantIdWithPlanId.productVariantId.planId;
+    } else {
+      this.planid = id;
+    }
+    if (this.planid) {
       this.planService
-        .getPlanById(planid)
+        .getPlanById(this.planid)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
           this.plan = res;
-          
+
           this.planArray = this.plan.data.productVariant.map(
             (item) => item.name
           );
+
           const resultArray = this.planArray.map((item) => {
-            return item;
+            const splitResult = item.split(`${this.planid}variant`);
+
+            return splitResult.length > 1 ? splitResult[1] : splitResult[0];
           });
           this.updateproductData = this.productData.filter(
             (product) => !resultArray.includes(product.productId)
           );
-          console.log(this.updateproductData );
-          
         });
     }
   }
   getProductVariantById(id: any) {
-    this.productVariantId = id.productVariantId.productVariantId;
-
+    if (id.productVariantId) {
+      this.productVariantId = id.productVariantId.productVariantId;
+    }
     if (this.productVariantId) {
       this.productDetailsService
         .getProductVariantById(this.productVariantId)
@@ -232,13 +240,23 @@ export class ProductDetailsPopupComponent {
     }
   }
   patchValue(res: any) {
-    console.log(res);
-    
     this.editable = true;
+    this.filteredFeatures = res.data.features;
+
+    const rangeFormControls = {};
+    this.filteredFeatures.forEach((feature) => {
+      if (feature.type === 'range') {
+        const rangeValue = [''];
+        rangeFormControls[feature.featureId] = rangeValue;
+      }
+    });
+
+    this.rangeForm = this.formBuilder.group(rangeFormControls);
+    this.productVariantId = res.data.productVariantId;
 
     this.formGroup.patchValue({
       productName: res.data.name,
-      productID: res.data.productID, 
+      productID: res.data.productID,
       status: res.data.status,
       planID: res.data.planID,
     });
@@ -258,7 +276,7 @@ export class ProductDetailsPopupComponent {
     if (this.isAllSelected()) {
       this.selection.clear();
     } else {
-    // this.isCheckboxChecked=true
+      // this.isCheckboxChecked=true
       this.selection.select(...this.filteredFeatures);
     }
   }
@@ -325,15 +343,19 @@ export class ProductDetailsPopupComponent {
   onSubmit() {
     this.loading = true;
     const formData = this.formGroup.value;
-    
-    const productVariantName = formData.productName;
+
+    const productVariantName = this.planId + 'variant' + formData.productName;
+
     const productVariantId = productVariantName
       .replace(/\s+/g, '-')
       .toLowerCase();
-    const editProductVariantName =formData.productName;
-    const editProductVariantId = editProductVariantName.replace(/\s+/g, '-')
-    .toLowerCase();
-      
+    const editProductVariantName =
+      this.EditplanId + 'variant' + formData.productName;
+
+    const editProductVariantId = editProductVariantName
+      .replace(/\s+/g, '-')
+      .toLowerCase();
+
     const features = this.selectedFeatures.map((productVariantFeature) => {
       switch (productVariantFeature.type) {
         case 'quantity':
@@ -400,12 +422,13 @@ export class ProductDetailsPopupComponent {
         productVariantId: editProductVariantId,
         name: editProductVariantName,
         planId: this.EditplanId,
-       // productID: this.productId,
+        productID: this.productId,
         type: 'base',
         features: features,
         status: 'active',
       };
       this.global.showLoader();
+
       this.productDetailsService
         .updateProductVariant(this.productVariantId, UpdateproductVariant)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
