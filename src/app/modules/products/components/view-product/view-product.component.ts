@@ -111,8 +111,7 @@ export class ViewProductComponent {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       panelClass: 'dialog-curved',
       data: {
-        module: 'Feature',
-        deleteId: id,
+        module: 'feature',
       },
     });
 

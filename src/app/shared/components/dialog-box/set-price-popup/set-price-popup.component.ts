@@ -133,7 +133,7 @@ export class SetPricePopupComponent {
         endingUnit: {
           value:
             item.endingUnit === null ? '&above' : item.endingUnit.toString(),
-          disabled: true,
+          disabled: false,
         },
         price: [item.price],
       });
@@ -162,7 +162,7 @@ export class SetPricePopupComponent {
       multiPricing: this.form.array([
         this.form.group({
           startingUnit: { value: '1', disabled: true },
-          endingUnit: [''],
+          endingUnit: ['&above'],
           price: [''],
         }),
       ]),

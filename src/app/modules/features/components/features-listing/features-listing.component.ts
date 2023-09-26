@@ -191,8 +191,7 @@ export class FeaturesListingComponent implements OnInit {
     const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
       panelClass: 'dialog-curved',
       data: {
-        module: 'Feature',
-        deleteId: id,
+        module: 'feature',
       },
     });
     this.featureService
@@ -224,8 +223,7 @@ export class FeaturesListingComponent implements OnInit {
     this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       panelClass: 'dialog-curved',
       data: {
-        module: 'Feature',
-        deleteId: id,
+        module: 'feature',
       },
     });
 
