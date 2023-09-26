@@ -1,19 +1,26 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard {
-  constructor(private router: Router) { }
+  constructor(private router: Router, private globalService: GlobalService) {}
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    // Check if the session is valid
-    const session = window.localStorage.getItem('session');
-    if (session !== null) {
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    const isAuthenticated = this.globalService.isUserAuthenticated();
+
+    if (isAuthenticated) {
       return true;
     } else {
-      // Redirect the user to the sign-in page 
       this.router.navigate(['/sign-in']);
       return false;
     }
