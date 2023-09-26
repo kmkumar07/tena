@@ -23,6 +23,7 @@ import { ProductsService } from 'src/app/modules/products/services/products.serv
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { feature_types } from 'src/app/shared/constants/consants';
 import { FeatureService } from '../../services/feature.service';
+import { featureSamples } from 'src/app/shared/constants/static-info';
 
 export interface menuOptions {
   value: number;
@@ -35,6 +36,7 @@ export interface menuOptions {
   styleUrls: ['./edit-feature.component.scss'],
 })
 export class EditFeatureComponent {
+  featureSamples = featureSamples;
   featureType: menuOptions[] = feature_types;
   subscription: Subscription;
   isUnlimited: boolean = false;
@@ -293,6 +295,8 @@ export class EditFeatureComponent {
       unit: resData.unit,
       levels: resData.levels,
     });
+    this.featureForm.get('productID')?.disable();
+
     if (Array.isArray(res.levels) && res.levels.length >= 0) {
       const levelsControl = this.featureForm.get('levels') as FormArray;
       levelsControl.clear();
@@ -388,91 +392,27 @@ export class EditFeatureComponent {
   }
 
   // sample data code
-  switchSample() {
-    this.featureForm.removeControl('unit');
-    this.isRangeSelected = false;
-    this.featureForm.patchValue({
-      productID: this.filterProducts[0],
-      name: 'Whiteboard',
-      description: ` This feature type has 2 entitlement levels- "available" and "notavailable"`,
-      type: 'switch',
-      status: [true],
-    });
-  }
-  rangeSample() {
+  setSampleFeature(featureData) {
     this.featureForm.addControl(
       'unit',
       this.formBuilder.control('', Validators.required)
     );
-    this.isRangeSelected = true;
-    this.featureForm.patchValue({
-      productID: this.filterProducts[0],
-      name: 'API Call',
-      description: `This feature supports range based entitlements. For eg : Customer’s
-          access can be between 100 and 300 API / minute`,
-      type: 'range',
-      status: [true],
-      unit: 'License',
-    });
-    const values = [
-      { value: '10', name: 'License' },
-      { value: '20', name: 'License' },
-    ];
 
-    for (let i = 0; i < 2; i++) {
-      const formGroup = this.levels.at(i);
-      formGroup?.patchValue(values[i]);
-    }
-  }
-  quantitySample() {
-    this.featureForm.addControl(
-      'unit',
-      this.formBuilder.control('', Validators.required)
-    );
-    this.isRangeSelected = false;
+    this.isRangeSelected = featureData.type === 'range';
     this.featureForm.patchValue({
-      productID: this.filterProducts[0],
-      name: 'API Call',
-      description: ` This feature type has numbered entitlement levels- For eg : 2,3,4 or
-          10 user licenses.`,
-      type: 'quantity',
+      productID: this.featureForm.getRawValue().productID,
+      name: featureData.name,
+      description: featureData.description,
+      type: featureData.type,
       status: [true],
-      unit: 'License',
+      unit: featureData.unit || '',
     });
-    const values = [
-      { value: '3', name: 'License' },
-      { value: '10', name: 'License' },
-      { value: '20', name: 'License' },
-    ];
 
-    for (let i = 0; i < 3; i++) {
-      const formGroup = this.levels.at(i);
-      formGroup?.patchValue(values[i]);
-    }
-  }
-  customSample() {
-    this.featureForm.addControl(
-      'unit',
-      this.formBuilder.control('', Validators.required)
-    );
-    this.isRangeSelected = false;
-    this.featureForm.patchValue({
-      productID: this.filterProducts[0],
-      name: 'Email Support',
-      description: ` This feature supports range based entitlements. For eg : Customer’s
-          access can be between 100 and 300 API / minute`,
-      type: 'custom',
-      status: [true],
-    });
-    const values = [
-      { value: '12', name: 'Working hours' },
-      { value: '24', name: 'Weekdays' },
-      { value: '20', name: 'Month' },
-    ];
-
-    for (let i = 0; i < 3; i++) {
-      const formGroup = this.levels.at(i);
-      formGroup?.patchValue(values[i]);
+    if (featureData.levels) {
+      for (let i = 0; i < featureData.levels.length; i++) {
+        const formGroup = this.levels.at(i);
+        formGroup?.patchValue(featureData.levels[i]);
+      }
     }
   }
 }
