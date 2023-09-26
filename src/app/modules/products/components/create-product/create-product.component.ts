@@ -195,13 +195,6 @@ export class CreateProductComponent implements OnInit {
 
     this.subscription = this.productService.createProduct(product).subscribe({
       next: (res) => {
-        // let success = 'Product created successfully';
-        // this.snackBar.open(success, '', {
-        //   duration: 5000,
-        //   verticalPosition: 'top',
-        //   horizontalPosition: 'right',
-        //   panelClass: ['custom-class'],
-        // });
         this.snackBar.openFromComponent(SnackBarCustomComponent, {
           duration: 5000,
           verticalPosition: 'top',
@@ -213,7 +206,6 @@ export class CreateProductComponent implements OnInit {
       },    
       error: (error: any) => {
         this.global.hideLoader();
-        // this.error = error?.error?.message || 'Database error';
         this.snackBar.openFromComponent(SnackBarCustomComponent, {
           duration: 5000,
           verticalPosition: 'top',
