@@ -24,44 +24,6 @@ export interface PeriodicElement {
   status: string;
   symbol: string;
 }
-
-//   name: string;
-//   position: number;
-//   type: string;
-//   status: string;
-//   entitlements: string;
-// }
-
-// const ELEMENT_DATA: PeriodicElement1[] = [
-//   {
-//     position: 1,
-//     name: 'Whiteboard',
-//     status: 'Active',
-//     type: 'Switch',
-//     entitlements: '',
-//   },
-//   {
-//     position: 2,
-//     name: 'Email support',
-//     status: 'Active',
-//     type: 'Custom',
-//     entitlements: '',
-//   },
-//   {
-//     position: 3,
-//     name: 'API Call',
-//     status: 'Active',
-//     type: 'Range',
-//     entitlements: '',
-//   },
-//   {
-//     position: 4,
-//     name: 'User License',
-//     status: 'Active',
-//     type: 'Quantity',
-//     entitlements: '',
-//   },
-// ];
 @Component({
   selector: 'app-product-details-popup',
   templateUrl: './product-details-popup.component.html',
@@ -111,9 +73,7 @@ export class ProductDetailsPopupComponent {
     'status',
     'entitlements',
   ];
-  // dataSource = new MatTableDataSource<PeriodicElement1>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
-  selection1 = new SelectionModel<PeriodicElement>(true, []);
 
   constructor(
     public dialog: MatDialog,
@@ -262,26 +222,7 @@ export class ProductDetailsPopupComponent {
     this.getPlanById(this.EditplanId);
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.filteredFeatures.length;
-    return numSelected === numRows;
-  }
-
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-    } else {
-      // this.isCheckboxChecked=true
-      this.selection.select(...this.filteredFeatures);
-    }
-  }
-
   checkboxLabel(row?: PeriodicElement): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row `;
   }
   selectedOptions: { [key: string]: boolean } = {};
@@ -405,10 +346,9 @@ export class ProductDetailsPopupComponent {
               verticalPosition: 'top',
               horizontalPosition: 'right',
             });
-            return res;
           },
           error: (err: any) => {
-            this.snackBar.open(err.error.message, '', {
+            this.snackBar.open(err.message, '', {
               duration: 5000,
               verticalPosition: 'top',
               horizontalPosition: 'right',
@@ -442,7 +382,7 @@ export class ProductDetailsPopupComponent {
             this.global.hideLoader();
           },
           error: (err: any) => {
-            this.snackBar.open(err.error.message, '', {
+            this.snackBar.open(err.message, '', {
               duration: 5000,
               verticalPosition: 'top',
               horizontalPosition: 'right',
