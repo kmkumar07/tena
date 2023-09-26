@@ -49,4 +49,8 @@ export class GlobalService {
     };
     return destroyed$;
   }
+  isUserAuthenticated(): boolean {
+    const session = window.localStorage.getItem('session');
+    return session !== null;
+  }
 }

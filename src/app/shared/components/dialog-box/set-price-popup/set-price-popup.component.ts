@@ -104,7 +104,8 @@ export class SetPricePopupComponent {
 
   patchValue(data: any) {
     data.multiPricing.sort(
-      (indexOne, indexTwo) => indexOne.startingUnit - indexTwo.startingUnit
+      (indexOne:any, indexTwo:any) =>
+        indexOne.startingUnit - indexTwo.startingUnit
     );
     this.editable = true;
     this.setPriceForm.patchValue({
@@ -168,7 +169,7 @@ export class SetPricePopupComponent {
     });
     this.setPriceForm.get('periodUnit')?.disable();
   }
-  
+
   checkValidationWithModel(input: string) {
     if (input === 'tiered' || input === 'volume' || input === 'stair_step') {
       this.setPriceForm.get('price').patchValue(0);
@@ -214,7 +215,7 @@ export class SetPricePopupComponent {
     this.multiPricing.push(
       this.form.group({
         startingUnit: { value: '', disabled: true },
-        endingUnit: [''],
+        endingUnit: ['&above'],
         price: [''],
       })
     );
@@ -222,7 +223,7 @@ export class SetPricePopupComponent {
     const lastIdx = this.lastObj();
     const prevIdx = this.secondLastObj();
     lastIdx.patchValue({
-      endingUnit: '',
+      endingUnit: '&above',
     });
     lastIdx.get('endingUnit');
     prevIdx.get('endingUnit')?.enable();
@@ -252,8 +253,13 @@ export class SetPricePopupComponent {
   }
   deleteTier(tierIndex: number) {
     this.multiPricing.removeAt(tierIndex);
+    const lastList = this.multiPricing.value.at(-2);
+    const setStarting = lastList.endingUnit
+      ? Number(lastList.endingUnit) + 1
+      : 1;
+    this.start = setStarting;
     const lastIdx = this.lastObj();
-    lastIdx.get('endingUnit')?.setValue('');
+    lastIdx.get('endingUnit')?.setValue('&above');
   }
 
   cycleValue(event: any) {
@@ -379,21 +385,18 @@ export class SetPricePopupComponent {
     }
   }
 
-  setStartingValue(event: any, index: number) {
-    const setStarting = Number(event.target.value);
-
+  setStartingValue(index: number) {
+    const lastList = this.multiPricing.value.at(-1);
+    const setStarting = lastList.endingUnit
+      ? Number(lastList.endingUnit) + 1
+      : 1;
     if (this.start < setStarting) {
-      if (
-        event.target.value !== undefined &&
-        event.target.value.trim() !== ''
-      ) {
-        this.addMultiPricing();
-      }
-      this.start = Number(event.target.value) + 1;
+      this.addMultiPricing();
+      this.start = setStarting;
       const getNext = index + 1;
       const NextObject = this.getLevelList(getNext);
       NextObject.patchValue({
-        startingUnit: setStarting + 1,
+        startingUnit: setStarting,
       });
     } else {
       this.check = 'please put above value from startingunit';
