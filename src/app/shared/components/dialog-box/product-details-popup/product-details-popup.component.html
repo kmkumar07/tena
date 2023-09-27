@@ -11,7 +11,7 @@
             <p class="mat-subtitle-2 font-weight-500 text-blue-darken">Product</p>
           </div>
           <ng-container [formGroup]="formGroup">
-            <mat-form-field appearance="outline" class="border-2">
+            <mat-form-field appearance="outline" class="border-2 w-full">
               <mat-select required formControlName="productID" placeholder="select">
                 <mat-option *ngFor="let product of productData" (click)="selectProduct(product)"
                   [value]="product.productId">
@@ -93,7 +93,7 @@
 
           <!-- Symbol Column -->
           <ng-container matColumnDef="entitlements">
-            <th mat-header-cell *matHeaderCellDef class="text-blue-darken"> Entitlements </th>
+            <th mat-header-cell *matHeaderCellDef class="text-blue-darken text-left"> Entitlements </th>
             <td mat-cell *matCellDef="let element" class="entitlements-option flex-center py-4">
               <ng-container *ngIf="element.type === 'quantity' || element.type === 'custom' ">
                 <ng-container *ngIf="element.levels && element.levels.length > 0">
@@ -101,7 +101,7 @@
                   <div class="select-wrapper">
                     <mat-form-field appearance="outline" class="border-2 w-full">
                       <mat-select required placeholder="select" class="w-full" [value]="selectedLevelFromDropdown">
-                        <mat-option *ngFor="let level of element.levels" value="{{ level.value }}" (click)="
+                        <mat-option *ngFor="let level of element.levels" value="{{ level.value }}" class="option-wrap" (click)="
                       onSelectedLevelChange(
                         element.featureId,
                         level.value
@@ -119,8 +119,8 @@
                   <mat-form-field appearance="outline" class="border-2 w-full">
                     <mat-select [(ngModel)]="selectedOptions[element.featureId]" errorState="false"
                       placeholder="select" class="w-full">
-                      <mat-option [value]="true">Available</mat-option>
-                      <mat-option [value]="false">Not available</mat-option>
+                      <mat-option [value]="true" class="option-wrap">Available</mat-option>
+                      <mat-option [value]="false" class="option-wrap">Not available</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
