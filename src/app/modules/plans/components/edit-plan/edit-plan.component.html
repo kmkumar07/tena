@@ -15,8 +15,8 @@
         </div>
         <form [formGroup]="planForm">
           <div class="info-form">
-            <div class="input-wrapper mt-5">
-              <div>
+            <div class="mt-5">
+              <div class="input-wrapper">
                 <div class="flex align-center mb-2">
                   <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
                     Plan Id
@@ -36,13 +36,13 @@
                     </div>
                   </ng-template>
                 </div>
-                <mat-form-field appearance="outline">
-                  <input *ngIf="!editable" required matInput placeholder="Enter here..." formControlName="planId" />
-                  <input *ngIf="editable" readonly required matInput placeholder="Enter here..."
+                <mat-form-field appearance="outline" class="disabled-input">
+                  <!-- <input *ngIf="!editable" required matInput placeholder="Enter here..." formControlName="planId" /> -->
+                  <input readonly matInput placeholder="Enter here..."
                     formControlName="planId" />
                 </mat-form-field>
               </div>
-              <div>
+              <div class="input-wrapper">
                 <div class="flex align-center mb-2">
                   <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
                     Plan Name (External)
@@ -84,7 +84,7 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-              <div class="relative">
+              <div class="relative input-wrapper">
                 <div class="flex align-center mb-2">
                   <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
                     Plan Name (Internal)

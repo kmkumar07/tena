@@ -25,6 +25,13 @@
       line-height: 161.52%;
     }
   }
+
+  .outer-tooltip{
+    .inner-tooltip{
+      max-height: 30vh;
+      overflow: auto;
+    }
+  }
 }
 
 // form with sample

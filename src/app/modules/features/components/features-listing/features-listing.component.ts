@@ -12,10 +12,7 @@ import {
 } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
-import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { GlobalService } from 'src/app/core/services/global.service';
-
 
 @Component({
   selector: 'app-features-listing',
@@ -43,8 +40,8 @@ export class FeaturesListingComponent implements OnInit {
   data$ = this.featureService.feature$;
   elementId: number;
   data: any;
-  PageNumber:number =1 ;
-  limit:number =10 ;
+  PageNumber: number = 1;
+  limit: number = 10;
   search: string = '';
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
@@ -72,11 +69,10 @@ export class FeaturesListingComponent implements OnInit {
   constructor(
     private featureService: FeatureService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar,
     private global: GlobalService
   ) {}
   onSearchInput() {
-    this.PageNumber=1;
+    this.PageNumber = 1;
     this.searchQueryChanged.next(this.searchQuery);
   }
   ngOnInit(): void {
@@ -122,23 +118,24 @@ export class FeaturesListingComponent implements OnInit {
             this.global.hideLoader();
             if (search.length > 0) {
               this.totalNumberOfFeatureBySearch = this.totalNumberOfFeature;
-              this.fsearchDataNextPage = this.totalNumberOfFeatureBySearch <= limit;
+              this.fsearchDataNextPage =
+                this.totalNumberOfFeatureBySearch <= limit;
             } else {
               this.fsearchDataNextPage = false;
               this.totalPages = Math.ceil(this.totalNumberOfFeature / limit);
               this.hasNextPage = PageNumber < this.totalPages;
             }
-            if (this.totalNumberOfFeature > this.allFeaturesData || this.totalNumberOfFeature === 0) {
+            if (
+              this.totalNumberOfFeature > this.allFeaturesData ||
+              this.totalNumberOfFeature === 0
+            ) {
               this.allFeaturesData = this.totalNumberOfFeature;
             }
           }
         },
         error: (error: any) => {
-          this.snackBar.open(error?.message, '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
+          const errorMessage = error?.message || 'Database error';
+          this.global.showSnackbar(false, errorMessage);
           this.global.hideLoader();
         },
       });
@@ -175,47 +172,33 @@ export class FeaturesListingComponent implements OnInit {
   deleteElementById(elementId: number) {
     this.featureService.deleteFeature(elementId).subscribe({
       next: (res) => {
-        this.deleteSuccess(elementId);
+        this.featureService
+        .getFeatures(
+          this.PageNumber,
+          this.limit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        )
+        .subscribe((data) => {
+          this.featureLength = data['features'].length;
+        });
+        if (this.featureLength === 0 && this.PageNumber > 1) {
+          this.onPrevious();
+        }
+        this.getFeature(
+          this.PageNumber,
+          this.limit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
+        this.global.showSnackbar(true, 'Feature deleted successfully')
       },
       error: (error: any) => {
-        this.snackBar.open(error.error.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
+        const errorMessage = error?.error?.message || 'Database error';
+        this.global.showSnackbar(false, errorMessage);
       },
-    });
-  }
-
-  deleteSuccess(id: any) {
-    const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
-      panelClass: 'dialog-curved',
-      data: {
-        module: 'feature',
-      },
-    });
-    this.featureService
-      .getFeatures(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
-      )
-      .subscribe((data) => {
-        this.featureLength = data['features'].length;
-      });
-    dialogRef.afterClosed().subscribe(() => {
-      if (this.featureLength === 0 && this.PageNumber > 1) {
-        this.onPrevious();
-      }
-      this.getFeature(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
-      );
     });
   }
 

@@ -13,7 +13,6 @@ import {
 } from 'src/app/shared/constants/consants';
 import { PlanService } from '../../services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SetPricePopupComponent } from 'src/app/shared/components/dialog-box/set-price-popup/set-price-popup.component';
 import { ProductDetailsPopupComponent } from 'src/app/shared/components/dialog-box/product-details-popup/product-details-popup.component';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
@@ -96,7 +95,6 @@ export class CreatePlanComponent implements OnInit {
     private planService: PlanService,
     private productDetailService: ProductDetailsService,
     private global: GlobalService,
-    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -300,12 +298,9 @@ export class CreatePlanComponent implements OnInit {
             this.openSuccess(plan.planId);
             return res;
           },
-          error: (err: any) => {
-            this.snackBar.open(err.message, '', {
-              duration: 5000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-            });
+          error: (error: any) => {
+            const errorMessage = error?.message || 'Database error';
+            this.global.showSnackbar(false, errorMessage);
             this.global.hideLoader();
           },
         });
@@ -332,11 +327,8 @@ export class CreatePlanComponent implements OnInit {
         this.getPlanById(this.planId);
       },
       error: (error: any) => {
-        this.snackBar.open(error.error.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
+        const errorMessage = error?.error?.message || 'Database error';
+        this.global.showSnackbar(false, errorMessage);
       },
     });
   }
@@ -351,6 +343,7 @@ export class CreatePlanComponent implements OnInit {
     this.dialogRef.afterClosed().subscribe((res: any) => {
       if (res) {
         this.sendPriceId(pricingId);
+        this.global.showSnackbar(true,'Price deleted successfully')
       }
     });
   }
@@ -441,18 +434,12 @@ export class CreatePlanComponent implements OnInit {
     this.planService.deletePlan(planId).subscribe({
       next: (res) => {
         this.navigateToGetAllPlans();
-        this.snackBar.open('Plan deleted successfully', '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
+        this.global.showSnackbar(true, 'Plan deleted successfully');
+
       },
       error: (error: any) => {
-        this.snackBar.open(error?.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
+        const errorMessage = error?.message || 'Database error';
+        this.global.showSnackbar(false, errorMessage);
       },
     });
   }
@@ -479,18 +466,11 @@ export class CreatePlanComponent implements OnInit {
     this.productDetailService.deleteProductVariant(productVariantId).subscribe({
       next: (res) => {
         this.getPlanById(this.planId);
-        this.snackBar.open('productVariant deleted successfully', '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
+        this.global.showSnackbar(true, 'Product variant deleted successfully');
       },
       error: (error: any) => {
-        this.snackBar.open(error?.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
+        const errorMessage = error?.message || 'Database error';
+        this.global.showSnackbar(false, errorMessage);
       },
     });
   }
