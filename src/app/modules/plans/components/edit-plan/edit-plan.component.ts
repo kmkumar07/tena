@@ -2,7 +2,13 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Subscription, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
+import {
+  Subject,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+  takeUntil,
+} from 'rxjs';
 import { FeatureDetailsPopupComponent } from 'src/app/shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 import {
   Plan,
@@ -59,17 +65,17 @@ export class EditPlanComponent {
   PageNumber: any = '';
   limit: any = '';
   planId: string;
-  planWithTotal:any;
+  planWithTotal: any;
   featureLength: string;
   searchQuery: string;
   private searchQueryChanged: Subject<string> = new Subject<string>();
   private searchSubscription: Subscription;
   showLoader = false;
-  search:string;
+  search: string;
   sortBy: 'externalName' | 'createdOn';
   sortOrder: 'asc' | 'desc';
   planSearchDataLength: boolean = false;
-  planSearchData:Plan[];
+  planSearchData: Plan[];
   dialogRef: any;
   public stepOneCompleted: boolean = false;
   editable: boolean = false;
@@ -96,7 +102,7 @@ export class EditPlanComponent {
     this.setupSearchSubscription();
     this.planId = this.route.snapshot.params['id'];
     this.getPlanById(this.planId);
-   
+
     this.planService.plan$.subscribe((data) => {
       if (data) {
         this.productDetails = data;
@@ -151,7 +157,6 @@ export class EditPlanComponent {
       });
   }
 
-
   getSearchPlans(
     PageNumber: number,
     limit: number,
@@ -160,13 +165,7 @@ export class EditPlanComponent {
     sortOrder: 'asc' | 'desc'
   ) {
     this.planService
-      .getPlans(
-        PageNumber,
-        limit,
-        search,
-        sortBy,
-        sortOrder
-      )
+      .getPlans(PageNumber, limit, search, sortBy, sortOrder)
       .subscribe((data) => {
         if (data) {
           this.planWithTotal = data;
@@ -175,7 +174,7 @@ export class EditPlanComponent {
           if (this.search.length > 0) {
             this.planSearchData.forEach((plan) => {
               if (this.search === plan.internalName) {
-                this.planSearchDataLength = true;                
+                this.planSearchDataLength = true;
                 return;
               }
             });
@@ -184,7 +183,7 @@ export class EditPlanComponent {
         }
       });
   }
-  
+
   getPlanById(id: string) {
     if (id) {
       this.stepOneCompleted = true;
@@ -261,20 +260,13 @@ export class EditPlanComponent {
         .subscribe({
           next: (res: any) => {
             this.router.navigate([`/plans/create/${plan.planId}`]);
-            this.snackBar.open('Plan updated successfully', '', {
-              duration: 5000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-            });
+            this.global.showSnackbar(true, 'Plan updated successfully');
             this.global.hideLoader();
             return res;
           },
-          error: (err: any) => {
-            this.snackBar.open(err.message, '', {
-              duration: 5000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-            });
+          error: (error: any) => {
+            const errorMessage = error?.message || 'Database error';
+            this.global.showSnackbar(false, errorMessage);
             this.global.hideLoader();
           },
         });
@@ -284,11 +276,7 @@ export class EditPlanComponent {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
           this.router.navigate([`/plans/create/${plan.planId}`]);
-          this.snackBar.open('Plan updated successfully', '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
+          this.global.showSnackbar(true, 'Plan updated successfully');
           this.global.hideLoader();
         });
     }

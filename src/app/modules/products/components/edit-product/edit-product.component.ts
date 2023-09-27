@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ProductsService } from '../../services/products.service';
-import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+} from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { DialogAnimaComponent } from 'src/app/shared/components/dialog-box/dialog-anima/dialog-anima.component';
 import { GlobalService } from 'src/app/core/services/global.service';
@@ -35,7 +39,7 @@ export class EditProductComponent implements OnInit {
   uploadLogo: boolean = false;
   isImageUploaded: boolean = false;
   getProductImageUrl: string;
-  removeImagePayload:any;
+  removeImagePayload: any;
   environment = environment;
   imagePath: string;
   product$: Observable<any>;
@@ -45,8 +49,8 @@ export class EditProductComponent implements OnInit {
   imageUrlName: string;
   receivedCroppedImage: string;
   dialogRef: any;
-  getProductData:any;
-  getProduct:any;
+  getProductData: any;
+  getProduct: any;
   uploadMessage: string = '';
   uploadSuccess: boolean = false;
   PageNumber = 1;
@@ -55,9 +59,9 @@ export class EditProductComponent implements OnInit {
   sortBy: 'name' | 'createdOn';
   sortOrder: 'asc' | 'desc';
   productsSearchDataLength: boolean = false;
-  productsSearchData:Product[];
-  productsWithTotal:any;
-  showLoader =false;
+  productsSearchData: Product[];
+  productsWithTotal: any;
+  showLoader = false;
   searchQuery: string;
   private searchQueryChanged: Subject<string> = new Subject<string>();
   private searchSubscription: Subscription;
@@ -83,16 +87,15 @@ export class EditProductComponent implements OnInit {
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private global: GlobalService,
-    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
     this.productService.getProductById(id).subscribe((res) => {
-      let getProductData=res
+      let getProductData = res;
       this.getProductData = getProductData;
-      this.populateForm( this.getProductData.data);
-      this.getProductImageUrl = this.getProductData.data.imageUrl;      
+      this.populateForm(this.getProductData.data);
+      this.getProductImageUrl = this.getProductData.data.imageUrl;
       this.imagePath = this.environment.blobStorage;
       this.productService.croppedImage$.subscribe((croppedImage) => {
         this.receivedCroppedImage = croppedImage;
@@ -124,7 +127,7 @@ export class EditProductComponent implements OnInit {
         }
       });
   }
-  
+
   getSearchProduct(
     PageNumber: number,
     limit: number,
@@ -133,13 +136,7 @@ export class EditProductComponent implements OnInit {
     sortOrder: 'asc' | 'desc'
   ) {
     this.productService
-      .getProducts(
-        PageNumber,
-        limit,
-        search,
-        sortBy,
-        sortOrder
-      )
+      .getProducts(PageNumber, limit, search, sortBy, sortOrder)
       .subscribe((res) => {
         if (res) {
           this.productsWithTotal = res.data;
@@ -179,18 +176,17 @@ export class EditProductComponent implements OnInit {
       .editProduct(this.postForm.value.productId, product)
       .subscribe({
         next: (res) => {
-          let getProductData=res
+          let getProductData = res;
           this.getProduct = getProductData;
+          this.global.showSnackbar(true, 'Product updated successfully');
           this.global.hideLoader();
-          this.openSuccess();
-          this.router.navigate([`/products/view-product/${this.getProduct.data.productId}`]);
+          this.router.navigate([
+            `/products/view-product/${this.getProduct.data.productId}`,
+          ]);
         },
         error: (error: any) => {
-          this.snackBar.open(error.error.message, '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
+          const errorMessage = error?.error?.message || 'Database error';
+          this.global.showSnackbar(false, errorMessage);
         },
       });
   }
@@ -227,7 +223,7 @@ export class EditProductComponent implements OnInit {
   }
 
   deleteImage() {
-    if (this.getProductImageUrl[0]!==" ") {
+    if (this.getProductImageUrl[0] !== ' ') {
       const imageUrlparts = this.getProductImageUrl?.split('/saasframework/');
       const extractedImagePart = decodeURIComponent(imageUrlparts[1]);
       this.removeImagePayload = {
@@ -238,37 +234,34 @@ export class EditProductComponent implements OnInit {
       const extractedImagePart = decodeURIComponent(imageUrlparts[1]);
       this.removeImagePayload = {
         image: extractedImagePart,
-      }
+      };
     }
 
- 
-
-    this.productService.removeImage(this.removeImagePayload).subscribe((res) => {
-      this.imageName = res.data.blobURL;
-      this.deleteBlob = res.data.deleteBlob;
-      this.imageUrl = ' ';
-      this.uploadMessage = 'Image removed successfully.';
-      this.startMessageTimer();
-    });
+    this.productService
+      .removeImage(this.removeImagePayload)
+      .subscribe((res) => {
+        this.imageName = res.data.blobURL;
+        this.deleteBlob = res.data.deleteBlob;
+        this.imageUrl = ' ';
+        this.uploadMessage = 'Image removed successfully.';
+        this.startMessageTimer();
+      });
   }
 
-  openSuccess() {
-    this.dialog.open(SuccessDialogComponent, {
-      width: '420px',
-      data: {
-        module: 'Product',
-        operation: 'is updated',
-      },
-    });
-  }
+  // openSuccess() {
+  //   this.dialog.open(SuccessDialogComponent, {
+  //     width: '420px',
+  //     data: {
+  //       module: 'Product',
+  //       operation: 'is updated',
+  //     },
+  //   });
+  // }
   toggleStatus() {
-
     let currentStatus = this.postForm.get('status').value;
     this.postForm.get('status').setValue(!currentStatus);
-
   }
   populateForm(res: any) {
-    
     if (res.status === 'active') {
       this.status = true;
     } else if (res.status === 'draft') {

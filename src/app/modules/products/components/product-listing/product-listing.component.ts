@@ -11,8 +11,6 @@ import {
 import { Data_Type, noProducts } from 'src/app/shared/constants/consants';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
@@ -61,7 +59,6 @@ export class ProductListingComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     protected productService: ProductsService,
-    private snackBar: MatSnackBar,
     private global: GlobalService
   ) {}
 
@@ -104,48 +101,39 @@ export class ProductListingComponent implements OnInit {
   ) {
     this.global.showLoader();
     this.productService
-      .getProducts(
-        PageNumber,
-        limit,
-        search,
-        sortBy,
-        sortOrder
-      )
+      .getProducts(PageNumber, limit, search, sortBy, sortOrder)
       .subscribe({
-        next:(res)=>{
-        if (res) {
-          this.products = res.data;          
-          this.totalNumberOfProduct = this.products.totalCount;
-          this.productsSearchData = this.products.products;
-          this.global.hideLoader();
-          if (
-            this.totalNumberOfProduct > this.allProductsData ||
-            this.totalNumberOfProduct == 0
-          ) {
-            this.allProductsData = this.totalNumberOfProduct;
-          }
-
-          this.totalPages = Math.ceil(this.totalNumberOfProduct / limit);
-          this.hasNextPage = PageNumber < this.totalPages;
-
-          if (search.length > 0) {
-            this.totalNumberOfProductBySearch = this.products.totalCount;
-            this.searchDataNextPage =
-              this.totalNumberOfProductBySearch <= limit;
-          } else {
+        next: (res) => {
+          if (res) {
+            this.products = res.data;
             this.totalNumberOfProduct = this.products.totalCount;
-            this.searchDataNextPage = false;
+            this.productsSearchData = this.products.products;
+            this.global.hideLoader();
+            if (
+              this.totalNumberOfProduct > this.allProductsData ||
+              this.totalNumberOfProduct == 0
+            ) {
+              this.allProductsData = this.totalNumberOfProduct;
+            }
+
+            this.totalPages = Math.ceil(this.totalNumberOfProduct / limit);
+            this.hasNextPage = PageNumber < this.totalPages;
+
+            if (search.length > 0) {
+              this.totalNumberOfProductBySearch = this.products.totalCount;
+              this.searchDataNextPage =
+                this.totalNumberOfProductBySearch <= limit;
+            } else {
+              this.totalNumberOfProduct = this.products.totalCount;
+              this.searchDataNextPage = false;
+            }
           }
-        }
-      },
-      error: (error: any) => {
-        this.snackBar.open(error?.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
-        this.global.hideLoader();
-      },
+        },
+        error: (error: any) => {
+          const errorMessage = error?.message || 'Database error';
+          this.global.showSnackbar(false, errorMessage);
+          this.global.hideLoader();
+        },
       });
   }
 
@@ -158,13 +146,7 @@ export class ProductListingComponent implements OnInit {
   ) {
     this.global.showLoader();
     this.productService
-      .getProducts(
-        PageNumber,
-        limit,
-        search,
-        sortBy,
-        sortOrder
-      )
+      .getProducts(PageNumber, limit, search, sortBy, sortOrder)
       .subscribe((res) => {
         if (res) {
           this.products = res.data;
@@ -224,48 +206,34 @@ export class ProductListingComponent implements OnInit {
   sendElementId(elementId: string) {
     this.productService.deleteProduct(elementId).subscribe({
       next: (res) => {
-        this.deleteSuccess(elementId);
+        this.productService
+          .getProducts(
+            this.PageNumber,
+            this.limit,
+            this.search,
+            this.sortBy,
+            this.sortOrder
+          )
+          .subscribe((data) => {
+            this.productLength = data['products'].length;
+          });
+        if (this.productLength === 0 && this.PageNumber > 1) {
+          this.onPrevious();
+        }
+        this.getProduct(
+          this.PageNumber,
+          this.limit,
+          this.search,
+          this.sortBy,
+          this.sortOrder
+        );
+        this.global.showSnackbar(true, 'Product deleted successfully');
         this.products = res;
       },
       error: (error: any) => {
-        this.snackBar.open(error.error.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
+        const errorMessage = error?.error?.message || 'Database error';
+        this.global.showSnackbar(false, errorMessage);
       },
-    });
-  }
-  deleteSuccess(id: any) {
-    const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
-      panelClass: 'dialog-curved',
-      data: {
-        module: 'Product',
-        deleteId: id,
-      },
-    });
-    this.productService
-      .getProducts(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
-      )
-      .subscribe((data) => {
-        this.productLength = data['products'].length;
-      });
-    dialogRef.afterClosed().subscribe(() => {
-      if (this.productLength === 0 && this.PageNumber > 1) {
-        this.onPrevious();
-      }
-      this.getProduct(
-        this.PageNumber,
-        this.limit,
-        this.search,
-        this.sortBy,
-        this.sortOrder
-      );
     });
   }
 
@@ -279,15 +247,8 @@ export class ProductListingComponent implements OnInit {
     this.featureLength = this.getfeaturedata.feature.length;
     let productName = this.getfeaturedata.name;
     if (this.featureLength) {
-      this.snackBar.open(
-        `Unable to delete ${productName}. Please remove associated features first.`,
-        '',
-        {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        }
-      );
+      const errorMessage = `Unable to delete ${productName}. Please remove associated features first.`;
+      this.global.showSnackbar(false, errorMessage);
     } else {
       this.dialogRef = this.dialog.open(DeleteConfirmationComponent, {
         panelClass: 'dialog-curved',

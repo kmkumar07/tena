@@ -26,7 +26,6 @@ import {
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { featureSamples } from 'src/app/shared/constants/static-info';
 
@@ -80,7 +79,6 @@ export class CreateFeatureComponent {
     private productService: ProductsService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
   ) {}
   onSearchInput() {
     this.searchQueryChanged.next(this.searchQuery);
@@ -434,24 +432,17 @@ export class CreateFeatureComponent {
 
     this.subscription = this.featureService.addFeature(feature).subscribe({
       next: (res: any) => {
-        this.openCustomSnackbar('Feature created successfully')
+        this.global.showSnackbar(true, 'Feature created successfully');
         this.routes.navigate([`/features/view/${res.data.featureId}`]);
         return res;
       },
       error: (error: any) => {
-        this.openCustomSnackbar(error.error.message)
+        const errorMessage = error?.error?.message ;
+        this.global.showSnackbar(false, errorMessage);
       },
     });
   }
-  openCustomSnackbar(message: string) {
-    this.snackBar.open(message, '', {
-      duration: 5000,
-      verticalPosition: 'top',
-      horizontalPosition: 'right',
-      panelClass: ['custom-class'],
-    });
-  }
-
+  
   onDelete() {
     this.routes.navigate(['/features']);
   }

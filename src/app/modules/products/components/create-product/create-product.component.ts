@@ -7,7 +7,6 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { NgxTippyProps } from 'ngx-tippy-wrapper';
 import { trigger, transition, animate, style } from '@angular/animations';
-import { SuccessDialogComponent } from '../../../../shared/components/dialog-box/success-dialog/success-dialog.component';
 import { DialogAnimaComponent } from '../../../../shared/components/dialog-box/dialog-anima/dialog-anima.component';
 import { OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -20,9 +19,7 @@ import {
   distinctUntilChanged,
 } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { MatSnackBar} from '@angular/material/snack-bar';
 import { GlobalService } from 'src/app/core/services/global.service';
-import { SnackBarCustomComponent } from 'src/app/shared/components/dialog-box/snack-bar-custom/snack-bar-custom.component';
 
 @Component({
   selector: 'app-create-product',
@@ -73,8 +70,7 @@ export class CreateProductComponent implements OnInit {
     private formBuilder: FormBuilder,
     public router: Router,
     private productService: ProductsService,
-    private snackBar: MatSnackBar,
-    private global: GlobalService
+    private global: GlobalService,
   ) {}
  
   ngOnInit() {
@@ -195,22 +191,14 @@ export class CreateProductComponent implements OnInit {
 
     this.subscription = this.productService.createProduct(product).subscribe({
       next: (res) => {
-        this.snackBar.openFromComponent(SnackBarCustomComponent, {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-          panelClass: ['custom-class'],
-        });
+        this.global.showSnackbar(true, 'Product created successfully');
         this.global.hideLoader();
         this.navigateToViewProduct(res);
       },    
       error: (error: any) => {
         this.global.hideLoader();
-        this.snackBar.openFromComponent(SnackBarCustomComponent, {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
+        const errorMessage = error?.error?.message || 'Database error';
+        this.global.showSnackbar(false, errorMessage);
       },
     });
   }
@@ -266,16 +254,6 @@ export class CreateProductComponent implements OnInit {
       this.imageUrl = ' ';
       this.uploadMessage = 'Image removed successfully.';
       this.startMessageTimer();
-    });
-  }
-
-  openSuccess() {
-    this.dialog.open(SuccessDialogComponent, {
-      width: '420px',
-      data: {
-        module: 'Product',
-        operation: 'is created',
-      },
     });
   }
 
