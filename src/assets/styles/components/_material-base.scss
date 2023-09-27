@@ -666,3 +666,16 @@ ul {
     }
   }  
 }
+
+
+//disabled-input
+.disabled-input{
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+    border-color: color('grey','lighten-11');
+  }
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline {
+    .mdc-notched-outline__leading, .mdc-notched-outline__notch, .mdc-notched-outline__trailing  {
+      border-color: color('grey','lighten-11');
+    }
+  }
+}
