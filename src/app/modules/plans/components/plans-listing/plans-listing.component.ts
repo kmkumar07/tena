@@ -9,7 +9,6 @@ import {
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
 import { PlanService } from '../../services/plan.service';
@@ -62,7 +61,6 @@ export class PlansListingComponent implements OnDestroy {
     private global: GlobalService,
     public dialog: MatDialog,
     public router: Router,
-    private snackBar: MatSnackBar
   ) {}
 
   onSearchInput() {
@@ -134,11 +132,8 @@ export class PlansListingComponent implements OnDestroy {
           }
         },
         error: (error: any) => {
-          this.snackBar.open(error?.message, '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
+          const errorMessage = error?.message || 'Database error';
+          this.global.showSnackbar(false, errorMessage);
           this.global.hideLoader();
         },
       });
@@ -149,7 +144,11 @@ export class PlansListingComponent implements OnDestroy {
    * new sorting criteria.
    */
   announceSortChange(sortState: Sort) {
-    this.sortBy = sortState.active as 'externalName' | 'createdOn' | 'internalName' | 'planId';
+    this.sortBy = sortState.active as
+      | 'externalName'
+      | 'createdOn'
+      | 'internalName'
+      | 'planId';
     this.sortOrder = sortState.direction as 'asc' | 'desc';
     this.getPlans(
       this.pageNumber,
@@ -182,18 +181,11 @@ export class PlansListingComponent implements OnDestroy {
           this.sortBy,
           this.sortOrder
         );
-        this.snackBar.open('Plan deleted successfully', '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
+        this.global.showSnackbar(true, 'Plan deleted successfully');
       },
       error: (error: any) => {
-        this.snackBar.open(error?.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
+        const errorMessage = error?.message || 'Database error';
+        this.global.showSnackbar(false, errorMessage);
       },
     });
   }

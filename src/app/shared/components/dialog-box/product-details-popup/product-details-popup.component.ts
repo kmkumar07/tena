@@ -141,7 +141,6 @@ export class ProductDetailsPopupComponent {
       this.sortBy,
       this.sortOrder
     );
-   
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -197,30 +196,20 @@ export class ProductDetailsPopupComponent {
   ) {
     this.global.showLoader();
     this.productService
-      .getProducts(
-        PageNumber,
-        limit,
-        search,
-        sortBy,
-        sortOrder
-      )
+      .getProducts(PageNumber, limit, search, sortBy, sortOrder)
       .subscribe({
-        next:(res)=>{
-        if (res) {
-          const products = res.data;          
-          this.productData = products.products;
+        next: (res) => {
+          if (res) {
+            const products = res.data;
+            this.productData = products.products;
+            this.global.hideLoader();
+          }
+        },
+        error: (error: any) => {
+          const errorMessage = error?.message || 'Database error';
+          this.global.showSnackbar(false, errorMessage);
           this.global.hideLoader();
-         
-        }
-      },
-      error: (error: any) => {
-        this.snackBar.open(error?.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
-        this.global.hideLoader();
-      },
+        },
       });
   }
 
@@ -305,19 +294,12 @@ export class ProductDetailsPopupComponent {
           this.isButtonDisabled = true;
           this.selectedFeatures = [];
           this.dialogRef.close(true);
-          this.snackBar.open('Product-Varaint created successfully', '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
+          this.global.showSnackbar(true, 'Product varaint created successfully');
           return res;
         },
-        error: (err: any) => {
-          this.snackBar.open(err.error.message, '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
+        error: (error: any) => {
+          const errorMessage = error?.error?.message || 'Database error';
+          this.global.showSnackbar(false, errorMessage);
           this.global.hideLoader();
         },
       });

@@ -12,7 +12,6 @@ import {
 import { Plan } from 'src/app/shared/constants/consants';
 import { PlanService } from '../../services/plan.service';
 import { GlobalService } from 'src/app/core/services/global.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-plan-details',
@@ -47,7 +46,6 @@ export class PlanDetailsComponent {
     private route: ActivatedRoute,
     private planService: PlanService,
     private global: GlobalService,
-    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -179,21 +177,13 @@ export class PlanDetailsComponent {
         .subscribe({
           next: (res: any) => {
             this.router.navigate([`/plans/create/${plan.planId}`]);
-            this.snackBar.open('Plan created successfully', '', {
-              duration: 5000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-              panelClass: ['custom-class'],
-            });
+            this.global.showSnackbar(true, 'Plan created successfully');
             this.global.hideLoader();
             return res;
           },
-          error: (err: any) => {
-            this.snackBar.open(err.message, '', {
-              duration: 5000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-            });
+          error: (error: any) => {
+            const errorMessage = error?.message ;
+            this.global.showSnackbar(false, errorMessage);
             this.global.hideLoader();
           },
         });
@@ -203,11 +193,7 @@ export class PlanDetailsComponent {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
           this.router.navigate([`/plans/create/${plan.planId}`]);
-          this.snackBar.open('Plan updated successfully', '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
+          this.global.showSnackbar(true, 'Plan updated successfully');
           this.global.hideLoader();
         });
     }

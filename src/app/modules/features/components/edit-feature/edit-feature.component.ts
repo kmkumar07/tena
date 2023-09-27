@@ -8,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   debounceTime,
@@ -20,10 +19,10 @@ import {
   Subscription,
 } from 'rxjs';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
-import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { feature_types } from 'src/app/shared/constants/consants';
 import { FeatureService } from '../../services/feature.service';
 import { featureSamples } from 'src/app/shared/constants/static-info';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 export interface menuOptions {
   value: number;
@@ -88,7 +87,7 @@ export class EditFeatureComponent {
     private route: ActivatedRoute,
     private productService: ProductsService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private global: GlobalService
   ) {}
 
   ngOnInit() {
@@ -369,12 +368,13 @@ export class EditFeatureComponent {
       .updateFeature(this.featureForm.value.featureId, feature)
       .subscribe({
         next: (res: any) => {
-          this.openCustomSnackbar('Feature updated successfully');
+          this.global.showSnackbar(true, 'Feature updated successfully');
           this.routes.navigate([`/features/view/${res.data.featureId}`]);
           return res;
         },
         error: (error: any) => {
-          this.openCustomSnackbar(error.error.message);
+          const errorMessage = error?.error?.message ;
+        this.global.showSnackbar(false, errorMessage);
         },
       });
   }
@@ -382,15 +382,7 @@ export class EditFeatureComponent {
   onDelete() {
     this.routes.navigate(['/features']);
   }
-  openCustomSnackbar(message: string) {
-    this.snackBar.open(message, '', {
-      duration: 5000,
-      verticalPosition: 'top',
-      horizontalPosition: 'right',
-      panelClass: ['custom-class'],
-    });
-  }
-
+ 
   // sample data code
   setSampleFeature(featureData) {
     this.featureForm.addControl(

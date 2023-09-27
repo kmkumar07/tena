@@ -8,7 +8,6 @@ import {
   selectPrice,
 } from 'src/app/shared/constants/consants';
 import { Subscription, takeUntil } from 'rxjs';
-import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlanService } from '../../../../modules/plans/services/plan.service';
@@ -18,6 +17,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EventEmitter, Output } from '@angular/core';
+import { SnackBarCustomComponent } from '../snack-bar-custom/snack-bar-custom.component';
 
 export class PlanValue {
   planId: string;
@@ -70,7 +70,6 @@ export class SetPricePopupComponent {
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<SetPricePopupComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: { planId: any; priceId: string; periodUnit: string }
@@ -104,7 +103,7 @@ export class SetPricePopupComponent {
 
   patchValue(data: any) {
     data.multiPricing.sort(
-      (indexOne:any, indexTwo:any) =>
+      (indexOne: any, indexTwo: any) =>
         indexOne.startingUnit - indexTwo.startingUnit
     );
     this.editable = true;
@@ -331,15 +330,13 @@ export class SetPricePopupComponent {
             this.dialogRef.close(true);
             this.planService.setData(this.price);
             this.priceId = this.price.priceId;
+            this.global.showSnackbar(true, 'Price created successfully');
             this.global.hideLoader();
           },
 
-          error: (err: any) => {
-            this.snackBar.open(err.message, '', {
-              duration: 5000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-            });
+          error: (error: any) => {
+            const errorMessage = error?.message || 'Database error';
+            this.global.showSnackbar(false, errorMessage);
             this.global.hideLoader();
           },
         });
@@ -351,29 +348,11 @@ export class SetPricePopupComponent {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
           this.dialogRef.close(true);
+          this.global.showSnackbar(true, 'Price updated successfully');
           this.global.hideLoader();
         });
     }
     this.global.hideLoader();
-  }
-  openUpdateSuccess(planId) {
-    this.dialog.open(SuccessDialogComponent, {
-      width: '420px',
-      data: {
-        module: 'Pricing',
-        operation: 'is updated',
-      },
-    });
-    this.router.navigate([`/plans/create/${planId}`]);
-  }
-  openCreateSuccess() {
-    this.dialog.open(SuccessDialogComponent, {
-      width: '420px',
-      data: {
-        module: 'Pricing',
-        operation: 'is created',
-      },
-    });
   }
 
   checkIndex(index: number) {

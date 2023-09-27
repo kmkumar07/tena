@@ -5,10 +5,9 @@ import { Observable, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { FeatureService } from 'src/app/modules/features/services/feature.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CouponsDeleteSuccessComponent } from 'src/app/shared/components/dialog-box/coupons-delete-success/coupons-delete-success.component';
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FeaturesPopupComponent } from 'src/app/shared/components/dialog-box/features-popup/features-popup.component';
+import { GlobalService } from 'src/app/core/services/global.service';
 @Component({
   selector: 'app-view-product',
   templateUrl: './view-product.component.html',
@@ -39,7 +38,7 @@ export class ViewProductComponent {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     public router: Router,
-    private snackBar: MatSnackBar,
+    private global: GlobalService,
   ) {}
 
   ngOnInit(): void {
@@ -84,27 +83,14 @@ export class ViewProductComponent {
   deleteElementById(elementId: number) {
     this.featureService.deleteFeature(elementId).subscribe({
       next: (res) => {
-        this.deleteSuccess(elementId);
+        this.global.showSnackbar(true, 'Product deleted successfully');
+
       },
       error: (error: any) => {
-        this.snackBar.open(error.error.message, '', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right'
-        })
+        const errorMessage = error?.error?.message || 'Database error';
+        this.global.showSnackbar(false, errorMessage);
       },
     });
-  }
-
-  deleteSuccess(id: any) {
-    const dialogRef = this.dialog.open(CouponsDeleteSuccessComponent, {
-      panelClass: 'dialog-curved',
-      data: {
-        module: 'Feature',
-        deleteId: id,
-      },
-    });
-    this.navigateToGetAllFeatures();
   }
 
   openDelete(id: any) {

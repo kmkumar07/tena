@@ -1,5 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { SnackBarCustomComponent } from 'src/app/shared/components/dialog-box/snack-bar-custom/snack-bar-custom.component';
 import { StaticRoutes } from 'src/app/shared/constants/consants';
 
 @Injectable({
@@ -9,7 +11,7 @@ export class GlobalService {
   staticRoutes: any = StaticRoutes;
   public isLoading = new BehaviorSubject<boolean>(false);
   public isDarkMode = new BehaviorSubject<boolean>(false);
-  constructor() {}
+  constructor(private snackBar: MatSnackBar) {}
 
   // loader operations
   showLoader() {
@@ -52,5 +54,16 @@ export class GlobalService {
   isUserAuthenticated(): boolean {
     const session = window.localStorage.getItem('session');
     return session !== null;
+  }
+
+
+  showSnackbar(isSuccess: boolean, message: string) {
+    this.snackBar.openFromComponent(SnackBarCustomComponent, {
+      duration: 5000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: ['custom-class'],
+      data: isSuccess ? { isSuccess, message } : { isError: true, errorMessage: message },
+    });
   }
 }
