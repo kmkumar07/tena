@@ -114,8 +114,6 @@
                             </div>
 
                         </div>
-                        <button disableRipple mat-button type="button" class="primary-text text-main"
-                            (click)="addMultiPricing()">+ Add More</button>
                     </div>
                 </div>
                 <!-- Price Field -->
@@ -174,8 +172,8 @@
         <button mat-stroked-button color="primary" class="mr-2 large" (click)="onCancelClick()">
             Dismiss
         </button>
-        <button mat-flat-button color="primary" class="large" type="submit" (click)="submitValues()" [disabled]="setPriceForm.controls['billingCycle'].invalid ||
-        setPriceForm.controls['price'].invalid">
+        <button mat-flat-button color="primary" class="large" type="submit" (click)="submitValues()"
+            [disabled]="setPriceForm.invalid">
             {{editable?'update':'Create'}}
         </button>
     </div>
