@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription, takeUntil } from 'rxjs';
+import { Observable, Subscription, map, startWith, takeUntil } from 'rxjs';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -63,9 +63,10 @@ export class ProductDetailsPopupComponent {
   updateproductData = [];
   editable: boolean = false;
   flag = false;
+  productArray = [];
   updateproduct = [];
-
-  selectedProductIds: string[] = [];
+  filteredProducts: Observable<any[]>;
+  editProductId: string = '';
   displayedColumns1: string[] = [
     'select',
     'name',
@@ -123,37 +124,36 @@ export class ProductDetailsPopupComponent {
     this.getPlanById(this.planId);
   }
   selectProduct(product: any) {
-    // Add the selected product's ID to the list
-    this.selectedProductIds.push(product.productId);
+    if (!product.disabled) {
+      // Now, you can update the form control or perform any other necessary actions
+      this.formGroup.get('productID').setValue(product.productId);
+      this.productId = product.productId;
+      this.isProductSelected = true;
+      this.formGroup.controls.productName.patchValue(product.name);
+      this.formGroup.controls.description.patchValue(product.description);
+      this.filteredFeatures = product.feature;
 
-    // Now, you can update the form control or perform any other necessary actions
-    this.formGroup.get('productID').setValue(product.productId);
-    this.productId = product.productId;
-    this.isProductSelected = true;
-    this.formGroup.controls.productName.patchValue(product.name);
-    this.formGroup.controls.description.patchValue(product.description);
-    this.filteredFeatures = product.feature;
+      const rangeFormControls = {};
+      this.filteredFeatures.forEach((feature) => {
+        const minValue = feature.levels[0]?.value;
+        const maxValue = feature.levels[1]?.value;
+        if (feature.type === 'range') {
+          const rangeValue = [
+            '',
+            [
+              Validators.required,
+              Validators.min(Math.min(minValue, maxValue)),
+              Validators.max(Math.max(minValue, maxValue)),
+            ],
+          ];
+          rangeFormControls[feature.featureId] = rangeValue;
+          feature.minValue = Math.min(minValue, maxValue);
+          feature.maxValue = Math.max(minValue, maxValue);
+        }
+      });
 
-    const rangeFormControls = {};
-    this.filteredFeatures.forEach((feature) => {
-      const minValue = feature.levels[0]?.value;
-      const maxValue = feature.levels[1]?.value;
-      if (feature.type === 'range') {
-        const rangeValue = [
-          '',
-          [
-            Validators.required,
-            Validators.min(Math.min(minValue, maxValue)),
-            Validators.max(Math.max(minValue, maxValue)),
-          ],
-        ];
-        rangeFormControls[feature.featureId] = rangeValue;
-        feature.minValue = Math.min(minValue, maxValue);
-        feature.maxValue = Math.max(minValue, maxValue);
-      }
-    });
-
-    this.rangeForm = this.formBuilder.group(rangeFormControls);
+      this.rangeForm = this.formBuilder.group(rangeFormControls);
+    }
   }
   getPlanById(id: string) {
     if (this.editable == true) {
@@ -167,19 +167,24 @@ export class ProductDetailsPopupComponent {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe((res) => {
           this.plan = res;
-
           this.planArray = this.plan.data.productVariant.map(
             (item) => item.name
           );
-
-          const resultArray = this.planArray.map((item) => {
-            const splitResult = item.split(`${this.planid}variant`);
-
-            return splitResult.length > 1 ? splitResult[1] : splitResult[0];
-          });
-          this.updateproductData = this.productData.filter(
-            (product) => !resultArray.includes(product.productId)
-          );
+          if (this.editable == false) {
+            const flattenedArray = this.planArray.map(String).join(', ');
+            this.updateproductData = this.productData.filter(
+              (product) => !flattenedArray.includes(product.productId)
+            );
+          } else {
+            const flattenedArray = this.planArray.map(String);
+            this.updateproductData = this.productData.map((product) => {
+              if (flattenedArray.includes(product.productId)) {
+                return { ...product, disabled: true };
+              } else {
+                return { ...product, disabled: false };
+              }
+            });
+          }
         });
     }
   }
@@ -191,14 +196,25 @@ export class ProductDetailsPopupComponent {
       this.productDetailsService
         .getProductVariantById(this.productVariantId)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
-        .subscribe((res) => {
-          this.patchValue(res);
+        .subscribe({
+          next: (res) => {
+            this.patchValue(res);
+          },
+          error: (err: any) => {
+            this.snackBar.open(err.error.message, '', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            });
+            this.global.hideLoader();
+          },
         });
     }
   }
   patchValue(res: any) {
     this.editable = true;
     this.filteredFeatures = res.data.features;
+    this.editProductId = res.data.productID;
 
     const rangeFormControls = {};
     this.filteredFeatures.forEach((feature) => {
@@ -263,7 +279,6 @@ export class ProductDetailsPopupComponent {
             const products = res.data;
             this.productData = products.products;
             this.checkproductAvailabe(this.productData);
-
             this.global.hideLoader();
           }
         },
@@ -278,23 +293,22 @@ export class ProductDetailsPopupComponent {
       });
   }
 
- 
-
   onSubmit() {
     this.loading = true;
     const formData = this.formGroup.value;
 
-    const productVariantName = this.planId + 'variant' + formData.productName;
+    const productVariantName = formData.productName;
 
-    const productVariantId = productVariantName
-      .replace(/\s+/g, '-')
-      .toLowerCase();
-    const editProductVariantName =
-      this.EditplanId + 'variant' + formData.productName;
+    const productVariantId =
+      this.planId +
+      'variant' +
+      productVariantName.replace(/\s+/g, '-').toLowerCase();
+    const editProductVariantName = formData.productName;
 
-    const editProductVariantId = editProductVariantName
-      .replace(/\s+/g, '-')
-      .toLowerCase();
+    const editProductVariantId =
+      this.EditplanId +
+      'variant' +
+      editProductVariantName.replace(/\s+/g, '-').toLowerCase();
 
     const features = this.selectedFeatures.map((productVariantFeature) => {
       switch (productVariantFeature.type) {

@@ -19,13 +19,15 @@
               <mat-select
                 required
                 formControlName="productID"
-                placeholder="select"    
+                placeholder="select"  
+               
               >
                 <ng-container>
                   <mat-option
                     *ngFor="let product of updateproductData"
                     (click)="selectProduct(product)"
                     [value]="product.productId"
+                    [disabled]="product.disabled"
                   >
                     {{product.productId }}
                   </mat-option>
@@ -206,7 +208,7 @@
                   <form [formGroup]="rangeForm">
                     <mat-form-field appearance="outline" class="border-2" subscriptSizing="dynamic">
                       <input matInput placeholder="Enter the value" [formControlName]="element.featureId" (input)="rangeForm.controls[element.featureId].markAsTouched()" pattern="[0-9]*" required />
-                       <mat-hint>
+                       <mat-hint >
                       Between {{ element.minValue }} and {{ element.maxValue }}
                       </mat-hint>
                       <mat-error *ngIf="

@@ -3,7 +3,7 @@ import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, takeUntil } from 'rxjs';
+import { Subscription, takeUntil, map } from 'rxjs';
 import { FeatureDetailsPopupComponent } from 'src/app/shared/components/dialog-box/feature-details-popup/feature-details-popup.component';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import {
@@ -19,6 +19,7 @@ import { ProductDetailsPopupComponent } from 'src/app/shared/components/dialog-b
 import { DeleteConfirmationComponent } from 'src/app/shared/components/dialog-box/delete-confirmation/delete-confirmation.component';
 import { AddonDetailsPopupComponent } from 'src/app/shared/components/dialog-box/addon-details-popup/addon-details-popup.component';
 import { NewChargePopupComponent } from 'src/app/shared/components/dialog-box/new-charge-popup/new-charge-popup.component';
+import { environment } from 'src/environments/environment';
 
 export interface PeriodicElement {
   PricingCycle: string;
@@ -81,7 +82,8 @@ export class CreatePlanComponent implements OnInit {
   yearlyPrice: string;
   weeklyPrice: string;
   priceIdxArr: any[] = [];
-
+  environment = environment;
+  imagePath: string;
   @ViewChild('step1') step1: ElementRef;
   @ViewChild('step2') step2: ElementRef;
   @ViewChild('step3') step3: ElementRef;
@@ -177,7 +179,6 @@ export class CreatePlanComponent implements OnInit {
       }
     });
   }
-
   /**
    * The function retrieves a plan by its ID and updates the pricing data, form values, and editable
    */
@@ -191,7 +192,8 @@ export class CreatePlanComponent implements OnInit {
         .subscribe((res) => {
           if (res) {            
             this.global.hideLoader();
-            this.plandataById = res.data;            
+            this.imagePath = this.environment.blobStorage;
+            this.plandataById = res.data;          
             this.updatePricingData(res.data.pricing);
             this.setPricing(this.pricingData);
             this.patchValue(res.data);
