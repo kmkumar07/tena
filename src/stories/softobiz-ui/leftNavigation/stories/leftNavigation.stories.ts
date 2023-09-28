@@ -42,7 +42,7 @@ const meta: Meta<LeftNavigationComponent> = {
     notificationsData: { table: { disable: true } },
     activeRoute: { table: { disable: true } },
     currentRoute: { table: { disable: true } },
-    globalService: { table: { disable: true } },
+    // globalService: { table: { disable: true } },
     opened: { table: { disable: true } },
     newItemEvent: { table: { disable: true } },
     toggleSidenav: { table: { disable: true } },

@@ -24,6 +24,9 @@ const meta: Meta<planDetailsComponent> = {
   }),
   argTypes: { },
   decorators: [
+    componentWrapperDecorator(
+      (story) => `<div class="left-navigation" >${story}</div>`
+    ),
     moduleMetadata({
       imports: [
         CommonModule,
