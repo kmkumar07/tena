@@ -5,7 +5,7 @@ import { filter } from 'rxjs';
 // import { MENUITEMS, Config_Menu, Menu_Headings, User_Options, Notifications_Data } from 'src/app/shared/constants/consants';
 import { MENUITEMS, Config_Menu, Menu_Headings, User_Options, Notifications_Data } from '../../../app/shared/constants/consants';
 // import { GlobalService } from 'src/app/core/services/global.service';
-import { GlobalService } from '../../../../src/app/core/services/global.service';
+// import { GlobalService } from '../../../../src/app/core/services/global.service';
 
 
 export interface PeriodicElement {
@@ -42,7 +42,7 @@ export class createPlanComponent {
   clickedRows = new Set<PeriodicElement>();
 
   constructor(
-    public globalService: GlobalService,
+    // public globalService: GlobalService,
     private router: Router,
     public route: ActivatedRoute
   ) {
@@ -59,7 +59,7 @@ export class createPlanComponent {
 
   opened: boolean = true;
   toggleSidenav() {
-    this.sidenav.toggle();
+    // this.sidenav.toggle();
     this.opened = !this.opened;
     this.newItemEvent.emit(this.opened);
   }

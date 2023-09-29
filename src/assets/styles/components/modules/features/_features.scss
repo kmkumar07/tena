@@ -116,6 +116,11 @@
   @media only screen and (max-width: 80rem) {
     padding-top: 20px !important;
   }
+  .product-select {
+    .mat-mdc-select-arrow-wrapper {
+      display: none;
+    }
+  }
   .inner-form-wrapper {
     max-width: 80.1875rem;
     width: 95%;

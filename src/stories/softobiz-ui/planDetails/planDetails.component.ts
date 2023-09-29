@@ -5,7 +5,7 @@ import { filter } from 'rxjs';
 // import { MENUITEMS, Config_Menu, Menu_Headings, User_Options, Notifications_Data } from 'src/app/shared/constants/consants';
 import { MENUITEMS, Config_Menu, Menu_Headings, User_Options, Notifications_Data } from '../../../app/shared/constants/consants';
 // import { GlobalService } from 'src/app/core/services/global.service';
-import { GlobalService } from '../../../app/core/services/global.service';
+// import { GlobalService } from '../../../app/core/services/global.service';
 
 @Component({
   selector: 'sft-planDetails',
@@ -25,7 +25,7 @@ export class planDetailsComponent {
   currentRoute: string;
 
   constructor(
-    public globalService: GlobalService,
+    // public globalService: GlobalService,
     private router: Router,
     public route: ActivatedRoute
   ) {
@@ -42,7 +42,7 @@ export class planDetailsComponent {
 
   opened: boolean = true;
   toggleSidenav() {
-    this.sidenav.toggle();
+    // this.sidenav.toggle();
     this.opened = !this.opened;
     this.newItemEvent.emit(this.opened);
   }

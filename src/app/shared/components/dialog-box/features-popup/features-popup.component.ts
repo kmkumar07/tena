@@ -14,16 +14,15 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { SuccessDialogComponent } from 'src/app/shared/components/dialog-box/success-dialog/success-dialog.component';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FeatureService } from 'src/app/modules/features/services/feature.service';
 import { Inject } from '@angular/core';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 export interface menuOptions {
   value: number;
@@ -56,7 +55,7 @@ export class FeaturesPopupComponent {
   isRangeSelected: boolean = false;
   selectedproductName: string;
   feature: any;
-  allProductsdata:any
+  allProductsdata: any;
   displayName: string;
   featureUpdatedata: any;
   unlimitedValue: any;
@@ -70,7 +69,7 @@ export class FeaturesPopupComponent {
     private routes: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar,
+    private global: GlobalService,
     public dialogRef: MatDialogRef<FeaturesPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { productId: string; feature: any }
   ) {
@@ -243,7 +242,7 @@ export class FeaturesPopupComponent {
       this.isRangeSelected = false;
     }
   }
-  updateForm(res: any) {    
+  updateForm(res: any) {
     this.editable = true;
 
     if (res.data.status === 'active') {
@@ -350,15 +349,13 @@ export class FeaturesPopupComponent {
           next: (res: any) => {
             this.showLoader = false;
             this.onDelete();
+            this.global.showSnackbar(true, 'Feature created successfully');
             this.routes.navigate([`/features/view/${res.data.featureId}`]);
             return res;
           },
           error: (error: any) => {
-            this.snackBar.open(error.error.message, '', {
-              duration: 5000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-            });
+            const errorMessage = error?.error?.message || 'Database error';
+            this.global.showSnackbar(false, errorMessage);
           },
         });
     } else {
@@ -368,15 +365,13 @@ export class FeaturesPopupComponent {
           next: (res: any) => {
             this.showLoader = false;
             this.onDelete();
+            this.global.showSnackbar(true, 'Feature updated successfully');
             this.routes.navigate([`/features/view/${res.data.featureId}`]);
             return res;
           },
           error: (error: any) => {
-            this.snackBar.open(error.error.message, '', {
-              duration: 5000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-            });
+            const errorMessage = error?.error?.message || 'Database error';
+            this.global.showSnackbar(false, errorMessage);
           },
         });
     }

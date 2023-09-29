@@ -2,7 +2,7 @@
   <mat-sidenav-container [ngClass]="opened ? 'sidenav-open' : 'sidenav-closed'">
     <mat-sidenav #sidenav mode="side" opened="true" class="sidenav-slider">
       <div class="sidenav-wrapper">
-        <!-- <div class="sidebar-toggle">
+        <div class="sidebar-toggle">
           <button
             mat-mini-fab
             color="accent"
@@ -22,22 +22,33 @@
               />
             </svg>
           </button>
-        </div> -->
+        </div>
         <div class="sidebar-wrapper">
           <div class="">
-            <h3 class="mat-headline-5 font-weight-700 text-purple-lighten-1">Digital Framework</h3>
+            <h3 class="mat-headline-5 font-weight-700 text-purple-lighten-1 header">Digital Framework</h3>
+            <h3 class="mat-headline-5 font-weight-700 text-purple-lighten-1 header-small">DF</h3>
           </div>
           <div class="sidebar-scrollable mt-12">
             <mat-nav-list class="sidebar p-0">
               <div *ngFor="let element of Menu_Headings" class="transition-400 list-wrapper">
-                <div *ngIf="element.name != 'Dashboard'" class="category-heading">
+                <div
+                  *ngIf="element.name != 'Dashboard'"
+                  class="category-heading"
+                >
                   <h1 class="mat-caption font-weight-600">{{ element.name }}</h1>
                 </div>
-                <mat-list-item class="nav-list-item p-0 w-full" *ngFor="let item of getList(element.category)">
-                  <a class="icon-wrapper flex align-center">
+                <mat-list-item
+                  class="nav-list-item p-0 w-full"
+                  *ngFor="let item of getList(element.category)"
+                >
+                  <a
+                    class="icon-wrapper flex align-center"
+                  >
                     <div class="flex justify-center sidebar-icon-wraper">
-                      <mat-icon class="material-symbols-outlined m-0 sidebar-icon mat-primary">{{ item.icon
-                        }}</mat-icon>
+                      <mat-icon
+                        class="material-symbols-outlined m-0 sidebar-icon mat-primary"
+                        >{{ item.icon }}</mat-icon
+                      >
                     </div>
                     <div class="content-wrapper">
                       <span class="mat-subtitle-2 ml-2 text-grey-darken-9">{{ item.name }}</span>
@@ -48,11 +59,17 @@
             </mat-nav-list>
           </div>
           <mat-nav-list class="config-section sidebar">
-            <mat-list-item class="nav-list-item p-0" *ngFor="let item of configOptions">
-              <a class="icon-wrapper flex align-center" [routerLink]="['/', item.state]">
+            <mat-list-item
+              class="nav-list-item p-0"
+              *ngFor="let item of configOptions"
+            >
+              <a
+                class="icon-wrapper flex align-center"
+                [routerLink]="['/', item.state]"
+              >
                 <mat-icon class="material-symbols-outlined m-0 sidebar-icon mat-primary">{{
                   item.icon
-                  }}</mat-icon>
+                }}</mat-icon>
                 <div class="content-wrapper">
                   <span class="mat-subtitle-2 ml-2 text-grey-darken-9">{{ item.name }}</span>
                 </div>
@@ -64,21 +81,27 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <!-- Header for application starts here! -->
-      <mat-toolbar class="header-wrapper relative main-bg">
-        <div class="absolute left-header pointer">
+      <mat-toolbar class="header-wrapper main-bg">
+        <!-- <div class="absolute left-header pointer">
           <mat-icon class="material-symbols-outlined mat-primary" (click)="sidenav.toggle()">
             menu_open
           </mat-icon>
-        </div>
+        </div> -->
         <div class="header-right">
-          <div class="language-section pointer mr-4">
-            <img src="en.png" alt="language flag" />
-          </div>
-          <div class="notifications-section pointer" [matMenuTriggerFor]="notificationsMenu" matBadge="3"
-            matBadgeSize="small" matBadgeColor="warn">
+          <div
+            class="notifications-section pointer"
+            [matMenuTriggerFor]="notificationsMenu"
+            matBadge="3"
+            matBadgeSize="small"
+            matBadgeColor="warn"
+          >
             <img src="/icons/notifications.svg" alt="notifications-icon" />
           </div>
-          <mat-menu #notificationsMenu="matMenu" class="notifications-menu border-2" backdropClass="right-menu">
+          <mat-menu
+            #notificationsMenu="matMenu"
+            class="notifications-menu border-2"
+            backdropClass="right-menu"
+          >
             <div class="notifications-header">
               <div class="flex align-center justify-between">
                 <div class="label">Notifications</div>
@@ -87,7 +110,10 @@
               <div class="tab-panel" (click)="preventClose($event)">
                 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
                   <mat-tab label="All (4)">
-                    <div class="relative h-55" *ngIf="notificationsData.length == 0">
+                    <div
+                      class="relative h-55"
+                      *ngIf="notificationsData.length == 0"
+                    >
                       <div class="absolute position-center text-center w-full">
                         <img src="/notifications-icon.png" alt="notification-icon">
                         <span class="block mt-6">
@@ -95,11 +121,17 @@
                         </span>
                       </div>
                     </div>
-                    <div class="notification-list" (click)="preventClose($event)" *ngIf="notificationsData.length > 0">
-                    </div>
+                    <div
+                      class="notification-list"
+                      (click)="preventClose($event)"
+                      *ngIf="notificationsData.length > 0"
+                    ></div>
                   </mat-tab>
                   <mat-tab label="Messages">
-                    <div class="relative h-55" *ngIf="notificationsData.length == 0">
+                    <div
+                      class="relative h-55"
+                      *ngIf="notificationsData.length == 0"
+                    >
                       <div class="absolute position-center text-center w-full">
                         <img src="/notifications-icon.png" alt="no data" />
                         <span class="block mt-6">
@@ -107,12 +139,19 @@
                         </span>
                       </div>
                     </div>
-                    <div class="message-list" (click)="preventClose($event)" *ngIf="notificationsData.length > 0">
+                    <div
+                      class="message-list"
+                      (click)="preventClose($event)"
+                      *ngIf="notificationsData.length > 0"
+                    >
                       My Messages
                     </div>
                   </mat-tab>
                   <mat-tab label="Alerts">
-                    <div class="relative h-55" *ngIf="notificationsData.length == 0">
+                    <div
+                      class="relative h-55"
+                      *ngIf="notificationsData.length == 0"
+                    >
                       <div class="absolute position-center text-center w-full">
                         <img src="/notifications-icon.png" alt="notifications-icon" />
                         <span class="block mt-6">
@@ -120,13 +159,20 @@
                         </span>
                       </div>
                     </div>
-                    <div class="message-list" (click)="preventClose($event)" *ngIf="notificationsData.length > 0">
+                    <div
+                      class="message-list"
+                      (click)="preventClose($event)"
+                      *ngIf="notificationsData.length > 0"
+                    >
                       Alerts
                     </div>
                   </mat-tab>
                 </mat-tab-group>
               </div>
-              <div class="text-center modal-footer pointer" (click)="preventClose($event)">
+              <div
+                class="text-center modal-footer pointer"
+                (click)="preventClose($event)"
+              >
                 <span class="block py-4"> View All </span>
               </div>
             </div>
@@ -140,7 +186,11 @@
               <span class="role">Founder</span>
             </div>
           </div>
-          <mat-menu #menu="matMenu" class="profile-menu" backdropClass="alert-menu">
+          <mat-menu
+            #menu="matMenu"
+            class="profile-menu"
+            backdropClass="alert-menu"
+          >
             <div class="profile-menu-outer">
               <div class="grad-bg">
                 <div class="user-initials">JS</div>
@@ -150,16 +200,22 @@
                 <p class="m-0 mt-1">Founder</p>
               </div>
               <div class="profile-paths">
-                <a class="flex align-center justify-between user-link" *ngFor="let element of userProfile">
+                <a
+                  class="flex align-center justify-between user-link"
+                  *ngFor="let element of userProfile"
+                >
                   <div class="flex align-center">
                     <mat-icon class="material-symbols-outlined mat-primary">{{
                       element.icon
-                      }}</mat-icon>
+                    }}</mat-icon>
                     <span class="ml-3">{{ element.name }}</span>
                   </div>
                   <div *ngIf="element.toggle">
-                    <mat-slide-toggle color="primary" (click)="preventClose($event)"
-                      (change)="switchDark($event)"></mat-slide-toggle>
+                    <mat-slide-toggle
+                      color="primary"
+                      (click)="preventClose($event)"
+                      (change)="switchDark($event)"
+                    ></mat-slide-toggle>
                   </div>
                 </a>
               </div>
@@ -167,7 +223,7 @@
           </mat-menu>
         </div>
       </mat-toolbar>
-      <div class="h-full relative">
+      <div class="inner-h relative overflow-auto">
         <div class="relative border-2 w-full h-full py-6 pl-5 pr-6 overflow-auto mat-primary">
           <div class="flex justify-between align-center px-1">
             <div class="flex align-center">
@@ -187,13 +243,22 @@
             </ng-template>
 
             <div class="flex align-center">
-              <div class="global-search main-bg mr-6 border-2">
+              <div class="global-search main-bg border-2">
                 <span class="search-icon pointer">
                   <img src="/search.png" alt="search-icon" />
                 </span>
                 <input type="text" placeholder="Search anything..." [(ngModel)]="searchQuery"
                   (input)="onSearchInput()" />
               </div>
+              <button
+              mat-flat-button
+              class="create-btn m-width mx-2"
+            >
+              <mat-icon class="material-symbols-outlined m-0" color="primary">filter_list</mat-icon>
+              <span class="text-nowrap block ml-2 letter-spacing-0"
+                >Filter</span
+              >
+            </button>
               <button mat-flat-button color="primary" class="create-btn">
                 <mat-icon class="material-symbols-outlined m-0 white-text">add_circle</mat-icon>
                 <span class="text-nowrap block ml-2 letter-spacing-0">Create Product</span>

@@ -25,6 +25,9 @@ const meta: Meta<viewProductComponent> = {
   }),
   argTypes: { },
   decorators: [
+    componentWrapperDecorator(
+      (story) => `<div class="left-navigation" >${story}</div>`
+    ),
     moduleMetadata({
       imports: [
         CommonModule,

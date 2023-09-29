@@ -53,13 +53,13 @@
       <div class="details">
         <h5 class="text-grey-darken mat-subtitle-2 mb-2">Created</h5>
         <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">
-          {{ plandataById?.createdOn | date: 'd MMMM y' }}
+          {{ plandataById?.createdOn | date: "d MMMM y" }}
         </h6>
       </div>
       <div class="details">
         <h5 class="text-grey-darken mat-subtitle-2 mb-2">Modified</h5>
         <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">
-          {{ plandataById?.modifiedOn | date: 'd MMMM y' }}
+          {{ plandataById?.modifiedOn | date: "d MMMM y" }}
         </h6>
       </div>
     </div>
@@ -134,23 +134,23 @@
                   </td>
                   <td class="mat-subtitle-2 text-purple-lighten-1">
                     <ng-container
-                      *ngIf='pricing.priceId && (pricing.price !== "0")'
+                      *ngIf="pricing.priceId && pricing.price !== '0'"
                     >
                       ${{ pricing.price }}/Unit
                     </ng-container>
                     <ng-container
-                      *ngIf='pricing.priceId && (pricing.price == "0")'
+                      *ngIf="pricing.priceId && pricing.price == '0'"
                     >
-                    <div class="flex align-center table-tooltip">
-                      ${{ pricing.multiPricing[0].price }}/Unit
-                      <mat-icon
-                        class="material-symbols-outlined pointer help-icon text-primary"
-                        [ngxTippy]="productnameinfo"
-                        [tippyProps]="{ placement: 'right', interactive: true }"
-                        tippyName="content"
-                        >help</mat-icon
-                      >
-                    </div>
+                      <div class="flex align-center table-tooltip">
+                        ${{ pricing.multiPricing[0].price }}/Unit
+                        <mat-icon
+                          class="material-symbols-outlined pointer help-icon text-primary"
+                          [ngxTippy]="productnameinfo"
+                          [tippyProps]="{ placement: 'right', interactive: true }"
+                          tippyName="content"
+                          >help</mat-icon
+                        >
+                      </div>
                       <ng-template #productnameinfo let-name>
                         <div class="help-info-tooltip">
                           <h3 class="text-grey-darken mb-2 font-weight-500 mat-subtitle-2">Price</h3>
@@ -275,12 +275,20 @@
               <div class="details-inner">
                 <div class="flex justify-between">
                   <div class="flex img-info">
-                    <div class="product-img p-2 mr-4">
-                      <img
-                        src="../.././../../assets/images/teams.png"
-                        alt="product-img"
-                      />
+                    <div class="product-img p-2 mr-4"
+                      *ngIf="variant.imageUrl !== ' '; else staticImage"
+                    >
+                      <img src="{{ imagePath + variant.imageUrl }}" alt="" />
                     </div>
+
+                    <ng-template #staticImage>
+                      <div class="product-img p-2 mr-4">
+                        <img
+                          src="../.././../../assets/images/teams.png"
+                          alt="product-img"
+                        />
+                      </div>
+                    </ng-template>
                     <div class="mt-2 info-box">
                       <div>
                         <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-1">
@@ -298,8 +306,8 @@
                             {{feature.featureName}}
                           </h5>
                           <a class="mat-subtitle-2 text-blue-darken font-weight-500" (click)="editFeatureDetails()">{{
-                            feature?.value === 'true' ? 'Available' : feature?.value === 'false' ? 'Not Available' : feature.value
-                            }}</a>
+                              feature?.value === "true" ? "Available"  : feature?.value === "false" ? "Not Available" : feature.value
+                          }}</a>
                         </div>
                       </div>
                     </div>
@@ -309,7 +317,7 @@
                       class="flex icon-text mat-caption mr-4"
                       mat-button
                       color="primary"
-                      (click)="editFeatureDetails()"
+                      (click)="editProductDetails(plandataById.planId,variant.productVariantId)"
                     >
                       <mat-icon
                         class="material-symbols-outlined mr-1"
@@ -649,3 +657,5 @@
       </button>
     </div>
   </div> -->
+  </div>
+</div>

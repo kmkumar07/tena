@@ -346,10 +346,17 @@ export class SetPricePopupComponent {
       this.planService
         .updatePrice(this.price, this.pricingId)
         .pipe(takeUntil(this.global.componentDestroyed(this)))
-        .subscribe((res) => {
-          this.dialogRef.close(true);
-          this.global.showSnackbar(true, 'Price updated successfully');
-          this.global.hideLoader();
+        .subscribe({
+          next: (res) => {
+            this.dialogRef.close(true);
+            this.global.showSnackbar(true, 'Price updated successfully');
+            this.global.hideLoader();
+          },
+          error: (error: any) => {
+            const errorMessage = error?.message || 'Database error';
+            this.global.showSnackbar(false, errorMessage);
+            this.global.hideLoader();
+          },
         });
     }
     this.global.hideLoader();
