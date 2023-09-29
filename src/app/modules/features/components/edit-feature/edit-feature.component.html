@@ -71,21 +71,21 @@
                   <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
                     Select Product
                   </p>
-                  <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                  <!-- <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
                     [ngxTippy]="selectProduct" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
                   <ng-template #selectProduct let-name class="t-template">
-                    <div class="help-info-tooltip">
+                    <div class="help-info-tooltip"> -->
                       <!-- <div class="heading-with-background">Product</div> -->
-                      <div class="details">
+                      <!-- <div class="details">
                         Please select a product to create a feature to it.
-                      </div>
+                      </div> -->
                       <!-- <button mat-button color="primary" class="px-0">
                         Learn more
                       </button> -->
-                    </div>
-                  </ng-template>
+                    <!-- </div>
+                  </ng-template> -->
                 </div>
-                <mat-form-field appearance="outline" class="border-2">
+                <mat-form-field appearance="outline" class="border-2 product-select">
                   <!-- <mat-label> Select </mat-label> -->
                   <mat-select required formControlName="productID" placeholder="select">
                     <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
@@ -269,30 +269,30 @@
             <h5 class="text-blue-darken mat-subtitle-1 font-weight-500">
               Sample Feature
             </h5>
-              <ng-container *ngFor="let sample of featureSamples; let i = index">
-          <div class="mt-4 mb-2">
-            <div class="flex">
-              <mat-icon class="material-symbols-outlined text-icon mr-2">
-                {{ sample.type === 'switch' ? 'toggle_off' : sample.type === 'range' ? 'arrow_range' : sample.type === 'quantity' ? 'production_quantity_limits' : 'tune' }}
-              </mat-icon>
-              <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">
-                {{ sample.type | titlecase }} Feature
-              </h3>
+          </div>
+          <ng-container *ngFor="let sample of featureSamples; let i = index">
+            <div class="mt-4 mb-2">
+              <div class="flex">
+                <mat-icon class="material-symbols-outlined text-icon mr-2">
+                  {{ sample.type === 'switch' ? 'toggle_off' : sample.type === 'range' ? 'arrow_range' : sample.type === 'quantity' ? 'production_quantity_limits' : 'tune' }}
+                </mat-icon>
+                <h3 class="font-weight-500 mat-subtitle-2 text-blue-darken m-0">
+                  {{ sample.type | titlecase }} Feature
+                </h3>
+              </div>
+              <p class="mat-h4 text-grey-darken mb-3">
+                {{ sample.description }}
+              </p>
+              <button
+                mat-button
+                color="primary"
+                class="medium px-1 mb-3 font-weight-500"
+                (click)="setSampleFeature(sample)"
+              >
+                Try a Sample
+              </button>
             </div>
-            <p class="mat-h4 text-grey-darken mb-3">
-              {{ sample.description }}
-            </p>
-            <button
-              mat-button
-              color="primary"
-              class="medium px-1 mb-3 font-weight-500"
-              (click)="setSampleFeature(sample)"
-            >
-              Try a Sample
-            </button>
-          </div>
-        </ng-container>
-          </div>
+          </ng-container>
         </div>
       </div>
     </div>

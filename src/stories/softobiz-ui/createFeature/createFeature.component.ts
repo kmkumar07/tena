@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
-import { GlobalService } from 'src/app/core/services/global.service';
+// import { GlobalService } from 'src/app/core/services/global.service';
 import { MENUITEMS, Config_Menu, Menu_Headings, User_Options, Notifications_Data } from 'src/app/shared/constants/consants';
 @Component({
   selector: 'sft-createFeature',
@@ -23,7 +23,7 @@ export class createFeatureComponent {
   currentRoute: string;
 
   constructor(
-    public globalService: GlobalService,
+    // public globalService: GlobalService,
     private router: Router,
     public route: ActivatedRoute
   ) {
@@ -38,9 +38,14 @@ export class createFeatureComponent {
   @ViewChild('sidenav') sidenav: MatSidenav;
   @Output() newItemEvent = new EventEmitter<boolean>();
 
+  // opened: boolean = true;
+  // toggleSidenav() {
+  //   this.sidenav.toggle();
+  //   this.opened = !this.opened;
+  //   this.newItemEvent.emit(this.opened);
+  // }
   opened: boolean = true;
   toggleSidenav() {
-    this.sidenav.toggle();
     this.opened = !this.opened;
     this.newItemEvent.emit(this.opened);
   }

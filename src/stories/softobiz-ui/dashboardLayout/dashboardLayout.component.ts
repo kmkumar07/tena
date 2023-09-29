@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
-import { GlobalService } from 'src/app/core/services/global.service';
+// import { GlobalService } from 'src/app/core/services/global.service';
 import { MENUITEMS, Config_Menu, Menu_Headings, User_Options, Notifications_Data } from 'src/app/shared/constants/consants';
 @Component({
   selector: 'sft-dashboardLayout',
@@ -41,7 +41,7 @@ export class DashboardLayoutComponent {
   currentRoute: string;
 
   constructor(
-    public globalService: GlobalService,
+    // public globalService: GlobalService,
     private router: Router,
     public route: ActivatedRoute
   ) {
@@ -58,7 +58,7 @@ export class DashboardLayoutComponent {
 
   opened: boolean = true;
   toggleSidenav() {
-    this.sidenav.toggle();
+    // this.sidenav.toggle();
     this.opened = !this.opened;
     this.newItemEvent.emit(this.opened);
   }

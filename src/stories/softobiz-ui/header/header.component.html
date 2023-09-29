@@ -1,7 +1,13 @@
 
-  <mat-toolbar class="header-wrapper">
+  <mat-toolbar class="header-wrapper main-bg">
     <!-- <sft-searchbar></sft-searchbar> -->
     <div class="header-right">
+      <div
+      class="language-section pointer mr-4"
+      (click)="changeLanguage()"
+    >
+      <img src="/en.png" alt="language flag" />
+    </div>
       <div
         class="notifications-section pointer"
         [matMenuTriggerFor]="notificationsMenu"
