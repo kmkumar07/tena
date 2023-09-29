@@ -283,11 +283,8 @@ export class ProductDetailsPopupComponent {
           }
         },
         error: (error: any) => {
-          this.snackBar.open(error?.message, '', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
+          const errorMessage = error?.message || 'Database error';
+          this.global.showSnackbar(false, errorMessage);
           this.global.hideLoader();
         },
       });
@@ -355,18 +352,12 @@ export class ProductDetailsPopupComponent {
             this.isButtonDisabled = true;
             this.selectedFeatures = [];
             this.dialogRef.close(true);
-            this.snackBar.open('Product-Varaint created successfully', '', {
-              duration: 5000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-            });
+            this.global.showSnackbar(true, 'Product varaint created successfully');
+          return res;
           },
-          error: (err: any) => {
-            this.snackBar.open(err.message, '', {
-              duration: 5000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-            });
+          error: (error: any) => {
+            const errorMessage = error?.error?.message || 'Database error';
+            this.global.showSnackbar(false, errorMessage);
             this.global.hideLoader();
           },
         });
@@ -387,20 +378,14 @@ export class ProductDetailsPopupComponent {
         .pipe(takeUntil(this.global.componentDestroyed(this)))
         .subscribe({
           next: (res) => {
-            this.snackBar.open('Product-Varaint updated successfully', '', {
-              duration: 5000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-            });
             this.dialogRef.close(true);
             this.global.hideLoader();
+            this.global.showSnackbar(true, 'Product varaint updated successfully');
+          return res;
           },
-          error: (err: any) => {
-            this.snackBar.open(err.message, '', {
-              duration: 5000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-            });
+          error: (error: any) => {
+            const errorMessage = error?.error?.message || 'Database error';
+            this.global.showSnackbar(false, errorMessage);
             this.global.hideLoader();
           },
         });

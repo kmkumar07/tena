@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <div class="info-details py-8 flex">
+    <div class="info-details py-8 flex flex-wrap w-full">
       <div class="details">
         <h5 class="text-grey-darken mat-subtitle-2 mb-2">Plan Name</h5>
         <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-0">
@@ -161,14 +161,16 @@
                                 <th class="text-grey-darken">Ending</th>
                                 <th class="text-grey-darken">Price</th>
                               </tr>
-                              <tr
-                                class="details"
-                                *ngFor="let price of pricing.multiPricing"
-                              >
-                                <td>{{ price.startingUnit }}</td>
-                                <td>{{ price.endingUnit }}</td>
-                                <td>${{ price.price }}/Unit</td>
-                              </tr>
+                              <tbody>
+                                <tr
+                                  class="details"
+                                  *ngFor="let price of pricing.multiPricing"
+                                >
+                                  <td>{{ price.startingUnit }}</td>
+                                  <td>{{ price.endingUnit }}</td>
+                                  <td>${{ price.price }}/Unit</td>
+                                </tr>
+                              </tbody>
                             </table>
                           </div>
                         </div>
@@ -272,7 +274,7 @@
             >
               <div class="details-inner">
                 <div class="flex justify-between">
-                  <div class="flex">
+                  <div class="flex img-info">
                     <div class="product-img p-2 mr-4"
                       *ngIf="variant.imageUrl !== ' '; else staticImage"
                     >
@@ -280,12 +282,14 @@
                     </div>
 
                     <ng-template #staticImage>
-                      <img
-                        src="../.././../../assets/images/teams.png"
-                        alt="product-img"
-                      />
+                      <div class="product-img p-2 mr-4">
+                        <img
+                          src="../.././../../assets/images/teams.png"
+                          alt="product-img"
+                        />
+                      </div>
                     </ng-template>
-                    <div class="mt-2">
+                    <div class="mt-2 info-box">
                       <div>
                         <h6 class="mat-subtitle-2 font-weight-500 text-blue-darken mb-1">
                           {{variant.name}}

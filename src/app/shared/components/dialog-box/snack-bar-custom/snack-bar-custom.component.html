@@ -1,12 +1,9 @@
 <div class="flex">
-    <div class="icon-box flex-center snackbar-success-bg">
-        <mat-icon class="material-icons text-success text-white">done</mat-icon>
+    <div
+        [ngClass]="{'icon-box': true, 'flex-center': true, 'snackbar-success-bg': data.isSuccess, 'snackbar-error-bg': data.isError}">
+        <mat-icon class="material-icons text-white">{{ data.isSuccess ? 'done' : 'cancel' }}</mat-icon>
     </div>
-    <div class="py-3 pl-4"><P class="text-blue-darken mat-subtitle-2">created successfully</P></div>
-</div>
-<div class="flex">
-    <div class="icon-box flex-center snackbar-error-bg">
-        <mat-icon class="material-icons text-success text-white"> cancel </mat-icon>
+    <div class="py-3 pl-4">
+        <P class="text-blue-darken mat-subtitle-2">{{ data.isSuccess ? data.message : data.errorMessage }}</P>
     </div>
-    <div class="py-3 pl-4"><P class="text-blue-darken mat-subtitle-2">created successfully</P></div>
 </div>
