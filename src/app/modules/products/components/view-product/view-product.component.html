@@ -2,14 +2,32 @@
   <div class="header-section pb-6">
     <div class="flex align-center justify-between">
       <div class="flex align-center">
-        <mat-icon class="material-symbols-outlined pointer mr-1" color="primary"
-          [routerLink]="'/products'">keyboard_backspace</mat-icon>
+        <!-- <mat-icon class="material-symbols-outlined pointer mr-1" color="primary"
+          [routerLink]="'/products'">keyboard_backspace</mat-icon> -->
         <p class="mat-headline-5 font-weight-500 text-purple-lighten-1">View Product</p>
       </div>
-      <button mat-stroked-button color="primary" class="medium"
+      <!-- <button mat-stroked-button color="primary" class="medium"
       [routerLink]="['/products/edit-product/' + productId]">
         Edit
-      </button>
+      </button> -->
+      <div class="btn-section flex align-center">
+        <button
+          mat-stroked-button
+          color="primary"
+          class="mr-2 large"
+          [routerLink]="['/products/edit-product/' + productId]"
+        >
+          Edit
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          class="large"
+          [routerLink]="'/products'"
+        >
+          Back to list
+        </button>
+      </div>
     </div>
   </div>
   <div class="header-block border-2">

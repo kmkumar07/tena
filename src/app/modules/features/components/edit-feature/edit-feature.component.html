@@ -99,12 +99,12 @@
                   <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
                     Feature ID
                   </p>
-                  <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
+                  <!-- <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
                     [ngxTippy]="helpinfotooltip"
                     [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
                   <ng-template #helpinfotooltip let-name>
                     <div class="help-info-tooltip">
-                      <!-- <div class="heading-with-background">Feature id</div> -->
+                      <div class="heading-with-background">Feature id</div>
                       <div class="details">
                         Please enter a Customized Id.If user do not enter this field,
                         the system will generate a 'Customized Human-Readable-id'
@@ -115,7 +115,7 @@
                         </div>
                       </div>
                     </div>
-                  </ng-template>
+                  </ng-template> -->
                 </div>
                 <mat-form-field appearance="outline" class="border-2 disabled-input">
                   <input required matInput readonly placeholder="Enter here" formControlName="featureId" />
