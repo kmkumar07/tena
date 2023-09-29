@@ -83,7 +83,7 @@ export class ViewProductComponent {
   deleteElementById(elementId: number) {
     this.featureService.deleteFeature(elementId).subscribe({
       next: (res) => {
-        this.global.showSnackbar(true, 'Product deleted successfully');
+        this.global.showSnackbar(true, 'Feature deleted successfully');
 
       },
       error: (error: any) => {

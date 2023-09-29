@@ -437,7 +437,7 @@ export class CreateFeatureComponent {
         return res;
       },
       error: (error: any) => {
-        const errorMessage = error?.error?.message ;
+        const errorMessage = error?.message ;
         this.global.showSnackbar(false, errorMessage);
       },
     });
