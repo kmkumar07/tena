@@ -206,7 +206,7 @@
                 </ng-container>
                 <ng-container *ngIf="element.type === 'range'">
                   <form [formGroup]="rangeForm">
-                    <mat-form-field appearance="outline" class="border-2" subscriptSizing="dynamic">
+                    <mat-form-field appearance="outline" class="border-2" subscriptSizing="dynamic" class="input-range">
                       <input matInput placeholder="Enter the value" [formControlName]="element.featureId" (input)="rangeForm.controls[element.featureId].markAsTouched()" pattern="[0-9]*" required />
                        <mat-hint >
                       Between {{ element.minValue }} and {{ element.maxValue }}

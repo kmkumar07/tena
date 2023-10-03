@@ -1082,6 +1082,11 @@
     border: 0.0625rem solid $border-color;
   }
 
+  .input-range{
+    .mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input, .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control{
+      height: 30px !important;
+    }
+  }
   .add-product-description {
 
     .mat-mdc-text-field-wrapper,
@@ -1139,7 +1144,9 @@
     justify-content: flex-start;
      }
   }
-
+  .primary-table.checked-stripe-table .mdc-data-table__cell, .primary-table.checked-stripe-table .mdc-data-table__header-cell, .checked-stripe-table .mdc-data-table__cell, .checked-stripe-table .mdc-data-table__header-cell{
+    padding: 0.5rem 0.5rem .25rem;
+  }
   // .primary-table.checked-stripe-table .entitlements-option .mat-mdc-text-field-wrapper.mdc-text-field--outlined.mdc-text-field--no-label {
   //   border: none;
   //   border-radius: 0.5rem;

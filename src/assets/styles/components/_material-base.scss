@@ -193,7 +193,7 @@
       margin-bottom: 0;
       .mat-mdc-text-field-wrapper {
         height: fit-content;
-        border: 1px solid color("grey", "lighten-11");
+        // border: 1px solid color("grey", "lighten-11");
         border-radius: 0.25rem;
         min-width: 6.375rem;
         padding: 0 0.5rem;
@@ -678,4 +678,9 @@ ul {
       border-color: color('grey','lighten-11');
     }
   }
+}
+
+// error message
+.mat-mdc-form-field-hint-wrapper, .mat-mdc-form-field-error-wrapper{
+padding: 0 !important;
 }
