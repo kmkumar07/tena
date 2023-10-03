@@ -69,7 +69,7 @@
               <div class="input-wrapper">
                 <div class="flex align-center mb-2">
                   <p class="mat-subtitle-2 font-weight-500 text-blue-darken">
-                    Select Product
+                    Product Name
                   </p>
                   <!-- <mat-icon class="material-symbols-outlined pointer ml-3 help-icon text-text text-primary"
                     [ngxTippy]="selectProduct" [tippyProps]="{ placement: 'right', interactive: true }">help</mat-icon>
@@ -248,16 +248,16 @@
                     </div>
                   </ng-container>
                 </ng-container>
-                <div>
-                  <button mat-button color="primary" class="small-font-14" (click)="toggleUnlimited()">
+                <div class="flex">
+                  <button mat-button color="primary" class="small-font-14 mr-2" (click)="toggleUnlimited()">
                     <!-- <mat-icon class="add-course-btn"></mat-icon -->
                     {{ unlimitedButtonLabel }}
                   </button>
-                </div>
-                <button mat-button color="primary" class="small-font-16 mt-4" (click)="addLevels()"
+                <button mat-button color="primary" class="small-font-16" (click)="addLevels()"
                   *ngIf="!isRangeSelected">
                   <mat-icon class="add-course-btn mat-primary">add</mat-icon>Add Entitlement
                 </button>
+              </div>
               </div>
             </div>
           </form>
